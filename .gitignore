@@ -1,0 +1,11 @@
+.vs/
+.idea/
+.vscode/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+docs/temp/
+1.7/Assemblies/*.dll
+1.7/Assemblies/*.pdb
+Thumbs.db

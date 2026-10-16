@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>MyModeTest</AssemblyName>
+    <RootNamespace>MyModeTest</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <OutputPath>$(MSBuildThisFileDirectory)..\..\1.7\Assemblies\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RimWorldPath Condition="'$(RimWorldPath)' == '' and '$(RIMWORLD_PATH)' != ''">$(RIMWORLD_PATH)</RimWorldPath>
+    <RimWorldPath Condition="'$(RimWorldPath)' == ''">D:\RimWorld v1.7.4979</RimWorldPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldPath)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityStubs">
+      <HintPath>$(RimWorldPath)\UnityStubs.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="ValidateRimWorldPath" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(RimWorldPath)\Assembly-CSharp.dll')"
+           Text="未找到 Assembly-CSharp.dll。请通过 -p:RimWorldPath=游戏目录 或 RIMWORLD_PATH 指定 RimWorld 1.7 根目录。" />
+    <Error Condition="!Exists('$(RimWorldPath)\UnityStubs.dll')"
+           Text="未找到 UnityStubs.dll。请通过 -p:RimWorldPath=游戏目录 或 RIMWORLD_PATH 指定 RimWorld 1.7 根目录。" />
+  </Target>
+</Project>

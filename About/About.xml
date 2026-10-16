@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>myModeTest</name>
+  <author>YourName</author>
+  <packageId>YourName.myModeTest</packageId>
+  <supportedVersions>
+    <li>1.7</li>
+  </supportedVersions>
+  <description>参考 HSK 资源生产流程实现的独立玻璃生产链。</description>
+</ModMetaData>
