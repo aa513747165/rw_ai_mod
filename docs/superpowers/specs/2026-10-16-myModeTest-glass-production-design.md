@@ -19,13 +19,13 @@
 | packageId | `YourName.myModeTest` |
 | C# 命名空间 | `MyModeTest` |
 | 程序集名 | `MyModeTest` |
-| 目标框架 | `net472` |
+| 目标框架 | `net10.0` |
 | 与 HSK 的关系 | 独立实现，不要求玩家安装 HSK |
 | 首条资源链 | 建材玻璃链 |
 | 首版范围 | 核心链等值实现 |
 | 文本语言 | 中文 label、description 和配方文本；英文 defName |
 | 贴图 | 复制已确认获得授权的 HSK 静态贴图 |
-| 编译验证 | 本次不执行；当前没有 RimWorld 安装路径 |
+| 编译验证 | 安装 .NET 10 SDK 后，使用 `D:\RimWorld v1.7.4979` 执行 |
 | 游戏内验证 | 本次不执行；不声称已通过游戏加载测试 |
 
 ## 3. 范围
@@ -208,16 +208,17 @@ HSK 参考来源固定为：
 
 ## 8. C# 工程
 
-保留基础 C# 工程，用于后续扩展：
+保留基础 C# 工程，用于后续扩展。RimWorld 1.7 的 `RimWorld.runtimeconfig.json` 明确使用 `net10.0`，且程序集位于游戏根目录，因此工程按 1.7 新结构配置：
 
 - SDK 风格项目。
-- 目标框架：`net472`。
+- 目标框架：`net10.0`。
 - 程序集输出到 `1.7/Assemblies`。
-- 通过 `RimWorldPath` 指向游戏目录。
-- 编译前检查 `Data\Managed\Assembly-CSharp.dll` 是否存在，缺失时给出明确错误。
+- 默认 `RimWorldPath` 为 `D:\RimWorld v1.7.4979`，仍允许通过 MSBuild 属性或 `RIMWORLD_PATH` 覆盖。
+- 引用游戏根目录下的 `Assembly-CSharp.dll` 和 `UnityStubs.dll`。
+- 编译前检查上述两个程序集是否存在，缺失时给出明确错误。
 - 最小入口类 `MyModeTestMod` 继承 `Verse.Mod`，构造时输出一条加载日志。
 
-当前没有 RimWorld 安装路径，所以本次只生成工程和配置，不执行编译，不生成 DLL。
+当前本机尚未安装 .NET 10 SDK；安装后执行编译验证并生成 DLL。
 
 ## 9. 错误处理与兼容性
 
@@ -229,21 +230,21 @@ HSK 参考来源固定为：
 
 ## 10. 验证计划
 
-本次只执行静态验证：
+本次执行静态验证和 C# 编译验证：
 
 1. 检查设计中列出的目录和文件均已创建。
 2. 使用 XML 解析器解析全部 `.xml` 文件，确认 UTF-8 内容可解析。
 3. 检查全部 PNG 文件头和非空大小。
 4. 静态检查配方输入、输出、工作台和研究引用是否完整。
 5. 检查贴图 XML 路径与实际文件路径一致。
+6. 安装 .NET 10 SDK 后，使用 `D:\RimWorld v1.7.4979` 执行 `dotnet build`，确认 `1.7/Assemblies/MyModeTest.dll` 生成。
 
 明确不执行：
 
-- `dotnet build`
 - RimWorld 游戏启动或存档加载
 - 游戏内配方平衡测试
 
-因此实施完成后只能声明“静态检查通过”，不能声明“编译通过”或“游戏内加载通过”。
+因此实施完成后只能声明“静态检查通过、C# 编译通过”，不能声明“游戏内加载通过”。
 
 ## 11. 验收标准
 
@@ -251,6 +252,7 @@ HSK 参考来源固定为：
 - 玻璃链资源、配方、建筑和研究 Def 已生成。
 - 已授权静态贴图按映射复制完成。
 - C# 工程和最小入口类已生成。
-- README 包含后续指定 `RimWorldPath` 编译的方法。
+- README 包含使用 `RimWorldPath` 编译的方法。
 - 所有 XML、PNG 和静态引用检查通过。
-- 最终报告明确说明未编译、未进行游戏内验证。
+- .NET 10 SDK 安装后，C# 编译通过并生成 `1.7/Assemblies/MyModeTest.dll`。
+- 最终报告明确说明未进行游戏内验证。
