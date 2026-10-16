@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CrushedStone</defName>
+    <label>碎石</label>
+    <description>由石块或岩块粉碎得到的细小石料，可进一步加工成砂。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/CrushedStone</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>0.3</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+    </statBases>
+    <stackLimit>900</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Sand</defName>
+    <label>砂</label>
+    <description>经过粉碎和筛选的砂料，是制作玻璃配合料的基础原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Sand</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>0.3</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+    </statBases>
+    <stackLimit>900</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_GlassBatch</defName>
+    <label>玻璃配合料</label>
+    <description>由砂配制而成的玻璃原料，需要在玻璃工坊中进一步加工。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/GlassBatch</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>1.2</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.05</Flammability>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Glass</defName>
+    <label>玻璃</label>
+    <description>由玻璃配合料加工得到的透明材料，可作为后续生产链的基础资源。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Glass</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>5.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
