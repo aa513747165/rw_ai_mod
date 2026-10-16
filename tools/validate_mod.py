@@ -28,6 +28,33 @@ CONCRETE_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Concret
 CONCRETE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Concrete.xml"
 CONCRETE_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Concrete.xml"
 CONCRETE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Concrete.xml"
+WOOD_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Wood.xml"
+WOOD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Wood.xml"
+WOOD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Wood.xml"
+WOOD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Wood.xml"
+
+WOOD_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
+    "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_b.png",
+    "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_c.png",
+    "1.7/Textures/Things/Item/MMT/Kindling.png",
+    "1.7/Textures/Things/Item/MMT/Charcoal.png",
+]
+
+WOOD_BUILDING_TEXTURES = [
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_east.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_eastm.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_north.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_northm.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_south.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill_southm.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_east.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_eastm.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_north.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_northm.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_south.png",
+    "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_southm.png",
+]
 
 CONCRETE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Concrete.png",
@@ -231,7 +258,7 @@ RECIPE_EXPECTATIONS = {
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting"}
-VANILLA_THINGS = {"ComponentIndustrial"}
+VANILLA_THINGS = {"ComponentIndustrial", "WoodLog"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -288,6 +315,84 @@ CONCRETE_RECIPE_EXPECTATIONS = {
         "sound": "Recipe_MakeStoneBlocks",
         "skill": "4",
         "building_mounted": False,
+    },
+}
+
+WOOD_RESOURCE_EXPECTATIONS = {
+    "MMT_WoodPlank": {
+        "label": "木板",
+        "value": "1.5",
+        "stack": "300",
+        "tex": "Things/Item/MMT/WoodPlank",
+        "graphic": "Graphic_StackCount",
+        "tech": "Neolithic",
+        "stuff": True,
+    },
+    "MMT_Kindling": {
+        "label": "柴火",
+        "value": "2.3",
+        "stack": "300",
+        "tex": "Things/Item/MMT/Kindling",
+        "graphic": "Graphic_Single",
+        "tech": "Neolithic",
+        "stuff": False,
+    },
+    "MMT_Charcoal": {
+        "label": "木炭",
+        "value": "2.0",
+        "stack": "600",
+        "tex": "Things/Item/MMT/Charcoal",
+        "graphic": "Graphic_Single",
+        "tech": "Medieval",
+        "stuff": False,
+    },
+}
+
+SAWMILL_RECIPES = ["MMT_MakeWoodPlanks_Hand", "MMT_MakeKindling_Hand"]
+CHARCOAL_KILN_RECIPES = ["MMT_MakeCharcoal_Hand"]
+
+WOOD_RECIPE_EXPECTATIONS = {
+    "MMT_MakeWoodPlanks_Hand": {
+        "work": "1200",
+        "input": "WoodLog",
+        "input_count": "10",
+        "output": "MMT_WoodPlank",
+        "output_count": "15",
+        "research": "MMT_Woodworking",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "skill": "3",
+        "learn": "0.8",
+        "building": "MMT_HandSawmill",
+    },
+    "MMT_MakeKindling_Hand": {
+        "work": "500",
+        "input": "WoodLog",
+        "input_count": "10",
+        "output": "MMT_Kindling",
+        "output_count": "20",
+        "research": "MMT_Woodworking",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "skill": None,
+        "learn": "0.25",
+        "building": "MMT_HandSawmill",
+    },
+    "MMT_MakeCharcoal_Hand": {
+        "work": "1600",
+        "input": "WoodLog",
+        "input_count": "25",
+        "output": "MMT_Charcoal",
+        "output_count": "20",
+        "research": "MMT_CharcoalBurning",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "skill": None,
+        "learn": "0.8",
+        "building": "MMT_CharcoalKiln",
     },
 }
 
@@ -758,6 +863,182 @@ def validate_concrete() -> None:
     print("concrete: OK")
 
 
+def validate_wood_resources() -> None:
+    require_files([WOOD_RESOURCE_XML, *WOOD_ITEM_TEXTURES])
+    defs = def_map(parse_xml(WOOD_RESOURCE_XML))
+    assert_equal(set(defs), set(WOOD_RESOURCE_EXPECTATIONS), "木材资源 defName 集合")
+
+    for name, expected in WOOD_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), expected["graphic"], f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+
+        if expected["stuff"]:
+            assert_equal(li_values(node, "./stuffProps/categories"), ["Woody"], f"{name} stuff categories")
+            assert_equal(child_text(node, "./stuffProps/stuffAdjective"), "木制", f"{name} stuffAdjective")
+            assert_equal(child_text(node, "./stuffProps/appearance"), "Planks", f"{name} stuff appearance")
+            assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), "0.9", f"{name} MaxHitPoints factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/Flammability"), "1", f"{name} Flammability factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/Beauty"), "1.65", f"{name} Beauty factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), "0.7", f"{name} WorkToMake factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), "0.7", f"{name} WorkToBuild factor")
+            assert_equal(child_text(node, "terrainAffordanceNeeded"), "Light", f"{name} terrain affordance")
+        elif node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    for path in WOOD_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(WOOD_RESOURCE_XML):
+        fail("木材资源 XML 不得引用 SK 类型")
+    print("wood-resources: OK")
+
+
+def validate_wood_building() -> None:
+    require_files([WOOD_RESEARCH_XML, WOOD_BUILDING_XML, *WOOD_BUILDING_TEXTURES])
+
+    research_defs = def_map(parse_xml(WOOD_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_Woodworking", "MMT_CharcoalBurning"}, "木材研究 defName 集合")
+
+    woodworking = research_defs["MMT_Woodworking"]
+    assert_equal(child_text(woodworking, "label"), "木工加工", "木工研究 label")
+    assert_equal(child_text(woodworking, "baseCost"), "300", "木工研究 baseCost")
+    assert_equal(child_text(woodworking, "techLevel"), "Neolithic", "木工研究 techLevel")
+    assert_equal(li_values(woodworking, "prerequisites"), [], "木工研究前置")
+    assert_equal(child_text(woodworking, "researchViewX"), "0.00", "木工研究 X 坐标")
+    assert_equal(child_text(woodworking, "researchViewY"), "1.00", "木工研究 Y 坐标")
+
+    charcoal = research_defs["MMT_CharcoalBurning"]
+    assert_equal(child_text(charcoal, "label"), "木炭烧制", "烧炭研究 label")
+    assert_equal(child_text(charcoal, "baseCost"), "500", "烧炭研究 baseCost")
+    assert_equal(child_text(charcoal, "techLevel"), "Medieval", "烧炭研究 techLevel")
+    assert_equal(li_values(charcoal, "prerequisites"), ["MMT_Woodworking"], "烧炭研究前置")
+    assert_equal(child_text(charcoal, "researchViewX"), "1.00", "烧炭研究 X 坐标")
+    assert_equal(child_text(charcoal, "researchViewY"), "1.00", "烧炭研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(WOOD_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_HandSawmill", "MMT_CharcoalKiln"}, "木材建筑 defName 集合")
+
+    sawmill = building_defs["MMT_HandSawmill"]
+    assert_equal(child_text(sawmill, "label"), "手动锯木机", "锯木机 label")
+    assert_equal(child_text(sawmill, "thingClass"), "Building_WorkTable", "锯木机 thingClass")
+    assert_equal(child_text(sawmill, "./graphicData/texPath"), "Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill", "锯木机 texPath")
+    assert_equal(child_text(sawmill, "./graphicData/graphicClass"), "Graphic_Multi", "锯木机 graphicClass")
+    assert_equal(li_values(sawmill, "stuffCategories"), ["Woody"], "锯木机材料分类")
+    assert_equal(child_text(sawmill, "costStuffCount"), "120", "锯木机材料数量")
+    assert_equal(child_text(sawmill, "./statBases/WorkToBuild"), "700", "锯木机建造工作量")
+    assert_equal(child_text(sawmill, "./statBases/MaxHitPoints"), "170", "锯木机耐久")
+    assert_equal(child_text(sawmill, "size"), "(3,1)", "锯木机尺寸")
+    assert_equal(li_values(sawmill, "recipes"), SAWMILL_RECIPES, "锯木机配方")
+    assert_equal(li_values(sawmill, "researchPrerequisites"), ["MMT_Woodworking"], "锯木机研究前置")
+    assert_equal(child_text(sawmill, "constructionSkillPrerequisite"), "3", "锯木机建造技能")
+
+    kiln = building_defs["MMT_CharcoalKiln"]
+    assert_equal(child_text(kiln, "label"), "简易木炭窑", "木炭窑 label")
+    assert_equal(child_text(kiln, "thingClass"), "Building_WorkTable", "木炭窑 thingClass")
+    assert_equal(child_text(kiln, "./graphicData/texPath"), "Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln", "木炭窑 texPath")
+    assert_equal(child_text(kiln, "./graphicData/graphicClass"), "Graphic_Multi", "木炭窑 graphicClass")
+    assert_equal(li_values(kiln, "stuffCategories"), ["Stony"], "木炭窑材料分类")
+    assert_equal(child_text(kiln, "costStuffCount"), "180", "木炭窑材料数量")
+    assert_equal(child_text(kiln, "./statBases/WorkToBuild"), "3000", "木炭窑建造工作量")
+    assert_equal(child_text(kiln, "./statBases/MaxHitPoints"), "270", "木炭窑耐久")
+    assert_equal(child_text(kiln, "size"), "(3,3)", "木炭窑尺寸")
+    assert_equal(li_values(kiln, "recipes"), CHARCOAL_KILN_RECIPES, "木炭窑配方")
+    assert_equal(li_values(kiln, "researchPrerequisites"), ["MMT_CharcoalBurning"], "木炭窑研究前置")
+    assert_equal(child_text(kiln, "constructionSkillPrerequisite"), "4", "木炭窑建造技能")
+
+    for building_name, building in building_defs.items():
+        comp_classes = [li.attrib.get("Class") for li in building.findall("./comps/li")]
+        if "CompProperties_Power" in comp_classes:
+            fail(f"{building_name} 不应包含电力组件")
+
+    for path in WOOD_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (WOOD_RESEARCH_XML, WOOD_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("wood-building: OK")
+
+
+def validate_wood_recipes() -> None:
+    require_files([WOOD_RECIPE_XML, WOOD_RESOURCE_XML, WOOD_RESEARCH_XML, WOOD_BUILDING_XML])
+    recipe_defs = def_map(parse_xml(WOOD_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(WOOD_RECIPE_EXPECTATIONS), "木材配方 defName 集合")
+
+    resource_names = set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+    building_defs = def_map(parse_xml(WOOD_BUILDING_XML))
+    research_names = set(def_map(parse_xml(WOOD_RESEARCH_XML)))
+
+    for name, expected in WOOD_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), expected["learn"], f"{name} workSkillLearnFactor")
+
+        skill = recipe.find("./skillRequirements/Crafting")
+        if expected["skill"] is None:
+            if skill is not None:
+                fail(f"{name} 不应要求 Crafting 技能")
+        else:
+            if skill is None or not (skill.text or "").strip():
+                fail(f"{name} 缺少 Crafting 技能要求")
+            assert_equal((skill.text or "").strip(), expected["skill"], f"{name} Crafting requirement")
+
+        ingredient = recipe.find("./ingredients/li")
+        if ingredient is None:
+            fail(f"{name} 缺少输入")
+        assert_equal(child_text(ingredient, "count"), expected["input_count"], f"{name} 输入数量")
+        input_values = li_values(ingredient, "./filter/thingDefs")
+        assert_equal(input_values, [expected["input"]], f"{name} 输入引用")
+        assert_equal(li_values(recipe, "./fixedIngredientFilter/thingDefs"), [expected["input"]], f"{name} 固定输入引用")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if expected["input"] not in VANILLA_THINGS:
+            fail(f"{name} 使用未知原版输入: {expected['input']}")
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由建筑 recipes 列表挂载，不应写 recipeUsers")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, expected["research"], f"{name} researchPrerequisite")
+        if research not in research_names:
+            fail(f"{name} 使用未知研究: {research}")
+
+        building = building_defs[expected["building"]]
+        if name not in li_values(building, "recipes"):
+            fail(f"{name} 未挂载到 {expected['building']}")
+
+    if "SK." in read_text(WOOD_RECIPE_XML):
+        fail("木材配方 XML 不得引用 SK 类型")
+    if "SmithingSpeed" in read_text(WOOD_RECIPE_XML) or "Wooden" in read_text(WOOD_RECIPE_XML):
+        fail("木材配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed 或 Wooden 分类")
+    print("wood-recipes: OK")
+
+
+def validate_wood() -> None:
+    validate_wood_resources()
+    validate_wood_building()
+    validate_wood_recipes()
+    print("wood: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -786,6 +1067,10 @@ SUITES = {
     "concrete-building": validate_concrete_building,
     "concrete-recipes": validate_concrete_recipes,
     "concrete": validate_concrete,
+    "wood-resources": validate_wood_resources,
+    "wood-building": validate_wood_building,
+    "wood-recipes": validate_wood_recipes,
+    "wood": validate_wood,
     "all": validate_all,
 }
 
