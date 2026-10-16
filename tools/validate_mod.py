@@ -773,6 +773,7 @@ def validate_all() -> None:
     validate_resources()
     validate_building()
     validate_recipes()
+    validate_concrete()
     validate_all_xml()
 
 
