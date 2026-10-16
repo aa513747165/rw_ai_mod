@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WoodPlank</defName>
+    <label>木板</label>
+    <description>由原木锯成的板材，可用于建造木质结构。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/WoodPlank</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>1.5</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>5.0</Flammability>
+      <Mass>0.3</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Woody</li>
+      </categories>
+      <stuffAdjective>木制</stuffAdjective>
+      <appearance>Planks</appearance>
+      <color>(133,97,67)</color>
+      <constructEffect>ConstructWood</constructEffect>
+      <statFactors>
+        <MaxHitPoints>0.9</MaxHitPoints>
+        <Flammability>1</Flammability>
+        <Beauty>1.65</Beauty>
+        <WorkToMake>0.7</WorkToMake>
+        <WorkToBuild>0.7</WorkToBuild>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Kindling</defName>
+    <label>柴火</label>
+    <description>由原木劈成的柴火，可作为后续燃料系统的中间资源。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Kindling</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>2.3</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>5.0</Flammability>
+      <Mass>0.15</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Charcoal</defName>
+    <label>木炭</label>
+    <description>由原木烧制而成的木炭，可作为后续金属和燃料系统的中间资源。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Charcoal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(95,95,95)</color>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MarketValue>2.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>3.0</Flammability>
+      <Mass>0.16</Mass>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
