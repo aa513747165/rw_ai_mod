@@ -24,6 +24,24 @@ RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Glass.xml"
 RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Glass.xml"
 RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Glass.xml"
 BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Glassworks.xml"
+CONCRETE_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Concrete.xml"
+CONCRETE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Concrete.xml"
+CONCRETE_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Concrete.xml"
+CONCRETE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Concrete.xml"
+
+CONCRETE_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/Concrete.png",
+    "1.7/Textures/Things/Item/MMT/ReinforcedConcrete.png",
+]
+
+CONCRETE_BUILDING_TEXTURES = [
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_east.png",
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_eastm.png",
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_north.png",
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_northm.png",
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_south.png",
+    "1.7/Textures/Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer_southm.png",
+]
 
 ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/CrushedStone.png",
@@ -214,6 +232,64 @@ VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting"}
 VANILLA_THINGS = {"ComponentIndustrial"}
+
+CONCRETE_RESOURCE_EXPECTATIONS = {
+    "MMT_Concrete": {
+        "label": "混凝土",
+        "value": "6.0",
+        "stack": "150",
+        "tex": "Things/Item/MMT/Concrete",
+        "graphic": "Graphic_Single",
+        "tech": "Industrial",
+        "stuff": False,
+    },
+    "MMT_ReinforcedConcrete": {
+        "label": "钢筋混凝土",
+        "value": "16.0",
+        "stack": "75",
+        "tex": "Things/Item/MMT/ReinforcedConcrete",
+        "graphic": "Graphic_Single",
+        "tech": "Industrial",
+        "stuff": True,
+    },
+}
+
+CONCRETE_BUILDING_RECIPES = ["MMT_MixConcrete_Hand"]
+
+CONCRETE_RECIPE_EXPECTATIONS = {
+    "MMT_MixConcrete_Hand": {
+        "work": "1200",
+        "inputs": [
+            ("thingDefs", "MMT_Sand", "45"),
+            ("thingDefs", "MMT_CrushedStone", "30"),
+        ],
+        "output": "MMT_Concrete",
+        "output_count": "15",
+        "users": [],
+        "research": "MMT_ConcreteBasic",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "skill": "3",
+        "building_mounted": True,
+    },
+    "MMT_MakeReinforcedConcrete_Hand": {
+        "work": "1600",
+        "inputs": [
+            ("categories", "Metallic", "10"),
+            ("thingDefs", "MMT_Concrete", "10"),
+        ],
+        "output": "MMT_ReinforcedConcrete",
+        "output_count": "8",
+        "users": ["TableStonecutter"],
+        "research": "MMT_ConcreteBasic",
+        "speed": "GeneralLaborSpeed",
+        "effect": "CutStone",
+        "sound": "Recipe_MakeStoneBlocks",
+        "skill": "4",
+        "building_mounted": False,
+    },
+}
 
 
 def fail(message: str) -> None:
@@ -507,6 +583,181 @@ def validate_recipes() -> None:
     print("recipes: OK")
 
 
+def validate_concrete_resources() -> None:
+    require_files([CONCRETE_RESOURCE_XML, *CONCRETE_ITEM_TEXTURES])
+    defs = def_map(parse_xml(CONCRETE_RESOURCE_XML))
+    assert_equal(set(defs), set(CONCRETE_RESOURCE_EXPECTATIONS), "混凝土资源 defName 集合")
+
+    for name, expected in CONCRETE_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), expected["graphic"], f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+
+        if expected["stuff"]:
+            assert_equal(li_values(node, "./stuffProps/categories"), ["Stony"], f"{name} stuff categories")
+            assert_equal(child_text(node, "./stuffProps/stuffAdjective"), "钢筋混凝土", f"{name} stuffAdjective")
+            assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), "2.8", f"{name} MaxHitPoints factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/Flammability"), "0", f"{name} Flammability factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), "4.5", f"{name} WorkToMake factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), "4.5", f"{name} WorkToBuild factor")
+            assert_equal(child_text(node, "terrainAffordanceNeeded"), "Heavy", f"{name} terrain affordance")
+        elif node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    for path in CONCRETE_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(CONCRETE_RESOURCE_XML):
+        fail("混凝土资源 XML 不得引用 SK 类型")
+    print("concrete-resources: OK")
+
+
+def validate_concrete_building() -> None:
+    require_files([CONCRETE_RESEARCH_XML, CONCRETE_BUILDING_XML, *CONCRETE_BUILDING_TEXTURES])
+
+    research_defs = def_map(parse_xml(CONCRETE_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_ConcreteBasic"}, "混凝土研究 defName 集合")
+    research = research_defs["MMT_ConcreteBasic"]
+    assert_equal(child_text(research, "label"), "混凝土技术", "混凝土研究 label")
+    assert_equal(child_text(research, "baseCost"), "1000", "混凝土研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "混凝土研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["Stonecutting"], "混凝土研究前置")
+    assert_equal(child_text(research, "researchViewX"), "7.00", "混凝土研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "0.00", "混凝土研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_ConcreteMixer"}, "混凝土建筑 defName 集合")
+    building = building_defs["MMT_ConcreteMixer"]
+    assert_equal(child_text(building, "label"), "手动混凝土搅拌机", "混凝土建筑 label")
+    assert_equal(child_text(building, "thingClass"), "Building_WorkTable", "混凝土建筑 thingClass")
+    assert_equal(child_text(building, "./graphicData/texPath"), "Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer", "混凝土建筑 texPath")
+    assert_equal(child_text(building, "./graphicData/graphicClass"), "Graphic_Multi", "混凝土建筑 graphicClass")
+    assert_equal(li_values(building, "stuffCategories"), ["Metallic"], "混凝土建筑材料分类")
+    assert_equal(child_text(building, "costStuffCount"), "135", "混凝土建筑材料数量")
+    assert_equal(child_text(building, "./costList/ComponentIndustrial"), "5", "混凝土建筑零部件成本")
+    assert_equal(child_text(building, "./statBases/WorkToBuild"), "1600", "混凝土建筑建造工作量")
+    assert_equal(child_text(building, "./statBases/MaxHitPoints"), "180", "混凝土建筑耐久")
+    assert_equal(child_text(building, "size"), "(2,1)", "混凝土建筑尺寸")
+    assert_equal(li_values(building, "recipes"), CONCRETE_BUILDING_RECIPES, "混凝土建筑配方")
+    assert_equal(li_values(building, "researchPrerequisites"), ["MMT_ConcreteBasic"], "混凝土建筑研究前置")
+    assert_equal(child_text(building, "constructionSkillPrerequisite"), "8", "混凝土建筑建造技能")
+
+    comp_classes = [li.attrib.get("Class") for li in building.findall("./comps/li")]
+    if "CompProperties_Power" in comp_classes:
+        fail("手动混凝土搅拌机不应包含电力组件")
+
+    for path in CONCRETE_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (CONCRETE_RESEARCH_XML, CONCRETE_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("concrete-building: OK")
+
+
+def validate_concrete_recipes() -> None:
+    require_files([
+        CONCRETE_RECIPE_XML,
+        RESOURCE_XML,
+        CONCRETE_RESOURCE_XML,
+        CONCRETE_RESEARCH_XML,
+        CONCRETE_BUILDING_XML,
+    ])
+    recipe_defs = def_map(parse_xml(CONCRETE_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(CONCRETE_RECIPE_EXPECTATIONS), "混凝土配方 defName 集合")
+
+    resource_names = set(def_map(parse_xml(RESOURCE_XML))) | set(def_map(parse_xml(CONCRETE_RESOURCE_XML)))
+    building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
+    building_names = set(building_defs)
+    research_names = set(def_map(parse_xml(CONCRETE_RESEARCH_XML)))
+    mixer_recipes = li_values(building_defs["MMT_ConcreteMixer"], "recipes")
+
+    for name, expected in CONCRETE_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        ingredients = recipe.findall("./ingredients/li")
+        for ingredient in ingredients:
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            categories = li_values(filter_node, "categories")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if len(categories) + len(thing_defs) != 1:
+                fail(f"{name} 每个输入 filter 必须且只能包含一个引用")
+            kind = "categories" if categories else "thingDefs"
+            value = categories[0] if categories else thing_defs[0]
+            actual_inputs.append((kind, value, child_text(ingredient, "count")))
+        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+
+        fixed_filter = recipe.find("fixedIngredientFilter")
+        if fixed_filter is None:
+            fail(f"{name} 缺少 fixedIngredientFilter")
+        actual_fixed = []
+        for kind in ("categories", "thingDefs"):
+            for value in li_values(fixed_filter, kind):
+                actual_fixed.append((kind, value))
+        expected_fixed = [(kind, value) for kind, value, _ in expected["inputs"]]
+        assert_equal(actual_fixed, expected_fixed, f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        users = li_values(recipe, "recipeUsers")
+        assert_equal(users, expected["users"], f"{name} recipeUsers")
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, expected["research"], f"{name} researchPrerequisite")
+
+        for kind, value, _ in expected["inputs"]:
+            if kind == "categories":
+                if value not in VANILLA_CATEGORIES:
+                    fail(f"{name} 使用未登记分类: {value}")
+            elif value not in resource_names | VANILLA_THINGS:
+                fail(f"{name} 使用未知资源: {value}")
+
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+        for user in users:
+            if user not in VANILLA_WORKTABLES | building_names:
+                fail(f"{name} 使用未知工作台: {user}")
+        if research and research not in VANILLA_RESEARCH | research_names:
+            fail(f"{name} 使用未知研究: {research}")
+
+        if expected["building_mounted"]:
+            if users:
+                fail(f"{name} 应由 MMT_ConcreteMixer 的 recipes 列表挂载，不应写 recipeUsers")
+            if name not in mixer_recipes:
+                fail(f"{name} 未挂载到手动混凝土搅拌机")
+
+    if "SK." in read_text(CONCRETE_RECIPE_XML):
+        fail("混凝土配方 XML 不得引用 SK 类型")
+    print("concrete-recipes: OK")
+
+
+def validate_concrete() -> None:
+    validate_concrete_resources()
+    validate_concrete_building()
+    validate_concrete_recipes()
+    print("concrete: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -530,6 +781,10 @@ SUITES = {
     "resources": validate_resources,
     "building": validate_building,
     "recipes": validate_recipes,
+    "concrete-resources": validate_concrete_resources,
+    "concrete-building": validate_concrete_building,
+    "concrete-recipes": validate_concrete_recipes,
+    "concrete": validate_concrete,
     "all": validate_all,
 }
 
