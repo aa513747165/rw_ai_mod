@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Concrete</defName>
+    <label>混凝土</label>
+    <description>由砂和碎石搅拌而成的复合材料，可加入金属材料制成钢筋混凝土。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Concrete</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>6.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ReinforcedConcrete</defName>
+    <label>钢筋混凝土</label>
+    <description>由混凝土和金属材料制成的高强度建筑材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/ReinforcedConcrete</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>16.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.6</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Stony</li>
+      </categories>
+      <stuffAdjective>钢筋混凝土</stuffAdjective>
+      <color>(122,122,120)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>2.8</MaxHitPoints>
+        <Flammability>0</Flammability>
+        <WorkToMake>4.5</WorkToMake>
+        <WorkToBuild>4.5</WorkToBuild>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+</Defs>
