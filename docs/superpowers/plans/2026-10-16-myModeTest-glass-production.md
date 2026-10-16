@@ -147,7 +147,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "20",
         "users": ["TableStonecutter"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -160,7 +160,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "40",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -173,7 +173,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "32",
         "users": ["TableStonecutter"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -186,7 +186,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "32",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -199,7 +199,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "25",
         "users": ["TableStonecutter"],
         "research": "Stonecutting",
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -212,7 +212,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "50",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -225,7 +225,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "80",
         "users": ["TableStonecutter"],
         "research": "Stonecutting",
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -238,7 +238,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "80",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -697,6 +697,8 @@ dotnet build Source/MyModeTest/MyModeTest.csproj -p:RimWorldPath="D:\Games\RimWo
 ```bash
 python tools/validate_mod.py all
 ```
+
+Windows GBK 控制台或中文输出乱码时，可使用 `PYTHONIOENCODING=utf-8 python tools/validate_mod.py all`。
 
 ## 参考来源
 
@@ -1159,7 +1161,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>将石块粉碎为碎石。产出 20。</description>
     <jobString>正在粉碎石块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1193,7 +1195,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>使用机械加工台批量粉碎石块。产出 40。</description>
     <jobString>正在批量粉碎石块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1227,7 +1229,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>将一整块岩块粉碎为碎石。产出 32。</description>
     <jobString>正在粉碎岩块。</jobString>
     <workAmount>2400</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1261,7 +1263,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>使用机械加工台快速粉碎岩块。产出 32。</description>
     <jobString>正在快速粉碎岩块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1295,7 +1297,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>将碎石研磨成砂。产出 25。</description>
     <jobString>正在研磨碎石制砂。</jobString>
     <workAmount>600</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1330,7 +1332,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>使用机械加工台批量研磨碎石。产出 50。</description>
     <jobString>正在批量研磨碎石。</jobString>
     <workAmount>600</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1364,7 +1366,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>将一整块岩块直接粉碎成砂。产出 80。</description>
     <jobString>正在粉碎岩块制砂。</jobString>
     <workAmount>3000</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -1399,7 +1401,7 @@ Expected: 退出码为 `1`，输出包含 `[FAIL] recipes: 缺少文件:`，并�
     <description>使用机械加工台将岩块直接粉碎成砂。产出 80。</description>
     <jobString>正在快速粉碎岩块制砂。</jobString>
     <workAmount>1500</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>

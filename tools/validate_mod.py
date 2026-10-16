@@ -87,7 +87,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "20",
         "users": ["TableStonecutter"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -100,7 +100,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "40",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -113,7 +113,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "32",
         "users": ["TableStonecutter"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -126,7 +126,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "32",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -139,7 +139,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "25",
         "users": ["TableStonecutter"],
         "research": "Stonecutting",
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -152,7 +152,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "50",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -165,7 +165,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "80",
         "users": ["TableStonecutter"],
         "research": "Stonecutting",
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -178,7 +178,7 @@ RECIPE_EXPECTATIONS = {
         "output_count": "80",
         "users": ["TableMachining"],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
     },
@@ -281,9 +281,20 @@ def assert_equal(actual: object, expected: object, label: str) -> None:
 
 
 def assert_png(path: str) -> None:
+    # 校验 PNG 魔数、IHDR 块类型以及宽高均大于 0
     data = (ROOT / path).read_bytes()
     if len(data) <= len(PNG_SIGNATURE) or not data.startswith(PNG_SIGNATURE):
         fail(f"{path}: 不是有效的 PNG 文件")
+    # IHDR 块紧随 8 字节魔数：4 字节长度 + 4 字节类型 + 4 字节宽 + 4 字节高
+    ihdr_end = len(PNG_SIGNATURE) + 8 + 8
+    if len(data) < ihdr_end:
+        fail(f"{path}: PNG 缺少完整的 IHDR 块")
+    if data[len(PNG_SIGNATURE) + 4 : len(PNG_SIGNATURE) + 8] != b"IHDR":
+        fail(f"{path}: PNG 首个块不是 IHDR")
+    width = int.from_bytes(data[len(PNG_SIGNATURE) + 8 : len(PNG_SIGNATURE) + 12], "big")
+    height = int.from_bytes(data[len(PNG_SIGNATURE) + 12 : len(PNG_SIGNATURE) + 16], "big")
+    if width <= 0 or height <= 0:
+        fail(f"{path}: PNG 宽高必须大于 0，实际 {width}x{height}")
 
 
 def validate_base() -> None:
@@ -433,8 +444,8 @@ def validate_recipes() -> None:
 
     for name, expected in RECIPE_EXPECTATIONS.items():
         recipe = recipe_defs[name]
-        if not child_text(recipe, "label"):
-            fail(f"{name} 缺少 label")
+        # label 必填，child_text 会处理缺失/空值失败
+        child_text(recipe, "label")
         assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
         assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
         assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")

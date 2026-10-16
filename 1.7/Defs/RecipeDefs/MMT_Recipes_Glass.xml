@@ -6,7 +6,7 @@
     <description>将石块粉碎为碎石。产出 20。</description>
     <jobString>正在粉碎石块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -40,7 +40,7 @@
     <description>使用机械加工台批量粉碎石块。产出 40。</description>
     <jobString>正在批量粉碎石块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -74,7 +74,7 @@
     <description>将一整块岩块粉碎为碎石。产出 32。</description>
     <jobString>正在粉碎岩块。</jobString>
     <workAmount>2400</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -108,7 +108,7 @@
     <description>使用机械加工台快速粉碎岩块。产出 32。</description>
     <jobString>正在快速粉碎岩块。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -142,7 +142,7 @@
     <description>将碎石研磨成砂。产出 25。</description>
     <jobString>正在研磨碎石制砂。</jobString>
     <workAmount>600</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -177,7 +177,7 @@
     <description>使用机械加工台批量研磨碎石。产出 50。</description>
     <jobString>正在批量研磨碎石。</jobString>
     <workAmount>600</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -211,7 +211,7 @@
     <description>将一整块岩块直接粉碎成砂。产出 80。</description>
     <jobString>正在粉碎岩块制砂。</jobString>
     <workAmount>3000</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
@@ -246,7 +246,7 @@
     <description>使用机械加工台将岩块直接粉碎成砂。产出 80。</description>
     <jobString>正在快速粉碎岩块制砂。</jobString>
     <workAmount>1500</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <recipeUsers>
