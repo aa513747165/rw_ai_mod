@@ -106,6 +106,9 @@ ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Glass/Glass_a.png",
     "1.7/Textures/Things/Item/MMT/Glass/Glass_b.png",
     "1.7/Textures/Things/Item/MMT/Glass/Glass_c.png",
+    "1.7/Textures/Things/Item/MMT/MMT_ReinforcedGlass/MMT_ReinforcedGlass_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_ReinforcedGlass/MMT_ReinforcedGlass_b.png",
+    "1.7/Textures/Things/Item/MMT/MMT_ReinforcedGlass/MMT_ReinforcedGlass_c.png",
 ]
 
 BUILDING_TEXTURES = [
@@ -147,9 +150,17 @@ RESOURCE_EXPECTATIONS = {
         "graphic": "Graphic_StackCount",
         "tech": "Industrial",
     },
+    "MMT_ReinforcedGlass": {
+        "label": "强化玻璃",
+        "value": "17.0",
+        "stack": "150",
+        "tex": "Things/Item/MMT/MMT_ReinforcedGlass",
+        "graphic": "Graphic_StackCount",
+        "tech": "Industrial",
+    },
 }
 
-BUILDING_RECIPES = ["MMT_MakeGlassBatch", "MMT_MakeGlass"]
+BUILDING_RECIPES = ["MMT_MakeGlassBatch", "MMT_MakeGlass", "MMT_MakeReinforcedGlass"]
 
 RECIPE_EXPECTATIONS = {
     "MMT_MakeCrushedStone_Hand": {
@@ -278,6 +289,21 @@ RECIPE_EXPECTATIONS = {
         "output_count": "10",
         "users": [],
         "research": "MMT_Glassworking",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+    },
+    "MMT_MakeReinforcedGlass": {
+        "work": "1400",
+        "inputs": [
+            ("thingDefs", "MMT_GlassBatch", "40"),
+            ("thingDefs", "MMT_Carbon", "5"),
+            ("thingDefs", "MMT_SyntheticFibers", "5"),
+        ],
+        "output": "MMT_ReinforcedGlass",
+        "output_count": "5",
+        "users": [],
+        "research": "MMT_ReinforcedGlassTech",
         "speed": "SmeltingSpeed",
         "effect": "Smelt",
         "sound": "Recipe_Smelt",
@@ -721,12 +747,20 @@ def validate_building() -> None:
     require_files([RESEARCH_XML, BUILDING_XML, *BUILDING_TEXTURES])
 
     research_defs = def_map(parse_xml(RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_Glassworking"}, "研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_Glassworking", "MMT_ReinforcedGlassTech"}, "研究 defName 集合")
     research = research_defs["MMT_Glassworking"]
     assert_equal(child_text(research, "label"), "玻璃制造", "研究 label")
     assert_equal(child_text(research, "baseCost"), "300", "研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Medieval", "研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["Stonecutting"], "研究前置")
+
+    reinforced = research_defs["MMT_ReinforcedGlassTech"]
+    assert_equal(child_text(reinforced, "label"), "强化玻璃工艺", "强化玻璃研究 label")
+    assert_equal(child_text(reinforced, "baseCost"), "1500", "强化玻璃研究 baseCost")
+    assert_equal(child_text(reinforced, "techLevel"), "Industrial", "强化玻璃研究 techLevel")
+    assert_equal(li_values(reinforced, "prerequisites"), ["MMT_Glassworking", "MMT_BasicPetrochemistry"], "强化玻璃研究前置")
+    assert_equal(child_text(reinforced, "researchViewX"), "5.00", "强化玻璃研究 X 坐标")
+    assert_equal(child_text(reinforced, "researchViewY"), "1.00", "强化玻璃研究 Y 坐标")
 
     building_defs = def_map(parse_xml(BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_GlassworksTable"}, "建筑 defName 集合")
@@ -772,11 +806,11 @@ def validate_building() -> None:
 
 
 def validate_recipes() -> None:
-    require_files([RECIPE_XML, RESOURCE_XML, RESEARCH_XML, BUILDING_XML])
+    require_files([RECIPE_XML, RESOURCE_XML, RESEARCH_XML, BUILDING_XML, PETROCHEM_RESOURCE_XML])
     recipe_defs = def_map(parse_xml(RECIPE_XML))
     assert_equal(set(recipe_defs), set(RECIPE_EXPECTATIONS), "配方 defName 集合")
 
-    resource_names = set(def_map(parse_xml(RESOURCE_XML)))
+    resource_names = set(def_map(parse_xml(RESOURCE_XML))) | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
     building_defs = def_map(parse_xml(BUILDING_XML))
     building_names = set(building_defs)
     research_names = set(def_map(parse_xml(RESEARCH_XML)))
@@ -793,21 +827,47 @@ def validate_recipes() -> None:
         assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
         assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
 
-        ingredient = recipe.find("./ingredients/li")
-        if ingredient is None:
-            fail(f"{name} 缺少输入")
-        assert_equal(child_text(ingredient, "count"), expected["input_count"], f"{name} 输入数量")
-        filter_node = ingredient.find("filter")
-        if filter_node is None:
-            fail(f"{name} 缺少输入 filter")
-        input_values = li_values(filter_node, expected["input_kind"])
-        assert_equal(input_values, [expected["input"]], f"{name} 输入引用")
+        if "inputs" in expected:
+            # 多输入配方：逐项比较 ingredients 与 fixedIngredientFilter
+            actual_inputs = []
+            for ingredient in recipe.findall("./ingredients/li"):
+                filter_node = ingredient.find("filter")
+                if filter_node is None:
+                    fail(f"{name} 存在缺少 filter 的输入")
+                categories = li_values(filter_node, "categories")
+                thing_defs = li_values(filter_node, "thingDefs")
+                if len(categories) + len(thing_defs) != 1:
+                    fail(f"{name} 每个输入 filter 必须且只能包含一个引用")
+                kind = "categories" if categories else "thingDefs"
+                value = categories[0] if categories else thing_defs[0]
+                actual_inputs.append((kind, value, child_text(ingredient, "count")))
+            assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
 
-        fixed_filter = recipe.find("fixedIngredientFilter")
-        if fixed_filter is None:
-            fail(f"{name} 缺少 fixedIngredientFilter")
-        fixed_values = li_values(fixed_filter, expected["input_kind"])
-        assert_equal(fixed_values, [expected["input"]], f"{name} 固定输入引用")
+            fixed_filter = recipe.find("fixedIngredientFilter")
+            if fixed_filter is None:
+                fail(f"{name} 缺少 fixedIngredientFilter")
+            actual_fixed = []
+            for kind in ("categories", "thingDefs"):
+                for value in li_values(fixed_filter, kind):
+                    actual_fixed.append((kind, value))
+            expected_fixed = [(kind, value) for kind, value, _ in expected["inputs"]]
+            assert_equal(actual_fixed, expected_fixed, f"{name} 固定输入列表")
+        else:
+            ingredient = recipe.find("./ingredients/li")
+            if ingredient is None:
+                fail(f"{name} 缺少输入")
+            assert_equal(child_text(ingredient, "count"), expected["input_count"], f"{name} 输入数量")
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 缺少输入 filter")
+            input_values = li_values(filter_node, expected["input_kind"])
+            assert_equal(input_values, [expected["input"]], f"{name} 输入引用")
+
+            fixed_filter = recipe.find("fixedIngredientFilter")
+            if fixed_filter is None:
+                fail(f"{name} 缺少 fixedIngredientFilter")
+            fixed_values = li_values(fixed_filter, expected["input_kind"])
+            assert_equal(fixed_values, [expected["input"]], f"{name} 固定输入引用")
 
         products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
         if len(products) != 1:
@@ -821,7 +881,14 @@ def validate_recipes() -> None:
         research = research.strip() if research else None
         assert_equal(research, expected["research"], f"{name} researchPrerequisite")
 
-        if expected["input_kind"] == "categories":
+        if "inputs" in expected:
+            for kind, value, _ in expected["inputs"]:
+                if kind == "categories":
+                    if value not in VANILLA_CATEGORIES:
+                        fail(f"{name} 使用未登记分类: {value}")
+                elif value not in resource_names | VANILLA_THINGS:
+                    fail(f"{name} 使用未知资源: {value}")
+        elif expected["input_kind"] == "categories":
             if expected["input"] not in VANILLA_CATEGORIES:
                 fail(f"{name} 使用未登记分类: {expected['input']}")
         elif expected["input"] not in resource_names | VANILLA_THINGS:
