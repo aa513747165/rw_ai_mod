@@ -45,6 +45,15 @@
       <li>MMT_SmeltSilver_Electric</li>
       <li>MMT_SmeltGold_Electric</li>
       <li>MMT_ExtractSilicon_Electric</li>
+      <li>MMT_SmeltNickelBar</li>
+      <li>MMT_ExtractCobalt</li>
+      <li>MMT_ExtractChromium</li>
+      <li>MMT_SmeltTungsten</li>
+      <li>MMT_SmeltTitanium</li>
+      <li>MMT_MakeStellite</li>
+      <li>MMT_MakeNitinol</li>
+      <li>MMT_MakePobedite</li>
+      <li>MMT_MakeFerrotitanium</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
