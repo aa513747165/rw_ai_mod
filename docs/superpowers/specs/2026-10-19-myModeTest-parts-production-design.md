@@ -41,6 +41,7 @@ Mod 独立实现，不依赖 HSK。
 | HSK 自定义 stuff 分类 | `RuggedMetallic` 等 → 仅 `Metallic`（1.7 原版安全集） |
 | RobAssem 动画 | 弃用 HSK `SK.Building_AnimatedWorktable` 自定义类与 26 帧动画，使用普通 `Building_WorkTable` + `Graphic_Single` 静帧 |
 | 非配方途径 | 不做：HSK 摧毁残留、Ideology 矿点产出（属事件/ DLC 机制，非本链范畴） |
+| 手动装配台自举 | HSK 原版成本（原始零件×10+机构件×5）在本 Mod 形成死锁（机构件只能在装配台制作，而本 Mod 无野外获取途径），故成本改为 `WoodLog`×40 + `Steel`×25，价值量级对标 HSK 原成本（用户选定） |
 | Pipe（钻杆） | 不做：属石油链范畴 |
 | 贴图 | 全部从 HSK 本地复制（沿用已授权惯例），含蒙版 `*m.png` |
 
@@ -71,7 +72,7 @@ Mod 独立实现，不依赖 HSK。
 
 | defName | label | 对标 | size | costStuffCount | costList | WorkToBuild | 其它关键数值 |
 |---|---|---|---|---|---|---|---|
-| `MMT_HandAssemblyBench` | 装配台 | HSK 补丁后原版 FabricationBench | (3,1) | 125 | `MMT_ComponentMedieval`×10 + `MMT_Mechanism`×5 | 1200 | `WorkTableWorkSpeedFactor` 0.9；MaxHitPoints 180；Cleanliness -8；无电力 comps |
+| `MMT_HandAssemblyBench` | 装配台 | HSK 补丁后原版 FabricationBench | (3,1) | 125 | `WoodLog`×40 + `Steel`×25 | 1200 | `WorkTableWorkSpeedFactor` 0.9；MaxHitPoints 180；Cleanliness -8；无电力 comps |
 | `MMT_ElectricAssemblyBench` | 电动装配台 | HSK `AdvToolBench` | (3,1) | 220 | `MMT_SyntheticFibers`×45 + `MMT_IntegratedCircuit`×10 + `ComponentIndustrial`×15 + `MMT_Mechanism`×10 | 5500 | `WorkTableWorkSpeedFactor` 1.5；MaxHitPoints 210；Cleanliness -2；耗电 750W |
 | `MMT_RoboticAssembler` | 机器人装配台 | HSK `RobAssem` | (1,1) | 120 | `MMT_SyntheticFibers`×45 + `MMT_SpacerComponent`×10 + `MMT_AdvMechanism`×10 + `MMT_Microchip`×5 | 9000 | MaxHitPoints 200；Cleanliness -4；耗电 5000W；`Graphic_Single` |
 
