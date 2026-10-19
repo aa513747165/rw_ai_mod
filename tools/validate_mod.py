@@ -1798,6 +1798,7 @@ def validate_all() -> None:
     validate_wood()
     validate_metal()
     validate_petrochem()
+    validate_electronics()
     validate_all_xml()
 
 
