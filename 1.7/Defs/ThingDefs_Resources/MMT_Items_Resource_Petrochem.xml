@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CrudeOil</defName>
+    <label>原油</label>
+    <description>从油苗中开采出的未精炼石油，可在化学实验台蒸馏成聚合物。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/CrudeOil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>3.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Polymers</defName>
+    <label>聚合物</label>
+    <description>原油蒸馏得到的聚合物原料，是制造塑料、橡胶、合成纤维和碳材料的基础。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/Polymers</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>1.5</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Mass>0.07</Mass>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Plastic</defName>
+    <label>塑料</label>
+    <description>由聚合物合成的塑料，是建造和物品生产的有用原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/Plastic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>9.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>2</Flammability>
+      <Mass>0.05</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Rubber</defName>
+    <label>橡胶</label>
+    <description>由聚合物合成的橡胶，可用于制造管道、泵或作为建筑材料添加剂。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/Rubber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>11.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>2</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_SyntheticFibers</defName>
+    <label>合成纤维</label>
+    <description>由聚合物制成的人造纤维，可用于织物和强化复合材料的原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/SyntheticFibers</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>12.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>2</Flammability>
+      <Mass>0.12</Mass>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Carbon</defName>
+    <label>碳材料</label>
+    <description>纤维增强聚合物制成的碳材料，坚固而轻便，是高级复合材料的原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Petro/Carbon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>40.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.15</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
