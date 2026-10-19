@@ -36,6 +36,10 @@ METAL_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Metal.xml"
 METAL_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Metal.xml"
 METAL_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Metal.xml"
 METAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Metal.xml"
+PETROCHEM_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Petrochem.xml"
+PETROCHEM_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Petrochem.xml"
+PETROCHEM_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Petrochem.xml"
+PETROCHEM_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Petrochem.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -69,6 +73,16 @@ METAL_BUILDING_TEXTURES = [
     f"1.7/Textures/Things/Building/Production/MMT_HandFurnace/MMT_HandFurnace_{side}{mask}.png"
     for side in ("east", "north", "south")
     for mask in ("", "m")
+]
+
+PETROCHEM_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_Petro/{name}.png"
+    for name in ("CrudeOil", "Polymers", "Plastic", "Rubber", "SyntheticFibers", "Carbon")
+]
+
+PETROCHEM_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable_{side}.png"
+    for side in ("east", "north", "south")
 ]
 
 CONCRETE_ITEM_TEXTURES = [
@@ -272,7 +286,7 @@ RECIPE_EXPECTATIONS = {
 
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
-VANILLA_RESEARCH = {"Stonecutting", "Smithing"}
+VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining"}
 VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
@@ -464,6 +478,80 @@ METAL_RECIPE_EXPECTATIONS = {
         "output": "Steel",
         "output_count": "20",
         "skill": "3",
+    },
+}
+
+PETROCHEM_RESOURCE_EXPECTATIONS = {
+    "MMT_CrudeOil": {"label": "原油", "value": "3.0", "stack": "300", "flammable": "5"},
+    "MMT_Polymers": {"label": "聚合物", "value": "1.5", "stack": "600", "flammable": "5"},
+    "MMT_Plastic": {"label": "塑料", "value": "9.0", "stack": "300", "flammable": "2"},
+    "MMT_Rubber": {"label": "橡胶", "value": "11.0", "stack": "300", "flammable": "2"},
+    "MMT_SyntheticFibers": {"label": "合成纤维", "value": "12.0", "stack": "150", "flammable": "2"},
+    "MMT_Carbon": {"label": "碳材料", "value": "40.0", "stack": "75", "flammable": "0"},
+}
+
+PETROCHEM_TABLE_RECIPES = [
+    "MMT_DistillPolymers_Hand",
+    "MMT_MakePlastic_Hand",
+    "MMT_MakeRubber_Hand",
+    "MMT_MakeSyntheticFibers_Hand",
+    "MMT_MakeCarbon_Hand",
+]
+
+PETROCHEM_RECIPE_EXPECTATIONS = {
+    "MMT_DistillPolymers_Hand": {
+        "work": "1500",
+        "inputs": [("thingDefs", "MMT_CrudeOil", "20")],
+        "output": "MMT_Polymers",
+        "output_count": "15",
+        "skill": "4",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+    },
+    "MMT_MakePlastic_Hand": {
+        "work": "800",
+        "inputs": [("thingDefs", "MMT_Polymers", "30")],
+        "output": "MMT_Plastic",
+        "output_count": "10",
+        "skill": "6",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeRubber_Hand": {
+        "work": "800",
+        "inputs": [("thingDefs", "MMT_Polymers", "30")],
+        "output": "MMT_Rubber",
+        "output_count": "10",
+        "skill": "6",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeSyntheticFibers_Hand": {
+        "work": "1200",
+        "inputs": [("thingDefs", "MMT_Polymers", "25")],
+        "output": "MMT_SyntheticFibers",
+        "output_count": "5",
+        "skill": "8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeCarbon_Hand": {
+        "work": "4000",
+        "inputs": [
+            ("thingDefs", "MMT_Polymers", "25"),
+            ("thingDefs", "MMT_Charcoal", "25"),
+            ("thingDefs", "MMT_Rubber", "15"),
+        ],
+        "output": "MMT_Carbon",
+        "output_count": "12",
+        "skill": "10",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
     },
 }
 
@@ -1270,6 +1358,155 @@ def validate_metal() -> None:
     print("metal: OK")
 
 
+def validate_petrochem_resources() -> None:
+    require_files([PETROCHEM_RESOURCE_XML, *PETROCHEM_ITEM_TEXTURES])
+    defs = def_map(parse_xml(PETROCHEM_RESOURCE_XML))
+    assert_equal(set(defs), set(PETROCHEM_RESOURCE_EXPECTATIONS), "石化资源 defName 集合")
+
+    for name, expected in PETROCHEM_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./graphicData/texPath"), f"Things/Item/MMT/MMT_Petro/{name.removeprefix('MMT_')}", f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    for path in PETROCHEM_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(PETROCHEM_RESOURCE_XML):
+        fail("石化资源 XML 不得引用 SK 类型")
+    print("petrochem-resources: OK")
+
+
+def validate_petrochem_building() -> None:
+    require_files([PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML, *PETROCHEM_BUILDING_TEXTURES])
+
+    research_defs = def_map(parse_xml(PETROCHEM_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_BasicPetrochemistry"}, "石化研究 defName 集合")
+    research = research_defs["MMT_BasicPetrochemistry"]
+    assert_equal(child_text(research, "label"), "基础石化工艺", "石化研究 label")
+    assert_equal(child_text(research, "baseCost"), "1200", "石化研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "石化研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["BiofuelRefining"], "石化研究前置")
+    assert_equal(child_text(research, "researchViewX"), "13.00", "石化研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "0.00", "石化研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_MineableOilSeep"}, "石化建筑 defName 集合")
+
+    table = building_defs["MMT_HandChemTable"]
+    assert_equal(child_text(table, "label"), "手动化学实验台", "化学台 label")
+    assert_equal(child_text(table, "thingClass"), "Building_WorkTable", "化学台 thingClass")
+    assert_equal(child_text(table, "./graphicData/texPath"), "Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable", "化学台 texPath")
+    assert_equal(child_text(table, "./graphicData/graphicClass"), "Graphic_Multi", "化学台 graphicClass")
+    assert_equal(li_values(table, "stuffCategories"), ["Metallic"], "化学台材料分类")
+    assert_equal(child_text(table, "costStuffCount"), "130", "化学台材料数量")
+    assert_equal(child_text(table, "./costList/ComponentIndustrial"), "5", "化学台零部件成本")
+    assert_equal(child_text(table, "./statBases/WorkToBuild"), "2000", "化学台建造工作量")
+    assert_equal(child_text(table, "./statBases/MaxHitPoints"), "200", "化学台耐久")
+    assert_equal(child_text(table, "size"), "(3,2)", "化学台尺寸")
+    assert_equal(li_values(table, "recipes"), PETROCHEM_TABLE_RECIPES, "化学台配方")
+    assert_equal(li_values(table, "researchPrerequisites"), ["MMT_BasicPetrochemistry"], "化学台研究前置")
+    assert_equal(child_text(table, "constructionSkillPrerequisite"), "6", "化学台建造技能")
+
+    comp_classes = [li.attrib.get("Class") for li in table.findall("./comps/li")]
+    if "CompProperties_Power" in comp_classes:
+        fail("手动化学实验台不应包含电力组件")
+
+    seep = building_defs["MMT_MineableOilSeep"]
+    assert_equal(seep.attrib.get("ParentName"), "RockBase", "油苗父类")
+    assert_equal(child_text(seep, "label"), "油苗", "油苗 label")
+    assert_equal(child_text(seep, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "油苗 texPath")
+    assert_equal(child_text(seep, "./statBases/MaxHitPoints"), "1500", "油苗耐久")
+    assert_equal(child_text(seep, "./building/isResourceRock"), "true", "油苗 isResourceRock")
+    assert_equal(child_text(seep, "./building/mineableThing"), "MMT_CrudeOil", "油苗 mineableThing")
+    assert_equal(child_text(seep, "./building/mineableYield"), "75", "油苗 mineableYield")
+    assert_equal(child_text(seep, "./building/veinMineable"), "true", "油苗 veinMineable")
+
+    for path in PETROCHEM_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("petrochem-building: OK")
+
+
+def validate_petrochem_recipes() -> None:
+    require_files([PETROCHEM_RECIPE_XML, PETROCHEM_RESOURCE_XML, WOOD_RESOURCE_XML, PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML])
+    recipe_defs = def_map(parse_xml(PETROCHEM_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(PETROCHEM_RECIPE_EXPECTATIONS), "石化配方 defName 集合")
+
+    resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+    building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
+    table_recipes = li_values(building_defs["MMT_HandChemTable"], "recipes")
+
+    for name, expected in PETROCHEM_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
+            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
+        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+
+        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
+        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由 MMT_HandChemTable 的 recipes 列表挂载，不应写 recipeUsers")
+        if name not in table_recipes:
+            fail(f"{name} 未挂载到手动化学实验台")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, "MMT_BasicPetrochemistry", f"{name} researchPrerequisite")
+
+        for _, value, _ in expected["inputs"]:
+            if value not in resource_names:
+                fail(f"{name} 使用未知资源: {value}")
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+
+    recipe_text = read_text(PETROCHEM_RECIPE_XML)
+    if "SK." in recipe_text:
+        fail("石化配方 XML 不得引用 SK 类型")
+    if "SmithingSpeed" in recipe_text:
+        fail("石化配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    print("petrochem-recipes: OK")
+
+
+def validate_petrochem() -> None:
+    validate_petrochem_resources()
+    validate_petrochem_building()
+    validate_petrochem_recipes()
+    print("petrochem: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -1308,6 +1545,10 @@ SUITES = {
     "metal-building": validate_metal_building,
     "metal-recipes": validate_metal_recipes,
     "metal": validate_metal,
+    "petrochem-resources": validate_petrochem_resources,
+    "petrochem-building": validate_petrochem_building,
+    "petrochem-recipes": validate_petrochem_recipes,
+    "petrochem": validate_petrochem,
     "all": validate_all,
 }
 
