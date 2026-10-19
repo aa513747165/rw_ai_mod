@@ -54,6 +54,9 @@ PRECIOUS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Precious.xml"
 ELECTRIC_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electric.xml"
 ELECTRIC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electric.xml"
 ELECTRIC_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electric.xml"
+ELECTRIC_WOOD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricWood.xml"
+ELECTRIC_WOOD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricWood.xml"
+ELECTRIC_WOOD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ElectricWood.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -782,6 +785,82 @@ ELECTRIC_RECIPE_EXPECTATIONS = {
         "output": "MMT_Silicon",
         "output_count": "5",
         "skill": "5",
+    },
+}
+
+
+ELECTRIC_WOOD_BUILDING_TEXTURES = [
+    *[f"1.7/Textures/Things/Building/Production/MMT_ElectricSawmill/MMT_ElectricSawmill_{side}{mask}.png" for side in ("east", "north", "south") for mask in ("", "m")],
+    *[f"1.7/Textures/Things/Building/Production/MMT_ElectricCharcoalKiln/MMT_ElectricCharcoalKiln_{side}{mask}.png" for side in ("east", "north", "south") for mask in ("", "m")],
+]
+
+ELECTRIC_WOOD_BUILDING_EXPECTATIONS = {
+    "MMT_ElectricSawmill": {
+        "label": "电动锯木机",
+        "tex": "Things/Building/Production/MMT_ElectricSawmill/MMT_ElectricSawmill",
+        "stuff": "Metallic",
+        "stuff_count": "150",
+        "components": "10",
+        "parts": "5",
+        "work": "5000",
+        "hp": "170",
+        "size": "(3,1)",
+        "power": "600",
+        "skill": "10",
+        "recipes": ["MMT_MakeWoodPlanks_Electric", "MMT_MakeKindling_Electric"],
+    },
+    "MMT_ElectricCharcoalKiln": {
+        "label": "电动木炭窑",
+        "tex": "Things/Building/Production/MMT_ElectricCharcoalKiln/MMT_ElectricCharcoalKiln",
+        "stuff": "Stony",
+        "stuff_count": "180",
+        "components": "5",
+        "parts": "3",
+        "work": "3000",
+        "hp": "270",
+        "size": "(3,3)",
+        "power": "1500",
+        "skill": "8",
+        "recipes": ["MMT_MakeCharcoal_Electric"],
+    },
+}
+
+ELECTRIC_WOOD_RECIPE_EXPECTATIONS = {
+    "MMT_MakeWoodPlanks_Electric": {
+        "work": "1200",
+        "input_count": "20",
+        "output": "MMT_WoodPlank",
+        "output_count": "30",
+        "skill": "6",
+        "learn": "0.8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "building": "MMT_ElectricSawmill",
+    },
+    "MMT_MakeKindling_Electric": {
+        "work": "500",
+        "input_count": "20",
+        "output": "MMT_Kindling",
+        "output_count": "40",
+        "skill": "4",
+        "learn": "0.25",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "building": "MMT_ElectricSawmill",
+    },
+    "MMT_MakeCharcoal_Electric": {
+        "work": "800",
+        "input_count": "25",
+        "output": "MMT_Charcoal",
+        "output_count": "20",
+        "skill": "4",
+        "learn": "0.8",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "building": "MMT_ElectricCharcoalKiln",
     },
 }
 
@@ -2089,6 +2168,115 @@ def validate_electric() -> None:
     print("electric: OK")
 
 
+def validate_electric_wood() -> None:
+    require_files([
+        ELECTRIC_WOOD_RESEARCH_XML,
+        ELECTRIC_WOOD_BUILDING_XML,
+        ELECTRIC_WOOD_RECIPE_XML,
+        WOOD_RESOURCE_XML,
+        *ELECTRIC_WOOD_BUILDING_TEXTURES,
+    ])
+
+    research_defs = def_map(parse_xml(ELECTRIC_WOOD_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_ElectricWoodworking"}, "电动木材研究 defName 集合")
+    research = research_defs["MMT_ElectricWoodworking"]
+    assert_equal(child_text(research, "label"), "电动木材加工", "电动木材研究 label")
+    assert_equal(child_text(research, "baseCost"), "1500", "电动木材研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "电动木材研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["MMT_CharcoalBurning", "MicroelectronicsBasics"], "电动木材研究前置")
+    assert_equal(child_text(research, "researchViewX"), "2.00", "电动木材研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "1.00", "电动木材研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(ELECTRIC_WOOD_BUILDING_XML))
+    assert_equal(set(building_defs), set(ELECTRIC_WOOD_BUILDING_EXPECTATIONS), "电动木材建筑 defName 集合")
+    building_recipes: dict[str, list[str]] = {}
+    for name, expected in ELECTRIC_WOOD_BUILDING_EXPECTATIONS.items():
+        building = building_defs[name]
+        assert_equal(child_text(building, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(building, "thingClass"), "Building_WorkTable", f"{name} thingClass")
+        assert_equal(child_text(building, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(building, "./graphicData/graphicClass"), "Graphic_Multi", f"{name} graphicClass")
+        assert_equal(li_values(building, "stuffCategories"), [expected["stuff"]], f"{name} 材料分类")
+        assert_equal(child_text(building, "costStuffCount"), expected["stuff_count"], f"{name} 材料数量")
+        assert_equal(child_text(building, "./costList/ComponentIndustrial"), expected["components"], f"{name} 零部件成本")
+        assert_equal(child_text(building, "./costList/MMT_ElectronicParts"), expected["parts"], f"{name} 电子元件成本")
+        assert_equal(child_text(building, "./statBases/WorkToBuild"), expected["work"], f"{name} 建造工作量")
+        assert_equal(child_text(building, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(building, "size"), expected["size"], f"{name} 尺寸")
+        assert_equal(li_values(building, "recipes"), expected["recipes"], f"{name} 配方")
+        assert_equal(li_values(building, "researchPrerequisites"), ["MMT_ElectricWoodworking"], f"{name} 研究前置")
+        assert_equal(child_text(building, "constructionSkillPrerequisite"), expected["skill"], f"{name} 建造技能")
+
+        # 电动建筑与手动台相反：必须包含电力组件且功耗符合设计
+        comp_classes = [li.attrib.get("Class") for li in building.findall("./comps/li")]
+        for comp in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable"):
+            if comp not in comp_classes:
+                fail(f"{name} 缺少组件: {comp}")
+        power = building.find("./comps/li[@Class='CompProperties_Power']")
+        assert_equal(child_text(power, "compClass"), "CompPowerTrader", f"{name} 电力 compClass")
+        assert_equal(child_text(power, "basePowerConsumption"), expected["power"], f"{name} 电力消耗")
+        building_recipes[name] = li_values(building, "recipes")
+
+    kiln = building_defs["MMT_ElectricCharcoalKiln"]
+    glower = kiln.find("./comps/li[@Class='CompProperties_Glower']")
+    if glower is None:
+        fail("电动木炭窑缺少发光组件")
+    assert_equal(child_text(glower, "glowRadius"), "4", "电动木炭窑发光半径")
+    assert_equal(child_text(glower, "glowColor"), "(217,112,33,0)", "电动木炭窑发光颜色")
+
+    recipe_defs = def_map(parse_xml(ELECTRIC_WOOD_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(ELECTRIC_WOOD_RECIPE_EXPECTATIONS), "电动木材配方 defName 集合")
+
+    resource_names = set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+
+    for name, expected in ELECTRIC_WOOD_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), expected["learn"], f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        ingredient = recipe.find("./ingredients/li")
+        if ingredient is None:
+            fail(f"{name} 缺少输入")
+        assert_equal(child_text(ingredient, "count"), expected["input_count"], f"{name} 输入数量")
+        assert_equal(li_values(ingredient, "./filter/thingDefs"), ["WoodLog"], f"{name} 输入引用")
+        assert_equal(li_values(recipe, "./fixedIngredientFilter/thingDefs"), ["WoodLog"], f"{name} 固定输入引用")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由建筑 recipes 列表挂载，不应写 recipeUsers")
+        if name not in building_recipes[expected["building"]]:
+            fail(f"{name} 未挂载到 {expected['building']}")
+
+        research_prerequisite = recipe.findtext("researchPrerequisite")
+        research_prerequisite = research_prerequisite.strip() if research_prerequisite else None
+        assert_equal(research_prerequisite, "MMT_ElectricWoodworking", f"{name} researchPrerequisite")
+
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+
+    for path in ELECTRIC_WOOD_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (ELECTRIC_WOOD_RESEARCH_XML, ELECTRIC_WOOD_BUILDING_XML, ELECTRIC_WOOD_RECIPE_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    recipe_text = read_text(ELECTRIC_WOOD_RECIPE_XML)
+    if "SmithingSpeed" in recipe_text or "Wooden" in recipe_text:
+        fail("电动木材配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed 或 Wooden 分类")
+    print("electric-wood: OK")
+
+
 def validate_coal() -> None:
     require_files([COAL_RESOURCE_XML, COAL_BUILDING_XML, *COAL_ITEM_TEXTURES])
 
@@ -2273,6 +2461,7 @@ def validate_all() -> None:
     validate_petrochem()
     validate_electronics()
     validate_electric()
+    validate_electric_wood()
     validate_all_xml()
 
 
@@ -2302,6 +2491,7 @@ SUITES = {
     "electronics-recipes": validate_electronics_recipes,
     "electronics": validate_electronics,
     "electric": validate_electric,
+    "electric-wood": validate_electric_wood,
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
