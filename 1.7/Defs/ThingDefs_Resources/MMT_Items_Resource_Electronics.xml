@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Silicon</defName>
+    <label>硅</label>
+    <description>从砂中熔炼提取的硅，是制造电子元件的基础材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/Silicon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>4.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ElectronicParts</defName>
+    <label>电子元件</label>
+    <description>由铜锭、玻璃和硅组装的电子元件，是电子设备的基础部件。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/ElectronicParts</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>25.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
