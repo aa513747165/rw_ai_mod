@@ -382,7 +382,7 @@ RECIPE_EXPECTATIONS = {
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentAdvanced", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -1049,6 +1049,104 @@ ADVANCED_ALLOYS_RECIPE_EXPECTATIONS = {
     "MMT_MakeNitinol": {"work": "2600", "inputs": [("thingDefs", "MMT_Titanium", "4"), ("thingDefs", "MMT_NickelBar", "11")], "output": "MMT_NitinolAlloy", "output_count": "15", "skill": "16", "research": "MMT_AdvancedAlloys"},
     "MMT_MakePobedite": {"work": "2700", "inputs": [("thingDefs", "MMT_Tungsten", "3"), ("thingDefs", "MMT_Carbon", "3"), ("thingDefs", "MMT_Cobalt", "3")], "output": "MMT_PobediteAlloy", "output_count": "10", "skill": "18", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeFerrotitanium": {"work": "2400", "inputs": [("thingDefs", "MMT_Titanium", "5"), ("thingDefs", "Steel", "12"), ("thingDefs", "MMT_Carbon", "3")], "output": "Plasteel", "output_count": "15", "skill": "15", "research": "MMT_AdvancedAlloys"},
+}
+
+PARTS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Parts.xml"
+PARTS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Parts.xml"
+PARTS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Parts.xml"
+PARTS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Parts.xml"
+
+PARTS_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_Parts/{name}.png"
+    for name in ("ComponentMedieval", "Wires", "Mechanism", "AdvMechanism", "AdvancedComponent", "ComponentUltra")
+]
+
+PARTS_BUILDING_TEXTURES = [
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_HandAssemblyBench/MMT_HandAssemblyBench_{side}{mask}.png"
+        for side in ("east", "north", "south")
+        for mask in ("", "m")
+    ],
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_ElectricAssemblyBench/MMT_ElectricAssemblyBench_{side}{mask}.png"
+        for side in ("east", "north", "south")
+        for mask in ("", "m")
+    ],
+    "1.7/Textures/Things/Building/Production/MMT_RoboticAssembler/MMT_RoboticAssembler.png",
+]
+
+PARTS_RESOURCE_EXPECTATIONS = {
+    "MMT_ComponentMedieval": {"label": "原始零件", "value": "6", "mass": "1.5", "stack": "300", "tech": "Neolithic", "flam": "0.2", "tex": "Things/Item/MMT/MMT_Parts/ComponentMedieval"},
+    "MMT_Wire": {"label": "导线", "value": "1.5", "mass": "0.2", "stack": "600", "tech": "Industrial", "flam": "0.1", "tex": "Things/Item/MMT/MMT_Parts/Wires"},
+    "MMT_Mechanism": {"label": "机构件", "value": "200", "mass": "0.65", "stack": "75", "tech": "Industrial", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/Mechanism"},
+    "MMT_AdvMechanism": {"label": "高级机构件", "value": "400", "mass": "0.7", "stack": "75", "tech": "Spacer", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/AdvMechanism"},
+    "MMT_SpacerComponent": {"label": "太空零件", "value": "150", "mass": "0.5", "stack": "150", "tech": "Spacer", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/AdvancedComponent"},
+    "MMT_UltraComponent": {"label": "超级零件", "value": "200", "mass": "0.5", "stack": "150", "tech": "Ultra", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/ComponentUltra"},
+}
+
+PARTS_RESEARCH_EXPECTATIONS = {
+    "MMT_ComponentCrafting": {"label": "零件加工", "cost": "600", "tech": "Industrial", "prereqs": [], "x": "15.00", "y": "0.00"},
+    "MMT_AdvancedComponents": {"label": "高级零件", "cost": "1600", "tech": "Spacer", "prereqs": ["MMT_ComponentCrafting"], "x": "15.00", "y": "1.00"},
+    "MMT_UltraComponents": {"label": "超级零件", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedComponents", "MMT_AdvancedAlloys"], "x": "15.00", "y": "2.00"},
+}
+
+PARTS_HAND_BENCH_RECIPES = [
+    "MMT_MakeComponentMedieval_Wood",
+    "MMT_MakeComponentMedieval_Metal",
+    "MMT_MakeComponentIndustrial_Hand",
+    "MMT_MakeWire_Hand",
+    "MMT_MakeMechanism_Hand",
+    "MMT_MakeComponentAdvanced_Hand",
+    "MMT_MakeAdvMechanism_Hand",
+]
+
+PARTS_ELECTRIC_BENCH_RECIPES = [
+    "MMT_MakeComponentMedieval_Wood",
+    "MMT_MakeComponentMedieval_Metal",
+    "MMT_MakeComponentIndustrial_Electric",
+    "MMT_MakeWire_Electric",
+    "MMT_MakeMechanism_Electric",
+    "MMT_MakeComponentAdvanced_Electric",
+    "MMT_MakeAdvMechanism_Electric",
+    "MMT_MakeSpacerComponent",
+]
+
+PARTS_BUILDING_EXPECTATIONS = {
+    "MMT_HandAssemblyBench": {
+        "label": "装配台", "tex": "Things/Building/Production/MMT_HandAssemblyBench/MMT_HandAssemblyBench", "graphic": "Graphic_Multi",
+        "stuff_count": "125", "costs": {"WoodLog": "40", "Steel": "25"},
+        "work_build": "1200", "hp": "180", "size": "(3,1)", "speed": "0.9", "power": None,
+        "research": ["MMT_ComponentCrafting"], "recipes": PARTS_HAND_BENCH_RECIPES, "construction_skill": "4",
+    },
+    "MMT_ElectricAssemblyBench": {
+        "label": "电动装配台", "tex": "Things/Building/Production/MMT_ElectricAssemblyBench/MMT_ElectricAssemblyBench", "graphic": "Graphic_Multi",
+        "stuff_count": "220", "costs": {"MMT_SyntheticFibers": "45", "MMT_IntegratedCircuit": "10", "ComponentIndustrial": "15", "MMT_Mechanism": "10"},
+        "work_build": "5500", "hp": "210", "size": "(3,1)", "speed": "1.5", "power": "750",
+        "research": ["MMT_ComponentCrafting", "MMT_AdvancedComponents"], "recipes": PARTS_ELECTRIC_BENCH_RECIPES, "construction_skill": "8",
+    },
+    "MMT_RoboticAssembler": {
+        "label": "机器人装配台", "tex": "Things/Building/Production/MMT_RoboticAssembler/MMT_RoboticAssembler", "graphic": "Graphic_Single",
+        "stuff_count": "120", "costs": {"MMT_SyntheticFibers": "45", "MMT_SpacerComponent": "10", "MMT_AdvMechanism": "10", "MMT_Microchip": "5"},
+        "work_build": "9000", "hp": "200", "size": "(1,1)", "speed": None, "power": "5000",
+        "research": ["MMT_UltraComponents"], "recipes": ["MMT_MakeUltraComponent"], "construction_skill": "10",
+    },
+}
+
+PARTS_RECIPE_EXPECTATIONS = {
+    "MMT_MakeComponentMedieval_Wood": {"work": "900", "inputs": [("thingDefs", "WoodLog", "20")], "output": "MMT_ComponentMedieval", "output_count": "10", "skill": None, "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench", "MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentMedieval_Metal": {"work": "900", "inputs": [("thingDefs", ("Steel", "MMT_CopperBar"), "10")], "output": "MMT_ComponentMedieval", "output_count": "10", "skill": None, "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench", "MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentIndustrial_Hand": {"work": "2000", "inputs": [("thingDefs", ("Steel", "Plasteel"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeComponentIndustrial_Electric": {"work": "2000", "inputs": [("thingDefs", ("Steel", "Plasteel"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeWire_Hand": {"work": "800", "inputs": [("thingDefs", "MMT_CopperBar", "10")], "output": "MMT_Wire", "output_count": "20", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeWire_Electric": {"work": "800", "inputs": [("thingDefs", "MMT_CopperBar", "20")], "output": "MMT_Wire", "output_count": "40", "skill": "6", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeMechanism_Hand": {"work": "1800", "inputs": [("thingDefs", "Steel", "30"), ("thingDefs", "ComponentIndustrial", "10")], "output": "MMT_Mechanism", "output_count": "5", "skill": "4", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeMechanism_Electric": {"work": "1800", "inputs": [("thingDefs", "Steel", "60"), ("thingDefs", "ComponentIndustrial", "20")], "output": "MMT_Mechanism", "output_count": "10", "skill": "7", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentAdvanced_Hand": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentAdvanced", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeComponentAdvanced_Electric": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentAdvanced", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Hand": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "30"), ("thingDefs", "ComponentAdvanced", "10"), ("thingDefs", "MMT_SyntheticFibers", "5")], "output": "MMT_AdvMechanism", "output_count": "5", "skill": "13", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Electric": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "60"), ("thingDefs", "ComponentAdvanced", "20"), ("thingDefs", "MMT_SyntheticFibers", "10")], "output": "MMT_AdvMechanism", "output_count": "10", "skill": "16", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeSpacerComponent": {"work": "3500", "inputs": [("thingDefs", "Plasteel", "25"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_SpacerComponent", "output_count": "10", "skill": "9", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeUltraComponent": {"work": "4500", "inputs": [("thingDefs", ("MMT_Tungsten", "MMT_Titanium"), "15"), ("thingDefs", ("MMT_StelliteAlloy", "MMT_PobediteAlloy"), "10"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_UltraComponent", "output_count": "10", "skill": "13", "research": "MMT_UltraComponents", "benches": ["MMT_RoboticAssembler"]},
 }
 
 
@@ -2883,6 +2981,163 @@ def validate_advanced_alloys() -> None:
     print("advanced-alloys: OK")
 
 
+def validate_parts() -> None:
+    require_files([
+        PARTS_RESOURCE_XML,
+        PARTS_BUILDING_XML,
+        PARTS_RECIPE_XML,
+        PARTS_RESEARCH_XML,
+        METAL_RESOURCE_XML,
+        PETROCHEM_RESOURCE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        ADVANCED_ALLOY_RESOURCE_XML,
+        *PARTS_ITEM_TEXTURES,
+        *PARTS_BUILDING_TEXTURES,
+    ])
+
+    research_defs = def_map(parse_xml(PARTS_RESEARCH_XML))
+    assert_equal(set(research_defs), set(PARTS_RESEARCH_EXPECTATIONS), "零件研究 defName 集合")
+    for name, expected in PARTS_RESEARCH_EXPECTATIONS.items():
+        node = research_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "baseCost"), expected["cost"], f"{name} baseCost")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
+        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+
+    resource_defs = def_map(parse_xml(PARTS_RESOURCE_XML))
+    assert_equal(set(resource_defs), set(PARTS_RESOURCE_EXPECTATIONS), "零件资源 defName 集合")
+    for name, expected in PARTS_RESOURCE_EXPECTATIONS.items():
+        node = resource_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "./statBases/Mass"), expected["mass"], f"{name} Mass")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flam"], f"{name} Flammability")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    building_defs = def_map(parse_xml(PARTS_BUILDING_XML))
+    assert_equal(set(building_defs), set(PARTS_BUILDING_EXPECTATIONS), "零件建筑 defName 集合")
+    for name, expected in PARTS_BUILDING_EXPECTATIONS.items():
+        node = building_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "thingClass"), "Building_WorkTable", f"{name} thingClass")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), expected["graphic"], f"{name} graphicClass")
+        assert_equal(li_values(node, "stuffCategories"), ["Metallic"], f"{name} 材料分类")
+        assert_equal(child_text(node, "costStuffCount"), expected["stuff_count"], f"{name} 材料数量")
+        cost_list = {child.tag: (child.text or "").strip() for child in node.findall("./costList/*")}
+        assert_equal(cost_list, expected["costs"], f"{name} 成本列表")
+        assert_equal(child_text(node, "./statBases/WorkToBuild"), expected["work_build"], f"{name} 建造工作量")
+        assert_equal(child_text(node, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(node, "size"), expected["size"], f"{name} 尺寸")
+        speed = node.findtext("./statBases/WorkTableWorkSpeedFactor")
+        speed = speed.strip() if speed else None
+        assert_equal(speed, expected["speed"], f"{name} 工作台速度因子")
+        assert_equal(li_values(node, "recipes"), expected["recipes"], f"{name} 配方列表")
+        assert_equal(li_values(node, "researchPrerequisites"), expected["research"], f"{name} 研究前置")
+        assert_equal(child_text(node, "constructionSkillPrerequisite"), expected["construction_skill"], f"{name} 建造技能")
+        comp_classes = [li.attrib.get("Class") for li in node.findall("./comps/li")]
+        if expected["power"] is None:
+            if "CompProperties_Power" in comp_classes:
+                fail(f"{name} 不应包含电力组件")
+        else:
+            if "CompProperties_Power" not in comp_classes:
+                fail(f"{name} 缺少电力组件")
+            power_comp = next(li for li in node.findall("./comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+            assert_equal(child_text(power_comp, "basePowerConsumption"), expected["power"], f"{name} 功耗")
+
+    recipe_defs = def_map(parse_xml(PARTS_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(PARTS_RECIPE_EXPECTATIONS), "零件配方 defName 集合")
+
+    resource_names = (
+        set(resource_defs)
+        | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
+        | set(def_map(parse_xml(ADVANCED_ALLOY_RESOURCE_XML)))
+    )
+    output_names = set(resource_defs) | VANILLA_THINGS
+    building_recipes = {name: li_values(node, "recipes") for name, node in building_defs.items()}
+
+    for name, expected in PARTS_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), "GeneralLaborSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), "Smith", f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), "Recipe_Machining", f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        if expected["skill"] is None:
+            if recipe.find("skillRequirements") is not None:
+                fail(f"{name} 不应有技能要求")
+        else:
+            assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由建筑 recipes 列表挂载，不应写 recipeUsers")
+        actual_benches = sorted(bench for bench, recipes in building_recipes.items() if name in recipes)
+        assert_equal(actual_benches, sorted(expected["benches"]), f"{name} 挂载工作台")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, expected["research"], f"{name} researchPrerequisite")
+
+        for _, value, _ in normalized:
+            for item in value:
+                if item not in resource_names | VANILLA_THINGS:
+                    fail(f"{name} 使用未知资源: {item}")
+        if expected["output"] not in output_names:
+            fail(f"{name} 输出不是零件资源: {expected['output']}")
+
+    for path in PARTS_ITEM_TEXTURES + PARTS_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (PARTS_RESOURCE_XML, PARTS_BUILDING_XML, PARTS_RECIPE_XML, PARTS_RESEARCH_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    for path in (PARTS_RESOURCE_XML, PARTS_BUILDING_XML):
+        text = read_text(path)
+        for forbidden in ("SolidMetallic", "StrongMetallic", "RuggedMetallic", "HeavyMetallic"):
+            if forbidden in text:
+                fail(f"{path} 不得使用 RimWorld 1.7 不存在的 {forbidden} 分类")
+    if "SmithingSpeed" in read_text(PARTS_RECIPE_XML):
+        fail("零件配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    print("parts: OK")
+
+
 def validate_coal() -> None:
     require_files([COAL_RESOURCE_XML, COAL_BUILDING_XML, *COAL_ITEM_TEXTURES])
 
@@ -3071,6 +3326,7 @@ def validate_all() -> None:
     validate_electric_petrochem()
     validate_electric_electronics()
     validate_advanced_alloys()
+    validate_parts()
     validate_all_xml()
 
 
@@ -3104,6 +3360,7 @@ SUITES = {
     "electric-petrochem": validate_electric_petrochem,
     "electric-electronics": validate_electric_electronics,
     "advanced-alloys": validate_advanced_alloys,
+    "parts": validate_parts,
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
