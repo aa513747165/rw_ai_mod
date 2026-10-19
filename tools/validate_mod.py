@@ -51,6 +51,9 @@ SULFUR_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sulfur.xml"
 PRECIOUS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Precious.xml"
 PRECIOUS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Precious.xml"
 PRECIOUS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Precious.xml"
+ELECTRIC_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electric.xml"
+ELECTRIC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electric.xml"
+ELECTRIC_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electric.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -711,6 +714,74 @@ ELECTRONICS_RECIPE_EXPECTATIONS = {
         "sound": "Recipe_Machining",
         "building": "MMT_HandElectronicsTable",
         "research": "MMT_IntegratedCircuitTech",
+    },
+}
+
+
+ELECTRIC_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_ElectricArcFurnace/MMT_ElectricArcFurnace_{side}.png"
+    for side in ("east", "north", "south")
+]
+
+ELECTRIC_FURNACE_RECIPES = [
+    "MMT_SmeltCopperBar_Electric",
+    "MMT_SmeltTinBar_Electric",
+    "MMT_MakeBronze_Electric",
+    "MMT_SmeltSteel_Electric",
+    "MMT_SmeltSilver_Electric",
+    "MMT_SmeltGold_Electric",
+    "MMT_ExtractSilicon_Electric",
+]
+
+ELECTRIC_RECIPE_EXPECTATIONS = {
+    "MMT_SmeltCopperBar_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_CopperOre", "20")],
+        "output": "MMT_CopperBar",
+        "output_count": "20",
+        "skill": "4",
+    },
+    "MMT_SmeltTinBar_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_TinOre", "20")],
+        "output": "MMT_TinBar",
+        "output_count": "20",
+        "skill": "4",
+    },
+    "MMT_MakeBronze_Electric": {
+        "work": "700",
+        "inputs": [("thingDefs", "MMT_CopperBar", "20"), ("thingDefs", "MMT_TinBar", "10")],
+        "output": "MMT_Bronze",
+        "output_count": "30",
+        "skill": "4",
+    },
+    "MMT_SmeltSteel_Electric": {
+        "work": "900",
+        "inputs": [("thingDefs", "MMT_IronOre", "15"), ("thingDefs", ("MMT_Charcoal", "MMT_Coal"), "7")],
+        "output": "Steel",
+        "output_count": "20",
+        "skill": "6",
+    },
+    "MMT_SmeltSilver_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_SilverOre", "14")],
+        "output": "Silver",
+        "output_count": "10",
+        "skill": "5",
+    },
+    "MMT_SmeltGold_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_GoldOre", "12")],
+        "output": "Gold",
+        "output_count": "15",
+        "skill": "6",
+    },
+    "MMT_ExtractSilicon_Electric": {
+        "work": "800",
+        "inputs": [("thingDefs", "MMT_Sand", "50")],
+        "output": "MMT_Silicon",
+        "output_count": "5",
+        "skill": "5",
     },
 }
 
@@ -1889,6 +1960,135 @@ def validate_electronics() -> None:
     print("electronics: OK")
 
 
+def validate_electric() -> None:
+    require_files([
+        ELECTRIC_RESEARCH_XML,
+        ELECTRIC_BUILDING_XML,
+        ELECTRIC_RECIPE_XML,
+        METAL_RESOURCE_XML,
+        WOOD_RESOURCE_XML,
+        COAL_RESOURCE_XML,
+        PRECIOUS_RESOURCE_XML,
+        RESOURCE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        *ELECTRIC_BUILDING_TEXTURES,
+    ])
+
+    research_defs = def_map(parse_xml(ELECTRIC_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_ElectricSmelting"}, "电动研究 defName 集合")
+    research = research_defs["MMT_ElectricSmelting"]
+    assert_equal(child_text(research, "label"), "电弧冶炼", "电动研究 label")
+    assert_equal(child_text(research, "baseCost"), "2000", "电动研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "电动研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["MMT_BasicMetalworking", "MicroelectronicsBasics"], "电动研究前置")
+    assert_equal(child_text(research, "researchViewX"), "11.00", "电动研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "1.00", "电动研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(ELECTRIC_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_ElectricArcFurnace"}, "电动建筑 defName 集合")
+    furnace = building_defs["MMT_ElectricArcFurnace"]
+    assert_equal(child_text(furnace, "label"), "电弧炉", "电弧炉 label")
+    assert_equal(child_text(furnace, "thingClass"), "Building_WorkTable", "电弧炉 thingClass")
+    assert_equal(child_text(furnace, "./graphicData/texPath"), "Things/Building/Production/MMT_ElectricArcFurnace/MMT_ElectricArcFurnace", "电弧炉 texPath")
+    assert_equal(child_text(furnace, "./graphicData/graphicClass"), "Graphic_Multi", "电弧炉 graphicClass")
+    assert_equal(li_values(furnace, "stuffCategories"), ["Metallic"], "电弧炉材料分类")
+    assert_equal(child_text(furnace, "costStuffCount"), "180", "电弧炉材料数量")
+    assert_equal(child_text(furnace, "./costList/MMT_ReinforcedConcrete"), "50", "电弧炉钢筋混凝土成本")
+    assert_equal(child_text(furnace, "./costList/ComponentIndustrial"), "15", "电弧炉零部件成本")
+    assert_equal(child_text(furnace, "./costList/MMT_ElectronicParts"), "6", "电弧炉电子元件成本")
+    assert_equal(child_text(furnace, "./statBases/WorkToBuild"), "4500", "电弧炉建造工作量")
+    assert_equal(child_text(furnace, "./statBases/MaxHitPoints"), "280", "电弧炉耐久")
+    assert_equal(child_text(furnace, "size"), "(3,3)", "电弧炉尺寸")
+    assert_equal(li_values(furnace, "recipes"), ELECTRIC_FURNACE_RECIPES, "电弧炉配方")
+    assert_equal(li_values(furnace, "researchPrerequisites"), ["MMT_ElectricSmelting"], "电弧炉研究前置")
+    assert_equal(child_text(furnace, "constructionSkillPrerequisite"), "10", "电弧炉建造技能")
+
+    # 电动建筑与手动台相反：必须包含电力组件且功耗为 2500W
+    comp_classes = [li.attrib.get("Class") for li in furnace.findall("./comps/li")]
+    for expected in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable", "CompProperties_Glower"):
+        if expected not in comp_classes:
+            fail(f"电弧炉缺少组件: {expected}")
+    power = furnace.find("./comps/li[@Class='CompProperties_Power']")
+    assert_equal(child_text(power, "compClass"), "CompPowerTrader", "电弧炉电力 compClass")
+    assert_equal(child_text(power, "basePowerConsumption"), "2500", "电弧炉电力消耗")
+    glower = furnace.find("./comps/li[@Class='CompProperties_Glower']")
+    assert_equal(child_text(glower, "glowRadius"), "4", "电弧炉发光半径")
+    assert_equal(child_text(glower, "glowColor"), "(217,112,33,0)", "电弧炉发光颜色")
+
+    recipe_defs = def_map(parse_xml(ELECTRIC_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(ELECTRIC_RECIPE_EXPECTATIONS), "电动配方 defName 集合")
+
+    resource_names = (
+        set(def_map(parse_xml(METAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+        | set(def_map(parse_xml(COAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(PRECIOUS_RESOURCE_XML)))
+        | set(def_map(parse_xml(RESOURCE_XML)))
+    )
+    output_names = resource_names | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML))) | VANILLA_THINGS
+    furnace_recipes = li_values(furnace, "recipes")
+
+    for name, expected in ELECTRIC_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), "SmeltingSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), "Smelt", f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), "Recipe_Smelt", f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由 MMT_ElectricArcFurnace 的 recipes 列表挂载，不应写 recipeUsers")
+        if name not in furnace_recipes:
+            fail(f"{name} 未挂载到电弧炉")
+
+        research_prerequisite = recipe.findtext("researchPrerequisite")
+        research_prerequisite = research_prerequisite.strip() if research_prerequisite else None
+        assert_equal(research_prerequisite, "MMT_ElectricSmelting", f"{name} researchPrerequisite")
+
+        for _, value, _ in normalized:
+            for item in value:
+                if item not in resource_names:
+                    fail(f"{name} 使用未知资源: {item}")
+        if expected["output"] not in output_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+
+    for path in ELECTRIC_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (ELECTRIC_RESEARCH_XML, ELECTRIC_BUILDING_XML, ELECTRIC_RECIPE_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("electric: OK")
+
+
 def validate_coal() -> None:
     require_files([COAL_RESOURCE_XML, COAL_BUILDING_XML, *COAL_ITEM_TEXTURES])
 
@@ -2072,6 +2272,7 @@ def validate_all() -> None:
     validate_sulfur()
     validate_petrochem()
     validate_electronics()
+    validate_electric()
     validate_all_xml()
 
 
@@ -2100,6 +2301,7 @@ SUITES = {
     "electronics-building": validate_electronics_building,
     "electronics-recipes": validate_electronics_recipes,
     "electronics": validate_electronics,
+    "electric": validate_electric,
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
