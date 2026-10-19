@@ -57,6 +57,9 @@ ELECTRIC_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electric.xml"
 ELECTRIC_WOOD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricWood.xml"
 ELECTRIC_WOOD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricWood.xml"
 ELECTRIC_WOOD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ElectricWood.xml"
+ELECTRIC_PETROCHEM_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricPetrochem.xml"
+ELECTRIC_PETROCHEM_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricPetrochem.xml"
+ELECTRIC_PETROCHEM_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ElectricPetrochem.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -861,6 +864,77 @@ ELECTRIC_WOOD_RECIPE_EXPECTATIONS = {
         "effect": "Smelt",
         "sound": "Recipe_Smelt",
         "building": "MMT_ElectricCharcoalKiln",
+    },
+}
+
+
+ELECTRIC_PETROCHEM_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_ElectricChemLab/MMT_ElectricChemLab_{side}.png"
+    for side in ("east", "north", "south")
+]
+
+ELECTRIC_PETROCHEM_LAB_RECIPES = [
+    "MMT_DistillPolymers_Electric",
+    "MMT_MakePlastic_Electric",
+    "MMT_MakeRubber_Electric",
+    "MMT_MakeSyntheticFibers_Electric",
+    "MMT_MakeCarbon_Electric",
+]
+
+ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS = {
+    "MMT_DistillPolymers_Electric": {
+        "work": "1000",
+        "inputs": [("thingDefs", "MMT_CrudeOil", "20")],
+        "output": "MMT_Polymers",
+        "output_count": "15",
+        "skill": "6",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+    },
+    "MMT_MakePlastic_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_Polymers", "30")],
+        "output": "MMT_Plastic",
+        "output_count": "10",
+        "skill": "8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeRubber_Electric": {
+        "work": "500",
+        "inputs": [("thingDefs", "MMT_Polymers", "30"), ("thingDefs", "MMT_Sulfur", "3")],
+        "output": "MMT_Rubber",
+        "output_count": "10",
+        "skill": "8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeSyntheticFibers_Electric": {
+        "work": "800",
+        "inputs": [("thingDefs", "MMT_Polymers", "25"), ("thingDefs", "MMT_Sulfur", "3")],
+        "output": "MMT_SyntheticFibers",
+        "output_count": "5",
+        "skill": "10",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
+    },
+    "MMT_MakeCarbon_Electric": {
+        "work": "2800",
+        "inputs": [
+            ("thingDefs", "MMT_Polymers", "25"),
+            ("thingDefs", ("MMT_Charcoal", "MMT_Coal"), "25"),
+            ("thingDefs", "MMT_Rubber", "15"),
+        ],
+        "output": "MMT_Carbon",
+        "output_count": "12",
+        "skill": "12",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Smith",
     },
 }
 
@@ -2277,6 +2351,132 @@ def validate_electric_wood() -> None:
     print("electric-wood: OK")
 
 
+def validate_electric_petrochem() -> None:
+    require_files([
+        ELECTRIC_PETROCHEM_RESEARCH_XML,
+        ELECTRIC_PETROCHEM_BUILDING_XML,
+        ELECTRIC_PETROCHEM_RECIPE_XML,
+        PETROCHEM_RESOURCE_XML,
+        SULFUR_RESOURCE_XML,
+        WOOD_RESOURCE_XML,
+        COAL_RESOURCE_XML,
+        *ELECTRIC_PETROCHEM_BUILDING_TEXTURES,
+    ])
+
+    research_defs = def_map(parse_xml(ELECTRIC_PETROCHEM_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_ElectricPetrochemistry"}, "电动石化研究 defName 集合")
+    research = research_defs["MMT_ElectricPetrochemistry"]
+    assert_equal(child_text(research, "label"), "电动石化工艺", "电动石化研究 label")
+    assert_equal(child_text(research, "baseCost"), "1800", "电动石化研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "电动石化研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["MMT_BasicPetrochemistry", "MicroelectronicsBasics"], "电动石化研究前置")
+    assert_equal(child_text(research, "researchViewX"), "14.00", "电动石化研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "1.00", "电动石化研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(ELECTRIC_PETROCHEM_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_ElectricChemLab"}, "电动石化建筑 defName 集合")
+    lab = building_defs["MMT_ElectricChemLab"]
+    assert_equal(child_text(lab, "label"), "石化电动实验室", "石化实验室 label")
+    assert_equal(child_text(lab, "thingClass"), "Building_WorkTable", "石化实验室 thingClass")
+    assert_equal(child_text(lab, "./graphicData/texPath"), "Things/Building/Production/MMT_ElectricChemLab/MMT_ElectricChemLab", "石化实验室 texPath")
+    assert_equal(child_text(lab, "./graphicData/graphicClass"), "Graphic_Multi", "石化实验室 graphicClass")
+    assert_equal(li_values(lab, "stuffCategories"), ["Metallic"], "石化实验室材料分类")
+    assert_equal(child_text(lab, "costStuffCount"), "130", "石化实验室材料数量")
+    assert_equal(child_text(lab, "./costList/MMT_ReinforcedConcrete"), "40", "石化实验室钢筋混凝土成本")
+    assert_equal(child_text(lab, "./costList/MMT_Glass"), "50", "石化实验室玻璃成本")
+    assert_equal(child_text(lab, "./costList/ComponentIndustrial"), "20", "石化实验室零部件成本")
+    assert_equal(child_text(lab, "./costList/MMT_ElectronicParts"), "5", "石化实验室电子元件成本")
+    assert_equal(child_text(lab, "./statBases/WorkToBuild"), "5500", "石化实验室建造工作量")
+    assert_equal(child_text(lab, "./statBases/MaxHitPoints"), "340", "石化实验室耐久")
+    assert_equal(child_text(lab, "size"), "(4,5)", "石化实验室尺寸")
+    assert_equal(child_text(lab, "interactionCellOffset"), "(0,0,3)", "石化实验室交互格偏移")
+    assert_equal(li_values(lab, "recipes"), ELECTRIC_PETROCHEM_LAB_RECIPES, "石化实验室配方")
+    assert_equal(li_values(lab, "researchPrerequisites"), ["MMT_ElectricPetrochemistry"], "石化实验室研究前置")
+    assert_equal(child_text(lab, "constructionSkillPrerequisite"), "10", "石化实验室建造技能")
+
+    # 电动建筑与手动台相反：必须包含电力组件且功耗为 450W
+    comp_classes = [li.attrib.get("Class") for li in lab.findall("./comps/li")]
+    for comp in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable"):
+        if comp not in comp_classes:
+            fail(f"石化实验室缺少组件: {comp}")
+    power = lab.find("./comps/li[@Class='CompProperties_Power']")
+    assert_equal(child_text(power, "compClass"), "CompPowerTrader", "石化实验室电力 compClass")
+    assert_equal(child_text(power, "basePowerConsumption"), "450", "石化实验室电力消耗")
+
+    recipe_defs = def_map(parse_xml(ELECTRIC_PETROCHEM_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS), "电动石化配方 defName 集合")
+
+    resource_names = (
+        set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(SULFUR_RESOURCE_XML)))
+        | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+        | set(def_map(parse_xml(COAL_RESOURCE_XML)))
+    )
+    lab_recipes = li_values(lab, "recipes")
+
+    for name, expected in ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由 MMT_ElectricChemLab 的 recipes 列表挂载，不应写 recipeUsers")
+        if name not in lab_recipes:
+            fail(f"{name} 未挂载到石化电动实验室")
+
+        research_prerequisite = recipe.findtext("researchPrerequisite")
+        research_prerequisite = research_prerequisite.strip() if research_prerequisite else None
+        assert_equal(research_prerequisite, "MMT_ElectricPetrochemistry", f"{name} researchPrerequisite")
+
+        for _, value, _ in normalized:
+            for item in value:
+                if item not in resource_names:
+                    fail(f"{name} 使用未知资源: {item}")
+        if expected["output"] not in set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))):
+            fail(f"{name} 输出不是石化资源: {expected['output']}")
+
+    for path in ELECTRIC_PETROCHEM_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (ELECTRIC_PETROCHEM_RESEARCH_XML, ELECTRIC_PETROCHEM_BUILDING_XML, ELECTRIC_PETROCHEM_RECIPE_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    if "SmithingSpeed" in read_text(ELECTRIC_PETROCHEM_RECIPE_XML):
+        fail("电动石化配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    print("electric-petrochem: OK")
+
+
 def validate_coal() -> None:
     require_files([COAL_RESOURCE_XML, COAL_BUILDING_XML, *COAL_ITEM_TEXTURES])
 
@@ -2462,6 +2662,7 @@ def validate_all() -> None:
     validate_electronics()
     validate_electric()
     validate_electric_wood()
+    validate_electric_petrochem()
     validate_all_xml()
 
 
@@ -2492,6 +2693,7 @@ SUITES = {
     "electronics": validate_electronics,
     "electric": validate_electric,
     "electric-wood": validate_electric_wood,
+    "electric-petrochem": validate_electric_petrochem,
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
