@@ -83,4 +83,28 @@
       <li>ResourcesRaw</li>
     </thingCategories>
   </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ReinforcedGlass</defName>
+    <label>强化玻璃</label>
+    <description>在玻璃配合料中加入碳材料和合成纤维制成的强化玻璃，强度更高，加工难度也更大。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ReinforcedGlass</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>17.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.22</Mass>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
 </Defs>
