@@ -99,6 +99,8 @@ PETROCHEM_BUILDING_TEXTURES = [
 ELECTRONICS_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/MMT_Electronics/Silicon.png",
     "1.7/Textures/Things/Item/MMT/MMT_Electronics/ElectronicParts.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Electronics/IntegratedCircuit.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Electronics/Microchip.png",
 ]
 
 ELECTRONICS_BUILDING_TEXTURES = [
@@ -640,11 +642,13 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
 }
 
 ELECTRONICS_RESOURCE_EXPECTATIONS = {
-    "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon"},
-    "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts"},
+    "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon", "tech": "Industrial"},
+    "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts", "tech": "Industrial"},
+    "MMT_IntegratedCircuit": {"label": "集成电路", "value": "55.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/IntegratedCircuit", "tech": "Industrial"},
+    "MMT_Microchip": {"label": "微芯片", "value": "100.0", "stack": "25", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/Microchip", "tech": "Spacer"},
 }
 
-ELECTRONICS_TABLE_RECIPES = ["MMT_AssembleElectronicParts_Hand"]
+ELECTRONICS_TABLE_RECIPES = ["MMT_AssembleElectronicParts_Hand", "MMT_AssembleIC_Hand", "MMT_AssembleMicrochip_Hand"]
 
 ELECTRONICS_RECIPE_EXPECTATIONS = {
     "MMT_ExtractSilicon_Hand": {
@@ -657,6 +661,7 @@ ELECTRONICS_RECIPE_EXPECTATIONS = {
         "effect": "Smelt",
         "sound": "Recipe_Smelt",
         "building": "MMT_HandFurnace",
+        "research": "MMT_BasicElectronics",
     },
     "MMT_AssembleElectronicParts_Hand": {
         "work": "2500",
@@ -672,6 +677,40 @@ ELECTRONICS_RECIPE_EXPECTATIONS = {
         "effect": "Smith",
         "sound": "Recipe_Machining",
         "building": "MMT_HandElectronicsTable",
+        "research": "MMT_BasicElectronics",
+    },
+    "MMT_AssembleIC_Hand": {
+        "work": "3500",
+        "inputs": [
+            ("thingDefs", "MMT_Silicon", "25"),
+            ("thingDefs", "MMT_Plastic", "20"),
+            ("thingDefs", "MMT_ElectronicParts", "3"),
+            ("thingDefs", "Gold", "2"),
+        ],
+        "output": "MMT_IntegratedCircuit",
+        "output_count": "5",
+        "skill": "10",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Machining",
+        "building": "MMT_HandElectronicsTable",
+        "research": "MMT_IntegratedCircuitTech",
+    },
+    "MMT_AssembleMicrochip_Hand": {
+        "work": "3500",
+        "inputs": [
+            ("thingDefs", "MMT_IntegratedCircuit", "2"),
+            ("thingDefs", "MMT_Carbon", "5"),
+            ("thingDefs", "Gold", "5"),
+        ],
+        "output": "MMT_Microchip",
+        "output_count": "1",
+        "skill": "12",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Machining",
+        "building": "MMT_HandElectronicsTable",
+        "research": "MMT_IntegratedCircuitTech",
     },
 }
 
@@ -1693,6 +1732,7 @@ def validate_electronics_resources() -> None:
         assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
         if node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
@@ -1709,7 +1749,7 @@ def validate_electronics_building() -> None:
     require_files([ELECTRONICS_RESEARCH_XML, ELECTRONICS_BUILDING_XML, *ELECTRONICS_BUILDING_TEXTURES])
 
     research_defs = def_map(parse_xml(ELECTRONICS_RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_BasicElectronics"}, "电子研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_BasicElectronics", "MMT_IntegratedCircuitTech"}, "电子研究 defName 集合")
     research = research_defs["MMT_BasicElectronics"]
     assert_equal(child_text(research, "label"), "基础电子工艺", "电子研究 label")
     assert_equal(child_text(research, "baseCost"), "1600", "电子研究 baseCost")
@@ -1717,6 +1757,14 @@ def validate_electronics_building() -> None:
     assert_equal(li_values(research, "prerequisites"), ["MicroelectronicsBasics"], "电子研究前置")
     assert_equal(child_text(research, "researchViewX"), "16.00", "电子研究 X 坐标")
     assert_equal(child_text(research, "researchViewY"), "0.00", "电子研究 Y 坐标")
+
+    ic_research = research_defs["MMT_IntegratedCircuitTech"]
+    assert_equal(child_text(ic_research, "label"), "集成电路技术", "集成电路研究 label")
+    assert_equal(child_text(ic_research, "baseCost"), "2000", "集成电路研究 baseCost")
+    assert_equal(child_text(ic_research, "techLevel"), "Industrial", "集成电路研究 techLevel")
+    assert_equal(li_values(ic_research, "prerequisites"), ["MMT_BasicElectronics"], "集成电路研究前置")
+    assert_equal(child_text(ic_research, "researchViewX"), "17.00", "集成电路研究 X 坐标")
+    assert_equal(child_text(ic_research, "researchViewY"), "1.00", "集成电路研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRONICS_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandElectronicsTable"}, "电子建筑 defName 集合")
@@ -1732,7 +1780,7 @@ def validate_electronics_building() -> None:
     assert_equal(child_text(table, "./statBases/MaxHitPoints"), "220", "电子台耐久")
     assert_equal(child_text(table, "size"), "(3,3)", "电子台尺寸")
     assert_equal(li_values(table, "recipes"), ELECTRONICS_TABLE_RECIPES, "电子台配方")
-    assert_equal(li_values(table, "researchPrerequisites"), ["MMT_BasicElectronics"], "电子台研究前置")
+    assert_equal(li_values(table, "researchPrerequisites"), ["MMT_BasicElectronics", "MMT_IntegratedCircuitTech"], "电子台研究前置")
     assert_equal(child_text(table, "constructionSkillPrerequisite"), "8", "电子台建造技能")
 
     comp_classes = [li.attrib.get("Class") for li in table.findall("./comps/li")]
@@ -1754,6 +1802,7 @@ def validate_electronics_recipes() -> None:
         ELECTRONICS_RESOURCE_XML,
         RESOURCE_XML,
         METAL_RESOURCE_XML,
+        PETROCHEM_RESOURCE_XML,
         ELECTRONICS_RESEARCH_XML,
         ELECTRONICS_BUILDING_XML,
         METAL_BUILDING_XML,
@@ -1765,6 +1814,7 @@ def validate_electronics_recipes() -> None:
         set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
         | set(def_map(parse_xml(RESOURCE_XML)))
         | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
     )
     building_recipes = {
         "MMT_HandFurnace": li_values(def_map(parse_xml(METAL_BUILDING_XML))["MMT_HandFurnace"], "recipes"),
@@ -1815,11 +1865,11 @@ def validate_electronics_recipes() -> None:
 
         research = recipe.findtext("researchPrerequisite")
         research = research.strip() if research else None
-        assert_equal(research, "MMT_BasicElectronics", f"{name} researchPrerequisite")
+        assert_equal(research, expected["research"], f"{name} researchPrerequisite")
 
         for _, value, _ in expected["inputs"]:
             for item in ((value,) if isinstance(value, str) else value):
-                if item not in resource_names:
+                if item not in resource_names | VANILLA_THINGS:
                     fail(f"{name} 使用未知资源: {item}")
         if expected["output"] not in resource_names:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")
