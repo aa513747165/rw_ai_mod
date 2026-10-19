@@ -62,14 +62,14 @@ ADVANCED_ORE_EXPECTATIONS = {
 }
 
 ADVANCED_ALLOY_EXPECTATIONS = {
-    "MMT_NickelBar": {"label": "镍锭", "value": "6.0", "stack": "150", "color": "(42,208,206)", "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35"},
+    "MMT_NickelBar": {"label": "镍锭", "value": "6.0", "stack": "150", "color": "(42,208,206)", "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35", "market_value": "0.7"},
     "MMT_Cobalt": {"label": "钴锭", "value": "10.0", "stack": "150", "color": "(60,90,120)", "stuff": False},
     "MMT_Chromium": {"label": "铬锭", "value": "5.0", "stack": "150", "color": "(235,235,235)", "stuff": False},
     "MMT_Tungsten": {"label": "钨合金", "value": "40.0", "stack": "150", "color": "(240,230,230)", "stuff": False},
-    "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8"},
-    "MMT_StelliteAlloy": {"label": "司太立合金", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24"},
-    "MMT_NitinolAlloy": {"label": "镍钛诺合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95"},
-    "MMT_PobediteAlloy": {"label": "钴硬质合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4"},
+    "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8", "door": "1.3"},
+    "MMT_StelliteAlloy": {"label": "司太立合金", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24", "door": "0.95"},
+    "MMT_NitinolAlloy": {"label": "镍钛诺合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95", "door": "1.2"},
+    "MMT_PobediteAlloy": {"label": "钴硬质合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4", "door": "0.7"},
 }
 
 ADVANCED_MINEABLE_EXPECTATIONS = {
@@ -182,6 +182,10 @@ def validate_advanced_alloys() -> None:
             assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), expected["work_make"], f"{name} WorkToMake factor")
             assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), expected["work_build"], f"{name} WorkToBuild factor")
             assert_equal(child_text(node, "./stuffProps/statFactors/Mass"), expected["mass"], f"{name} Mass factor")
+            if "market_value" in expected:
+                assert_equal(child_text(node, "./stuffProps/statFactors/MarketValue"), expected["market_value"], f"{name} MarketValue factor")
+            if "door" in expected:
+                assert_equal(child_text(node, "./stuffProps/statFactors/DoorOpenSpeed"), expected["door"], f"{name} DoorOpenSpeed factor")
             assert_equal(child_text(node, "terrainAffordanceNeeded"), "Medium", f"{name} terrain affordance")
         elif node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")

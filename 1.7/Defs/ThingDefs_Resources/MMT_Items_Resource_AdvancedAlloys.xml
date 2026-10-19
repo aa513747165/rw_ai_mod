@@ -37,6 +37,7 @@
         <WorkToMake>2.0</WorkToMake>
         <WorkToBuild>2.0</WorkToBuild>
         <Mass>1.35</Mass>
+        <MarketValue>0.7</MarketValue>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -154,6 +155,7 @@
         <WorkToMake>3.0</WorkToMake>
         <WorkToBuild>3.0</WorkToBuild>
         <Mass>0.8</Mass>
+        <DoorOpenSpeed>1.3</DoorOpenSpeed>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -196,6 +198,7 @@
         <WorkToMake>2.0</WorkToMake>
         <WorkToBuild>2.2</WorkToBuild>
         <Mass>1.24</Mass>
+        <DoorOpenSpeed>0.95</DoorOpenSpeed>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -241,6 +244,7 @@
         <WorkToMake>2.6</WorkToMake>
         <WorkToBuild>2.4</WorkToBuild>
         <Mass>0.95</Mass>
+        <DoorOpenSpeed>1.2</DoorOpenSpeed>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -283,6 +287,7 @@
         <WorkToMake>2.8</WorkToMake>
         <WorkToBuild>2.8</WorkToBuild>
         <Mass>1.4</Mass>
+        <DoorOpenSpeed>0.7</DoorOpenSpeed>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
