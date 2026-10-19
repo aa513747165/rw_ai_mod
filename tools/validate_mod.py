@@ -32,6 +32,10 @@ WOOD_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Wood.xml"
 WOOD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Wood.xml"
 WOOD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Wood.xml"
 WOOD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Wood.xml"
+METAL_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Metal.xml"
+METAL_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Metal.xml"
+METAL_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Metal.xml"
+METAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Metal.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -54,6 +58,17 @@ WOOD_BUILDING_TEXTURES = [
     "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_northm.png",
     "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_south.png",
     "1.7/Textures/Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln_southm.png",
+]
+
+METAL_ITEM_TEXTURES = [
+    *[f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}_{suffix}.png" for ore in ("IronOre", "CopperOre", "TinOre") for suffix in ("a", "b", "c")],
+    *[f"1.7/Textures/Things/Item/MMT/MMT_Ingot/MMT_Ingot_{suffix}.png" for suffix in ("a", "b", "c")],
+]
+
+METAL_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_HandFurnace/MMT_HandFurnace_{side}{mask}.png"
+    for side in ("east", "north", "south")
+    for mask in ("", "m")
 ]
 
 CONCRETE_ITEM_TEXTURES = [
@@ -257,8 +272,8 @@ RECIPE_EXPECTATIONS = {
 
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
-VANILLA_RESEARCH = {"Stonecutting"}
-VANILLA_THINGS = {"ComponentIndustrial", "WoodLog"}
+VANILLA_RESEARCH = {"Stonecutting", "Smithing"}
+VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -393,6 +408,62 @@ WOOD_RECIPE_EXPECTATIONS = {
         "skill": None,
         "learn": "0.8",
         "building": "MMT_CharcoalKiln",
+    },
+}
+
+METAL_ORE_EXPECTATIONS = {
+    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre"},
+    "MMT_CopperOre": {"label": "铜矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre"},
+    "MMT_TinOre": {"label": "锡矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre"},
+}
+
+METAL_BAR_EXPECTATIONS = {
+    "MMT_CopperBar": {"label": "铜锭", "value": "3.0", "stack": "300", "adjective": "铜制", "hp": "1.4", "flammable": "0.1", "work": "1.5"},
+    "MMT_TinBar": {"label": "锡锭", "value": "3.0", "stack": "300", "adjective": "锡制", "hp": "1.3", "flammable": "0", "work": "1.2"},
+    "MMT_Bronze": {"label": "青铜", "value": "4.0", "stack": "600", "adjective": "青铜制", "hp": "1.6", "flammable": "0", "work": "0.8"},
+}
+
+METAL_FURNACE_RECIPES = [
+    "MMT_SmeltCopperBar_Hand",
+    "MMT_SmeltTinBar_Hand",
+    "MMT_MakeBronze_Hand",
+    "MMT_SmeltSteel_Hand",
+]
+
+METAL_MINEABLE_EXPECTATIONS = {
+    "MMT_MineableIronOre": {"label": "铁矿脉", "yield_thing": "MMT_IronOre", "hp": "1500"},
+    "MMT_MineableCopperOre": {"label": "铜矿脉", "yield_thing": "MMT_CopperOre", "hp": "1800"},
+    "MMT_MineableTinOre": {"label": "锡矿脉", "yield_thing": "MMT_TinOre", "hp": "1300"},
+}
+
+METAL_RECIPE_EXPECTATIONS = {
+    "MMT_SmeltCopperBar_Hand": {
+        "work": "700",
+        "inputs": [("thingDefs", "MMT_CopperOre", "10")],
+        "output": "MMT_CopperBar",
+        "output_count": "10",
+        "skill": "1",
+    },
+    "MMT_SmeltTinBar_Hand": {
+        "work": "600",
+        "inputs": [("thingDefs", "MMT_TinOre", "10")],
+        "output": "MMT_TinBar",
+        "output_count": "10",
+        "skill": "1",
+    },
+    "MMT_MakeBronze_Hand": {
+        "work": "1000",
+        "inputs": [("thingDefs", "MMT_CopperBar", "20"), ("thingDefs", "MMT_TinBar", "10")],
+        "output": "MMT_Bronze",
+        "output_count": "30",
+        "skill": "2",
+    },
+    "MMT_SmeltSteel_Hand": {
+        "work": "1300",
+        "inputs": [("thingDefs", "MMT_IronOre", "15"), ("thingDefs", "MMT_Charcoal", "13")],
+        "output": "Steel",
+        "output_count": "20",
+        "skill": "3",
     },
 }
 
@@ -1039,6 +1110,166 @@ def validate_wood() -> None:
     print("wood: OK")
 
 
+def validate_metal_resources() -> None:
+    require_files([METAL_RESOURCE_XML, *METAL_ITEM_TEXTURES])
+    defs = def_map(parse_xml(METAL_RESOURCE_XML))
+    assert_equal(set(defs), set(METAL_ORE_EXPECTATIONS) | set(METAL_BAR_EXPECTATIONS), "金属资源 defName 集合")
+
+    for name, expected in METAL_ORE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), "2.0", f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), "600", f"{name} stackLimit")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    for name, expected in METAL_BAR_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot/MMT_Ingot", f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "./stuffProps/categories"), ["Metallic"], f"{name} stuff categories")
+        assert_equal(child_text(node, "./stuffProps/stuffAdjective"), expected["adjective"], f"{name} stuffAdjective")
+        assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), expected["hp"], f"{name} MaxHitPoints factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/Flammability"), expected["flammable"], f"{name} Flammability factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), expected["work"], f"{name} WorkToMake factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), expected["work"], f"{name} WorkToBuild factor")
+
+    for path in METAL_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(METAL_RESOURCE_XML):
+        fail("金属资源 XML 不得引用 SK 类型")
+    print("metal-resources: OK")
+
+
+def validate_metal_building() -> None:
+    require_files([METAL_RESEARCH_XML, METAL_BUILDING_XML, *METAL_BUILDING_TEXTURES])
+
+    research_defs = def_map(parse_xml(METAL_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_BasicMetalworking"}, "金属研究 defName 集合")
+    research = research_defs["MMT_BasicMetalworking"]
+    assert_equal(child_text(research, "label"), "基础金属冶炼", "金属研究 label")
+    assert_equal(child_text(research, "baseCost"), "800", "金属研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Medieval", "金属研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["Smithing"], "金属研究前置")
+    assert_equal(child_text(research, "researchViewX"), "10.00", "金属研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "0.00", "金属研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(METAL_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_HandFurnace", *METAL_MINEABLE_EXPECTATIONS}, "金属建筑 defName 集合")
+
+    furnace = building_defs["MMT_HandFurnace"]
+    assert_equal(child_text(furnace, "label"), "手动熔炉", "熔炉 label")
+    assert_equal(child_text(furnace, "thingClass"), "Building_WorkTable", "熔炉 thingClass")
+    assert_equal(child_text(furnace, "./graphicData/texPath"), "Things/Building/Production/MMT_HandFurnace/MMT_HandFurnace", "熔炉 texPath")
+    assert_equal(child_text(furnace, "./graphicData/graphicClass"), "Graphic_Multi", "熔炉 graphicClass")
+    assert_equal(li_values(furnace, "stuffCategories"), ["Stony"], "熔炉材料分类")
+    assert_equal(child_text(furnace, "costStuffCount"), "240", "熔炉材料数量")
+    assert_equal(child_text(furnace, "./statBases/WorkToBuild"), "3000", "熔炉建造工作量")
+    assert_equal(child_text(furnace, "./statBases/MaxHitPoints"), "280", "熔炉耐久")
+    assert_equal(child_text(furnace, "size"), "(3,3)", "熔炉尺寸")
+    assert_equal(li_values(furnace, "recipes"), METAL_FURNACE_RECIPES, "熔炉配方")
+    assert_equal(li_values(furnace, "researchPrerequisites"), ["MMT_BasicMetalworking"], "熔炉研究前置")
+    assert_equal(child_text(furnace, "constructionSkillPrerequisite"), "5", "熔炉建造技能")
+
+    comp_classes = [li.attrib.get("Class") for li in furnace.findall("./comps/li")]
+    if "CompProperties_Power" in comp_classes:
+        fail("手动熔炉不应包含电力组件")
+
+    for name, expected in METAL_MINEABLE_EXPECTATIONS.items():
+        vein = building_defs[name]
+        assert_equal(vein.attrib.get("ParentName"), "RockBase", f"{name} 父类")
+        assert_equal(child_text(vein, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", f"{name} texPath")
+        assert_equal(child_text(vein, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(vein, "./building/isResourceRock"), "true", f"{name} isResourceRock")
+        assert_equal(child_text(vein, "./building/mineableThing"), expected["yield_thing"], f"{name} mineableThing")
+        assert_equal(child_text(vein, "./building/mineableYield"), "75", f"{name} mineableYield")
+        assert_equal(child_text(vein, "./building/veinMineable"), "true", f"{name} veinMineable")
+
+    for path in METAL_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (METAL_RESEARCH_XML, METAL_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("metal-building: OK")
+
+
+def validate_metal_recipes() -> None:
+    require_files([METAL_RECIPE_XML, METAL_RESOURCE_XML, WOOD_RESOURCE_XML, METAL_RESEARCH_XML, METAL_BUILDING_XML])
+    recipe_defs = def_map(parse_xml(METAL_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(METAL_RECIPE_EXPECTATIONS), "金属配方 defName 集合")
+
+    resource_names = set(def_map(parse_xml(METAL_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+    building_defs = def_map(parse_xml(METAL_BUILDING_XML))
+    furnace_recipes = li_values(building_defs["MMT_HandFurnace"], "recipes")
+
+    for name, expected in METAL_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), "SmeltingSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), "Smelt", f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), "Recipe_Smelt", f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
+            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
+        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+
+        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
+        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由 MMT_HandFurnace 的 recipes 列表挂载，不应写 recipeUsers")
+        if name not in furnace_recipes:
+            fail(f"{name} 未挂载到手动熔炉")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, "MMT_BasicMetalworking", f"{name} researchPrerequisite")
+
+        for _, value, _ in expected["inputs"]:
+            if value not in resource_names:
+                fail(f"{name} 使用未知资源: {value}")
+        if expected["output"] not in resource_names | VANILLA_THINGS:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+
+    if "SK." in read_text(METAL_RECIPE_XML):
+        fail("金属配方 XML 不得引用 SK 类型")
+    print("metal-recipes: OK")
+
+
+def validate_metal() -> None:
+    validate_metal_resources()
+    validate_metal_building()
+    validate_metal_recipes()
+    print("metal: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -1072,6 +1303,10 @@ SUITES = {
     "wood-building": validate_wood_building,
     "wood-recipes": validate_wood_recipes,
     "wood": validate_wood,
+    "metal-resources": validate_metal_resources,
+    "metal-building": validate_metal_building,
+    "metal-recipes": validate_metal_recipes,
+    "metal": validate_metal,
     "all": validate_all,
 }
 
