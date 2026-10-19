@@ -48,6 +48,9 @@ COAL_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Coal.xml"
 COAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Coal.xml"
 SULFUR_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Sulfur.xml"
 SULFUR_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sulfur.xml"
+PRECIOUS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Precious.xml"
+PRECIOUS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Precious.xml"
+PRECIOUS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Precious.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -114,6 +117,27 @@ SULFUR_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Sulfur.png"]
 
 SULFUR_RESOURCE_EXPECTATIONS = {
     "MMT_Sulfur": {"label": "硫磺", "value": "7", "stack": "300", "flammable": "2", "tex": "Things/Item/MMT/MMT_Sulfur"},
+}
+
+PRECIOUS_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}_{suffix}.png"
+    for ore in ("SilverOre", "GoldOre")
+    for suffix in ("a", "b", "c")
+]
+
+PRECIOUS_RESOURCE_EXPECTATIONS = {
+    "MMT_SilverOre": {"label": "银矿石", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre"},
+    "MMT_GoldOre": {"label": "金矿石", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
+}
+
+PRECIOUS_MINEABLE_EXPECTATIONS = {
+    "MMT_MineableSilverOre": {"label": "银矿脉", "yield_thing": "MMT_SilverOre", "hp": "1500"},
+    "MMT_MineableGoldOre": {"label": "金矿脉", "yield_thing": "MMT_GoldOre", "hp": "1500"},
+}
+
+PRECIOUS_RECIPE_EXPECTATIONS = {
+    "MMT_SmeltSilver_Hand": {"work": "750", "ore": "MMT_SilverOre", "ore_count": "14", "output": "Silver", "output_count": "10", "skill": "2"},
+    "MMT_SmeltGold_Hand": {"work": "750", "ore": "MMT_GoldOre", "ore_count": "12", "output": "Gold", "output_count": "15", "skill": "3"},
 }
 
 CONCRETE_ITEM_TEXTURES = [
@@ -344,7 +368,7 @@ RECIPE_EXPECTATIONS = {
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel"}
+VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel", "Silver", "Gold"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -500,6 +524,8 @@ METAL_FURNACE_RECIPES = [
     "MMT_MakeBronze_Hand",
     "MMT_SmeltSteel_Hand",
     "MMT_ExtractSilicon_Hand",
+    "MMT_SmeltSilver_Hand",
+    "MMT_SmeltGold_Hand",
 ]
 
 METAL_MINEABLE_EXPECTATIONS = {
@@ -1891,6 +1917,88 @@ def validate_sulfur() -> None:
     print("sulfur: OK")
 
 
+def validate_precious() -> None:
+    require_files([PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML, METAL_BUILDING_XML, *PRECIOUS_ITEM_TEXTURES])
+
+    defs = def_map(parse_xml(PRECIOUS_RESOURCE_XML))
+    assert_equal(set(defs), set(PRECIOUS_RESOURCE_EXPECTATIONS), "金银资源 defName 集合")
+    for name, expected in PRECIOUS_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), "0", f"{name} Flammability")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), "Medieval", f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    building_defs = def_map(parse_xml(PRECIOUS_BUILDING_XML))
+    assert_equal(set(building_defs), set(PRECIOUS_MINEABLE_EXPECTATIONS), "金银建筑 defName 集合")
+    for name, expected in PRECIOUS_MINEABLE_EXPECTATIONS.items():
+        vein = building_defs[name]
+        assert_equal(vein.attrib.get("ParentName"), "RockBase", f"{name} 父类")
+        assert_equal(child_text(vein, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", f"{name} texPath")
+        assert_equal(child_text(vein, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(vein, "./building/isResourceRock"), "true", f"{name} isResourceRock")
+        assert_equal(child_text(vein, "./building/mineableThing"), expected["yield_thing"], f"{name} mineableThing")
+        assert_equal(child_text(vein, "./building/mineableYield"), "75", f"{name} mineableYield")
+        assert_equal(child_text(vein, "./building/veinMineable"), "true", f"{name} veinMineable")
+
+    recipe_defs = def_map(parse_xml(PRECIOUS_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(PRECIOUS_RECIPE_EXPECTATIONS), "金银配方 defName 集合")
+    furnace_recipes = li_values(def_map(parse_xml(METAL_BUILDING_XML))["MMT_HandFurnace"], "recipes")
+    resource_names = set(defs)
+    for name, expected in PRECIOUS_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), "SmeltingSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), "Smelt", f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), "Recipe_Smelt", f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        ingredients = recipe.findall("./ingredients/li")
+        if len(ingredients) != 1:
+            fail(f"{name} 必须且只能有一个输入")
+        assert_equal(li_values(ingredients[0], "./filter/thingDefs"), [expected["ore"]], f"{name} 输入引用")
+        assert_equal(child_text(ingredients[0], "count"), expected["ore_count"], f"{name} 输入数量")
+        assert_equal(li_values(recipe, "./fixedIngredientFilter/thingDefs"), [expected["ore"]], f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由 MMT_HandFurnace 的 recipes 列表挂载，不应写 recipeUsers")
+        if name not in furnace_recipes:
+            fail(f"{name} 未挂载到手动熔炉")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, "MMT_BasicMetalworking", f"{name} researchPrerequisite")
+
+        if expected["ore"] not in resource_names:
+            fail(f"{name} 使用未知资源: {expected['ore']}")
+        if expected["output"] not in VANILLA_THINGS:
+            fail(f"{name} 输出不是原版资源: {expected['output']}")
+
+    for path in PRECIOUS_ITEM_TEXTURES:
+        assert_png(path)
+
+    for path in (PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("precious: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -1909,6 +2017,7 @@ def validate_all() -> None:
     validate_concrete()
     validate_wood()
     validate_metal()
+    validate_precious()
     validate_coal()
     validate_sulfur()
     validate_petrochem()
@@ -1943,6 +2052,7 @@ SUITES = {
     "electronics": validate_electronics,
     "coal": validate_coal,
     "sulfur": validate_sulfur,
+    "precious": validate_precious,
     "all": validate_all,
 }
 
