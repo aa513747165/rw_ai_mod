@@ -40,6 +40,10 @@ PETROCHEM_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Petroc
 PETROCHEM_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Petrochem.xml"
 PETROCHEM_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Petrochem.xml"
 PETROCHEM_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Petrochem.xml"
+ELECTRONICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Electronics.xml"
+ELECTRONICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electronics.xml"
+ELECTRONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electronics.xml"
+ELECTRONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electronics.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -83,6 +87,17 @@ PETROCHEM_ITEM_TEXTURES = [
 PETROCHEM_BUILDING_TEXTURES = [
     f"1.7/Textures/Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable_{side}.png"
     for side in ("east", "north", "south")
+]
+
+ELECTRONICS_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/MMT_Electronics/Silicon.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Electronics/ElectronicParts.png",
+]
+
+ELECTRONICS_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_HandElectronicsTable/MMT_HandElectronicsTable_{side}{mask}.png"
+    for side in ("east", "north", "south")
+    for mask in ("", "m")
 ]
 
 CONCRETE_ITEM_TEXTURES = [
@@ -312,7 +327,7 @@ RECIPE_EXPECTATIONS = {
 
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
-VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining"}
+VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
 VANILLA_THINGS = {"ComponentIndustrial", "WoodLog", "Steel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
@@ -468,6 +483,7 @@ METAL_FURNACE_RECIPES = [
     "MMT_SmeltTinBar_Hand",
     "MMT_MakeBronze_Hand",
     "MMT_SmeltSteel_Hand",
+    "MMT_ExtractSilicon_Hand",
 ]
 
 METAL_MINEABLE_EXPECTATIONS = {
@@ -578,6 +594,42 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
         "speed": "GeneralLaborSpeed",
         "effect": "Smith",
         "sound": "Recipe_Smith",
+    },
+}
+
+ELECTRONICS_RESOURCE_EXPECTATIONS = {
+    "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon"},
+    "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts"},
+}
+
+ELECTRONICS_TABLE_RECIPES = ["MMT_AssembleElectronicParts_Hand"]
+
+ELECTRONICS_RECIPE_EXPECTATIONS = {
+    "MMT_ExtractSilicon_Hand": {
+        "work": "1600",
+        "inputs": [("thingDefs", "MMT_Sand", "50")],
+        "output": "MMT_Silicon",
+        "output_count": "5",
+        "skill": "5",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "building": "MMT_HandFurnace",
+    },
+    "MMT_AssembleElectronicParts_Hand": {
+        "work": "2500",
+        "inputs": [
+            ("thingDefs", "MMT_CopperBar", "15"),
+            ("thingDefs", "MMT_Glass", "10"),
+            ("thingDefs", "MMT_Silicon", "10"),
+        ],
+        "output": "MMT_ElectronicParts",
+        "output_count": "5",
+        "skill": "8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "Smith",
+        "sound": "Recipe_Machining",
+        "building": "MMT_HandElectronicsTable",
     },
 }
 
@@ -1574,6 +1626,159 @@ def validate_petrochem() -> None:
     print("petrochem: OK")
 
 
+def validate_electronics_resources() -> None:
+    require_files([ELECTRONICS_RESOURCE_XML, *ELECTRONICS_ITEM_TEXTURES])
+    defs = def_map(parse_xml(ELECTRONICS_RESOURCE_XML))
+    assert_equal(set(defs), set(ELECTRONICS_RESOURCE_EXPECTATIONS), "电子资源 defName 集合")
+
+    for name, expected in ELECTRONICS_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    for path in ELECTRONICS_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(ELECTRONICS_RESOURCE_XML):
+        fail("电子资源 XML 不得引用 SK 类型")
+    print("electronics-resources: OK")
+
+
+def validate_electronics_building() -> None:
+    require_files([ELECTRONICS_RESEARCH_XML, ELECTRONICS_BUILDING_XML, *ELECTRONICS_BUILDING_TEXTURES])
+
+    research_defs = def_map(parse_xml(ELECTRONICS_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_BasicElectronics"}, "电子研究 defName 集合")
+    research = research_defs["MMT_BasicElectronics"]
+    assert_equal(child_text(research, "label"), "基础电子工艺", "电子研究 label")
+    assert_equal(child_text(research, "baseCost"), "1600", "电子研究 baseCost")
+    assert_equal(child_text(research, "techLevel"), "Industrial", "电子研究 techLevel")
+    assert_equal(li_values(research, "prerequisites"), ["MicroelectronicsBasics"], "电子研究前置")
+    assert_equal(child_text(research, "researchViewX"), "16.00", "电子研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), "0.00", "电子研究 Y 坐标")
+
+    building_defs = def_map(parse_xml(ELECTRONICS_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_HandElectronicsTable"}, "电子建筑 defName 集合")
+    table = building_defs["MMT_HandElectronicsTable"]
+    assert_equal(child_text(table, "label"), "手动电子工作台", "电子台 label")
+    assert_equal(child_text(table, "thingClass"), "Building_WorkTable", "电子台 thingClass")
+    assert_equal(child_text(table, "./graphicData/texPath"), "Things/Building/Production/MMT_HandElectronicsTable/MMT_HandElectronicsTable", "电子台 texPath")
+    assert_equal(child_text(table, "./graphicData/graphicClass"), "Graphic_Multi", "电子台 graphicClass")
+    assert_equal(li_values(table, "stuffCategories"), ["Metallic"], "电子台材料分类")
+    assert_equal(child_text(table, "costStuffCount"), "140", "电子台材料数量")
+    assert_equal(child_text(table, "./costList/ComponentIndustrial"), "5", "电子台零部件成本")
+    assert_equal(child_text(table, "./statBases/WorkToBuild"), "2200", "电子台建造工作量")
+    assert_equal(child_text(table, "./statBases/MaxHitPoints"), "220", "电子台耐久")
+    assert_equal(child_text(table, "size"), "(3,3)", "电子台尺寸")
+    assert_equal(li_values(table, "recipes"), ELECTRONICS_TABLE_RECIPES, "电子台配方")
+    assert_equal(li_values(table, "researchPrerequisites"), ["MMT_BasicElectronics"], "电子台研究前置")
+    assert_equal(child_text(table, "constructionSkillPrerequisite"), "8", "电子台建造技能")
+
+    comp_classes = [li.attrib.get("Class") for li in table.findall("./comps/li")]
+    if "CompProperties_Power" in comp_classes:
+        fail("手动电子工作台不应包含电力组件")
+
+    for path in ELECTRONICS_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (ELECTRONICS_RESEARCH_XML, ELECTRONICS_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("electronics-building: OK")
+
+
+def validate_electronics_recipes() -> None:
+    require_files([
+        ELECTRONICS_RECIPE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        RESOURCE_XML,
+        METAL_RESOURCE_XML,
+        ELECTRONICS_RESEARCH_XML,
+        ELECTRONICS_BUILDING_XML,
+        METAL_BUILDING_XML,
+    ])
+    recipe_defs = def_map(parse_xml(ELECTRONICS_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(ELECTRONICS_RECIPE_EXPECTATIONS), "电子配方 defName 集合")
+
+    resource_names = (
+        set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
+        | set(def_map(parse_xml(RESOURCE_XML)))
+        | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+    )
+    building_recipes = {
+        "MMT_HandFurnace": li_values(def_map(parse_xml(METAL_BUILDING_XML))["MMT_HandFurnace"], "recipes"),
+        "MMT_HandElectronicsTable": li_values(def_map(parse_xml(ELECTRONICS_BUILDING_XML))["MMT_HandElectronicsTable"], "recipes"),
+    }
+
+    for name, expected in ELECTRONICS_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
+            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
+        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+
+        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
+        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由建筑 recipes 列表挂载，不应写 recipeUsers")
+        building = expected["building"]
+        if name not in building_recipes[building]:
+            fail(f"{name} 未挂载到 {building}")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, "MMT_BasicElectronics", f"{name} researchPrerequisite")
+
+        for _, value, _ in expected["inputs"]:
+            if value not in resource_names:
+                fail(f"{name} 使用未知资源: {value}")
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已定义资源: {expected['output']}")
+
+    recipe_text = read_text(ELECTRONICS_RECIPE_XML)
+    if "SK." in recipe_text:
+        fail("电子配方 XML 不得引用 SK 类型")
+    if "ElectronicCraftingSpeed" in recipe_text:
+        fail("电子配方不得使用 RimWorld 1.7 不存在的 ElectronicCraftingSpeed")
+    print("electronics-recipes: OK")
+
+
+def validate_electronics() -> None:
+    validate_electronics_resources()
+    validate_electronics_building()
+    validate_electronics_recipes()
+    print("electronics: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -1617,6 +1822,10 @@ SUITES = {
     "petrochem-building": validate_petrochem_building,
     "petrochem-recipes": validate_petrochem_recipes,
     "petrochem": validate_petrochem,
+    "electronics-resources": validate_electronics_resources,
+    "electronics-building": validate_electronics_building,
+    "electronics-recipes": validate_electronics_recipes,
+    "electronics": validate_electronics,
     "all": validate_all,
 }
 
