@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricChemLab</defName>
+    <label>石化电动实验室</label>
+    <description>以电力驱动的大型石化实验室，可以更快地蒸馏原油并合成塑料、橡胶、合成纤维和碳材料。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricChemLab/MMT_ElectricChemLab</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(4,5)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,3)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>130</costStuffCount>
+    <costList>
+      <MMT_ReinforcedConcrete>40</MMT_ReinforcedConcrete>
+      <MMT_Glass>50</MMT_Glass>
+      <ComponentIndustrial>20</ComponentIndustrial>
+      <MMT_ElectronicParts>5</MMT_ElectronicParts>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>5500</WorkToBuild>
+      <MaxHitPoints>340</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-3</Cleanliness>
+      <Mass>800</Mass>
+    </statBases>
+    <size>(4,5)</size>
+    <designationCategory>Production</designationCategory>
+    <recipes>
+      <li>MMT_DistillPolymers_Electric</li>
+      <li>MMT_MakePlastic_Electric</li>
+      <li>MMT_MakeRubber_Electric</li>
+      <li>MMT_MakeSyntheticFibers_Electric</li>
+      <li>MMT_MakeCarbon_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>450</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <building>
+      <uninstallWork>2800</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_ElectricPetrochemistry</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_ElectricPetrochemistry</defName>
+    <label>电动石化工艺</label>
+    <description>学习如何建造以电力驱动的石化实验室，更快地蒸馏原油并合成石化产品。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>MMT_BasicPetrochemistry</li>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
