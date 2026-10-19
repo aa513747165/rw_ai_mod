@@ -44,6 +44,8 @@ ELECTRONICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Elec
 ELECTRONICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electronics.xml"
 ELECTRONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electronics.xml"
 ELECTRONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electronics.xml"
+COAL_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Coal.xml"
+COAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Coal.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -99,6 +101,12 @@ ELECTRONICS_BUILDING_TEXTURES = [
     for side in ("east", "north", "south")
     for mask in ("", "m")
 ]
+
+COAL_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Coal.png"]
+
+COAL_RESOURCE_EXPECTATIONS = {
+    "MMT_Coal": {"label": "煤炭", "value": "2.0", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
+}
 
 CONCRETE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Concrete.png",
@@ -516,7 +524,7 @@ METAL_RECIPE_EXPECTATIONS = {
     },
     "MMT_SmeltSteel_Hand": {
         "work": "1300",
-        "inputs": [("thingDefs", "MMT_IronOre", "15"), ("thingDefs", "MMT_Charcoal", "13")],
+        "inputs": [("thingDefs", "MMT_IronOre", "15"), ("thingDefs", ("MMT_Charcoal", "MMT_Coal"), "13")],
         "output": "Steel",
         "output_count": "20",
         "skill": "3",
@@ -585,7 +593,7 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
         "work": "4000",
         "inputs": [
             ("thingDefs", "MMT_Polymers", "25"),
-            ("thingDefs", "MMT_Charcoal", "25"),
+            ("thingDefs", ("MMT_Charcoal", "MMT_Coal"), "25"),
             ("thingDefs", "MMT_Rubber", "15"),
         ],
         "output": "MMT_Carbon",
@@ -1411,11 +1419,11 @@ def validate_metal_building() -> None:
 
 
 def validate_metal_recipes() -> None:
-    require_files([METAL_RECIPE_XML, METAL_RESOURCE_XML, WOOD_RESOURCE_XML, METAL_RESEARCH_XML, METAL_BUILDING_XML])
+    require_files([METAL_RECIPE_XML, METAL_RESOURCE_XML, WOOD_RESOURCE_XML, COAL_RESOURCE_XML, METAL_RESEARCH_XML, METAL_BUILDING_XML])
     recipe_defs = def_map(parse_xml(METAL_RECIPE_XML))
     assert_equal(set(recipe_defs), set(METAL_RECIPE_EXPECTATIONS), "金属配方 defName 集合")
 
-    resource_names = set(def_map(parse_xml(METAL_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+    resource_names = set(def_map(parse_xml(METAL_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML))) | set(def_map(parse_xml(COAL_RESOURCE_XML)))
     building_defs = def_map(parse_xml(METAL_BUILDING_XML))
     furnace_recipes = li_values(building_defs["MMT_HandFurnace"], "recipes")
 
@@ -1436,13 +1444,18 @@ def validate_metal_recipes() -> None:
             if filter_node is None:
                 fail(f"{name} 存在缺少 filter 的输入")
             thing_defs = li_values(filter_node, "thingDefs")
-            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
-                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
-            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
-        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
 
-        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
-        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
 
         products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
         if len(products) != 1:
@@ -1460,8 +1473,9 @@ def validate_metal_recipes() -> None:
         assert_equal(research, "MMT_BasicMetalworking", f"{name} researchPrerequisite")
 
         for _, value, _ in expected["inputs"]:
-            if value not in resource_names:
-                fail(f"{name} 使用未知资源: {value}")
+            for item in ((value,) if isinstance(value, str) else value):
+                if item not in resource_names:
+                    fail(f"{name} 使用未知资源: {item}")
         if expected["output"] not in resource_names | VANILLA_THINGS:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")
 
@@ -1557,11 +1571,11 @@ def validate_petrochem_building() -> None:
 
 
 def validate_petrochem_recipes() -> None:
-    require_files([PETROCHEM_RECIPE_XML, PETROCHEM_RESOURCE_XML, WOOD_RESOURCE_XML, PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML])
+    require_files([PETROCHEM_RECIPE_XML, PETROCHEM_RESOURCE_XML, WOOD_RESOURCE_XML, COAL_RESOURCE_XML, PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML])
     recipe_defs = def_map(parse_xml(PETROCHEM_RECIPE_XML))
     assert_equal(set(recipe_defs), set(PETROCHEM_RECIPE_EXPECTATIONS), "石化配方 defName 集合")
 
-    resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+    resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML))) | set(def_map(parse_xml(COAL_RESOURCE_XML)))
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
     table_recipes = li_values(building_defs["MMT_HandChemTable"], "recipes")
 
@@ -1582,13 +1596,18 @@ def validate_petrochem_recipes() -> None:
             if filter_node is None:
                 fail(f"{name} 存在缺少 filter 的输入")
             thing_defs = li_values(filter_node, "thingDefs")
-            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
-                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
-            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
-        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
 
-        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
-        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
 
         products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
         if len(products) != 1:
@@ -1606,8 +1625,9 @@ def validate_petrochem_recipes() -> None:
         assert_equal(research, "MMT_BasicPetrochemistry", f"{name} researchPrerequisite")
 
         for _, value, _ in expected["inputs"]:
-            if value not in resource_names:
-                fail(f"{name} 使用未知资源: {value}")
+            for item in ((value,) if isinstance(value, str) else value):
+                if item not in resource_names:
+                    fail(f"{name} 使用未知资源: {item}")
         if expected["output"] not in resource_names:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")
 
@@ -1734,13 +1754,18 @@ def validate_electronics_recipes() -> None:
             if filter_node is None:
                 fail(f"{name} 存在缺少 filter 的输入")
             thing_defs = li_values(filter_node, "thingDefs")
-            if len(thing_defs) != 1 or li_values(filter_node, "categories"):
-                fail(f"{name} 每个输入 filter 必须且只能包含一个 thingDefs 引用")
-            actual_inputs.append(("thingDefs", thing_defs[0], child_text(ingredient, "count")))
-        assert_equal(actual_inputs, expected["inputs"], f"{name} 输入列表")
+            if not thing_defs or li_values(filter_node, "categories"):
+                fail(f"{name} 每个输入 filter 必须只包含 thingDefs 引用")
+            actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
 
-        fixed = li_values(recipe, "./fixedIngredientFilter/thingDefs")
-        assert_equal(fixed, [value for _, value, _ in expected["inputs"]], f"{name} 固定输入列表")
+        fixed = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_fixed = sorted({item for _, value, _ in normalized for item in value})
+        assert_equal(fixed, expected_fixed, f"{name} 固定输入列表")
 
         products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
         if len(products) != 1:
@@ -1759,8 +1784,9 @@ def validate_electronics_recipes() -> None:
         assert_equal(research, "MMT_BasicElectronics", f"{name} researchPrerequisite")
 
         for _, value, _ in expected["inputs"]:
-            if value not in resource_names:
-                fail(f"{name} 使用未知资源: {value}")
+            for item in ((value,) if isinstance(value, str) else value):
+                if item not in resource_names:
+                    fail(f"{name} 使用未知资源: {item}")
         if expected["output"] not in resource_names:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")
 
@@ -1777,6 +1803,45 @@ def validate_electronics() -> None:
     validate_electronics_building()
     validate_electronics_recipes()
     print("electronics: OK")
+
+
+def validate_coal() -> None:
+    require_files([COAL_RESOURCE_XML, COAL_BUILDING_XML, *COAL_ITEM_TEXTURES])
+
+    defs = def_map(parse_xml(COAL_RESOURCE_XML))
+    assert_equal(set(defs), set(COAL_RESOURCE_EXPECTATIONS), "煤炭资源 defName 集合")
+    for name, expected in COAL_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), "Medieval", f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    building_defs = def_map(parse_xml(COAL_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_MineableCoal"}, "煤炭建筑 defName 集合")
+    vein = building_defs["MMT_MineableCoal"]
+    assert_equal(vein.attrib.get("ParentName"), "RockBase", "煤矿脉父类")
+    assert_equal(child_text(vein, "label"), "煤矿脉", "煤矿脉 label")
+    assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "煤矿脉 texPath")
+    assert_equal(child_text(vein, "./statBases/MaxHitPoints"), "1500", "煤矿脉耐久")
+    assert_equal(child_text(vein, "./building/isResourceRock"), "true", "煤矿脉 isResourceRock")
+    assert_equal(child_text(vein, "./building/mineableThing"), "MMT_Coal", "煤矿脉 mineableThing")
+    assert_equal(child_text(vein, "./building/mineableYield"), "75", "煤矿脉 mineableYield")
+    assert_equal(child_text(vein, "./building/veinMineable"), "true", "煤矿脉 veinMineable")
+
+    for path in COAL_ITEM_TEXTURES:
+        assert_png(path)
+
+    for path in (COAL_RESOURCE_XML, COAL_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("coal: OK")
 
 
 def validate_all_xml() -> None:
@@ -1827,6 +1892,7 @@ SUITES = {
     "electronics-building": validate_electronics_building,
     "electronics-recipes": validate_electronics_recipes,
     "electronics": validate_electronics,
+    "coal": validate_coal,
     "all": validate_all,
 }
 
