@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_ComponentCrafting</defName>
+    <label>零件加工</label>
+    <description>学习使用木材与金属组装基础零件、导线与机构件，并搭建装配台。</description>
+    <baseCost>600</baseCost>
+    <techLevel>Industrial</techLevel>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>MMT_AdvancedComponents</defName>
+    <label>高级零件</label>
+    <description>掌握以玻璃钢加工高级零件、高级机构件与太空零件的精密装配工艺。</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MMT_ComponentCrafting</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>MMT_UltraComponents</defName>
+    <label>超级零件</label>
+    <description>以稀有合金与贵金属制造最精密的超级零件，只有机器人装配台能完成。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MMT_AdvancedComponents</li>
+      <li>MMT_AdvancedAlloys</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
