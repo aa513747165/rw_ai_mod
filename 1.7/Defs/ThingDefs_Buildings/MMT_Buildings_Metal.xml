@@ -38,6 +38,8 @@
       <li>MMT_MakeBronze_Hand</li>
       <li>MMT_SmeltSteel_Hand</li>
       <li>MMT_ExtractSilicon_Hand</li>
+      <li>MMT_SmeltSilver_Hand</li>
+      <li>MMT_SmeltGold_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>

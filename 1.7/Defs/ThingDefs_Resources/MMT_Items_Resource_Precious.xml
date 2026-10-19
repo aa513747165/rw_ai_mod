@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_SilverOre</defName>
+    <label>银矿石</label>
+    <description>含银的矿石，可在熔炉中冶炼成银。银主要用作货币和交易品。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_SilverOre</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(180,173,150)</color>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MarketValue>1.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>1800</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_GoldOre</defName>
+    <label>金矿石</label>
+    <description>含金的矿石，可在熔炉中冶炼成金。金是稀有贵金属，主要用于交易和高端制造。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_GoldOre</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(255,215,0)</color>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MarketValue>25.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>

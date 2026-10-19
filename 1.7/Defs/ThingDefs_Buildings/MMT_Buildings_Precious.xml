@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableSilverOre</defName>
+    <label>银矿脉</label>
+    <description>露头的银矿脉，开采后可获得银矿石，冶炼成银。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(65,34,34)</color>
+      <colorTwo>(180,173,150)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1500</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_SilverOre</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>1.0</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>10~16</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableGoldOre</defName>
+    <label>金矿脉</label>
+    <description>露头的金矿脉，开采后可获得金矿石，冶炼成金。十分稀有。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(65,34,34)</color>
+      <colorTwo>(255,215,0)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1500</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_GoldOre</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>0.5</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>8~14</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <RecipeDef>
+    <defName>MMT_SmeltSilver_Hand</defName>
+    <label>冶炼银</label>
+    <description>将银矿石冶炼成银。产出 10。</description>
+    <jobString>正在冶炼银。</jobString>
+    <workAmount>750</workAmount>
+    <workSpeedStat>SmeltingSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_SilverOre</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_SilverOre</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Silver>10</Silver>
+    </products>
+    <skillRequirements>
+      <Crafting>2</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_BasicMetalworking</researchPrerequisite>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_SmeltGold_Hand</defName>
+    <label>冶炼金</label>
+    <description>将金矿石冶炼成金。产出 15。</description>
+    <jobString>正在冶炼金。</jobString>
+    <workAmount>750</workAmount>
+    <workSpeedStat>SmeltingSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_GoldOre</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_GoldOre</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Gold>15</Gold>
+    </products>
+    <skillRequirements>
+      <Crafting>3</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_BasicMetalworking</researchPrerequisite>
+  </RecipeDef>
+</Defs>
