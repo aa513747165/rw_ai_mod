@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Sulfur</defName>
+    <label>硫磺</label>
+    <description>天然产出的黄色矿物，用作橡胶硫化和合成纤维生产中的添加剂。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Sulfur</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(255,255,255)</color>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>7</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>2</Flammability>
+      <Mass>0.05</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
