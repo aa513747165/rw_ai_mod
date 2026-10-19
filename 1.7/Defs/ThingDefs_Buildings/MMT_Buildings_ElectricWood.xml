@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricSawmill</defName>
+    <label>电动锯木机</label>
+    <description>以电力驱动锯片的工作台，可以更快地批量切割原木制作木板和柴火。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricSawmill/MMT_ElectricSawmill</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>80</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>150</costStuffCount>
+    <costList>
+      <ComponentIndustrial>10</ComponentIndustrial>
+      <MMT_ElectronicParts>5</MMT_ElectronicParts>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>5000</WorkToBuild>
+      <MaxHitPoints>170</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-7</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(3,1)</size>
+    <designationCategory>Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeWoodPlanks_Electric</li>
+      <li>MMT_MakeKindling_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>600</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <building>
+      <uninstallWork>2500</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_ElectricWoodworking</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricCharcoalKiln</defName>
+    <label>电动木炭窑</label>
+    <description>以电力加热干馏原木的窑炉，可以更快地烧制木炭。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricCharcoalKiln/MMT_ElectricCharcoalKiln</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.9</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>180</costStuffCount>
+    <costList>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <MMT_ElectronicParts>3</MMT_ElectronicParts>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>3000</WorkToBuild>
+      <MaxHitPoints>270</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Cleanliness>-8</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeCharcoal_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>1500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(217,112,33,0)</glowColor>
+      </li>
+    </comps>
+    <building>
+      <uninstallWork>1850</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_ElectricWoodworking</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

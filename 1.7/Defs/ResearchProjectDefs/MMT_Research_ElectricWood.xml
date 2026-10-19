@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_ElectricWoodworking</defName>
+    <label>电动木材加工</label>
+    <description>学习如何建造以电力驱动的锯木机和木炭窑，更快地将原木加工成木板、柴火和木炭。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>MMT_CharcoalBurning</li>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
