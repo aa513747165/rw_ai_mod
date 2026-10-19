@@ -46,6 +46,8 @@ ELECTRONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electronic
 ELECTRONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electronics.xml"
 COAL_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Coal.xml"
 COAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Coal.xml"
+SULFUR_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Sulfur.xml"
+SULFUR_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sulfur.xml"
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -106,6 +108,12 @@ COAL_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Coal.png"]
 
 COAL_RESOURCE_EXPECTATIONS = {
     "MMT_Coal": {"label": "煤炭", "value": "2.0", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
+}
+
+SULFUR_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Sulfur.png"]
+
+SULFUR_RESOURCE_EXPECTATIONS = {
+    "MMT_Sulfur": {"label": "硫磺", "value": "7", "stack": "300", "flammable": "2", "tex": "Things/Item/MMT/MMT_Sulfur"},
 }
 
 CONCRETE_ITEM_TEXTURES = [
@@ -571,7 +579,7 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
     },
     "MMT_MakeRubber_Hand": {
         "work": "800",
-        "inputs": [("thingDefs", "MMT_Polymers", "30")],
+        "inputs": [("thingDefs", "MMT_Polymers", "30"), ("thingDefs", "MMT_Sulfur", "3")],
         "output": "MMT_Rubber",
         "output_count": "10",
         "skill": "6",
@@ -581,7 +589,7 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
     },
     "MMT_MakeSyntheticFibers_Hand": {
         "work": "1200",
-        "inputs": [("thingDefs", "MMT_Polymers", "25")],
+        "inputs": [("thingDefs", "MMT_Polymers", "25"), ("thingDefs", "MMT_Sulfur", "3")],
         "output": "MMT_SyntheticFibers",
         "output_count": "5",
         "skill": "8",
@@ -1571,11 +1579,11 @@ def validate_petrochem_building() -> None:
 
 
 def validate_petrochem_recipes() -> None:
-    require_files([PETROCHEM_RECIPE_XML, PETROCHEM_RESOURCE_XML, WOOD_RESOURCE_XML, COAL_RESOURCE_XML, PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML])
+    require_files([PETROCHEM_RECIPE_XML, PETROCHEM_RESOURCE_XML, WOOD_RESOURCE_XML, COAL_RESOURCE_XML, SULFUR_RESOURCE_XML, PETROCHEM_RESEARCH_XML, PETROCHEM_BUILDING_XML])
     recipe_defs = def_map(parse_xml(PETROCHEM_RECIPE_XML))
     assert_equal(set(recipe_defs), set(PETROCHEM_RECIPE_EXPECTATIONS), "石化配方 defName 集合")
 
-    resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML))) | set(def_map(parse_xml(COAL_RESOURCE_XML)))
+    resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML))) | set(def_map(parse_xml(COAL_RESOURCE_XML))) | set(def_map(parse_xml(SULFUR_RESOURCE_XML)))
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
     table_recipes = li_values(building_defs["MMT_HandChemTable"], "recipes")
 
@@ -1844,6 +1852,45 @@ def validate_coal() -> None:
     print("coal: OK")
 
 
+def validate_sulfur() -> None:
+    require_files([SULFUR_RESOURCE_XML, SULFUR_BUILDING_XML, *SULFUR_ITEM_TEXTURES])
+
+    defs = def_map(parse_xml(SULFUR_RESOURCE_XML))
+    assert_equal(set(defs), set(SULFUR_RESOURCE_EXPECTATIONS), "硫磺资源 defName 集合")
+    for name, expected in SULFUR_RESOURCE_EXPECTATIONS.items():
+        node = defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(child_text(node, "techLevel"), "Industrial", f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+
+    building_defs = def_map(parse_xml(SULFUR_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_MineableSulfur"}, "硫磺建筑 defName 集合")
+    vein = building_defs["MMT_MineableSulfur"]
+    assert_equal(vein.attrib.get("ParentName"), "RockBase", "硫磺矿脉父类")
+    assert_equal(child_text(vein, "label"), "硫磺矿脉", "硫磺矿脉 label")
+    assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "硫磺矿脉 texPath")
+    assert_equal(child_text(vein, "./statBases/MaxHitPoints"), "1500", "硫磺矿脉耐久")
+    assert_equal(child_text(vein, "./building/isResourceRock"), "true", "硫磺矿脉 isResourceRock")
+    assert_equal(child_text(vein, "./building/mineableThing"), "MMT_Sulfur", "硫磺矿脉 mineableThing")
+    assert_equal(child_text(vein, "./building/mineableYield"), "75", "硫磺矿脉 mineableYield")
+    assert_equal(child_text(vein, "./building/veinMineable"), "true", "硫磺矿脉 veinMineable")
+
+    for path in SULFUR_ITEM_TEXTURES:
+        assert_png(path)
+
+    for path in (SULFUR_RESOURCE_XML, SULFUR_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("sulfur: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -1863,6 +1910,7 @@ def validate_all() -> None:
     validate_wood()
     validate_metal()
     validate_coal()
+    validate_sulfur()
     validate_petrochem()
     validate_electronics()
     validate_all_xml()
@@ -1894,6 +1942,7 @@ SUITES = {
     "electronics-recipes": validate_electronics_recipes,
     "electronics": validate_electronics,
     "coal": validate_coal,
+    "sulfur": validate_sulfur,
     "all": validate_all,
 }
 
