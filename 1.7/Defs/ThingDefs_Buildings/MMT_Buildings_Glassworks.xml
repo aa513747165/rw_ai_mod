@@ -39,6 +39,7 @@
     <recipes>
       <li>MMT_MakeGlassBatch</li>
       <li>MMT_MakeGlass</li>
+      <li>MMT_MakeReinforcedGlass</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
