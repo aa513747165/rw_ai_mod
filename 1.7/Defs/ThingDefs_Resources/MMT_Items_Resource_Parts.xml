@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ComponentMedieval</defName>
+    <label>原始零件</label>
+    <description>各种简易的木石零件，可用于制作原始工具和搭建装配台。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/ComponentMedieval</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Wood_Drop</soundInteract>
+    <soundDrop>Wood_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>6</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>1.5</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Wire</defName>
+    <label>导线</label>
+    <description>由高导电金属拉制的导线，用于在电气设备中传导电流。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/Wires</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>1.5</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.1</Flammability>
+      <Mass>0.2</Mass>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Mechanism</defName>
+    <label>机构件</label>
+    <description>齿轮状的简单机构件，是组装机械设备的基础部件。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/Mechanism</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>200</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1</Flammability>
+      <Mass>0.65</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AdvMechanism</defName>
+    <label>高级机构件</label>
+    <description>结构精密的复杂机构件，用于组装高级机械设备。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/AdvMechanism</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>400</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1</Flammability>
+      <Mass>0.7</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_SpacerComponent</defName>
+    <label>太空零件</label>
+    <description>以玻璃钢与贵金属制造的精密零件，是组装太空时代设备的必需部件。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/AdvancedComponent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>150</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.3</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_UltraComponent</defName>
+    <label>超级零件</label>
+    <description>为最苛刻的应用而微型化并强化的高级计算与能量导引机械，只有机器人装配台才能制造。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Parts/ComponentUltra</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Ultra</techLevel>
+    <statBases>
+      <MarketValue>200</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.3</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
