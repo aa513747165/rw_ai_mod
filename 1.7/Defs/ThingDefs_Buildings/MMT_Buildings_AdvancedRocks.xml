@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableNickelOre</defName>
+    <label>镍矿脉</label>
+    <description>露头的镍矿石矿脉，开采后可获得镍矿石，用于冶炼镍锭和提取钴。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(88,115,175)</color>
+      <colorTwo>(42,208,206)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>10000</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_NickelOre</mineableThing>
+      <mineableYield>50</mineableYield>
+      <mineableScatterCommonality>0.4</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>5~10</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableIlmenite</defName>
+    <label>钛铁矿脉</label>
+    <description>露头的钛铁矿矿脉，开采后可获得钛铁矿石，用于冶炼钛合金。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(160,178,181)</color>
+      <colorTwo>(160,178,195)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>13000</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_IlmeniteOre</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>0.25</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>3~9</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableWolframite</defName>
+    <label>钨锰铁矿脉</label>
+    <description>露头的钨锰铁矿矿脉，开采后可获得钨锰铁矿石，用于冶炼钨合金。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(88,115,175)</color>
+      <colorTwo>(230,230,255)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>20000</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_WolframiteOre</mineableThing>
+      <mineableYield>50</mineableYield>
+      <mineableScatterCommonality>0.15</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>3~9</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+</Defs>
