@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricArcFurnace</defName>
+    <label>电弧炉</label>
+    <description>以电力产生电弧高温的大型熔炉，可以更快地批量冶炼金属并提取硅。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricArcFurnace/MMT_ElectricArcFurnace</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.7</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>180</costStuffCount>
+    <costList>
+      <MMT_ReinforcedConcrete>50</MMT_ReinforcedConcrete>
+      <ComponentIndustrial>15</ComponentIndustrial>
+      <MMT_ElectronicParts>6</MMT_ElectronicParts>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>4500</WorkToBuild>
+      <MaxHitPoints>280</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-8</Cleanliness>
+      <Mass>1000</Mass>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>Production</designationCategory>
+    <recipes>
+      <li>MMT_SmeltCopperBar_Electric</li>
+      <li>MMT_SmeltTinBar_Electric</li>
+      <li>MMT_MakeBronze_Electric</li>
+      <li>MMT_SmeltSteel_Electric</li>
+      <li>MMT_SmeltSilver_Electric</li>
+      <li>MMT_SmeltGold_Electric</li>
+      <li>MMT_ExtractSilicon_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>2500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(217,112,33,0)</glowColor>
+      </li>
+    </comps>
+    <building>
+      <uninstallWork>2000</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_ElectricSmelting</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>
