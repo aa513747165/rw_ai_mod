@@ -337,4 +337,57 @@
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_Glassworking</researchPrerequisite>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeReinforcedGlass</defName>
+    <label>制作强化玻璃</label>
+    <description>在玻璃配合料中加入碳材料和合成纤维，制作强化玻璃。产出 5。</description>
+    <jobString>正在制作强化玻璃。</jobString>
+    <workAmount>1400</workAmount>
+    <workSpeedStat>SmeltingSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_GlassBatch</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Carbon</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_SyntheticFibers</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_GlassBatch</li>
+        <li>MMT_Carbon</li>
+        <li>MMT_SyntheticFibers</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_ReinforcedGlass>5</MMT_ReinforcedGlass>
+    </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_ReinforcedGlassTech</researchPrerequisite>
+  </RecipeDef>
 </Defs>
