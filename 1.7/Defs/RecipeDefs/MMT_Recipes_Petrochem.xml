@@ -88,10 +88,19 @@
         </filter>
         <count>30</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Sulfur</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>MMT_Polymers</li>
+        <li>MMT_Sulfur</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -123,10 +132,19 @@
         </filter>
         <count>25</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Sulfur</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>MMT_Polymers</li>
+        <li>MMT_Sulfur</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
