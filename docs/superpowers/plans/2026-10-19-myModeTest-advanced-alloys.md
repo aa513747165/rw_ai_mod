@@ -69,7 +69,7 @@ ADVANCED_ALLOY_EXPECTATIONS = {
     "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8"},
     "MMT_StelliteAlloy": {"label": "司太立合金", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24"},
     "MMT_NitinolAlloy": {"label": "镍钛诺合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95"},
-    "MMT_PobediteAlloy": {"label": "胜利合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "胜利制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4"},
+    "MMT_PobediteAlloy": {"label": "钴硬质合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4"},
 }
 
 ADVANCED_MINEABLE_EXPECTATIONS = {
@@ -336,10 +336,10 @@ cp "Hardcore-SK/Mods/Core_SK/Textures/Things/Item/Ores/Wolframite/Wolframite_c.p
 
 - [ ] **Step 3: 编写合金资源 XML**
 
-`MMT_Items_Resource_AdvancedAlloys.xml` 含 8 个 ThingDef。带 stuff 的 5 种（镍锭/钛/司太立/镍钛诺/胜利）结构参照 `MMT_Items_Resource_Metal.xml` 的 `MMT_Bronze`；不带 stuff 的 3 种（钴/铬/钨）结构参照同文件矿石段但用 Ingot 贴图。统一要点：
+`MMT_Items_Resource_AdvancedAlloys.xml` 含 8 个 ThingDef。带 stuff 的 5 种（镍锭/钛/司太立/镍钛诺/钴硬质）结构参照 `MMT_Items_Resource_Metal.xml` 的 `MMT_Bronze`；不带 stuff 的 3 种（钴/铬/钨）结构参照同文件矿石段但用 Ingot 贴图。统一要点：
 
 - texPath 一律 `Things/Item/MMT/MMT_Ingot/MMT_Ingot`，`Graphic_StackCount`，颜色以 Task 1 常量为准；
-- 统一 statBases：DeteriorationRate 0、Flammability 0；Mass：钴/铬 0.45、钨 0.35、镍锭 0.45、钛 0.2、司太立 0.3、镍钛诺 0.3、胜利 0.5；
+- 统一 statBases：DeteriorationRate 0、Flammability 0；Mass：钴/铬 0.45、钨 0.35、镍锭 0.45、钛 0.2、司太立 0.3、镍钛诺 0.3、钴硬质 0.5；
 - 带 stuff 的 5 种：`useHitPoints true` + stuffProps（categories 仅 `Metallic`、constructEffect `ConstructMetal`、stuffAdjective/color/statFactors 以 Task 1 常量为准，statFactors 另含 Flammability 0）+ `terrainAffordanceNeeded Medium`；
 - 钴/铬/钨：不写 stuffProps、不写 useHitPoints；
 - label/价值/堆叠以 Task 1 `ADVANCED_ALLOY_EXPECTATIONS` 为准。
@@ -350,7 +350,7 @@ cp "Hardcore-SK/Mods/Core_SK/Textures/Things/Item/Ores/Wolframite/Wolframite_c.p
 
 - [ ] **Step 5: 编写研究 XML**
 
-`MMT_Research_AdvancedAlloys.xml` 含 2 个 ResearchProjectDef，结构参照 `MMT_Research_ElectricElectronics.xml`。字段以 Task 1 Step 3 研究断言为准（精炼 1600/Industrial/前置 MMT_ElectricSmelting/坐标 12.00,2.00；合金 2300/Spacer/前置 MMT_AdvancedMetalRefining/坐标 13.00,3.00）。description 示例（高级合金）：`掌握钨、钛等高级合金的电弧熔炼工艺，可合炼司太立、镍钛诺、胜利合金与铁钛合金（玻璃钢）。`
+`MMT_Research_AdvancedAlloys.xml` 含 2 个 ResearchProjectDef，结构参照 `MMT_Research_ElectricElectronics.xml`。字段以 Task 1 Step 3 研究断言为准（精炼 1600/Industrial/前置 MMT_ElectricSmelting/坐标 12.00,2.00；合金 2300/Spacer/前置 MMT_AdvancedMetalRefining/坐标 13.00,3.00）。description 示例（高级合金）：`掌握钨、钛等高级合金的电弧熔炼工艺，可合炼司太立、镍钛诺、钴硬质合金与铁钛合金（玻璃钢）。`
 
 - [ ] **Step 6: 提交**
 
@@ -372,7 +372,7 @@ git commit -m "feat: 添加高级合金资源、矿脉与研究"
 
 - [ ] **Step 1: 编写配方 XML**
 
-`MMT_Recipes_AdvancedAlloys.xml` 含 9 个 RecipeDef，结构参照 `MMT_Recipes_Electric.xml`（统一 `SmeltingSpeed`/`Smelt`/`Recipe_Smelt`、workSkill Crafting、learn 0.8、不写 recipeUsers、写 researchPrerequisite）。全部数值以 Task 1 `ADVANCED_ALLOYS_RECIPE_EXPECTATIONS` 为准。label 依次为：冶炼镍锭、提取钴、提取铬、冶炼钨合金、冶炼钛合金、合炼司太立合金、合炼镍钛诺合金、合炼胜利合金、合炼铁钛合金。description 需注明产出数量（如 `将镍矿石冶炼成镍锭。产出 15。`）。
+`MMT_Recipes_AdvancedAlloys.xml` 含 9 个 RecipeDef，结构参照 `MMT_Recipes_Electric.xml`（统一 `SmeltingSpeed`/`Smelt`/`Recipe_Smelt`、workSkill Crafting、learn 0.8、不写 recipeUsers、写 researchPrerequisite）。全部数值以 Task 1 `ADVANCED_ALLOYS_RECIPE_EXPECTATIONS` 为准。label 依次为：冶炼镍锭、提取钴、提取铬、冶炼钨合金、冶炼钛合金、合炼司太立合金、合炼镍钛诺合金、合炼钴硬质合金、合炼铁钛合金。description 需注明产出数量（如 `将镍矿石冶炼成镍锭。产出 15。`）。
 
 - [ ] **Step 2: 修改电弧炉挂载**
 

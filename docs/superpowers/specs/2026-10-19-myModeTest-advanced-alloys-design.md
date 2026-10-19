@@ -9,7 +9,7 @@
 
 - 3 种新矿石（镍矿、钛铁矿、钨锰铁矿）及自设计矿脉；
 - 3 种中间金属（镍锭、钴、铬）；
-- 5 种高级合金（钨、钛、司太立、镍钛诺、胜利合金）+ 铁钛合金（产出原版玻璃钢 Plasteel）；
+- 5 种高级合金（钨、钛、司太立、镍钛诺、钴硬质合金）+ 铁钛合金（产出原版玻璃钢 Plasteel）；
 - 9 个电弧炉配方 + 2 个新研究。
 
 Mod 独立实现，不依赖 HSK。
@@ -35,7 +35,7 @@ Mod 独立实现，不依赖 HSK。
 | 研究分层 | 两级：精炼（Industrial）→ 高级合金（Spacer），对标 HSK Metals_C3 → Metals_D1 |
 | 配方挂点 | 全部挂现有 `MMT_ElectricArcFurnace`，零新建筑（与 HSK 一致） |
 | 手动版本 | 不做（HSK 中这些配方本就只在电弧炉） |
-| 碳纤维合金 | 不新造，胜利/铁钛配方直接使用现有 `MMT_Carbon`（碳材料，YAGNI） |
+| 碳纤维合金 | 不新造，钴硬质/铁钛配方直接使用现有 `MMT_Carbon`（碳材料，YAGNI） |
 | HSK 自定义 ThingCategory | HCM/RAR/RARBar/USLDBar 等一律替换为 `ResourcesRaw`（沿用本 Mod 惯例） |
 | HSK 自定义 stuff 分类 | SolidMetallic/StrongMetallic/RuggedMetallic/HeavyMetallic → 仅 `Metallic`（1.7 原版安全集） |
 | 贴图 | 矿石贴图复制 HSK（已授权）；锭/合金复用现有 `MMT_Ingot` 贴图改色；矿脉用原版贴图零复制 |
@@ -75,10 +75,10 @@ texPath 分别为 `Things/Item/MMT/MMT_Ore/MMT_NickelOre` 等。
 | `MMT_Titanium` | 钛合金 | (160,178,181) | 45.0 | 75 | MaxHP 3.3 / Beauty 1.8 / Flammability 0 / WorkToMake 3.0 / WorkToBuild 3.0 / DoorOpenSpeed 1.3 / Mass 0.8，statOffsets Beauty 3 |
 | `MMT_StelliteAlloy` | 司太立合金 | (125,146,178) | 30.0 | 150 | MaxHP 3.55 / Beauty 1.5 / WorkToMake 2.0 / WorkToBuild 2.2 / DoorOpenSpeed 0.95 / Mass 1.24 |
 | `MMT_NitinolAlloy` | 镍钛诺合金 | (175,175,175) | 27.0 | 150 | MaxHP 3.6 / Beauty 1.6 / WorkToMake 2.6 / WorkToBuild 2.4 / DoorOpenSpeed 1.2 / Mass 0.95，statOffsets Beauty 3 |
-| `MMT_PobediteAlloy` | 胜利合金 | (85,85,85) | 33.0 | 150 | MaxHP 4.0 / Beauty 1.1 / WorkToMake 2.8 / WorkToBuild 2.8 / DoorOpenSpeed 0.7 / Mass 1.4 |
+| `MMT_PobediteAlloy` | 钴硬质合金 | (85,85,85) | 33.0 | 150 | MaxHP 4.0 / Beauty 1.1 / WorkToMake 2.8 / WorkToBuild 2.8 / DoorOpenSpeed 0.7 / Mass 1.4 |
 
 - 统一基础属性：DeteriorationRate 0、Flammability 0、soundInteract/soundDrop `Metal_Drop`。
-- stuffProps 内统一：categories 仅 `Metallic`、constructEffect `ConstructMetal`、stuffAdjective 中文（镍制/钛制/司太立制/镍钛诺制/胜利制）、color 同上、Flammability 0。
+- stuffProps 内统一：categories 仅 `Metallic`、constructEffect `ConstructMetal`、stuffAdjective 中文（镍制/钛制/司太立制/镍钛诺制/钴硬质制）、color 同上、Flammability 0。
 - 不带 stuffProps 的 3 种（钴/铬/钨）不设 useHitPoints（与 HSK 一致），其余设 `useHitPoints true`。
 - HSK 的 Armor/Insulation/伤害倍率类 StuffPower 属性本包不移植（本 Mod 尚无武器/护甲内容，YAGNI；后续做装备包时再补）。
 
@@ -118,7 +118,7 @@ texPath 分别为 `Things/Item/MMT/MMT_Ore/MMT_NickelOre` 等。
 | `MMT_SmeltTitanium` | 冶炼钛合金 | MMT_IlmeniteOre 15 → MMT_Titanium 15 | 3300 | 16 |
 | `MMT_MakeStellite` | 合炼司太立合金 | MMT_Cobalt 5 + MMT_Chromium 13 + MMT_Tungsten 2 → MMT_StelliteAlloy 20 | 2100 | 17 |
 | `MMT_MakeNitinol` | 合炼镍钛诺合金 | MMT_Titanium 4 + MMT_NickelBar 11 → MMT_NitinolAlloy 15 | 2600 | 16 |
-| `MMT_MakePobedite` | 合炼胜利合金 | MMT_Tungsten 3 + MMT_Carbon 3 + MMT_Cobalt 3 → MMT_PobediteAlloy 10 | 2700 | 18 |
+| `MMT_MakePobedite` | 合炼钴硬质合金 | MMT_Tungsten 3 + MMT_Carbon 3 + MMT_Cobalt 3 → MMT_PobediteAlloy 10 | 2700 | 18 |
 | `MMT_MakeFerrotitanium` | 合炼铁钛合金 | MMT_Titanium 5 + Steel 12 + MMT_Carbon 3 → Plasteel 15 | 2400 | 15 |
 
 数值全部取 HSK 原值（工作量/技能/输入产出比）。
