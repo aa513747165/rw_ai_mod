@@ -38,6 +38,8 @@
     <designationCategory>Production</designationCategory>
     <recipes>
       <li>MMT_AssembleElectronicParts_Hand</li>
+      <li>MMT_AssembleIC_Hand</li>
+      <li>MMT_AssembleMicrochip_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>
@@ -51,6 +53,7 @@
     </placeWorkers>
     <researchPrerequisites>
       <li>MMT_BasicElectronics</li>
+      <li>MMT_IntegratedCircuitTech</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
   </ThingDef>

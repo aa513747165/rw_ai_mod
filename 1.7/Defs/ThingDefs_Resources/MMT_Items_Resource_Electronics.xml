@@ -47,4 +47,52 @@
       <li>ResourcesRaw</li>
     </thingCategories>
   </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_IntegratedCircuit</defName>
+    <label>集成电路</label>
+    <description>在半导体基板上集成的电路，用于制造更高级的电子设备。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/IntegratedCircuit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>55.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Microchip</defName>
+    <label>微芯片</label>
+    <description>集成了微处理器的芯片，用于制造最高级的电子设备。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/Microchip</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>100.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.3</Mass>
+    </statBases>
+    <stackLimit>25</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
 </Defs>
