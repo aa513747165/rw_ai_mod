@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Coal</defName>
+    <label>煤炭</label>
+    <description>黑色的可燃矿石，是金属冶炼中有用的反应剂，可替代木炭作为碳源。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Coal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(85,85,85)</color>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MarketValue>2.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>3</Flammability>
+      <Mass>0.2</Mass>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>

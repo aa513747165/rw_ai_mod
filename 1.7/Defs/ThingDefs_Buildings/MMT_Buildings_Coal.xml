@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableCoal</defName>
+    <label>煤矿脉</label>
+    <description>露头的煤矿脉，开采后可获得煤炭，用作冶炼的碳源。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(65,34,34)</color>
+      <colorTwo>(147,144,134)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1500</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_Coal</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>1.2</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>11~18</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+</Defs>
