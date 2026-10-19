@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_ElectricElectronics</defName>
+    <label>电动电子工艺</label>
+    <description>学习如何建造以电力驱动的电子工作台，更快地组装电子元件、集成电路和微芯片。</description>
+    <baseCost>2200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>MMT_IntegratedCircuitTech</li>
+    </prerequisites>
+    <researchViewX>18.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
