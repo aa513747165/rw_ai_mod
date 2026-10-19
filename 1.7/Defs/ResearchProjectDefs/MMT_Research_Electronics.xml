@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_BasicElectronics</defName>
+    <label>基础电子工艺</label>
+    <description>学习如何从砂中提取硅，并将硅、铜锭和玻璃组装成电子元件。</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

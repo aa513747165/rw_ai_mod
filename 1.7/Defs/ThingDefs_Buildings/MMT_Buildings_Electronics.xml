@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_HandElectronicsTable</defName>
+    <label>手动电子工作台</label>
+    <description>依靠人力精细操作的电子工作台，用于组装电子元件。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_HandElectronicsTable/MMT_HandElectronicsTable</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>80</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>140</costStuffCount>
+    <costList>
+      <ComponentIndustrial>5</ComponentIndustrial>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>2200</WorkToBuild>
+      <MaxHitPoints>220</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-3</Cleanliness>
+      <Mass>200</Mass>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>Production</designationCategory>
+    <recipes>
+      <li>MMT_AssembleElectronicParts_Hand</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <building>
+      <uninstallWork>1300</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_BasicElectronics</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>
