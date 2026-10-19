@@ -162,6 +162,7 @@
         <filter>
           <thingDefs>
             <li>MMT_Charcoal</li>
+            <li>MMT_Coal</li>
           </thingDefs>
         </filter>
         <count>25</count>
@@ -179,6 +180,7 @@
       <thingDefs>
         <li>MMT_Polymers</li>
         <li>MMT_Charcoal</li>
+        <li>MMT_Coal</li>
         <li>MMT_Rubber</li>
       </thingDefs>
     </fixedIngredientFilter>

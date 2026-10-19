@@ -136,6 +136,7 @@
         <filter>
           <thingDefs>
             <li>MMT_Charcoal</li>
+            <li>MMT_Coal</li>
           </thingDefs>
         </filter>
         <count>13</count>
@@ -145,6 +146,7 @@
       <thingDefs>
         <li>MMT_IronOre</li>
         <li>MMT_Charcoal</li>
+        <li>MMT_Coal</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
