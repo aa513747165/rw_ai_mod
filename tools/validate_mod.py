@@ -409,11 +409,11 @@ RECIPE_EXPECTATIONS = {
     },
 }
 
-VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
+VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "AnimalProductRaw", "PlantFoodRaw", "FoodRaw"}
 MMT_CATEGORIES = {"MMT_MetallicBar"}
-VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
+VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -3686,6 +3686,198 @@ def validate_basic_metallurgy() -> None:
     print("basic-metallurgy: OK")
 
 
+def validate_stone_construction() -> None:
+    """B3 石料建材：农业辅料资源/盐链/电动混凝土线的专项校验。"""
+    require_files([
+        AGRICULTURE_RESOURCE_XML,
+        AGRICULTURE_RECIPE_XML,
+        AGRICULTURE_RESEARCH_XML,
+        AGRICULTURE_BUILDING_XML,
+        *AGRICULTURE_ITEM_TEXTURES,
+        *AGRICULTURE_BUILDING_TEXTURES,
+    ])
+
+    # 农业辅料资源
+    resource_defs = def_map(parse_xml(AGRICULTURE_RESOURCE_XML))
+    assert_equal(set(resource_defs), {"MMT_Compost", "MMT_Fertilizer", "MMT_Dirt", "MMT_Salt"}, "农业资源 defName 集合")
+
+    compost = resource_defs["MMT_Compost"]
+    assert_equal(child_text(compost, "label"), "堆肥料", "堆肥 label")
+    assert_equal(child_text(compost, "./statBases/MarketValue"), "2.4", "堆肥 MarketValue")
+    assert_equal(child_text(compost, "stackLimit"), "300", "堆肥 stackLimit")
+    assert_equal(child_text(compost, "./statBases/DeteriorationRate"), "5", "堆肥 DeteriorationRate")
+    assert_equal(child_text(compost, "tradeability"), "None", "堆肥 tradeability")
+    assert_equal(li_values(compost, "thingCategories"), ["ResourcesRaw"], "堆肥 thingCategories")
+
+    fertilizer = resource_defs["MMT_Fertilizer"]
+    assert_equal(child_text(fertilizer, "label"), "肥料", "肥料 label")
+    assert_equal(child_text(fertilizer, "./statBases/MarketValue"), "3.8", "肥料 MarketValue")
+    assert_equal(child_text(fertilizer, "stackLimit"), "300", "肥料 stackLimit")
+    assert_equal(child_text(fertilizer, "./statBases/DeteriorationRate"), "5", "肥料 DeteriorationRate")
+    assert_equal(li_values(fertilizer, "thingCategories"), ["ResourcesRaw"], "肥料 thingCategories")
+
+    dirt = resource_defs["MMT_Dirt"]
+    assert_equal(child_text(dirt, "label"), "土堆", "土堆 label")
+    assert_equal(child_text(dirt, "./statBases/MarketValue"), "0.2", "土堆 MarketValue")
+    assert_equal(child_text(dirt, "stackLimit"), "900", "土堆 stackLimit")
+    assert_equal(child_text(dirt, "./statBases/DeteriorationRate"), "0", "土堆 DeteriorationRate")
+    assert_equal(li_values(dirt, "thingCategories"), ["ResourcesRaw"], "土堆 thingCategories")
+
+    salt = resource_defs["MMT_Salt"]
+    assert_equal(child_text(salt, "label"), "盐", "盐 label")
+    assert_equal(child_text(salt, "./statBases/MarketValue"), "1", "盐 MarketValue")
+    assert_equal(child_text(salt, "stackLimit"), "600", "盐 stackLimit")
+    assert_equal(li_values(salt, "thingCategories"), ["ResourcesRaw"], "盐 thingCategories")
+    if salt.find("./statBases/Nutrition") is not None or salt.find("ingestible") is not None:
+        fail("盐不应带食物属性（MMT 不做食物链）")
+    if salt.find("deepCountPerPortion") is not None:
+        fail("盐不应带深钻井参数（属非目标）")
+
+    # 盐矿脉 + 挖盐点
+    building_defs = def_map(parse_xml(AGRICULTURE_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_MineableSalt", "MMT_SaltMine"}, "农业建筑 defName 集合")
+
+    vein = building_defs["MMT_MineableSalt"]
+    assert_equal(child_text(vein, "./building/mineableThing"), "MMT_Salt", "盐矿脉产出")
+    assert_equal(child_text(vein, "./building/mineableYield"), "150", "盐矿脉产量")
+    assert_equal(child_text(vein, "./building/mineableScatterCommonality"), "1.2", "盐矿脉散布")
+    assert_equal(child_text(vein, "./building/mineableScatterLumpSizeRange"), "5~10", "盐矿脉矿团")
+
+    mine = building_defs["MMT_SaltMine"]
+    assert_equal(child_text(mine, "thingClass"), "Building_WorkTable", "挖盐点 thingClass")
+    assert_equal(child_text(mine, "size"), "(1,1)", "挖盐点尺寸")
+    assert_equal(child_text(mine, "terrainAffordanceNeeded"), "SmoothableStone", "挖盐点地形需求")
+    assert_equal(child_text(mine, "designationCategory"), "MMT_Production", "挖盐点建造分类")
+    assert_equal(li_values(mine, "recipes"), ["MMT_MineSalt"], "挖盐点配方列表")
+
+    # 农业配方（堆肥/肥料/土堆×2/挖盐）
+    recipe_defs = def_map(parse_xml(AGRICULTURE_RECIPE_XML))
+    assert_equal(set(recipe_defs), {"MMT_MakeCompost", "MMT_MakeFertilizer", "MMT_MakeDirt", "MMT_MakeDirt_Hand", "MMT_MineSalt"}, "农业配方 defName 集合")
+
+    make_compost = recipe_defs["MMT_MakeCompost"]
+    assert_equal(child_text(make_compost, "workAmount"), "625", "堆肥 workAmount")
+    assert_equal(sorted(li_values(make_compost, "recipeUsers")), ["ButcherSpot", "ElectricStove", "FueledStove", "TableButcher"], "堆肥挂载建筑")
+    assert_equal(sorted(li_values(make_compost, "./ingredients/li[1]/filter/categories")), ["AnimalProductRaw", "MeatRaw"], "堆肥输入1类别")
+    assert_equal(child_text(make_compost, "./ingredients/li[1]/count"), "25", "堆肥输入1数量")
+    assert_equal(li_values(make_compost, "./ingredients/li[2]/filter/categories"), ["PlantFoodRaw"], "堆肥输入2类别")
+    assert_equal(sorted(li_values(make_compost, "./ingredients/li[2]/filter/thingDefs")), ["Hay", "MMT_Ash"], "堆肥输入2物品")
+    assert_equal(child_text(make_compost, "./ingredients/li[2]/count"), "5", "堆肥输入2数量")
+    assert_equal(li_values(make_compost, "./fixedIngredientFilter/categories"), ["FoodRaw"], "堆肥固定过滤类别")
+    assert_equal(sorted(li_values(make_compost, "./fixedIngredientFilter/thingDefs")), ["Hay", "MMT_Ash"], "堆肥固定过滤物品")
+    compost_products = [(node.tag, (node.text or "").strip()) for node in make_compost.findall("./products/*")]
+    assert_equal(compost_products, [("MMT_Compost", "5")], "堆肥产出")
+    assert_equal(child_text(make_compost, "researchPrerequisite"), "MMT_AgricultureBasic", "堆肥研究")
+
+    make_fertilizer = recipe_defs["MMT_MakeFertilizer"]
+    assert_equal(child_text(make_fertilizer, "workAmount"), "10000", "肥料 workAmount")
+    assert_equal(sorted(li_values(make_fertilizer, "recipeUsers")), ["ButcherSpot", "ElectricStove", "FueledStove", "TableButcher"], "肥料挂载建筑")
+    assert_equal(li_values(make_fertilizer, "./ingredients/li/filter/thingDefs"), ["MMT_Compost"], "肥料输入")
+    assert_equal(child_text(make_fertilizer, "./ingredients/li/count"), "10", "肥料输入数量")
+    fertilizer_products = [(node.tag, (node.text or "").strip()) for node in make_fertilizer.findall("./products/*")]
+    assert_equal(fertilizer_products, [("MMT_Fertilizer", "10")], "肥料产出")
+    assert_equal(child_text(make_fertilizer, "researchPrerequisite"), "MMT_AgricultureBasic", "肥料研究")
+
+    make_dirt = recipe_defs["MMT_MakeDirt"]
+    assert_equal(child_text(make_dirt, "workAmount"), "300", "土堆 workAmount")
+    assert_equal(li_values(make_dirt, "recipeUsers"), ["ButcherSpot"], "土堆挂载建筑")
+    dirt_products = [(node.tag, (node.text or "").strip()) for node in make_dirt.findall("./products/*")]
+    assert_equal(dirt_products, [("MMT_Dirt", "3")], "土堆产出")
+    assert_equal(child_text(make_dirt, "researchPrerequisite"), "MMT_AgricultureBasic", "土堆研究")
+
+    make_dirt_hand = recipe_defs["MMT_MakeDirt_Hand"]
+    assert_equal(child_text(make_dirt_hand, "workAmount"), "3000", "手动土堆 workAmount")
+    assert_equal(li_values(make_dirt_hand, "recipeUsers"), [], "手动土堆不写 recipeUsers（建筑 recipes 列表挂载）")
+    hand_dirt_products = [(node.tag, (node.text or "").strip()) for node in make_dirt_hand.findall("./products/*")]
+    assert_equal(hand_dirt_products, [("MMT_Dirt", "30")], "手动土堆产出")
+    assert_equal(child_text(make_dirt_hand, "researchPrerequisite"), "MMT_ConcreteBasic", "手动土堆研究")
+
+    mine_salt = recipe_defs["MMT_MineSalt"]
+    assert_equal(child_text(mine_salt, "workAmount"), "1800", "挖盐 workAmount")
+    assert_equal(child_text(mine_salt, "workSkill"), "Mining", "挖盐 workSkill")
+    salt_products = [(node.tag, (node.text or "").strip()) for node in mine_salt.findall("./products/*")]
+    assert_equal(salt_products, [("MMT_Salt", "5")], "挖盐产出")
+
+    # 手动搅拌器挂载手动土堆
+    concrete_building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
+    mixer_recipes = li_values(concrete_building_defs["MMT_ConcreteMixer"], "recipes")
+    if "MMT_MakeDirt_Hand" not in mixer_recipes:
+        fail("MMT_MakeDirt_Hand 未挂载到手动混凝土搅拌机")
+
+    # 电动搅拌机
+    e_mixer = concrete_building_defs["MMT_EConcreteMixer"]
+    assert_equal(child_text(e_mixer, "label"), "电动混凝土搅拌机", "电动搅拌机 label")
+    assert_equal(child_text(e_mixer, "thingClass"), "Building_WorkTable", "电动搅拌机 thingClass")
+    assert_equal(child_text(e_mixer, "size"), "(2,1)", "电动搅拌机尺寸")
+    assert_equal(child_text(e_mixer, "costStuffCount"), "115", "电动搅拌机材料数")
+    assert_equal(child_text(e_mixer, "./statBases/WorkToBuild"), "5000", "电动搅拌机 WorkToBuild")
+    assert_equal(child_text(e_mixer, "designationCategory"), "MMT_Production", "电动搅拌机建造分类")
+    assert_equal(child_text(e_mixer, "./comps/li[@Class='CompProperties_Power']/basePowerConsumption"), "500", "电动搅拌机耗电")
+    assert_equal(li_values(e_mixer, "researchPrerequisites"), ["MMT_ConcreteAdvanced"], "电动搅拌机研究")
+    assert_equal(child_text(e_mixer, "constructionSkillPrerequisite"), "11", "电动搅拌机建造技能")
+    e_mixer_costs = [(node.tag, (node.text or "").strip()) for node in e_mixer.findall("./costList/*")]
+    assert_equal(e_mixer_costs, [("MMT_Rubber", "45"), ("ComponentIndustrial", "10"), ("MMT_ElectronicParts", "5"), ("MMT_Mechanism", "5")], "电动搅拌机造价")
+    assert_equal(sorted(li_values(e_mixer, "recipes")), ["MMT_MakeDirt_Electric", "MMT_MixConcrete_Electric"], "电动搅拌机配方列表")
+
+    # 混凝土电动配方
+    concrete_recipe_defs = def_map(parse_xml(CONCRETE_RECIPE_XML))
+    for name in ("MMT_MixConcrete_Electric", "MMT_MakeReinforcedConcrete_Electric", "MMT_MakeDirt_Electric"):
+        if name not in concrete_recipe_defs:
+            fail(f"{name} 不存在于混凝土配方文件")
+
+    mix_electric = concrete_recipe_defs["MMT_MixConcrete_Electric"]
+    assert_equal(child_text(mix_electric, "workAmount"), "600", "电动混凝土 workAmount")
+    assert_equal(child_text(mix_electric, "./skillRequirements/Crafting"), "6", "电动混凝土技能")
+    assert_equal(child_text(mix_electric, "researchPrerequisite"), "MMT_ConcreteAdvanced", "电动混凝土研究")
+    mix_products = [(node.tag, (node.text or "").strip()) for node in mix_electric.findall("./products/*")]
+    assert_equal(mix_products, [("MMT_Concrete", "15")], "电动混凝土产出")
+
+    reinforced_electric = concrete_recipe_defs["MMT_MakeReinforcedConcrete_Electric"]
+    assert_equal(child_text(reinforced_electric, "workAmount"), "1200", "电动钢筋混凝土 workAmount")
+    assert_equal(child_text(reinforced_electric, "./skillRequirements/Crafting"), "7", "电动钢筋混凝土技能")
+    assert_equal(li_values(reinforced_electric, "./ingredients/li[1]/filter/categories"), ["MMT_MetallicBar"], "电动钢筋混凝土输入类别")
+    assert_equal(child_text(reinforced_electric, "./ingredients/li[1]/count"), "20", "电动钢筋混凝土输入数量")
+    reinforced_products = [(node.tag, (node.text or "").strip()) for node in reinforced_electric.findall("./products/*")]
+    assert_equal(reinforced_products, [("MMT_ReinforcedConcrete", "16")], "电动钢筋混凝土产出")
+    if reinforced_electric.find("researchPrerequisite") is not None:
+        fail("电动钢筋混凝土不应设研究前置（对齐 HSK，靠装配台建筑前置）")
+
+    dirt_electric = concrete_recipe_defs["MMT_MakeDirt_Electric"]
+    assert_equal(child_text(dirt_electric, "workAmount"), "1500", "电动土堆 workAmount")
+    e_dirt_products = [(node.tag, (node.text or "").strip()) for node in dirt_electric.findall("./products/*")]
+    assert_equal(e_dirt_products, [("MMT_Dirt", "30")], "电动土堆产出")
+    assert_equal(child_text(dirt_electric, "researchPrerequisite"), "MMT_ConcreteAdvanced", "电动土堆研究")
+
+    # 电动装配台挂载电动钢筋混凝土
+    parts_building_defs = def_map(parse_xml(PARTS_BUILDING_XML))
+    bench_recipes = li_values(parts_building_defs["MMT_ElectricAssemblyBench"], "recipes")
+    if "MMT_MakeReinforcedConcrete_Electric" not in bench_recipes:
+        fail("MMT_MakeReinforcedConcrete_Electric 未挂载到电动装配台")
+
+    # 研究
+    agriculture_research = def_map(parse_xml(AGRICULTURE_RESEARCH_XML))["MMT_AgricultureBasic"]
+    assert_equal(child_text(agriculture_research, "baseCost"), "150", "农业 I baseCost")
+    assert_equal(child_text(agriculture_research, "techLevel"), "Neolithic", "农业 I techLevel")
+    assert_equal(child_text(agriculture_research, "tab"), "MMT_ResearchTab", "农业 I tab")
+    assert_equal(child_text(agriculture_research, "researchViewX"), "0.00", "农业 I 坐标X")
+    assert_equal(child_text(agriculture_research, "researchViewY"), "2.00", "农业 I 坐标Y")
+
+    concrete_research = def_map(parse_xml(CONCRETE_RESEARCH_XML))["MMT_ConcreteAdvanced"]
+    assert_equal(child_text(concrete_research, "baseCost"), "1000", "混凝土 II baseCost")
+    assert_equal(child_text(concrete_research, "techLevel"), "Industrial", "混凝土 II techLevel")
+    assert_equal(child_text(concrete_research, "tab"), "MMT_ResearchTab", "混凝土 II tab")
+    assert_equal(li_values(concrete_research, "prerequisites"), ["MMT_ConcreteBasic"], "混凝土 II 前置")
+    assert_equal(child_text(concrete_research, "researchViewX"), "8.00", "混凝土 II 坐标X")
+    assert_equal(child_text(concrete_research, "researchViewY"), "0.00", "混凝土 II 坐标Y")
+
+    for path in (*AGRICULTURE_ITEM_TEXTURES, *AGRICULTURE_BUILDING_TEXTURES):
+        assert_png(path)
+
+    for path in (AGRICULTURE_RESOURCE_XML, AGRICULTURE_RECIPE_XML, AGRICULTURE_RESEARCH_XML, AGRICULTURE_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("stone-construction: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -3707,6 +3899,7 @@ def validate_all() -> None:
     validate_advanced_alloys()
     validate_parts()
     validate_basic_metallurgy()
+    validate_stone_construction()
     validate_all_xml()
 
 
@@ -3746,6 +3939,7 @@ SUITES = {
     "sulfur": validate_sulfur,
     "precious": validate_precious,
     "basic-metallurgy": validate_basic_metallurgy,
+    "stone-construction": validate_stone_construction,
     "all": validate_all,
 }
 
