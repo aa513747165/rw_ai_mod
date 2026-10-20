@@ -21,7 +21,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_RARBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -63,7 +63,7 @@
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_RARBar</li>
     </thingCategories>
   </ThingDef>
 
@@ -87,7 +87,7 @@
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_RARBar</li>
     </thingCategories>
   </ThingDef>
 
@@ -111,7 +111,8 @@
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_RARBar</li>
+      <li>MMT_USLDHBar</li>
     </thingCategories>
   </ThingDef>
 
@@ -136,7 +137,8 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>75</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_RARBar</li>
+      <li>MMT_USLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -182,7 +184,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_USLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -225,7 +227,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_USLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -271,7 +273,8 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_USLDBar</li>
+      <li>MMT_USLDHBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -288,6 +291,185 @@
         <WorkToBuild>2.8</WorkToBuild>
         <Mass>1.4</Mass>
         <DoorOpenSpeed>0.7</DoorOpenSpeed>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_DepletedUranium</defName>
+    <label>贫铀合金</label>
+    <description>由铀矿精炼而成的贫铀合金，密度极高且带有微弱放射性，是顶级穿甲与防护材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(20,94,30)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>18.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>MMT_RADBar</li>
+      <li>MMT_USLDHBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>贫铀制</stuffAdjective>
+      <color>(20,94,30)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>3.05</MaxHitPoints>
+        <Beauty>0</Beauty>
+        <Flammability>0</Flammability>
+        <WorkToMake>2.3</WorkToMake>
+        <WorkToBuild>2.3</WorkToBuild>
+        <Mass>1.6</Mass>
+        <MarketValue>0.7</MarketValue>
+        <DoorOpenSpeed>0.75</DoorOpenSpeed>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_SteelBar</defName>
+    <label>斯坦合金</label>
+    <description>由钢和镍合炼而成的斯坦合金，比普通的钢更坚固耐用。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(120,147,131)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>8.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.4</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>MMT_USLDBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>斯坦制</stuffAdjective>
+      <color>(120,147,131)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>2.2</MaxHitPoints>
+        <Beauty>1.4</Beauty>
+        <Flammability>0</Flammability>
+        <WorkToMake>1.5</WorkToMake>
+        <WorkToBuild>1.5</WorkToBuild>
+        <Mass>1.3</Mass>
+        <MarketValue>0.7</MarketValue>
+        <DoorOpenSpeed>0.8</DoorOpenSpeed>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CupronickelAlloy</defName>
+    <label>梅尔基奥合金</label>
+    <description>由铜和镍合炼而成的梅尔基奥合金（白铜），耐腐蚀且导电性良好。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(168,157,125)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>8.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.4</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>MMT_HCMBar</li>
+      <li>MMT_SLDBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>梅尔基奥制</stuffAdjective>
+      <color>(168,157,125)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>2.1</MaxHitPoints>
+        <Beauty>1.6</Beauty>
+        <Flammability>0</Flammability>
+        <WorkToMake>1.4</WorkToMake>
+        <WorkToBuild>1.4</WorkToBuild>
+        <Mass>1.15</Mass>
+        <MarketValue>0.7</MarketValue>
+        <DoorOpenSpeed>0.75</DoorOpenSpeed>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AlnicoAlloy</defName>
+    <label>亚力可合金</label>
+    <description>由钢、铝、钴和镍合炼而成的亚力可合金，磁性极强且轻便美观。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(210,210,210)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>11.0</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.25</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>150</stackLimit>
+    <thingCategories>
+      <li>MMT_HCMBar</li>
+      <li>MMT_USLDBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>亚力可制</stuffAdjective>
+      <color>(210,210,210)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>2.6</MaxHitPoints>
+        <Beauty>1.35</Beauty>
+        <Flammability>0</Flammability>
+        <WorkToMake>1.7</WorkToMake>
+        <WorkToBuild>1.7</WorkToBuild>
+        <Mass>1.15</Mass>
+        <MarketValue>0.7</MarketValue>
+        <DoorOpenSpeed>1.0</DoorOpenSpeed>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>

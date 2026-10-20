@@ -1132,14 +1132,18 @@ ADVANCED_ORE_EXPECTATIONS = {
 }
 
 ADVANCED_ALLOY_EXPECTATIONS = {
-    "MMT_NickelBar": {"label": "镍合金", "value": "6.0", "stack": "150", "color": "(42,208,206)", "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35", "market_value": "0.7"},
-    "MMT_Cobalt": {"label": "钴合金", "value": "10.0", "stack": "150", "color": "(60,90,120)", "stuff": False},
-    "MMT_Chromium": {"label": "铬合金", "value": "5.0", "stack": "150", "color": "(235,235,235)", "stuff": False},
-    "MMT_Tungsten": {"label": "钨合金", "value": "40.0", "stack": "150", "color": "(240,230,230)", "stuff": False},
-    "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8", "door": "1.3"},
-    "MMT_StelliteAlloy": {"label": "司太立合金（钨铬钴合金）", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24", "door": "0.95"},
-    "MMT_NitinolAlloy": {"label": "镍钛合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95", "door": "1.2"},
-    "MMT_PobediteAlloy": {"label": "钨钴合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4", "door": "0.7"},
+    "MMT_NickelBar": {"label": "镍合金", "value": "6.0", "stack": "150", "color": "(42,208,206)", "categories": ["MMT_RARBar"], "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35", "market_value": "0.7"},
+    "MMT_Cobalt": {"label": "钴合金", "value": "10.0", "stack": "150", "color": "(60,90,120)", "categories": ["MMT_RARBar"], "stuff": False},
+    "MMT_Chromium": {"label": "铬合金", "value": "5.0", "stack": "150", "color": "(235,235,235)", "categories": ["MMT_RARBar"], "stuff": False},
+    "MMT_Tungsten": {"label": "钨合金", "value": "40.0", "stack": "150", "color": "(240,230,230)", "categories": ["MMT_RARBar", "MMT_USLDHBar"], "stuff": False},
+    "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "categories": ["MMT_RARBar", "MMT_USLDBar"], "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8", "door": "1.3"},
+    "MMT_StelliteAlloy": {"label": "司太立合金（钨铬钴合金）", "value": "30.0", "stack": "150", "color": "(125,146,178)", "categories": ["MMT_USLDBar"], "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24", "door": "0.95"},
+    "MMT_NitinolAlloy": {"label": "镍钛合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "categories": ["MMT_USLDBar"], "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95", "door": "1.2"},
+    "MMT_PobediteAlloy": {"label": "钨钴合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "categories": ["MMT_USLDBar", "MMT_USLDHBar"], "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4", "door": "0.7"},
+    "MMT_DepletedUranium": {"label": "贫铀合金", "value": "18.0", "stack": "75", "color": "(20,94,30)", "categories": ["MMT_RADBar", "MMT_USLDHBar"], "stuff": True, "adjective": "贫铀制", "hp": "3.05", "beauty": "0", "work_make": "2.3", "work_build": "2.3", "mass": "1.6", "market_value": "0.7", "door": "0.75"},
+    "MMT_SteelBar": {"label": "斯坦合金", "value": "8.0", "stack": "150", "color": "(120,147,131)", "categories": ["MMT_USLDBar"], "stuff": True, "adjective": "斯坦制", "hp": "2.2", "beauty": "1.4", "work_make": "1.5", "work_build": "1.5", "mass": "1.3", "market_value": "0.7", "door": "0.8"},
+    "MMT_CupronickelAlloy": {"label": "梅尔基奥合金", "value": "8.0", "stack": "150", "color": "(168,157,125)", "categories": ["MMT_HCMBar", "MMT_SLDBar"], "stuff": True, "adjective": "梅尔基奥制", "hp": "2.1", "beauty": "1.6", "work_make": "1.4", "work_build": "1.4", "mass": "1.15", "market_value": "0.7", "door": "0.75"},
+    "MMT_AlnicoAlloy": {"label": "亚力可合金", "value": "11.0", "stack": "150", "color": "(210,210,210)", "categories": ["MMT_HCMBar", "MMT_USLDBar"], "stuff": True, "adjective": "亚力可制", "hp": "2.6", "beauty": "1.35", "work_make": "1.7", "work_build": "1.7", "mass": "1.15", "market_value": "0.7", "door": "1.0"},
 }
 
 ADVANCED_MINEABLE_EXPECTATIONS = {
@@ -3038,7 +3042,7 @@ def validate_advanced_alloys() -> None:
         assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot/MMT_Ingot", f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
         assert_equal(child_text(node, "./graphicData/color"), expected["color"], f"{name} color")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
         if expected["stuff"]:
             assert_equal(child_text(node, "useHitPoints"), "true", f"{name} useHitPoints")
             assert_equal(li_values(node, "./stuffProps/categories"), ["Metallic"], f"{name} stuff categories")
