@@ -419,7 +419,7 @@ CONCRETE_RESOURCE_EXPECTATIONS = {
     },
 }
 
-CONCRETE_BUILDING_RECIPES = ["MMT_MixConcrete_Hand"]
+CONCRETE_BUILDING_RECIPES = ["MMT_MixConcrete_Hand", "MMT_MakeDirt_Hand"]
 
 CONCRETE_RECIPE_EXPECTATIONS = {
     "MMT_MixConcrete_Hand": {
@@ -1211,7 +1211,7 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 18
+INFRA_RESEARCH_TOTAL = 19
 INFRA_WORKTABLE_TOTAL = 15
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {

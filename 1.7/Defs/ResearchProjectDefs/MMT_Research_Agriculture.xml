@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 农业 I：解锁堆肥/肥料/手动土堆，对照 HSK SewageSludgeComposting（150 点，新石器） -->
+  <ResearchProjectDef>
+    <defName>MMT_AgricultureBasic</defName>
+    <label>农业 I</label>
+    <description>学习将有机废料堆成堆肥并加工为肥料，为农业生产打下基础。</description>
+    <baseCost>150</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

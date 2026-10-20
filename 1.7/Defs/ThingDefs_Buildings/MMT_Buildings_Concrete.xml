@@ -42,6 +42,7 @@
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MixConcrete_Hand</li>
+      <li>MMT_MakeDirt_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>

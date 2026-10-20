@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 农业辅料：堆肥/肥料/土堆/盐，数值对齐 HSK（Items_Resource_Terraforming.xml / Items_Resource_Extracted.xml） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Compost</defName>
+    <label>堆肥料</label>
+    <description>食物废料发酵而成的混合物，气味难闻，但是制作肥料的原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Compost</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Wood_Drop</soundInteract>
+    <soundDrop>Wood_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>2.4</MarketValue>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Flammability>0.5</Flammability>
+      <Beauty>-14</Beauty>
+      <Mass>0.4</Mass>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <tradeability>None</tradeability>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Fertilizer</defName>
+    <label>肥料</label>
+    <description>增强土壤肥力、加速植物生长的肥料，也是拌制土堆的原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Fertilizer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Wood_Drop</soundInteract>
+    <soundDrop>Wood_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>3.8</MarketValue>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Flammability>1.5</Flammability>
+      <Beauty>-7</Beauty>
+      <Mass>0.35</Mass>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Dirt</defName>
+    <label>土堆</label>
+    <description>从地里挖出的普通土壤，可用作窑炉的封料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Dirt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>900</stackLimit>
+    <statBases>
+      <MarketValue>0.2</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Mass>0.50</Mass>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Salt</defName>
+    <label>盐</label>
+    <description>常见的矿物盐，是化工生产中重要的原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/Salt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(245,245,245)</color>
+    </graphicData>
+    <stackLimit>600</stackLimit>
+    <statBases>
+      <MarketValue>1</MarketValue>
+      <Mass>0.025</Mass>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>
