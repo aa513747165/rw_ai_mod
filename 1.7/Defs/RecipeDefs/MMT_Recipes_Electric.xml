@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_SmeltCopperBar_Electric</defName>
-    <label>电炼铜锭</label>
+    <label>提炼铜（20个）</label>
     <description>用电弧炉将铜矿石批量冶炼成铜锭。产出 20。</description>
     <jobString>正在电炼铜锭。</jobString>
     <workAmount>500</workAmount>
@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltTinBar_Electric</defName>
-    <label>电炼锡锭</label>
+    <label>提炼锡（20个）</label>
     <description>用电弧炉将锡矿石批量冶炼成锡锭。产出 20。</description>
     <jobString>正在电炼锡锭。</jobString>
     <workAmount>500</workAmount>
@@ -72,7 +72,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeBronze_Electric</defName>
-    <label>电炼青铜</label>
+    <label>提炼青铜（30个）</label>
     <description>用电弧炉将铜锭和锡锭合炼成青铜。产出 30。</description>
     <jobString>正在电炼青铜。</jobString>
     <workAmount>700</workAmount>
@@ -116,7 +116,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltSteel_Electric</defName>
-    <label>电炼钢</label>
+    <label>提炼钢铁（20个）</label>
     <description>用电弧炉将铁矿石和碳源冶炼成钢，电弧高温减少了碳源消耗。产出 20。</description>
     <jobString>正在电炼钢。</jobString>
     <workAmount>900</workAmount>
@@ -162,7 +162,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltSilver_Electric</defName>
-    <label>电炼银</label>
+    <label>提炼纯银合金（15个）</label>
     <description>用电弧炉将银矿石冶炼成银。产出 10。</description>
     <jobString>正在电炼银。</jobString>
     <workAmount>500</workAmount>
@@ -197,7 +197,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltGold_Electric</defName>
-    <label>电炼金</label>
+    <label>提炼纯金合金（15个）</label>
     <description>用电弧炉将金矿石冶炼成金。产出 15。</description>
     <jobString>正在电炼金。</jobString>
     <workAmount>500</workAmount>
@@ -232,7 +232,7 @@
 
   <RecipeDef>
     <defName>MMT_ExtractSilicon_Electric</defName>
-    <label>电提取硅</label>
+    <label>提取硅（x4）</label>
     <description>用电弧炉熔炼砂以快速提取其中的硅。产出 5。</description>
     <jobString>正在电提取硅。</jobString>
     <workAmount>800</workAmount>

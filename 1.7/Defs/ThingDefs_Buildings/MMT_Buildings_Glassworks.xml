@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_GlassworksTable</defName>
-    <label>玻璃工坊</label>
+    <label>玻璃制作台</label>
     <description>配有玻璃加工工具的电力工作台，用于制作玻璃配合料和玻璃。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -27,6 +27,9 @@
       <ComponentIndustrial>10</ComponentIndustrial>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>1600</WorkToBuild>
       <MaxHitPoints>180</MaxHitPoints>

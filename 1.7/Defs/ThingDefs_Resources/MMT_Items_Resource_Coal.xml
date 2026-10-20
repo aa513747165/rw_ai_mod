@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Coal</defName>
-    <label>煤炭</label>
+    <label>原煤</label>
     <description>黑色的可燃矿石，是金属冶炼中有用的反应剂，可替代木炭作为碳源。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Coal</texPath>

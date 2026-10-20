@@ -2,14 +2,14 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandChemTable</defName>
-    <label>手动化学实验台</label>
+    <label>石化产品实验室</label>
     <description>依靠人力操作的化学实验台，用于蒸馏原油和合成石化材料。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,2)</drawSize>
+      <drawSize>(3,4)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
     <pathCost>80</pathCost>
@@ -27,6 +27,9 @@
       <ComponentIndustrial>5</ComponentIndustrial>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>2000</WorkToBuild>
       <MaxHitPoints>200</MaxHitPoints>

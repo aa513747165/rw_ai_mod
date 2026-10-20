@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricElectronicsTable</defName>
-    <label>电子电动工作台</label>
+    <label>电子器件工作台</label>
     <description>以电力驱动的精密电子工作台，可以更快地组装电子元件、集成电路和微芯片。需要持续供电。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -28,6 +28,9 @@
       <ComponentIndustrial>10</ComponentIndustrial>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>2750</WorkToBuild>
       <MaxHitPoints>220</MaxHitPoints>

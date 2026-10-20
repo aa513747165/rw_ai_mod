@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_SmeltSilver_Hand</defName>
-    <label>冶炼银</label>
+    <label>提炼纯银合金（10个）</label>
     <description>将银矿石冶炼成银。产出 10。</description>
     <jobString>正在冶炼银。</jobString>
     <workAmount>750</workAmount>
@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltGold_Hand</defName>
-    <label>冶炼金</label>
+    <label>提炼纯金合金（15个）</label>
     <description>将金矿石冶炼成金。产出 15。</description>
     <jobString>正在冶炼金。</jobString>
     <workAmount>750</workAmount>

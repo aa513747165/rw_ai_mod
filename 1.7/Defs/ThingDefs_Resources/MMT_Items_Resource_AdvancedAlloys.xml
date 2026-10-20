@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_NickelBar</defName>
-    <label>镍锭</label>
+    <label>镍合金</label>
     <description>由镍矿石冶炼而成的镍锭，是合炼镍钛诺等高级合金的重要原料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -45,7 +45,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Cobalt</defName>
-    <label>钴锭</label>
+    <label>钴合金</label>
     <description>从镍矿石中伴生提取的钴，是合炼司太立与钴硬质合金的必要成分。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -69,7 +69,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Chromium</defName>
-    <label>铬锭</label>
+    <label>铬合金</label>
     <description>从铁矿石中提取的铬，是合炼司太立合金的必要成分。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -163,7 +163,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_StelliteAlloy</defName>
-    <label>司太立合金</label>
+    <label>司太立合金（钨铬钴合金）</label>
     <description>由钴、铬和钨合炼而成的司太立合金，专为耐磨而设计。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -206,7 +206,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_NitinolAlloy</defName>
-    <label>镍钛诺合金</label>
+    <label>镍钛合金</label>
     <description>由镍锭和钛合炼而成的镍钛诺合金，极其耐久且相当美观，但难以制造。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -252,7 +252,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_PobediteAlloy</defName>
-    <label>钴硬质合金</label>
+    <label>钨钴合金</label>
     <description>由钨、碳材料和钴合炼而成的钴硬质合金，硬度堪比金刚石。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>

@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandElectronicsTable</defName>
-    <label>手动电子工作台</label>
+    <label>电子器件工作台</label>
     <description>依靠人力精细操作的电子工作台，用于组装电子元件。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -27,6 +27,9 @@
       <ComponentIndustrial>5</ComponentIndustrial>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>2200</WorkToBuild>
       <MaxHitPoints>220</MaxHitPoints>

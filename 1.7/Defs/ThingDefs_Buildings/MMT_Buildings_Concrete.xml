@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ConcreteMixer</defName>
-    <label>手动混凝土搅拌机</label>
+    <label>手动混凝土搅拌器</label>
     <description>依靠人力搅拌砂和碎石的工作台，用于制作混凝土。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -27,6 +27,9 @@
       <ComponentIndustrial>5</ComponentIndustrial>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>1600</WorkToBuild>
       <MaxHitPoints>180</MaxHitPoints>

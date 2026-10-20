@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandSawmill</defName>
-    <label>手动锯木机</label>
+    <label>手工锯台</label>
     <description>依靠人力切割原木的工作台，用于制作木板和柴火。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -24,6 +24,9 @@
     </stuffCategories>
     <costStuffCount>120</costStuffCount>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>700</WorkToBuild>
       <MaxHitPoints>170</MaxHitPoints>
@@ -55,7 +58,7 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_CharcoalKiln</defName>
-    <label>简易木炭窑</label>
+    <label>窑炉</label>
     <description>用于将原木烧制成木炭的简易窑炉。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>

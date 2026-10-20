@@ -14,6 +14,7 @@
       <MarketValue>0.3</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
+      <Mass>0.8</Mass>
     </statBases>
     <stackLimit>900</stackLimit>
     <thingCategories>
@@ -23,7 +24,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Sand</defName>
-    <label>砂</label>
+    <label>沙</label>
     <description>经过粉碎和筛选的砂料，是制作玻璃配合料的基础原料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/Sand</texPath>
@@ -35,6 +36,7 @@
       <MarketValue>0.3</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
+      <Mass>0.6</Mass>
     </statBases>
     <stackLimit>900</stackLimit>
     <thingCategories>
@@ -44,7 +46,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_GlassBatch</defName>
-    <label>玻璃配合料</label>
+    <label>玻璃生料</label>
     <description>由砂配制而成的玻璃原料，需要在玻璃工坊中进一步加工。</description>
     <graphicData>
       <texPath>Things/Item/MMT/GlassBatch</texPath>
@@ -56,6 +58,7 @@
       <MarketValue>1.2</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0.05</Flammability>
+      <Mass>0.6</Mass>
     </statBases>
     <stackLimit>300</stackLimit>
     <thingCategories>
@@ -65,7 +68,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Glass</defName>
-    <label>玻璃</label>
+    <label>玻璃块</label>
     <description>由玻璃配合料加工得到的透明材料，可作为后续生产链的基础资源。</description>
     <graphicData>
       <texPath>Things/Item/MMT/Glass</texPath>
@@ -77,6 +80,7 @@
       <MarketValue>5.0</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
+      <Mass>0.22</Mass>
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
@@ -86,7 +90,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_ReinforcedGlass</defName>
-    <label>强化玻璃</label>
+    <label>强化玻璃块</label>
     <description>在玻璃配合料中加入碳材料和合成纤维制成的强化玻璃，强度更高，加工难度也更大。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_ReinforcedGlass</texPath>

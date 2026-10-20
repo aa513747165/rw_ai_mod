@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableSilverOre</defName>
-    <label>银矿脉</label>
+    <label>银矿</label>
     <description>露头的银矿脉，开采后可获得银矿石，冶炼成银。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
@@ -26,7 +26,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableGoldOre</defName>
-    <label>金矿脉</label>
+    <label>金矿</label>
     <description>露头的金矿脉，开采后可获得金矿石，冶炼成金。十分稀有。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>

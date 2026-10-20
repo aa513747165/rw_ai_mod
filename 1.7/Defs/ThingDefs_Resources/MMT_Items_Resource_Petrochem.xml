@@ -74,7 +74,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Rubber</defName>
-    <label>橡胶</label>
+    <label>合成橡胶</label>
     <description>由聚合物合成的橡胶，可用于制造管道、泵或作为建筑材料添加剂。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Petro/Rubber</texPath>
@@ -98,7 +98,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_SyntheticFibers</defName>
-    <label>合成纤维</label>
+    <label>人造纤维</label>
     <description>由聚合物制成的人造纤维，可用于织物和强化复合材料的原料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Petro/SyntheticFibers</texPath>
@@ -122,7 +122,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Carbon</defName>
-    <label>碳材料</label>
+    <label>碳聚物</label>
     <description>纤维增强聚合物制成的碳材料，坚固而轻便，是高级复合材料的原料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Petro/Carbon</texPath>

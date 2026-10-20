@@ -5,7 +5,7 @@
     <label>铁矿石</label>
     <description>可以从中提炼金属铁的岩石和矿物，是炼钢的主要原料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_IronOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(125,140,131)</color>
     </graphicData>
@@ -26,10 +26,10 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_CopperOre</defName>
-    <label>铜矿石</label>
+    <label>铜矿</label>
     <description>含铜的天然矿石，可冶炼成铜锭，用于制造合金和导电部件。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_CopperOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(160,115,45)</color>
     </graphicData>
@@ -50,10 +50,10 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_TinOre</defName>
-    <label>锡矿石</label>
+    <label>锡矿</label>
     <description>含锡的天然矿石，可冶炼成锡锭，是制造青铜的必要成分。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_TinOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(210,210,255)</color>
     </graphicData>
@@ -74,7 +74,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_CopperBar</defName>
-    <label>铜锭</label>
+    <label>铜</label>
     <description>由铜矿石冶炼而成的铜锭，具有良好的导电性，可用于制造合金和建筑材料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
@@ -114,7 +114,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_TinBar</defName>
-    <label>锡锭</label>
+    <label>锡</label>
     <description>由锡矿石冶炼而成的锡锭，质地较软，主要用于与铜锭一起冶炼青铜。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>

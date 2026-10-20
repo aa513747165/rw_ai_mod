@@ -2,10 +2,10 @@
 <Defs>
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_NickelOre</defName>
-    <label>镍矿石</label>
+    <label>镍矿</label>
     <description>含镍的天然矿石，可冶炼镍锭，并能从中伴生提取钴。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_NickelOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_NickelOre/MMT_NickelOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(42,208,206)</color>
     </graphicData>
@@ -26,10 +26,10 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_IlmeniteOre</defName>
-    <label>钛铁矿石</label>
+    <label>钛铁矿</label>
     <description>钛的矿石形态，可冶炼出轻量而高强度的钛合金。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre/MMT_IlmeniteOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(160,178,195)</color>
     </graphicData>
@@ -50,10 +50,10 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WolframiteOre</defName>
-    <label>钨锰铁矿石</label>
+    <label>黑钨矿</label>
     <description>钨的主要来源矿石，可冶炼出高硬度、高熔点的钨合金。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_WolframiteOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_WolframiteOre/MMT_WolframiteOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(230,230,255)</color>
     </graphicData>

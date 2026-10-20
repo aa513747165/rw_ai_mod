@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableNickelOre</defName>
-    <label>镍矿脉</label>
+    <label>镍矿矿藏</label>
     <description>露头的镍矿石矿脉，开采后可获得镍矿石，用于冶炼镍锭和提取钴。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
@@ -26,7 +26,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableIlmenite</defName>
-    <label>钛铁矿脉</label>
+    <label>钛铁矿</label>
     <description>露头的钛铁矿矿脉，开采后可获得钛铁矿石，用于冶炼钛合金。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
@@ -50,7 +50,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableWolframite</defName>
-    <label>钨锰铁矿脉</label>
+    <label>黑钨矿</label>
     <description>露头的钨锰铁矿矿脉，开采后可获得钨锰铁矿石，用于冶炼钨合金。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>

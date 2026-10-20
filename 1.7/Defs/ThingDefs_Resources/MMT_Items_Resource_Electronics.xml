@@ -74,7 +74,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Microchip</defName>
-    <label>微芯片</label>
+    <label>微芯片集成电路</label>
     <description>集成了微处理器的芯片，用于制造最高级的电子设备。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Electronics/Microchip</texPath>

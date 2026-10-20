@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricSawmill</defName>
-    <label>电动锯木机</label>
+    <label>电动锯木台</label>
     <description>以电力驱动锯片的工作台，可以更快地批量切割原木制作木板和柴火。需要持续供电。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -28,6 +28,9 @@
       <MMT_ElectronicParts>5</MMT_ElectronicParts>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>5000</WorkToBuild>
       <MaxHitPoints>170</MaxHitPoints>
@@ -93,6 +96,9 @@
       <MMT_ElectronicParts>3</MMT_ElectronicParts>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>3000</WorkToBuild>
       <MaxHitPoints>270</MaxHitPoints>

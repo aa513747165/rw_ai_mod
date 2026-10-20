@@ -88,7 +88,7 @@ WOOD_BUILDING_TEXTURES = [
 ]
 
 METAL_ITEM_TEXTURES = [
-    *[f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}_{suffix}.png" for ore in ("IronOre", "CopperOre", "TinOre") for suffix in ("a", "b", "c")],
+    *[f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}/MMT_{ore}_{suffix}.png" for ore in ("IronOre", "CopperOre", "TinOre") for suffix in ("a", "b", "c")],
     *[f"1.7/Textures/Things/Item/MMT/MMT_Ingot/MMT_Ingot_{suffix}.png" for suffix in ("a", "b", "c")],
 ]
 
@@ -124,7 +124,7 @@ ELECTRONICS_BUILDING_TEXTURES = [
 COAL_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Coal.png"]
 
 COAL_RESOURCE_EXPECTATIONS = {
-    "MMT_Coal": {"label": "煤炭", "value": "2.0", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
+    "MMT_Coal": {"label": "原煤", "value": "2.0", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
 }
 
 SULFUR_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Sulfur.png"]
@@ -134,19 +134,19 @@ SULFUR_RESOURCE_EXPECTATIONS = {
 }
 
 PRECIOUS_ITEM_TEXTURES = [
-    f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}_{suffix}.png"
+    f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}/MMT_{ore}_{suffix}.png"
     for ore in ("SilverOre", "GoldOre")
     for suffix in ("a", "b", "c")
 ]
 
 PRECIOUS_RESOURCE_EXPECTATIONS = {
-    "MMT_SilverOre": {"label": "银矿石", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre"},
-    "MMT_GoldOre": {"label": "金矿石", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
+    "MMT_SilverOre": {"label": "白银", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre/MMT_SilverOre"},
+    "MMT_GoldOre": {"label": "金矿", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre/MMT_GoldOre"},
 }
 
 PRECIOUS_MINEABLE_EXPECTATIONS = {
-    "MMT_MineableSilverOre": {"label": "银矿脉", "yield_thing": "MMT_SilverOre", "hp": "1500"},
-    "MMT_MineableGoldOre": {"label": "金矿脉", "yield_thing": "MMT_GoldOre", "hp": "1500"},
+    "MMT_MineableSilverOre": {"label": "银矿", "yield_thing": "MMT_SilverOre", "hp": "1500"},
+    "MMT_MineableGoldOre": {"label": "金矿", "yield_thing": "MMT_GoldOre", "hp": "1500"},
 }
 
 PRECIOUS_RECIPE_EXPECTATIONS = {
@@ -196,7 +196,7 @@ RESOURCE_EXPECTATIONS = {
         "tech": "Neolithic",
     },
     "MMT_Sand": {
-        "label": "砂",
+        "label": "沙",
         "value": "0.3",
         "stack": "900",
         "tex": "Things/Item/MMT/Sand",
@@ -204,7 +204,7 @@ RESOURCE_EXPECTATIONS = {
         "tech": "Neolithic",
     },
     "MMT_GlassBatch": {
-        "label": "玻璃配合料",
+        "label": "玻璃生料",
         "value": "1.2",
         "stack": "300",
         "tex": "Things/Item/MMT/GlassBatch",
@@ -212,7 +212,7 @@ RESOURCE_EXPECTATIONS = {
         "tech": "Industrial",
     },
     "MMT_Glass": {
-        "label": "玻璃",
+        "label": "玻璃块",
         "value": "5.0",
         "stack": "150",
         "tex": "Things/Item/MMT/Glass",
@@ -220,7 +220,7 @@ RESOURCE_EXPECTATIONS = {
         "tech": "Industrial",
     },
     "MMT_ReinforcedGlass": {
-        "label": "强化玻璃",
+        "label": "强化玻璃块",
         "value": "17.0",
         "stack": "150",
         "tex": "Things/Item/MMT/MMT_ReinforcedGlass",
@@ -382,7 +382,7 @@ RECIPE_EXPECTATIONS = {
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentAdvanced", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -521,14 +521,14 @@ WOOD_RECIPE_EXPECTATIONS = {
 }
 
 METAL_ORE_EXPECTATIONS = {
-    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre"},
-    "MMT_CopperOre": {"label": "铜矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre"},
-    "MMT_TinOre": {"label": "锡矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre"},
+    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre"},
+    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre"},
+    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre"},
 }
 
 METAL_BAR_EXPECTATIONS = {
-    "MMT_CopperBar": {"label": "铜锭", "value": "3.0", "stack": "300", "adjective": "铜制", "hp": "1.4", "flammable": "0.1", "work": "1.5"},
-    "MMT_TinBar": {"label": "锡锭", "value": "3.0", "stack": "300", "adjective": "锡制", "hp": "1.3", "flammable": "0", "work": "1.2"},
+    "MMT_CopperBar": {"label": "铜", "value": "3.0", "stack": "300", "adjective": "铜制", "hp": "1.4", "flammable": "0.1", "work": "1.5"},
+    "MMT_TinBar": {"label": "锡", "value": "3.0", "stack": "300", "adjective": "锡制", "hp": "1.3", "flammable": "0", "work": "1.2"},
     "MMT_Bronze": {"label": "青铜", "value": "4.0", "stack": "600", "adjective": "青铜制", "hp": "1.6", "flammable": "0", "work": "0.8"},
 }
 
@@ -543,9 +543,9 @@ METAL_FURNACE_RECIPES = [
 ]
 
 METAL_MINEABLE_EXPECTATIONS = {
-    "MMT_MineableIronOre": {"label": "铁矿脉", "yield_thing": "MMT_IronOre", "hp": "1500"},
-    "MMT_MineableCopperOre": {"label": "铜矿脉", "yield_thing": "MMT_CopperOre", "hp": "1800"},
-    "MMT_MineableTinOre": {"label": "锡矿脉", "yield_thing": "MMT_TinOre", "hp": "1300"},
+    "MMT_MineableIronOre": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500"},
+    "MMT_MineableCopperOre": {"label": "铜矿", "yield_thing": "MMT_CopperOre", "hp": "1800"},
+    "MMT_MineableTinOre": {"label": "锡矿", "yield_thing": "MMT_TinOre", "hp": "1300"},
 }
 
 METAL_RECIPE_EXPECTATIONS = {
@@ -583,9 +583,9 @@ PETROCHEM_RESOURCE_EXPECTATIONS = {
     "MMT_CrudeOil": {"label": "原油", "value": "3.0", "stack": "300", "flammable": "5"},
     "MMT_Polymers": {"label": "聚合物", "value": "1.5", "stack": "600", "flammable": "5"},
     "MMT_Plastic": {"label": "塑料", "value": "9.0", "stack": "300", "flammable": "2"},
-    "MMT_Rubber": {"label": "橡胶", "value": "11.0", "stack": "300", "flammable": "2"},
-    "MMT_SyntheticFibers": {"label": "合成纤维", "value": "12.0", "stack": "150", "flammable": "2"},
-    "MMT_Carbon": {"label": "碳材料", "value": "40.0", "stack": "75", "flammable": "0"},
+    "MMT_Rubber": {"label": "合成橡胶", "value": "11.0", "stack": "300", "flammable": "2"},
+    "MMT_SyntheticFibers": {"label": "人造纤维", "value": "12.0", "stack": "150", "flammable": "2"},
+    "MMT_Carbon": {"label": "碳聚物", "value": "40.0", "stack": "75", "flammable": "0"},
 }
 
 PETROCHEM_TABLE_RECIPES = [
@@ -657,7 +657,7 @@ ELECTRONICS_RESOURCE_EXPECTATIONS = {
     "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon", "tech": "Industrial"},
     "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts", "tech": "Industrial"},
     "MMT_IntegratedCircuit": {"label": "集成电路", "value": "55.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/IntegratedCircuit", "tech": "Industrial"},
-    "MMT_Microchip": {"label": "微芯片", "value": "100.0", "stack": "25", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/Microchip", "tech": "Spacer"},
+    "MMT_Microchip": {"label": "微芯片集成电路", "value": "100.0", "stack": "25", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/Microchip", "tech": "Spacer"},
 }
 
 ELECTRONICS_TABLE_RECIPES = ["MMT_AssembleElectronicParts_Hand", "MMT_AssembleIC_Hand", "MMT_AssembleMicrochip_Hand"]
@@ -802,7 +802,7 @@ ELECTRIC_WOOD_BUILDING_TEXTURES = [
 
 ELECTRIC_WOOD_BUILDING_EXPECTATIONS = {
     "MMT_ElectricSawmill": {
-        "label": "电动锯木机",
+        "label": "电动锯木台",
         "tex": "Things/Building/Production/MMT_ElectricSawmill/MMT_ElectricSawmill",
         "stuff": "Metallic",
         "stuff_count": "150",
@@ -999,32 +999,32 @@ ADVANCED_ALLOYS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_AdvancedAlloys.xml
 ADVANCED_ALLOYS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_AdvancedAlloys.xml"
 
 ADVANCED_ORE_ITEM_TEXTURES = [
-    f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}_{suffix}.png"
+    f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}/MMT_{ore}_{suffix}.png"
     for ore in ("NickelOre", "IlmeniteOre", "WolframiteOre")
     for suffix in ("a", "b", "c")
 ]
 
 ADVANCED_ORE_EXPECTATIONS = {
-    "MMT_NickelOre": {"label": "镍矿石", "value": "4.0", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre"},
-    "MMT_IlmeniteOre": {"label": "钛铁矿石", "value": "8.0", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre"},
-    "MMT_WolframiteOre": {"label": "钨锰铁矿石", "value": "9.0", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre"},
+    "MMT_NickelOre": {"label": "镍矿", "value": "4.0", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre/MMT_NickelOre"},
+    "MMT_IlmeniteOre": {"label": "钛铁矿", "value": "8.0", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre/MMT_IlmeniteOre"},
+    "MMT_WolframiteOre": {"label": "黑钨矿", "value": "9.0", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre/MMT_WolframiteOre"},
 }
 
 ADVANCED_ALLOY_EXPECTATIONS = {
-    "MMT_NickelBar": {"label": "镍锭", "value": "6.0", "stack": "150", "color": "(42,208,206)", "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35", "market_value": "0.7"},
-    "MMT_Cobalt": {"label": "钴锭", "value": "10.0", "stack": "150", "color": "(60,90,120)", "stuff": False},
-    "MMT_Chromium": {"label": "铬锭", "value": "5.0", "stack": "150", "color": "(235,235,235)", "stuff": False},
+    "MMT_NickelBar": {"label": "镍合金", "value": "6.0", "stack": "150", "color": "(42,208,206)", "stuff": True, "adjective": "镍制", "hp": "2.8", "beauty": "2.4", "work_make": "2.0", "work_build": "2.0", "mass": "1.35", "market_value": "0.7"},
+    "MMT_Cobalt": {"label": "钴合金", "value": "10.0", "stack": "150", "color": "(60,90,120)", "stuff": False},
+    "MMT_Chromium": {"label": "铬合金", "value": "5.0", "stack": "150", "color": "(235,235,235)", "stuff": False},
     "MMT_Tungsten": {"label": "钨合金", "value": "40.0", "stack": "150", "color": "(240,230,230)", "stuff": False},
     "MMT_Titanium": {"label": "钛合金", "value": "45.0", "stack": "75", "color": "(160,178,181)", "stuff": True, "adjective": "钛制", "hp": "3.3", "beauty": "1.8", "work_make": "3.0", "work_build": "3.0", "mass": "0.8", "door": "1.3"},
-    "MMT_StelliteAlloy": {"label": "司太立合金", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24", "door": "0.95"},
-    "MMT_NitinolAlloy": {"label": "镍钛诺合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95", "door": "1.2"},
-    "MMT_PobediteAlloy": {"label": "钴硬质合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4", "door": "0.7"},
+    "MMT_StelliteAlloy": {"label": "司太立合金（钨铬钴合金）", "value": "30.0", "stack": "150", "color": "(125,146,178)", "stuff": True, "adjective": "司太立制", "hp": "3.55", "beauty": "1.5", "work_make": "2.0", "work_build": "2.2", "mass": "1.24", "door": "0.95"},
+    "MMT_NitinolAlloy": {"label": "镍钛合金", "value": "27.0", "stack": "150", "color": "(175,175,175)", "stuff": True, "adjective": "镍钛诺制", "hp": "3.6", "beauty": "1.6", "work_make": "2.6", "work_build": "2.4", "mass": "0.95", "door": "1.2"},
+    "MMT_PobediteAlloy": {"label": "钨钴合金", "value": "33.0", "stack": "150", "color": "(85,85,85)", "stuff": True, "adjective": "钴硬质制", "hp": "4.0", "beauty": "1.1", "work_make": "2.8", "work_build": "2.8", "mass": "1.4", "door": "0.7"},
 }
 
 ADVANCED_MINEABLE_EXPECTATIONS = {
-    "MMT_MineableNickelOre": {"label": "镍矿脉", "yield_thing": "MMT_NickelOre", "hp": "10000", "yield": "50", "commonality": "0.4", "lump": "5~10", "color": "(88,115,175)", "color_two": "(42,208,206)"},
-    "MMT_MineableIlmenite": {"label": "钛铁矿脉", "yield_thing": "MMT_IlmeniteOre", "hp": "13000", "yield": "75", "commonality": "0.25", "lump": "3~9", "color": "(160,178,181)", "color_two": "(160,178,195)"},
-    "MMT_MineableWolframite": {"label": "钨锰铁矿脉", "yield_thing": "MMT_WolframiteOre", "hp": "20000", "yield": "50", "commonality": "0.15", "lump": "3~9", "color": "(88,115,175)", "color_two": "(230,230,255)"},
+    "MMT_MineableNickelOre": {"label": "镍矿矿藏", "yield_thing": "MMT_NickelOre", "hp": "10000", "yield": "50", "commonality": "0.4", "lump": "5~10", "color": "(88,115,175)", "color_two": "(42,208,206)"},
+    "MMT_MineableIlmenite": {"label": "钛铁矿", "yield_thing": "MMT_IlmeniteOre", "hp": "13000", "yield": "75", "commonality": "0.25", "lump": "3~9", "color": "(160,178,181)", "color_two": "(160,178,195)"},
+    "MMT_MineableWolframite": {"label": "黑钨矿", "yield_thing": "MMT_WolframiteOre", "hp": "20000", "yield": "50", "commonality": "0.15", "lump": "3~9", "color": "(88,115,175)", "color_two": "(230,230,255)"},
 }
 
 ADVANCED_ALLOYS_FURNACE_RECIPES = [
@@ -1076,12 +1076,12 @@ PARTS_BUILDING_TEXTURES = [
 ]
 
 PARTS_RESOURCE_EXPECTATIONS = {
-    "MMT_ComponentMedieval": {"label": "原始零件", "value": "6", "mass": "1.5", "stack": "300", "tech": "Neolithic", "flam": "0.2", "tex": "Things/Item/MMT/MMT_Parts/ComponentMedieval"},
-    "MMT_Wire": {"label": "导线", "value": "1.5", "mass": "0.2", "stack": "600", "tech": "Industrial", "flam": "0.1", "tex": "Things/Item/MMT/MMT_Parts/Wires"},
-    "MMT_Mechanism": {"label": "机构件", "value": "200", "mass": "0.65", "stack": "75", "tech": "Industrial", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/Mechanism"},
-    "MMT_AdvMechanism": {"label": "高级机构件", "value": "400", "mass": "0.7", "stack": "75", "tech": "Spacer", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/AdvMechanism"},
-    "MMT_SpacerComponent": {"label": "太空零件", "value": "150", "mass": "0.5", "stack": "150", "tech": "Spacer", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/AdvancedComponent"},
-    "MMT_UltraComponent": {"label": "超级零件", "value": "200", "mass": "0.5", "stack": "150", "tech": "Ultra", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/ComponentUltra"},
+    "MMT_ComponentMedieval": {"label": "原始零部件", "value": "6", "mass": "1.5", "stack": "300", "tech": "Neolithic", "flam": "0.2", "tex": "Things/Item/MMT/MMT_Parts/ComponentMedieval"},
+    "MMT_Wire": {"label": "电线", "value": "1.5", "mass": "0.2", "stack": "600", "tech": "Industrial", "flam": "0.1", "tex": "Things/Item/MMT/MMT_Parts/Wires"},
+    "MMT_Mechanism": {"label": "机械组件", "value": "200", "mass": "0.65", "stack": "75", "tech": "Industrial", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/Mechanism"},
+    "MMT_AdvMechanism": {"label": "先进机械组件", "value": "400", "mass": "0.7", "stack": "75", "tech": "Spacer", "flam": "1", "tex": "Things/Item/MMT/MMT_Parts/AdvMechanism"},
+    "MMT_SpacerComponent": {"label": "高级零部件", "value": "150", "mass": "0.5", "stack": "150", "tech": "Spacer", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/AdvancedComponent"},
+    "MMT_UltraComponent": {"label": "超级零部件", "value": "200", "mass": "0.5", "stack": "150", "tech": "Ultra", "flam": "0.3", "tex": "Things/Item/MMT/MMT_Parts/ComponentUltra"},
 }
 
 PARTS_RESEARCH_EXPECTATIONS = {
@@ -1096,7 +1096,7 @@ PARTS_HAND_BENCH_RECIPES = [
     "MMT_MakeComponentIndustrial_Hand",
     "MMT_MakeWire_Hand",
     "MMT_MakeMechanism_Hand",
-    "MMT_MakeComponentAdvanced_Hand",
+    "MMT_MakeComponentSpacer_Hand",
     "MMT_MakeAdvMechanism_Hand",
 ]
 
@@ -1106,14 +1106,14 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeComponentIndustrial_Electric",
     "MMT_MakeWire_Electric",
     "MMT_MakeMechanism_Electric",
-    "MMT_MakeComponentAdvanced_Electric",
+    "MMT_MakeComponentSpacer_Electric",
     "MMT_MakeAdvMechanism_Electric",
     "MMT_MakeSpacerComponent",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
     "MMT_HandAssemblyBench": {
-        "label": "装配台", "tex": "Things/Building/Production/MMT_HandAssemblyBench/MMT_HandAssemblyBench", "graphic": "Graphic_Multi",
+        "label": "手工装配台", "tex": "Things/Building/Production/MMT_HandAssemblyBench/MMT_HandAssemblyBench", "graphic": "Graphic_Multi",
         "stuff_count": "125", "costs": {"WoodLog": "40", "Steel": "25"},
         "work_build": "1200", "hp": "180", "size": "(3,1)", "speed": "0.9", "power": None,
         "research": ["MMT_ComponentCrafting"], "recipes": PARTS_HAND_BENCH_RECIPES, "construction_skill": "4",
@@ -1125,7 +1125,7 @@ PARTS_BUILDING_EXPECTATIONS = {
         "research": ["MMT_ComponentCrafting", "MMT_AdvancedComponents"], "recipes": PARTS_ELECTRIC_BENCH_RECIPES, "construction_skill": "8",
     },
     "MMT_RoboticAssembler": {
-        "label": "机器人装配台", "tex": "Things/Building/Production/MMT_RoboticAssembler/MMT_RoboticAssembler", "graphic": "Graphic_Single",
+        "label": "自动化装配器", "tex": "Things/Building/Production/MMT_RoboticAssembler/MMT_RoboticAssembler", "graphic": "Graphic_Single",
         "stuff_count": "120", "costs": {"MMT_SyntheticFibers": "45", "MMT_SpacerComponent": "10", "MMT_AdvMechanism": "10", "MMT_Microchip": "5"},
         "work_build": "9000", "hp": "200", "size": "(1,1)", "speed": None, "power": "5000",
         "research": ["MMT_UltraComponents"], "recipes": ["MMT_MakeUltraComponent"], "construction_skill": "10",
@@ -1141,10 +1141,10 @@ PARTS_RECIPE_EXPECTATIONS = {
     "MMT_MakeWire_Electric": {"work": "800", "inputs": [("thingDefs", "MMT_CopperBar", "20")], "output": "MMT_Wire", "output_count": "40", "skill": "6", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
     "MMT_MakeMechanism_Hand": {"work": "1800", "inputs": [("thingDefs", "Steel", "30"), ("thingDefs", "ComponentIndustrial", "10")], "output": "MMT_Mechanism", "output_count": "5", "skill": "4", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
     "MMT_MakeMechanism_Electric": {"work": "1800", "inputs": [("thingDefs", "Steel", "60"), ("thingDefs", "ComponentIndustrial", "20")], "output": "MMT_Mechanism", "output_count": "10", "skill": "7", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeComponentAdvanced_Hand": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentAdvanced", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeComponentAdvanced_Electric": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentAdvanced", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeAdvMechanism_Hand": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "30"), ("thingDefs", "ComponentAdvanced", "10"), ("thingDefs", "MMT_SyntheticFibers", "5")], "output": "MMT_AdvMechanism", "output_count": "5", "skill": "13", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeAdvMechanism_Electric": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "60"), ("thingDefs", "ComponentAdvanced", "20"), ("thingDefs", "MMT_SyntheticFibers", "10")], "output": "MMT_AdvMechanism", "output_count": "10", "skill": "16", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentSpacer_Hand": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeComponentSpacer_Electric": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Hand": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "30"), ("thingDefs", "ComponentSpacer", "10"), ("thingDefs", "MMT_SyntheticFibers", "5")], "output": "MMT_AdvMechanism", "output_count": "5", "skill": "13", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Electric": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "60"), ("thingDefs", "ComponentSpacer", "20"), ("thingDefs", "MMT_SyntheticFibers", "10")], "output": "MMT_AdvMechanism", "output_count": "10", "skill": "16", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
     "MMT_MakeSpacerComponent": {"work": "3500", "inputs": [("thingDefs", "Plasteel", "25"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_SpacerComponent", "output_count": "10", "skill": "9", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
     "MMT_MakeUltraComponent": {"work": "4500", "inputs": [("thingDefs", ("MMT_Tungsten", "MMT_Titanium"), "15"), ("thingDefs", ("MMT_StelliteAlloy", "MMT_PobediteAlloy"), "10"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_UltraComponent", "output_count": "10", "skill": "13", "research": "MMT_UltraComponents", "benches": ["MMT_RoboticAssembler"]},
 }
@@ -1371,7 +1371,7 @@ def validate_building() -> None:
     building_defs = def_map(parse_xml(BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_GlassworksTable"}, "建筑 defName 集合")
     building = building_defs["MMT_GlassworksTable"]
-    assert_equal(child_text(building, "label"), "玻璃工坊", "建筑 label")
+    assert_equal(child_text(building, "label"), "玻璃制作台", "建筑 label")
     assert_equal(child_text(building, "thingClass"), "Building_WorkTable", "建筑 thingClass")
     assert_equal(child_text(building, "./graphicData/texPath"), "Things/Building/Production/MMT_GlassworksTable/MMT_GlassworksTable", "建筑 texPath")
     assert_equal(child_text(building, "./graphicData/graphicClass"), "Graphic_Multi", "建筑 graphicClass")
@@ -1570,7 +1570,7 @@ def validate_concrete_building() -> None:
     building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ConcreteMixer"}, "混凝土建筑 defName 集合")
     building = building_defs["MMT_ConcreteMixer"]
-    assert_equal(child_text(building, "label"), "手动混凝土搅拌机", "混凝土建筑 label")
+    assert_equal(child_text(building, "label"), "手动混凝土搅拌器", "混凝土建筑 label")
     assert_equal(child_text(building, "thingClass"), "Building_WorkTable", "混凝土建筑 thingClass")
     assert_equal(child_text(building, "./graphicData/texPath"), "Things/Building/Production/MMT_ConcreteMixer/MMT_ConcreteMixer", "混凝土建筑 texPath")
     assert_equal(child_text(building, "./graphicData/graphicClass"), "Graphic_Multi", "混凝土建筑 graphicClass")
@@ -1757,7 +1757,7 @@ def validate_wood_building() -> None:
     assert_equal(set(building_defs), {"MMT_HandSawmill", "MMT_CharcoalKiln"}, "木材建筑 defName 集合")
 
     sawmill = building_defs["MMT_HandSawmill"]
-    assert_equal(child_text(sawmill, "label"), "手动锯木机", "锯木机 label")
+    assert_equal(child_text(sawmill, "label"), "手工锯台", "锯木机 label")
     assert_equal(child_text(sawmill, "thingClass"), "Building_WorkTable", "锯木机 thingClass")
     assert_equal(child_text(sawmill, "./graphicData/texPath"), "Things/Building/Production/MMT_HandSawmill/MMT_HandSawmill", "锯木机 texPath")
     assert_equal(child_text(sawmill, "./graphicData/graphicClass"), "Graphic_Multi", "锯木机 graphicClass")
@@ -1771,7 +1771,7 @@ def validate_wood_building() -> None:
     assert_equal(child_text(sawmill, "constructionSkillPrerequisite"), "3", "锯木机建造技能")
 
     kiln = building_defs["MMT_CharcoalKiln"]
-    assert_equal(child_text(kiln, "label"), "简易木炭窑", "木炭窑 label")
+    assert_equal(child_text(kiln, "label"), "窑炉", "木炭窑 label")
     assert_equal(child_text(kiln, "thingClass"), "Building_WorkTable", "木炭窑 thingClass")
     assert_equal(child_text(kiln, "./graphicData/texPath"), "Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln", "木炭窑 texPath")
     assert_equal(child_text(kiln, "./graphicData/graphicClass"), "Graphic_Multi", "木炭窑 graphicClass")
@@ -1927,7 +1927,7 @@ def validate_metal_building() -> None:
     assert_equal(set(building_defs), {"MMT_HandFurnace", *METAL_MINEABLE_EXPECTATIONS}, "金属建筑 defName 集合")
 
     furnace = building_defs["MMT_HandFurnace"]
-    assert_equal(child_text(furnace, "label"), "手动熔炉", "熔炉 label")
+    assert_equal(child_text(furnace, "label"), "熔炉", "熔炉 label")
     assert_equal(child_text(furnace, "thingClass"), "Building_WorkTable", "熔炉 thingClass")
     assert_equal(child_text(furnace, "./graphicData/texPath"), "Things/Building/Production/MMT_HandFurnace/MMT_HandFurnace", "熔炉 texPath")
     assert_equal(child_text(furnace, "./graphicData/graphicClass"), "Graphic_Multi", "熔炉 graphicClass")
@@ -2079,7 +2079,7 @@ def validate_petrochem_building() -> None:
     assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_MineableOilSeep"}, "石化建筑 defName 集合")
 
     table = building_defs["MMT_HandChemTable"]
-    assert_equal(child_text(table, "label"), "手动化学实验台", "化学台 label")
+    assert_equal(child_text(table, "label"), "石化产品实验室", "化学台 label")
     assert_equal(child_text(table, "thingClass"), "Building_WorkTable", "化学台 thingClass")
     assert_equal(child_text(table, "./graphicData/texPath"), "Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable", "化学台 texPath")
     assert_equal(child_text(table, "./graphicData/graphicClass"), "Graphic_Multi", "化学台 graphicClass")
@@ -2242,7 +2242,7 @@ def validate_electronics_building() -> None:
     building_defs = def_map(parse_xml(ELECTRONICS_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandElectronicsTable"}, "电子建筑 defName 集合")
     table = building_defs["MMT_HandElectronicsTable"]
-    assert_equal(child_text(table, "label"), "手动电子工作台", "电子台 label")
+    assert_equal(child_text(table, "label"), "电子器件工作台", "电子台 label")
     assert_equal(child_text(table, "thingClass"), "Building_WorkTable", "电子台 thingClass")
     assert_equal(child_text(table, "./graphicData/texPath"), "Things/Building/Production/MMT_HandElectronicsTable/MMT_HandElectronicsTable", "电子台 texPath")
     assert_equal(child_text(table, "./graphicData/graphicClass"), "Graphic_Multi", "电子台 graphicClass")
@@ -2625,7 +2625,7 @@ def validate_electric_petrochem() -> None:
     building_defs = def_map(parse_xml(ELECTRIC_PETROCHEM_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ElectricChemLab"}, "电动石化建筑 defName 集合")
     lab = building_defs["MMT_ElectricChemLab"]
-    assert_equal(child_text(lab, "label"), "石化电动实验室", "石化实验室 label")
+    assert_equal(child_text(lab, "label"), "石化产品实验室", "石化实验室 label")
     assert_equal(child_text(lab, "thingClass"), "Building_WorkTable", "石化实验室 thingClass")
     assert_equal(child_text(lab, "./graphicData/texPath"), "Things/Building/Production/MMT_ElectricChemLab/MMT_ElectricChemLab", "石化实验室 texPath")
     assert_equal(child_text(lab, "./graphicData/graphicClass"), "Graphic_Multi", "石化实验室 graphicClass")
@@ -2751,7 +2751,7 @@ def validate_electric_electronics() -> None:
     building_defs = def_map(parse_xml(ELECTRIC_ELECTRONICS_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ElectricElectronicsTable"}, "电动电子建筑 defName 集合")
     table = building_defs["MMT_ElectricElectronicsTable"]
-    assert_equal(child_text(table, "label"), "电子电动工作台", "电子电动台 label")
+    assert_equal(child_text(table, "label"), "电子器件工作台", "电子电动台 label")
     assert_equal(child_text(table, "thingClass"), "Building_WorkTable", "电子电动台 thingClass")
     assert_equal(child_text(table, "./graphicData/texPath"), "Things/Building/Production/MMT_ElectricElectronicsTable/MMT_ElectricElectronicsTable", "电子电动台 texPath")
     assert_equal(child_text(table, "./graphicData/graphicClass"), "Graphic_Multi", "电子电动台 graphicClass")
@@ -3198,7 +3198,7 @@ def validate_coal() -> None:
     assert_equal(set(building_defs), {"MMT_MineableCoal"}, "煤炭建筑 defName 集合")
     vein = building_defs["MMT_MineableCoal"]
     assert_equal(vein.attrib.get("ParentName"), "RockBase", "煤矿脉父类")
-    assert_equal(child_text(vein, "label"), "煤矿脉", "煤矿脉 label")
+    assert_equal(child_text(vein, "label"), "煤矿", "煤矿脉 label")
     assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "煤矿脉 texPath")
     assert_equal(child_text(vein, "./statBases/MaxHitPoints"), "1500", "煤矿脉耐久")
     assert_equal(child_text(vein, "./building/isResourceRock"), "true", "煤矿脉 isResourceRock")

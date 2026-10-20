@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_ExtractSilicon_Hand</defName>
-    <label>提取硅</label>
+    <label>提炼硅</label>
     <description>熔炼砂以提取其中的硅。产出 5。</description>
     <jobString>正在提取硅。</jobString>
     <workAmount>1600</workAmount>
@@ -152,7 +152,7 @@
 
   <RecipeDef>
     <defName>MMT_AssembleMicrochip_Hand</defName>
-    <label>组装微芯片</label>
+    <label>组装微芯片集成电路</label>
     <description>将集成电路、碳材料和金组装成微芯片。产出 1。</description>
     <jobString>正在组装微芯片。</jobString>
     <workAmount>3500</workAmount>

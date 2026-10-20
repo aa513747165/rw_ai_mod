@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableCoal</defName>
-    <label>煤矿脉</label>
+    <label>煤矿</label>
     <description>露头的煤矿脉，开采后可获得煤炭，用作冶炼的碳源。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>

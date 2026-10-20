@@ -2,14 +2,14 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandAssemblyBench</defName>
-    <label>装配台</label>
+    <label>手工装配台</label>
     <description>摆满手工工具的工作台，用于组装基础零件、导线与机构件。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_HandAssemblyBench/MMT_HandAssemblyBench</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,1)</drawSize>
+      <drawSize>(3,3)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
     <pathCost>90</pathCost>
@@ -27,6 +27,9 @@
       <Steel>25</Steel>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>1200</WorkToBuild>
       <MaxHitPoints>180</MaxHitPoints>
@@ -43,7 +46,7 @@
       <li>MMT_MakeComponentIndustrial_Hand</li>
       <li>MMT_MakeWire_Hand</li>
       <li>MMT_MakeMechanism_Hand</li>
-      <li>MMT_MakeComponentAdvanced_Hand</li>
+      <li>MMT_MakeComponentSpacer_Hand</li>
       <li>MMT_MakeAdvMechanism_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
@@ -71,7 +74,7 @@
       <texPath>Things/Building/Production/MMT_ElectricAssemblyBench/MMT_ElectricAssemblyBench</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,1)</drawSize>
+      <drawSize>(3,3)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
     <pathCost>90</pathCost>
@@ -91,6 +94,9 @@
       <MMT_Mechanism>10</MMT_Mechanism>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>5500</WorkToBuild>
       <MaxHitPoints>210</MaxHitPoints>
@@ -107,7 +113,7 @@
       <li>MMT_MakeComponentIndustrial_Electric</li>
       <li>MMT_MakeWire_Electric</li>
       <li>MMT_MakeMechanism_Electric</li>
-      <li>MMT_MakeComponentAdvanced_Electric</li>
+      <li>MMT_MakeComponentSpacer_Electric</li>
       <li>MMT_MakeAdvMechanism_Electric</li>
       <li>MMT_MakeSpacerComponent</li>
     </recipes>
@@ -139,7 +145,7 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_RoboticAssembler</defName>
-    <label>机器人装配台</label>
+    <label>自动化装配器</label>
     <description>应用最先进机器人技术的装配机器，可以制造人手无法企及的精密零件。工作时需要大量电力。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -166,6 +172,9 @@
       <MMT_Microchip>5</MMT_Microchip>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>9000</WorkToBuild>
       <MaxHitPoints>200</MaxHitPoints>

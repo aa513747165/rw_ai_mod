@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_SmeltNickelBar</defName>
-    <label>冶炼镍锭</label>
+    <label>提炼镍合金（15个）</label>
     <description>将镍矿石冶炼成镍锭。产出 15。</description>
     <jobString>正在冶炼镍锭。</jobString>
     <workAmount>1500</workAmount>
@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_ExtractCobalt</defName>
-    <label>提取钴</label>
+    <label>提炼钴合金（15个）</label>
     <description>从镍矿石中伴生提取钴。产出 15。</description>
     <jobString>正在提取钴。</jobString>
     <workAmount>1300</workAmount>
@@ -72,7 +72,7 @@
 
   <RecipeDef>
     <defName>MMT_ExtractChromium</defName>
-    <label>提取铬</label>
+    <label>提炼铬合金（10个）</label>
     <description>从铁矿石中提取铬。产出 10。</description>
     <jobString>正在提取铬。</jobString>
     <workAmount>1200</workAmount>
@@ -107,7 +107,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltTungsten</defName>
-    <label>冶炼钨合金</label>
+    <label>提炼钨合金（15个）</label>
     <description>将钨锰铁矿石冶炼成钨合金。产出 15。</description>
     <jobString>正在冶炼钨合金。</jobString>
     <workAmount>3000</workAmount>
@@ -142,7 +142,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltTitanium</defName>
-    <label>冶炼钛合金</label>
+    <label>提炼钛合金（15个）</label>
     <description>将钛铁矿石冶炼成钛合金。产出 15。</description>
     <jobString>正在冶炼钛合金。</jobString>
     <workAmount>3300</workAmount>
@@ -177,7 +177,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeStellite</defName>
-    <label>合炼司太立合金</label>
+    <label>冶炼司太立合金（20个）</label>
     <description>将钴、铬和钨合炼成耐磨的司太立合金。产出 20。</description>
     <jobString>正在合炼司太立合金。</jobString>
     <workAmount>2100</workAmount>
@@ -230,7 +230,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeNitinol</defName>
-    <label>合炼镍钛诺合金</label>
+    <label>冶炼镍钛合金（15个）</label>
     <description>将钛和镍锭合炼成镍钛诺合金。产出 15。</description>
     <jobString>正在合炼镍钛诺合金。</jobString>
     <workAmount>2600</workAmount>
@@ -274,7 +274,7 @@
 
   <RecipeDef>
     <defName>MMT_MakePobedite</defName>
-    <label>合炼钴硬质合金</label>
+    <label>冶炼钨钴合金（10个）</label>
     <description>将钨、碳材料和钴合炼成硬度堪比金刚石的钴硬质合金。产出 10。</description>
     <jobString>正在合炼钴硬质合金。</jobString>
     <workAmount>2700</workAmount>
@@ -327,7 +327,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeFerrotitanium</defName>
-    <label>合炼铁钛合金</label>
+    <label>冶炼钛铁合金（15个）</label>
     <description>将钛、钢和碳材料合炼成铁钛合金（玻璃钢）。产出 15。</description>
     <jobString>正在合炼铁钛合金。</jobString>
     <workAmount>2400</workAmount>

@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_MakeWoodPlanks_Electric</defName>
-    <label>电锯木板</label>
+    <label>加工木板</label>
     <description>用电动锯木机将原木批量切割成木板。产出 30。</description>
     <jobString>正在电锯木板。</jobString>
     <workAmount>1200</workAmount>
@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeKindling_Electric</defName>
-    <label>电劈柴火</label>
+    <label>加工柴火</label>
     <description>用电动锯木机将原木批量劈成柴火。产出 40。</description>
     <jobString>正在电劈柴火。</jobString>
     <workAmount>500</workAmount>
@@ -72,7 +72,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeCharcoal_Electric</defName>
-    <label>电烧木炭</label>
+    <label>制作木炭</label>
     <description>用电动木炭窑将原木干馏成木炭，比土窑更快。产出 20。</description>
     <jobString>正在电烧木炭。</jobString>
     <workAmount>800</workAmount>

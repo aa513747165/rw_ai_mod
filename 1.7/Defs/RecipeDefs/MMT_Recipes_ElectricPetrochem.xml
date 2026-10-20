@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_MakePlastic_Electric</defName>
-    <label>电制塑料</label>
+    <label>制作塑料</label>
     <description>用石化电动实验室将聚合物合成为塑料。产出 10。</description>
     <jobString>正在电制塑料。</jobString>
     <workAmount>500</workAmount>
@@ -72,7 +72,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeRubber_Electric</defName>
-    <label>电制橡胶</label>
+    <label>制作合成橡胶</label>
     <description>用石化电动实验室将聚合物和硫磺合成为橡胶。产出 10。</description>
     <jobString>正在电制橡胶。</jobString>
     <workAmount>500</workAmount>
@@ -116,7 +116,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeSyntheticFibers_Electric</defName>
-    <label>电制合成纤维</label>
+    <label>制作人造纤维</label>
     <description>用石化电动实验室将聚合物和硫磺合成为合成纤维。产出 5。</description>
     <jobString>正在电制合成纤维。</jobString>
     <workAmount>800</workAmount>
@@ -160,7 +160,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeCarbon_Electric</defName>
-    <label>电制碳材料</label>
+    <label>制作碳聚物</label>
     <description>用石化电动实验室将聚合物、碳源和橡胶合成为碳材料。产出 12。</description>
     <jobString>正在电制碳材料。</jobString>
     <workAmount>2800</workAmount>

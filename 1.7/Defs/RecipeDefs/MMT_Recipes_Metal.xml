@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_SmeltCopperBar_Hand</defName>
-    <label>冶炼铜锭</label>
+    <label>提炼铜（10个）</label>
     <description>将铜矿石冶炼成铜锭。产出 10。</description>
     <jobString>正在冶炼铜锭。</jobString>
     <workAmount>700</workAmount>
@@ -37,7 +37,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltTinBar_Hand</defName>
-    <label>冶炼锡锭</label>
+    <label>提炼锡（10个）</label>
     <description>将锡矿石冶炼成锡锭。产出 10。</description>
     <jobString>正在冶炼锡锭。</jobString>
     <workAmount>600</workAmount>
@@ -72,7 +72,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeBronze_Hand</defName>
-    <label>冶炼青铜</label>
+    <label>提炼青铜（30个）</label>
     <description>将铜锭和锡锭合炼成青铜。产出 30。</description>
     <jobString>正在冶炼青铜。</jobString>
     <workAmount>1000</workAmount>
@@ -116,7 +116,7 @@
 
   <RecipeDef>
     <defName>MMT_SmeltSteel_Hand</defName>
-    <label>冶炼钢</label>
+    <label>提炼钢铁（20个）</label>
     <description>将铁矿石和木炭冶炼成钢。产出 20。</description>
     <jobString>正在冶炼钢。</jobString>
     <workAmount>1300</workAmount>

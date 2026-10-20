@@ -28,6 +28,9 @@
       <MMT_ElectronicParts>6</MMT_ElectronicParts>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>4500</WorkToBuild>
       <MaxHitPoints>280</MaxHitPoints>

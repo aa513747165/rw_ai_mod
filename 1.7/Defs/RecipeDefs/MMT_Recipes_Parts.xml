@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_MakeComponentMedieval_Wood</defName>
-    <label>组装原始零件（木材）</label>
+    <label>使用木板组装原始零部件</label>
     <description>用木材组装原始零件。产出 10。</description>
     <jobString>正在组装原始零件。</jobString>
     <workAmount>900</workAmount>
@@ -34,7 +34,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeComponentMedieval_Metal</defName>
-    <label>组装原始零件（金属）</label>
+    <label>使用金属组装原始零部件</label>
     <description>用金属锭组装原始零件。产出 10。</description>
     <jobString>正在组装原始零件。</jobString>
     <workAmount>900</workAmount>
@@ -68,7 +68,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeComponentIndustrial_Hand</defName>
-    <label>组装工业零件</label>
+    <label>组装普通零部件</label>
     <description>将钢或玻璃钢组装成工业零件。产出 10。</description>
     <jobString>正在组装工业零件。</jobString>
     <workAmount>2000</workAmount>
@@ -105,7 +105,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeComponentIndustrial_Electric</defName>
-    <label>组装工业零件</label>
+    <label>组装普通零部件</label>
     <description>将钢或玻璃钢组装成工业零件。产出 10。</description>
     <jobString>正在组装工业零件。</jobString>
     <workAmount>2000</workAmount>
@@ -142,7 +142,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeWire_Hand</defName>
-    <label>制作导线</label>
+    <label>制作电线</label>
     <description>将铜锭拉制成导线。产出 20。</description>
     <jobString>正在制作导线。</jobString>
     <workAmount>800</workAmount>
@@ -177,7 +177,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeWire_Electric</defName>
-    <label>制作导线</label>
+    <label>制作电线</label>
     <description>将铜锭拉制成导线。产出 40。</description>
     <jobString>正在制作导线。</jobString>
     <workAmount>800</workAmount>
@@ -212,7 +212,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeMechanism_Hand</defName>
-    <label>组装机构件</label>
+    <label>组装机械组件</label>
     <description>用钢和工业零件组装机构件。产出 5。</description>
     <jobString>正在组装机构件。</jobString>
     <workAmount>1800</workAmount>
@@ -256,7 +256,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeMechanism_Electric</defName>
-    <label>组装机构件</label>
+    <label>组装机械组件</label>
     <description>用钢和工业零件组装机构件。产出 10。</description>
     <jobString>正在组装机构件。</jobString>
     <workAmount>1800</workAmount>
@@ -299,8 +299,8 @@
   </RecipeDef>
 
   <RecipeDef>
-    <defName>MMT_MakeComponentAdvanced_Hand</defName>
-    <label>组装高级零件</label>
+    <defName>MMT_MakeComponentSpacer_Hand</defName>
+    <label>组装高级零部件</label>
     <description>将玻璃钢加工成高级零件。产出 10。</description>
     <jobString>正在组装高级零件。</jobString>
     <workAmount>2500</workAmount>
@@ -323,7 +323,7 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <ComponentAdvanced>10</ComponentAdvanced>
+      <ComponentSpacer>10</ComponentSpacer>
     </products>
     <skillRequirements>
       <Crafting>6</Crafting>
@@ -334,8 +334,8 @@
   </RecipeDef>
 
   <RecipeDef>
-    <defName>MMT_MakeComponentAdvanced_Electric</defName>
-    <label>组装高级零件</label>
+    <defName>MMT_MakeComponentSpacer_Electric</defName>
+    <label>组装高级零部件</label>
     <description>将玻璃钢加工成高级零件。产出 10。</description>
     <jobString>正在组装高级零件。</jobString>
     <workAmount>2500</workAmount>
@@ -358,7 +358,7 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <ComponentAdvanced>10</ComponentAdvanced>
+      <ComponentSpacer>10</ComponentSpacer>
     </products>
     <skillRequirements>
       <Crafting>6</Crafting>
@@ -370,7 +370,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeAdvMechanism_Hand</defName>
-    <label>组装高级机构件</label>
+    <label>组装先进机械组件</label>
     <description>用玻璃钢、高级零件和合成纤维组装高级机构件。产出 5。</description>
     <jobString>正在组装高级机构件。</jobString>
     <workAmount>3200</workAmount>
@@ -389,7 +389,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>ComponentAdvanced</li>
+            <li>ComponentSpacer</li>
           </thingDefs>
         </filter>
         <count>10</count>
@@ -406,7 +406,7 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
-        <li>ComponentAdvanced</li>
+        <li>ComponentSpacer</li>
         <li>MMT_SyntheticFibers</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -423,7 +423,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeAdvMechanism_Electric</defName>
-    <label>组装高级机构件</label>
+    <label>组装先进机械组件</label>
     <description>用玻璃钢、高级零件和合成纤维组装高级机构件。产出 10。</description>
     <jobString>正在组装高级机构件。</jobString>
     <workAmount>3200</workAmount>
@@ -442,7 +442,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>ComponentAdvanced</li>
+            <li>ComponentSpacer</li>
           </thingDefs>
         </filter>
         <count>20</count>
@@ -459,7 +459,7 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
-        <li>ComponentAdvanced</li>
+        <li>ComponentSpacer</li>
         <li>MMT_SyntheticFibers</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -476,7 +476,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeSpacerComponent</defName>
-    <label>组装太空零件</label>
+    <label>组装高级零部件</label>
     <description>用玻璃钢和贵金属组装太空零件。产出 10。</description>
     <jobString>正在组装太空零件。</jobString>
     <workAmount>3500</workAmount>
@@ -522,7 +522,7 @@
 
   <RecipeDef>
     <defName>MMT_MakeUltraComponent</defName>
-    <label>组装超级零件</label>
+    <label>组装超级零部件</label>
     <description>用稀有合金、超硬合金和贵金属组装超级零件。产出 10。</description>
     <jobString>正在组装超级零件。</jobString>
     <workAmount>4500</workAmount>

@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricChemLab</defName>
-    <label>石化电动实验室</label>
+    <label>石化产品实验室</label>
     <description>以电力驱动的大型石化实验室，可以更快地蒸馏原油并合成塑料、橡胶、合成纤维和碳材料。需要持续供电。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -29,6 +29,9 @@
       <MMT_ElectronicParts>5</MMT_ElectronicParts>
     </costList>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>5500</WorkToBuild>
       <MaxHitPoints>340</MaxHitPoints>

@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_ComponentMedieval</defName>
-    <label>原始零件</label>
+    <label>原始零部件</label>
     <description>各种简易的木石零件，可用于制作原始工具和搭建装配台。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/ComponentMedieval</texPath>
@@ -26,7 +26,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Wire</defName>
-    <label>导线</label>
+    <label>电线</label>
     <description>由高导电金属拉制的导线，用于在电气设备中传导电流。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/Wires</texPath>
@@ -50,7 +50,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Mechanism</defName>
-    <label>机构件</label>
+    <label>机械组件</label>
     <description>齿轮状的简单机构件，是组装机械设备的基础部件。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/Mechanism</texPath>
@@ -74,7 +74,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_AdvMechanism</defName>
-    <label>高级机构件</label>
+    <label>先进机械组件</label>
     <description>结构精密的复杂机构件，用于组装高级机械设备。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/AdvMechanism</texPath>
@@ -98,7 +98,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_SpacerComponent</defName>
-    <label>太空零件</label>
+    <label>高级零部件</label>
     <description>以玻璃钢与贵金属制造的精密零件，是组装太空时代设备的必需部件。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/AdvancedComponent</texPath>
@@ -122,7 +122,7 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_UltraComponent</defName>
-    <label>超级零件</label>
+    <label>超级零部件</label>
     <description>为最苛刻的应用而微型化并强化的高级计算与能量导引机械，只有机器人装配台才能制造。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Parts/ComponentUltra</texPath>

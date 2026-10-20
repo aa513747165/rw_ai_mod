@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>MMT_AssembleElectronicParts_Electric</defName>
-    <label>电装电子元件</label>
+    <label>组装电子元件</label>
     <description>用电子电动工作台将铜锭、玻璃和硅组装成电子元件。产出 5。</description>
     <jobString>正在电装电子元件。</jobString>
     <workAmount>1600</workAmount>
@@ -55,7 +55,7 @@
 
   <RecipeDef>
     <defName>MMT_AssembleIC_Electric</defName>
-    <label>电装集成电路</label>
+    <label>组装集成电路</label>
     <description>用电子电动工作台将硅、塑料、电子元件和金组装成集成电路。产出 5。</description>
     <jobString>正在电装集成电路。</jobString>
     <workAmount>2400</workAmount>
@@ -117,7 +117,7 @@
 
   <RecipeDef>
     <defName>MMT_AssembleMicrochip_Electric</defName>
-    <label>电装微芯片</label>
+    <label>组装微芯片集成电路</label>
     <description>用电子电动工作台将集成电路、碳材料和金组装成微芯片。产出 1。</description>
     <jobString>正在电装微芯片。</jobString>
     <workAmount>2400</workAmount>

@@ -2,7 +2,7 @@
 <Defs>
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandFurnace</defName>
-    <label>手动熔炉</label>
+    <label>熔炉</label>
     <description>依靠人力鼓风加热的熔炉，用于将金属矿石冶炼成金属锭，并合炼青铜和钢。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
@@ -23,6 +23,9 @@
     </stuffCategories>
     <costStuffCount>240</costStuffCount>
     <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <statBases>
       <WorkToBuild>3000</WorkToBuild>
       <MaxHitPoints>280</MaxHitPoints>
@@ -59,7 +62,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableIronOre</defName>
-    <label>铁矿脉</label>
+    <label>铁矿</label>
     <description>露头的铁矿石矿脉，开采后可获得铁矿石，用于炼钢。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
@@ -83,7 +86,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableCopperOre</defName>
-    <label>铜矿脉</label>
+    <label>铜矿</label>
     <description>露头的铜矿石矿脉，开采后可获得铜矿石，用于冶炼铜锭。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
@@ -107,7 +110,7 @@
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableTinOre</defName>
-    <label>锡矿脉</label>
+    <label>锡矿</label>
     <description>露头的锡矿石矿脉，开采后可获得锡矿石，用于冶炼锡锭。</description>
     <graphicData>
       <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
