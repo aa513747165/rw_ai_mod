@@ -56,10 +56,11 @@
     <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
   </ThingDef>
 
+  <!-- 窑炉：对标 HSK Kiln 的全能燃料窑（烧木炭/烧砖/陶瓷/焚烧），SK 燃料组件用原版 CompProperties_Refuelable 替代 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_CharcoalKiln</defName>
     <label>窑炉</label>
-    <description>用于将原木烧制成木炭的简易窑炉。</description>
+    <description>烧柴煤的土窑，用于烧制木炭、粘土砖、陶瓷，也可焚烧杂物获取灰烬。可用石砖或粘土砖建造。</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln</texPath>
@@ -76,6 +77,7 @@
     <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
     <stuffCategories>
       <li>Stony</li>
+      <li>MMT_Bricks</li>
     </stuffCategories>
     <costStuffCount>180</costStuffCount>
     <statBases>
@@ -89,11 +91,34 @@
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeCharcoal_Hand</li>
+      <li>MMT_MakeCeramics</li>
+      <li>MMT_MakeClayBricks</li>
+      <li>MMT_BurnThings</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>
       <uninstallWork>1850</uninstallWork>
     </building>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>10.0</fuelConsumptionRate>
+        <fuelCapacity>30.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Coal</li>
+            <li>MMT_Charcoal</li>
+            <li>MMT_Kindling</li>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(217,112,33,0)</glowColor>
+      </li>
+      <li Class="CompProperties_Flickable" />
+    </comps>
     <inspectorTabs>
       <li>ITab_Bills</li>
     </inspectorTabs>

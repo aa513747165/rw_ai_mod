@@ -78,12 +78,6 @@ CERAMICS_ITEM_TEXTURES = [
     *[f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}/MMT_{ore}_{s}.png" for ore in ("Anglesite", "AluminiumOre") for s in ("a", "b", "c")],
 ]
 
-CERAMICS_BUILDING_TEXTURES = [
-    f"1.7/Textures/Things/Building/Production/MMT_Kiln/MMT_Kiln_{side}{mask}.png"
-    for side in ("east", "north", "south")
-    for mask in ("", "m")
-]
-
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_b.png",
@@ -493,7 +487,7 @@ WOOD_RESOURCE_EXPECTATIONS = {
 }
 
 SAWMILL_RECIPES = ["MMT_MakeWoodPlanks_Hand", "MMT_MakeKindling_Hand"]
-CHARCOAL_KILN_RECIPES = ["MMT_MakeCharcoal_Hand"]
+CHARCOAL_KILN_RECIPES = ["MMT_MakeCharcoal_Hand", "MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings"]
 
 WOOD_RECIPE_EXPECTATIONS = {
     "MMT_MakeWoodPlanks_Hand": {
@@ -1218,7 +1212,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 18
-INFRA_WORKTABLE_TOTAL = 16
+INFRA_WORKTABLE_TOTAL = 15
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -1837,7 +1831,7 @@ def validate_wood_building() -> None:
     assert_equal(child_text(kiln, "thingClass"), "Building_WorkTable", "木炭窑 thingClass")
     assert_equal(child_text(kiln, "./graphicData/texPath"), "Things/Building/Production/MMT_CharcoalKiln/MMT_CharcoalKiln", "木炭窑 texPath")
     assert_equal(child_text(kiln, "./graphicData/graphicClass"), "Graphic_Multi", "木炭窑 graphicClass")
-    assert_equal(li_values(kiln, "stuffCategories"), ["Stony"], "木炭窑材料分类")
+    assert_equal(li_values(kiln, "stuffCategories"), ["Stony", "MMT_Bricks"], "木炭窑材料分类")
     assert_equal(child_text(kiln, "costStuffCount"), "180", "木炭窑材料数量")
     assert_equal(child_text(kiln, "./statBases/WorkToBuild"), "3000", "木炭窑建造工作量")
     assert_equal(child_text(kiln, "./statBases/MaxHitPoints"), "270", "木炭窑耐久")
@@ -1845,6 +1839,13 @@ def validate_wood_building() -> None:
     assert_equal(li_values(kiln, "recipes"), CHARCOAL_KILN_RECIPES, "木炭窑配方")
     assert_equal(li_values(kiln, "researchPrerequisites"), ["MMT_CharcoalBurning"], "木炭窑研究前置")
     assert_equal(child_text(kiln, "constructionSkillPrerequisite"), "4", "木炭窑建造技能")
+    # 窑炉为燃料型（对标 HSK Kiln）：Refuelable + Glower + Flickable
+    kiln_comps = [li.attrib.get("Class") for li in kiln.findall("./comps/li")]
+    for expected in ("CompProperties_Refuelable", "CompProperties_Glower", "CompProperties_Flickable"):
+        if expected not in kiln_comps:
+            fail(f"木炭窑缺少组件: {expected}")
+    fuel = kiln.find("./comps/li[@Class='CompProperties_Refuelable']")
+    assert_equal(sorted(li_values(fuel, "./fuelFilter/thingDefs")), ["MMT_Charcoal", "MMT_Coal", "MMT_Kindling", "WoodLog"], "木炭窑燃料列表")
 
     for building_name, building in building_defs.items():
         comp_classes = [li.attrib.get("Class") for li in building.findall("./comps/li")]
@@ -3480,8 +3481,8 @@ def validate_basic_metallurgy() -> None:
         METAL_RESOURCE_XML,
         ELECTRIC_BUILDING_XML,
         ELECTRIC_RECIPE_XML,
+        WOOD_BUILDING_XML,
         *CERAMICS_ITEM_TEXTURES,
-        *CERAMICS_BUILDING_TEXTURES,
     ])
 
     # StuffCategoryDef
@@ -3528,9 +3529,9 @@ def validate_basic_metallurgy() -> None:
     if can.find("stuffProps") is not None:
         fail("金属罐不应定义 stuffProps")
 
-    # 窑炉与粘土矿脉
+    # 粘土矿脉（窑炉已并入 MMT_CharcoalKiln，由 wood 套件校验其建筑本体）
     building_defs = def_map(parse_xml(CERAMICS_BUILDING_XML))
-    assert_equal(set(building_defs), {"MMT_MineableSoftClay", "MMT_Kiln"}, "陶瓷建筑 defName 集合")
+    assert_equal(set(building_defs), {"MMT_MineableSoftClay"}, "陶瓷建筑 defName 集合")
 
     vein = building_defs["MMT_MineableSoftClay"]
     assert_equal(child_text(vein, "./building/mineableThing"), "MMT_SoftClay", "粘土矿脉产出")
@@ -3538,20 +3539,15 @@ def validate_basic_metallurgy() -> None:
     assert_equal(child_text(vein, "./building/mineableScatterCommonality"), "0.7", "粘土矿脉散布")
     assert_equal(child_text(vein, "./building/mineableScatterLumpSizeRange"), "8~15", "粘土矿脉矿团")
 
-    kiln = building_defs["MMT_Kiln"]
+    # 窑炉（= MMT_CharcoalKiln，木材链建筑兼任）的陶瓷链职责：材料分类/配方/研究
+    kiln = def_map(parse_xml(WOOD_BUILDING_XML))["MMT_CharcoalKiln"]
     assert_equal(child_text(kiln, "label"), "窑炉", "窑炉 label")
-    assert_equal(child_text(kiln, "thingClass"), "Building_WorkTable", "窑炉 thingClass")
     assert_equal(li_values(kiln, "stuffCategories"), ["Stony", "MMT_Bricks"], "窑炉材料分类")
-    assert_equal(child_text(kiln, "costStuffCount"), "180", "窑炉材料数量")
     assert_equal(child_text(kiln, "designationCategory"), "MMT_Production", "窑炉建造分类")
-    assert_equal(li_values(kiln, "recipes"), ["MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings"], "窑炉配方")
-    assert_equal(li_values(kiln, "researchPrerequisites"), ["MMT_BasicMetalworking"], "窑炉研究前置")
-    kiln_comps = [li.attrib.get("Class") for li in kiln.findall("./comps/li")]
-    for expected in ("CompProperties_Refuelable", "CompProperties_Glower", "CompProperties_Flickable"):
-        if expected not in kiln_comps:
-            fail(f"窑炉缺少组件: {expected}")
-    fuel = kiln.find("./comps/li[@Class='CompProperties_Refuelable']")
-    assert_equal(sorted(li_values(fuel, "./fuelFilter/thingDefs")), ["MMT_Charcoal", "MMT_Coal", "MMT_Kindling", "WoodLog"], "窑炉燃料列表")
+    kiln_recipes = li_values(kiln, "recipes")
+    for name in ("MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings"):
+        if name not in kiln_recipes:
+            fail(f"{name} 未挂载到窑炉")
 
     # 陶瓷系配方 + 燃烧配方
     recipe_defs = def_map(parse_xml(CERAMICS_RECIPE_XML))
@@ -3610,7 +3606,7 @@ def validate_basic_metallurgy() -> None:
         if needle not in patch_text:
             fail(f"灰烬 patch 缺少: {needle}")
 
-    for path in (*CERAMICS_ITEM_TEXTURES, *CERAMICS_BUILDING_TEXTURES):
+    for path in CERAMICS_ITEM_TEXTURES:
         assert_png(path)
 
     for path in (CERAMICS_RESOURCE_XML, CERAMICS_RECIPE_XML, CERAMICS_BUILDING_XML, STUFFCATEGORY_XML, ASH_PATCH_XML):
