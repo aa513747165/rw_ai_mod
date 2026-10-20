@@ -51,6 +51,8 @@
       <li>MMT_MakeSulphates</li>
       <li>MMT_MakeCarbonAlloy</li>
       <li>MMT_MakeOxidizedChemfuel</li>
+      <li>MMT_ExtractBiomatterCorpse</li>
+      <li>MMT_ExtractBiomatterMeat</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
