@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 动力电池：对照 HSK Hexcell（爆炸 comp 为原版；HSK 误归织物类，修正为电子件） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Hexcell</defName>
+    <label>动力电池</label>
+    <description>紧凑型储能装置，一般用于为先进武器或动力装甲的减震系统供电。受到损伤时会剧烈起火爆炸。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Hexcell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <useHitPoints>true</useHitPoints>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>10</MaxHitPoints>
+      <MarketValue>150</MarketValue>
+      <DeteriorationRate>0.02</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>1.4</explosiveRadius>
+        <explosiveDamageType>Flame</explosiveDamageType>
+        <explosiveExpandPerStackcount>0.2</explosiveExpandPerStackcount>
+        <startWickHitPointsPercent>0.333</startWickHitPointsPercent>
+        <wickTicks>
+          <min>5</min>
+          <max>10</max>
+        </wickTicks>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 机器人部件：对照 HSK RobotParts（剔除 SK 语义的 Robots 交易标签） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RobotParts</defName>
+    <label>机器人部件</label>
+    <description>组装机器人所需的精密机械与电子部件组。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_RobotParts</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <stackLimit>75</stackLimit>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>70</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1</Flammability>
+      <Mass>0.2</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <tradeTags>
+      <li>Exotic</li>
+    </tradeTags>
+  </ThingDef>
+
+  <!-- 矿物声纳模块：对照 HSK MineralSonarModule -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_MineralSonarModule</defName>
+    <label>矿物声纳模块</label>
+    <description>以金属合金为封装外壳、电子元件为计算模块的矿物声纳探测模块。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_MineralSonarModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>300</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.1</Flammability>
+      <Mass>6</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>25</stackLimit>
+  </ThingDef>
+</Defs>
