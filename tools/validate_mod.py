@@ -412,8 +412,8 @@ RECIPE_EXPECTATIONS = {
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "AnimalProductRaw", "PlantFoodRaw", "FoodRaw"}
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
-VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel", "AIPersonaCore", "Hyperweave", "Bioferrite", "Apparel_ShieldBelt"}
+VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics", "Machining", "Gunsmithing", "BlowbackOperation", "GasOperation", "PrecisionRifling", "HeavyTurrets", "Mortars", "Fabrication", "ChargedShot", "ComplexClothing", "AdvancedFabrication", "Firefoam", "Pemmican", "TreeSowing"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel", "AIPersonaCore", "Hyperweave", "Bioferrite", "Apparel_ShieldBelt", "Cloth", "DevilstrandCloth", "Synthread", "SmokeleafLeaves", "Campfire", "FueledStove", "ElectricStove", "Brewery", "DrugLab"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -549,9 +549,29 @@ WOOD_RESOURCE_EXPECTATIONS = {
         "tech": "Medieval",
         "stuff": False,
     },
+    "MMT_BambooPlank": {
+        "label": "竹板",
+        "value": "1.5",
+        "stack": "300",
+        "tex": "Things/Item/MMT/MMT_BambooPlank",
+        "graphic": "Graphic_Single",
+        "tech": "Neolithic",
+        "stuff": False,
+        "stuff_lite": True,
+    },
+    "MMT_RedWoodPlank": {
+        "label": "红木木板",
+        "value": "3.5",
+        "stack": "300",
+        "tex": "Things/Item/MMT/MMT_RedWoodPlank",
+        "graphic": "Graphic_StackCount",
+        "tech": "Neolithic",
+        "stuff": False,
+        "stuff_lite": True,
+    },
 }
 
-SAWMILL_RECIPES = ["MMT_MakeWoodPlanks_Hand", "MMT_MakeKindling_Hand"]
+SAWMILL_RECIPES = ["MMT_MakeWoodPlanks_Hand", "MMT_MakeKindling_Hand", "MMT_MakeBambooPlanks_Hand", "MMT_MakeRedWoodPlanks_Hand"]
 CHARCOAL_KILN_RECIPES = ["MMT_MakeCharcoal_Hand", "MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings"]
 
 WOOD_RECIPE_EXPECTATIONS = {
@@ -581,6 +601,34 @@ WOOD_RECIPE_EXPECTATIONS = {
         "sound": "Recipe_MakeWoodPlanks_Hand",
         "skill": None,
         "learn": "0.25",
+        "building": "MMT_HandSawmill",
+    },
+    "MMT_MakeBambooPlanks_Hand": {
+        "work": "1200",
+        "input": "MMT_Bamboo",
+        "input_count": "10",
+        "output": "MMT_BambooPlank",
+        "output_count": "15",
+        "research": "MMT_Woodworking",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "skill": "6",
+        "learn": "0.8",
+        "building": "MMT_HandSawmill",
+    },
+    "MMT_MakeRedWoodPlanks_Hand": {
+        "work": "1200",
+        "input": "MMT_RedWoodLog",
+        "input_count": "10",
+        "output": "MMT_RedWoodPlank",
+        "output_count": "15",
+        "research": "MMT_Woodworking",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "skill": "3",
+        "learn": "0.8",
         "building": "MMT_HandSawmill",
     },
     "MMT_MakeCharcoal_Hand": {
@@ -944,7 +992,7 @@ ELECTRIC_WOOD_BUILDING_EXPECTATIONS = {
         "size": "(3,1)",
         "power": "600",
         "skill": "10",
-        "recipes": ["MMT_MakeWoodPlanks_Electric", "MMT_MakeKindling_Electric"],
+        "recipes": ["MMT_MakeWoodPlanks_Electric", "MMT_MakeKindling_Electric", "MMT_MakeBambooPlanks_Electric", "MMT_MakeRedWoodPlanks_Electric"],
     },
     "MMT_ElectricCharcoalKiln": {
         "label": "电动木炭窑",
@@ -987,6 +1035,32 @@ ELECTRIC_WOOD_RECIPE_EXPECTATIONS = {
         "sound": "Recipe_MakeWoodPlanks_Hand",
         "building": "MMT_ElectricSawmill",
     },
+    "MMT_MakeBambooPlanks_Electric": {
+        "work": "1200",
+        "input": "MMT_Bamboo",
+        "input_count": "20",
+        "output": "MMT_BambooPlank",
+        "output_count": "30",
+        "skill": "9",
+        "learn": "0.8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "building": "MMT_ElectricSawmill",
+    },
+    "MMT_MakeRedWoodPlanks_Electric": {
+        "work": "1200",
+        "input": "MMT_RedWoodLog",
+        "input_count": "20",
+        "output": "MMT_RedWoodPlank",
+        "output_count": "30",
+        "skill": "6",
+        "learn": "0.8",
+        "speed": "GeneralLaborSpeed",
+        "effect": "MakeWoodPlanks_Hand",
+        "sound": "Recipe_MakeWoodPlanks_Hand",
+        "building": "MMT_ElectricSawmill",
+    },
     "MMT_MakeCharcoal_Electric": {
         "work": "800",
         "input_count": "25",
@@ -997,8 +1071,7 @@ ELECTRIC_WOOD_RECIPE_EXPECTATIONS = {
         "speed": "SmeltingSpeed",
         "effect": "Smelt",
         "sound": "Recipe_Smelt",
-        "building": "MMT_ElectricCharcoalKiln",
-    },
+        "building": "MMT_ElectricCharcoalKiln",    },
 }
 
 
@@ -1119,7 +1192,7 @@ PETROCHEM_EXT_RESEARCH_EXPECTATIONS = {
     "MMT_OxidizedFuel": {"label": "氧化燃料", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedPetrochemistry"], "x": "17.00", "y": "2.00"},
 }
 
-PETROCHEM_EXT_LOOM_RECIPES = ["MMT_MakeCompaste"]
+PETROCHEM_EXT_LOOM_RECIPES = ["MMT_MakeCompaste", "MMT_MakeCloth", "MMT_MakeFlaxcloth", "MMT_MakeHempCloth", "MMT_MakeDevilstrand", "MMT_MakeSynthread", "MMT_MakeVelour", "MMT_MakeKevlar", "MMT_MakeHyperweave", "MMT_MakeChitinPlating"]
 PETROCHEM_EXT_AMMO_BENCH_RECIPES = ["MMT_MakeSulfur", "MMT_MakePowder", "MMT_MakeNapalm"]
 
 PETROCHEM_EXT_RECIPE_EXPECTATIONS = {
@@ -1129,6 +1202,7 @@ PETROCHEM_EXT_RECIPE_EXPECTATIONS = {
     "MMT_MakeCompaste": {"work": "3200", "inputs": [("thingDefs", "Chemfuel", "10"), ("thingDefs", "MMT_Rubber", "5"), ("thingDefs", "MMT_Paraffins", "2")], "output": "MMT_Compaste", "output_count": "20", "skill": "5", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry"},
     "MMT_MakeSurfactant": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("categories", "Alcohol", "15")], "output": "MMT_Surfactant", "output_count": "50", "skill": "8", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["Brewery", "DrugLab"]},
     "MMT_MakeSurfactant_Compaste": {"work": "4000", "inputs": [("thingDefs", "MMT_Compaste", "15"), ("thingDefs", "MMT_Polymers", "25")], "output": "MMT_Surfactant", "output_count": "50", "skill": "12", "skill2": ("Intellectual", "4"), "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["DrugLab"]},
+    "MMT_MakeSurfactant_CoconutSubstitute": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("thingDefs", "MMT_RawCoconut", "25")], "output": "MMT_Surfactant", "output_count": "50", "skill": "12", "skill2": ("Intellectual", "4"), "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "Firefoam", "users": ["Brewery", "DrugLab"]},
     "MMT_MakeSulfur": {"work": "1200", "inputs": [("thingDefs", "MMT_IronOre", "35")], "output": "MMT_Sulfur", "output_count": "10", "skill": None, "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_MakePowder": {"work": "3000", "inputs": [("thingDefs", "MMT_Nitre", "75"), ("categories", "MMT_Coal", "20"), ("thingDefs", "MMT_Sulfur", "20")], "output": "MMT_Powder", "output_count": "20", "skill": "3", "speed": "GeneralLaborSpeed", "effect": "Smith", "sound": "Recipe_Smith", "research": None, "target_count_adjustment": "5"},
     "MMT_MakeNapalm": {"work": "1200", "inputs": [("thingDefs", "Chemfuel", "30"), ("thingDefs", "MMT_Polymers", "15")], "output": "MMT_Napalm", "output_count": "10", "skill": "5", "speed": "GeneralLaborSpeed", "effect": "Smith", "sound": "Recipe_Smith", "research": None},
@@ -1140,6 +1214,144 @@ ELECTRIC_ELECTRONICS_BUILDING_TEXTURES = [
     for side in ("east", "north", "south")
     for mask in ("", "m")
 ]
+
+# === B8 织物 + 作物 + 武器部件 ===
+CROPS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Crops.xml"
+CROPS_PLANT_XML = "1.7/Defs/ThingDefs_Plants/MMT_Plants_Cultivated.xml"
+CROPS_PATCH_XML = "1.7/Patches/MMT_Patch_CropHarvest.xml"
+INSECT_CHITIN_PATCH_XML = "1.7/Patches/MMT_Patch_InsectChitin.xml"
+TEXTILES_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Textiles.xml"
+TEXTILES_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Textiles.xml"
+WEAPON_PARTS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_WeaponParts.xml"
+WEAPON_PARTS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_WeaponParts.xml"
+WEAPON_PARTS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_WeaponParts.xml"
+TEXTILES_WEAPONS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_TextilesWeapons.xml"
+
+CROPS_RESOURCE_EXPECTATIONS = {
+    "MMT_RawCotton": {"label": "原棉", "value": "1.5", "stack": "300", "categories": ["PlantMatter"]},
+    "MMT_RawFlax": {"label": "生亚麻", "value": "3.5", "stack": "300", "categories": ["PlantMatter"]},
+    "MMT_RawDevilstrand": {"label": "生恶魔菇", "value": "6.4", "stack": "150", "categories": ["PlantMatter"]},
+    "MMT_RawCaoutchouc": {"label": "天然橡胶", "value": "2", "categories": ["PlantMatter"]},
+    "MMT_Bamboo": {"label": "竹节", "value": "2.0", "stack": "300", "categories": ["ResourcesRaw"]},
+    "MMT_RedWoodLog": {"label": "红木", "value": "2.0", "stack": "300", "categories": ["ResourcesRaw"]},
+    "MMT_RawCoconut": {"label": "椰子", "value": "6", "categories": ["PlantFoodRaw"]},
+    "MMT_WildRose": {"label": "野玫瑰", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
+    "MMT_Hypericum": {"label": "金丝桃", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
+    "MMT_MintLeaves": {"label": "薄荷叶", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
+}
+
+CROPS_PLANT_EXPECTATIONS = {
+    "MMT_PlantFlax": {"harvest": "MMT_RawFlax", "yield": "9", "grow": "8.1", "sow": ["Ground", "Hydroponic"], "skill": "5"},
+    "MMT_PlantWildRose": {"harvest": "MMT_WildRose", "yield": "6", "grow": "8", "sow": ["Hydroponic"], "skill": "12"},
+    "MMT_PlantHypericum": {"harvest": "MMT_Hypericum", "yield": "4", "grow": "6", "sow": ["Hydroponic"], "skill": "12"},
+    "MMT_PlantMint": {"harvest": "MMT_MintLeaves", "yield": "5", "grow": "6.5", "sow": ["Hydroponic"], "skill": "12"},
+    "MMT_PlantHevea": {"harvest": "MMT_RawCaoutchouc", "yield": "20", "grow": "6.5", "sow": ["Ground"], "skill": "8"},
+    "MMT_PlantRedwood": {"harvest": "MMT_RedWoodLog", "yield": "225", "grow": "85", "sow": [], "skill": None},
+}
+
+CROPS_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_Crops/{name}.png"
+    for name in ("MMT_RawCotton", "MMT_RawFlax", "MMT_RawDevilstrand", "MMT_RawCaoutchouc", "MMT_RawCoconut", "MMT_WildRose", "MMT_Hypericum", "MMT_MintLeaves", "MMT_Bamboo")
+] + [f"1.7/Textures/Things/Item/MMT/MMT_Crops/MMT_RedWoodLog/MMT_RedWoodLog_{s}.png" for s in "abc"]
+CROPS_PLANT_TEXTURE_DIRS = [
+    f"1.7/Textures/Things/Plant/MMT/{name}"
+    for name in ("MMT_PlantFlax", "MMT_PlantFlax_Immature", "MMT_PlantWildRose", "MMT_PlantHypericum", "MMT_PlantMint", "MMT_PlantHevea", "MMT_PlantHevea_Leafless", "MMT_PlantRedwood")
+]
+
+TEXTILES_RESOURCE_EXPECTATIONS = {
+    "MMT_Flaxcloth": {"label": "亚麻布", "value": "6", "stack": "150", "categories": ["MMT_BTextiles"], "class": "Graphic_StackCount"},
+    "MMT_HempCloth": {"label": "大麻布", "value": "3", "stack": "300", "categories": ["MMT_BTextiles"], "class": "Graphic_StackCount"},
+    "MMT_Velour": {"label": "丝绒", "value": "12.0", "stack": "300", "categories": ["Textiles"], "class": "Graphic_Single"},
+    "MMT_Kevlar": {"label": "凯夫拉", "value": "25", "stack": "150", "categories": ["Textiles"], "class": "Graphic_StackCount"},
+    "MMT_ChitinPlating": {"label": "甲壳板", "value": "35", "stack": "75", "categories": ["Textiles"], "class": "Graphic_Single"},
+    "MMT_Chitin": {"label": "甲壳", "value": "7", "stack": "150", "parent": "LeatherBase"},
+    "MMT_Tallow": {"label": "兽脂", "value": "2", "stack": "75", "categories": ["MMT_FuelCat"], "class": "Graphic_Single"},
+    "MMT_PaintingSupplies": {"label": "绘画用品", "value": "50", "stack": "10", "categories": ["Manufactured"], "class": "Graphic_Single"},
+    "MMT_Dye": {"label": "染料", "value": "1.5", "stack": "150", "categories": ["Manufactured"], "class": "Graphic_Single"},
+}
+
+TEXTILES_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/MMT_Textiles/MMT_Velour.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Textiles/MMT_ChitinPlating.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Textiles/MMT_Tallow.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Textiles/MMT_PaintingSupplies.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Textiles/MMT_Dye.png",
+    "1.7/Textures/Things/Item/MMT/MMT_BambooPlank.png",
+] + [f"1.7/Textures/Things/Item/MMT/MMT_Textiles/{name}/{name}_{s}.png" for name in ("MMT_Flaxcloth", "MMT_HempCloth", "MMT_Kevlar", "MMT_Chitin") for s in "abc"] \
+  + [f"1.7/Textures/Things/Item/MMT/MMT_RedWoodPlank/MMT_RedWoodPlank_{s}.png" for s in "abc"]
+
+TEXTILES_RECIPE_EXPECTATIONS = {
+    "MMT_MakeCloth": {"work": "600", "inputs": [("thingDefs", "MMT_RawCotton", "20")], "output": "Cloth", "output_count": "20", "skill": "2", "speed": "GeneralLaborSpeed", "research": "ComplexClothing", "bench": "loom"},
+    "MMT_MakeFlaxcloth": {"work": "600", "inputs": [("thingDefs", "MMT_RawFlax", "20")], "output": "MMT_Flaxcloth", "output_count": "10", "skill": "4", "speed": "GeneralLaborSpeed", "research": None, "bench": "loom"},
+    "MMT_MakeHempCloth": {"work": "1200", "inputs": [("thingDefs", "SmokeleafLeaves", "30")], "output": "MMT_HempCloth", "output_count": "15", "skill": "6", "speed": "GeneralLaborSpeed", "research": "ComplexClothing", "bench": "loom"},
+    "MMT_MakeDevilstrand": {"work": "600", "inputs": [("thingDefs", "MMT_RawDevilstrand", "15"), ("thingDefs", "MMT_SyntheticFibers", "2")], "output": "DevilstrandCloth", "output_count": "15", "skill": "13", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
+    "MMT_MakeSynthread": {"work": "600", "inputs": [("thingDefs", "MMT_RawCotton", "10"), ("thingDefs", "MMT_SyntheticFibers", "3")], "output": "Synthread", "output_count": "10", "skill": "12", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
+    "MMT_MakeVelour": {"work": "1800", "inputs": [("thingDefs", "MMT_Compaste", "5"), ("categories", "MMT_BTextiles", "40")], "output": "MMT_Velour", "output_count": "25", "skill": "12", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
+    "MMT_MakeKevlar": {"work": "1800", "inputs": [("thingDefs", "MMT_Plastic", "30"), ("thingDefs", "MMT_SyntheticFibers", "15")], "output": "MMT_Kevlar", "output_count": "10", "skill": "13", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
+    "MMT_MakeHyperweave": {"work": "600", "inputs": [("thingDefs", "Synthread", "10"), ("thingDefs", "DevilstrandCloth", "10")], "output": "Hyperweave", "output_count": "10", "skill": "17", "speed": "GeneralLaborSpeed", "research": "MMT_SuperFabric", "bench": "loom"},
+    "MMT_MakeChitinPlating": {"work": "1080", "inputs": [("thingDefs", "MMT_Chitin", "50"), ("thingDefs", "MMT_SyntheticFibers", "4"), ("thingDefs", "MMT_Compaste", "1")], "output": "MMT_ChitinPlating", "output_count": "15", "skill": "12", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
+    "MMT_MakeTallow": {"work": "1200", "inputs": [("categories", "MeatRaw", "30")], "output": "MMT_Tallow", "output_count": "15", "skill": ("Cooking", "3"), "speed": "CookSpeed", "research": "Pemmican", "users": ["Campfire", "FueledStove"]},
+    "MMT_CookPaint": {"work": "550", "inputs": [("thingDefs", ("MMT_WildRose", "MMT_Hypericum", "MMT_MintLeaves"), "10"), ("thingDefs", ("WoodLog", "MMT_WoodPlank", "MMT_Bamboo", "MMT_BambooPlank", "MMT_RedWoodLog", "MMT_RedWoodPlank"), "2")], "output": "MMT_PaintingSupplies", "output_count": "1", "skill": "5", "speed": "CookSpeed", "research": "MMT_ArtSupplies", "users": ["ElectricStove", "FueledStove"]},
+    "MMT_CookPaintDye": {"work": "550", "inputs": [("thingDefs", "MMT_Dye", "10"), ("thingDefs", ("WoodLog", "MMT_WoodPlank", "MMT_Bamboo", "MMT_BambooPlank", "MMT_RedWoodLog", "MMT_RedWoodPlank"), "2")], "output": "MMT_PaintingSupplies", "output_count": "1", "skill": "5", "speed": "CookSpeed", "research": "MMT_ArtSupplies", "users": ["ElectricStove", "FueledStove"]},
+    "MMT_MakeDye": {"work": "400", "inputs": [("thingDefs", ("MMT_WildRose", "MMT_Hypericum", "MMT_MintLeaves"), "4")], "output": "MMT_Dye", "output_count": "8", "skill": "3", "speed": "CookSpeed", "research": "MMT_ArtSupplies", "users": ["ElectricStove", "FueledStove"]},
+}
+
+WEAPON_PARTS_RESOURCE_EXPECTATIONS = {
+    "MMT_WeaponParts": {"label": "武器部件", "value": "65", "stack": "75", "tech": "Industrial"},
+    "MMT_PistolComponent": {"label": "手枪部件", "value": "50", "stack": "75", "tech": "Industrial"},
+    "MMT_SMGComponent": {"label": "冲锋枪部件", "value": "150", "stack": "25", "tech": "Industrial"},
+    "MMT_ShotgunComponent": {"label": "霰弹枪部件", "value": "150", "stack": "25", "tech": "Industrial"},
+    "MMT_RifleComponent": {"label": "步枪部件", "value": "200", "stack": "25", "tech": "Industrial"},
+    "MMT_AdvRifleComponent": {"label": "先进步枪部件", "value": "400", "stack": "25", "tech": "Industrial"},
+    "MMT_SniperComponent": {"label": "狙击枪部件", "value": "250", "stack": "25", "tech": "Industrial"},
+    "MMT_AdvSniperComponent": {"label": "先进狙击枪部件", "value": "1250", "stack": "25", "tech": "Industrial"},
+    "MMT_HeavyComponent": {"label": "重型武器部件", "value": "500", "stack": "25", "tech": "Industrial"},
+    "MMT_CannonComponent": {"label": "火炮武器部件", "value": "600", "stack": "25", "tech": "Industrial"},
+    "MMT_LauncherComponent": {"label": "发射器部件", "value": "750", "stack": "25", "tech": "Industrial"},
+    "MMT_ChargedComponent": {"label": "电荷武器部件", "value": "687", "stack": "25", "tech": "Spacer"},
+    "MMT_LaserComponent": {"label": "光束武器部件", "value": "1000", "stack": "25", "tech": "Spacer"},
+    "MMT_PlasmaComponent": {"label": "离子武器部件", "value": "1000", "stack": "25", "tech": "Spacer"},
+}
+
+WEAPON_PARTS_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_WeaponParts/{name}.png" for name in WEAPON_PARTS_RESOURCE_EXPECTATIONS
+]
+WEAPON_PARTS_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/{b}/{b}_{side}{mask}.png"
+    for b in ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable", "MMT_MechWeaponTable")
+    for side in ("east", "north", "south")
+    for mask in ("", "m")
+]
+
+WEAPON_PARTS_BUILDING_EXPECTATIONS = {
+    "MMT_WeaponCraftingTable": {"label": "武器加工台", "size": "(3,1)", "power": "500", "work_build": "4000", "hp": "210", "stuff_count": "140", "research": ["Machining"], "skill": "6"},
+    "MMT_AdvWeaponCraftingTable": {"label": "先进武器加工台", "size": "(3,1)", "power": "500", "work_build": "6500", "hp": "250", "stuff_count": "160", "research": ["Fabrication"], "skill": "12"},
+    "MMT_MechWeaponTable": {"label": "未来武器工作台", "size": "(3,1)", "power": "1800", "work_build": "11000", "hp": "260", "stuff_count": "190", "research": ["ChargedShot"], "skill": "18"},
+}
+
+SLDB_USLDB = ("MMT_SLDBar", "MMT_USLDBar")
+WEAPON_PARTS_RECIPE_EXPECTATIONS = {
+    "MMT_MakeWeaponParts": {"work": "1500", "inputs": [("categories", "MMT_MetallicBar", "25"), ("thingDefs", "ComponentIndustrial", "10"), ("thingDefs", "MMT_Mechanism", "5")], "output": "MMT_WeaponParts", "output_count": "5", "skill": "6", "research": "Machining", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable", "MMT_MechWeaponTable")},
+    "MMT_MakePistolComponent": {"work": "1200", "inputs": [("categories", SLDB_USLDB, "6"), ("categories", "MMT_HCMBar", "3"), ("thingDefs", "ComponentIndustrial", "2"), ("thingDefs", "MMT_Wire", "1"), ("thingDefs", "MMT_Mechanism", "1")], "output": "MMT_PistolComponent", "output_count": "1", "skill": "6", "research": "Gunsmithing", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable")},
+    "MMT_MakeSMGComponent": {"work": "1800", "inputs": [("categories", SLDB_USLDB, "10"), ("categories", "MMT_HCMBar", "5"), ("thingDefs", "ComponentIndustrial", "4"), ("thingDefs", "MMT_Wire", "6"), ("thingDefs", "MMT_Mechanism", "2")], "output": "MMT_SMGComponent", "output_count": "1", "skill": "9", "research": "BlowbackOperation", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable")},
+    "MMT_MakeShotgunComponent": {"work": "1800", "inputs": [("categories", SLDB_USLDB, "15"), ("categories", "MMT_HCMBar", "8"), ("thingDefs", "ComponentIndustrial", "4"), ("thingDefs", "MMT_Wire", "5"), ("thingDefs", "MMT_Mechanism", "2")], "output": "MMT_ShotgunComponent", "output_count": "1", "skill": "7", "research": "GasOperation", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable")},
+    "MMT_MakeRifleComponent": {"work": "2100", "inputs": [("categories", SLDB_USLDB, "20"), ("categories", "MMT_HCMBar", "10"), ("thingDefs", "ComponentIndustrial", "6"), ("thingDefs", "MMT_Wire", "8"), ("thingDefs", "MMT_Mechanism", "3")], "output": "MMT_RifleComponent", "output_count": "1", "skill": "8", "research": "GasOperation", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable")},
+    "MMT_MakeSniperComponent": {"work": "2100", "inputs": [("thingDefs", "MMT_RifleComponent", "1"), ("thingDefs", "ComponentIndustrial", "6"), ("thingDefs", "MMT_Glass", "12")], "output": "MMT_SniperComponent", "output_count": "1", "skill": "10", "research": "PrecisionRifling", "benches": ("MMT_WeaponCraftingTable", "MMT_AdvWeaponCraftingTable")},
+    "MMT_MakeAdvRifleComponent": {"work": "2100", "inputs": [("thingDefs", "MMT_SyntheticFibers", "5"), ("thingDefs", "MMT_Plastic", "15"), ("thingDefs", "MMT_Rubber", "15"), ("thingDefs", "MMT_RifleComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "2")], "output": "MMT_AdvRifleComponent", "output_count": "1", "skill": "13", "research": "Fabrication", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeAdvSniperComponent": {"work": "2100", "inputs": [("thingDefs", "MMT_SyntheticFibers", "10"), ("thingDefs", "MMT_Plastic", "20"), ("thingDefs", "MMT_Rubber", "15"), ("thingDefs", "MMT_IntegratedCircuit", "4"), ("thingDefs", "MMT_SniperComponent", "2"), ("thingDefs", "MMT_AdvMechanism", "3")], "output": "MMT_AdvSniperComponent", "output_count": "1", "skill": "15", "research": "Fabrication", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeHeavyComponent": {"work": "2800", "inputs": [("categories", SLDB_USLDB, "25"), ("categories", "MMT_HCMBar", "15"), ("thingDefs", "ComponentIndustrial", "12"), ("thingDefs", "MMT_Wire", "15"), ("thingDefs", "MMT_Mechanism", "6")], "output": "MMT_HeavyComponent", "output_count": "1", "skill": "12", "research": "HeavyTurrets", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeCannonComponent": {"work": "3100", "inputs": [("categories", SLDB_USLDB, "20"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "5")], "output": "MMT_CannonComponent", "output_count": "1", "skill": "14", "research": "Mortars", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeLauncherComponent": {"work": "3100", "inputs": [("thingDefs", "MMT_IntegratedCircuit", "2"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "3"), ("thingDefs", "MMT_Glass", "12")], "output": "MMT_LauncherComponent", "output_count": "1", "skill": "14", "research": "MMT_Rocketry1", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeChargedComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "10"), ("categories", "MMT_HCMBar", "20"), ("thingDefs", "MMT_MagneticMaterial", "2"), ("thingDefs", "MMT_AdvMechanism", "2")], "output": "MMT_ChargedComponent", "output_count": "1", "skill": "14", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
+    "MMT_MakeLaserComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "20"), ("categories", "MMT_HCMBar", "10"), ("thingDefs", "MMT_MagneticMaterial", "4"), ("thingDefs", "MMT_Microchip", "1")], "output": "MMT_LaserComponent", "output_count": "1", "skill": "15", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
+    "MMT_MakePlasmaComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "20"), ("categories", "MMT_HCMBar", "10"), ("thingDefs", "MMT_BiosyntheticMaterial", "4"), ("thingDefs", "MMT_Microchip", "1")], "output": "MMT_PlasmaComponent", "output_count": "1", "skill": "15", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
+}
+
+TEXTILES_WEAPONS_RESEARCH_EXPECTATIONS = {
+    "MMT_ArtSupplies": {"label": "艺术用品", "cost": "400", "tech": "Industrial", "prereqs": [], "x": "2.00", "y": "0.00"},
+    "MMT_SuperFabric": {"label": "超织物工艺", "cost": "2000", "tech": "Spacer", "prereqs": ["AdvancedFabrication"], "x": "23.00", "y": "1.00"},
+    "MMT_Rocketry1": {"label": "火箭弹 I", "cost": "1400", "tech": "Industrial", "prereqs": ["HeavyTurrets"], "x": "23.00", "y": "2.00"},
+}
 
 MATTER_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Matter.xml"
 SUPER_ALLOYS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_SuperAlloys.xml"
@@ -1495,8 +1707,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 26
-INFRA_WORKTABLE_TOTAL = 22
+INFRA_RESEARCH_TOTAL = 29
+INFRA_WORKTABLE_TOTAL = 25
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -1525,6 +1737,7 @@ INFRA_PATCH_TARGETS = {
     "Uranium": "MMT_RADBar",
     "ComponentIndustrial": "MMT_Parts",
     "ComponentSpacer": "MMT_Parts",
+    "Cloth": "MMT_BTextiles",
 }
 
 
@@ -2064,6 +2277,9 @@ def validate_wood_resources() -> None:
             assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), "0.7", f"{name} WorkToMake factor")
             assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), "0.7", f"{name} WorkToBuild factor")
             assert_equal(child_text(node, "terrainAffordanceNeeded"), "Light", f"{name} terrain affordance")
+        elif expected.get("stuff_lite"):
+            assert_equal(li_values(node, "./stuffProps/categories"), ["Woody"], f"{name} stuff categories")
+            assert_equal(child_text(node, "./stuffProps/appearance"), "Planks", f"{name} stuff appearance")
         elif node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
 
@@ -2191,7 +2407,7 @@ def validate_wood_recipes() -> None:
         assert_equal(products[0].tag, expected["output"], f"{name} 输出")
         assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
 
-        if expected["input"] not in VANILLA_THINGS:
+        if expected["input"] not in VANILLA_THINGS | {"MMT_Bamboo", "MMT_RedWoodLog"}:
             fail(f"{name} 使用未知原版输入: {expected['input']}")
         if expected["output"] not in resource_names:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")
@@ -3050,8 +3266,8 @@ def validate_electric_wood() -> None:
         if ingredient is None:
             fail(f"{name} 缺少输入")
         assert_equal(child_text(ingredient, "count"), expected["input_count"], f"{name} 输入数量")
-        assert_equal(li_values(ingredient, "./filter/thingDefs"), ["WoodLog"], f"{name} 输入引用")
-        assert_equal(li_values(recipe, "./fixedIngredientFilter/thingDefs"), ["WoodLog"], f"{name} 固定输入引用")
+        assert_equal(li_values(ingredient, "./filter/thingDefs"), [expected.get("input", "WoodLog")], f"{name} 输入引用")
+        assert_equal(li_values(recipe, "./fixedIngredientFilter/thingDefs"), [expected.get("input", "WoodLog")], f"{name} 固定输入引用")
 
         products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
         if len(products) != 1:
@@ -3884,6 +4100,7 @@ def validate_petrochem_ext() -> None:
         | set(def_map(parse_xml(SULFUR_RESOURCE_XML)))
         | set(def_map(parse_xml(AGRICULTURE_RESOURCE_XML)))
         | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(CROPS_RESOURCE_XML)))
     )
     allowed_categories = {"Alcohol", "MMT_Coal"}
 
@@ -4340,6 +4557,287 @@ def validate_infrastructure() -> None:
     print("infrastructure: OK")
 
 
+def validate_textiles_weapons() -> None:
+    require_files([
+        CROPS_RESOURCE_XML,
+        CROPS_PLANT_XML,
+        CROPS_PATCH_XML,
+        INSECT_CHITIN_PATCH_XML,
+        TEXTILES_RESOURCE_XML,
+        TEXTILES_RECIPE_XML,
+        WEAPON_PARTS_RESOURCE_XML,
+        WEAPON_PARTS_BUILDING_XML,
+        WEAPON_PARTS_RECIPE_XML,
+        TEXTILES_WEAPONS_RESEARCH_XML,
+        PETROCHEM_EXT_BUILDING_XML,
+        WOOD_RESOURCE_XML,
+        PARTS_RESOURCE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        MATTER_RESOURCE_XML,
+        RESOURCE_XML,
+        PETROCHEM_RESOURCE_XML,
+        PETROCHEM_EXT_RESOURCE_XML,
+        *CROPS_ITEM_TEXTURES,
+        *TEXTILES_ITEM_TEXTURES,
+        *WEAPON_PARTS_ITEM_TEXTURES,
+        *WEAPON_PARTS_BUILDING_TEXTURES,
+    ])
+    require_dirs(CROPS_PLANT_TEXTURE_DIRS)
+
+    # --- 8.1 作物资源 ---
+    crop_defs = def_map(parse_xml(CROPS_RESOURCE_XML))
+    assert_equal(set(crop_defs), set(CROPS_RESOURCE_EXPECTATIONS), "作物资源 defName 集合")
+    for name, expected in CROPS_RESOURCE_EXPECTATIONS.items():
+        node = crop_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        if "stack" in expected:
+            assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        tex = child_text(node, "./graphicData/texPath")
+        if not tex.startswith(f"Things/Item/MMT/MMT_Crops/{name}"):
+            fail(f"{name} texPath 不在 MMT_Crops 目录: {tex}")
+
+    # --- 8.1 植物 ---
+    plant_defs = def_map(parse_xml(CROPS_PLANT_XML))
+    assert_equal(set(plant_defs), set(CROPS_PLANT_EXPECTATIONS), "作物植物 defName 集合")
+    for name, expected in CROPS_PLANT_EXPECTATIONS.items():
+        node = plant_defs[name]
+        assert_equal(child_text(node, "./plant/harvestedThingDef"), expected["harvest"], f"{name} 收获物")
+        assert_equal(child_text(node, "./plant/harvestYield"), expected["yield"], f"{name} 产量")
+        assert_equal(child_text(node, "./plant/growDays"), expected["grow"], f"{name} 生长天数")
+        sow_node = node.find("./plant/sowTags")
+        sow = [li.text for li in sow_node.findall("li")] if sow_node is not None else []
+        assert_equal(sow, expected["sow"], f"{name} 播种标签")
+        skill_node = node.find("./plant/sowMinSkill")
+        if expected["skill"] is None:
+            if skill_node is not None:
+                fail(f"{name} 不应定义播种技能")
+        else:
+            assert_equal((skill_node.text or "").strip() if skill_node is not None else None, expected["skill"], f"{name} 播种技能")
+        if node.find("./plant/sowResearchPrerequisites") is not None:
+            fail(f"{name} 不得带 HSK 播种研究前置")
+        tex = child_text(node, "./graphicData/texPath")
+        if not tex.startswith(f"Things/Plant/MMT/{name}"):
+            fail(f"{name} texPath 不在 MMT 植物目录: {tex}")
+
+    # --- 8.1/8.2 patch 文本断言 ---
+    crop_patch = read_text(CROPS_PATCH_XML)
+    for target, product in (("Plant_Cotton", "MMT_RawCotton"), ("Plant_Devilstrand", "MMT_RawDevilstrand"), ("Plant_TreeBamboo", "MMT_Bamboo"), ("Plant_TreePalm", "MMT_RawCoconut")):
+        if f'defName="{target}"' not in crop_patch or product not in crop_patch:
+            fail(f"作物 patch 缺少 {target} → {product}")
+    insect_patch = read_text(INSECT_CHITIN_PATCH_XML)
+    if insect_patch.count("PatchOperationConditional") != 3:
+        fail("甲壳 patch 应为 3 个条件操作")
+    for race, count in (("Megascarab", "30"), ("Spelopede", "45"), ("Megaspider", "60")):
+        if race not in insect_patch:
+            fail(f"甲壳 patch 缺少 {race}")
+    if insect_patch.count("MMT_Chitin") < 3:
+        fail("甲壳 patch 缺少 MMT_Chitin 掉落")
+    infra_patch = read_text(INFRA_PATCH_XML)
+    if 'defName="Cloth"' not in infra_patch or "MMT_BTextiles" not in infra_patch:
+        fail("原版类别 patch 缺少 Cloth → MMT_BTextiles")
+
+    # --- 8.2 织物资源 ---
+    textile_defs = def_map(parse_xml(TEXTILES_RESOURCE_XML))
+    assert_equal(set(textile_defs), set(TEXTILES_RESOURCE_EXPECTATIONS), "织物资源 defName 集合")
+    for name, expected in TEXTILES_RESOURCE_EXPECTATIONS.items():
+        node = textile_defs[name]
+        if "parent" in expected:
+            assert_equal(node.attrib.get("ParentName"), expected["parent"], f"{name} 父类")
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        if "categories" in expected:
+            assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        if "class" in expected:
+            assert_equal(child_text(node, "./graphicData/graphicClass"), expected["class"], f"{name} graphicClass")
+            tex = child_text(node, "./graphicData/texPath")
+            if not tex.startswith(f"Things/Item/MMT/MMT_Textiles/{name}"):
+                fail(f"{name} texPath 不在 MMT_Textiles 目录: {tex}")
+
+    # --- 8.2 织物配方 ---
+    textile_recipe_defs = def_map(parse_xml(TEXTILES_RECIPE_XML))
+    assert_equal(set(textile_recipe_defs), set(TEXTILES_RECIPE_EXPECTATIONS), "织物配方 defName 集合")
+    loom_recipes = li_values(def_map(parse_xml(PETROCHEM_EXT_BUILDING_XML))["MMT_Loom"], "recipes")
+
+    resource_names = (
+        set(crop_defs)
+        | set(textile_defs)
+        | set(def_map(parse_xml(WOOD_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_EXT_RESOURCE_XML)))
+        | set(def_map(parse_xml(PARTS_RESOURCE_XML)))
+        | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
+        | set(def_map(parse_xml(MATTER_RESOURCE_XML)))
+        | set(def_map(parse_xml(RESOURCE_XML)))
+        | set(def_map(parse_xml(WEAPON_PARTS_RESOURCE_XML)))
+    )
+    allowed_categories = {"PlantMatter", "PlantFoodRaw", "MeatRaw", "MMT_BTextiles", "MMT_MetallicBar", "MMT_SLDBar", "MMT_USLDBar", "MMT_HCMBar", "MMT_FuelCat"}
+
+    for name, expected in TEXTILES_RECIPE_EXPECTATIONS.items():
+        recipe = textile_recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        skill = expected["skill"]
+        if isinstance(skill, tuple):
+            assert_equal(child_text(recipe, f"./skillRequirements/{skill[0]}"), skill[1], f"{name} {skill[0]} requirement")
+        else:
+            assert_equal(child_text(recipe, "./skillRequirements/Crafting"), skill, f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            categories = li_values(filter_node, "categories")
+            if bool(thing_defs) == bool(categories):
+                fail(f"{name} 每个输入 filter 必须且只能包含 thingDefs 或 categories 之一")
+            if thing_defs:
+                actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+            else:
+                actual_inputs.append(("categories", tuple(categories), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        products = {node.tag: (node.text or "").strip() for node in recipe.findall("./products/*") if isinstance(node.tag, str)}
+        assert_equal(products, {expected["output"]: expected["output_count"]}, f"{name} 输出")
+
+        research = recipe.findtext("researchPrerequisite")
+        assert_equal(research.strip() if research else None, expected["research"], f"{name} researchPrerequisite")
+
+        if expected.get("bench") == "loom":
+            if name not in loom_recipes:
+                fail(f"{name} 未挂载到纺织机")
+            if li_values(recipe, "recipeUsers"):
+                fail(f"{name} 不应写 recipeUsers")
+        else:
+            assert_equal(li_values(recipe, "recipeUsers"), expected["users"], f"{name} recipeUsers")
+
+        for kind, value, _ in normalized:
+            for item in value:
+                if kind == "thingDefs":
+                    if item not in resource_names | VANILLA_THINGS:
+                        fail(f"{name} 使用未知资源: {item}")
+                elif item not in allowed_categories:
+                    fail(f"{name} 使用未知类别: {item}")
+        if expected["output"] not in resource_names | VANILLA_THINGS:
+            fail(f"{name} 输出不是已知资源: {expected['output']}")
+
+    # --- 8.3 武器部件资源 ---
+    weapon_defs = def_map(parse_xml(WEAPON_PARTS_RESOURCE_XML))
+    assert_equal(set(weapon_defs), set(WEAPON_PARTS_RESOURCE_EXPECTATIONS), "武器部件资源 defName 集合")
+    for name, expected in WEAPON_PARTS_RESOURCE_EXPECTATIONS.items():
+        node = weapon_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(li_values(node, "thingCategories"), ["MMT_WeaponParts"], f"{name} thingCategories")
+        assert_equal(child_text(node, "./graphicData/texPath"), f"Things/Item/MMT/MMT_WeaponParts/{name}", f"{name} texPath")
+
+    # --- 8.3 武器加工建筑 ---
+    weapon_building_defs = def_map(parse_xml(WEAPON_PARTS_BUILDING_XML))
+    assert_equal(set(weapon_building_defs), set(WEAPON_PARTS_BUILDING_EXPECTATIONS), "武器加工建筑 defName 集合")
+    for name, expected in WEAPON_PARTS_BUILDING_EXPECTATIONS.items():
+        node = weapon_building_defs[name]
+        assert_equal(node.attrib.get("ParentName"), "BuildingBase", f"{name} 父类")
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "thingClass"), "Building_WorkTable", f"{name} thingClass")
+        assert_equal(child_text(node, "size"), expected["size"], f"{name} 尺寸")
+        assert_equal(child_text(node, "./statBases/WorkToBuild"), expected["work_build"], f"{name} 建造工作量")
+        assert_equal(child_text(node, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(node, "costStuffCount"), expected["stuff_count"], f"{name} 材料数量")
+        assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{name} 建筑分类")
+        assert_equal(li_values(node, "researchPrerequisites"), expected["research"], f"{name} 研究前置")
+        assert_equal(child_text(node, "constructionSkillPrerequisite"), expected["skill"], f"{name} 建造技能")
+        comps = [li.attrib.get("Class") for li in node.findall("./comps/li")]
+        for comp in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable"):
+            if comp not in comps:
+                fail(f"{name} 缺少组件: {comp}")
+        assert_equal(child_text(node, "./comps/li/basePowerConsumption"), expected["power"], f"{name} 功耗")
+    # 建筑 recipes 列表与配方挂载一一对应
+    for building_name in WEAPON_PARTS_BUILDING_EXPECTATIONS:
+        expected_list = [r for r, e in WEAPON_PARTS_RECIPE_EXPECTATIONS.items() if building_name in e["benches"]]
+        assert_equal(li_values(weapon_building_defs[building_name], "recipes"), expected_list, f"{building_name} 配方列表")
+
+    # --- 8.3 武器部件配方 ---
+    weapon_recipe_defs = def_map(parse_xml(WEAPON_PARTS_RECIPE_XML))
+    assert_equal(set(weapon_recipe_defs), set(WEAPON_PARTS_RECIPE_EXPECTATIONS), "武器部件配方 defName 集合")
+    for name, expected in WEAPON_PARTS_RECIPE_EXPECTATIONS.items():
+        recipe = weapon_recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), "SmithingSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            thing_defs = li_values(filter_node, "thingDefs")
+            categories = li_values(filter_node, "categories")
+            if bool(thing_defs) == bool(categories):
+                fail(f"{name} 每个输入 filter 必须且只能包含 thingDefs 或 categories 之一")
+            if thing_defs:
+                actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+            else:
+                actual_inputs.append(("categories", tuple(categories), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        products = {node.tag: (node.text or "").strip() for node in recipe.findall("./products/*") if isinstance(node.tag, str)}
+        assert_equal(products, {expected["output"]: expected["output_count"]}, f"{name} 输出")
+
+        research = recipe.findtext("researchPrerequisite")
+        research = research.strip() if research else None
+        assert_equal(research, expected["research"], f"{name} researchPrerequisite")
+        if research and research not in VANILLA_RESEARCH and not research.startswith("MMT_"):
+            fail(f"{name} 使用未知研究: {research}")
+        if li_values(recipe, "recipeUsers"):
+            fail(f"{name} 应由建筑 recipes 列表挂载")
+
+        for kind, value, _ in normalized:
+            for item in value:
+                if kind == "thingDefs":
+                    if item not in resource_names | VANILLA_THINGS:
+                        fail(f"{name} 使用未知资源: {item}")
+                elif item not in allowed_categories:
+                    fail(f"{name} 使用未知类别: {item}")
+
+    # --- 研究 ---
+    research_defs = def_map(parse_xml(TEXTILES_WEAPONS_RESEARCH_XML))
+    assert_equal(set(research_defs), set(TEXTILES_WEAPONS_RESEARCH_EXPECTATIONS), "织物武器研究 defName 集合")
+    for name, expected in TEXTILES_WEAPONS_RESEARCH_EXPECTATIONS.items():
+        node = research_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "baseCost"), expected["cost"], f"{name} baseCost")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
+        assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
+        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+
+    # --- 贴图 ---
+    for path in (*CROPS_ITEM_TEXTURES, *TEXTILES_ITEM_TEXTURES, *WEAPON_PARTS_ITEM_TEXTURES, *WEAPON_PARTS_BUILDING_TEXTURES):
+        assert_png(path)
+    for directory in CROPS_PLANT_TEXTURE_DIRS:
+        if not list((ROOT / directory).glob("*.png")):
+            fail(f"植物贴图目录为空: {directory}")
+
+    for path in (CROPS_RESOURCE_XML, CROPS_PLANT_XML, TEXTILES_RESOURCE_XML, TEXTILES_RECIPE_XML, WEAPON_PARTS_RESOURCE_XML, WEAPON_PARTS_BUILDING_XML, WEAPON_PARTS_RECIPE_XML, TEXTILES_WEAPONS_RESEARCH_XML, CROPS_PATCH_XML, INSECT_CHITIN_PATCH_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("textiles-weapons: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -4716,6 +5214,7 @@ def validate_all() -> None:
     validate_stone_construction()
     validate_petrochem_ext()
     validate_matter_top()
+    validate_textiles_weapons()
     validate_all_xml()
 
 
@@ -4759,6 +5258,7 @@ SUITES = {
     "stone-construction": validate_stone_construction,
     "petrochem-ext": validate_petrochem_ext,
     "matter-top": validate_matter_top,
+    "textiles-weapons": validate_textiles_weapons,
     "all": validate_all,
 }
 
