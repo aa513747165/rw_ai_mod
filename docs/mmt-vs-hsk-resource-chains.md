@@ -9,9 +9,9 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 16 |
-| MMT 配方 | 128 |
-| 与 HSK 数值一致 | 82 |
-| 与 HSK 有数值差异 | 43 |
+| MMT 配方 | 132 |
+| 与 HSK 数值一致 | 85 |
+| 与 HSK 有数值差异 | 44 |
 | HSK 有对应资源但无对应配方 | 3 |
 | MMT 新增（HSK 无对应资源） | 0 |
 
@@ -760,7 +760,33 @@
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.17 TopMaterials（TopMaterials）
+### 3.17 Robotics（Robotics）
+
+#### 制造动力电池（`MMT_MakeHexcell`）
+
+- **MMT**：磁性材料×2 + [MMT_HCMBar]×4 + 微芯片集成电路×1 -> 动力电池×10 @ 电子器件工作台 ｜ 工作量=6000 ｜ 研究:机器人工程 I(MMT_Robotics1)，技能:Crafting≥14
+- **HSK** `MakeHexcell`：磁性材料(MagneticMaterial)×2 + [HCMBar]×4 + 微芯片集成电路(Microchips)×1 -> 动力电池(Hexcell)×10 @ 电子器件工作台(TableElectronics) ｜ 工作量=6000 ｜ 研究:Droids_D1，技能:Crafting≥14
+- **对比**：数值一致
+
+#### 制造机器人部件（`MMT_MakeRobotParts`）
+
+- **MMT**：[MMT_USLDBar]×60 + 先进机械组件×15 -> 机器人部件×25 @ 电子器件工作台 ｜ 工作量=8000 ｜ 研究:机器人工程 I(MMT_Robotics1)，技能:Crafting≥15
+- **HSK** `MakeRobotParts`：[USLDBar]×60 + 先进机械组件(AdvMechanism)×15 -> 机器人部件(RobotParts)×25 @ 电子器件工作台(TableElectronics) ｜ 工作量=8000 ｜ 研究:Droids_D1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 组装矿物声纳模块（`MMT_MakeMineralSonarModule`）
+
+- **MMT**：[MMT_MetallicBar]×25 + 太空零件(ComponentSpacer)×5 + 电子元件×10 + 机械组件×1 -> 矿物声纳模块×1 @ 电子器件工作台, 电动装配台 ｜ 工作量=4800 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥10
+- **HSK** `MakeMineralSonarModule`：[Metallic]×25 + 高级零件(ComponentAdvanced)×5 + 电子元件(ElectronicComponents)×10 + 机械组件(Mechanism)×1 -> 矿物声纳模块(MineralSonarModule)×1 @ AdvToolBench, 电子器件工作台(TableElectronics) ｜ 工作量=4800 ｜ 研究:Mining_C1，技能:Crafting≥10
+- **对比**：数值一致
+
+#### 拆解护盾腰带（`MMT_DeconstructPersonalShield`）
+
+- **MMT**：Apparel_ShieldBelt×1 -> 太空零件(ComponentSpacer)×8 + 集成电路×1 @ — ｜ 工作量=1000 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥10
+- **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
+- **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
+
+### 3.18 TopMaterials（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -819,7 +845,7 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.18 木材（Wood）
+### 3.19 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
