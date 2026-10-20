@@ -3467,7 +3467,9 @@ def validate_sulfur() -> None:
 def validate_petrochem_ext() -> None:
     require_files([
         PETROCHEM_EXT_RESOURCE_XML,
+        PETROCHEM_EXT_BUILDING_XML,
         *PETROCHEM_EXT_ITEM_TEXTURES,
+        *PETROCHEM_EXT_BUILDING_TEXTURES,
     ])
 
     resource_defs = def_map(parse_xml(PETROCHEM_EXT_RESOURCE_XML))
@@ -3500,11 +3502,78 @@ def validate_petrochem_ext() -> None:
             if node.find("stuffProps") is not None:
                 fail(f"{name} 不应定义 stuffProps")
 
+    building_defs = def_map(parse_xml(PETROCHEM_EXT_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_MineableNitre", "MMT_Loom", "MMT_AmmoBench"}, "石化扩展建筑 defName 集合")
+
+    vein = building_defs["MMT_MineableNitre"]
+    assert_equal(vein.attrib.get("ParentName"), "RockBase", "硝石矿脉父类")
+    assert_equal(child_text(vein, "label"), "硝石矿脉", "硝石矿脉 label")
+    assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "硝石矿脉 texPath")
+    assert_equal(child_text(vein, "./graphicData/color"), "(124,124,110)", "硝石矿脉 color")
+    assert_equal(child_text(vein, "./graphicData/colorTwo"), "(175,175,165)", "硝石矿脉 colorTwo")
+    assert_equal(child_text(vein, "./statBases/MaxHitPoints"), "1800", "硝石矿脉耐久")
+    assert_equal(child_text(vein, "./building/isResourceRock"), "true", "硝石矿脉 isResourceRock")
+    assert_equal(child_text(vein, "./building/mineableThing"), "MMT_Nitre", "硝石矿脉 mineableThing")
+    assert_equal(child_text(vein, "./building/mineableYield"), "75", "硝石矿脉 mineableYield")
+    assert_equal(child_text(vein, "./building/mineableScatterCommonality"), "1.05", "硝石矿脉常见度")
+    assert_equal(child_text(vein, "./building/mineableScatterLumpSizeRange"), "8~16", "硝石矿脉矿块范围")
+    assert_equal(child_text(vein, "./building/veinMineable"), "true", "硝石矿脉 veinMineable")
+
+    loom = building_defs["MMT_Loom"]
+    assert_equal(child_text(loom, "label"), "纺织机", "纺织机 label")
+    assert_equal(child_text(loom, "thingClass"), "Building_WorkTable", "纺织机 thingClass")
+    assert_equal(child_text(loom, "./graphicData/texPath"), "Things/Building/Production/MMT_Loom/MMT_Loom", "纺织机 texPath")
+    assert_equal(child_text(loom, "./graphicData/graphicClass"), "Graphic_Multi", "纺织机 graphicClass")
+    assert_equal(li_values(loom, "stuffCategories"), ["Metallic", "Woody"], "纺织机材料分类")
+    assert_equal(child_text(loom, "costStuffCount"), "125", "纺织机材料数量")
+    assert_equal(child_text(loom, "./costList/MMT_ComponentMedieval"), "10", "纺织机原始零部件成本")
+    assert_equal(child_text(loom, "./costList/MMT_ElectronicParts"), "3", "纺织机电子元件成本")
+    assert_equal(child_text(loom, "./costList/MMT_Mechanism"), "6", "纺织机机械组件成本")
+    assert_equal(child_text(loom, "./statBases/WorkToBuild"), "3850", "纺织机建造工作量")
+    assert_equal(child_text(loom, "./statBases/MaxHitPoints"), "170", "纺织机耐久")
+    assert_equal(child_text(loom, "size"), "(2,2)", "纺织机尺寸")
+    assert_equal(child_text(loom, "designationCategory"), "MMT_Production", "纺织机建筑分类")
+    assert_equal(li_values(loom, "recipes"), PETROCHEM_EXT_LOOM_RECIPES, "纺织机配方")
+    assert_equal(li_values(loom, "researchPrerequisites"), ["ComplexClothing"], "纺织机研究前置")
+    assert_equal(child_text(loom, "constructionSkillPrerequisite"), "7", "纺织机建造技能")
+    loom_comps = [li.attrib.get("Class") for li in loom.findall("./comps/li")]
+    for expected in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable"):
+        if expected not in loom_comps:
+            fail(f"纺织机缺少组件: {expected}")
+    assert_equal(child_text(loom, "./comps/li/basePowerConsumption"), "300", "纺织机功耗")
+
+    bench = building_defs["MMT_AmmoBench"]
+    assert_equal(child_text(bench, "label"), "弹药工作台", "弹药台 label")
+    assert_equal(child_text(bench, "thingClass"), "Building_WorkTable", "弹药台 thingClass")
+    assert_equal(child_text(bench, "./graphicData/texPath"), "Things/Building/Production/MMT_AmmoBench/MMT_AmmoBench", "弹药台 texPath")
+    assert_equal(child_text(bench, "./graphicData/graphicClass"), "Graphic_Multi", "弹药台 graphicClass")
+    assert_equal(li_values(bench, "stuffCategories"), ["Metallic"], "弹药台材料分类")
+    assert_equal(child_text(bench, "costStuffCount"), "210", "弹药台材料数量")
+    assert_equal(child_text(bench, "./costList/ComponentIndustrial"), "10", "弹药台零部件成本")
+    assert_equal(child_text(bench, "./costList/MMT_ElectronicParts"), "5", "弹药台电子元件成本")
+    assert_equal(child_text(bench, "./costList/MMT_Mechanism"), "10", "弹药台机械组件成本")
+    assert_equal(child_text(bench, "./statBases/WorkToBuild"), "6500", "弹药台建造工作量")
+    assert_equal(child_text(bench, "./statBases/MaxHitPoints"), "300", "弹药台耐久")
+    assert_equal(child_text(bench, "size"), "(3,1)", "弹药台尺寸")
+    assert_equal(child_text(bench, "designationCategory"), "MMT_Production", "弹药台建筑分类")
+    assert_equal(li_values(bench, "recipes"), PETROCHEM_EXT_AMMO_BENCH_RECIPES, "弹药台配方")
+    assert_equal(li_values(bench, "researchPrerequisites"), ["Machining"], "弹药台研究前置")
+    assert_equal(child_text(bench, "constructionSkillPrerequisite"), "10", "弹药台建造技能")
+    bench_comps = [li.attrib.get("Class") for li in bench.findall("./comps/li")]
+    for expected in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable"):
+        if expected not in bench_comps:
+            fail(f"弹药台缺少组件: {expected}")
+    assert_equal(child_text(bench, "./comps/li/basePowerConsumption"), "500", "弹药台功耗")
+
     for path in PETROCHEM_EXT_ITEM_TEXTURES:
         assert_png(path)
 
-    if "SK." in read_text(PETROCHEM_EXT_RESOURCE_XML):
-        fail(f"{PETROCHEM_EXT_RESOURCE_XML} 不得引用 SK 类型")
+    for path in PETROCHEM_EXT_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (PETROCHEM_EXT_RESOURCE_XML, PETROCHEM_EXT_BUILDING_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
     print("petrochem-ext: OK")
 
 
