@@ -3575,6 +3575,7 @@ def validate_basic_metallurgy() -> None:
     cremate = recipe_defs["MMT_CremateCorpseCampfire"]
     assert_equal(child_text(cremate, "workAmount"), "800", "篝火火化 workAmount")
     assert_equal(li_values(cremate, "recipeUsers"), ["Campfire"], "篝火火化挂载")
+    assert_equal(child_text(cremate, "autoStripCorpses"), "true", "篝火火化 autoStripCorpses（对齐 HSK 同名配方）")
     cremate_products = [(node.tag, (node.text or "").strip()) for node in cremate.findall("./products/*")]
     assert_equal(cremate_products, [("MMT_Ash", "4")], "篝火火化产出")
 

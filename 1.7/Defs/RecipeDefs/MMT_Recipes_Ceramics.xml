@@ -130,7 +130,7 @@
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Cremate</effectWorking>
     <soundWorking>Recipe_Cremate</soundWorking>
-    <autoStripCorpses>false</autoStripCorpses>
+    <autoStripCorpses>true</autoStripCorpses>
     <recipeUsers>
       <li>Campfire</li>
     </recipeUsers>
