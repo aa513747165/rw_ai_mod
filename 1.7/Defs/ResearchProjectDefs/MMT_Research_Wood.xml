@@ -6,6 +6,7 @@
     <description>学习如何将原木加工成木板和柴火。</description>
     <baseCost>300</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <researchViewX>0.00</researchViewX>
     <researchViewY>1.00</researchViewY>
   </ResearchProjectDef>
@@ -16,6 +17,7 @@
     <description>学习如何使用简易木炭窑将原木烧制成木炭。</description>
     <baseCost>500</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_Woodworking</li>
     </prerequisites>

@@ -6,6 +6,7 @@
     <description>学习如何在电弧炉中冶炼镍锭，并从镍矿和铁矿中提取钴与铬。</description>
     <baseCost>1600</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_ElectricSmelting</li>
     </prerequisites>
@@ -19,6 +20,7 @@
     <description>掌握钨、钛等高级合金的电弧熔炼工艺，可合炼司太立、镍钛诺、钴硬质合金与铁钛合金（玻璃钢）。</description>
     <baseCost>2300</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_AdvancedMetalRefining</li>
     </prerequisites>

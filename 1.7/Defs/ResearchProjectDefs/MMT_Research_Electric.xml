@@ -6,6 +6,7 @@
     <description>学习如何建造以电力驱动的电弧炉，用更高的温度批量冶炼金属并提取硅。</description>
     <baseCost>2000</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_BasicMetalworking</li>
       <li>MicroelectronicsBasics</li>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchTabDef>
+    <defName>MMT_ResearchTab</defName>
+    <label>MMT 资源生产</label>
+  </ResearchTabDef>
+</Defs>

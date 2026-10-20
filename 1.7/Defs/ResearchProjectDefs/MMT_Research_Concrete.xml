@@ -6,6 +6,7 @@
     <description>学习如何将砂和碎石搅拌成混凝土，并进一步制作钢筋混凝土。</description>
     <baseCost>1000</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>Stonecutting</li>
     </prerequisites>

@@ -6,6 +6,7 @@
     <description>学习如何蒸馏原油得到聚合物，并进一步合成塑料、橡胶、合成纤维和碳材料。</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>BiofuelRefining</li>
     </prerequisites>

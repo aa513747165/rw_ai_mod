@@ -6,6 +6,7 @@
     <description>学习如何从砂中提取硅，并将硅、铜锭和玻璃组装成电子元件。</description>
     <baseCost>1600</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
@@ -19,6 +20,7 @@
     <description>学习如何将硅、塑料、电子元件和金组装成集成电路，并进一步制造微芯片。</description>
     <baseCost>2000</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_BasicElectronics</li>
     </prerequisites>

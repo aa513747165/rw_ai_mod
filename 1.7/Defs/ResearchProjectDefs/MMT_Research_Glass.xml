@@ -6,6 +6,7 @@
     <description>研究如何将砂配制成玻璃配合料，并进一步加工成玻璃。</description>
     <baseCost>300</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>Stonecutting</li>
     </prerequisites>
@@ -19,6 +20,7 @@
     <description>研究如何在玻璃配合料中加入碳材料和合成纤维，制作更坚固的强化玻璃。</description>
     <baseCost>1500</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_Glassworking</li>
       <li>MMT_BasicPetrochemistry</li>

@@ -6,6 +6,7 @@
     <description>学习如何建造以电力驱动的石化实验室，更快地蒸馏原油并合成石化产品。</description>
     <baseCost>1800</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_BasicPetrochemistry</li>
       <li>MicroelectronicsBasics</li>

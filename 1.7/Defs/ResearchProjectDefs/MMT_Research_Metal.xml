@@ -6,6 +6,7 @@
     <description>学习如何将开采出的金属矿石冶炼成金属锭，并将铜锭和锡锭合炼成青铜，以及用铁矿石和木炭炼钢。</description>
     <baseCost>800</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>Smithing</li>
     </prerequisites>

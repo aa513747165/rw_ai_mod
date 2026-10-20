@@ -6,6 +6,7 @@
     <description>学习如何建造以电力驱动的锯木机和木炭窑，更快地将原木加工成木板、柴火和木炭。</description>
     <baseCost>1500</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_CharcoalBurning</li>
       <li>MicroelectronicsBasics</li>

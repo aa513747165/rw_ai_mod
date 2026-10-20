@@ -6,6 +6,7 @@
     <description>学习如何建造以电力驱动的电子工作台，更快地组装电子元件、集成电路和微芯片。</description>
     <baseCost>2200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_IntegratedCircuitTech</li>
     </prerequisites>
