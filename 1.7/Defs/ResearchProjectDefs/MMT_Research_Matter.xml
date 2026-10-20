@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 对照 HSK Super_matter_D1（前置 Electronics_D1 + Components_D1） -->
+  <ResearchProjectDef>
+    <defName>MMT_MatterConversion1</defName>
+    <label>物质转换 I</label>
+    <description>研究将原材料分解转化为无机物的技术，解锁无机物转化器与生物质提取工艺。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_BasicElectronics</li>
+      <li>MMT_ComponentCrafting</li>
+    </prerequisites>
+    <researchViewX>19.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 对照 HSK Super_matter_E1（前置 Components_D3） -->
+  <ResearchProjectDef>
+    <defName>MMT_MatterConversion2</defName>
+    <label>物质转换 II</label>
+    <description>掌握将无机物还原为特定资源的逆向转化技术，并解锁粒子对撞台以制备反物质。</description>
+    <baseCost>2400</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_UltraComponents</li>
+      <li>MMT_MatterConversion1</li>
+    </prerequisites>
+    <researchViewX>20.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 对照 HSK Super_matter_E2 -->
+  <ResearchProjectDef>
+    <defName>MMT_MatterConversion3</defName>
+    <label>物质转换 III</label>
+    <description>量子层面重组物质的终极工艺，解锁量子加工台以制造α与β聚合物。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_MatterConversion2</li>
+    </prerequisites>
+    <researchViewX>21.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
