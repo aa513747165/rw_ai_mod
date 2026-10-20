@@ -44,6 +44,9 @@
       <li>MMT_AssembleElectronicParts_Electric</li>
       <li>MMT_AssembleIC_Electric</li>
       <li>MMT_AssembleMicrochip_Electric</li>
+      <li>MMT_MakeHexcell</li>
+      <li>MMT_MakeRobotParts</li>
+      <li>MMT_MakeMineralSonarModule</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

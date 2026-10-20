@@ -117,6 +117,7 @@
       <li>MMT_MakeAdvMechanism_Electric</li>
       <li>MMT_MakeSpacerComponent</li>
       <li>MMT_MakeReinforcedConcrete_Electric</li>
+      <li>MMT_MakeMineralSonarModule</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
