@@ -9,10 +9,10 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 16 |
-| MMT 配方 | 104 |
-| 与 HSK 数值一致 | 61 |
+| MMT 配方 | 128 |
+| 与 HSK 数值一致 | 82 |
 | 与 HSK 有数值差异 | 43 |
-| HSK 有对应资源但无对应配方 | 0 |
+| HSK 有对应资源但无对应配方 | 3 |
 | MMT 新增（HSK 无对应资源） | 0 |
 
 ## 2. 矿脉对比
@@ -237,13 +237,13 @@
 #### 提炼纯银合金（15个）（`MMT_SmeltSilver_Electric`）
 
 - **MMT**：白银×14 -> 银(Silver)×10 @ 电弧炉 ｜ 工作量=500 ｜ 研究:电弧冶炼(MMT_ElectricSmelting)，技能:Crafting≥5
-- **HSK** `ConvertToSilver`：Matter×100 -> 白银(Silver)×300 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToSilver`：无机物(Matter)×100 -> 白银(Silver)×300 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 14 vs HSK 100；产出 10 vs HSK 300；工作量 500 vs HSK 12000；技能 Crafting≥5 vs HSK Crafting≥15
 
 #### 提炼纯金合金（15个）（`MMT_SmeltGold_Electric`）
 
 - **MMT**：金矿×12 -> 金(Gold)×15 @ 电弧炉 ｜ 工作量=500 ｜ 研究:电弧冶炼(MMT_ElectricSmelting)，技能:Crafting≥6
-- **HSK** `ConvertToGold`：Matter×60 -> 金矿(Gold)×20 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 500 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
 
 #### 提取硅（x4）（`MMT_ExtractSilicon_Electric`）
@@ -307,7 +307,7 @@
 #### 电蒸馏聚合物（`MMT_DistillPolymers_Electric`）
 
 - **MMT**：原油×20 -> 聚合物×15 @ 石化产品实验室 ｜ 工作量=1000 ｜ 研究:电动石化工艺(MMT_ElectricPetrochemistry)，技能:Crafting≥6
-- **HSK** `ConvertToPolymers`：Matter×50 -> 聚合物(Polymers)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToPolymers`：无机物(Matter)×50 -> 聚合物(Polymers)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 20 vs HSK 50；产出 15 vs HSK 100；工作量 1000 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
 
 #### 制作塑料（`MMT_MakePlastic_Electric`）
@@ -448,7 +448,93 @@
 - **HSK** `MakeReinforcedGlass`：玻璃生料(GlassBatch)×40 + 碳聚物(Carbon)×5 + 人造纤维(SyntheticFibers)×5 -> 强化玻璃块(ReinforcedGlass)×5 @ 玻璃制作台(GlassworkTable) ｜ 工作量=1400 ｜ 研究:Glass_C1，技能:Crafting≥8
 - **对比**：数值一致
 
-### 3.11 金属（Metal）
+### 3.11 Matter（Matter）
+
+#### 转化为无机物（`MMT_ConvertResourcesRaw`）
+
+- **MMT**：[ResourcesRaw]×300 -> 无机物×150 @ 无机物转化器 ｜ 工作量=10000 ｜ 研究:物质转换 I(MMT_MatterConversion1)，技能:Crafting≥15
+- **HSK** `ConvertResourcesRaw`：[ResourcesRaw]×300 -> 无机物(Matter)×150 @ 无机物转化器(MatterConverter) ｜ 工作量=10000 ｜ 研究:Super_matter_D1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为铁矿石（`MMT_ConvertToIron`）
+
+- **MMT**：无机物×50 -> 铁矿石×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToSteel`：无机物(Matter)×50 -> 铁矿石(Iron)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为铜矿（`MMT_ConvertToCopper`）
+
+- **MMT**：无机物×50 -> 铜矿×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToCopper`：无机物(Matter)×50 -> 铜矿(Copper)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为锡矿（`MMT_ConvertToTin`）
+
+- **MMT**：无机物×50 -> 锡矿×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToTin`：无机物(Matter)×50 -> 锡矿(Tin)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为铅矾矿（`MMT_ConvertToLead`）
+
+- **MMT**：无机物×50 -> 铅矾矿×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToLead`：无机物(Matter)×50 -> 铅矾矿(Anglesite)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为铝土矿（`MMT_ConvertToAluminium`）
+
+- **MMT**：无机物×50 -> 铝土矿×80 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToAluminium`：无机物(Matter)×50 -> 铝土矿(Aluminium)×80 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为镍矿（`MMT_ConvertToNickel`）
+
+- **MMT**：无机物×150 -> 镍矿×20 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToNickel`：无机物(Matter)×150 -> 镍矿(Nickel)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为钛铁矿（`MMT_ConvertToTitanium`）
+
+- **MMT**：无机物×200 -> 钛铁矿×20 @ 无机物转化器 ｜ 工作量=15000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToTitanium`：无机物(Matter)×200 -> 钛铁矿(Ilmenite)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=15000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为金矿（`MMT_ConvertToGold`）
+
+- **MMT**：无机物×60 -> 金矿×20 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为银矿（`MMT_ConvertToSilver`）
+
+- **MMT**：无机物×100 -> 白银×300 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToSilver`：无机物(Matter)×100 -> 白银(Silver)×300 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为铀矿（`MMT_ConvertToUranium`）
+
+- **MMT**：无机物×200 -> Uranium×50 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToUranium`：无机物(Matter)×200 -> Uranium×50 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为聚合物（`MMT_ConvertToPolymers`）
+
+- **MMT**：无机物×50 -> 聚合物×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToPolymers`：无机物(Matter)×50 -> 聚合物(Polymers)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为石蜡（`MMT_ConvertToParaffins`）
+
+- **MMT**：无机物×50 -> 石蜡×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToParaffins`：无机物(Matter)×50 -> 石蜡(Paraffins)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 转化为硫酸盐（`MMT_ConvertToSulphates`）
+
+- **MMT**：无机物×50 -> 硫酸盐×100 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **HSK** `ConvertToSulphates`：无机物(Matter)×50 -> 硫酸盐(Sulphates)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：数值一致
+
+### 3.12 金属（Metal）
 
 #### 提炼铜（10个）（`MMT_SmeltCopperBar_Hand`）
 
@@ -480,7 +566,7 @@
 - **HSK** `MakeLeadBars_Hand`：铅矾矿(Anglesite)×10 -> 铅合金(LeadBar)×10 @ 熔炉(TableFurnace) ｜ 工作量=1100 ｜ 研究:Craft_B1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.12 零件（Parts）
+### 3.13 零件（Parts）
 
 #### 使用木板组装原始零部件（`MMT_MakeComponentMedieval_Wood`）
 
@@ -566,12 +652,12 @@
 - **HSK** `Make_ComponentUltra`：[RARBar]×15 + [USLDHBar]×10 + [PRSBar]×5 -> 超级零部件(ComponentUltra)×10 @ 自动化装配器(RobAssem) ｜ 工作量=4500 ｜ 研究:Components_E1，技能:Crafting≥13
 - **对比**：数值一致
 
-### 3.13 石化（Petrochem）
+### 3.14 石化（Petrochem）
 
 #### 蒸馏聚合物（`MMT_DistillPolymers_Hand`）
 
 - **MMT**：原油×20 -> 聚合物×15 @ 石化产品实验室 ｜ 工作量=1500 ｜ 研究:基础石化工艺(MMT_BasicPetrochemistry)，技能:Crafting≥4
-- **HSK** `ConvertToPolymers`：Matter×50 -> 聚合物(Polymers)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToPolymers`：无机物(Matter)×50 -> 聚合物(Polymers)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 20 vs HSK 50；产出 15 vs HSK 100；工作量 1500 vs HSK 12000；技能 Crafting≥4 vs HSK Crafting≥15
 
 #### 制作塑料（`MMT_MakePlastic_Hand`）
@@ -598,18 +684,18 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.14 PetrochemExt（PetrochemExt）
+### 3.15 PetrochemExt（PetrochemExt）
 
 #### 精炼石蜡（10个）（`MMT_MakeParaffins`）
 
 - **MMT**：原油×20 -> 石蜡×10 @ 石化产品实验室, 石化产品实验室 ｜ 工作量=1000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥6
-- **HSK** `ConvertToParaffins`：Matter×50 -> 石蜡(Paraffins)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToParaffins`：无机物(Matter)×50 -> 石蜡(Paraffins)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 20 vs HSK 50；产出 10 vs HSK 100；工作量 1000 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
 
 #### 制备硫酸盐（10个）（`MMT_MakeSulphates`）
 
 - **MMT**：硫磺×10 -> 硫酸盐×10 @ 石化产品实验室, 石化产品实验室 ｜ 工作量=800 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥6
-- **HSK** `ConvertToSulphates`：Matter×50 -> 硫酸盐(Sulphates)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToSulphates`：无机物(Matter)×50 -> 硫酸盐(Sulphates)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 10 vs HSK 50；产出 10 vs HSK 100；工作量 800 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
 
 #### 合成碳纤维锭（10个）（`MMT_MakeCarbonAlloy`）
@@ -660,21 +746,80 @@
 - **HSK** `MakeOxidizedChemfuel`：Chemfuel×100 + 硝石(Nitre)×10 + 硫酸盐(Sulphates)×10 + Prometheum 或 FSX×5 -> 氧化化合燃料(OxidizedChemfuel)×75 @ 石化产品实验室(TableChemlab) ｜ 工作量=10000 ｜ 研究:BasicGravtech，技能:Crafting≥12
 - **对比**：数值一致
 
-### 3.15 贵金属（Precious）
+### 3.16 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
 - **MMT**：白银×14 -> 银(Silver)×10 @ 熔炉 ｜ 工作量=750 ｜ 研究:基础金属冶炼(MMT_BasicMetalworking)，技能:Crafting≥2
-- **HSK** `ConvertToSilver`：Matter×100 -> 白银(Silver)×300 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToSilver`：无机物(Matter)×100 -> 白银(Silver)×300 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 14 vs HSK 100；产出 10 vs HSK 300；工作量 750 vs HSK 12000；技能 Crafting≥2 vs HSK Crafting≥15
 
 #### 提炼纯金合金（15个）（`MMT_SmeltGold_Hand`）
 
 - **MMT**：金矿×12 -> 金(Gold)×15 @ 熔炉 ｜ 工作量=750 ｜ 研究:基础金属冶炼(MMT_BasicMetalworking)，技能:Crafting≥3
-- **HSK** `ConvertToGold`：Matter×60 -> 金矿(Gold)×20 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.16 木材（Wood）
+### 3.17 TopMaterials（TopMaterials）
+
+#### 合成磁性材料（`MMT_BuildMagneticMaterial`）
+
+- **MMT**：无机物×30 + 硫酸盐×15 + [MMT_USLDBar]×10 + [MMT_SLDBar]×5 -> 磁性材料×5 @ — ｜ 工作量=2400 ｜ 研究:超级零件(MMT_UltraComponents)，技能:Crafting≥18
+- **HSK** `BuildMagneticMaterial`：无机物(Matter)×30 + 硫酸盐(Sulphates)×15 + [USLDBar]×10 + [SLDBar]×5 -> 磁性材料(MagneticMaterial)×5 @ 自动化装配器(RobAssem) ｜ 工作量=2400 ｜ 研究:Components_D3，技能:Crafting≥18
+- **对比**：数值一致
+
+#### 合成生物合成材料（`MMT_BuildBiosyntheticMaterial`）
+
+- **MMT**：生物质×15 + 人造纤维×9 + 塑料×30 -> 生物合成材料×5 @ — ｜ 工作量=2400 ｜ 研究:超级零件(MMT_UltraComponents)，技能:Crafting≥18
+- **HSK** `BuildBiosyntheticMaterial`：生物质(Biomatter)×15 + 人造纤维(SyntheticFibers)×9 + 塑料(Plastic)×30 -> 生物合成材料(BiosyntheticMaterial)×5 @ 自动化装配器(RobAssem) ｜ 工作量=2400 ｜ 技能:Crafting≥18
+- **对比**：数值一致
+
+#### 组装生物电子元件（`MMT_MakeBioelectronicDevices`）
+
+- **MMT**：生物质×60 + Hyperweave×15 + 微芯片集成电路×2 -> 生物电子元件×1 @ — ｜ 工作量=7000 ｜ 研究:超级零件(MMT_UltraComponents)，技能:Crafting≥18
+- **HSK** `MakeBioelectronicDevices`：生物质(Biomatter)×60 + Hyperweave×15 + 微芯片集成电路(Microchips)×2 -> 生物电子元件(BioMicrochips)×1 @ 自动化装配器(RobAssem) ｜ 工作量=7000 ｜ 研究:Components_D3，技能:Crafting≥18
+- **对比**：数值一致
+
+#### 拆解伪人格核心（`MMT_DisassembleAIPersonaCore`）
+
+- **MMT**：AIPersonaCore×1 -> 生物电子元件×1 + α阿尔法聚合物×30 + 碳纤维锭×40 @ — ｜ 工作量=4000 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥16
+- **HSK** `DisassembleAIPersonaCore`：AIPersonaCore×1 -> 生物电子元件(BioMicrochips)×1 + α阿尔法聚合物(AlphaPoly)×30 + 碳纤维锭(CarbonAlloy)×40 @ 自动化装配器(RobAssem) ｜ 工作量=4000 ｜ 研究:Components_D2，技能:Crafting≥16
+- **对比**：数值一致
+
+#### 制造α阿尔法聚合物（`MMT_ProduceAPoly`）
+
+- **MMT**：贫铀合金×5 + 碳纤维锭×5 + 反物质×3 -> α阿尔法聚合物×15 @ 量子加工台 ｜ 工作量=8000 ｜ 技能:Crafting≥19
+- **HSK** `ProduceAPoly`：贫铀合金(DepletedUranium)×5 + 碳纤维锭(CarbonAlloy)×5 + 反物质(Antimatter)×3 -> α阿尔法聚合物(AlphaPoly)×15 @ 量子加工台(Matterfab) ｜ 工作量=8000 ｜ 技能:Crafting≥19
+- **对比**：数值一致
+
+#### 制造β贝塔聚合物（`MMT_ProduceBPoly`）
+
+- **MMT**：α阿尔法聚合物×3 + 生物合成材料×5 -> β贝塔聚合物×5 @ 量子加工台 ｜ 工作量=12000 ｜ 技能:Crafting≥20
+- **HSK** `ProduceBPoly`：α阿尔法聚合物(AlphaPoly)×3 + 生物合成材料(BiosyntheticMaterial)×5 -> β贝塔聚合物(BetaPoly)×5 @ 量子加工台(Matterfab) ｜ 工作量=12000 ｜ 技能:Crafting≥20
+- **对比**：数值一致
+
+#### 制备反物质（`MMT_MakeAntimatter`）
+
+- **MMT**：无机物×50 + Uranium×20 -> 反物质×2 @ 粒子对撞台 ｜ 工作量=10000 ｜ 技能:Crafting≥15
+- **HSK**：有资源 Antimatter，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 从尸体提取生物质（`MMT_ExtractBiomatterCorpse`）
+
+- **MMT**：[Corpses]×1 -> 生物质×20 @ 石化产品实验室 ｜ 工作量=6000 ｜ 研究:物质转换 I(MMT_MatterConversion1)，技能:Crafting≥8
+- **HSK**：有资源 Biomatter，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 从生肉提取生物质（`MMT_ExtractBiomatterMeat`）
+
+- **MMT**：[MeatRaw]×40 -> 生物质×20 @ 石化产品实验室 ｜ 工作量=4000 ｜ 研究:物质转换 I(MMT_MatterConversion1)，技能:Crafting≥8
+- **HSK**：有资源 Biomatter，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 熔炼生物铁合金（`MMT_MakeBioferriteAlloy`）
+
+- **MMT**：Bioferrite×10 + 铁矿石×10 + [MMT_Coal]×5 -> 生物铁合金×10 @ — ｜ 工作量=2100 ｜ 研究:BioferriteShaping(BioferriteShaping)，技能:Crafting≥9
+- **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
+- **对比**：数值一致
+
+### 3.18 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -704,7 +849,6 @@
 - **沙(SandResource)**：`MakeSand_Electric_Chunk`（TableMachining，工作量=1500）、`MakeSand_Hand`（TableStonecutter，工作量=600）、`MakeSand_Hand_Chunk`（TableStonecutter，工作量=3000）
 - **表面活性剂(Surfactant)**：`MakeSurfactant_CoconutSubstitute`（Brewery, DrugLab, ElectricBrewery，工作量=4000）
 - **先进机械组件(AdvMechanism)**：`MakeAdvMechanism_Hand`（FabricationBench，工作量=3200）
-- **碳纤维锭(CarbonAlloy)**：`DisassembleAIPersonaCore`（RobAssem，工作量=4000）
 - **集成电路(Electronics)**：`DeconstructPersonalShield`（TableRecycling，工作量=1000）
 - **机械组件(Mechanism)**：`MakeSimpleMechanism_Hand`（FabricationBench，工作量=1800）
 - **原始零部件(ComponentMedieval)**：`Make_ComponentMedievalBronze`（AdvToolBench, CraftingSpot, FabricationBench，工作量=900）

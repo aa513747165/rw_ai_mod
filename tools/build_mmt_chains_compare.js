@@ -17,6 +17,7 @@ const MMT_ALIAS = {
   GlassworksTable: 'GlassworkTable', HandChemTable: 'TableChemlab', RoboticAssembler: 'RobAssem',
   HandSawmill: 'TableSawmillHand', ElectricSawmill: 'TableSawmillElectric',
   HandElectronicsTable: 'TableElectronics', ElectricElectronicsTable: 'TableElectronics',
+  ParticleCollider: 'HadronCollider',
 };
 
 // ---------- 读取 MMT Defs ----------
