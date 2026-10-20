@@ -116,6 +116,7 @@
       <li>MMT_MakeComponentSpacer_Electric</li>
       <li>MMT_MakeAdvMechanism_Electric</li>
       <li>MMT_MakeSpacerComponent</li>
+      <li>MMT_MakeReinforcedConcrete_Electric</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

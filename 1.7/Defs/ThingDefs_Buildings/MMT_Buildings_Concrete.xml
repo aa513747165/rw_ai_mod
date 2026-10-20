@@ -59,4 +59,77 @@
     </researchPrerequisites>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
   </ThingDef>
+
+  <!-- 电动混凝土搅拌机：对照 HSK EConcreteMixer；SK 的 IdlePower 组件用原版 CompProperties_Power 替代 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_EConcreteMixer</defName>
+    <label>电动混凝土搅拌机</label>
+    <description>以电力驱动的混凝土搅拌机，由砂和碎石搅拌混凝土，效率更高。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_EConcreteMixer/MMT_EConcreteMixer</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>80</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>115</costStuffCount>
+    <costList>
+      <MMT_Rubber>45</MMT_Rubber>
+      <ComponentIndustrial>10</ComponentIndustrial>
+      <MMT_ElectronicParts>5</MMT_ElectronicParts>
+      <MMT_Mechanism>5</MMT_Mechanism>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>5000</WorkToBuild>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <Beauty>-40</Beauty>
+      <Cleanliness>-6</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(2,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_MixConcrete_Electric</li>
+      <li>MMT_MakeDirt_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <building>
+      <uninstallWork>2500</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_ConcreteAdvanced</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>11</constructionSkillPrerequisite>
+  </ThingDef>
 </Defs>

@@ -13,4 +13,19 @@
     <researchViewX>7.00</researchViewX>
     <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 混凝土 II：解锁电动混凝土搅拌机与电动配方，对照 HSK Concrete_C2（1000 点，工业） -->
+  <ResearchProjectDef>
+    <defName>MMT_ConcreteAdvanced</defName>
+    <label>混凝土 II</label>
+    <description>学习使用电力驱动的混凝土搅拌机，更快地搅拌混凝土并拌制土堆。</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ConcreteBasic</li>
+    </prerequisites>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

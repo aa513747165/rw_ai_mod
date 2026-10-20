@@ -68,6 +68,22 @@ CERAMICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Ceramics.xml"
 CERAMICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Ceramics.xml"
 STUFFCATEGORY_XML = "1.7/Defs/StuffCategoryDefs/MMT_StuffCategories.xml"
 ASH_PATCH_XML = "1.7/Patches/MMT_Patch_AshRecipes.xml"
+AGRICULTURE_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Agriculture.xml"
+AGRICULTURE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Agriculture.xml"
+AGRICULTURE_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Agriculture.xml"
+AGRICULTURE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Agriculture.xml"
+
+AGRICULTURE_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/Dirt.png",
+    "1.7/Textures/Things/Item/MMT/Compost.png",
+    "1.7/Textures/Things/Item/MMT/Fertilizer.png",
+    "1.7/Textures/Things/Item/MMT/Salt.png",
+]
+
+AGRICULTURE_BUILDING_TEXTURES = [
+    "1.7/Textures/Things/Building/Production/MMT_SaltMine.png",
+    *[f"1.7/Textures/Things/Building/Production/MMT_EConcreteMixer/MMT_EConcreteMixer_{side}{mask}.png" for side in ("east", "north", "south") for mask in ("", "m")],
+]
 
 CERAMICS_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/MMT_Ceramics/SoftClay.png",
@@ -394,6 +410,7 @@ RECIPE_EXPECTATIONS = {
 }
 
 VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic"}
+MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
 VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel"}
@@ -452,6 +469,54 @@ CONCRETE_RECIPE_EXPECTATIONS = {
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
         "skill": "4",
+        "building_mounted": False,
+    },
+    "MMT_MixConcrete_Electric": {
+        "work": "600",
+        "inputs": [
+            ("thingDefs", "MMT_Sand", "45"),
+            ("thingDefs", "MMT_CrushedStone", "30"),
+        ],
+        "output": "MMT_Concrete",
+        "output_count": "15",
+        "users": [],
+        "research": "MMT_ConcreteAdvanced",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "skill": "6",
+        "building_mounted": False,
+    },
+    "MMT_MakeReinforcedConcrete_Electric": {
+        "work": "1200",
+        "inputs": [
+            ("categories", "MMT_MetallicBar", "20"),
+            ("thingDefs", "MMT_Concrete", "20"),
+        ],
+        "output": "MMT_ReinforcedConcrete",
+        "output_count": "16",
+        "users": [],
+        "research": None,
+        "speed": "StonecuttingSpeed",
+        "effect": "CutStone",
+        "sound": "Recipe_MakeStoneBlocks",
+        "skill": "7",
+        "building_mounted": False,
+    },
+    "MMT_MakeDirt_Electric": {
+        "work": "1500",
+        "inputs": [
+            ("thingDefs", "MMT_Sand", "20"),
+            ("thingDefs", "MMT_Fertilizer", "10"),
+        ],
+        "output": "MMT_Dirt",
+        "output_count": "30",
+        "users": [],
+        "research": "MMT_ConcreteAdvanced",
+        "speed": "SmeltingSpeed",
+        "effect": "Smelt",
+        "sound": "Recipe_Smelt",
+        "skill": None,
         "building_mounted": False,
     },
 }
@@ -1165,6 +1230,7 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeComponentSpacer_Electric",
     "MMT_MakeAdvMechanism_Electric",
     "MMT_MakeSpacerComponent",
+    "MMT_MakeReinforcedConcrete_Electric",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
@@ -1211,8 +1277,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 19
-INFRA_WORKTABLE_TOTAL = 16
+INFRA_RESEARCH_TOTAL = 20
+INFRA_WORKTABLE_TOTAL = 17
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -1614,7 +1680,7 @@ def validate_concrete_building() -> None:
     require_files([CONCRETE_RESEARCH_XML, CONCRETE_BUILDING_XML, *CONCRETE_BUILDING_TEXTURES])
 
     research_defs = def_map(parse_xml(CONCRETE_RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_ConcreteBasic"}, "混凝土研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_ConcreteBasic", "MMT_ConcreteAdvanced"}, "混凝土研究 defName 集合")
     research = research_defs["MMT_ConcreteBasic"]
     assert_equal(child_text(research, "label"), "混凝土技术", "混凝土研究 label")
     assert_equal(child_text(research, "baseCost"), "1000", "混凝土研究 baseCost")
@@ -1624,7 +1690,7 @@ def validate_concrete_building() -> None:
     assert_equal(child_text(research, "researchViewY"), "0.00", "混凝土研究 Y 坐标")
 
     building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
-    assert_equal(set(building_defs), {"MMT_ConcreteMixer"}, "混凝土建筑 defName 集合")
+    assert_equal(set(building_defs), {"MMT_ConcreteMixer", "MMT_EConcreteMixer"}, "混凝土建筑 defName 集合")
     building = building_defs["MMT_ConcreteMixer"]
     assert_equal(child_text(building, "label"), "手动混凝土搅拌器", "混凝土建筑 label")
     assert_equal(child_text(building, "thingClass"), "Building_WorkTable", "混凝土建筑 thingClass")
@@ -1664,7 +1730,7 @@ def validate_concrete_recipes() -> None:
     recipe_defs = def_map(parse_xml(CONCRETE_RECIPE_XML))
     assert_equal(set(recipe_defs), set(CONCRETE_RECIPE_EXPECTATIONS), "混凝土配方 defName 集合")
 
-    resource_names = set(def_map(parse_xml(RESOURCE_XML))) | set(def_map(parse_xml(CONCRETE_RESOURCE_XML)))
+    resource_names = set(def_map(parse_xml(RESOURCE_XML))) | set(def_map(parse_xml(CONCRETE_RESOURCE_XML))) | set(def_map(parse_xml(AGRICULTURE_RESOURCE_XML)))
     building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
     building_names = set(building_defs)
     research_names = set(def_map(parse_xml(CONCRETE_RESEARCH_XML)))
@@ -1679,7 +1745,11 @@ def validate_concrete_recipes() -> None:
         assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
         assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
         assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
-        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+        if expected["skill"] is None:
+            if recipe.find("./skillRequirements/Crafting") is not None:
+                fail(f"{name} 不应设 Crafting 技能要求（对齐 HSK 无技能要求）")
+        else:
+            assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
 
         actual_inputs = []
         ingredients = recipe.findall("./ingredients/li")
@@ -1720,7 +1790,7 @@ def validate_concrete_recipes() -> None:
 
         for kind, value, _ in expected["inputs"]:
             if kind == "categories":
-                if value not in VANILLA_CATEGORIES:
+                if value not in VANILLA_CATEGORIES | MMT_CATEGORIES:
                     fail(f"{name} 使用未登记分类: {value}")
             elif value not in resource_names | VANILLA_THINGS:
                 fail(f"{name} 使用未知资源: {value}")
