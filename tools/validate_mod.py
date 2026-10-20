@@ -1071,6 +1071,62 @@ ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS = {
 }
 
 
+PETROCHEM_EXT_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_PetrochemExt.xml"
+PETROCHEM_EXT_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_PetrochemExt.xml"
+PETROCHEM_EXT_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_PetrochemExt.xml"
+PETROCHEM_EXT_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_PetrochemExt.xml"
+
+PETROCHEM_EXT_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_PetroExt/{name}.png"
+    for name in ("Paraffins", "Sulphates", "Surfactant", "Compaste", "Powder", "Napalm", "Nitre", "OxidizedChemfuel")
+]
+
+PETROCHEM_EXT_BUILDING_TEXTURES = [
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_Loom/MMT_Loom_{side}{mask}.png"
+        for side in ("east", "north", "south")
+        for mask in ("", "m")
+    ],
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_AmmoBench/MMT_AmmoBench_{side}{mask}.png"
+        for side in ("east", "north", "south")
+        for mask in ("", "m")
+    ],
+]
+
+PETROCHEM_EXT_RESOURCE_EXPECTATIONS = {
+    "MMT_Paraffins": {"label": "石蜡", "value": "14.0", "stack": "150", "flammable": "3", "tech": "Industrial", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Paraffins"},
+    "MMT_Sulphates": {"label": "硫酸盐", "value": "7.0", "stack": "300", "flammable": "2", "tech": "Industrial", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Sulphates"},
+    "MMT_Surfactant": {"label": "表面活性剂", "value": "0.4", "stack": "150", "flammable": "3", "tech": "Industrial", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Surfactant"},
+    "MMT_Compaste": {"label": "复合粘剂", "value": "5.0", "stack": "300", "flammable": "1.5", "tech": "Industrial", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Compaste"},
+    "MMT_Powder": {"label": "火药", "value": "25.0", "stack": "150", "flammable": "14", "tech": "Industrial", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Powder"},
+    "MMT_Napalm": {"label": "凝固汽油", "value": "5.0", "stack": "300", "flammable": "8", "tech": "Industrial", "categories": ["MMT_FuelCat"], "tex": "Things/Item/MMT/MMT_PetroExt/Napalm"},
+    "MMT_Nitre": {"label": "硝石", "value": "3.0", "stack": "300", "flammable": "5", "tech": "Medieval", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Nitre"},
+    "MMT_OxidizedChemfuel": {"label": "氧化化合燃料", "value": "9.0", "stack": "375", "flammable": "12", "tech": "Spacer", "categories": ["MMT_FuelCat"], "tex": "Things/Item/MMT/MMT_PetroExt/OxidizedChemfuel"},
+    "MMT_CarbonAlloy": {"label": "碳纤维锭", "value": "40.0", "stack": "75", "flammable": "0", "tech": "Industrial", "categories": ["MMT_USLDHBar"], "tex": "Things/Item/MMT/MMT_Ingot/MMT_Ingot"},
+}
+
+PETROCHEM_EXT_RESEARCH_EXPECTATIONS = {
+    "MMT_AdvancedPetrochemistry": {"label": "高级石化工艺", "cost": "1500", "tech": "Industrial", "prereqs": ["MMT_ElectricPetrochemistry"], "x": "16.00", "y": "1.00"},
+    "MMT_OxidizedFuel": {"label": "氧化燃料", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedPetrochemistry"], "x": "17.00", "y": "2.00"},
+}
+
+PETROCHEM_EXT_LOOM_RECIPES = ["MMT_MakeCompaste"]
+PETROCHEM_EXT_AMMO_BENCH_RECIPES = ["MMT_MakeSulfur", "MMT_MakePowder", "MMT_MakeNapalm"]
+
+PETROCHEM_EXT_RECIPE_EXPECTATIONS = {
+    "MMT_MakeParaffins": {"work": "1000", "inputs": [("thingDefs", "MMT_CrudeOil", "20")], "output": "MMT_Paraffins", "output_count": "10", "skill": "6", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_AdvancedPetrochemistry"},
+    "MMT_MakeSulphates": {"work": "800", "inputs": [("thingDefs", "MMT_Sulfur", "10")], "output": "MMT_Sulphates", "output_count": "10", "skill": "6", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_AdvancedPetrochemistry"},
+    "MMT_MakeCarbonAlloy": {"work": "2800", "inputs": [("thingDefs", "MMT_SyntheticFibers", "10"), ("thingDefs", "MMT_Carbon", "10")], "output": "MMT_CarbonAlloy", "output_count": "10", "skill": "15", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_AdvancedPetrochemistry"},
+    "MMT_MakeCompaste": {"work": "3200", "inputs": [("thingDefs", "Chemfuel", "10"), ("thingDefs", "MMT_Rubber", "5"), ("thingDefs", "MMT_Paraffins", "2")], "output": "MMT_Compaste", "output_count": "20", "skill": "5", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry"},
+    "MMT_MakeSurfactant": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("categories", "Alcohol", "15")], "output": "MMT_Surfactant", "output_count": "50", "skill": "8", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["Brewery", "DrugLab"]},
+    "MMT_MakeSurfactant_Compaste": {"work": "4000", "inputs": [("thingDefs", "MMT_Compaste", "15"), ("thingDefs", "MMT_Polymers", "25")], "output": "MMT_Surfactant", "output_count": "50", "skill": "12", "skill2": ("Intellectual", "4"), "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["DrugLab"]},
+    "MMT_MakeSulfur": {"work": "1200", "inputs": [("thingDefs", "MMT_IronOre", "35")], "output": "MMT_Sulfur", "output_count": "10", "skill": None, "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
+    "MMT_MakePowder": {"work": "3000", "inputs": [("thingDefs", "MMT_Nitre", "75"), ("categories", "MMT_Coal", "20"), ("thingDefs", "MMT_Sulfur", "20")], "output": "MMT_Powder", "output_count": "20", "skill": "3", "speed": "GeneralLaborSpeed", "effect": "Smith", "sound": "Recipe_Smith", "research": None, "target_count_adjustment": "5"},
+    "MMT_MakeNapalm": {"work": "1200", "inputs": [("thingDefs", "Chemfuel", "30"), ("thingDefs", "MMT_Polymers", "15")], "output": "MMT_Napalm", "output_count": "10", "skill": "5", "speed": "GeneralLaborSpeed", "effect": "Smith", "sound": "Recipe_Smith", "research": None},
+    "MMT_MakeOxidizedChemfuel": {"work": "10000", "inputs": [("thingDefs", "Chemfuel", "100"), ("thingDefs", "MMT_Nitre", "15"), ("thingDefs", "MMT_Sulphates", "15"), ("thingDefs", "MMT_Polymers", "5")], "output": "MMT_OxidizedChemfuel", "output_count": "75", "skill": "12", "speed": "DrugSynthesisSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_OxidizedFuel"},
+}
+
 ELECTRIC_ELECTRONICS_BUILDING_TEXTURES = [
     f"1.7/Textures/Things/Building/Production/MMT_ElectricElectronicsTable/MMT_ElectricElectronicsTable_{side}{mask}.png"
     for side in ("east", "north", "south")
@@ -3408,6 +3464,50 @@ def validate_sulfur() -> None:
     print("sulfur: OK")
 
 
+def validate_petrochem_ext() -> None:
+    require_files([
+        PETROCHEM_EXT_RESOURCE_XML,
+        *PETROCHEM_EXT_ITEM_TEXTURES,
+    ])
+
+    resource_defs = def_map(parse_xml(PETROCHEM_EXT_RESOURCE_XML))
+    assert_equal(set(resource_defs), set(PETROCHEM_EXT_RESOURCE_EXPECTATIONS), "石化扩展资源 defName 集合")
+    for name, expected in PETROCHEM_EXT_RESOURCE_EXPECTATIONS.items():
+        node = resource_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./statBases/DeteriorationRate"), "0", f"{name} DeteriorationRate")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        if name == "MMT_CarbonAlloy":
+            assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
+            assert_equal(child_text(node, "./graphicData/color"), "(130,130,130)", f"{name} color")
+            assert_equal(child_text(node, "useHitPoints"), "true", f"{name} useHitPoints")
+            assert_equal(li_values(node, "./stuffProps/categories"), ["Metallic"], f"{name} stuff categories")
+            assert_equal(child_text(node, "./stuffProps/stuffAdjective"), "碳纤维制", f"{name} stuffAdjective")
+            assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), "3.6", f"{name} MaxHitPoints factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), "2.5", f"{name} WorkToMake factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), "2.5", f"{name} WorkToBuild factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/Mass"), "0.8", f"{name} Mass factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/MarketValue"), "1", f"{name} MarketValue factor")
+            assert_equal(child_text(node, "./stuffProps/statFactors/DoorOpenSpeed"), "0.8", f"{name} DoorOpenSpeed factor")
+            assert_equal(child_text(node, "terrainAffordanceNeeded"), "Medium", f"{name} terrain affordance")
+        else:
+            assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+            if node.find("stuffProps") is not None:
+                fail(f"{name} 不应定义 stuffProps")
+
+    for path in PETROCHEM_EXT_ITEM_TEXTURES:
+        assert_png(path)
+
+    if "SK." in read_text(PETROCHEM_EXT_RESOURCE_XML):
+        fail(f"{PETROCHEM_EXT_RESOURCE_XML} 不得引用 SK 类型")
+    print("petrochem-ext: OK")
+
+
 def validate_precious() -> None:
     require_files([PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML, METAL_BUILDING_XML, *PRECIOUS_ITEM_TEXTURES])
 
@@ -3920,6 +4020,7 @@ def validate_all() -> None:
     validate_parts()
     validate_basic_metallurgy()
     validate_stone_construction()
+    validate_petrochem_ext()
     validate_all_xml()
 
 
@@ -3960,6 +4061,7 @@ SUITES = {
     "precious": validate_precious,
     "basic-metallurgy": validate_basic_metallurgy,
     "stone-construction": validate_stone_construction,
+    "petrochem-ext": validate_petrochem_ext,
     "all": validate_all,
 }
 
