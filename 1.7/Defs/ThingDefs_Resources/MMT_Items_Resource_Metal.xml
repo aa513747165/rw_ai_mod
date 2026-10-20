@@ -5,7 +5,7 @@
     <label>铁矿石</label>
     <description>可以从中提炼金属铁的岩石和矿物，是炼钢的主要原料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_IronOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(125,140,131)</color>
     </graphicData>
@@ -29,7 +29,7 @@
     <label>铜矿</label>
     <description>含铜的天然矿石，可冶炼成铜锭，用于制造合金和导电部件。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_CopperOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(160,115,45)</color>
     </graphicData>
@@ -53,7 +53,7 @@
     <label>锡矿</label>
     <description>含锡的天然矿石，可冶炼成锡锭，是制造青铜的必要成分。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_TinOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(210,210,255)</color>
     </graphicData>
@@ -77,7 +77,7 @@
     <label>铜</label>
     <description>由铜矿石冶炼而成的铜锭，具有良好的导电性，可用于制造合金和建筑材料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(160,115,45)</color>
     </graphicData>
@@ -117,7 +117,7 @@
     <label>锡</label>
     <description>由锡矿石冶炼而成的锡锭，质地较软，主要用于与铜锭一起冶炼青铜。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(175,175,175)</color>
     </graphicData>
@@ -157,7 +157,7 @@
     <label>青铜</label>
     <description>由铜锭和锡锭冶炼而成的青铜合金，硬度高于纯铜，是早期重要的金属建材。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(210,140,20)</color>
     </graphicData>
@@ -197,7 +197,7 @@
     <label>铅矾矿</label>
     <description>铅矾矿是铅的矿石形式。铅是一种重金属，比大多数普通材料密度大。铅柔软而有延展性，熔点相对较低。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_Anglesite/MMT_Anglesite</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_Anglesite</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(165,185,70)</color>
     </graphicData>
@@ -221,7 +221,7 @@
     <label>铝土矿</label>
     <description>铝土矿是铝的矿石形式。铝的冶炼无法手工完成，需要电力驱动。铝密度低、抗腐蚀，具有顺磁性。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_AluminiumOre/MMT_AluminiumOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_AluminiumOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(255,200,200)</color>
     </graphicData>
@@ -245,7 +245,7 @@
     <label>铅合金</label>
     <description>由铅矾矿冶炼出的铅锭。密度大的重金属，柔软有延展性，熔点相对较低。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(129,107,100)</color>
     </graphicData>
@@ -286,7 +286,6 @@
         <ImmunityGainSpeedFactor>0.25</ImmunityGainSpeedFactor>
         <WorkTableWorkSpeedFactor>0.8</WorkTableWorkSpeedFactor>
         <DoorOpenSpeed>0.6</DoorOpenSpeed>
-        <MeleePenetrationFactor>0.45</MeleePenetrationFactor>
         <Mass>1.2</Mass>
       </statFactors>
     </stuffProps>
@@ -298,7 +297,7 @@
     <label>铝合金</label>
     <description>由铝土矿电解冶炼出的铝锭。类似铜但不那么贵重，因高导电性广泛用于电气产业。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(190,205,190)</color>
     </graphicData>
@@ -339,7 +338,6 @@
         <BedRestEffectiveness>1</BedRestEffectiveness>
         <ImmunityGainSpeedFactor>1.05</ImmunityGainSpeedFactor>
         <WorkTableWorkSpeedFactor>1.2</WorkTableWorkSpeedFactor>
-        <MeleePenetrationFactor>0.7</MeleePenetrationFactor>
         <Mass>0.85</Mass>
         <Cleanliness>0.6</Cleanliness>
       </statFactors>
@@ -352,7 +350,7 @@
     <label>斯特合金</label>
     <description>铁硅铝三元合金，可用作其他金属的脱氧剂，比标准铸铁或钢更耐磨。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(131,137,147)</color>
     </graphicData>
@@ -390,7 +388,6 @@
         <BedRestEffectiveness>0.85</BedRestEffectiveness>
         <ImmunityGainSpeedFactor>0.9</ImmunityGainSpeedFactor>
         <WorkTableWorkSpeedFactor>1.1</WorkTableWorkSpeedFactor>
-        <MeleePenetrationFactor>1.2</MeleePenetrationFactor>
         <Mass>1.2</Mass>
       </statFactors>
     </stuffProps>

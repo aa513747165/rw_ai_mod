@@ -5,7 +5,7 @@
     <label>白银</label>
     <description>含银的矿石，可在熔炉中冶炼成银。银主要用作货币和交易品。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_SilverOre/MMT_SilverOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_SilverOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(180,173,150)</color>
     </graphicData>
@@ -30,7 +30,7 @@
     <label>金矿</label>
     <description>含金的矿石，可在熔炉中冶炼成金。金是稀有贵金属，主要用于交易和高端制造。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ore/MMT_GoldOre/MMT_GoldOre</texPath>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_GoldOre</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(255,215,0)</color>
     </graphicData>

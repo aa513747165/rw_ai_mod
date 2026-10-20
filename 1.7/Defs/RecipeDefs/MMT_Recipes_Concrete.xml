@@ -145,7 +145,7 @@
     <description>在混凝土中加入金属材料，制作钢筋混凝土。产出 16。</description>
     <jobString>正在制作钢筋混凝土。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>StonecuttingSpeed</workSpeedStat>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>CutStone</effectWorking>
     <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
     <ingredients>

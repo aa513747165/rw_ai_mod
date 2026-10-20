@@ -170,8 +170,8 @@ PRECIOUS_ITEM_TEXTURES = [
 ]
 
 PRECIOUS_RESOURCE_EXPECTATIONS = {
-    "MMT_SilverOre": {"label": "白银", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre/MMT_SilverOre"},
-    "MMT_GoldOre": {"label": "金矿", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre/MMT_GoldOre"},
+    "MMT_SilverOre": {"label": "白银", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre"},
+    "MMT_GoldOre": {"label": "金矿", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
 }
 
 PRECIOUS_MINEABLE_EXPECTATIONS = {
@@ -497,7 +497,7 @@ CONCRETE_RECIPE_EXPECTATIONS = {
         "output_count": "16",
         "users": [],
         "research": None,
-        "speed": "StonecuttingSpeed",
+        "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
         "skill": "7",
@@ -600,11 +600,11 @@ WOOD_RECIPE_EXPECTATIONS = {
 }
 
 METAL_ORE_EXPECTATIONS = {
-    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre", "value": "2.0", "stack": "600"},
-    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre", "value": "2.0", "stack": "600"},
-    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre", "value": "2.0", "stack": "600"},
-    "MMT_Anglesite": {"label": "铅矾矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_Anglesite/MMT_Anglesite", "value": "4", "stack": "300"},
-    "MMT_AluminiumOre": {"label": "铝土矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_AluminiumOre/MMT_AluminiumOre", "value": "2", "stack": "600"},
+    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre", "value": "2.0", "stack": "600"},
+    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre", "value": "2.0", "stack": "600"},
+    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre", "value": "2.0", "stack": "600"},
+    "MMT_Anglesite": {"label": "铅矾矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_Anglesite", "value": "4", "stack": "300"},
+    "MMT_AluminiumOre": {"label": "铝土矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_AluminiumOre", "value": "2", "stack": "600"},
 }
 
 METAL_BAR_EXPECTATIONS = {
@@ -1109,7 +1109,7 @@ PETROCHEM_EXT_RESOURCE_EXPECTATIONS = {
     "MMT_Napalm": {"label": "凝固汽油", "value": "5.0", "stack": "300", "flammable": "8", "tech": "Industrial", "categories": ["MMT_FuelCat"], "tex": "Things/Item/MMT/MMT_PetroExt/Napalm"},
     "MMT_Nitre": {"label": "硝石", "value": "3.0", "stack": "300", "flammable": "5", "tech": "Medieval", "categories": ["ResourcesRaw"], "tex": "Things/Item/MMT/MMT_PetroExt/Nitre"},
     "MMT_OxidizedChemfuel": {"label": "氧化化合燃料", "value": "9.0", "stack": "375", "flammable": "12", "tech": "Spacer", "categories": ["MMT_FuelCat"], "tex": "Things/Item/MMT/MMT_PetroExt/OxidizedChemfuel"},
-    "MMT_CarbonAlloy": {"label": "碳纤维锭", "value": "40.0", "stack": "75", "flammable": "0", "tech": "Industrial", "categories": ["MMT_USLDHBar"], "tex": "Things/Item/MMT/MMT_Ingot/MMT_Ingot"},
+    "MMT_CarbonAlloy": {"label": "碳纤维锭", "value": "40.0", "stack": "75", "flammable": "0", "tech": "Industrial", "categories": ["MMT_USLDHBar"], "tex": "Things/Item/MMT/MMT_Ingot"},
 }
 
 PETROCHEM_EXT_RESEARCH_EXPECTATIONS = {
@@ -1196,9 +1196,9 @@ ADVANCED_ORE_ITEM_TEXTURES = [
 ]
 
 ADVANCED_ORE_EXPECTATIONS = {
-    "MMT_NickelOre": {"label": "镍矿", "value": "4.0", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre/MMT_NickelOre"},
-    "MMT_IlmeniteOre": {"label": "钛铁矿", "value": "8.0", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre/MMT_IlmeniteOre"},
-    "MMT_WolframiteOre": {"label": "黑钨矿", "value": "9.0", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre/MMT_WolframiteOre"},
+    "MMT_NickelOre": {"label": "镍矿", "value": "4.0", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre"},
+    "MMT_IlmeniteOre": {"label": "钛铁矿", "value": "8.0", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre"},
+    "MMT_WolframiteOre": {"label": "黑钨矿", "value": "9.0", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre"},
 }
 
 ADVANCED_ALLOY_EXPECTATIONS = {
@@ -2107,7 +2107,7 @@ def validate_metal_resources() -> None:
         assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
         assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
         assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
-        assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot/MMT_Ingot", f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot", f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
         assert_equal(li_values(node, "thingCategories"), [expected["category"]], f"{name} thingCategories")
         assert_equal(li_values(node, "./stuffProps/categories"), ["Metallic"], f"{name} stuff categories")
@@ -3118,7 +3118,7 @@ def validate_advanced_alloys() -> None:
         assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
         assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
         assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
-        assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot/MMT_Ingot", f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot", f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
         assert_equal(child_text(node, "./graphicData/color"), expected["color"], f"{name} color")
         assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")

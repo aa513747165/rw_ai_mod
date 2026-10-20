@@ -5,7 +5,7 @@
     <label>镍合金</label>
     <description>由镍矿石冶炼而成的镍锭，是合炼镍钛诺等高级合金的重要原料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(42,208,206)</color>
     </graphicData>
@@ -48,7 +48,7 @@
     <label>钴合金</label>
     <description>从镍矿石中伴生提取的钴，是合炼司太立与钴硬质合金的必要成分。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(60,90,120)</color>
     </graphicData>
@@ -72,7 +72,7 @@
     <label>铬合金</label>
     <description>从铁矿石中提取的铬，是合炼司太立合金的必要成分。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(235,235,235)</color>
     </graphicData>
@@ -96,7 +96,7 @@
     <label>钨合金</label>
     <description>由钨锰铁矿冶炼而成的钨合金，硬度与密度极高，是高级合金的重要原料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(240,230,230)</color>
     </graphicData>
@@ -121,7 +121,7 @@
     <label>钛合金</label>
     <description>由钛铁矿冶炼而成的钛合金，轻量、高强度且美观，是顶级建材之一。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(160,178,181)</color>
     </graphicData>
@@ -168,7 +168,7 @@
     <label>司太立合金（钨铬钴合金）</label>
     <description>由钴、铬和钨合炼而成的司太立合金，专为耐磨而设计。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(125,146,178)</color>
     </graphicData>
@@ -211,7 +211,7 @@
     <label>镍钛合金</label>
     <description>由镍锭和钛合炼而成的镍钛诺合金，极其耐久且相当美观，但难以制造。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(175,175,175)</color>
     </graphicData>
@@ -257,7 +257,7 @@
     <label>钨钴合金</label>
     <description>由钨、碳材料和钴合炼而成的钴硬质合金，硬度堪比金刚石。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(85,85,85)</color>
     </graphicData>
@@ -301,7 +301,7 @@
     <label>贫铀合金</label>
     <description>由铀矿精炼而成的贫铀合金，密度极高且带有微弱放射性，是顶级穿甲与防护材料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(20,94,30)</color>
     </graphicData>
@@ -346,7 +346,7 @@
     <label>斯坦合金</label>
     <description>由钢和镍合炼而成的斯坦合金，比普通的钢更坚固耐用。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(120,147,131)</color>
     </graphicData>
@@ -390,7 +390,7 @@
     <label>梅尔基奥合金</label>
     <description>由铜和镍合炼而成的梅尔基奥合金（白铜），耐腐蚀且导电性良好。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(168,157,125)</color>
     </graphicData>
@@ -435,7 +435,7 @@
     <label>亚力可合金</label>
     <description>由钢、铝、钴和镍合炼而成的亚力可合金，磁性极强且轻便美观。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(210,210,210)</color>
     </graphicData>

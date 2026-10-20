@@ -198,7 +198,7 @@
     <label>碳纤维锭</label>
     <description>由人造纤维与碳聚物复合而成的碳纤维锭，轻量且强度极高，是高级合金与顶级材料的关键原料。</description>
     <graphicData>
-      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <texPath>Things/Item/MMT/MMT_Ingot</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
       <color>(130,130,130)</color>
     </graphicData>
