@@ -413,7 +413,7 @@ VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "Anim
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -688,6 +688,8 @@ PETROCHEM_TABLE_RECIPES = [
     "MMT_MakeRubber_Hand",
     "MMT_MakeSyntheticFibers_Hand",
     "MMT_MakeCarbon_Hand",
+    "MMT_MakeParaffins",
+    "MMT_MakeSulphates",
 ]
 
 PETROCHEM_RECIPE_EXPECTATIONS = {
@@ -1011,6 +1013,10 @@ ELECTRIC_PETROCHEM_LAB_RECIPES = [
     "MMT_MakeRubber_Electric",
     "MMT_MakeSyntheticFibers_Electric",
     "MMT_MakeCarbon_Electric",
+    "MMT_MakeParaffins",
+    "MMT_MakeSulphates",
+    "MMT_MakeCarbonAlloy",
+    "MMT_MakeOxidizedChemfuel",
 ]
 
 ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS = {
@@ -1240,8 +1246,8 @@ ADVANCED_ALLOYS_RECIPE_EXPECTATIONS = {
     "MMT_SmeltTitanium": {"work": "3300", "inputs": [("thingDefs", "MMT_IlmeniteOre", "15")], "output": "MMT_Titanium", "output_count": "15", "skill": "16", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeStellite": {"work": "2100", "inputs": [("thingDefs", "MMT_Cobalt", "5"), ("thingDefs", "MMT_Chromium", "13"), ("thingDefs", "MMT_Tungsten", "2")], "output": "MMT_StelliteAlloy", "output_count": "20", "skill": "17", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeNitinol": {"work": "2600", "inputs": [("thingDefs", "MMT_Titanium", "4"), ("thingDefs", "MMT_NickelBar", "11")], "output": "MMT_NitinolAlloy", "output_count": "15", "skill": "16", "research": "MMT_AdvancedAlloys"},
-    "MMT_MakePobedite": {"work": "2700", "inputs": [("thingDefs", "MMT_Tungsten", "3"), ("thingDefs", "MMT_Carbon", "3"), ("thingDefs", "MMT_Cobalt", "3")], "output": "MMT_PobediteAlloy", "output_count": "10", "skill": "18", "research": "MMT_AdvancedAlloys"},
-    "MMT_MakeFerrotitanium": {"work": "2400", "inputs": [("thingDefs", "MMT_Titanium", "5"), ("thingDefs", "Steel", "12"), ("thingDefs", "MMT_Carbon", "3")], "output": "Plasteel", "output_count": "15", "skill": "15", "research": "MMT_AdvancedAlloys"},
+    "MMT_MakePobedite": {"work": "2700", "inputs": [("thingDefs", "MMT_Tungsten", "3"), ("thingDefs", "MMT_CarbonAlloy", "3"), ("thingDefs", "MMT_Cobalt", "3")], "output": "MMT_PobediteAlloy", "output_count": "10", "skill": "18", "research": "MMT_AdvancedAlloys"},
+    "MMT_MakeFerrotitanium": {"work": "2400", "inputs": [("thingDefs", "MMT_Titanium", "5"), ("thingDefs", "Steel", "12"), ("thingDefs", "MMT_CarbonAlloy", "3")], "output": "Plasteel", "output_count": "15", "skill": "15", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeCupronickelAlloy": {"work": "1600", "inputs": [("thingDefs", "MMT_CopperBar", "24"), ("thingDefs", "MMT_NickelBar", "6")], "output": "MMT_CupronickelAlloy", "output_count": "30", "skill": "12", "research": "MMT_AdvancedMetalRefining"},
     "MMT_MakeDepletedUranium": {"work": "1700", "inputs": [("thingDefs", "Uranium", "10")], "output": "MMT_DepletedUranium", "output_count": "10", "skill": "11", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeSteelBar": {"work": "1800", "inputs": [("thingDefs", "Steel", "15"), ("thingDefs", "MMT_NickelBar", "5")], "output": "MMT_SteelBar", "output_count": "20", "skill": "11", "research": "MMT_AdvancedAlloys"},
@@ -3070,6 +3076,7 @@ def validate_advanced_alloys() -> None:
         ELECTRIC_BUILDING_XML,
         METAL_RESOURCE_XML,
         PETROCHEM_RESOURCE_XML,
+        PETROCHEM_EXT_RESOURCE_XML,
         *ADVANCED_ORE_ITEM_TEXTURES,
     ])
 
@@ -3158,6 +3165,7 @@ def validate_advanced_alloys() -> None:
         | set(alloy_defs)
         | set(def_map(parse_xml(METAL_RESOURCE_XML)))
         | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_EXT_RESOURCE_XML)))
     )
     output_names = set(alloy_defs) | VANILLA_THINGS
     furnace_recipes = li_values(def_map(parse_xml(ELECTRIC_BUILDING_XML))["MMT_ElectricArcFurnace"], "recipes")
@@ -3468,6 +3476,14 @@ def validate_petrochem_ext() -> None:
     require_files([
         PETROCHEM_EXT_RESOURCE_XML,
         PETROCHEM_EXT_BUILDING_XML,
+        PETROCHEM_EXT_RECIPE_XML,
+        PETROCHEM_EXT_RESEARCH_XML,
+        PETROCHEM_RESOURCE_XML,
+        PETROCHEM_BUILDING_XML,
+        ELECTRIC_PETROCHEM_BUILDING_XML,
+        SULFUR_RESOURCE_XML,
+        AGRICULTURE_RESOURCE_XML,
+        METAL_RESOURCE_XML,
         *PETROCHEM_EXT_ITEM_TEXTURES,
         *PETROCHEM_EXT_BUILDING_TEXTURES,
     ])
@@ -3565,13 +3581,135 @@ def validate_petrochem_ext() -> None:
             fail(f"弹药台缺少组件: {expected}")
     assert_equal(child_text(bench, "./comps/li/basePowerConsumption"), "500", "弹药台功耗")
 
+    research_defs = def_map(parse_xml(PETROCHEM_EXT_RESEARCH_XML))
+    assert_equal(set(research_defs), set(PETROCHEM_EXT_RESEARCH_EXPECTATIONS), "石化扩展研究 defName 集合")
+    for name, expected in PETROCHEM_EXT_RESEARCH_EXPECTATIONS.items():
+        node = research_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "baseCost"), expected["cost"], f"{name} baseCost")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
+        assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
+        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+
+    recipe_defs = def_map(parse_xml(PETROCHEM_EXT_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(PETROCHEM_EXT_RECIPE_EXPECTATIONS), "石化扩展配方 defName 集合")
+
+    hand_table_recipes = li_values(def_map(parse_xml(PETROCHEM_BUILDING_XML))["MMT_HandChemTable"], "recipes")
+    electric_lab_recipes = li_values(def_map(parse_xml(ELECTRIC_PETROCHEM_BUILDING_XML))["MMT_ElectricChemLab"], "recipes")
+    loom_recipes = li_values(building_defs["MMT_Loom"], "recipes")
+    ammo_bench_recipes = li_values(building_defs["MMT_AmmoBench"], "recipes")
+    bench_membership = {
+        "MMT_MakeParaffins": [hand_table_recipes, electric_lab_recipes],
+        "MMT_MakeSulphates": [hand_table_recipes, electric_lab_recipes],
+        "MMT_MakeCarbonAlloy": [electric_lab_recipes],
+        "MMT_MakeCompaste": [loom_recipes],
+        "MMT_MakeSulfur": [ammo_bench_recipes],
+        "MMT_MakePowder": [ammo_bench_recipes],
+        "MMT_MakeNapalm": [ammo_bench_recipes],
+        "MMT_MakeOxidizedChemfuel": [electric_lab_recipes],
+    }
+
+    resource_names = (
+        set(resource_defs)
+        | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(SULFUR_RESOURCE_XML)))
+        | set(def_map(parse_xml(AGRICULTURE_RESOURCE_XML)))
+        | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+    )
+    allowed_categories = {"Alcohol", "MMT_Coal"}
+
+    for name, expected in PETROCHEM_EXT_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        effect = recipe.findtext("effectWorking")
+        assert_equal(effect.strip() if effect else None, expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+
+        if expected["skill"] is None:
+            if recipe.find("skillRequirements") is not None:
+                fail(f"{name} 不应有技能要求")
+        else:
+            assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+            if "skill2" in expected:
+                skill2_name, skill2_value = expected["skill2"]
+                assert_equal(child_text(recipe, f"./skillRequirements/{skill2_name}"), skill2_value, f"{name} {skill2_name} requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            categories = li_values(filter_node, "categories")
+            if bool(thing_defs) == bool(categories):
+                fail(f"{name} 每个输入 filter 必须且只能包含 thingDefs 或 categories 之一")
+            if thing_defs:
+                actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+            else:
+                actual_inputs.append(("categories", tuple(categories), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed_things = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_things = sorted({item for kind, value, _ in normalized if kind == "thingDefs" for item in value})
+        assert_equal(fixed_things, expected_things, f"{name} 固定输入列表")
+        fixed_categories = sorted(li_values(recipe, "./fixedIngredientFilter/categories"))
+        expected_categories = sorted({item for kind, value, _ in normalized if kind == "categories" for item in value})
+        assert_equal(fixed_categories, expected_categories, f"{name} 固定输入类别")
+
+        products = [node for node in recipe.findall("./products/*") if isinstance(node.tag, str)]
+        if len(products) != 1:
+            fail(f"{name} 必须且只能有一个输出")
+        assert_equal(products[0].tag, expected["output"], f"{name} 输出")
+        assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
+
+        research = recipe.findtext("researchPrerequisite")
+        assert_equal(research.strip() if research else None, expected["research"], f"{name} researchPrerequisite")
+
+        users = li_values(recipe, "recipeUsers")
+        if "users" in expected:
+            assert_equal(users, expected["users"], f"{name} recipeUsers")
+        elif users:
+            fail(f"{name} 不应写 recipeUsers")
+
+        if "target_count_adjustment" in expected:
+            assert_equal(child_text(recipe, "targetCountAdjustment"), expected["target_count_adjustment"], f"{name} targetCountAdjustment")
+
+        for bench_list in bench_membership.get(name, []):
+            if name not in bench_list:
+                fail(f"{name} 未挂载到目标建筑")
+        if name not in bench_membership and not expected.get("users"):
+            fail(f"{name} 未声明挂载方式")
+
+        for kind, value, _ in normalized:
+            for item in value:
+                if kind == "thingDefs":
+                    if item not in resource_names | VANILLA_THINGS:
+                        fail(f"{name} 使用未知资源: {item}")
+                elif item not in allowed_categories:
+                    fail(f"{name} 使用未知类别: {item}")
+        if expected["output"] not in resource_names:
+            fail(f"{name} 输出不是已知资源: {expected['output']}")
+
+    if "SmithingSpeed" in read_text(PETROCHEM_EXT_RECIPE_XML):
+        fail("石化扩展配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+
     for path in PETROCHEM_EXT_ITEM_TEXTURES:
         assert_png(path)
 
     for path in PETROCHEM_EXT_BUILDING_TEXTURES:
         assert_png(path)
 
-    for path in (PETROCHEM_EXT_RESOURCE_XML, PETROCHEM_EXT_BUILDING_XML):
+    for path in (PETROCHEM_EXT_RESOURCE_XML, PETROCHEM_EXT_BUILDING_XML, PETROCHEM_EXT_RECIPE_XML, PETROCHEM_EXT_RESEARCH_XML):
         if "SK." in read_text(path):
             fail(f"{path} 不得引用 SK 类型")
     print("petrochem-ext: OK")

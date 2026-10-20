@@ -293,7 +293,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_Carbon</li>
+            <li>MMT_CarbonAlloy</li>
           </thingDefs>
         </filter>
         <count>3</count>
@@ -310,7 +310,7 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>MMT_Tungsten</li>
-        <li>MMT_Carbon</li>
+        <li>MMT_CarbonAlloy</li>
         <li>MMT_Cobalt</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -354,7 +354,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_Carbon</li>
+            <li>MMT_CarbonAlloy</li>
           </thingDefs>
         </filter>
         <count>3</count>
@@ -364,7 +364,7 @@
       <thingDefs>
         <li>MMT_Titanium</li>
         <li>Steel</li>
-        <li>MMT_Carbon</li>
+        <li>MMT_CarbonAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>

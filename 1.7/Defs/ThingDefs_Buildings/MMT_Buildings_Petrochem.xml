@@ -45,6 +45,8 @@
       <li>MMT_MakeRubber_Hand</li>
       <li>MMT_MakeSyntheticFibers_Hand</li>
       <li>MMT_MakeCarbon_Hand</li>
+      <li>MMT_MakeParaffins</li>
+      <li>MMT_MakeSulphates</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>

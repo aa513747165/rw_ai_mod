@@ -47,6 +47,10 @@
       <li>MMT_MakeRubber_Electric</li>
       <li>MMT_MakeSyntheticFibers_Electric</li>
       <li>MMT_MakeCarbon_Electric</li>
+      <li>MMT_MakeParaffins</li>
+      <li>MMT_MakeSulphates</li>
+      <li>MMT_MakeCarbonAlloy</li>
+      <li>MMT_MakeOxidizedChemfuel</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

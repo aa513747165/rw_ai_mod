@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>MMT_AdvancedPetrochemistry</defName>
+    <label>高级石化工艺</label>
+    <description>掌握石化下游的精深加工：精炼石蜡与硫酸盐、合成碳纤维锭与复合粘剂、制备表面活性剂。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ElectricPetrochemistry</li>
+    </prerequisites>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>MMT_OxidizedFuel</defName>
+    <label>氧化燃料</label>
+    <description>向化合燃料中掺入氧化剂，合成能量密度极高的氧化化合燃料。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_AdvancedPetrochemistry</li>
+    </prerequisites>
+    <researchViewX>17.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
