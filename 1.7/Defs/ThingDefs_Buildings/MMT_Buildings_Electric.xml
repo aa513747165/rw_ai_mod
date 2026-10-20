@@ -52,6 +52,8 @@
       <li>MMT_SmeltAluminiumBar_Electric</li>
       <li>MMT_MakeFerrosiliconAlloy</li>
       <li>MMT_MakeMetalCan</li>
+      <li>MMT_MakeCeramics</li>
+      <li>MMT_MakeClayBricks</li>
       <li>MMT_SmeltNickelBar</li>
       <li>MMT_ExtractCobalt</li>
       <li>MMT_ExtractChromium</li>

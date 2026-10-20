@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableSoftClay</defName>
+    <label>粘土矿脉</label>
+    <description>露头的软粘土矿脉，开采后可获得软粘土，用于烧制粘土砖和陶瓷。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(121,96,76)</color>
+      <colorTwo>(168,134,105)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1400</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_SoftClay</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>0.7</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>8~15</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <!-- 窑炉：对标 HSK Kiln，SK 燃料组件用原版 CompProperties_Refuelable 替代 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Kiln</defName>
+    <label>窑炉</label>
+    <description>烧柴煤的土窑，用于烧制粘土砖、陶瓷，也可焚烧杂物获取灰烬。可用石砖或粘土砖建造。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_Kiln/MMT_Kiln</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <uiIconPath>Things/Building/Production/MMT_Kiln/MMT_Kiln_north</uiIconPath>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.9</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Stony</li>
+      <li>MMT_Bricks</li>
+    </stuffCategories>
+    <costStuffCount>180</costStuffCount>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>3000</WorkToBuild>
+      <MaxHitPoints>270</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Cleanliness>-8</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeCeramics</li>
+      <li>MMT_MakeClayBricks</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <building>
+      <uninstallWork>1850</uninstallWork>
+    </building>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>10.0</fuelConsumptionRate>
+        <fuelCapacity>30.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Coal</li>
+            <li>MMT_Charcoal</li>
+            <li>MMT_Kindling</li>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(217,112,33,0)</glowColor>
+      </li>
+      <li Class="CompProperties_Flickable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_BasicMetalworking</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 砖块建材类别：对应 HSK Bricks，供粘土砖与窑炉建造材质使用 -->
+  <StuffCategoryDef>
+    <defName>MMT_Bricks</defName>
+    <label>砖块</label>
+  </StuffCategoryDef>
+</Defs>
