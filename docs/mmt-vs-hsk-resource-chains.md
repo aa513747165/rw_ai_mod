@@ -588,19 +588,19 @@
 
 #### 使用金属组装原始零部件（`MMT_MakeComponentMedieval_Metal`）
 
-- **MMT**：钢(Steel) 或 铜×10 -> 原始零部件×10 @ 手工装配台, 电动装配台 ｜ 工作量=900 ｜ 研究:零件加工(MMT_ComponentCrafting)
+- **MMT**：钢(Steel) 或 青铜 或 铜 或 锡 或 铝合金 或 银(Silver) 或 金(Gold)×10 -> 原始零部件×10 @ 手工装配台, 电动装配台 ｜ 工作量=900 ｜ 研究:零件加工(MMT_ComponentCrafting)
 - **HSK** `Make_ComponentMedieval`：[Woody]×20 -> 原始零部件(ComponentMedieval)×10 @ AdvToolBench, CraftingSpot, FabricationBench, 电动锯木台(TableSawmillElectric), 手工锯台(TableSawmillHand) ｜ 工作量=900 ｜ 研究:Craft_0
 - **对比**：首投入 10 vs HSK 20
 
 #### 组装普通零部件（`MMT_MakeComponentIndustrial_Hand`）
 
-- **MMT**：钢(Steel) 或 铁钛合金(Plasteel)×30 -> 工业零件(ComponentIndustrial)×10 @ 手工装配台 ｜ 工作量=2000 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥3
+- **MMT**：钢(Steel) 或 青铜 或 斯坦合金 或 斯特合金×30 -> 工业零件(ComponentIndustrial)×10 @ 手工装配台 ｜ 工作量=2000 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥3
 - **HSK** `Make_ComponentIndustrial`：[SLDBar] 或 [USLDBar]×30 -> 工业零件(ComponentIndustrial)×10 @ AdvToolBench, FabricationBench ｜ 工作量=2000 ｜ 研究:Craft_0，技能:Crafting≥3
 - **对比**：数值一致
 
 #### 组装普通零部件（`MMT_MakeComponentIndustrial_Electric`）
 
-- **MMT**：钢(Steel) 或 铁钛合金(Plasteel)×30 -> 工业零件(ComponentIndustrial)×10 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥3
+- **MMT**：钢(Steel) 或 青铜 或 斯坦合金 或 斯特合金×30 -> 工业零件(ComponentIndustrial)×10 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥3
 - **HSK** `Make_ComponentIndustrial`：[SLDBar] 或 [USLDBar]×30 -> 工业零件(ComponentIndustrial)×10 @ AdvToolBench, FabricationBench ｜ 工作量=2000 ｜ 研究:Craft_0，技能:Crafting≥3
 - **对比**：数值一致
 
@@ -618,43 +618,43 @@
 
 #### 组装机械组件（`MMT_MakeMechanism_Hand`）
 
-- **MMT**：钢(Steel)×30 + 工业零件(ComponentIndustrial)×10 -> 机械组件×5 @ 手工装配台 ｜ 工作量=1800 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥4
+- **MMT**：钢(Steel) 或 青铜 或 斯特合金×30 + 工业零件(ComponentIndustrial)×10 -> 机械组件×5 @ 手工装配台 ｜ 工作量=1800 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥4
 - **HSK** `MakeSimpleMechanism_Electric`：[SLDBar]×60 + 工业零件(ComponentIndustrial)×20 -> 机械组件(Mechanism)×10 @ AdvToolBench ｜ 工作量=1800 ｜ 技能:Crafting≥7
 - **对比**：首投入 30 vs HSK 60；产出 5 vs HSK 10；技能 Crafting≥4 vs HSK Crafting≥7
 
 #### 组装机械组件（`MMT_MakeMechanism_Electric`）
 
-- **MMT**：钢(Steel)×60 + 工业零件(ComponentIndustrial)×20 -> 机械组件×10 @ 电动装配台 ｜ 工作量=1800 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥7
+- **MMT**：钢(Steel) 或 青铜 或 斯特合金×60 + 工业零件(ComponentIndustrial)×20 -> 机械组件×10 @ 电动装配台 ｜ 工作量=1800 ｜ 研究:零件加工(MMT_ComponentCrafting)，技能:Crafting≥7
 - **HSK** `MakeSimpleMechanism_Electric`：[SLDBar]×60 + 工业零件(ComponentIndustrial)×20 -> 机械组件(Mechanism)×10 @ AdvToolBench ｜ 工作量=1800 ｜ 技能:Crafting≥7
 - **对比**：数值一致
 
 #### 组装高级零部件（`MMT_MakeComponentSpacer_Hand`）
 
-- **MMT**：铁钛合金(Plasteel)×30 -> 太空零件(ComponentSpacer)×10 @ 手工装配台 ｜ 工作量=2500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥6
+- **MMT**：铁钛合金(Plasteel) 或 斯坦合金 或 钛合金 或 镍钛合金 或 亚力可合金×30 -> 太空零件(ComponentSpacer)×10 @ 手工装配台 ｜ 工作量=2500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥6
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 30 vs HSK 25；工作量 2500 vs HSK 3500；技能 Crafting≥6 vs HSK Crafting≥9
 
 #### 组装高级零部件（`MMT_MakeComponentSpacer_Electric`）
 
-- **MMT**：铁钛合金(Plasteel)×30 -> 太空零件(ComponentSpacer)×10 @ 电动装配台 ｜ 工作量=2500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥6
+- **MMT**：铁钛合金(Plasteel) 或 斯坦合金 或 钛合金 或 镍钛合金 或 亚力可合金×30 -> 太空零件(ComponentSpacer)×10 @ 电动装配台 ｜ 工作量=2500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥6
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 30 vs HSK 25；工作量 2500 vs HSK 3500；技能 Crafting≥6 vs HSK Crafting≥9
 
 #### 组装先进机械组件（`MMT_MakeAdvMechanism_Hand`）
 
-- **MMT**：铁钛合金(Plasteel)×30 + 太空零件(ComponentSpacer)×10 + 人造纤维×5 -> 先进机械组件×5 @ 手工装配台 ｜ 工作量=3200 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥13
+- **MMT**：铁钛合金(Plasteel) 或 斯坦合金 或 钛合金 或 镍钛合金 或 亚力可合金×30 + 太空零件(ComponentSpacer)×10 + 人造纤维×5 -> 先进机械组件×5 @ 手工装配台 ｜ 工作量=3200 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥13
 - **HSK** `MakeAdvMechanism_Electric`：[USLDBar]×60 + 高级零件(ComponentAdvanced)×20 + 人造纤维(SyntheticFibers)×10 -> 先进机械组件(AdvMechanism)×10 @ AdvToolBench ｜ 工作量=3200 ｜ 研究:Components_D1，技能:Crafting≥16
 - **对比**：首投入 30 vs HSK 60；产出 5 vs HSK 10；技能 Crafting≥13 vs HSK Crafting≥16
 
 #### 组装先进机械组件（`MMT_MakeAdvMechanism_Electric`）
 
-- **MMT**：铁钛合金(Plasteel)×60 + 太空零件(ComponentSpacer)×20 + 人造纤维×10 -> 先进机械组件×10 @ 电动装配台 ｜ 工作量=3200 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥16
+- **MMT**：铁钛合金(Plasteel) 或 斯坦合金 或 钛合金 或 镍钛合金 或 亚力可合金×60 + 太空零件(ComponentSpacer)×20 + 人造纤维×10 -> 先进机械组件×10 @ 电动装配台 ｜ 工作量=3200 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥16
 - **HSK** `MakeAdvMechanism_Electric`：[USLDBar]×60 + 高级零件(ComponentAdvanced)×20 + 人造纤维(SyntheticFibers)×10 -> 先进机械组件(AdvMechanism)×10 @ AdvToolBench ｜ 工作量=3200 ｜ 研究:Components_D1，技能:Crafting≥16
 - **对比**：数值一致
 
 #### 组装高级零部件（`MMT_MakeSpacerComponent`）
 
-- **MMT**：铁钛合金(Plasteel)×25 + 银(Silver) 或 金(Gold)×5 -> 高级零部件×10 @ 电动装配台 ｜ 工作量=3500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥9
+- **MMT**：铁钛合金(Plasteel) 或 斯坦合金 或 钛合金 或 镍钛合金 或 亚力可合金×25 + 银(Silver) 或 金(Gold)×5 -> 高级零部件×10 @ 电动装配台 ｜ 工作量=3500 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥9
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：数值一致
 
@@ -1060,20 +1060,71 @@
 - **HSK** `MakeRedWoodPlanks_Hand`：红木(RedWoodLog)×10 -> 红木木板(RedWoodPlank)×15 @ 手工锯台(TableSawmillHand) ｜ 工作量=1200 ｜ 研究:Craft_0，技能:Crafting≥3
 - **对比**：数值一致
 
-## 4. HSK 有而 MMT 未覆盖的配方（限于 MMT 涉及的资源）
+## 4. HSK 有而 MMT 未实现的配方（限于 MMT 涉及的资源）
 
-- **灰烬(Ash)**：`BurnThings`（Campfire, ElectricCrematorium, Kiln，工作量=400）、`CremateCorpse`（Campfire, ElectricCrematorium, Kiln，工作量=600）、`CremateCorpseCampfire`（，工作量=800）
-- **木炭(Charcoal)**：`MakeCharcoal_Hand`（Campfire, Kiln, TableFurnace，工作量=1600）
-- **塑料(Plastic)**：`MakePlasticSulphate`（TableChemlab，工作量=2400）、`MakePlasticSulphateBulk`（TableChemlab，工作量=2400）
-- **合成橡胶(Rubber)**：`VulcanizeRubber`（Kiln, TableChemlab，工作量=800）
-- **碎石(CrushedStone)**：`MakeCrushedStone_Electric_Chunk`（TableMachining，工作量=1200）、`MakeCrushedStone_Hand`（TableStonecutter，工作量=1200）、`MakeCrushedStone_Hand_Chunk`（TableStonecutter，工作量=2400）
-- **沙(SandResource)**：`MakeSand_Electric_Chunk`（TableMachining，工作量=1500）、`MakeSand_Hand`（TableStonecutter，工作量=600）、`MakeSand_Hand_Chunk`（TableStonecutter，工作量=3000）
-- **表面活性剂(Surfactant)**：`MakeSurfactant_CoconutSubstitute`（Brewery, DrugLab, ElectricBrewery，工作量=4000）
-- **先进机械组件(AdvMechanism)**：`MakeAdvMechanism_Hand`（FabricationBench，工作量=3200）
-- **集成电路(Electronics)**：`DeconstructPersonalShield`（TableRecycling，工作量=1000）
-- **机械组件(Mechanism)**：`MakeSimpleMechanism_Hand`（FabricationBench，工作量=1800）
-- **绘画用品(PaintingSupplies)**：`CookPaintDye`（ElectricStove, FueledStove，工作量=550）
-- **原始零部件(ComponentMedieval)**：`Make_ComponentMedievalBronze`（AdvToolBench, CraftingSpot, FabricationBench，工作量=900）
-- **钢筋混凝土(ReinforcedConcrete)**：`MakeReinforcedConcrete_Hand`（TableStonecutter，工作量=1600）
-- **电线(Wire)**：`MakeWires_Hand`（FabricationBench，工作量=800）
+以下 HSK 配方产出 MMT 已涉及的资源，但 MMT 尚未实现对应配方，可作为后续补全清单。
+
+### 4.1 灰烬(Ash)
+
+- `BurnThings`：[Wooden] 或 [Woody] 或 [Textiles] 或 [Leathers]×20 -> 灰烬(Ash)×3 @ Campfire, ElectricCrematorium, Kiln ｜ 工作量=400 ｜ 研究:Craft_0 ｜ **MMT 未实现**
+- `CremateCorpse`：— -> 灰烬(Ash)×4 @ Campfire, ElectricCrematorium, Kiln ｜ 工作量=600 ｜ 研究:Craft_0 ｜ **MMT 未实现**
+- `CremateCorpseCampfire`：[Corpses]×1 -> 灰烬(Ash)×4 ｜ 工作量=800 ｜ 研究:Craft_0 ｜ **MMT 未实现**
+
+### 4.2 木炭(Charcoal)
+
+- `MakeCharcoal_Hand`：[Wooden]×25 -> 木炭(Charcoal)×20 @ Campfire, Kiln, 熔炉(TableFurnace) ｜ 工作量=1600 ｜ 研究:Craft_B1 ｜ **MMT 未实现**
+
+### 4.3 塑料(Plastic)
+
+- `MakePlasticSulphate`：聚合物(Polymers)×20 + 硫酸盐(Sulphates)×5 -> 塑料(Plastic)×20 @ 石化产品实验室(TableChemlab) ｜ 工作量=2400 ｜ 技能:Crafting≥10 ｜ **MMT 未实现**
+- `MakePlasticSulphateBulk`：聚合物(Polymers)×60 + 硫酸盐(Sulphates)×15 -> 塑料(Plastic)×60 @ 石化产品实验室(TableChemlab) ｜ 工作量=2400 ｜ 技能:Crafting≥10 ｜ **MMT 未实现**
+
+### 4.4 合成橡胶(Rubber)
+
+- `VulcanizeRubber`：天然橡胶(RawCaoutchouc)×30 + 灰烬(Ash) 或 硫磺(Sulfur) 或 硫酸盐(Sulphates)×3 -> 合成橡胶(Rubber)×10 @ Kiln, 石化产品实验室(TableChemlab) ｜ 工作量=800 ｜ 研究:BiofuelRefining，技能:Crafting≥10 ｜ **MMT 未实现**
+
+### 4.5 碎石(CrushedStone)
+
+- `MakeCrushedStone_Electric_Chunk`：[StoneChunks]×1 -> 碎石(CrushedStone)×32 @ TableMachining ｜ 工作量=1200 ｜ **MMT 未实现**
+- `MakeCrushedStone_Hand`：[StoneBlocks]×20 -> 碎石(CrushedStone)×20 @ TableStonecutter ｜ 工作量=1200 ｜ **MMT 未实现**
+- `MakeCrushedStone_Hand_Chunk`：[StoneChunks]×1 -> 碎石(CrushedStone)×32 @ TableStonecutter ｜ 工作量=2400 ｜ **MMT 未实现**
+
+### 4.6 沙(SandResource)
+
+- `MakeSand_Electric_Chunk`：[StoneChunks]×1 -> 沙(SandResource)×80 @ TableMachining ｜ 工作量=1500 ｜ **MMT 未实现**
+- `MakeSand_Hand`：碎石(CrushedStone)×10 -> 沙(SandResource)×25 @ TableStonecutter ｜ 工作量=600 ｜ 研究:Stonecutting ｜ **MMT 未实现**
+- `MakeSand_Hand_Chunk`：[StoneChunks]×1 -> 沙(SandResource)×80 @ TableStonecutter ｜ 工作量=3000 ｜ 研究:Stonecutting ｜ **MMT 未实现**
+
+### 4.7 表面活性剂(Surfactant)
+
+- `MakeSurfactant_CoconutSubstitute`：盐(Salt)×10 + 硫磺(Sulfur)×15 + 椰子(RawCoconut)×25 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥12, Intellectual≥4 ｜ **MMT 未实现**
+
+### 4.8 先进机械组件(AdvMechanism)
+
+- `MakeAdvMechanism_Hand`：[USLDBar]×30 + 高级零件(ComponentAdvanced)×10 + 人造纤维(SyntheticFibers)×5 -> 先进机械组件(AdvMechanism)×5 @ FabricationBench ｜ 工作量=3200 ｜ 研究:Components_D1，技能:Crafting≥13 ｜ **MMT 未实现**
+
+### 4.9 集成电路(Electronics)
+
+- `DeconstructPersonalShield`：Apparel_ShieldBelt 或 Apparel_ShieldGuardian×1 -> 高级零件(ComponentAdvanced)×8 + 集成电路(Electronics)×1 @ TableRecycling ｜ 工作量=1000 ｜ 技能:Crafting≥10 ｜ **MMT 未实现**
+
+### 4.10 机械组件(Mechanism)
+
+- `MakeSimpleMechanism_Hand`：[SLDBar]×30 + 工业零件(ComponentIndustrial)×10 -> 机械组件(Mechanism)×5 @ FabricationBench ｜ 工作量=1800 ｜ 技能:Crafting≥4 ｜ **MMT 未实现**
+
+### 4.11 绘画用品(PaintingSupplies)
+
+- `CookPaintDye`：Dye×10 + [Woody]×2 -> 绘画用品(PaintingSupplies)×1 @ ElectricStove, FueledStove ｜ 工作量=550 ｜ 研究:Art_A1，技能:Crafting≥5 ｜ **MMT 未实现**
+
+### 4.12 原始零部件(ComponentMedieval)
+
+- `Make_ComponentMedievalBronze`：[SLDBar] 或 [HCMBar] 或 [PRSBar]×10 -> 原始零部件(ComponentMedieval)×10 @ AdvToolBench, CraftingSpot, FabricationBench ｜ 工作量=900 ｜ 研究:Craft_0 ｜ **MMT 未实现**
+
+### 4.13 钢筋混凝土(ReinforcedConcrete)
+
+- `MakeReinforcedConcrete_Hand`：[Metallic]×10 + 混凝土(ConcreteResource)×10 -> 钢筋混凝土(ReinforcedConcrete)×8 @ TableStonecutter ｜ 工作量=1600 ｜ 研究:Concrete_C1，技能:Crafting≥4 ｜ **MMT 未实现**
+
+### 4.14 电线(Wire)
+
+- `MakeWires_Hand`：[HCMBar]×10 -> 电线(Wire)×20 @ FabricationBench ｜ 工作量=800 ｜ 研究:Craft_0，技能:Crafting≥3 ｜ **MMT 未实现**
+
 

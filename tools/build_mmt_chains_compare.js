@@ -419,7 +419,9 @@ for (const r of recipes) for (const p of r.prods) {
   if (h) famHskDefs.add(h);
 }
 const uncovered = hskRecipes.filter(h => famHskDefs.has(h.resDef) && !matchedHsk.has(h.def));
-out.push('## 4. HSK 有而 MMT 未覆盖的配方（限于 MMT 涉及的资源）');
+out.push('## 4. HSK 有而 MMT 未实现的配方（限于 MMT 涉及的资源）');
+out.push('');
+out.push('以下 HSK 配方产出 MMT 已涉及的资源，但 MMT 尚未实现对应配方，可作为后续补全清单。');
 out.push('');
 if (!uncovered.length) {
   out.push('- 无。');
@@ -429,11 +431,21 @@ if (!uncovered.length) {
     if (!byRes.has(h.resDef)) byRes.set(h.resDef, []);
     byRes.get(h.resDef).push(h);
   }
+  let resSec = 0;
   for (const [resDef, hs] of byRes) {
-    out.push(`- **${hskItemTxt(resDef, null)}**：` + hs.map(h => {
-      const bld = h.pre['建筑'] || '';
-      return `\`${h.def}\`（${bld}，工作量=${h.kv['工作量'] || '—'}）`;
-    }).join('、'));
+    resSec++;
+    out.push(`### 4.${resSec} ${hskItemTxt(resDef, null)}`);
+    out.push('');
+    for (const h of hs) {
+      const hIn = h.ins.map(g => `${g.alts.map(a => hskItemTxt(a, null)).join(' 或 ')}${g.qty != null ? '×' + g.qty : ''}`).join(' + ') || '—';
+      const hOut = h.outs.map(o => hskItemTxt(o.def, o.qty)).join(' + ') || '—';
+      const hBld = h.pre['建筑'] ? ` @ ${h.pre['建筑'].split(',').map(b => hskItemTxt(b.trim(), null)).join(', ')}` : '';
+      const hPre = [];
+      if (h.pre['研究']) hPre.push(`研究:${h.pre['研究']}`);
+      if (h.pre['技能']) hPre.push(`技能:${h.pre['技能']}`);
+      out.push(`- \`${h.def}\`：${hIn} -> ${hOut}${hBld} ｜ 工作量=${h.kv['工作量'] || '—'}${hPre.length ? ' ｜ ' + hPre.join('，') : ''} ｜ **MMT 未实现**`);
+    }
+    out.push('');
   }
 }
 out.push('');
