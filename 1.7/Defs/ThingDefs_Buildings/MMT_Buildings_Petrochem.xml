@@ -35,7 +35,7 @@
       <Mass>200</Mass>
     </statBases>
     <size>(3,2)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_DistillPolymers_Hand</li>
       <li>MMT_MakePlastic_Hand</li>

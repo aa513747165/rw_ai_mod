@@ -36,7 +36,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeWoodPlanks_Electric</li>
       <li>MMT_MakeKindling_Electric</li>
@@ -101,7 +101,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,3)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeCharcoal_Electric</li>
     </recipes>

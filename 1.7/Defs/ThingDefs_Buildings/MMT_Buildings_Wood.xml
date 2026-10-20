@@ -32,7 +32,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeWoodPlanks_Hand</li>
       <li>MMT_MakeKindling_Hand</li>
@@ -83,7 +83,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,3)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeCharcoal_Hand</li>
     </recipes>

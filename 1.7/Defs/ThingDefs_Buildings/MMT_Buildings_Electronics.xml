@@ -35,7 +35,7 @@
       <Mass>200</Mass>
     </statBases>
     <size>(3,3)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_AssembleElectronicParts_Hand</li>
       <li>MMT_AssembleIC_Hand</li>

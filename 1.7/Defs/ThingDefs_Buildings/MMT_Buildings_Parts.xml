@@ -36,7 +36,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeComponentMedieval_Wood</li>
       <li>MMT_MakeComponentMedieval_Metal</li>
@@ -100,7 +100,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeComponentMedieval_Wood</li>
       <li>MMT_MakeComponentMedieval_Metal</li>
@@ -174,7 +174,7 @@
       <Mass>100</Mass>
     </statBases>
     <size>(1,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeUltraComponent</li>
     </recipes>

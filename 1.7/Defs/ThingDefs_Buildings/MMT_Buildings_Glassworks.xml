@@ -35,7 +35,7 @@
       <Mass>500</Mass>
     </statBases>
     <size>(3,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeGlassBatch</li>
       <li>MMT_MakeGlass</li>

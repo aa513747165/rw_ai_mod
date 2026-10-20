@@ -37,7 +37,7 @@
       <Mass>800</Mass>
     </statBases>
     <size>(4,5)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_DistillPolymers_Electric</li>
       <li>MMT_MakePlastic_Electric</li>

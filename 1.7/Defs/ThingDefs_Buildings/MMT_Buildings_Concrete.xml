@@ -36,7 +36,7 @@
       <Mass>200</Mass>
     </statBases>
     <size>(2,1)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MixConcrete_Hand</li>
     </recipes>

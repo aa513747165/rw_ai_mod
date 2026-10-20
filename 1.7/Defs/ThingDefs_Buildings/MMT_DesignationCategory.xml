@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <DesignationCategoryDef>
+    <defName>MMT_Production</defName>
+    <label>MMT 生产</label>
+    <order>350</order>
+  </DesignationCategoryDef>
+</Defs>

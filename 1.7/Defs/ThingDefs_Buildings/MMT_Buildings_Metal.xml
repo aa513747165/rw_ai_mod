@@ -31,7 +31,7 @@
       <Mass>1000</Mass>
     </statBases>
     <size>(3,3)</size>
-    <designationCategory>Production</designationCategory>
+    <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_SmeltCopperBar_Hand</li>
       <li>MMT_SmeltTinBar_Hand</li>
