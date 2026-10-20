@@ -3,12 +3,13 @@
 - MMT 数据源：`1.7/Defs`（本 MOD）；HSK 数据源：[hsk-resource-production-paths.md](hsk-resource-production-paths.md)（`Hardcore-SK` 分支 `1.7-super-unstable`，提交 `b99b17d2`）。
 - 由 `tools/build_mmt_chains_compare.js` 自动生成；MMT 侧使用 MOD 实际中文 label，HSK 侧沿用 MMT 对应物的中文名并附 defName。
 - 匹配规则：产出物的 HSK 对应 def 相同，且首选投入/建筑别名一致者优先；`MMT 新增` 表示 HSK 无该资源或对应配方。
+- 矿脉说明：原版钢/银/金/玻璃钢矿脉已由 `1.7/Patches/MMT_Patch_VanillaVeins.xml` 改造为 MMT 铁矿/银矿/金矿/钛铁矿（HSK 做法），不再作为 MMT def 出现在下表；零件矿脉照 HSK 保留原版。
 
 ## 1. 汇总
 
 | 项 | 数量 |
 | --- | --- |
-| MMT 矿脉 | 16 |
+| MMT 矿脉 | 13 |
 | MMT 配方 | 164 |
 | 与 HSK 数值一致 | 115 |
 | 与 HSK 有数值差异 | 45 |
@@ -25,15 +26,12 @@
 | 压实的盐(MMT_MineableSalt) | 盐 | 150 | 5~10 / 1.2 / 900 | Compacted salt(`MineableSalt`) | 150 | 5~10 / 1.2 / 900 | 产量一致 |
 | 粘土矿脉(MMT_MineableSoftClay) | 软粘土 | 75 | 8~15 / 0.7 / 1400 | — | — | — | MMT 新增资源 |
 | 煤矿(MMT_MineableCoal) | 原煤 | 75 | 11~18 / 1.2 / 1500 | Coal Ore Deposits(`MineableCoal`) | 75 | 11~18 / 1.2 / 1500 | 产量一致 |
-| 铁矿(MMT_MineableIronOre) | 铁矿石 | 75 | 15~25 / 1.0 / 1500 | Iron Ore Deposits(`MineableSteel`) | 35 | 20~40 / 1.1 / 2800 | 产量 75 vs HSK 35 |
 | 铜矿(MMT_MineableCopperOre) | 铜矿 | 75 | 15~25 / 0.95 / 1800 | Copper Ore Deposits(`MineableCopper`) | 75 | 15~25 / 0.95 / 1800 | 产量一致 |
 | 锡矿(MMT_MineableTinOre) | 锡矿 | 75 | 9~17 / 1.1 / 1300 | Tin Ore Deposits(`MineableTin`) | 75 | 9~17 / 1.1 / 1300 | 产量一致 |
 | 铅矾矿脉(MMT_MineableAnglesite) | 铅矾矿 | 75 | 6~13 / 0.8 / 1600 | Anglesite Deposits(`MineableLead`) | 75 | 6~13 / 0.8 / 6000 | 产量一致 |
 | 铝土矿脉(MMT_MineableAluminium) | 铝土矿 | 75 | 11~19 / 0.65 / 1600 | Bauxite Ore Deposits(`MineableAluminium`) | 75 | 11~19 / 0.65 / 5500 | 产量一致 |
 | 油苗(MMT_MineableOilSeep) | 原油 | 75 | 10~18 / 0.8 / 1500 | — | — | — | MMT 新增资源 |
 | 硝石矿脉(MMT_MineableNitre) | 硝石 | 75 | 8~16 / 1.05 / 1800 | Nitre Deposits(`MineableNitre`) | 75 | 8~16 / 1.05 / 1800 | 产量一致 |
-| 银矿(MMT_MineableSilverOre) | 白银 | 75 | 10~16 / 1.0 / 1500 | Silver Ore Deposits(`MineableSilver`) | 250 | 7~15 / 0.25 / 3500 | 产量 75 vs HSK 250 |
-| 金矿(MMT_MineableGoldOre) | 金矿 | 75 | 8~14 / 0.5 / 1500 | Gold Ore Deposits(`MineableGold`) | 50 | 3~9 / 0.15 / 4500 | 产量 75 vs HSK 50 |
 | 硫磺矿脉(MMT_MineableSulfur) | 硫磺 | 75 | 10~16 / 0.8 / 1500 | — | — | — | HSK 无矿脉（仅深钻等） |
 
 ## 3. 配方对比（按 MMT 家族分组）

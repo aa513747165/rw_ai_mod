@@ -61,29 +61,7 @@
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
 
-  <ThingDef ParentName="RockBase">
-    <defName>MMT_MineableIronOre</defName>
-    <label>铁矿</label>
-    <description>露头的铁矿石矿脉，开采后可获得铁矿石，用于炼钢。</description>
-    <graphicData>
-      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
-      <color>(125,140,131)</color>
-      <colorTwo>(147,144,134)</colorTwo>
-    </graphicData>
-    <statBases>
-      <MaxHitPoints>1500</MaxHitPoints>
-    </statBases>
-    <building>
-      <isResourceRock>true</isResourceRock>
-      <mineableThing>MMT_IronOre</mineableThing>
-      <mineableYield>75</mineableYield>
-      <mineableScatterCommonality>1.0</mineableScatterCommonality>
-      <mineableScatterLumpSizeRange>15~25</mineableScatterLumpSizeRange>
-      <veinMineable>true</veinMineable>
-    </building>
-  </ThingDef>
+  <!-- 铁矿脉由 patch 改造原版 MineableSteel 实现（MMT_Patch_VanillaVeins.xml，HSK 做法），此处不再重复定义 -->
 
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableCopperOre</defName>

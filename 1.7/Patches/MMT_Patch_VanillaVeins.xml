@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- 按 HSK 做法改造原版矿脉（参照 Core_SK AutoGenPatches/ThingDefs_Buildings/Buildings_Natural.xml）：
+       不删除原版 def，而是替换 label/贴图/产出物，使任务矿点(PreciousLump)、远古遗迹等引用原版 defName 的渠道
+       全部自动转向 MMT 矿石链。数值沿用被删除的 MMT 同名矿脉 def。
+       注意：patch 在 XML 继承解析之前执行，Replace 的节点（label/description/graphicData/statBases/building）
+       均为原版 def 自身已有节点，可直接替换。
+       零件矿脉 MineableComponentsIndustrial 照 HSK 保留原版不动（HSK 对应 patch 也是注释掉的）。 -->
+
+  <!-- MineableSteel -> 铁矿（产 MMT_IronOre，原 MMT_MineableIronOre 的数值与配色） -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSteel"]/label</xpath>
+        <value><label>铁矿</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSteel"]/description</xpath>
+        <value><description>露头的铁矿石矿脉，开采后可获得铁矿石，用于炼钢。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSteel"]/graphicData</xpath>
+        <value>
+          <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(125,140,131)</color>
+            <colorTwo>(147,144,134)</colorTwo>
+          </graphicData>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSteel"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSteel"]/building</xpath>
+        <value>
+          <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>MMT_IronOre</mineableThing>
+            <mineableYield>75</mineableYield>
+            <mineableScatterCommonality>1.0</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>15~25</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+          </building>
+        </value>
+      </li>
+
+      <!-- MineableSilver -> 银矿（产 MMT_SilverOre，原 MMT_MineableSilverOre 的数值与配色） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSilver"]/label</xpath>
+        <value><label>银矿</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSilver"]/description</xpath>
+        <value><description>露头的银矿脉，开采后可获得银矿石，冶炼成银。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSilver"]/graphicData</xpath>
+        <value>
+          <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(65,34,34)</color>
+            <colorTwo>(180,173,150)</colorTwo>
+          </graphicData>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSilver"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableSilver"]/building</xpath>
+        <value>
+          <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>MMT_SilverOre</mineableThing>
+            <mineableYield>75</mineableYield>
+            <mineableScatterCommonality>1.0</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>10~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+          </building>
+        </value>
+      </li>
+
+      <!-- MineableGold -> 金矿（产 MMT_GoldOre，原 MMT_MineableGoldOre 的数值与配色） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableGold"]/label</xpath>
+        <value><label>金矿</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableGold"]/description</xpath>
+        <value><description>露头的金矿脉，开采后可获得金矿石，冶炼成金。十分稀有。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableGold"]/graphicData</xpath>
+        <value>
+          <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(65,34,34)</color>
+            <colorTwo>(255,215,0)</colorTwo>
+          </graphicData>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableGold"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineableGold"]/building</xpath>
+        <value>
+          <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>MMT_GoldOre</mineableThing>
+            <mineableYield>75</mineableYield>
+            <mineableScatterCommonality>0.5</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~14</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+          </building>
+        </value>
+      </li>
+
+      <!-- MineablePlasteel -> 钛铁矿（产 MMT_IlmeniteOre，对应 HSK 的 Compacted Ferrotitanium。
+           保留原版稀有度（常见度 0.05 / 矿团 2~8），耐久参照 HSK 提升到 10000；
+           主体钛来源仍是 MMT_MineableIlmenite（对应 HSK MineableTitanium） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineablePlasteel"]/label</xpath>
+        <value><label>钛铁矿</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineablePlasteel"]/description</xpath>
+        <value><description>远古压实矿渣，富含钛铁。开采后可获得钛铁矿石，用于冶炼钛合金。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineablePlasteel"]/graphicData</xpath>
+        <value>
+          <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(160,178,181)</color>
+            <colorTwo>(160,178,195)</colorTwo>
+          </graphicData>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineablePlasteel"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>10000</MaxHitPoints>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="MineablePlasteel"]/building</xpath>
+        <value>
+          <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>MMT_IlmeniteOre</mineableThing>
+            <mineableYield>75</mineableYield>
+            <mineableScatterCommonality>0.05</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>2~8</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+          </building>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

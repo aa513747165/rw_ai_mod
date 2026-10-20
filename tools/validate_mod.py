@@ -49,8 +49,8 @@ COAL_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Coal.xml"
 SULFUR_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Sulfur.xml"
 SULFUR_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sulfur.xml"
 PRECIOUS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Precious.xml"
-PRECIOUS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Precious.xml"
 PRECIOUS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Precious.xml"
+VANILLA_VEIN_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaVeins.xml"
 ELECTRIC_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Electric.xml"
 ELECTRIC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Electric.xml"
 ELECTRIC_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Electric.xml"
@@ -174,10 +174,15 @@ PRECIOUS_RESOURCE_EXPECTATIONS = {
     "MMT_GoldOre": {"label": "金矿", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
 }
 
-PRECIOUS_MINEABLE_EXPECTATIONS = {
-    "MMT_MineableSilverOre": {"label": "银矿", "yield_thing": "MMT_SilverOre", "hp": "1500"},
-    "MMT_MineableGoldOre": {"label": "金矿", "yield_thing": "MMT_GoldOre", "hp": "1500"},
+# 原版矿脉改造（HSK 做法：不删 def，patch 替换产出物）。MMT 不再自带铁/银/金矿脉 def，
+# 玻璃钢矿脉改造为稀有钛铁来源；零件矿脉照 HSK 保留原版不动。
+VANILLA_VEIN_EXPECTATIONS = {
+    "MineableSteel": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500", "yield": "75", "commonality": "1.0", "lump": "15~25"},
+    "MineableSilver": {"label": "银矿", "yield_thing": "MMT_SilverOre", "hp": "1500", "yield": "75", "commonality": "1.0", "lump": "10~16"},
+    "MineableGold": {"label": "金矿", "yield_thing": "MMT_GoldOre", "hp": "1500", "yield": "75", "commonality": "0.5", "lump": "8~14"},
+    "MineablePlasteel": {"label": "钛铁矿", "yield_thing": "MMT_IlmeniteOre", "hp": "10000", "yield": "75", "commonality": "0.05", "lump": "2~8"},
 }
+VANILLA_VEIN_KEEP = ["MineableComponentsIndustrial"]  # 照 HSK 保留原版，不得出现在 patch 中
 
 PRECIOUS_RECIPE_EXPECTATIONS = {
     "MMT_SmeltSilver_Hand": {"work": "750", "ore": "MMT_SilverOre", "ore_count": "14", "output": "Silver", "output_count": "10", "skill": "2"},
@@ -676,7 +681,6 @@ METAL_FURNACE_RECIPES = [
 ]
 
 METAL_MINEABLE_EXPECTATIONS = {
-    "MMT_MineableIronOre": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500"},
     "MMT_MineableCopperOre": {"label": "铜矿", "yield_thing": "MMT_CopperOre", "hp": "1800"},
     "MMT_MineableTinOre": {"label": "锡矿", "yield_thing": "MMT_TinOre", "hp": "1300"},
     "MMT_MineableAnglesite": {"label": "铅矾矿脉", "yield_thing": "MMT_Anglesite", "hp": "1600"},
@@ -4421,7 +4425,7 @@ def validate_matter_top() -> None:
 
 
 def validate_precious() -> None:
-    require_files([PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML, METAL_BUILDING_XML, *PRECIOUS_ITEM_TEXTURES])
+    require_files([PRECIOUS_RESOURCE_XML, PRECIOUS_RECIPE_XML, METAL_BUILDING_XML, VANILLA_VEIN_PATCH_XML, *PRECIOUS_ITEM_TEXTURES])
 
     defs = def_map(parse_xml(PRECIOUS_RESOURCE_XML))
     assert_equal(set(defs), set(PRECIOUS_RESOURCE_EXPECTATIONS), "金银资源 defName 集合")
@@ -4437,19 +4441,6 @@ def validate_precious() -> None:
         assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
         if node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
-
-    building_defs = def_map(parse_xml(PRECIOUS_BUILDING_XML))
-    assert_equal(set(building_defs), set(PRECIOUS_MINEABLE_EXPECTATIONS), "金银建筑 defName 集合")
-    for name, expected in PRECIOUS_MINEABLE_EXPECTATIONS.items():
-        vein = building_defs[name]
-        assert_equal(vein.attrib.get("ParentName"), "RockBase", f"{name} 父类")
-        assert_equal(child_text(vein, "label"), expected["label"], f"{name} label")
-        assert_equal(child_text(vein, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", f"{name} texPath")
-        assert_equal(child_text(vein, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
-        assert_equal(child_text(vein, "./building/isResourceRock"), "true", f"{name} isResourceRock")
-        assert_equal(child_text(vein, "./building/mineableThing"), expected["yield_thing"], f"{name} mineableThing")
-        assert_equal(child_text(vein, "./building/mineableYield"), "75", f"{name} mineableYield")
-        assert_equal(child_text(vein, "./building/veinMineable"), "true", f"{name} veinMineable")
 
     recipe_defs = def_map(parse_xml(PRECIOUS_RECIPE_XML))
     assert_equal(set(recipe_defs), set(PRECIOUS_RECIPE_EXPECTATIONS), "金银配方 defName 集合")
@@ -4496,10 +4487,51 @@ def validate_precious() -> None:
     for path in PRECIOUS_ITEM_TEXTURES:
         assert_png(path)
 
-    for path in (PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML):
+    for path in (PRECIOUS_RESOURCE_XML, PRECIOUS_RECIPE_XML):
         if "SK." in read_text(path):
             fail(f"{path} 不得引用 SK 类型")
     print("precious: OK")
+
+
+def validate_vanilla_veins() -> None:
+    """原版矿脉改造 patch：校验 4 条矿脉被 Replace 为 MMT 矿石，且零件矿脉不被触碰。"""
+    require_files([VANILLA_VEIN_PATCH_XML])
+    patch = parse_xml(VANILLA_VEIN_PATCH_XML)
+
+    # 按目标 def 归集 Replace 操作
+    replaced = {}
+    for op in patch.iter():
+        if not op.attrib.get("Class", "").endswith("PatchOperationReplace"):
+            continue
+        xpath = child_text(op, "xpath")
+        target = xpath.split('defName="')[1].split('"')[0]
+        node_name = xpath.rstrip("/").split("/")[-1]
+        replaced.setdefault(target, {})[node_name] = op.find("value")
+
+    assert_equal(set(replaced), set(VANILLA_VEIN_EXPECTATIONS), "patch 改造的矿脉 def 集合")
+    for name, expected in VANILLA_VEIN_EXPECTATIONS.items():
+        nodes = replaced[name]
+        for node_name in ("label", "description", "graphicData", "statBases", "building"):
+            if node_name not in nodes:
+                fail(f"{name} 缺少 {node_name} 的 Replace 操作")
+        assert_equal(child_text(nodes["label"], "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(nodes["graphicData"], "graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", f"{name} texPath")
+        assert_equal(child_text(nodes["statBases"], "statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        building = nodes["building"].find("building")
+        assert_equal(child_text(building, "isResourceRock"), "true", f"{name} isResourceRock")
+        assert_equal(child_text(building, "mineableThing"), expected["yield_thing"], f"{name} mineableThing")
+        assert_equal(child_text(building, "mineableYield"), expected["yield"], f"{name} mineableYield")
+        assert_equal(child_text(building, "mineableScatterCommonality"), expected["commonality"], f"{name} commonality")
+        assert_equal(child_text(building, "mineableScatterLumpSizeRange"), expected["lump"], f"{name} lump")
+        assert_equal(child_text(building, "veinMineable"), "true", f"{name} veinMineable")
+
+    patch_text = read_text(VANILLA_VEIN_PATCH_XML)
+    for kept in VANILLA_VEIN_KEEP:
+        if f'defName="{kept}"' in patch_text:
+            fail(f"patch 不得触碰照 HSK 保留原版的矿脉: {kept}")
+    if "SK." in patch_text:
+        fail(f"{VANILLA_VEIN_PATCH_XML} 不得引用 SK 类型")
+    print("vanilla-veins: OK")
 
 
 def validate_infrastructure() -> None:
@@ -5221,6 +5253,7 @@ def validate_all() -> None:
     validate_wood()
     validate_metal()
     validate_precious()
+    validate_vanilla_veins()
     validate_coal()
     validate_sulfur()
     validate_petrochem()
@@ -5275,6 +5308,7 @@ SUITES = {
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
+    "vanilla-veins": validate_vanilla_veins,
     "basic-metallurgy": validate_basic_metallurgy,
     "stone-construction": validate_stone_construction,
     "petrochem-ext": validate_petrochem_ext,

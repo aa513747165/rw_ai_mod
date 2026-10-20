@@ -301,6 +301,7 @@ out.push('');
 out.push('- MMT 数据源：`1.7/Defs`（本 MOD）；HSK 数据源：[hsk-resource-production-paths.md](hsk-resource-production-paths.md)（`Hardcore-SK` 分支 `1.7-super-unstable`，提交 `b99b17d2`）。');
 out.push('- 由 `tools/build_mmt_chains_compare.js` 自动生成；MMT 侧使用 MOD 实际中文 label，HSK 侧沿用 MMT 对应物的中文名并附 defName。');
 out.push('- 匹配规则：产出物的 HSK 对应 def 相同，且首选投入/建筑别名一致者优先；`MMT 新增` 表示 HSK 无该资源或对应配方。');
+out.push('- 矿脉说明：原版钢/银/金/玻璃钢矿脉已由 `1.7/Patches/MMT_Patch_VanillaVeins.xml` 改造为 MMT 铁矿/银矿/金矿/钛铁矿（HSK 做法），不再作为 MMT def 出现在下表；零件矿脉照 HSK 保留原版。');
 out.push('');
 
 // 统计
