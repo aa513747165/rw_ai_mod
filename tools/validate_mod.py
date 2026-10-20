@@ -413,7 +413,7 @@ VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "Anim
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -834,6 +834,7 @@ ELECTRIC_FURNACE_RECIPES = [
     "MMT_SmeltSilver_Electric",
     "MMT_SmeltGold_Electric",
     "MMT_ExtractSilicon_Electric",
+    "MMT_MakeSilicon_Bulk",
     "MMT_SmeltLeadBar_Electric",
     "MMT_SmeltAluminiumBar_Electric",
     "MMT_MakeFerrosiliconAlloy",
@@ -890,6 +891,13 @@ ELECTRIC_RECIPE_EXPECTATIONS = {
         "inputs": [("thingDefs", "MMT_Sand", "50")],
         "output": "MMT_Silicon",
         "output_count": "5",
+        "skill": "5",
+    },
+    "MMT_MakeSilicon_Bulk": {
+        "work": "1800",
+        "inputs": [("thingDefs", "MMT_Sand", "200")],
+        "output": "MMT_Silicon",
+        "output_count": "20",
         "skill": "5",
     },
     "MMT_SmeltLeadBar_Electric": {
@@ -1162,6 +1170,10 @@ ADVANCED_ALLOYS_FURNACE_RECIPES = [
     "MMT_MakeNitinol",
     "MMT_MakePobedite",
     "MMT_MakeFerrotitanium",
+    "MMT_MakeCupronickelAlloy",
+    "MMT_MakeDepletedUranium",
+    "MMT_MakeSteelBar",
+    "MMT_MakeAlnicoAlloy",
 ]
 
 ADVANCED_ALLOYS_RECIPE_EXPECTATIONS = {
@@ -1174,6 +1186,10 @@ ADVANCED_ALLOYS_RECIPE_EXPECTATIONS = {
     "MMT_MakeNitinol": {"work": "2600", "inputs": [("thingDefs", "MMT_Titanium", "4"), ("thingDefs", "MMT_NickelBar", "11")], "output": "MMT_NitinolAlloy", "output_count": "15", "skill": "16", "research": "MMT_AdvancedAlloys"},
     "MMT_MakePobedite": {"work": "2700", "inputs": [("thingDefs", "MMT_Tungsten", "3"), ("thingDefs", "MMT_Carbon", "3"), ("thingDefs", "MMT_Cobalt", "3")], "output": "MMT_PobediteAlloy", "output_count": "10", "skill": "18", "research": "MMT_AdvancedAlloys"},
     "MMT_MakeFerrotitanium": {"work": "2400", "inputs": [("thingDefs", "MMT_Titanium", "5"), ("thingDefs", "Steel", "12"), ("thingDefs", "MMT_Carbon", "3")], "output": "Plasteel", "output_count": "15", "skill": "15", "research": "MMT_AdvancedAlloys"},
+    "MMT_MakeCupronickelAlloy": {"work": "1600", "inputs": [("thingDefs", "MMT_CopperBar", "24"), ("thingDefs", "MMT_NickelBar", "6")], "output": "MMT_CupronickelAlloy", "output_count": "30", "skill": "12", "research": "MMT_AdvancedMetalRefining"},
+    "MMT_MakeDepletedUranium": {"work": "1700", "inputs": [("thingDefs", "Uranium", "10")], "output": "MMT_DepletedUranium", "output_count": "10", "skill": "11", "research": "MMT_AdvancedAlloys"},
+    "MMT_MakeSteelBar": {"work": "1800", "inputs": [("thingDefs", "Steel", "15"), ("thingDefs", "MMT_NickelBar", "5")], "output": "MMT_SteelBar", "output_count": "20", "skill": "11", "research": "MMT_AdvancedAlloys"},
+    "MMT_MakeAlnicoAlloy": {"work": "1650", "inputs": [("thingDefs", "Steel", "8"), ("thingDefs", "MMT_AluminiumBar", "3"), ("thingDefs", "MMT_Cobalt", "3"), ("thingDefs", "MMT_NickelBar", "6")], "output": "MMT_AlnicoAlloy", "output_count": "20", "skill": "13", "research": "MMT_AdvancedAlloys"},
 }
 
 PARTS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Parts.xml"

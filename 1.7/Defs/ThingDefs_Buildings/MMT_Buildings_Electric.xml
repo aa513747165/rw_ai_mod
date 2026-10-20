@@ -48,6 +48,7 @@
       <li>MMT_SmeltSilver_Electric</li>
       <li>MMT_SmeltGold_Electric</li>
       <li>MMT_ExtractSilicon_Electric</li>
+      <li>MMT_MakeSilicon_Bulk</li>
       <li>MMT_SmeltLeadBar_Electric</li>
       <li>MMT_SmeltAluminiumBar_Electric</li>
       <li>MMT_MakeFerrosiliconAlloy</li>
@@ -63,6 +64,10 @@
       <li>MMT_MakeNitinol</li>
       <li>MMT_MakePobedite</li>
       <li>MMT_MakeFerrotitanium</li>
+      <li>MMT_MakeCupronickelAlloy</li>
+      <li>MMT_MakeDepletedUranium</li>
+      <li>MMT_MakeSteelBar</li>
+      <li>MMT_MakeAlnicoAlloy</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
