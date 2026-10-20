@@ -63,6 +63,26 @@ ELECTRIC_PETROCHEM_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ElectricPetroch
 ELECTRIC_ELECTRONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricElectronics.xml"
 ELECTRIC_ELECTRONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricElectronics.xml"
 ELECTRIC_ELECTRONICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ElectricElectronics.xml"
+CERAMICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Ceramics.xml"
+CERAMICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Ceramics.xml"
+CERAMICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Ceramics.xml"
+STUFFCATEGORY_XML = "1.7/Defs/StuffCategoryDefs/MMT_StuffCategories.xml"
+ASH_PATCH_XML = "1.7/Patches/MMT_Patch_AshRecipes.xml"
+
+CERAMICS_ITEM_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/MMT_Ceramics/SoftClay.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Ceramics/ClayBrick.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Ceramics/Ceramics.png",
+    "1.7/Textures/Things/Item/MMT/MetalCan.png",
+    *[f"1.7/Textures/Things/Item/MMT/MMT_Ceramics/Ash/MMT_Ash_{s}.png" for s in ("a", "b", "c")],
+    *[f"1.7/Textures/Things/Item/MMT/MMT_Ore/MMT_{ore}/MMT_{ore}_{s}.png" for ore in ("Anglesite", "AluminiumOre") for s in ("a", "b", "c")],
+]
+
+CERAMICS_BUILDING_TEXTURES = [
+    f"1.7/Textures/Things/Building/Production/MMT_Kiln/MMT_Kiln_{side}{mask}.png"
+    for side in ("east", "north", "south")
+    for mask in ("", "m")
+]
 
 WOOD_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/WoodPlank/WoodPlank_a.png",
@@ -3445,6 +3465,160 @@ def validate_all_xml() -> None:
     print(f"all-xml: OK ({len(paths)} files)")
 
 
+def validate_basic_metallurgy() -> None:
+    """B2 基础冶金：陶瓷链资源/窑炉/燃烧配方/灰烬 patch 的专项校验。
+
+    金属侧资源（铅/铝/斯特）由 metal/electric 套件覆盖（B2 已同步期望），
+    本套件聚焦新建文件与例外项（MetalCan、MakeMetalCan 的 categories 输入、灰烬 patch）。
+    """
+    require_files([
+        CERAMICS_RESOURCE_XML,
+        CERAMICS_RECIPE_XML,
+        CERAMICS_BUILDING_XML,
+        STUFFCATEGORY_XML,
+        ASH_PATCH_XML,
+        METAL_RESOURCE_XML,
+        ELECTRIC_BUILDING_XML,
+        ELECTRIC_RECIPE_XML,
+        *CERAMICS_ITEM_TEXTURES,
+        *CERAMICS_BUILDING_TEXTURES,
+    ])
+
+    # StuffCategoryDef
+    stuffcat_defs = def_map(parse_xml(STUFFCATEGORY_XML))
+    assert_equal(set(stuffcat_defs), {"MMT_Bricks"}, "stuff 类别 defName 集合")
+    assert_equal(child_text(stuffcat_defs["MMT_Bricks"], "label"), "砖块", "MMT_Bricks label")
+
+    # 陶瓷链资源
+    resource_defs = def_map(parse_xml(CERAMICS_RESOURCE_XML))
+    assert_equal(set(resource_defs), {"MMT_SoftClay", "MMT_ClayBrick", "MMT_Ceramics", "MMT_Ash"}, "陶瓷资源 defName 集合")
+
+    clay = resource_defs["MMT_SoftClay"]
+    assert_equal(child_text(clay, "label"), "软粘土", "软粘土 label")
+    assert_equal(child_text(clay, "./statBases/MarketValue"), "1", "软粘土 MarketValue")
+    assert_equal(child_text(clay, "stackLimit"), "600", "软粘土 stackLimit")
+    assert_equal(li_values(clay, "thingCategories"), ["ResourcesRaw"], "软粘土 thingCategories")
+
+    brick = resource_defs["MMT_ClayBrick"]
+    assert_equal(child_text(brick, "label"), "粘土砖", "粘土砖 label")
+    assert_equal(child_text(brick, "./statBases/MarketValue"), "3", "粘土砖 MarketValue")
+    assert_equal(li_values(brick, "thingCategories"), ["Manufactured"], "粘土砖 thingCategories")
+    assert_equal(li_values(brick, "./stuffProps/categories"), ["MMT_Bricks"], "粘土砖 stuff categories")
+
+    ceramics = resource_defs["MMT_Ceramics"]
+    assert_equal(child_text(ceramics, "label"), "陶瓷", "陶瓷 label")
+    assert_equal(child_text(ceramics, "./statBases/MarketValue"), "12", "陶瓷 MarketValue")
+    assert_equal(li_values(ceramics, "thingCategories"), ["Manufactured"], "陶瓷 thingCategories")
+    assert_equal(li_values(ceramics, "./stuffProps/categories"), ["Stony"], "陶瓷 stuff categories")
+
+    ash = resource_defs["MMT_Ash"]
+    assert_equal(child_text(ash, "label"), "灰烬", "灰烬 label")
+    assert_equal(child_text(ash, "./statBases/MarketValue"), "0.3", "灰烬 MarketValue")
+    assert_equal(child_text(ash, "./statBases/Beauty"), "-5", "灰烬 Beauty")
+    assert_equal(child_text(ash, "tradeability"), "None", "灰烬 tradeability")
+    assert_equal(li_values(ash, "thingCategories"), ["ResourcesRaw"], "灰烬 thingCategories")
+
+    # 金属罐（例外项：非 stuff、Manufactured，不在 METAL_BAR_EXPECTATIONS 结构内）
+    metal_defs = def_map(parse_xml(METAL_RESOURCE_XML))
+    can = metal_defs["MMT_MetalCan"]
+    assert_equal(child_text(can, "label"), "金属罐", "金属罐 label")
+    assert_equal(child_text(can, "./statBases/MarketValue"), "1.7", "金属罐 MarketValue")
+    assert_equal(child_text(can, "stackLimit"), "200", "金属罐 stackLimit")
+    assert_equal(li_values(can, "thingCategories"), ["Manufactured"], "金属罐 thingCategories")
+    if can.find("stuffProps") is not None:
+        fail("金属罐不应定义 stuffProps")
+
+    # 窑炉与粘土矿脉
+    building_defs = def_map(parse_xml(CERAMICS_BUILDING_XML))
+    assert_equal(set(building_defs), {"MMT_MineableSoftClay", "MMT_Kiln"}, "陶瓷建筑 defName 集合")
+
+    vein = building_defs["MMT_MineableSoftClay"]
+    assert_equal(child_text(vein, "./building/mineableThing"), "MMT_SoftClay", "粘土矿脉产出")
+    assert_equal(child_text(vein, "./building/mineableYield"), "75", "粘土矿脉产量")
+    assert_equal(child_text(vein, "./building/mineableScatterCommonality"), "0.7", "粘土矿脉散布")
+    assert_equal(child_text(vein, "./building/mineableScatterLumpSizeRange"), "8~15", "粘土矿脉矿团")
+
+    kiln = building_defs["MMT_Kiln"]
+    assert_equal(child_text(kiln, "label"), "窑炉", "窑炉 label")
+    assert_equal(child_text(kiln, "thingClass"), "Building_WorkTable", "窑炉 thingClass")
+    assert_equal(li_values(kiln, "stuffCategories"), ["Stony", "MMT_Bricks"], "窑炉材料分类")
+    assert_equal(child_text(kiln, "costStuffCount"), "180", "窑炉材料数量")
+    assert_equal(child_text(kiln, "designationCategory"), "MMT_Production", "窑炉建造分类")
+    assert_equal(li_values(kiln, "recipes"), ["MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings"], "窑炉配方")
+    assert_equal(li_values(kiln, "researchPrerequisites"), ["MMT_BasicMetalworking"], "窑炉研究前置")
+    kiln_comps = [li.attrib.get("Class") for li in kiln.findall("./comps/li")]
+    for expected in ("CompProperties_Refuelable", "CompProperties_Glower", "CompProperties_Flickable"):
+        if expected not in kiln_comps:
+            fail(f"窑炉缺少组件: {expected}")
+    fuel = kiln.find("./comps/li[@Class='CompProperties_Refuelable']")
+    assert_equal(sorted(li_values(fuel, "./fuelFilter/thingDefs")), ["MMT_Charcoal", "MMT_Coal", "MMT_Kindling", "WoodLog"], "窑炉燃料列表")
+
+    # 陶瓷系配方 + 燃烧配方
+    recipe_defs = def_map(parse_xml(CERAMICS_RECIPE_XML))
+    assert_equal(set(recipe_defs), {"MMT_MakeCeramics", "MMT_MakeClayBricks", "MMT_BurnThings", "MMT_CremateCorpseCampfire"}, "陶瓷配方 defName 集合")
+
+    make_ceramics = recipe_defs["MMT_MakeCeramics"]
+    assert_equal(child_text(make_ceramics, "workAmount"), "1200", "陶瓷 workAmount")
+    assert_equal(child_text(make_ceramics, "./skillRequirements/Crafting"), "8", "陶瓷技能")
+    assert_equal(child_text(make_ceramics, "researchPrerequisite"), "MMT_BasicMetalworking", "陶瓷研究")
+
+    make_bricks = recipe_defs["MMT_MakeClayBricks"]
+    assert_equal(child_text(make_bricks, "workAmount"), "800", "粘土砖 workAmount")
+    assert_equal(child_text(make_bricks, "./skillRequirements/Crafting"), "6", "粘土砖技能")
+    assert_equal(child_text(make_bricks, "researchPrerequisite"), "MMT_BasicMetalworking", "粘土砖研究")
+
+    burn = recipe_defs["MMT_BurnThings"]
+    assert_equal(child_text(burn, "workAmount"), "400", "焚烧 workAmount")
+    assert_equal(sorted(li_values(burn, "recipeUsers")), ["Campfire", "ElectricCrematorium"], "焚烧挂载建筑")
+    assert_equal(sorted(li_values(burn, "./ingredients/li/filter/categories")), ["Leathers", "Textiles"], "焚烧输入类别")
+    assert_equal(li_values(burn, "./ingredients/li/filter/thingDefs"), ["WoodLog"], "焚烧输入物品")
+    assert_equal(child_text(burn, "./ingredients/li/count"), "20", "焚烧输入数量")
+    ash_products = [(node.tag, (node.text or "").strip()) for node in burn.findall("./products/*")]
+    assert_equal(ash_products, [("MMT_Ash", "3")], "焚烧产出")
+
+    cremate = recipe_defs["MMT_CremateCorpseCampfire"]
+    assert_equal(child_text(cremate, "workAmount"), "800", "篝火火化 workAmount")
+    assert_equal(li_values(cremate, "recipeUsers"), ["Campfire"], "篝火火化挂载")
+    cremate_products = [(node.tag, (node.text or "").strip()) for node in cremate.findall("./products/*")]
+    assert_equal(cremate_products, [("MMT_Ash", "4")], "篝火火化产出")
+
+    # 陶瓷两条配方同时挂 EAF（HSK 挂 ElectricSmelter+Kiln，MMT 电配方统一挂 EAF）
+    eaf = def_map(parse_xml(ELECTRIC_BUILDING_XML))["MMT_ElectricArcFurnace"]
+    eaf_recipes = li_values(eaf, "recipes")
+    for name in ("MMT_MakeCeramics", "MMT_MakeClayBricks"):
+        if name not in eaf_recipes:
+            fail(f"{name} 未挂载到电弧炉")
+
+    # MakeMetalCan：唯一的 categories 输入配方（不塞 ELECTRIC_RECIPE_EXPECTATIONS 的原因）
+    can_recipe = def_map(parse_xml(ELECTRIC_RECIPE_XML))["MMT_MakeMetalCan"]
+    assert_equal(child_text(can_recipe, "workAmount"), "800", "金属罐 workAmount")
+    assert_equal(li_values(can_recipe, "./ingredients/li/filter/categories"), ["MMT_MetallicBar"], "金属罐输入类别")
+    assert_equal(child_text(can_recipe, "./ingredients/li/count"), "8", "金属罐输入数量")
+    can_products = [(node.tag, (node.text or "").strip()) for node in can_recipe.findall("./products/*")]
+    assert_equal(can_products, [("MMT_MetalCan", "15")], "金属罐产出")
+    assert_equal(child_text(can_recipe, "researchPrerequisite"), "MMT_ElectricSmelting", "金属罐研究")
+
+    # 灰烬 patch：xpath 目标与产出数值
+    patch_text = read_text(ASH_PATCH_XML)
+    for needle in (
+        'Defs/RecipeDef[defName="BurnApparel"]',
+        'Defs/RecipeDef[defName="CremateCorpse"]',
+        "<MMT_Ash>2</MMT_Ash>",
+        "<MMT_Ash>4</MMT_Ash>",
+        "PatchOperationConditional",
+    ):
+        if needle not in patch_text:
+            fail(f"灰烬 patch 缺少: {needle}")
+
+    for path in (*CERAMICS_ITEM_TEXTURES, *CERAMICS_BUILDING_TEXTURES):
+        assert_png(path)
+
+    for path in (CERAMICS_RESOURCE_XML, CERAMICS_RECIPE_XML, CERAMICS_BUILDING_XML, STUFFCATEGORY_XML, ASH_PATCH_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("basic-metallurgy: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -3465,6 +3639,7 @@ def validate_all() -> None:
     validate_electric_electronics()
     validate_advanced_alloys()
     validate_parts()
+    validate_basic_metallurgy()
     validate_all_xml()
 
 
@@ -3503,6 +3678,7 @@ SUITES = {
     "coal": validate_coal,
     "sulfur": validate_sulfur,
     "precious": validate_precious,
+    "basic-metallurgy": validate_basic_metallurgy,
     "all": validate_all,
 }
 
