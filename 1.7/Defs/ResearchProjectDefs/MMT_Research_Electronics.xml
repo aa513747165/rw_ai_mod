@@ -27,4 +27,19 @@
     <researchViewX>17.00</researchViewX>
     <researchViewY>1.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 对照 HSK Droids_D1（机器人工程 I：2000/Spacer/前置 Electronics_D1） -->
+  <ResearchProjectDef>
+    <defName>MMT_Robotics1</defName>
+    <label>机器人工程 I</label>
+    <description>研究机器人部件与高密度储能电池的制造工艺，为自动化生产与高端电子奠定基础。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_BasicElectronics</li>
+    </prerequisites>
+    <researchViewX>22.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>
