@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- B8 作物：数值对齐 HSK（Plants_Cultivated_Manufacture/Plants_Trees/Plants_Wild.xml）。SK 基类映射原版 PlantBase/TreeBase；HSK 播种研究不映射（决策 7）；竹与椰子树为原版植物，走 Patches/MMT_Patch_CropHarvest.xml -->
+
+  <!-- 亚麻花：对照 HSK Plant_Flax -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantFlax</defName>
+    <label>亚麻花</label>
+    <description>一种纤维作物，收获的亚麻纤维可纺成亚麻布。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>1</Beauty>
+      <BeautyOutdoors>1</BeautyOutdoors>
+      <Nutrition>0.3</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantFlax</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <wildClusterWeight>55</wildClusterWeight>
+      <wildClusterRadius>5</wildClusterRadius>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>5</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+        <li>Hydroponic</li>
+      </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantFlax_Immature</immatureGraphicPath>
+      <harvestedThingDef>MMT_RawFlax</harvestedThingDef>
+      <harvestYield>9</harvestYield>
+      <growDays>8.1</growDays>
+      <fertilitySensitivity>0.4</fertilitySensitivity>
+      <wildOrder>2</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 野玫瑰：对照 HSK Plant_WildRose -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantWildRose</defName>
+    <label>野玫瑰</label>
+    <description>开红色花朵的灌木花卉，花朵可用于调配绘画用品与染料。需要水栽培。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>7</Beauty>
+      <BeautyOutdoors>7</BeautyOutdoors>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantWildRose</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>12</sowMinSkill>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
+      <harvestedThingDef>MMT_WildRose</harvestedThingDef>
+      <sowWork>150</sowWork>
+      <harvestYield>6</harvestYield>
+      <topWindExposure>0.1</topWindExposure>
+      <growMinGlow>0.3</growMinGlow>
+      <growDays>8</growDays>
+      <fertilityMin>1.2</fertilityMin>
+      <fertilitySensitivity>1.3</fertilitySensitivity>
+      <visualSizeRange>0.3~1.05</visualSizeRange>
+      <wildOrder>1</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 金丝桃：对照 HSK Plant_Hypericum -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantHypericum</defName>
+    <label>金丝桃</label>
+    <description>一种药用花卉，花朵可用于调配绘画用品与染料。需要水栽培。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>5</Beauty>
+      <BeautyOutdoors>5</BeautyOutdoors>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantHypericum</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>12</sowMinSkill>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
+      <harvestedThingDef>MMT_Hypericum</harvestedThingDef>
+      <sowWork>150</sowWork>
+      <harvestYield>4</harvestYield>
+      <topWindExposure>0.1</topWindExposure>
+      <growMinGlow>0.3</growMinGlow>
+      <growDays>6</growDays>
+      <fertilityMin>1.3</fertilityMin>
+      <fertilitySensitivity>1.25</fertilitySensitivity>
+      <visualSizeRange>0.2~0.8</visualSizeRange>
+      <wildClusterWeight>7</wildClusterWeight>
+      <wildClusterRadius>3</wildClusterRadius>
+      <wildOrder>1</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 薄荷：对照 HSK Plant_Mint -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantMint</defName>
+    <label>薄荷</label>
+    <description>芳香草本植物，叶片可用于调配绘画用品与染料。需要水栽培。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>4</Beauty>
+      <BeautyOutdoors>4</BeautyOutdoors>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantMint</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>9</maxMeshCount>
+      <sowMinSkill>12</sowMinSkill>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
+      <harvestedThingDef>MMT_MintLeaves</harvestedThingDef>
+      <sowWork>150</sowWork>
+      <harvestYield>5</harvestYield>
+      <topWindExposure>0.1</topWindExposure>
+      <growMinGlow>0.3</growMinGlow>
+      <growDays>6.5</growDays>
+      <fertilityMin>1.35</fertilityMin>
+      <fertilitySensitivity>1.3</fertilitySensitivity>
+      <visualSizeRange>0.15~0.8</visualSizeRange>
+      <wildOrder>1</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 橡胶树：对照 HSK Plant_TreeHevea（非野生，允许直接播种） -->
+  <ThingDef ParentName="TreeBase">
+    <defName>MMT_PlantHevea</defName>
+    <label>橡胶树</label>
+    <description>橡胶树能分泌名为天然橡胶的乳胶。天然橡胶可在窑炉或实验室中硫化制成橡胶。</description>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Beauty>6</Beauty>
+      <BeautyOutdoors>6</BeautyOutdoors>
+      <Nutrition>0.5</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantHevea</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shadowData>
+        <volume>(0.3, 0.3, 0.3)</volume>
+      </shadowData>
+    </graphicData>
+    <pathCost>130</pathCost>
+    <plant>
+      <sowMinSkill>8</sowMinSkill>
+      <mustBeWildToSow>false</mustBeWildToSow>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <leaflessGraphicPath>Things/Plant/MMT/MMT_PlantHevea_Leafless</leaflessGraphicPath>
+      <growDays>6.5</growDays>
+      <fertilitySensitivity>0.6</fertilitySensitivity>
+      <fertilityMin>0.45</fertilityMin>
+      <harvestWork>700</harvestWork>
+      <harvestedThingDef>MMT_RawCaoutchouc</harvestedThingDef>
+      <harvestYield>20</harvestYield>
+      <harvestMinGrowth>0.40</harvestMinGrowth>
+      <blockAdjacentSow>true</blockAdjacentSow>
+      <visualSizeRange>1.5~3.0</visualSizeRange>
+      <wildOrder>2</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 红木：对照 HSK PlantTreeRedwood（野生巨树，不可播种；SK 扩展贴图组件已剔除） -->
+  <ThingDef ParentName="TreeBase">
+    <defName>MMT_PlantRedwood</defName>
+    <label>红木树</label>
+    <description>一种生长极其缓慢的巨树，根系浅，体型过大时会倒伏。产出名贵稀有的红木。</description>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantRedwood</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shadowData>
+        <volume>(0.35, 0.2, 0.2)</volume>
+        <offset>(0,0,-0.25)</offset>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>950</MaxHitPoints>
+      <Beauty>12</Beauty>
+      <BeautyOutdoors>12</BeautyOutdoors>
+    </statBases>
+    <blockLight>true</blockLight>
+    <plant>
+      <sowWork>1800</sowWork>
+      <sowTags />
+      <fertilityMin>0.8</fertilityMin>
+      <harvestedThingDef>MMT_RedWoodLog</harvestedThingDef>
+      <fertilitySensitivity>0.8</fertilitySensitivity>
+      <growDays>85</growDays>
+      <harvestWork>1700</harvestWork>
+      <harvestYield>225</harvestYield>
+      <wildClusterRadius>10</wildClusterRadius>
+      <wildClusterWeight>6</wildClusterWeight>
+      <visualSizeRange>5~7</visualSizeRange>
+    </plant>
+  </ThingDef>
+</Defs>

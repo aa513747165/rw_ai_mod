@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- B8 作物收获资源：数值对齐 HSK（Items_Resource_Cloth_Raw/Crops/Crops_Fruits/Crops_Luxury/Wood.xml），已剔除 CE 专属字段与 SK 基类 -->
+
+  <!-- 原棉：对照 HSK RawCotton（PlantMatter 为原版同名类别） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RawCotton</defName>
+    <label>原棉</label>
+    <description>棉花植株收获的原始棉纤维，可在纺织机上纺成布。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RawCotton</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>1.5</MarketValue>
+      <Flammability>2</Flammability>
+      <DeteriorationRate>0.3</DeteriorationRate>
+      <Mass>0.1</Mass>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 生亚麻：对照 HSK RawFlax -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RawFlax</defName>
+    <label>生亚麻</label>
+    <description>亚麻花收获的原始纤维，可纺成亚麻布或出售给商人。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RawFlax</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>3.5</MarketValue>
+      <Flammability>2</Flammability>
+      <DeteriorationRate>0.3</DeteriorationRate>
+      <Mass>0.1</Mass>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 生恶魔菇：对照 HSK RawDevilstrand -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RawDevilstrand</defName>
+    <label>生恶魔菇</label>
+    <description>恶魔菇菌株收获的原始菌丝团，可在纺织机上织成魔菇布。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RawDevilstrand</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>150</stackLimit>
+    <statBases>
+      <MarketValue>6.4</MarketValue>
+      <Flammability>1</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Mass>0.12</Mass>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 天然橡胶：对照 HSK RawCaoutchouc（可腐烂，25 天） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RawCaoutchouc</defName>
+    <label>天然橡胶</label>
+    <description>从橡胶树采集的天然乳胶，可在窑炉或实验室中硫化制成橡胶。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RawCaoutchouc</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <MarketValue>2</MarketValue>
+      <Flammability>4.0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>25</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 竹节：对照 HSK Bamboo（HSK 的 Wooden 类别为 SK 自定义，归原版 ResourcesRaw；燃烧时长等 SK 字段已剔除） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Bamboo</defName>
+    <label>竹节</label>
+    <description>竹子的茎秆，一种生长迅速的类木材料，可用于替代木材。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_Bamboo</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Wood_Drop</soundInteract>
+    <soundDrop>Wood_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>2.0</MarketValue>
+      <Flammability>5</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <StuffPower_Armor_Blunt>0.8</StuffPower_Armor_Blunt>
+      <StuffPower_Armor_Sharp>0.6</StuffPower_Armor_Sharp>
+      <StuffPower_Armor_Heat>0.04</StuffPower_Armor_Heat>
+      <StuffPower_Insulation_Cold>0.9</StuffPower_Insulation_Cold>
+      <StuffPower_Insulation_Heat>0.5</StuffPower_Insulation_Heat>
+      <Mass>0.25</Mass>
+    </statBases>
+    <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <burnableByRecipe>True</burnableByRecipe>
+    <stuffProps>
+      <categories>
+        <li>Woody</li>
+      </categories>
+      <color>(204,170,128)</color>
+      <constructEffect>ConstructWood</constructEffect>
+      <appearance>Planks</appearance>
+      <soundImpactBullet>BulletImpact_Wood</soundImpactBullet>
+      <soundMeleeHitSharp>MeleeHit_Wood</soundMeleeHitSharp>
+      <soundMeleeHitBlunt>MeleeHit_Wood</soundMeleeHitBlunt>
+      <soundImpactMelee>Pawn_Melee_Punch_HitBuilding_Wood</soundImpactMelee>
+      <stuffAdjective>竹制</stuffAdjective>
+      <statOffsets>
+        <Beauty>3</Beauty>
+      </statOffsets>
+      <statFactors>
+        <MaxHitPoints>0.75</MaxHitPoints>
+        <Flammability>1</Flammability>
+        <Beauty>2.2</Beauty>
+        <WorkToMake>0.5</WorkToMake>
+        <WorkToBuild>0.5</WorkToBuild>
+        <MeleeWeapon_CooldownMultiplier>1.05</MeleeWeapon_CooldownMultiplier>
+        <MoveSpeed>1.0</MoveSpeed>
+        <MarketValue>0.7</MarketValue>
+        <BedRestEffectiveness>0.95</BedRestEffectiveness>
+        <ImmunityGainSpeedFactor>1.05</ImmunityGainSpeedFactor>
+        <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
+        <DoorOpenSpeed>1.4</DoorOpenSpeed>
+        <Mass>0.3</Mass>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- 红木：对照 HSK RedWoodLog（WoodLogs stuff 类别映射原版 Woody；SK 燃烧字段已剔除） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RedWoodLog</defName>
+    <label>红木</label>
+    <description>红木与红杉的木料，呈红色、名贵且较普通木材耐火。可用于建造、制作武器。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RedWoodLog</texPath>
+      <color>(102,41,20)</color>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Wood_Drop</soundInteract>
+    <soundDrop>Wood_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>2.0</MarketValue>
+      <MaxHitPoints>165</MaxHitPoints>
+      <Flammability>1</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <StuffPower_Armor_Blunt>0.8</StuffPower_Armor_Blunt>
+      <StuffPower_Armor_Sharp>0.7</StuffPower_Armor_Sharp>
+      <StuffPower_Armor_Heat>0.04</StuffPower_Armor_Heat>
+      <StuffPower_Insulation_Cold>0.85</StuffPower_Insulation_Heat>
+      <StuffPower_Insulation_Heat>0.45</StuffPower_Insulation_Heat>
+      <SharpDamageMultiplier>0.3</SharpDamageMultiplier>
+      <BluntDamageMultiplier>0.8</BluntDamageMultiplier>
+      <Mass>0.4</Mass>
+    </statBases>
+    <techLevel>Neolithic</techLevel>
+    <stackLimit>300</stackLimit>
+    <stuffProps>
+      <stuffAdjective>红木</stuffAdjective>
+      <categories>
+        <li>Woody</li>
+      </categories>
+      <commonality>0.3</commonality>
+      <color>(102,41,20)</color>
+      <constructEffect>ConstructWood</constructEffect>
+      <appearance>Planks</appearance>
+      <soundImpactBullet>BulletImpact_Wood</soundImpactBullet>
+      <soundMeleeHitSharp>MeleeHit_Wood</soundMeleeHitSharp>
+      <soundMeleeHitBlunt>MeleeHit_Wood</soundMeleeHitBlunt>
+      <soundImpactMelee>Pawn_Melee_Punch_HitBuilding_Wood</soundImpactMelee>
+      <statOffsets>
+        <Beauty>3</Beauty>
+      </statOffsets>
+      <statFactors>
+        <MaxHitPoints>0.95</MaxHitPoints>
+        <Flammability>0.8</Flammability>
+        <Beauty>1.5</Beauty>
+        <WorkToMake>0.8</WorkToMake>
+        <WorkToBuild>0.8</WorkToBuild>
+        <MeleeWeapon_CooldownMultiplier>1.15</MeleeWeapon_CooldownMultiplier>
+        <MoveSpeed>0.8</MoveSpeed>
+        <MarketValue>0.9</MarketValue>
+        <BedRestEffectiveness>1.05</BedRestEffectiveness>
+        <ImmunityGainSpeedFactor>0.95</ImmunityGainSpeedFactor>
+        <WorkTableWorkSpeedFactor>0.65</WorkTableWorkSpeedFactor>
+        <DoorOpenSpeed>1.2</DoorOpenSpeed>
+        <Mass>0.55</Mass>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <burnableByRecipe>True</burnableByRecipe>
+  </ThingDef>
+
+  <!-- 椰子：对照 HSK RawCoconut（FruitFoodRaw 为 SK 类别，归原版 PlantFoodRaw） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RawCoconut</defName>
+    <label>椰子</label>
+    <description>椰子树结出的坚硬果实，可直接食用，也可作为化工原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_RawCoconut</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>6</MarketValue>
+      <Nutrition>0.25</Nutrition>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>10</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <ingestible>
+      <joy>0.08</joy>
+    </ingestible>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 野玫瑰：对照 HSK WildRose（LuxuryStuffs 为 SK 类别，归原版 PlantFoodRaw） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WildRose</defName>
+    <label>野玫瑰</label>
+    <description>野玫瑰植株的红色花朵，可用于调配绘画用品与染料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_WildRose</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Beauty>5</Beauty>
+      <MarketValue>2</MarketValue>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <ingestible>
+      <foodType>Plant, VegetableOrFruit</foodType>
+      <preferability>RawBad</preferability>
+      <joy>0.04</joy>
+      <joyKind>Gluttonous</joyKind>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>7</daysToRotStart>
+      </li>
+    </comps>
+    <tickerType>Rare</tickerType>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+    <stackLimit>75</stackLimit>
+  </ThingDef>
+
+  <!-- 金丝桃：对照 HSK Hypericum -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Hypericum</defName>
+    <label>金丝桃</label>
+    <description>金丝桃植株的花朵，一种药用花卉，可用于调配绘画用品与染料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_Hypericum</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Beauty>5</Beauty>
+      <MarketValue>2</MarketValue>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <ingestible>
+      <foodType>Plant, VegetableOrFruit</foodType>
+      <preferability>RawBad</preferability>
+      <joy>0.05</joy>
+      <joyKind>Gluttonous</joyKind>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>7</daysToRotStart>
+      </li>
+    </comps>
+    <tickerType>Rare</tickerType>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+    <stackLimit>75</stackLimit>
+  </ThingDef>
+
+  <!-- 薄荷叶：对照 HSK MintLeaves -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_MintLeaves</defName>
+    <label>薄荷叶</label>
+    <description>薄荷植株的芳香叶片，可用于调配绘画用品与染料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Crops/MMT_MintLeaves</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Beauty>5</Beauty>
+      <MarketValue>2</MarketValue>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Flammability>5</Flammability>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <ingestible>
+      <foodType>Plant, VegetableOrFruit</foodType>
+      <preferability>RawBad</preferability>
+      <joy>0.06</joy>
+      <joyKind>Gluttonous</joyKind>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>7</daysToRotStart>
+      </li>
+    </comps>
+    <tickerType>Rare</tickerType>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+    <stackLimit>75</stackLimit>
+  </ThingDef>
+</Defs>
