@@ -9,11 +9,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 16 |
-| MMT 配方 | 132 |
-| 与 HSK 数值一致 | 85 |
-| 与 HSK 有数值差异 | 44 |
+| MMT 配方 | 164 |
+| 与 HSK 数值一致 | 115 |
+| 与 HSK 有数值差异 | 45 |
 | HSK 有对应资源但无对应配方 | 3 |
-| MMT 新增（HSK 无对应资源） | 0 |
+| MMT 新增（HSK 无对应资源） | 1 |
 
 ## 2. 矿脉对比
 
@@ -352,6 +352,18 @@
 
 - **MMT**：原木(WoodLog)×25 -> 木炭×20 @ 电动木炭窑 ｜ 工作量=800 ｜ 研究:电动木材加工(MMT_ElectricWoodworking)，技能:Crafting≥4
 - **HSK** `MakeCharcoal_Electric`：[Wooden]×25 -> 木炭(Charcoal)×20 @ ElectricSmelter ｜ 工作量=800 ｜ 研究:Metals_C1，技能:Crafting≥4
+- **对比**：数值一致
+
+#### 加工竹板（`MMT_MakeBambooPlanks_Electric`）
+
+- **MMT**：竹节×20 -> 竹板×30 @ 电动锯木台 ｜ 工作量=1200 ｜ 研究:电动木材加工(MMT_ElectricWoodworking)，技能:Crafting≥9
+- **HSK** `MakeBambooPlanks_Electric`：竹节(Bamboo)×20 -> 竹板(BambooPlank)×30 @ 电动锯木台(TableSawmillElectric) ｜ 工作量=1200 ｜ 研究:Metals_C1，技能:Crafting≥9
+- **对比**：数值一致
+
+#### 加工红木木板（`MMT_MakeRedWoodPlanks_Electric`）
+
+- **MMT**：红木×20 -> 红木木板×30 @ 电动锯木台 ｜ 工作量=1200 ｜ 研究:电动木材加工(MMT_ElectricWoodworking)，技能:Crafting≥6
+- **HSK** `MakeRedWoodPlanks_Electric`：红木(RedWoodLog)×20 -> 红木木板(RedWoodPlank)×30 @ 电动锯木台(TableSawmillElectric) ｜ 工作量=1200 ｜ 研究:Metals_C1，技能:Crafting≥6
 - **对比**：数值一致
 
 ### 3.9 电子（Electronics）
@@ -746,6 +758,12 @@
 - **HSK** `MakeOxidizedChemfuel`：Chemfuel×100 + 硝石(Nitre)×10 + 硫酸盐(Sulphates)×10 + Prometheum 或 FSX×5 -> 氧化化合燃料(OxidizedChemfuel)×75 @ 石化产品实验室(TableChemlab) ｜ 工作量=10000 ｜ 研究:BasicGravtech，技能:Crafting≥12
 - **对比**：数值一致
 
+#### 制备表面活性剂（椰子替代，50个）（`MMT_MakeSurfactant_CoconutSubstitute`）
+
+- **MMT**：盐×10 + 硫磺×15 + 椰子×25 -> 表面活性剂×50 @ — ｜ 工作量=4000 ｜ 研究:Firefoam(Firefoam)，技能:Crafting≥12,Intellectual≥4
+- **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
+- **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥8
+
 ### 3.16 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
@@ -786,7 +804,86 @@
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
 
-### 3.18 TopMaterials（TopMaterials）
+### 3.18 Textiles（Textiles）
+
+#### 纺织布（`MMT_MakeCloth`）
+
+- **MMT**：原棉×20 -> Cloth×20 @ 纺织机 ｜ 工作量=600 ｜ 研究:ComplexClothing(ComplexClothing)，技能:Crafting≥2
+- **HSK** `MakeCloth`：原棉(RawCotton)×20 -> Cloth×20 @ TableLoom ｜ 工作量=600 ｜ 研究:Apparel_B1，技能:Crafting≥2
+- **对比**：数值一致
+
+#### 纺织亚麻布（`MMT_MakeFlaxcloth`）
+
+- **MMT**：生亚麻×20 -> 亚麻布×10 @ 纺织机 ｜ 工作量=600 ｜ 技能:Crafting≥4
+- **HSK** `MakeLinen`：生亚麻(RawFlax)×20 -> 亚麻布(Flaxcloth)×10 @ LeatherworkerTable, TableLoom ｜ 工作量=600 ｜ 技能:Crafting≥4
+- **对比**：数值一致
+
+#### 纺织大麻布（`MMT_MakeHempCloth`）
+
+- **MMT**：SmokeleafLeaves×30 -> 大麻布×15 @ 纺织机 ｜ 工作量=1200 ｜ 研究:ComplexClothing(ComplexClothing)，技能:Crafting≥6
+- **HSK** `MakeHempCloth`：SmokeleafLeaves×30 -> 大麻布(HempCloth)×15 @ TableLoom ｜ 工作量=1200 ｜ 研究:Apparel_B1，技能:Crafting≥6
+- **对比**：数值一致
+
+#### 纺织魔菇布（`MMT_MakeDevilstrand`）
+
+- **MMT**：生恶魔菇×15 + 人造纤维×2 -> DevilstrandCloth×15 @ 纺织机 ｜ 工作量=600 ｜ 研究:AdvancedFabrication(AdvancedFabrication)，技能:Crafting≥13
+- **HSK** `MakeDevilstrand`：生恶魔菇(RawDevilstrand)×15 + 人造纤维(SyntheticFibers)×2 -> DevilstrandCloth×15 @ TableLoom ｜ 工作量=600 ｜ 研究:AdvancedFabrication，技能:Crafting≥13
+- **对比**：数值一致
+
+#### 纺织合成纤维（`MMT_MakeSynthread`）
+
+- **MMT**：原棉×10 + 人造纤维×3 -> Synthread×10 @ 纺织机 ｜ 工作量=600 ｜ 研究:AdvancedFabrication(AdvancedFabrication)，技能:Crafting≥12
+- **HSK** `MakeSynthreadCloth`：原棉(RawCotton)×10 + 人造纤维(SyntheticFibers)×3 -> Synthread×10 @ TableLoom ｜ 工作量=600 ｜ 研究:AdvancedFabrication，技能:Crafting≥12
+- **对比**：数值一致
+
+#### 纺织丝绒（`MMT_MakeVelour`）
+
+- **MMT**：复合粘剂×5 + [MMT_BTextiles]×40 -> 丝绒×25 @ 纺织机 ｜ 工作量=1800 ｜ 研究:AdvancedFabrication(AdvancedFabrication)，技能:Crafting≥12
+- **HSK** `MakeVelour`：复合粘剂(Compaste)×5 + [BTextiles]×40 -> 丝绒(Velour)×25 @ TableLoom ｜ 工作量=1800 ｜ 研究:AdvancedFabrication，技能:Crafting≥12
+- **对比**：数值一致
+
+#### 纺织凯夫拉（`MMT_MakeKevlar`）
+
+- **MMT**：塑料×30 + 人造纤维×15 -> 凯夫拉×10 @ 纺织机 ｜ 工作量=1800 ｜ 研究:AdvancedFabrication(AdvancedFabrication)，技能:Crafting≥13
+- **HSK** `MakeKevlar`：塑料(Plastic)×30 + 人造纤维(SyntheticFibers)×15 -> 凯夫拉(Kevlar)×10 @ TableLoom ｜ 工作量=1800 ｜ 研究:AdvancedFabrication，技能:Crafting≥13
+- **对比**：数值一致
+
+#### 纺织超织物（`MMT_MakeHyperweave`）
+
+- **MMT**：Synthread×10 + DevilstrandCloth×10 -> Hyperweave×10 @ 纺织机 ｜ 工作量=600 ｜ 研究:超织物工艺(MMT_SuperFabric)，技能:Crafting≥17
+- **HSK** `MakeHyperweaveCloth`：Synthread×10 + DevilstrandCloth×10 -> Hyperweave×10 @ TableLoom ｜ 工作量=600 ｜ 研究:Apparel_D1，技能:Crafting≥17
+- **对比**：数值一致
+
+#### 压制甲壳板（`MMT_MakeChitinPlating`）
+
+- **MMT**：甲壳×50 + 人造纤维×4 + 复合粘剂×1 -> 甲壳板×15 @ 纺织机 ｜ 工作量=1080 ｜ 研究:AdvancedFabrication(AdvancedFabrication)，技能:Crafting≥12
+- **HSK** `MakeChitinPlating`：甲壳(Chitin)×50 + 人造纤维(SyntheticFibers)×4 + 复合粘剂(Compaste)×1 -> 甲壳板(ChitinPlating)×15 @ TableLoom ｜ 工作量=1080 ｜ 研究:AdvancedFabrication，技能:Crafting≥12
+- **对比**：数值一致
+
+#### 提炼兽脂（`MMT_MakeTallow`）
+
+- **MMT**：[MeatRaw]×30 -> 兽脂×15 @ — ｜ 工作量=1200 ｜ 研究:Pemmican(Pemmican)，技能:Cooking≥3
+- **HSK** `MakeTallow`：[MeatRaw]×30 -> 兽脂(Tallow)×15 @ Campfire, FueledStove ｜ 工作量=1200 ｜ 研究:Food_00，技能:Cooking≥3
+- **对比**：数值一致
+
+#### 调制绘画用品（花卉）（`MMT_CookPaint`）
+
+- **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×10 + 原木(WoodLog) 或 木板 或 竹节 或 竹板 或 红木 或 红木木板×2 -> 绘画用品×1 @ — ｜ 工作量=550 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥5
+- **HSK** `CookPaint`：野玫瑰(WildRose) 或 金丝桃(Hypericum) 或 薄荷叶(MintLeaves)×10 + [Woody]×2 -> 绘画用品(PaintingSupplies)×1 @ ElectricStove, FueledStove ｜ 工作量=550 ｜ 研究:Art_A1，技能:Crafting≥5
+- **对比**：数值一致
+
+#### 调制绘画用品（染料）（`MMT_CookPaintDye`）
+
+- **MMT**：染料×10 + 原木(WoodLog) 或 木板 或 竹节 或 竹板 或 红木 或 红木木板×2 -> 绘画用品×1 @ — ｜ 工作量=550 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥5
+- **HSK** `CookPaint`：野玫瑰(WildRose) 或 金丝桃(Hypericum) 或 薄荷叶(MintLeaves)×10 + [Woody]×2 -> 绘画用品(PaintingSupplies)×1 @ ElectricStove, FueledStove ｜ 工作量=550 ｜ 研究:Art_A1，技能:Crafting≥5
+- **对比**：数值一致
+
+#### 提炼染料（`MMT_MakeDye`）
+
+- **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.19 TopMaterials（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -845,7 +942,93 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.19 木材（Wood）
+### 3.20 WeaponParts（WeaponParts）
+
+#### 制造武器部件（`MMT_MakeWeaponParts`）
+
+- **MMT**：[MMT_MetallicBar]×25 + 工业零件(ComponentIndustrial)×10 + 机械组件×5 -> 武器部件×5 @ 武器加工台, 先进武器加工台, 未来武器工作台 ｜ 工作量=1500 ｜ 研究:Machining(Machining)，技能:Crafting≥6
+- **HSK** `MakeWeapon_Parts`：[Metallic]×25 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×5 -> 武器部件(Weapon_Parts)×5 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 未来武器工作台(MechWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=1500 ｜ 研究:Machining，技能:Crafting≥6
+- **对比**：数值一致
+
+#### 制造手枪部件（`MMT_MakePistolComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×6 + [MMT_HCMBar]×3 + 工业零件(ComponentIndustrial)×2 + 电线×1 + 机械组件×1 -> 手枪部件×1 @ 武器加工台, 先进武器加工台 ｜ 工作量=1200 ｜ 研究:Gunsmithing(Gunsmithing)，技能:Crafting≥6
+- **HSK** `MakePistol_Component`：[SLDBar] 或 [USLDBar]×6 + [HCMBar]×3 + 工业零件(ComponentIndustrial)×2 + 电线(Wire)×1 + 机械组件(Mechanism)×1 -> 手枪部件(Pistol_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=1200 ｜ 研究:Gunsmithing，技能:Crafting≥6
+- **对比**：数值一致
+
+#### 制造冲锋枪部件（`MMT_MakeSMGComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×10 + [MMT_HCMBar]×5 + 工业零件(ComponentIndustrial)×4 + 电线×6 + 机械组件×2 -> 冲锋枪部件×1 @ 武器加工台, 先进武器加工台 ｜ 工作量=1800 ｜ 研究:BlowbackOperation(BlowbackOperation)，技能:Crafting≥9
+- **HSK** `MakeSMG_Component`：[SLDBar] 或 [USLDBar]×10 + [HCMBar]×5 + 工业零件(ComponentIndustrial)×4 + 电线(Wire)×6 + 机械组件(Mechanism)×2 -> 冲锋枪部件(SMG_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=1800 ｜ 研究:BlowbackOperation，技能:Crafting≥9
+- **对比**：数值一致
+
+#### 制造霰弹枪部件（`MMT_MakeShotgunComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×15 + [MMT_HCMBar]×8 + 工业零件(ComponentIndustrial)×4 + 电线×5 + 机械组件×2 -> 霰弹枪部件×1 @ 武器加工台, 先进武器加工台 ｜ 工作量=1800 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥7
+- **HSK** `MakeShotgun_Component`：[SLDBar] 或 [USLDBar]×15 + [HCMBar]×8 + 工业零件(ComponentIndustrial)×4 + 电线(Wire)×5 + 机械组件(Mechanism)×2 -> 霰弹枪部件(Shotgun_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=1800 ｜ 研究:GasOperation，技能:Crafting≥7
+- **对比**：数值一致
+
+#### 制造步枪部件（`MMT_MakeRifleComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×20 + [MMT_HCMBar]×10 + 工业零件(ComponentIndustrial)×6 + 电线×8 + 机械组件×3 -> 步枪部件×1 @ 武器加工台, 先进武器加工台 ｜ 工作量=2100 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥8
+- **HSK** `MakeRifle_Component`：[SLDBar] 或 [USLDBar]×20 + [HCMBar]×10 + 工业零件(ComponentIndustrial)×6 + 电线(Wire)×8 + 机械组件(Mechanism)×3 -> 步枪部件(Rifle_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:Rifles_C1，技能:Crafting≥8
+- **对比**：数值一致
+
+#### 制造狙击枪部件（`MMT_MakeSniperComponent`）
+
+- **MMT**：步枪部件×1 + 工业零件(ComponentIndustrial)×6 + 玻璃块×12 -> 狙击枪部件×1 @ 武器加工台, 先进武器加工台 ｜ 工作量=2100 ｜ 研究:PrecisionRifling(PrecisionRifling)，技能:Crafting≥10
+- **HSK** `MakeSniper_Component`：步枪部件(Rifle_Component)×1 + 工业零件(ComponentIndustrial)×6 + 玻璃块(Glass)×12 -> 狙击枪部件(Sniper_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), 武器加工台(WeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:Sniper_rifles_C1，技能:Crafting≥10
+- **对比**：数值一致
+
+#### 制造先进步枪部件（`MMT_MakeAdvRifleComponent`）
+
+- **MMT**：人造纤维×5 + 塑料×15 + 合成橡胶×15 + 步枪部件×1 + 先进机械组件×2 -> 先进步枪部件×1 @ 先进武器加工台 ｜ 工作量=2100 ｜ 研究:Fabrication(Fabrication)，技能:Crafting≥13
+- **HSK** `MakeAdvRifle_Component`：人造纤维(SyntheticFibers)×5 + 塑料(Plastic)×15 + 合成橡胶(Rubber)×15 + 步枪部件(Rifle_Component)×1 + 先进机械组件(AdvMechanism)×2 -> 先进步枪部件(AdvRifle_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:Rifles_C2，技能:Crafting≥13
+- **对比**：数值一致
+
+#### 制造先进狙击枪部件（`MMT_MakeAdvSniperComponent`）
+
+- **MMT**：人造纤维×10 + 塑料×20 + 合成橡胶×15 + 集成电路×4 + 狙击枪部件×2 + 先进机械组件×3 -> 先进狙击枪部件×1 @ 先进武器加工台 ｜ 工作量=2100 ｜ 研究:Fabrication(Fabrication)，技能:Crafting≥15
+- **HSK** `MakeAdvSniper_Component`：人造纤维(SyntheticFibers)×10 + 塑料(Plastic)×20 + 合成橡胶(Rubber)×15 + 集成电路(Electronics)×4 + 狙击枪部件(Sniper_Component)×2 + 先进机械组件(AdvMechanism)×3 -> 先进狙击枪部件(AdvSniper_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:Sniper_rifles_D1，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 制造重型武器部件（`MMT_MakeHeavyComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×25 + [MMT_HCMBar]×15 + 工业零件(ComponentIndustrial)×12 + 电线×15 + 机械组件×6 -> 重型武器部件×1 @ 先进武器加工台 ｜ 工作量=2800 ｜ 研究:HeavyTurrets(HeavyTurrets)，技能:Crafting≥12
+- **HSK** `MakeHeavy_Component`：[SLDBar] 或 [USLDBar]×25 + [HCMBar]×15 + 工业零件(ComponentIndustrial)×12 + 电线(Wire)×15 + 机械组件(Mechanism)×6 -> 重型武器部件(Heavy_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), HeavyArmsBench ｜ 工作量=2800 ｜ 研究:HeavyTurrets，技能:Crafting≥12
+- **对比**：数值一致
+
+#### 制造火炮武器部件（`MMT_MakeCannonComponent`）
+
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×20 + 重型武器部件×1 + 先进机械组件×5 -> 火炮武器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:Mortars(Mortars)，技能:Crafting≥14
+- **HSK** `MakeCannon_Component`：[SLDBar] 或 [USLDBar]×20 + 重型武器部件(Heavy_Component)×1 + 先进机械组件(AdvMechanism)×5 -> 火炮武器部件(Cannon_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), HeavyArmsBench ｜ 工作量=3100 ｜ 研究:Turrets_31，技能:Crafting≥14
+- **对比**：数值一致
+
+#### 制造发射器部件（`MMT_MakeLauncherComponent`）
+
+- **MMT**：集成电路×2 + 重型武器部件×1 + 先进机械组件×3 + 玻璃块×12 -> 发射器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:火箭弹 I(MMT_Rocketry1)，技能:Crafting≥14
+- **HSK** `MakeLauncher_Component`：集成电路(Electronics)×2 + 重型武器部件(Heavy_Component)×1 + 先进机械组件(AdvMechanism)×3 + 玻璃块(Glass)×12 -> 发射器部件(Launcher_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), HeavyArmsBench ｜ 工作量=3100 ｜ 研究:Rockets_C1，技能:Crafting≥14
+- **对比**：数值一致
+
+#### 制造电荷武器部件（`MMT_MakeChargedComponent`）
+
+- **MMT**：[MMT_USLDBar]×10 + [MMT_HCMBar]×20 + 磁性材料×2 + 先进机械组件×2 -> 电荷武器部件×1 @ 未来武器工作台 ｜ 工作量=2100 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **HSK** `MakeCharged_Component`：[USLDBar]×10 + [HCMBar]×20 + 磁性材料(MagneticMaterial)×2 + 先进机械组件(AdvMechanism)×2 -> 电荷武器部件(Charged_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥14
+- **对比**：数值一致
+
+#### 制造光束武器部件（`MMT_MakeLaserComponent`）
+
+- **MMT**：[MMT_USLDBar]×20 + [MMT_HCMBar]×10 + 磁性材料×4 + 微芯片集成电路×1 -> 光束武器部件×1 @ 未来武器工作台 ｜ 工作量=2100 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥15
+- **HSK** `MakeLaser_Component`：[USLDBar]×20 + [HCMBar]×10 + 磁性材料(MagneticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 光束武器部件(Laser_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 制造离子武器部件（`MMT_MakePlasmaComponent`）
+
+- **MMT**：[MMT_USLDBar]×20 + [MMT_HCMBar]×10 + 生物合成材料×4 + 微芯片集成电路×1 -> 离子武器部件×1 @ 未来武器工作台 ｜ 工作量=2100 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥15
+- **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
+- **对比**：数值一致
+
+### 3.21 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -865,6 +1048,18 @@
 - **HSK** `MakeCharcoal_Electric`：[Wooden]×25 -> 木炭(Charcoal)×20 @ ElectricSmelter ｜ 工作量=800 ｜ 研究:Metals_C1，技能:Crafting≥4
 - **对比**：工作量 1600 vs HSK 800
 
+#### 加工竹板（`MMT_MakeBambooPlanks_Hand`）
+
+- **MMT**：竹节×10 -> 竹板×15 @ 手工锯台 ｜ 工作量=1200 ｜ 研究:木工加工(MMT_Woodworking)，技能:Crafting≥6
+- **HSK** `MakeBambooPlanks_Hand`：竹节(Bamboo)×10 -> 竹板(BambooPlank)×15 @ 手工锯台(TableSawmillHand) ｜ 工作量=1200 ｜ 研究:Craft_0，技能:Crafting≥6
+- **对比**：数值一致
+
+#### 加工红木木板（`MMT_MakeRedWoodPlanks_Hand`）
+
+- **MMT**：红木×10 -> 红木木板×15 @ 手工锯台 ｜ 工作量=1200 ｜ 研究:木工加工(MMT_Woodworking)，技能:Crafting≥3
+- **HSK** `MakeRedWoodPlanks_Hand`：红木(RedWoodLog)×10 -> 红木木板(RedWoodPlank)×15 @ 手工锯台(TableSawmillHand) ｜ 工作量=1200 ｜ 研究:Craft_0，技能:Crafting≥3
+- **对比**：数值一致
+
 ## 4. HSK 有而 MMT 未覆盖的配方（限于 MMT 涉及的资源）
 
 - **灰烬(Ash)**：`BurnThings`（Campfire, ElectricCrematorium, Kiln，工作量=400）、`CremateCorpse`（Campfire, ElectricCrematorium, Kiln，工作量=600）、`CremateCorpseCampfire`（，工作量=800）
@@ -877,6 +1072,7 @@
 - **先进机械组件(AdvMechanism)**：`MakeAdvMechanism_Hand`（FabricationBench，工作量=3200）
 - **集成电路(Electronics)**：`DeconstructPersonalShield`（TableRecycling，工作量=1000）
 - **机械组件(Mechanism)**：`MakeSimpleMechanism_Hand`（FabricationBench，工作量=1800）
+- **绘画用品(PaintingSupplies)**：`CookPaintDye`（ElectricStove, FueledStove，工作量=550）
 - **原始零部件(ComponentMedieval)**：`Make_ComponentMedievalBronze`（AdvToolBench, CraftingSpot, FabricationBench，工作量=900）
 - **钢筋混凝土(ReinforcedConcrete)**：`MakeReinforcedConcrete_Hand`（TableStonecutter，工作量=1600）
 - **电线(Wire)**：`MakeWires_Hand`（FabricationBench，工作量=800）

@@ -18,6 +18,17 @@ const MMT_ALIAS = {
   HandSawmill: 'TableSawmillHand', ElectricSawmill: 'TableSawmillElectric',
   HandElectronicsTable: 'TableElectronics', ElectricElectronicsTable: 'TableElectronics',
   ParticleCollider: 'HadronCollider',
+  // B8 武器部件与加工台
+  WeaponParts: 'Weapon_Parts', PistolComponent: 'Pistol_Component', SMGComponent: 'SMG_Component',
+  ShotgunComponent: 'Shotgun_Component', RifleComponent: 'Rifle_Component', AdvRifleComponent: 'AdvRifle_Component',
+  SniperComponent: 'Sniper_Component', AdvSniperComponent: 'AdvSniper_Component', HeavyComponent: 'Heavy_Component',
+  CannonComponent: 'Cannon_Component', LauncherComponent: 'Launcher_Component', ChargedComponent: 'Charged_Component',
+  LaserComponent: 'Laser_Component', PlasmaComponent: 'Plasma_Component',
+  WeaponCraftingTable: 'WeaponCraftingWorkTable', AdvWeaponCraftingTable: 'AdvWeaponCraftingWorkTable',
+  MechWeaponTable: 'MechWeaponCraftingWorkTable',
+  // B8 作物植物（竹/棕榈为原版 def，patch 收获物，不在此表）
+  PlantFlax: 'Plant_Flax', PlantWildRose: 'Plant_WildRose', PlantHypericum: 'Plant_Hypericum',
+  PlantMint: 'Plant_Mint', PlantHevea: 'Plant_TreeHevea', PlantRedwood: 'PlantTreeRedwood',
 };
 
 // ---------- 读取 MMT Defs ----------
