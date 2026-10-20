@@ -3,10 +3,10 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 1.游戏目录: D:\RimWorld v1.7.4979
-2.开发mod文件目录: D:\project\rw
-3.中文翻译文件: D:\project\rw\Hardcore-SK\1.6
+2.开发mod文件目录: H:\rw
+3.游戏存档目录: C:\Users\Administrator\AppData\LocalLow\Ludeon Studios\RimWorld by Ludeon Studios
 4.游戏DLC是全的可以使用依赖
-5.HSK目录: D:\project\rw\Hardcore-SK
+5.HSK目录: H:\rw\Hardcore-SK
 6.整体代码审查只在用户主动要求才执行
 ## 项目概述
 
