@@ -29,8 +29,4 @@
     <xpath>Defs/ThingDef[defName="ComponentSpacer"]/thingCategories</xpath>
     <value><li>MMT_Parts</li></value>
   </Operation>
-  <Operation Class="PatchOperationAdd">
-    <xpath>Defs/ThingDef[defName="ComponentAdvanced"]/thingCategories</xpath>
-    <value><li>MMT_Parts</li></value>
-  </Operation>
 </Patch>

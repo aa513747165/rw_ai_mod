@@ -1185,7 +1185,6 @@ INFRA_PATCH_TARGETS = {
     "Uranium": "MMT_RADBar",
     "ComponentIndustrial": "MMT_Parts",
     "ComponentSpacer": "MMT_Parts",
-    "ComponentAdvanced": "MMT_Parts",
 }
 
 
