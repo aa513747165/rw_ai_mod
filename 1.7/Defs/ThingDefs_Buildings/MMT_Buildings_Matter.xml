@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 无机物转化器：对照 HSK MatterConverter（SK 动画类改原版静态 Graphic_Multi，IdlePower 改恒定 2500W） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_MatterConverter</defName>
+    <label>无机物转化器</label>
+    <description>将各类原材料转化为无机物的装置。无机物可进一步还原为特定资源。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_MatterConverter/MMT_MatterConverter</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>280</costStuffCount>
+    <costList>
+      <MMT_SyntheticFibers>50</MMT_SyntheticFibers>
+      <MMT_SpacerComponent>12</MMT_SpacerComponent>
+      <MMT_AdvMechanism>6</MMT_AdvMechanism>
+      <MMT_Microchip>4</MMT_Microchip>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>9000</WorkToBuild>
+      <MaxHitPoints>280</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-40</Beauty>
+      <Cleanliness>-5</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_ConvertResourcesRaw</li>
+      <li>MMT_ConvertToIron</li>
+      <li>MMT_ConvertToCopper</li>
+      <li>MMT_ConvertToTin</li>
+      <li>MMT_ConvertToLead</li>
+      <li>MMT_ConvertToAluminium</li>
+      <li>MMT_ConvertToNickel</li>
+      <li>MMT_ConvertToTitanium</li>
+      <li>MMT_ConvertToGold</li>
+      <li>MMT_ConvertToSilver</li>
+      <li>MMT_ConvertToUranium</li>
+      <li>MMT_ConvertToPolymers</li>
+      <li>MMT_ConvertToParaffins</li>
+      <li>MMT_ConvertToSulphates</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>2500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(0,0,217,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>22</heatPerSecond>
+        <heatPushMaxTemperature>55</heatPushMaxTemperature>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_MatterConversion1</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>18</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 量子加工台：对照 HSK Matterfab（工作 20000W/待机 2000W 折中为恒定 8000W） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Matterfab</defName>
+    <label>量子加工台</label>
+    <description>量子热力学与等离子体光谱学的最前沿设备。这台机器将元素拆解为基础亚原子粒子，再重组为强大的人造元素。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_Matterfab/MMT_Matterfab</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,2)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>240</costStuffCount>
+    <costList>
+      <MMT_MagneticMaterial>25</MMT_MagneticMaterial>
+      <MMT_SpacerComponent>10</MMT_SpacerComponent>
+      <MMT_AdvMechanism>10</MMT_AdvMechanism>
+      <MMT_Microchip>2</MMT_Microchip>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>10000</WorkToBuild>
+      <MaxHitPoints>350</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-40</Beauty>
+      <Cleanliness>-5</Cleanliness>
+      <Mass>500</Mass>
+    </statBases>
+    <size>(3,2)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_ProduceAPoly</li>
+      <li>MMT_ProduceBPoly</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>8000</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(0,217,217,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>85</heatPerSecond>
+        <heatPushMaxTemperature>1500</heatPushMaxTemperature>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_MatterConversion3</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>16</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 粒子对撞台：对照 HSK HadronCollider（自定义类改配方制产反物质，恒定 15000W 自平衡） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ParticleCollider</defName>
+    <label>粒子对撞台</label>
+    <description>通过电场或电磁场将亚原子粒子加速到极高速度的装置。加速后的粒子相互对撞，可用于产生微量反物质。需要巨量电力。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ParticleCollider/MMT_ParticleCollider</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(7,2)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>120</costStuffCount>
+    <costList>
+      <MMT_ReinforcedConcrete>150</MMT_ReinforcedConcrete>
+      <MMT_MagneticMaterial>20</MMT_MagneticMaterial>
+      <MMT_BiosyntheticMaterial>15</MMT_BiosyntheticMaterial>
+      <MMT_AdvMechanism>12</MMT_AdvMechanism>
+      <MMT_Microchip>3</MMT_Microchip>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>12000</WorkToBuild>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-60</Beauty>
+      <Cleanliness>-5</Cleanliness>
+      <Mass>800</Mass>
+    </statBases>
+    <size>(7,2)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeAntimatter</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>15000</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>90</heatPerSecond>
+        <heatPushMaxTemperature>1500</heatPushMaxTemperature>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_MatterConversion2</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>18</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>
