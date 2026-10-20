@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 原版锭/零部件追加 MMT 类别，使类别过滤配方能选中原版物品；对照 HSK 对 Steel→SLDBar 的同类归属 -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Steel"]/thingCategories</xpath>
+    <value><li>MMT_SLDBar</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Plasteel"]/thingCategories</xpath>
+    <value><li>MMT_USLDBar</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Gold"]/thingCategories</xpath>
+    <value><li>MMT_PRSBar</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Silver"]/thingCategories</xpath>
+    <value><li>MMT_PRSBar</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Uranium"]/thingCategories</xpath>
+    <value><li>MMT_RADBar</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/thingCategories</xpath>
+    <value><li>MMT_Parts</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ComponentSpacer"]/thingCategories</xpath>
+    <value><li>MMT_Parts</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ComponentAdvanced"]/thingCategories</xpath>
+    <value><li>MMT_Parts</li></value>
+  </Operation>
+</Patch>
