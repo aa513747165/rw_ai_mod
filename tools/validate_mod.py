@@ -413,7 +413,7 @@ VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "Anim
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel", "AIPersonaCore", "Hyperweave", "Bioferrite"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel", "AIPersonaCore", "Hyperweave", "Bioferrite", "Apparel_ShieldBelt"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -750,10 +750,10 @@ PETROCHEM_RECIPE_EXPECTATIONS = {
 }
 
 ELECTRONICS_RESOURCE_EXPECTATIONS = {
-    "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon", "tech": "Industrial"},
-    "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts", "tech": "Industrial"},
-    "MMT_IntegratedCircuit": {"label": "集成电路", "value": "55.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/IntegratedCircuit", "tech": "Industrial"},
-    "MMT_Microchip": {"label": "微芯片集成电路", "value": "100.0", "stack": "25", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/Microchip", "tech": "Spacer"},
+    "MMT_Silicon": {"label": "硅", "value": "4.0", "stack": "300", "flammable": "0", "tex": "Things/Item/MMT/MMT_Electronics/Silicon", "tech": "Industrial", "category": "ResourcesRaw"},
+    "MMT_ElectronicParts": {"label": "电子元件", "value": "25.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/ElectronicParts", "tech": "Industrial", "category": "MMT_ElectronicsCat"},
+    "MMT_IntegratedCircuit": {"label": "集成电路", "value": "55.0", "stack": "75", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/IntegratedCircuit", "tech": "Industrial", "category": "MMT_ElectronicsCat"},
+    "MMT_Microchip": {"label": "微芯片集成电路", "value": "100.0", "stack": "25", "flammable": "1.0", "tex": "Things/Item/MMT/MMT_Electronics/Microchip", "tech": "Spacer", "category": "MMT_ElectronicsCat"},
 }
 
 ELECTRONICS_TABLE_RECIPES = ["MMT_AssembleElectronicParts_Hand", "MMT_AssembleIC_Hand", "MMT_AssembleMicrochip_Hand"]
@@ -1254,7 +1254,31 @@ ELECTRIC_ELECTRONICS_TABLE_RECIPES = [
     "MMT_AssembleElectronicParts_Electric",
     "MMT_AssembleIC_Electric",
     "MMT_AssembleMicrochip_Electric",
+    "MMT_MakeHexcell",
+    "MMT_MakeRobotParts",
+    "MMT_MakeMineralSonarModule",
 ]
+
+ROBOTICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Robotics.xml"
+ROBOTICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Robotics.xml"
+
+ROBOTICS_ITEM_TEXTURES = [
+    f"1.7/Textures/Things/Item/MMT/MMT_{name}.png"
+    for name in ("Hexcell", "RobotParts", "MineralSonarModule")
+]
+
+ROBOTICS_RESOURCE_EXPECTATIONS = {
+    "MMT_Hexcell": {"label": "动力电池", "value": "150", "stack": "50", "flammable": "5", "tech": "Spacer", "tex": "Things/Item/MMT/MMT_Hexcell"},
+    "MMT_RobotParts": {"label": "机器人部件", "value": "70", "stack": "75", "flammable": "1", "tech": "Spacer", "tex": "Things/Item/MMT/MMT_RobotParts"},
+    "MMT_MineralSonarModule": {"label": "矿物声纳模块", "value": "300", "stack": "25", "flammable": "0.1", "tech": "Spacer", "tex": "Things/Item/MMT/MMT_MineralSonarModule"},
+}
+
+ROBOTICS_RECIPE_EXPECTATIONS = {
+    "MMT_MakeHexcell": {"work": "6000", "inputs": [("thingDefs", "MMT_MagneticMaterial", "2"), ("categories", "MMT_HCMBar", "4"), ("thingDefs", "MMT_Microchip", "1")], "products": {"MMT_Hexcell": "10"}, "skill": "14", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
+    "MMT_MakeRobotParts": {"work": "8000", "inputs": [("categories", "MMT_USLDBar", "60"), ("thingDefs", "MMT_AdvMechanism", "15")], "products": {"MMT_RobotParts": "25"}, "skill": "15", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
+    "MMT_MakeMineralSonarModule": {"work": "4800", "inputs": [("categories", "MMT_MetallicBar", "25"), ("thingDefs", "ComponentSpacer", "5"), ("thingDefs", "MMT_ElectronicParts", "10"), ("thingDefs", "MMT_Mechanism", "1")], "products": {"MMT_MineralSonarModule": "1"}, "skill": "10", "speed": "ElectronicCraftingSpeed", "effect": "ButcherMechanoid", "sound": "Recipe_ButcherCorpseMechanoid", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench", "MMT_ElectricElectronicsTable"]},
+    "MMT_DeconstructPersonalShield": {"work": "1000", "inputs": [("thingDefs", "Apparel_ShieldBelt", "1")], "products": {"ComponentSpacer": "8", "MMT_IntegratedCircuit": "1"}, "skill": "10", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"]},
+}
 
 ELECTRIC_ELECTRONICS_RECIPE_EXPECTATIONS = {
     "MMT_AssembleElectronicParts_Electric": {
@@ -1424,6 +1448,7 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeAdvMechanism_Electric",
     "MMT_MakeSpacerComponent",
     "MMT_MakeReinforcedConcrete_Electric",
+    "MMT_MakeMineralSonarModule",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
@@ -1470,7 +1495,7 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 25
+INFRA_RESEARCH_TOTAL = 26
 INFRA_WORKTABLE_TOTAL = 22
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
@@ -2532,7 +2557,7 @@ def validate_electronics_resources() -> None:
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "thingCategories"), [expected["category"]], f"{name} thingCategories")
         if node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
 
@@ -2548,7 +2573,15 @@ def validate_electronics_building() -> None:
     require_files([ELECTRONICS_RESEARCH_XML, ELECTRONICS_BUILDING_XML, *ELECTRONICS_BUILDING_TEXTURES])
 
     research_defs = def_map(parse_xml(ELECTRONICS_RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_BasicElectronics", "MMT_IntegratedCircuitTech"}, "电子研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_BasicElectronics", "MMT_IntegratedCircuitTech", "MMT_Robotics1"}, "电子研究 defName 集合")
+    robotics = research_defs["MMT_Robotics1"]
+    assert_equal(child_text(robotics, "label"), "机器人工程 I", "机器人工程研究 label")
+    assert_equal(child_text(robotics, "baseCost"), "2000", "机器人工程研究 baseCost")
+    assert_equal(child_text(robotics, "techLevel"), "Spacer", "机器人工程研究 techLevel")
+    assert_equal(child_text(robotics, "tab"), "MMT_ResearchTab", "机器人工程研究 tab")
+    assert_equal(li_values(robotics, "prerequisites"), ["MMT_BasicElectronics"], "机器人工程研究前置")
+    assert_equal(child_text(robotics, "researchViewX"), "22.00", "机器人工程研究 X 坐标")
+    assert_equal(child_text(robotics, "researchViewY"), "1.00", "机器人工程研究 Y 坐标")
     research = research_defs["MMT_BasicElectronics"]
     assert_equal(child_text(research, "label"), "基础电子工艺", "电子研究 label")
     assert_equal(child_text(research, "baseCost"), "1600", "电子研究 baseCost")
@@ -2681,10 +2714,133 @@ def validate_electronics_recipes() -> None:
     print("electronics-recipes: OK")
 
 
+def validate_robotics() -> None:
+    require_files([
+        ROBOTICS_RESOURCE_XML,
+        ROBOTICS_RECIPE_XML,
+        MATTER_RESOURCE_XML,
+        PARTS_RESOURCE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        ADVANCED_ALLOY_RESOURCE_XML,
+        PARTS_BUILDING_XML,
+        ELECTRIC_ELECTRONICS_BUILDING_XML,
+        *ROBOTICS_ITEM_TEXTURES,
+    ])
+
+    resource_defs = def_map(parse_xml(ROBOTICS_RESOURCE_XML))
+    assert_equal(set(resource_defs), set(ROBOTICS_RESOURCE_EXPECTATIONS), "机器人资源 defName 集合")
+    for name, expected in ROBOTICS_RESOURCE_EXPECTATIONS.items():
+        node = resource_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), ["MMT_ElectronicsCat"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+    if resource_defs["MMT_Hexcell"].find("./comps/li[@Class='CompProperties_Explosive']") is None:
+        fail("MMT_Hexcell 缺少爆炸组件")
+    assert_equal(child_text(resource_defs["MMT_Hexcell"], "useHitPoints"), "true", "动力电池 useHitPoints")
+
+    resource_names = (
+        set(resource_defs)
+        | set(def_map(parse_xml(MATTER_RESOURCE_XML)))
+        | set(def_map(parse_xml(PARTS_RESOURCE_XML)))
+        | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
+        | set(def_map(parse_xml(ADVANCED_ALLOY_RESOURCE_XML)))
+    )
+    allowed_categories = {"MMT_HCMBar", "MMT_USLDBar", "MMT_MetallicBar"}
+
+    bench_lists = {
+        "MMT_ElectricAssemblyBench": li_values(def_map(parse_xml(PARTS_BUILDING_XML))["MMT_ElectricAssemblyBench"], "recipes"),
+        "MMT_ElectricElectronicsTable": li_values(def_map(parse_xml(ELECTRIC_ELECTRONICS_BUILDING_XML))["MMT_ElectricElectronicsTable"], "recipes"),
+    }
+
+    recipe_defs = def_map(parse_xml(ROBOTICS_RECIPE_XML))
+    assert_equal(set(recipe_defs), set(ROBOTICS_RECIPE_EXPECTATIONS), "机器人配方 defName 集合")
+    for name, expected in ROBOTICS_RECIPE_EXPECTATIONS.items():
+        recipe = recipe_defs[name]
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
+        assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            categories = li_values(filter_node, "categories")
+            if bool(thing_defs) == bool(categories):
+                fail(f"{name} 每个输入 filter 必须且只能包含 thingDefs 或 categories 之一")
+            if thing_defs:
+                actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+            else:
+                actual_inputs.append(("categories", tuple(categories), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed_things = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_things = sorted({item for kind, value, _ in normalized if kind == "thingDefs" for item in value})
+        assert_equal(fixed_things, expected_things, f"{name} 固定输入列表")
+        fixed_categories = sorted(li_values(recipe, "./fixedIngredientFilter/categories"))
+        expected_categories = sorted({item for kind, value, _ in normalized if kind == "categories" for item in value})
+        assert_equal(fixed_categories, expected_categories, f"{name} 固定输入类别")
+
+        products = {node.tag: (node.text or "").strip() for node in recipe.findall("./products/*") if isinstance(node.tag, str)}
+        assert_equal(products, expected["products"], f"{name} 输出")
+
+        research = recipe.findtext("researchPrerequisite")
+        assert_equal(research.strip() if research else None, expected["research"], f"{name} researchPrerequisite")
+
+        users = li_values(recipe, "recipeUsers")
+        if "users" in expected:
+            assert_equal(users, expected["users"], f"{name} recipeUsers")
+        elif users:
+            fail(f"{name} 不应写 recipeUsers")
+
+        for bench in expected.get("benches", []):
+            if name not in bench_lists[bench]:
+                fail(f"{name} 未挂载到 {bench}")
+        if not expected.get("benches") and "users" not in expected:
+            fail(f"{name} 未声明挂载方式")
+
+        for kind, value, _ in normalized:
+            for item in value:
+                if kind == "thingDefs":
+                    if item not in resource_names | VANILLA_THINGS:
+                        fail(f"{name} 使用未知资源: {item}")
+                elif item not in allowed_categories:
+                    fail(f"{name} 使用未知类别: {item}")
+        for output_name in expected["products"]:
+            if output_name not in resource_names | VANILLA_THINGS:
+                fail(f"{name} 输出不是已知资源: {output_name}")
+
+    for path in ROBOTICS_ITEM_TEXTURES:
+        assert_png(path)
+
+    for path in (ROBOTICS_RESOURCE_XML, ROBOTICS_RECIPE_XML):
+        if "SK." in read_text(path):
+            fail(f"{path} 不得引用 SK 类型")
+    print("robotics: OK")
+
+
 def validate_electronics() -> None:
     validate_electronics_resources()
     validate_electronics_building()
     validate_electronics_recipes()
+    validate_robotics()
     print("electronics: OK")
 
 
@@ -3385,7 +3541,7 @@ def validate_parts() -> None:
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "thingCategories"), ["MMT_Parts"], f"{name} thingCategories")
         if node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
 
@@ -4589,6 +4745,7 @@ SUITES = {
     "electronics-building": validate_electronics_building,
     "electronics-recipes": validate_electronics_recipes,
     "electronics": validate_electronics,
+    "robotics": validate_robotics,
     "electric": validate_electric,
     "electric-wood": validate_electric_wood,
     "electric-petrochem": validate_electric_petrochem,
