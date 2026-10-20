@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 盐矿脉：对照 HSK MineableSalt（产量 150 / 散布 1.2 / 矿团 5~10） -->
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableSalt</defName>
+    <label>压实的盐</label>
+    <description>经长年压实形成的盐矿层，开采后可获得盐。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(199,201,197)</color>
+      <colorTwo>(240,242,237)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>900</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_Salt</mineableThing>
+      <mineableYield>150</mineableYield>
+      <mineableScatterCommonality>1.2</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>5~10</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <!-- 挖盐点：对照 HSK VG_SaltMine（1x1，需粗糙石面，免研究）；原版 Building_WorkTable 即可 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_SaltMine</defName>
+    <label>挖盐点</label>
+    <description>放置在粗糙的石面上，从中挖掘盐。费时费力。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_SaltMine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <statBases>
+      <WorkToBuild>2500</WorkToBuild>
+    </statBases>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <useHitPoints>False</useHitPoints>
+    <size>(1,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <useStuffTerrainAffordance>false</useStuffTerrainAffordance>
+    <terrainAffordanceNeeded>SmoothableStone</terrainAffordanceNeeded>
+    <passability>Standable</passability>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <recipes>
+      <li>MMT_MineSalt</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <building>
+      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+</Defs>

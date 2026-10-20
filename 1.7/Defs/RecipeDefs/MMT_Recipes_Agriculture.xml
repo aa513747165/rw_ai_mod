@@ -184,4 +184,21 @@
     <workSkill>Crafting</workSkill>
     <researchPrerequisite>MMT_ConcreteBasic</researchPrerequisite>
   </RecipeDef>
+
+  <!-- 挖盐：对照 HSK VG_Minesalt（无输入，工作量 1800，采矿技能） -->
+  <RecipeDef>
+    <defName>MMT_MineSalt</defName>
+    <label>挖掘盐</label>
+    <description>从粗糙的岩石中挖盐。工作量很大。产出 5。</description>
+    <jobString>正在挖盐。</jobString>
+    <workSpeedStat>MiningSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <workSkillLearnFactor>0.5</workSkillLearnFactor>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <workAmount>1800</workAmount>
+    <products>
+      <MMT_Salt>5</MMT_Salt>
+    </products>
+    <workSkill>Mining</workSkill>
+  </RecipeDef>
 </Defs>
