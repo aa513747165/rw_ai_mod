@@ -1149,6 +1149,45 @@ PARTS_RECIPE_EXPECTATIONS = {
     "MMT_MakeUltraComponent": {"work": "4500", "inputs": [("thingDefs", ("MMT_Tungsten", "MMT_Titanium"), "15"), ("thingDefs", ("MMT_StelliteAlloy", "MMT_PobediteAlloy"), "10"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_UltraComponent", "output_count": "10", "skill": "13", "research": "MMT_UltraComponents", "benches": ["MMT_RoboticAssembler"]},
 }
 
+INFRA_RESEARCH_TAB_XML = "1.7/Defs/ResearchProjectDefs/MMT_ResearchTab.xml"
+INFRA_DESIGNATION_XML = "1.7/Defs/ThingDefs_Buildings/MMT_DesignationCategory.xml"
+INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
+INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
+INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
+INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
+INFRA_RESEARCH_TOTAL = 18
+INFRA_WORKTABLE_TOTAL = 15
+INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
+INFRA_EXPECTED_CATEGORIES = {
+    "MMT_MetallicBar": "Manufactured",
+    "MMT_HCMBar": "MMT_MetallicBar",
+    "MMT_PRSBar": "MMT_MetallicBar",
+    "MMT_SLDBar": "MMT_MetallicBar",
+    "MMT_HeavyBar": "MMT_MetallicBar",
+    "MMT_USLDBar": "MMT_MetallicBar",
+    "MMT_USLDHBar": "MMT_MetallicBar",
+    "MMT_RARBar": "MMT_MetallicBar",
+    "MMT_RADBar": "MMT_MetallicBar",
+    "MMT_Coal": "ResourcesRaw",
+    "MMT_FuelCat": "Manufactured",
+    "MMT_Parts": "Manufactured",
+    "MMT_WeaponParts": "Manufactured",
+    "MMT_ElectronicsCat": "Manufactured",
+    "MMT_GlassCat": "Manufactured",
+    "MMT_SuperMaterialCat": "Manufactured",
+    "MMT_BTextiles": "Textiles",
+}
+INFRA_PATCH_TARGETS = {
+    "Steel": "MMT_SLDBar",
+    "Plasteel": "MMT_USLDBar",
+    "Gold": "MMT_PRSBar",
+    "Silver": "MMT_PRSBar",
+    "Uranium": "MMT_RADBar",
+    "ComponentIndustrial": "MMT_Parts",
+    "ComponentSpacer": "MMT_Parts",
+    "ComponentAdvanced": "MMT_Parts",
+}
+
 
 def fail(message: str) -> None:
     raise AssertionError(message)
@@ -3298,6 +3337,62 @@ def validate_precious() -> None:
     print("precious: OK")
 
 
+def validate_infrastructure() -> None:
+    require_files([INFRA_RESEARCH_TAB_XML, INFRA_DESIGNATION_XML, INFRA_CATEGORIES_XML, INFRA_PATCH_XML])
+
+    tab = parse_xml(INFRA_RESEARCH_TAB_XML).find("ResearchTabDef")
+    assert_equal(child_text(tab, "defName"), "MMT_ResearchTab", "研究标签 defName")
+    assert_equal(child_text(tab, "label"), "MMT 资源生产", "研究标签 label")
+
+    research_count = 0
+    for path in sorted((ROOT / INFRA_RESEARCH_DIR).glob("MMT_Research_*.xml")):
+        rel = path.relative_to(ROOT).as_posix()
+        for node in parse_xml(rel).findall("ResearchProjectDef"):
+            research_count += 1
+            assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{path.name} 研究 {child_text(node, 'defName')} tab")
+    assert_equal(research_count, INFRA_RESEARCH_TOTAL, "研究项目总数")
+
+    designation = parse_xml(INFRA_DESIGNATION_XML).find("DesignationCategoryDef")
+    assert_equal(child_text(designation, "defName"), "MMT_Production", "建筑分类 defName")
+    assert_equal(child_text(designation, "label"), "MMT 生产", "建筑分类 label")
+
+    worktable_count = 0
+    for path in sorted((ROOT / INFRA_BUILDING_DIR).glob("MMT_Buildings_*.xml")):
+        rel = path.relative_to(ROOT).as_posix()
+        for node in parse_xml(rel).findall("ThingDef"):
+            if node.findtext("defName") is None:
+                continue
+            if node.get("ParentName") == "RockBase":
+                if node.findtext("designationCategory") is not None:
+                    fail(f"{rel} 矿脉 {node.findtext('defName')} 不应有 designationCategory")
+                continue
+            worktable_count += 1
+            assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{rel} {node.findtext('defName')} designationCategory")
+    assert_equal(worktable_count, INFRA_WORKTABLE_TOTAL, "工作台建筑总数")
+
+    categories = def_map(parse_xml(INFRA_CATEGORIES_XML))
+    assert_equal(set(categories), set(INFRA_EXPECTED_CATEGORIES), "类别 defName 集合")
+    for name, expected_parent in INFRA_EXPECTED_CATEGORIES.items():
+        assert_equal(child_text(categories[name], "parent"), expected_parent, f"{name} parent")
+
+    patch_text = read_text(INFRA_PATCH_XML)
+    if "PatchOperationReplace" in patch_text or "PatchOperationRemove" in patch_text:
+        fail("类别 patch 只允许 PatchOperationAdd（追加语义）")
+    patch = parse_xml(INFRA_PATCH_XML)
+    ops = patch.findall("Operation")
+    seen = {}
+    for op in ops:
+        assert_equal(op.attrib.get("Class"), "PatchOperationAdd", "patch 操作类型")
+        xpath = child_text(op, "xpath")
+        target = xpath.split('defName="')[1].split('"')[0]
+        value = child_text(op, "value/li")
+        if value not in INFRA_EXPECTED_CATEGORIES:
+            fail(f"patch 引用了不存在的类别: {value}")
+        seen[target] = value
+    assert_equal(seen, INFRA_PATCH_TARGETS, "patch 目标与类别映射")
+    print("infrastructure: OK")
+
+
 def validate_all_xml() -> None:
     paths = [Path("About/About.xml"), Path("LoadFolders.xml")]
     defs_dir = ROOT / "1.7"
@@ -3310,6 +3405,7 @@ def validate_all_xml() -> None:
 
 def validate_all() -> None:
     validate_base()
+    validate_infrastructure()
     validate_resources()
     validate_building()
     validate_recipes()
@@ -3332,6 +3428,7 @@ def validate_all() -> None:
 
 SUITES = {
     "base": validate_base,
+    "infrastructure": validate_infrastructure,
     "resources": validate_resources,
     "building": validate_building,
     "recipes": validate_recipes,
