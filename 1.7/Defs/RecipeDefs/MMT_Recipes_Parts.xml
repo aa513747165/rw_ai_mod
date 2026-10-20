@@ -46,7 +46,12 @@
         <filter>
           <thingDefs>
             <li>Steel</li>
+            <li>MMT_Bronze</li>
             <li>MMT_CopperBar</li>
+            <li>MMT_TinBar</li>
+            <li>MMT_AluminiumBar</li>
+            <li>Silver</li>
+            <li>Gold</li>
           </thingDefs>
         </filter>
         <count>10</count>
@@ -55,7 +60,12 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Steel</li>
+        <li>MMT_Bronze</li>
         <li>MMT_CopperBar</li>
+        <li>MMT_TinBar</li>
+        <li>MMT_AluminiumBar</li>
+        <li>Silver</li>
+        <li>Gold</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -69,7 +79,7 @@
   <RecipeDef>
     <defName>MMT_MakeComponentIndustrial_Hand</defName>
     <label>组装普通零部件</label>
-    <description>将钢或玻璃钢组装成工业零件。产出 10。</description>
+    <description>将钢或合金锭组装成工业零件。产出 10。</description>
     <jobString>正在组装工业零件。</jobString>
     <workAmount>2000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -80,7 +90,9 @@
         <filter>
           <thingDefs>
             <li>Steel</li>
-            <li>Plasteel</li>
+            <li>MMT_Bronze</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_FerrosiliconAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -89,7 +101,9 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Steel</li>
-        <li>Plasteel</li>
+        <li>MMT_Bronze</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_FerrosiliconAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -106,7 +120,7 @@
   <RecipeDef>
     <defName>MMT_MakeComponentIndustrial_Electric</defName>
     <label>组装普通零部件</label>
-    <description>将钢或玻璃钢组装成工业零件。产出 10。</description>
+    <description>将钢或合金锭组装成工业零件。产出 10。</description>
     <jobString>正在组装工业零件。</jobString>
     <workAmount>2000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -117,7 +131,9 @@
         <filter>
           <thingDefs>
             <li>Steel</li>
-            <li>Plasteel</li>
+            <li>MMT_Bronze</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_FerrosiliconAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -126,7 +142,9 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Steel</li>
-        <li>Plasteel</li>
+        <li>MMT_Bronze</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_FerrosiliconAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -213,7 +231,7 @@
   <RecipeDef>
     <defName>MMT_MakeMechanism_Hand</defName>
     <label>组装机械组件</label>
-    <description>用钢和工业零件组装机构件。产出 5。</description>
+    <description>用钢或合金和工业零件组装机构件。产出 5。</description>
     <jobString>正在组装机构件。</jobString>
     <workAmount>1800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -224,6 +242,8 @@
         <filter>
           <thingDefs>
             <li>Steel</li>
+            <li>MMT_Bronze</li>
+            <li>MMT_FerrosiliconAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -240,6 +260,8 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Steel</li>
+        <li>MMT_Bronze</li>
+        <li>MMT_FerrosiliconAlloy</li>
         <li>ComponentIndustrial</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -257,7 +279,7 @@
   <RecipeDef>
     <defName>MMT_MakeMechanism_Electric</defName>
     <label>组装机械组件</label>
-    <description>用钢和工业零件组装机构件。产出 10。</description>
+    <description>用钢或合金和工业零件组装机构件。产出 10。</description>
     <jobString>正在组装机构件。</jobString>
     <workAmount>1800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -268,6 +290,8 @@
         <filter>
           <thingDefs>
             <li>Steel</li>
+            <li>MMT_Bronze</li>
+            <li>MMT_FerrosiliconAlloy</li>
           </thingDefs>
         </filter>
         <count>60</count>
@@ -284,6 +308,8 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Steel</li>
+        <li>MMT_Bronze</li>
+        <li>MMT_FerrosiliconAlloy</li>
         <li>ComponentIndustrial</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -301,7 +327,7 @@
   <RecipeDef>
     <defName>MMT_MakeComponentSpacer_Hand</defName>
     <label>组装高级零部件</label>
-    <description>将玻璃钢加工成高级零件。产出 10。</description>
+    <description>将玻璃钢或高级合金加工成高级零件。产出 10。</description>
     <jobString>正在组装高级零件。</jobString>
     <workAmount>2500</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -312,6 +338,10 @@
         <filter>
           <thingDefs>
             <li>Plasteel</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_Titanium</li>
+            <li>MMT_NitinolAlloy</li>
+            <li>MMT_AlnicoAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -320,6 +350,10 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_Titanium</li>
+        <li>MMT_NitinolAlloy</li>
+        <li>MMT_AlnicoAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -336,7 +370,7 @@
   <RecipeDef>
     <defName>MMT_MakeComponentSpacer_Electric</defName>
     <label>组装高级零部件</label>
-    <description>将玻璃钢加工成高级零件。产出 10。</description>
+    <description>将玻璃钢或高级合金加工成高级零件。产出 10。</description>
     <jobString>正在组装高级零件。</jobString>
     <workAmount>2500</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -347,6 +381,10 @@
         <filter>
           <thingDefs>
             <li>Plasteel</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_Titanium</li>
+            <li>MMT_NitinolAlloy</li>
+            <li>MMT_AlnicoAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -355,6 +393,10 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_Titanium</li>
+        <li>MMT_NitinolAlloy</li>
+        <li>MMT_AlnicoAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -371,7 +413,7 @@
   <RecipeDef>
     <defName>MMT_MakeAdvMechanism_Hand</defName>
     <label>组装先进机械组件</label>
-    <description>用玻璃钢、高级零件和合成纤维组装高级机构件。产出 5。</description>
+    <description>用玻璃钢或高级合金、高级零件和合成纤维组装高级机构件。产出 5。</description>
     <jobString>正在组装高级机构件。</jobString>
     <workAmount>3200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -382,6 +424,10 @@
         <filter>
           <thingDefs>
             <li>Plasteel</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_Titanium</li>
+            <li>MMT_NitinolAlloy</li>
+            <li>MMT_AlnicoAlloy</li>
           </thingDefs>
         </filter>
         <count>30</count>
@@ -406,6 +452,10 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_Titanium</li>
+        <li>MMT_NitinolAlloy</li>
+        <li>MMT_AlnicoAlloy</li>
         <li>ComponentSpacer</li>
         <li>MMT_SyntheticFibers</li>
       </thingDefs>
@@ -424,7 +474,7 @@
   <RecipeDef>
     <defName>MMT_MakeAdvMechanism_Electric</defName>
     <label>组装先进机械组件</label>
-    <description>用玻璃钢、高级零件和合成纤维组装高级机构件。产出 10。</description>
+    <description>用玻璃钢或高级合金、高级零件和合成纤维组装高级机构件。产出 10。</description>
     <jobString>正在组装高级机构件。</jobString>
     <workAmount>3200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -435,6 +485,10 @@
         <filter>
           <thingDefs>
             <li>Plasteel</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_Titanium</li>
+            <li>MMT_NitinolAlloy</li>
+            <li>MMT_AlnicoAlloy</li>
           </thingDefs>
         </filter>
         <count>60</count>
@@ -459,6 +513,10 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_Titanium</li>
+        <li>MMT_NitinolAlloy</li>
+        <li>MMT_AlnicoAlloy</li>
         <li>ComponentSpacer</li>
         <li>MMT_SyntheticFibers</li>
       </thingDefs>
@@ -477,7 +535,7 @@
   <RecipeDef>
     <defName>MMT_MakeSpacerComponent</defName>
     <label>组装高级零部件</label>
-    <description>用玻璃钢和贵金属组装太空零件。产出 10。</description>
+    <description>用玻璃钢或高级合金和贵金属组装太空零件。产出 10。</description>
     <jobString>正在组装太空零件。</jobString>
     <workAmount>3500</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -488,6 +546,10 @@
         <filter>
           <thingDefs>
             <li>Plasteel</li>
+            <li>MMT_SteelBar</li>
+            <li>MMT_Titanium</li>
+            <li>MMT_NitinolAlloy</li>
+            <li>MMT_AlnicoAlloy</li>
           </thingDefs>
         </filter>
         <count>25</count>
@@ -505,6 +567,10 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Plasteel</li>
+        <li>MMT_SteelBar</li>
+        <li>MMT_Titanium</li>
+        <li>MMT_NitinolAlloy</li>
+        <li>MMT_AlnicoAlloy</li>
         <li>Silver</li>
         <li>Gold</li>
       </thingDefs>

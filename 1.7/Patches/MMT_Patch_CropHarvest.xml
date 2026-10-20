@@ -3,6 +3,7 @@
   <!-- B8 作物 patch：对照 HSK AutoGenPatches（棉花/恶魔菇/竹/棕榈）。仅改农艺数值与收获物，不换贴图（保持原版外观）。Replace/Add 按原版解析后节点是否存在选择 -->
 
   <!-- 棉花：产原棉，对照 HSK 数值（5.6 天/×8/播种技能 5/肥敏 1/肥需 0.5） -->
+  <!-- 注意：patch 在 XML 继承解析之前执行，Replace 只能改 def 自身已有的节点；没有的节点（如原版棉花缺 fertilitySensitivity/fertilityMin、树缺 harvestedThingDef）必须用 Add，添加的自身节点在继承解析时覆盖父类值 -->
   <Operation Class="PatchOperationReplace">
     <xpath>Defs/ThingDef[defName="Plant_Cotton"]/plant/harvestedThingDef</xpath>
     <value>
@@ -21,21 +22,11 @@
       <growDays>5.6</growDays>
     </value>
   </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_Cotton"]/plant/fertilitySensitivity</xpath>
-    <value>
-      <fertilitySensitivity>1</fertilitySensitivity>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_Cotton"]/plant/fertilityMin</xpath>
-    <value>
-      <fertilityMin>0.5</fertilityMin>
-    </value>
-  </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="Plant_Cotton"]/plant</xpath>
     <value>
+      <fertilitySensitivity>1</fertilitySensitivity>
+      <fertilityMin>0.5</fertilityMin>
       <sowMinSkill>5</sowMinSkill>
     </value>
   </Operation>
@@ -65,8 +56,8 @@
       <sowMinSkill>7</sowMinSkill>
     </value>
   </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_Devilstrand"]/plant/fertilitySensitivity</xpath>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Plant_Devilstrand"]/plant</xpath>
     <value>
       <fertilitySensitivity>0.4</fertilitySensitivity>
     </value>
@@ -78,51 +69,27 @@
     </value>
   </Operation>
 
-  <!-- 竹（原版 Plant_TreeBamboo）：产竹节，对照 HSK patch（4 天/×10/技能 2/肥敏 1/肥需 0.15，可水培） -->
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/harvestedThingDef</xpath>
-    <value>
-      <harvestedThingDef>MMT_Bamboo</harvestedThingDef>
-    </value>
-  </Operation>
+  <!-- 竹（原版 Plant_TreeBamboo）：产竹节，对照 HSK patch（4 天/×10/技能 2/肥敏 1/肥需 0.15，可水培）。树类 def 自身没有 harvestedThingDef/fertilityMin/sowMinSkill/sowTags 等节点（在 TreeBase 上），一律用 Add -->
   <Operation Class="PatchOperationReplace">
     <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/growDays</xpath>
     <value>
       <growDays>4</growDays>
     </value>
   </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/fertilitySensitivity</xpath>
-    <value>
-      <fertilitySensitivity>1</fertilitySensitivity>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/fertilityMin</xpath>
-    <value>
-      <fertilityMin>0.15</fertilityMin>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/sowMinSkill</xpath>
-    <value>
-      <sowMinSkill>2</sowMinSkill>
-    </value>
-  </Operation>
   <Operation Class="PatchOperationAdd">
-    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant/sowTags</xpath>
+    <xpath>Defs/ThingDef[defName="Plant_TreeBamboo"]/plant</xpath>
     <value>
-      <li>Hydroponic</li>
+      <harvestedThingDef>MMT_Bamboo</harvestedThingDef>
+      <fertilitySensitivity>1</fertilitySensitivity>
+      <fertilityMin>0.15</fertilityMin>
+      <sowMinSkill>2</sowMinSkill>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
     </value>
   </Operation>
 
   <!-- 棕榈树（原版 Plant_TreePalm）：产椰子，对照 HSK patch（12 天/×22/技能 9/肥敏 0.25/肥需 0.03/收获工作 550） -->
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant/harvestedThingDef</xpath>
-    <value>
-      <harvestedThingDef>MMT_RawCoconut</harvestedThingDef>
-    </value>
-  </Operation>
   <Operation Class="PatchOperationReplace">
     <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant/harvestYield</xpath>
     <value>
@@ -141,21 +108,12 @@
       <harvestWork>550</harvestWork>
     </value>
   </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant/fertilitySensitivity</xpath>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant</xpath>
     <value>
+      <harvestedThingDef>MMT_RawCoconut</harvestedThingDef>
       <fertilitySensitivity>0.25</fertilitySensitivity>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant/fertilityMin</xpath>
-    <value>
       <fertilityMin>0.03</fertilityMin>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
-    <xpath>Defs/ThingDef[defName="Plant_TreePalm"]/plant/sowMinSkill</xpath>
-    <value>
       <sowMinSkill>9</sowMinSkill>
     </value>
   </Operation>

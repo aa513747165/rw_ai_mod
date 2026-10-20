@@ -7,7 +7,7 @@
     <description>将各类原材料加工转化为无机物。产出 150。</description>
     <jobString>正在转化无机物。</jobString>
     <workAmount>10000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -43,7 +43,7 @@
     <description>将无机物还原为铁矿石。产出 100。</description>
     <jobString>正在转化铁矿石。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -78,7 +78,7 @@
     <description>将无机物还原为铜矿。产出 100。</description>
     <jobString>正在转化铜矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -113,7 +113,7 @@
     <description>将无机物还原为锡矿。产出 100。</description>
     <jobString>正在转化锡矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -148,7 +148,7 @@
     <description>将无机物还原为铅矾矿。产出 100。</description>
     <jobString>正在转化铅矾矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -183,7 +183,7 @@
     <description>将无机物还原为铝土矿。产出 80。</description>
     <jobString>正在转化铝土矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -218,7 +218,7 @@
     <description>将无机物还原为镍矿。产出 20。</description>
     <jobString>正在转化镍矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -253,7 +253,7 @@
     <description>将无机物还原为钛铁矿。产出 20。</description>
     <jobString>正在转化钛铁矿。</jobString>
     <workAmount>15000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -288,7 +288,7 @@
     <description>将无机物还原为金矿。产出 20。</description>
     <jobString>正在转化金矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -323,7 +323,7 @@
     <description>将无机物还原为银矿。产出 300。</description>
     <jobString>正在转化银矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -358,7 +358,7 @@
     <description>将无机物还原为铀矿。产出 50。</description>
     <jobString>正在转化铀矿。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -393,7 +393,7 @@
     <description>将无机物还原为聚合物。产出 100。</description>
     <jobString>正在转化聚合物。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -428,7 +428,7 @@
     <description>将无机物还原为石蜡。产出 100。</description>
     <jobString>正在转化石蜡。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>
@@ -463,7 +463,7 @@
     <description>将无机物还原为硫酸盐。产出 100。</description>
     <jobString>正在转化硫酸盐。</jobString>
     <workAmount>12000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>

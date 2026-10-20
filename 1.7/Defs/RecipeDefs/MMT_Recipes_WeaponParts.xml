@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- B8 武器部件配方：对照 HSK Recipes_WeaponComponents.xml（workSpeedStat=SmithingSpeed 原版同款；effectWorking=Smith、soundWorking=Recipe_Machining）。挂载经建筑 recipes 列表（MMT_Buildings_WeaponParts.xml）。HSK 的 [轻合金]或[超轻合金] 单过滤器映射 categories=[MMT_SLDBar]+[MMT_USLDBar] -->
+  <!-- B8 武器部件配方：对照 HSK Recipes_WeaponComponents.xml（workSpeedStat=MMT_SmithingSpeed（移植 HSK 同名属性）；effectWorking=Smith、soundWorking=Recipe_Machining）。挂载经建筑 recipes 列表（MMT_Buildings_WeaponParts.xml）。HSK 的 [轻合金]或[超轻合金] 单过滤器映射 categories=[MMT_SLDBar]+[MMT_USLDBar] -->
 
   <!-- 武器部件：对照 HSK MakeWeapon_Parts -->
   <RecipeDef>
@@ -9,7 +9,7 @@
     <description>制造通用武器部件。产出 5。</description>
     <jobString>正在制造武器部件。</jobString>
     <workAmount>1500</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -65,7 +65,7 @@
     <description>制造手枪部件。产出 1。</description>
     <jobString>正在制造手枪部件。</jobString>
     <workAmount>1200</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -141,7 +141,7 @@
     <description>制造冲锋枪部件。产出 1。</description>
     <jobString>正在制造冲锋枪部件。</jobString>
     <workAmount>1800</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -217,7 +217,7 @@
     <description>制造霰弹枪部件。产出 1。</description>
     <jobString>正在制造霰弹枪部件。</jobString>
     <workAmount>1800</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -293,7 +293,7 @@
     <description>制造步枪部件。产出 1。</description>
     <jobString>正在制造步枪部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -369,7 +369,7 @@
     <description>制造狙击枪部件。产出 1。</description>
     <jobString>正在制造狙击枪部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -423,7 +423,7 @@
     <description>制造先进步枪部件。产出 1。</description>
     <jobString>正在制造先进步枪部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -495,7 +495,7 @@
     <description>制造先进狙击枪部件。产出 1。</description>
     <jobString>正在制造先进狙击枪部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -576,7 +576,7 @@
     <description>制造重型武器部件。产出 1。</description>
     <jobString>正在制造重型武器部件。</jobString>
     <workAmount>2800</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -652,7 +652,7 @@
     <description>制造火炮武器部件。产出 1。</description>
     <jobString>正在制造火炮武器部件。</jobString>
     <workAmount>3100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -710,7 +710,7 @@
     <description>制造发射器部件。产出 1。</description>
     <jobString>正在制造发射器部件。</jobString>
     <workAmount>3100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -773,7 +773,7 @@
     <description>制造电荷武器部件。产出 1。</description>
     <jobString>正在制造电荷武器部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -838,7 +838,7 @@
     <description>制造光束武器部件。产出 1。</description>
     <jobString>正在制造光束武器部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -903,7 +903,7 @@
     <description>制造离子武器部件。产出 1。</description>
     <jobString>正在制造离子武器部件。</jobString>
     <workAmount>2100</workAmount>
-    <workSpeedStat>SmithingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_SmithingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>

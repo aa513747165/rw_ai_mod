@@ -132,7 +132,7 @@
     <description>组装一枚生物电子元件，用于高端电子设备与仿生体。产出 1。</description>
     <jobString>正在组装生物电子元件。</jobString>
     <workAmount>7000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <recipeUsers>
@@ -189,7 +189,7 @@
     <description>拆解一枚伪人格核心，获得高科技合金材料。</description>
     <jobString>正在拆解伪人格核心。</jobString>
     <workAmount>4000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <recipeUsers>
@@ -327,7 +327,7 @@
     <description>以无机物为原料，在强电磁约束下对撞制备微量反物质。产出 2。</description>
     <jobString>正在制备反物质。</jobString>
     <workAmount>10000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smelt</effectWorking>
     <soundWorking>Recipe_Smelt</soundWorking>
     <ingredients>

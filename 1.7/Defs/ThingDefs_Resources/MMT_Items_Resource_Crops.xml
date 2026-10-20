@@ -85,6 +85,7 @@
       <MarketValue>2</MarketValue>
       <Flammability>4.0</Flammability>
       <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.1</Mass>
     </statBases>
     <thingCategories>
       <li>PlantMatter</li>
@@ -241,8 +242,10 @@
     <statBases>
       <MarketValue>6</MarketValue>
       <Nutrition>0.25</Nutrition>
+      <Mass>0.5</Mass>
     </statBases>
     <tickerType>Rare</tickerType>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <comps>
       <li Class="CompProperties_Rottable">
         <daysToRotStart>10</daysToRotStart>
@@ -250,7 +253,12 @@
       </li>
     </comps>
     <ingestible>
+      <foodType>VegetableOrFruit</foodType>
+      <preferability>RawTasty</preferability>
       <joy>0.08</joy>
+      <joyKind>Gluttonous</joyKind>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
     </ingestible>
     <thingCategories>
       <li>PlantFoodRaw</li>
@@ -273,8 +281,10 @@
       <DeteriorationRate>5</DeteriorationRate>
       <Flammability>5</Flammability>
       <Nutrition>0.01</Nutrition>
+      <Mass>0.05</Mass>
     </statBases>
     <useHitPoints>true</useHitPoints>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <ingestible>
       <foodType>Plant, VegetableOrFruit</foodType>
       <preferability>RawBad</preferability>
@@ -311,8 +321,10 @@
       <DeteriorationRate>5</DeteriorationRate>
       <Flammability>5</Flammability>
       <Nutrition>0.01</Nutrition>
+      <Mass>0.05</Mass>
     </statBases>
     <useHitPoints>true</useHitPoints>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <ingestible>
       <foodType>Plant, VegetableOrFruit</foodType>
       <preferability>RawBad</preferability>
@@ -349,8 +361,10 @@
       <DeteriorationRate>5</DeteriorationRate>
       <Flammability>5</Flammability>
       <Nutrition>0.05</Nutrition>
+      <Mass>0.05</Mass>
     </statBases>
     <useHitPoints>true</useHitPoints>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <ingestible>
       <foodType>Plant, VegetableOrFruit</foodType>
       <preferability>RawBad</preferability>

@@ -1219,6 +1219,7 @@ ELECTRIC_ELECTRONICS_BUILDING_TEXTURES = [
 CROPS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Crops.xml"
 CROPS_PLANT_XML = "1.7/Defs/ThingDefs_Plants/MMT_Plants_Cultivated.xml"
 CROPS_PATCH_XML = "1.7/Patches/MMT_Patch_CropHarvest.xml"
+STATS_XML = "1.7/Defs/StatDefs/MMT_Stats_WorkRecipes.xml"
 INSECT_CHITIN_PATCH_XML = "1.7/Patches/MMT_Patch_InsectChitin.xml"
 TEXTILES_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Textiles.xml"
 TEXTILES_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Textiles.xml"
@@ -1231,13 +1232,13 @@ CROPS_RESOURCE_EXPECTATIONS = {
     "MMT_RawCotton": {"label": "原棉", "value": "1.5", "stack": "300", "categories": ["PlantMatter"]},
     "MMT_RawFlax": {"label": "生亚麻", "value": "3.5", "stack": "300", "categories": ["PlantMatter"]},
     "MMT_RawDevilstrand": {"label": "生恶魔菇", "value": "6.4", "stack": "150", "categories": ["PlantMatter"]},
-    "MMT_RawCaoutchouc": {"label": "天然橡胶", "value": "2", "categories": ["PlantMatter"]},
+    "MMT_RawCaoutchouc": {"label": "天然橡胶", "value": "2", "categories": ["PlantMatter"], "mass": "0.1"},
     "MMT_Bamboo": {"label": "竹节", "value": "2.0", "stack": "300", "categories": ["ResourcesRaw"]},
     "MMT_RedWoodLog": {"label": "红木", "value": "2.0", "stack": "300", "categories": ["ResourcesRaw"]},
-    "MMT_RawCoconut": {"label": "椰子", "value": "6", "categories": ["PlantFoodRaw"]},
-    "MMT_WildRose": {"label": "野玫瑰", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
-    "MMT_Hypericum": {"label": "金丝桃", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
-    "MMT_MintLeaves": {"label": "薄荷叶", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"]},
+    "MMT_RawCoconut": {"label": "椰子", "value": "6", "categories": ["PlantFoodRaw"], "mass": "0.5", "food": True},
+    "MMT_WildRose": {"label": "野玫瑰", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"], "mass": "0.05", "food": True},
+    "MMT_Hypericum": {"label": "金丝桃", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"], "mass": "0.05", "food": True},
+    "MMT_MintLeaves": {"label": "薄荷叶", "value": "2", "stack": "75", "categories": ["PlantFoodRaw"], "mass": "0.05", "food": True},
 }
 
 CROPS_PLANT_EXPECTATIONS = {
@@ -1451,11 +1452,11 @@ MATTER_RECIPE_EXPECTATIONS = {
 TOP_MATERIALS_RECIPE_EXPECTATIONS = {
     "MMT_BuildMagneticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Matter", "30"), ("thingDefs", "MMT_Sulphates", "15"), ("categories", "MMT_USLDBar", "10"), ("categories", "MMT_SLDBar", "5")], "output": "MMT_MagneticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
     "MMT_BuildBiosyntheticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Biomatter", "15"), ("thingDefs", "MMT_SyntheticFibers", "9"), ("thingDefs", "MMT_Plastic", "30")], "output": "MMT_BiosyntheticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
-    "MMT_MakeBioelectronicDevices": {"work": "7000", "inputs": [("thingDefs", "MMT_Biomatter", "60"), ("thingDefs", "Hyperweave", "15"), ("thingDefs", "MMT_Microchip", "2")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "18", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
-    "MMT_DisassembleAIPersonaCore": {"work": "4000", "inputs": [("thingDefs", "AIPersonaCore", "1")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "16", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"], "extra_products": {"MMT_AlphaPoly": "30", "MMT_CarbonAlloy": "40"}},
+    "MMT_MakeBioelectronicDevices": {"work": "7000", "inputs": [("thingDefs", "MMT_Biomatter", "60"), ("thingDefs", "Hyperweave", "15"), ("thingDefs", "MMT_Microchip", "2")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "18", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
+    "MMT_DisassembleAIPersonaCore": {"work": "4000", "inputs": [("thingDefs", "AIPersonaCore", "1")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"], "extra_products": {"MMT_AlphaPoly": "30", "MMT_CarbonAlloy": "40"}},
     "MMT_ProduceAPoly": {"work": "8000", "inputs": [("thingDefs", "MMT_DepletedUranium", "5"), ("thingDefs", "MMT_CarbonAlloy", "5"), ("thingDefs", "MMT_Antimatter", "3")], "output": "MMT_AlphaPoly", "output_count": "15", "skill": "19", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_ProduceBPoly": {"work": "12000", "inputs": [("thingDefs", "MMT_AlphaPoly", "3"), ("thingDefs", "MMT_BiosyntheticMaterial", "5")], "output": "MMT_BetaPoly", "output_count": "5", "skill": "20", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
-    "MMT_MakeAntimatter": {"work": "10000", "inputs": [("thingDefs", "MMT_Matter", "50"), ("thingDefs", "Uranium", "20")], "output": "MMT_Antimatter", "output_count": "2", "skill": "15", "speed": "ElectronicCraftingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
+    "MMT_MakeAntimatter": {"work": "10000", "inputs": [("thingDefs", "MMT_Matter", "50"), ("thingDefs", "Uranium", "20")], "output": "MMT_Antimatter", "output_count": "2", "skill": "15", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_ExtractBiomatterCorpse": {"work": "6000", "inputs": [("categories", "Corpses", "1")], "output": "MMT_Biomatter", "output_count": "20", "skill": "8", "speed": "DrugSynthesisSpeed", "effect": "Cook", "sound": "Recipe_Smelt", "research": "MMT_MatterConversion1"},
     "MMT_ExtractBiomatterMeat": {"work": "4000", "inputs": [("categories", "MeatRaw", "40")], "output": "MMT_Biomatter", "output_count": "20", "skill": "8", "speed": "DrugSynthesisSpeed", "effect": "Cook", "sound": "Recipe_Smelt", "research": "MMT_MatterConversion1"},
     "MMT_MakeBioferriteAlloy": {"work": "2100", "inputs": [("thingDefs", "Bioferrite", "10"), ("thingDefs", "MMT_IronOre", "10"), ("categories", "MMT_Coal", "5")], "output": "MMT_BioferriteAlloy", "output_count": "10", "skill": "9", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "BioferriteShaping", "users": ["BioferriteShaper"]},
@@ -1486,10 +1487,10 @@ ROBOTICS_RESOURCE_EXPECTATIONS = {
 }
 
 ROBOTICS_RECIPE_EXPECTATIONS = {
-    "MMT_MakeHexcell": {"work": "6000", "inputs": [("thingDefs", "MMT_MagneticMaterial", "2"), ("categories", "MMT_HCMBar", "4"), ("thingDefs", "MMT_Microchip", "1")], "products": {"MMT_Hexcell": "10"}, "skill": "14", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
-    "MMT_MakeRobotParts": {"work": "8000", "inputs": [("categories", "MMT_USLDBar", "60"), ("thingDefs", "MMT_AdvMechanism", "15")], "products": {"MMT_RobotParts": "25"}, "skill": "15", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
-    "MMT_MakeMineralSonarModule": {"work": "4800", "inputs": [("categories", "MMT_MetallicBar", "25"), ("thingDefs", "ComponentSpacer", "5"), ("thingDefs", "MMT_ElectronicParts", "10"), ("thingDefs", "MMT_Mechanism", "1")], "products": {"MMT_MineralSonarModule": "1"}, "skill": "10", "speed": "ElectronicCraftingSpeed", "effect": "ButcherMechanoid", "sound": "Recipe_ButcherCorpseMechanoid", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench", "MMT_ElectricElectronicsTable"]},
-    "MMT_DeconstructPersonalShield": {"work": "1000", "inputs": [("thingDefs", "Apparel_ShieldBelt", "1")], "products": {"ComponentSpacer": "8", "MMT_IntegratedCircuit": "1"}, "skill": "10", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"]},
+    "MMT_MakeHexcell": {"work": "6000", "inputs": [("thingDefs", "MMT_MagneticMaterial", "2"), ("categories", "MMT_HCMBar", "4"), ("thingDefs", "MMT_Microchip", "1")], "products": {"MMT_Hexcell": "10"}, "skill": "14", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
+    "MMT_MakeRobotParts": {"work": "8000", "inputs": [("categories", "MMT_USLDBar", "60"), ("thingDefs", "MMT_AdvMechanism", "15")], "products": {"MMT_RobotParts": "25"}, "skill": "15", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_Robotics1", "benches": ["MMT_ElectricElectronicsTable"]},
+    "MMT_MakeMineralSonarModule": {"work": "4800", "inputs": [("categories", "MMT_MetallicBar", "25"), ("thingDefs", "ComponentSpacer", "5"), ("thingDefs", "MMT_ElectronicParts", "10"), ("thingDefs", "MMT_Mechanism", "1")], "products": {"MMT_MineralSonarModule": "1"}, "skill": "10", "speed": "MMT_ElectronicCraftingSpeed", "effect": "ButcherMechanoid", "sound": "Recipe_ButcherCorpseMechanoid", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench", "MMT_ElectricElectronicsTable"]},
+    "MMT_DeconstructPersonalShield": {"work": "1000", "inputs": [("thingDefs", "Apparel_ShieldBelt", "1")], "products": {"ComponentSpacer": "8", "MMT_IntegratedCircuit": "1"}, "skill": "10", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"]},
 }
 
 ELECTRIC_ELECTRONICS_RECIPE_EXPECTATIONS = {
@@ -1686,18 +1687,18 @@ PARTS_BUILDING_EXPECTATIONS = {
 
 PARTS_RECIPE_EXPECTATIONS = {
     "MMT_MakeComponentMedieval_Wood": {"work": "900", "inputs": [("thingDefs", "WoodLog", "20")], "output": "MMT_ComponentMedieval", "output_count": "10", "skill": None, "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench", "MMT_ElectricAssemblyBench"]},
-    "MMT_MakeComponentMedieval_Metal": {"work": "900", "inputs": [("thingDefs", ("Steel", "MMT_CopperBar"), "10")], "output": "MMT_ComponentMedieval", "output_count": "10", "skill": None, "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench", "MMT_ElectricAssemblyBench"]},
-    "MMT_MakeComponentIndustrial_Hand": {"work": "2000", "inputs": [("thingDefs", ("Steel", "Plasteel"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeComponentIndustrial_Electric": {"work": "2000", "inputs": [("thingDefs", ("Steel", "Plasteel"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentMedieval_Metal": {"work": "900", "inputs": [("thingDefs", ("Steel", "MMT_Bronze", "MMT_CopperBar", "MMT_TinBar", "MMT_AluminiumBar", "Silver", "Gold"), "10")], "output": "MMT_ComponentMedieval", "output_count": "10", "skill": None, "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench", "MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentIndustrial_Hand": {"work": "2000", "inputs": [("thingDefs", ("Steel", "MMT_Bronze", "MMT_SteelBar", "MMT_FerrosiliconAlloy"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeComponentIndustrial_Electric": {"work": "2000", "inputs": [("thingDefs", ("Steel", "MMT_Bronze", "MMT_SteelBar", "MMT_FerrosiliconAlloy"), "30")], "output": "ComponentIndustrial", "output_count": "10", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
     "MMT_MakeWire_Hand": {"work": "800", "inputs": [("thingDefs", "MMT_CopperBar", "10")], "output": "MMT_Wire", "output_count": "20", "skill": "3", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
     "MMT_MakeWire_Electric": {"work": "800", "inputs": [("thingDefs", "MMT_CopperBar", "20")], "output": "MMT_Wire", "output_count": "40", "skill": "6", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeMechanism_Hand": {"work": "1800", "inputs": [("thingDefs", "Steel", "30"), ("thingDefs", "ComponentIndustrial", "10")], "output": "MMT_Mechanism", "output_count": "5", "skill": "4", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeMechanism_Electric": {"work": "1800", "inputs": [("thingDefs", "Steel", "60"), ("thingDefs", "ComponentIndustrial", "20")], "output": "MMT_Mechanism", "output_count": "10", "skill": "7", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeComponentSpacer_Hand": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeComponentSpacer_Electric": {"work": "2500", "inputs": [("thingDefs", "Plasteel", "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeAdvMechanism_Hand": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "30"), ("thingDefs", "ComponentSpacer", "10"), ("thingDefs", "MMT_SyntheticFibers", "5")], "output": "MMT_AdvMechanism", "output_count": "5", "skill": "13", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
-    "MMT_MakeAdvMechanism_Electric": {"work": "3200", "inputs": [("thingDefs", "Plasteel", "60"), ("thingDefs", "ComponentSpacer", "20"), ("thingDefs", "MMT_SyntheticFibers", "10")], "output": "MMT_AdvMechanism", "output_count": "10", "skill": "16", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
-    "MMT_MakeSpacerComponent": {"work": "3500", "inputs": [("thingDefs", "Plasteel", "25"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_SpacerComponent", "output_count": "10", "skill": "9", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeMechanism_Hand": {"work": "1800", "inputs": [("thingDefs", ("Steel", "MMT_Bronze", "MMT_FerrosiliconAlloy"), "30"), ("thingDefs", "ComponentIndustrial", "10")], "output": "MMT_Mechanism", "output_count": "5", "skill": "4", "research": "MMT_ComponentCrafting", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeMechanism_Electric": {"work": "1800", "inputs": [("thingDefs", ("Steel", "MMT_Bronze", "MMT_FerrosiliconAlloy"), "60"), ("thingDefs", "ComponentIndustrial", "20")], "output": "MMT_Mechanism", "output_count": "10", "skill": "7", "research": "MMT_ComponentCrafting", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeComponentSpacer_Hand": {"work": "2500", "inputs": [("thingDefs", ("Plasteel", "MMT_SteelBar", "MMT_Titanium", "MMT_NitinolAlloy", "MMT_AlnicoAlloy"), "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeComponentSpacer_Electric": {"work": "2500", "inputs": [("thingDefs", ("Plasteel", "MMT_SteelBar", "MMT_Titanium", "MMT_NitinolAlloy", "MMT_AlnicoAlloy"), "30")], "output": "ComponentSpacer", "output_count": "10", "skill": "6", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Hand": {"work": "3200", "inputs": [("thingDefs", ("Plasteel", "MMT_SteelBar", "MMT_Titanium", "MMT_NitinolAlloy", "MMT_AlnicoAlloy"), "30"), ("thingDefs", "ComponentSpacer", "10"), ("thingDefs", "MMT_SyntheticFibers", "5")], "output": "MMT_AdvMechanism", "output_count": "5", "skill": "13", "research": "MMT_AdvancedComponents", "benches": ["MMT_HandAssemblyBench"]},
+    "MMT_MakeAdvMechanism_Electric": {"work": "3200", "inputs": [("thingDefs", ("Plasteel", "MMT_SteelBar", "MMT_Titanium", "MMT_NitinolAlloy", "MMT_AlnicoAlloy"), "60"), ("thingDefs", "ComponentSpacer", "20"), ("thingDefs", "MMT_SyntheticFibers", "10")], "output": "MMT_AdvMechanism", "output_count": "10", "skill": "16", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
+    "MMT_MakeSpacerComponent": {"work": "3500", "inputs": [("thingDefs", ("Plasteel", "MMT_SteelBar", "MMT_Titanium", "MMT_NitinolAlloy", "MMT_AlnicoAlloy"), "25"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_SpacerComponent", "output_count": "10", "skill": "9", "research": "MMT_AdvancedComponents", "benches": ["MMT_ElectricAssemblyBench"]},
     "MMT_MakeUltraComponent": {"work": "4500", "inputs": [("thingDefs", ("MMT_Tungsten", "MMT_Titanium"), "15"), ("thingDefs", ("MMT_StelliteAlloy", "MMT_PobediteAlloy"), "10"), ("thingDefs", ("Silver", "Gold"), "5")], "output": "MMT_UltraComponent", "output_count": "10", "skill": "13", "research": "MMT_UltraComponents", "benches": ["MMT_RoboticAssembler"]},
 }
 
@@ -2426,8 +2427,8 @@ def validate_wood_recipes() -> None:
 
     if "SK." in read_text(WOOD_RECIPE_XML):
         fail("木材配方 XML 不得引用 SK 类型")
-    if "SmithingSpeed" in read_text(WOOD_RECIPE_XML) or "Wooden" in read_text(WOOD_RECIPE_XML):
-        fail("木材配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed 或 Wooden 分类")
+    if ">SmithingSpeed<" in read_text(WOOD_RECIPE_XML) or "Wooden" in read_text(WOOD_RECIPE_XML):
+        fail("木材配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed 或 Wooden 分类")
     print("wood-recipes: OK")
 
 
@@ -2747,8 +2748,8 @@ def validate_petrochem_recipes() -> None:
     recipe_text = read_text(PETROCHEM_RECIPE_XML)
     if "SK." in recipe_text:
         fail("石化配方 XML 不得引用 SK 类型")
-    if "SmithingSpeed" in recipe_text:
-        fail("石化配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    if ">SmithingSpeed<" in recipe_text:
+        fail("石化配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
     print("petrochem-recipes: OK")
 
 
@@ -2925,8 +2926,8 @@ def validate_electronics_recipes() -> None:
     recipe_text = read_text(ELECTRONICS_RECIPE_XML)
     if "SK." in recipe_text:
         fail("电子配方 XML 不得引用 SK 类型")
-    if "ElectronicCraftingSpeed" in recipe_text:
-        fail("电子配方不得使用 RimWorld 1.7 不存在的 ElectronicCraftingSpeed")
+    if ">ElectronicCraftingSpeed<" in recipe_text:
+        fail("电子配方不得使用未加 MMT_ 前缀的 HSK 属性 ElectronicCraftingSpeed")
     print("electronics-recipes: OK")
 
 
@@ -3294,8 +3295,8 @@ def validate_electric_wood() -> None:
         if "SK." in read_text(path):
             fail(f"{path} 不得引用 SK 类型")
     recipe_text = read_text(ELECTRIC_WOOD_RECIPE_XML)
-    if "SmithingSpeed" in recipe_text or "Wooden" in recipe_text:
-        fail("电动木材配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed 或 Wooden 分类")
+    if ">SmithingSpeed<" in recipe_text or "Wooden" in recipe_text:
+        fail("电动木材配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed 或 Wooden 分类")
     print("electric-wood: OK")
 
 
@@ -3420,8 +3421,8 @@ def validate_electric_petrochem() -> None:
     for path in (ELECTRIC_PETROCHEM_RESEARCH_XML, ELECTRIC_PETROCHEM_BUILDING_XML, ELECTRIC_PETROCHEM_RECIPE_XML):
         if "SK." in read_text(path):
             fail(f"{path} 不得引用 SK 类型")
-    if "SmithingSpeed" in read_text(ELECTRIC_PETROCHEM_RECIPE_XML):
-        fail("电动石化配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    if ">SmithingSpeed<" in read_text(ELECTRIC_PETROCHEM_RECIPE_XML):
+        fail("电动石化配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
     print("electric-petrochem: OK")
 
 
@@ -3544,8 +3545,8 @@ def validate_electric_electronics() -> None:
     for path in (ELECTRIC_ELECTRONICS_RESEARCH_XML, ELECTRIC_ELECTRONICS_BUILDING_XML, ELECTRIC_ELECTRONICS_RECIPE_XML):
         if "SK." in read_text(path):
             fail(f"{path} 不得引用 SK 类型")
-    if "ElectronicCraftingSpeed" in read_text(ELECTRIC_ELECTRONICS_RECIPE_XML):
-        fail("电动电子配方不得使用 RimWorld 1.7 不存在的 ElectronicCraftingSpeed")
+    if ">ElectronicCraftingSpeed<" in read_text(ELECTRIC_ELECTRONICS_RECIPE_XML):
+        fail("电动电子配方不得使用未加 MMT_ 前缀的 HSK 属性 ElectronicCraftingSpeed")
     print("electric-electronics: OK")
 
 
@@ -3715,8 +3716,8 @@ def validate_advanced_alloys() -> None:
     for forbidden in ("SolidMetallic", "StrongMetallic", "RuggedMetallic", "HeavyMetallic"):
         if forbidden in alloy_text:
             fail(f"高级合金资源不得使用 RimWorld 1.7 不存在的 {forbidden} 分类")
-    if "SmithingSpeed" in read_text(ADVANCED_ALLOYS_RECIPE_XML):
-        fail("高级合金配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    if ">SmithingSpeed<" in read_text(ADVANCED_ALLOYS_RECIPE_XML):
+        fail("高级合金配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
     print("advanced-alloys: OK")
 
 
@@ -3872,8 +3873,8 @@ def validate_parts() -> None:
         for forbidden in ("SolidMetallic", "StrongMetallic", "RuggedMetallic", "HeavyMetallic"):
             if forbidden in text:
                 fail(f"{path} 不得使用 RimWorld 1.7 不存在的 {forbidden} 分类")
-    if "SmithingSpeed" in read_text(PARTS_RECIPE_XML):
-        fail("零件配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    if ">SmithingSpeed<" in read_text(PARTS_RECIPE_XML):
+        fail("零件配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
     print("parts: OK")
 
 
@@ -4184,8 +4185,8 @@ def validate_petrochem_ext() -> None:
         if expected["output"] not in resource_names:
             fail(f"{name} 输出不是已知资源: {expected['output']}")
 
-    if "SmithingSpeed" in read_text(PETROCHEM_EXT_RECIPE_XML):
-        fail("石化扩展配方不得使用 RimWorld 1.7 不存在的 SmithingSpeed")
+    if ">SmithingSpeed<" in read_text(PETROCHEM_EXT_RECIPE_XML):
+        fail("石化扩展配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
 
     for path in PETROCHEM_EXT_ITEM_TEXTURES:
         assert_png(path)
@@ -4342,7 +4343,7 @@ def validate_matter_top() -> None:
         assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
         assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
         if name in MATTER_RECIPE_EXPECTATIONS:
-            assert_equal(child_text(recipe, "workSpeedStat"), "ElectronicCraftingSpeed", f"{name} workSpeedStat")
+            assert_equal(child_text(recipe, "workSpeedStat"), "MMT_ElectronicCraftingSpeed", f"{name} workSpeedStat")
         else:
             assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
 
@@ -4562,6 +4563,7 @@ def validate_textiles_weapons() -> None:
         CROPS_RESOURCE_XML,
         CROPS_PLANT_XML,
         CROPS_PATCH_XML,
+        STATS_XML,
         INSECT_CHITIN_PATCH_XML,
         TEXTILES_RESOURCE_XML,
         TEXTILES_RECIPE_XML,
@@ -4594,6 +4596,15 @@ def validate_textiles_weapons() -> None:
         if "stack" in expected:
             assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
         assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        if "mass" in expected:
+            assert_equal(child_text(node, "./statBases/Mass"), expected["mass"], f"{name} Mass（可搬运物品必须显式声明质量）")
+        if expected.get("food"):
+            assert_equal(child_text(node, "socialPropernessMatters"), "true", f"{name} socialPropernessMatters（preferability 高于 DesperateOnlyForHumanlikes 时必须为 true）")
+            assert_equal(child_text(node, "./ingestible/foodType") is not None, True, f"{name} ingestible foodType")
+            assert_equal(child_text(node, "./ingestible/preferability") is not None, True, f"{name} ingestible preferability")
+            if node.find("./ingestible/joy") is not None:
+                if node.find("./ingestible/joyKind") is None:
+                    fail(f"{name} joy > 0 必须声明 joyKind")
         tex = child_text(node, "./graphicData/texPath")
         if not tex.startswith(f"Things/Item/MMT/MMT_Crops/{name}"):
             fail(f"{name} texPath 不在 MMT_Crops 目录: {tex}")
@@ -4620,6 +4631,16 @@ def validate_textiles_weapons() -> None:
         tex = child_text(node, "./graphicData/texPath")
         if not tex.startswith(f"Things/Plant/MMT/{name}"):
             fail(f"{name} texPath 不在 MMT 植物目录: {tex}")
+
+    # --- 8.1 自定义工作速度 StatDef（配方的 workSpeedStat 必须引用 MMT_ 前缀自研属性） ---
+    stat_defs = def_map(parse_xml(STATS_XML))
+    for stat_name, label in (("MMT_SmithingSpeed", "锻造速度"), ("MMT_ElectronicCraftingSpeed", "电子装配速度")):
+        if stat_name not in stat_defs:
+            fail(f"缺少 StatDef {stat_name}")
+        node = stat_defs[stat_name]
+        assert_equal(child_text(node, "label"), label, f"{stat_name} label")
+        assert_equal(child_text(node, "category"), "PawnWork", f"{stat_name} category")
+        assert_equal(child_text(node, "defaultBaseValue"), "1", f"{stat_name} defaultBaseValue")
 
     # --- 8.1/8.2 patch 文本断言 ---
     crop_patch = read_text(CROPS_PATCH_XML)
@@ -4773,7 +4794,7 @@ def validate_textiles_weapons() -> None:
         recipe = weapon_recipe_defs[name]
         child_text(recipe, "label")
         assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
-        assert_equal(child_text(recipe, "workSpeedStat"), "SmithingSpeed", f"{name} workSpeedStat")
+        assert_equal(child_text(recipe, "workSpeedStat"), "MMT_SmithingSpeed", f"{name} workSpeedStat")
         assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
 
         actual_inputs = []

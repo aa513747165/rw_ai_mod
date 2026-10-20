@@ -7,7 +7,7 @@
     <description>制造紧凑型储能动力电池。产出 10。</description>
     <jobString>正在制造动力电池。</jobString>
     <workAmount>6000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -63,7 +63,7 @@
     <description>制造机器人所需的精密部件组。产出 25。</description>
     <jobString>正在制造机器人部件。</jobString>
     <workAmount>8000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
@@ -110,7 +110,7 @@
     <description>以金属合金为封装外壳、电子元件为计算模块，组装矿物声纳模块。产出 1。</description>
     <jobString>正在组装矿物声纳模块。</jobString>
     <workAmount>4800</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>ButcherMechanoid</effectWorking>
     <soundWorking>Recipe_ButcherCorpseMechanoid</soundWorking>
     <ingredients>
@@ -175,7 +175,7 @@
     <description>拆解一条护盾腰带，回收精密零件。</description>
     <jobString>正在拆解护盾腰带。</jobString>
     <workAmount>1000</workAmount>
-    <workSpeedStat>ElectronicCraftingSpeed</workSpeedStat>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <recipeUsers>

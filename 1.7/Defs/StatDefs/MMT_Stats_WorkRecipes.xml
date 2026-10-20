@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- MMT 自定义工作速度 StatDef：配方 workSpeedStat 引用（原 HSK Core_SK Stats_Pawns_WorkRecipes.xml 的 SmithingSpeed/ElectronicCraftingSpeed 移植，MMT 独立不依赖 HSK，故加 MMT_ 前缀自研） -->
+
+  <!-- 锻造速度：武器部件加工等锻压台配方使用，对照 HSK SmithingSpeed -->
+  <StatDef>
+    <defName>MMT_SmithingSpeed</defName>
+    <label>锻造速度</label>
+    <description>此人生成武器、机械与弹药部件的速度。\n\n此属性只影响产出速度，不影响品质，品质由制造技能决定。</description>
+    <category>PawnWork</category>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0.1</minValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <statFactors>
+      <li>WorkSpeedGlobal</li>
+    </statFactors>
+    <skillNeedFactors>
+      <li Class="SkillNeed_BaseBonus">
+        <skill>Crafting</skill>
+        <baseValue>0.6</baseValue>
+        <bonusPerLevel>0.05</bonusPerLevel>
+      </li>
+    </skillNeedFactors>
+    <capacityFactors>
+      <li>
+        <capacity>Sight</capacity>
+        <weight>0.6</weight>
+        <max>1</max>
+      </li>
+      <li>
+        <capacity>Manipulation</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
+  </StatDef>
+
+  <!-- 电子装配速度：电子器件/物质转化等精密台配方使用，对照 HSK ElectronicCraftingSpeed -->
+  <StatDef>
+    <defName>MMT_ElectronicCraftingSpeed</defName>
+    <label>电子装配速度</label>
+    <description>此人装配电子器件的速度。</description>
+    <category>PawnWork</category>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0.1</minValue>
+    <toStringStyle>PercentZero</toStringStyle>
+    <statFactors>
+      <li>WorkSpeedGlobal</li>
+    </statFactors>
+    <skillNeedFactors>
+      <li Class="SkillNeed_BaseBonus">
+        <skill>Intellectual</skill>
+        <baseValue>0.3</baseValue>
+        <bonusPerLevel>0.09</bonusPerLevel>
+      </li>
+      <li Class="SkillNeed_BaseBonus">
+        <skill>Crafting</skill>
+        <baseValue>0.6</baseValue>
+        <bonusPerLevel>0.05</bonusPerLevel>
+      </li>
+    </skillNeedFactors>
+    <capacityFactors>
+      <li>
+        <capacity>Sight</capacity>
+        <weight>0.2</weight>
+      </li>
+      <li>
+        <capacity>Manipulation</capacity>
+        <weight>1</weight>
+      </li>
+    </capacityFactors>
+  </StatDef>
+
+</Defs>
