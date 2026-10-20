@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 无机物：对照 HSK Matter（剔除 CE 的 Bulk） -->
+  <!-- 无机物：对照 HSK Matter（已剔除 CE 专属字段） -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_Matter</defName>
     <label>无机物</label>

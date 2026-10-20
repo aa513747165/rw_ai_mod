@@ -413,7 +413,7 @@ VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "Anim
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics"}
-VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel"}
+VANILLA_THINGS = {"ComponentIndustrial", "ComponentSpacer", "WoodLog", "Steel", "Silver", "Gold", "Plasteel", "Hay", "Uranium", "Chemfuel", "AIPersonaCore", "Hyperweave", "Bioferrite"}
 
 CONCRETE_RESOURCE_EXPECTATIONS = {
     "MMT_Concrete": {
@@ -1017,6 +1017,8 @@ ELECTRIC_PETROCHEM_LAB_RECIPES = [
     "MMT_MakeSulphates",
     "MMT_MakeCarbonAlloy",
     "MMT_MakeOxidizedChemfuel",
+    "MMT_ExtractBiomatterCorpse",
+    "MMT_ExtractBiomatterMeat",
 ]
 
 ELECTRIC_PETROCHEM_RECIPE_EXPECTATIONS = {
@@ -1138,6 +1140,115 @@ ELECTRIC_ELECTRONICS_BUILDING_TEXTURES = [
     for side in ("east", "north", "south")
     for mask in ("", "m")
 ]
+
+MATTER_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Matter.xml"
+SUPER_ALLOYS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_SuperAlloys.xml"
+MATTER_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Matter.xml"
+MATTER_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Matter.xml"
+TOP_MATERIALS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_TopMaterials.xml"
+MATTER_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Matter.xml"
+
+MATTER_ITEM_TEXTURES = [
+    *[
+        f"1.7/Textures/Things/Item/MMT/MMT_{name}.png"
+        for name in ("Matter", "Antimatter", "Biomatter", "MagneticMaterial", "BioMicrochips", "AlphaPoly", "BetaPoly")
+    ],
+    *[
+        f"1.7/Textures/Things/Item/MMT/MMT_BiosyntheticMaterial/MMT_BiosyntheticMaterial_{suffix}.png"
+        for suffix in ("a", "b", "c")
+    ],
+    *[
+        f"1.7/Textures/Things/Item/MMT/MMT_BioferriteAlloy/MMT_BioferriteAlloy_{suffix}.png"
+        for suffix in ("a", "b", "c")
+    ],
+]
+
+MATTER_BUILDING_TEXTURES = [
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_MatterConverter/MMT_MatterConverter_{side}.png"
+        for side in ("east", "north", "south")
+    ],
+    *[
+        f"1.7/Textures/Things/Building/Production/MMT_Matterfab/MMT_Matterfab_{side}.png"
+        for side in ("east", "north", "south")
+    ],
+    "1.7/Textures/Things/Building/Production/MMT_ParticleCollider/MMT_ParticleCollider.png",
+]
+
+MATTER_RESOURCE_EXPECTATIONS = {
+    "MMT_Matter": {"label": "无机物", "value": "10", "stack": "150", "flammable": "0", "tech": "Spacer", "categories": ["MMT_SuperMaterialCat"], "tex": "Things/Item/MMT/MMT_Matter", "class": "Graphic_Single"},
+    "MMT_Antimatter": {"label": "反物质", "value": "120", "stack": "75", "flammable": "5", "tech": "Ultra", "categories": ["MMT_SuperMaterialCat"], "tex": "Things/Item/MMT/MMT_Antimatter", "class": "Graphic_Single"},
+    "MMT_Biomatter": {"label": "生物质", "value": "10", "stack": "150", "flammable": "2", "tech": "Industrial", "categories": ["MMT_SuperMaterialCat"], "tex": "Things/Item/MMT/MMT_Biomatter", "class": "Graphic_Single"},
+    "MMT_MagneticMaterial": {"label": "磁性材料", "value": "110", "stack": "75", "flammable": "0.1", "tech": "Spacer", "categories": ["MMT_SuperMaterialCat"], "tex": "Things/Item/MMT/MMT_MagneticMaterial", "class": "Graphic_Single"},
+    "MMT_BiosyntheticMaterial": {"label": "生物合成材料", "value": "90", "stack": "75", "flammable": "0.3", "tech": "Spacer", "categories": ["MMT_SuperMaterialCat"], "tex": "Things/Item/MMT/MMT_BiosyntheticMaterial", "class": "Graphic_StackCount"},
+    "MMT_BioMicrochips": {"label": "生物电子元件", "value": "2100", "stack": "25", "flammable": "1", "tech": "Spacer", "categories": ["MMT_ElectronicsCat"], "tex": "Things/Item/MMT/MMT_BioMicrochips", "class": "Graphic_Single"},
+}
+
+SUPER_ALLOYS_RESOURCE_EXPECTATIONS = {
+    "MMT_AlphaPoly": {"label": "α阿尔法聚合物", "value": "45", "stack": "75", "categories": ["MMT_USLDBar"], "tex": "Things/Item/MMT/MMT_AlphaPoly", "adjective": "α聚合物制", "hp": "3.7", "work_make": "3.0", "work_build": "3.0", "mass": "0.6"},
+    "MMT_BetaPoly": {"label": "β贝塔聚合物", "value": "65", "stack": "75", "categories": ["MMT_USLDBar", "MMT_USLDHBar"], "tex": "Things/Item/MMT/MMT_BetaPoly", "adjective": "β聚合物制", "hp": "4.3", "work_make": "4.5", "work_build": "4.5", "mass": "1.3"},
+    "MMT_BioferriteAlloy": {"label": "生物铁合金", "value": "9", "stack": "600", "categories": ["MMT_SLDBar"], "tex": "Things/Item/MMT/MMT_BioferriteAlloy", "adjective": "生物铁合金制", "hp": "2.2", "work_make": "2", "work_build": "2", "mass": "0.95"},
+}
+
+MATTER_RESEARCH_EXPECTATIONS = {
+    "MMT_MatterConversion1": {"label": "物质转换 I", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_BasicElectronics", "MMT_ComponentCrafting"], "x": "19.00", "y": "1.00"},
+    "MMT_MatterConversion2": {"label": "物质转换 II", "cost": "2400", "tech": "Ultra", "prereqs": ["MMT_UltraComponents", "MMT_MatterConversion1"], "x": "20.00", "y": "2.00"},
+    "MMT_MatterConversion3": {"label": "物质转换 III", "cost": "2500", "tech": "Ultra", "prereqs": ["MMT_MatterConversion2"], "x": "21.00", "y": "2.00"},
+}
+
+MATTER_CONVERTER_RECIPES = [
+    "MMT_ConvertResourcesRaw",
+    "MMT_ConvertToIron",
+    "MMT_ConvertToCopper",
+    "MMT_ConvertToTin",
+    "MMT_ConvertToLead",
+    "MMT_ConvertToAluminium",
+    "MMT_ConvertToNickel",
+    "MMT_ConvertToTitanium",
+    "MMT_ConvertToGold",
+    "MMT_ConvertToSilver",
+    "MMT_ConvertToUranium",
+    "MMT_ConvertToPolymers",
+    "MMT_ConvertToParaffins",
+    "MMT_ConvertToSulphates",
+]
+
+MATTER_BUILDING_EXPECTATIONS = {
+    "MMT_MatterConverter": {"label": "无机物转化器", "size": "(3,3)", "draw": "(3,3)", "class": "Graphic_Multi", "tex": "Things/Building/Production/MMT_MatterConverter/MMT_MatterConverter", "stuff_count": "280", "work_build": "9000", "hp": "280", "power": "2500", "research": ["MMT_MatterConversion1"], "skill": "18", "recipes": MATTER_CONVERTER_RECIPES},
+    "MMT_Matterfab": {"label": "量子加工台", "size": "(3,2)", "draw": "(3,2)", "class": "Graphic_Multi", "tex": "Things/Building/Production/MMT_Matterfab/MMT_Matterfab", "stuff_count": "240", "work_build": "10000", "hp": "350", "power": "8000", "research": ["MMT_MatterConversion3"], "skill": "16", "recipes": ["MMT_ProduceAPoly", "MMT_ProduceBPoly"]},
+    "MMT_ParticleCollider": {"label": "粒子对撞台", "size": "(7,2)", "draw": "(7,2)", "class": "Graphic_Single", "tex": "Things/Building/Production/MMT_ParticleCollider/MMT_ParticleCollider", "stuff_count": "120", "work_build": "12000", "hp": "400", "power": "15000", "research": ["MMT_MatterConversion2"], "skill": "18", "recipes": ["MMT_MakeAntimatter"]},
+}
+
+MATTER_RECIPE_EXPECTATIONS = {
+    "MMT_ConvertResourcesRaw": {"work": "10000", "inputs": [("categories", "ResourcesRaw", "300")], "output": "MMT_Matter", "output_count": "150", "skill": "15", "research": "MMT_MatterConversion1"},
+    "MMT_ConvertToIron": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_IronOre", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToCopper": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_CopperOre", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToTin": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_TinOre", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToLead": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Anglesite", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToAluminium": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_AluminiumOre", "output_count": "80", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToNickel": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "150")], "output": "MMT_NickelOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToTitanium": {"work": "15000", "inputs": [("thingDefs", "MMT_Matter", "200")], "output": "MMT_IlmeniteOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToGold": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "60")], "output": "MMT_GoldOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToSilver": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "100")], "output": "MMT_SilverOre", "output_count": "300", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToUranium": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "200")], "output": "Uranium", "output_count": "50", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToPolymers": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Polymers", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToParaffins": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Paraffins", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToSulphates": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Sulphates", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
+}
+
+TOP_MATERIALS_RECIPE_EXPECTATIONS = {
+    "MMT_BuildMagneticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Matter", "30"), ("thingDefs", "MMT_Sulphates", "15"), ("categories", "MMT_USLDBar", "10"), ("categories", "MMT_SLDBar", "5")], "output": "MMT_MagneticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
+    "MMT_BuildBiosyntheticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Biomatter", "15"), ("thingDefs", "MMT_SyntheticFibers", "9"), ("thingDefs", "MMT_Plastic", "30")], "output": "MMT_BiosyntheticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
+    "MMT_MakeBioelectronicDevices": {"work": "7000", "inputs": [("thingDefs", "MMT_Biomatter", "60"), ("thingDefs", "Hyperweave", "15"), ("thingDefs", "MMT_Microchip", "2")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "18", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
+    "MMT_DisassembleAIPersonaCore": {"work": "4000", "inputs": [("thingDefs", "AIPersonaCore", "1")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "16", "speed": "ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"], "extra_products": {"MMT_AlphaPoly": "30", "MMT_CarbonAlloy": "40"}},
+    "MMT_ProduceAPoly": {"work": "8000", "inputs": [("thingDefs", "MMT_DepletedUranium", "5"), ("thingDefs", "MMT_CarbonAlloy", "5"), ("thingDefs", "MMT_Antimatter", "3")], "output": "MMT_AlphaPoly", "output_count": "15", "skill": "19", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
+    "MMT_ProduceBPoly": {"work": "12000", "inputs": [("thingDefs", "MMT_AlphaPoly", "3"), ("thingDefs", "MMT_BiosyntheticMaterial", "5")], "output": "MMT_BetaPoly", "output_count": "5", "skill": "20", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
+    "MMT_MakeAntimatter": {"work": "10000", "inputs": [("thingDefs", "MMT_Matter", "50"), ("thingDefs", "Uranium", "20")], "output": "MMT_Antimatter", "output_count": "2", "skill": "15", "speed": "ElectronicCraftingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
+    "MMT_ExtractBiomatterCorpse": {"work": "6000", "inputs": [("categories", "Corpses", "1")], "output": "MMT_Biomatter", "output_count": "20", "skill": "8", "speed": "DrugSynthesisSpeed", "effect": "Cook", "sound": "Recipe_Smelt", "research": "MMT_MatterConversion1"},
+    "MMT_ExtractBiomatterMeat": {"work": "4000", "inputs": [("categories", "MeatRaw", "40")], "output": "MMT_Biomatter", "output_count": "20", "skill": "8", "speed": "DrugSynthesisSpeed", "effect": "Cook", "sound": "Recipe_Smelt", "research": "MMT_MatterConversion1"},
+    "MMT_MakeBioferriteAlloy": {"work": "2100", "inputs": [("thingDefs", "Bioferrite", "10"), ("thingDefs", "MMT_IronOre", "10"), ("categories", "MMT_Coal", "5")], "output": "MMT_BioferriteAlloy", "output_count": "10", "skill": "9", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "BioferriteShaping", "users": ["BioferriteShaper"]},
+}
+
 
 ELECTRIC_ELECTRONICS_TABLE_RECIPES = [
     "MMT_AssembleElectronicParts_Electric",
@@ -1359,8 +1470,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 22
-INFRA_WORKTABLE_TOTAL = 19
+INFRA_RESEARCH_TOTAL = 25
+INFRA_WORKTABLE_TOTAL = 22
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -3715,6 +3826,226 @@ def validate_petrochem_ext() -> None:
     print("petrochem-ext: OK")
 
 
+def validate_matter_top() -> None:
+    require_files([
+        MATTER_RESOURCE_XML,
+        SUPER_ALLOYS_RESOURCE_XML,
+        MATTER_BUILDING_XML,
+        MATTER_RECIPE_XML,
+        TOP_MATERIALS_RECIPE_XML,
+        MATTER_RESEARCH_XML,
+        METAL_RESOURCE_XML,
+        ADVANCED_ORE_RESOURCE_XML,
+        ADVANCED_ALLOY_RESOURCE_XML,
+        PETROCHEM_RESOURCE_XML,
+        PETROCHEM_EXT_RESOURCE_XML,
+        ELECTRONICS_RESOURCE_XML,
+        ELECTRIC_PETROCHEM_BUILDING_XML,
+        PRECIOUS_RESOURCE_XML,
+        *MATTER_ITEM_TEXTURES,
+        *MATTER_BUILDING_TEXTURES,
+    ])
+
+    matter_defs = def_map(parse_xml(MATTER_RESOURCE_XML))
+    assert_equal(set(matter_defs), set(MATTER_RESOURCE_EXPECTATIONS), "无机物系资源 defName 集合")
+    for name, expected in MATTER_RESOURCE_EXPECTATIONS.items():
+        node = matter_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "./statBases/Flammability"), expected["flammable"], f"{name} Flammability")
+        assert_equal(child_text(node, "./statBases/DeteriorationRate"), "0" if name != "MMT_Antimatter" else "0.01", f"{name} DeteriorationRate")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), expected["class"], f"{name} graphicClass")
+        assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        if node.find("stuffProps") is not None:
+            fail(f"{name} 不应定义 stuffProps")
+    if matter_defs["MMT_Antimatter"].find("./comps/li[@Class='CompProperties_Explosive']") is None:
+        fail("MMT_Antimatter 缺少爆炸组件")
+    if matter_defs["MMT_Matter"].find("./comps/li[@Class='CompProperties_Glower']") is None:
+        fail("MMT_Matter 缺少发光组件")
+
+    alloy_defs = def_map(parse_xml(SUPER_ALLOYS_RESOURCE_XML))
+    assert_equal(set(alloy_defs), set(SUPER_ALLOYS_RESOURCE_EXPECTATIONS), "顶级合金资源 defName 集合")
+    for name, expected in SUPER_ALLOYS_RESOURCE_EXPECTATIONS.items():
+        node = alloy_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(li_values(node, "thingCategories"), expected["categories"], f"{name} thingCategories")
+        assert_equal(child_text(node, "useHitPoints"), "true", f"{name} useHitPoints")
+        stuff_categories = [li.text for li in node.findall("./stuffProps/categories/li")]
+        assert_equal([c for c in stuff_categories if c == "Metallic"], ["Metallic"], f"{name} stuff 含 Metallic")
+        assert_equal(child_text(node, "./stuffProps/stuffAdjective"), expected["adjective"], f"{name} stuffAdjective")
+        assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), expected["hp"], f"{name} MaxHitPoints factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/WorkToMake"), expected["work_make"], f"{name} WorkToMake factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/WorkToBuild"), expected["work_build"], f"{name} WorkToBuild factor")
+        assert_equal(child_text(node, "./stuffProps/statFactors/Mass"), expected["mass"], f"{name} Mass factor")
+        assert_equal(child_text(node, "terrainAffordanceNeeded"), "Medium", f"{name} terrain affordance")
+    bioferrite_categories = alloy_defs["MMT_BioferriteAlloy"].findall("./stuffProps/categories/li")
+    anomaly_li = [li for li in bioferrite_categories if (li.text or "").strip() == "Bioferrite"]
+    if len(anomaly_li) != 1 or anomaly_li[0].attrib.get("MayRequire") != "Ludeon.RimWorld.Anomaly":
+        fail("MMT_BioferriteAlloy 的 Bioferrite 材质类别须带 MayRequire Anomaly")
+    for name in ("MMT_AlphaPoly", "MMT_BetaPoly"):
+        if "MeleePenetrationFactor" in read_text(SUPER_ALLOYS_RESOURCE_XML):
+            fail("顶级合金不得使用 HSK 专属的 MeleePenetrationFactor")
+
+    building_defs = def_map(parse_xml(MATTER_BUILDING_XML))
+    assert_equal(set(building_defs), set(MATTER_BUILDING_EXPECTATIONS), "物质系建筑 defName 集合")
+    for name, expected in MATTER_BUILDING_EXPECTATIONS.items():
+        node = building_defs[name]
+        assert_equal(node.attrib.get("ParentName"), "BuildingBase", f"{name} 父类")
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "thingClass"), "Building_WorkTable", f"{name} thingClass")
+        assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
+        assert_equal(child_text(node, "./graphicData/graphicClass"), expected["class"], f"{name} graphicClass")
+        assert_equal(child_text(node, "./graphicData/drawSize"), expected["draw"], f"{name} drawSize")
+        assert_equal(li_values(node, "stuffCategories"), ["Metallic"], f"{name} 材料分类")
+        assert_equal(child_text(node, "costStuffCount"), expected["stuff_count"], f"{name} 材料数量")
+        assert_equal(child_text(node, "./statBases/WorkToBuild"), expected["work_build"], f"{name} 建造工作量")
+        assert_equal(child_text(node, "./statBases/MaxHitPoints"), expected["hp"], f"{name} 耐久")
+        assert_equal(child_text(node, "size"), expected["size"], f"{name} 尺寸")
+        assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{name} 建筑分类")
+        assert_equal(li_values(node, "recipes"), expected["recipes"], f"{name} 配方列表")
+        assert_equal(li_values(node, "researchPrerequisites"), expected["research"], f"{name} 研究前置")
+        assert_equal(child_text(node, "constructionSkillPrerequisite"), expected["skill"], f"{name} 建造技能")
+        comps = [li.attrib.get("Class") for li in node.findall("./comps/li")]
+        for comp in ("CompProperties_Power", "CompProperties_Flickable", "CompProperties_Breakdownable", "CompProperties_HeatPusher"):
+            if comp not in comps:
+                fail(f"{name} 缺少组件: {comp}")
+        assert_equal(child_text(node, "./comps/li/basePowerConsumption"), expected["power"], f"{name} 功耗")
+
+    research_defs = def_map(parse_xml(MATTER_RESEARCH_XML))
+    assert_equal(set(research_defs), set(MATTER_RESEARCH_EXPECTATIONS), "物质转换研究 defName 集合")
+    for name, expected in MATTER_RESEARCH_EXPECTATIONS.items():
+        node = research_defs[name]
+        assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
+        assert_equal(child_text(node, "baseCost"), expected["cost"], f"{name} baseCost")
+        assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
+        assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
+        assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
+        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+
+    resource_names = (
+        set(matter_defs)
+        | set(alloy_defs)
+        | set(def_map(parse_xml(METAL_RESOURCE_XML)))
+        | set(def_map(parse_xml(ADVANCED_ORE_RESOURCE_XML)))
+        | set(def_map(parse_xml(ADVANCED_ALLOY_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_RESOURCE_XML)))
+        | set(def_map(parse_xml(PETROCHEM_EXT_RESOURCE_XML)))
+        | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
+        | set(def_map(parse_xml(PRECIOUS_RESOURCE_XML)))
+    )
+    allowed_categories = {"ResourcesRaw", "MMT_USLDBar", "MMT_SLDBar", "MMT_Coal", "Corpses", "MeatRaw"}
+
+    converter_recipes = li_values(building_defs["MMT_MatterConverter"], "recipes")
+    matterfab_recipes = li_values(building_defs["MMT_Matterfab"], "recipes")
+    collider_recipes = li_values(building_defs["MMT_ParticleCollider"], "recipes")
+    electric_lab_recipes = li_values(def_map(parse_xml(ELECTRIC_PETROCHEM_BUILDING_XML))["MMT_ElectricChemLab"], "recipes")
+    bench_membership = {
+        **{name: [converter_recipes] for name in MATTER_RECIPE_EXPECTATIONS},
+        "MMT_ProduceAPoly": [matterfab_recipes],
+        "MMT_ProduceBPoly": [matterfab_recipes],
+        "MMT_MakeAntimatter": [collider_recipes],
+        "MMT_ExtractBiomatterCorpse": [electric_lab_recipes],
+        "MMT_ExtractBiomatterMeat": [electric_lab_recipes],
+    }
+
+    all_recipe_expectations = {**MATTER_RECIPE_EXPECTATIONS, **TOP_MATERIALS_RECIPE_EXPECTATIONS}
+    matter_recipe_defs = def_map(parse_xml(MATTER_RECIPE_XML))
+    top_recipe_defs = def_map(parse_xml(TOP_MATERIALS_RECIPE_XML))
+    assert_equal(set(matter_recipe_defs), set(MATTER_RECIPE_EXPECTATIONS), "物质转换配方 defName 集合")
+    assert_equal(set(top_recipe_defs), set(TOP_MATERIALS_RECIPE_EXPECTATIONS), "顶级材料配方 defName 集合")
+
+    for name, expected in all_recipe_expectations.items():
+        recipe = matter_recipe_defs.get(name, top_recipe_defs.get(name))
+        child_text(recipe, "label")
+        assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
+        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+        if name in MATTER_RECIPE_EXPECTATIONS:
+            assert_equal(child_text(recipe, "workSpeedStat"), "ElectronicCraftingSpeed", f"{name} workSpeedStat")
+        else:
+            assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
+
+        actual_inputs = []
+        for ingredient in recipe.findall("./ingredients/li"):
+            filter_node = ingredient.find("filter")
+            if filter_node is None:
+                fail(f"{name} 存在缺少 filter 的输入")
+            thing_defs = li_values(filter_node, "thingDefs")
+            categories = li_values(filter_node, "categories")
+            if bool(thing_defs) == bool(categories):
+                fail(f"{name} 每个输入 filter 必须且只能包含 thingDefs 或 categories 之一")
+            if thing_defs:
+                actual_inputs.append(("thingDefs", tuple(thing_defs), child_text(ingredient, "count")))
+            else:
+                actual_inputs.append(("categories", tuple(categories), child_text(ingredient, "count")))
+        normalized = [
+            (kind, (value,) if isinstance(value, str) else tuple(value), count)
+            for kind, value, count in expected["inputs"]
+        ]
+        assert_equal(actual_inputs, normalized, f"{name} 输入列表")
+
+        fixed_things = sorted(li_values(recipe, "./fixedIngredientFilter/thingDefs"))
+        expected_things = sorted({item for kind, value, _ in normalized if kind == "thingDefs" for item in value})
+        assert_equal(fixed_things, expected_things, f"{name} 固定输入列表")
+        fixed_categories = sorted(li_values(recipe, "./fixedIngredientFilter/categories"))
+        expected_categories = sorted({item for kind, value, _ in normalized if kind == "categories" for item in value})
+        assert_equal(fixed_categories, expected_categories, f"{name} 固定输入类别")
+
+        products = {node.tag: (node.text or "").strip() for node in recipe.findall("./products/*") if isinstance(node.tag, str)}
+        expected_products = {expected["output"]: expected["output_count"], **expected.get("extra_products", {})}
+        assert_equal(products, expected_products, f"{name} 输出")
+
+        research = recipe.findtext("researchPrerequisite")
+        assert_equal(research.strip() if research else None, expected["research"], f"{name} researchPrerequisite")
+
+        users = li_values(recipe, "recipeUsers")
+        if "users" in expected:
+            assert_equal(users, expected["users"], f"{name} recipeUsers")
+        elif users:
+            fail(f"{name} 不应写 recipeUsers")
+
+        for bench_list in bench_membership.get(name, []):
+            if name not in bench_list:
+                fail(f"{name} 未挂载到目标建筑")
+        if name not in bench_membership and "users" not in expected:
+            fail(f"{name} 未声明挂载方式")
+
+        for kind, value, _ in normalized:
+            for item in value:
+                if kind == "thingDefs":
+                    if item not in resource_names | VANILLA_THINGS:
+                        fail(f"{name} 使用未知资源: {item}")
+                elif item not in allowed_categories:
+                    fail(f"{name} 使用未知类别: {item}")
+        for output_name in expected_products:
+            if output_name not in resource_names | VANILLA_THINGS:
+                fail(f"{name} 输出不是已知资源: {output_name}")
+
+    if top_recipe_defs["MMT_MakeBioferriteAlloy"].attrib.get("MayRequire") != "Ludeon.RimWorld.Anomaly":
+        fail("MMT_MakeBioferriteAlloy 须整条带 MayRequire Anomaly")
+
+    for path in MATTER_ITEM_TEXTURES:
+        assert_png(path)
+    for path in MATTER_BUILDING_TEXTURES:
+        assert_png(path)
+
+    for path in (MATTER_RESOURCE_XML, SUPER_ALLOYS_RESOURCE_XML, MATTER_BUILDING_XML, MATTER_RECIPE_XML, TOP_MATERIALS_RECIPE_XML, MATTER_RESEARCH_XML):
+        text = read_text(path)
+        if "SK." in text:
+            fail(f"{path} 不得引用 SK 类型")
+        if "Bulk" in text:
+            fail(f"{path} 不得使用 CE 专属的 Bulk")
+    print("matter-top: OK")
+
+
 def validate_precious() -> None:
     require_files([PRECIOUS_RESOURCE_XML, PRECIOUS_BUILDING_XML, PRECIOUS_RECIPE_XML, METAL_BUILDING_XML, *PRECIOUS_ITEM_TEXTURES])
 
@@ -4228,6 +4559,7 @@ def validate_all() -> None:
     validate_basic_metallurgy()
     validate_stone_construction()
     validate_petrochem_ext()
+    validate_matter_top()
     validate_all_xml()
 
 
@@ -4269,6 +4601,7 @@ SUITES = {
     "basic-metallurgy": validate_basic_metallurgy,
     "stone-construction": validate_stone_construction,
     "petrochem-ext": validate_petrochem_ext,
+    "matter-top": validate_matter_top,
     "all": validate_all,
 }
 

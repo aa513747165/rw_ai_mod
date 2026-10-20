@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- α阿尔法聚合物：对照 HSK AlphaPoly（stuff 类别仅留原版 Metallic，删 MeleePenetrationFactor） -->
+  <!-- α阿尔法聚合物：对照 HSK AlphaPoly（stuff 类别仅留原版 Metallic，HSK 专属穿透系数已剔除） -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_AlphaPoly</defName>
     <label>α阿尔法聚合物</label>
