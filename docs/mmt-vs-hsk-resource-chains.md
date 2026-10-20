@@ -8,10 +8,10 @@
 
 | 项 | 数量 |
 | --- | --- |
-| MMT 矿脉 | 15 |
-| MMT 配方 | 94 |
-| 与 HSK 数值一致 | 54 |
-| 与 HSK 有数值差异 | 40 |
+| MMT 矿脉 | 16 |
+| MMT 配方 | 104 |
+| 与 HSK 数值一致 | 61 |
+| 与 HSK 有数值差异 | 43 |
 | HSK 有对应资源但无对应配方 | 0 |
 | MMT 新增（HSK 无对应资源） | 0 |
 
@@ -31,6 +31,7 @@
 | 铅矾矿脉(MMT_MineableAnglesite) | 铅矾矿 | 75 | 6~13 / 0.8 / 1600 | Anglesite Deposits(`MineableLead`) | 75 | 6~13 / 0.8 / 6000 | 产量一致 |
 | 铝土矿脉(MMT_MineableAluminium) | 铝土矿 | 75 | 11~19 / 0.65 / 1600 | Bauxite Ore Deposits(`MineableAluminium`) | 75 | 11~19 / 0.65 / 5500 | 产量一致 |
 | 油苗(MMT_MineableOilSeep) | 原油 | 75 | 10~18 / 0.8 / 1500 | — | — | — | MMT 新增资源 |
+| 硝石矿脉(MMT_MineableNitre) | 硝石 | 75 | 8~16 / 1.05 / 1800 | Nitre Deposits(`MineableNitre`) | 75 | 8~16 / 1.05 / 1800 | 产量一致 |
 | 银矿(MMT_MineableSilverOre) | 白银 | 75 | 10~16 / 1.0 / 1500 | Silver Ore Deposits(`MineableSilver`) | 250 | 7~15 / 0.25 / 3500 | 产量 75 vs HSK 250 |
 | 金矿(MMT_MineableGoldOre) | 金矿 | 75 | 8~14 / 0.5 / 1500 | Gold Ore Deposits(`MineableGold`) | 50 | 3~9 / 0.15 / 4500 | 产量 75 vs HSK 50 |
 | 硫磺矿脉(MMT_MineableSulfur) | 硫磺 | 75 | 10~16 / 0.8 / 1500 | — | — | — | HSK 无矿脉（仅深钻等） |
@@ -83,14 +84,14 @@
 
 #### 冶炼钨钴合金（10个）（`MMT_MakePobedite`）
 
-- **MMT**：钨合金×3 + 碳聚物×3 + 钴合金×3 -> 钨钴合金×10 @ 电弧炉 ｜ 工作量=2700 ｜ 研究:高级合金(MMT_AdvancedAlloys)，技能:Crafting≥18
-- **HSK** `MakePobediteAlloy`：钨合金(Tungsten)×3 + CarbonAlloy×3 + 钴合金(Cobalt)×3 -> 钨钴合金(PobediteAlloy)×10 @ 电弧炉(EAF) ｜ 工作量=2700 ｜ 研究:Metals_D1，技能:Crafting≥18
+- **MMT**：钨合金×3 + 碳纤维锭×3 + 钴合金×3 -> 钨钴合金×10 @ 电弧炉 ｜ 工作量=2700 ｜ 研究:高级合金(MMT_AdvancedAlloys)，技能:Crafting≥18
+- **HSK** `MakePobediteAlloy`：钨合金(Tungsten)×3 + 碳纤维锭(CarbonAlloy)×3 + 钴合金(Cobalt)×3 -> 钨钴合金(PobediteAlloy)×10 @ 电弧炉(EAF) ｜ 工作量=2700 ｜ 研究:Metals_D1，技能:Crafting≥18
 - **对比**：数值一致
 
 #### 冶炼钛铁合金（15个）（`MMT_MakeFerrotitanium`）
 
-- **MMT**：钛合金×5 + 钢(Steel)×12 + 碳聚物×3 -> 铁钛合金(Plasteel)×15 @ 电弧炉 ｜ 工作量=2400 ｜ 研究:高级合金(MMT_AdvancedAlloys)，技能:Crafting≥15
-- **HSK** `MakeFerrotitaniumAlloy`：钛合金(Titanium)×5 + 钢(Steel)×12 + CarbonAlloy×3 -> 铁钛合金(Plasteel)×15 @ 电弧炉(EAF) ｜ 工作量=2400 ｜ 研究:Metals_D1，技能:Crafting≥15
+- **MMT**：钛合金×5 + 钢(Steel)×12 + 碳纤维锭×3 -> 铁钛合金(Plasteel)×15 @ 电弧炉 ｜ 工作量=2400 ｜ 研究:高级合金(MMT_AdvancedAlloys)，技能:Crafting≥15
+- **HSK** `MakeFerrotitaniumAlloy`：钛合金(Titanium)×5 + 钢(Steel)×12 + 碳纤维锭(CarbonAlloy)×3 -> 铁钛合金(Plasteel)×15 @ 电弧炉(EAF) ｜ 工作量=2400 ｜ 研究:Metals_D1，技能:Crafting≥15
 - **对比**：数值一致
 
 #### 冶炼梅尔基奥合金（30个）（`MMT_MakeCupronickelAlloy`）
@@ -298,7 +299,7 @@
 #### 组装微芯片集成电路（`MMT_AssembleMicrochip_Electric`）
 
 - **MMT**：集成电路×2 + 碳聚物×5 + 金(Gold)×5 -> 微芯片集成电路×1 @ 电子器件工作台 ｜ 工作量=2400 ｜ 研究:电动电子工艺(MMT_ElectricElectronics)，技能:Crafting≥14
-- **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + CarbonAlloy×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
+- **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：工作量 2400 vs HSK 3500；技能 Crafting≥14 vs HSK Crafting≥16
 
 ### 3.7 电动石化（ElectricPetrochem）
@@ -318,13 +319,13 @@
 #### 制作合成橡胶（`MMT_MakeRubber_Electric`）
 
 - **MMT**：聚合物×30 + 硫磺×3 -> 合成橡胶×10 @ 石化产品实验室 ｜ 工作量=500 ｜ 研究:电动石化工艺(MMT_ElectricPetrochemistry)，技能:Crafting≥8
-- **HSK** `MakeRubber`：聚合物(Polymers)×30 + Sulphates×3 -> 合成橡胶(Rubber)×10 @ 石化产品实验室(TableChemlab) ｜ 工作量=800 ｜ 技能:Crafting≥10
+- **HSK** `MakeRubber`：聚合物(Polymers)×30 + 硫酸盐(Sulphates)×3 -> 合成橡胶(Rubber)×10 @ 石化产品实验室(TableChemlab) ｜ 工作量=800 ｜ 技能:Crafting≥10
 - **对比**：工作量 500 vs HSK 800；技能 Crafting≥8 vs HSK Crafting≥10
 
 #### 制作人造纤维（`MMT_MakeSyntheticFibers_Electric`）
 
 - **MMT**：聚合物×25 + 硫磺×3 -> 人造纤维×5 @ 石化产品实验室 ｜ 工作量=800 ｜ 研究:电动石化工艺(MMT_ElectricPetrochemistry)，技能:Crafting≥10
-- **HSK** `MakeSyntheticFibers`：聚合物(Polymers)×25 + Sulphates×3 -> 人造纤维(SyntheticFibers)×5 @ 石化产品实验室(TableChemlab) ｜ 工作量=1200 ｜ 研究:Oil_Industry_C6，技能:Crafting≥14
+- **HSK** `MakeSyntheticFibers`：聚合物(Polymers)×25 + 硫酸盐(Sulphates)×3 -> 人造纤维(SyntheticFibers)×5 @ 石化产品实验室(TableChemlab) ｜ 工作量=1200 ｜ 研究:Oil_Industry_C6，技能:Crafting≥14
 - **对比**：工作量 800 vs HSK 1200；技能 Crafting≥10 vs HSK Crafting≥14
 
 #### 制作碳聚物（`MMT_MakeCarbon_Electric`）
@@ -376,7 +377,7 @@
 #### 组装微芯片集成电路（`MMT_AssembleMicrochip_Hand`）
 
 - **MMT**：集成电路×2 + 碳聚物×5 + 金(Gold)×5 -> 微芯片集成电路×1 @ 电子器件工作台 ｜ 工作量=3500 ｜ 研究:集成电路技术(MMT_IntegratedCircuitTech)，技能:Crafting≥12
-- **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + CarbonAlloy×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
+- **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：技能 Crafting≥12 vs HSK Crafting≥16
 
 ### 3.10 玻璃（Glass）
@@ -582,13 +583,13 @@
 #### 制作合成橡胶（`MMT_MakeRubber_Hand`）
 
 - **MMT**：聚合物×30 + 硫磺×3 -> 合成橡胶×10 @ 石化产品实验室 ｜ 工作量=800 ｜ 研究:基础石化工艺(MMT_BasicPetrochemistry)，技能:Crafting≥6
-- **HSK** `MakeRubber`：聚合物(Polymers)×30 + Sulphates×3 -> 合成橡胶(Rubber)×10 @ 石化产品实验室(TableChemlab) ｜ 工作量=800 ｜ 技能:Crafting≥10
+- **HSK** `MakeRubber`：聚合物(Polymers)×30 + 硫酸盐(Sulphates)×3 -> 合成橡胶(Rubber)×10 @ 石化产品实验室(TableChemlab) ｜ 工作量=800 ｜ 技能:Crafting≥10
 - **对比**：技能 Crafting≥6 vs HSK Crafting≥10
 
 #### 制作人造纤维（`MMT_MakeSyntheticFibers_Hand`）
 
 - **MMT**：聚合物×25 + 硫磺×3 -> 人造纤维×5 @ 石化产品实验室 ｜ 工作量=1200 ｜ 研究:基础石化工艺(MMT_BasicPetrochemistry)，技能:Crafting≥8
-- **HSK** `MakeSyntheticFibers`：聚合物(Polymers)×25 + Sulphates×3 -> 人造纤维(SyntheticFibers)×5 @ 石化产品实验室(TableChemlab) ｜ 工作量=1200 ｜ 研究:Oil_Industry_C6，技能:Crafting≥14
+- **HSK** `MakeSyntheticFibers`：聚合物(Polymers)×25 + 硫酸盐(Sulphates)×3 -> 人造纤维(SyntheticFibers)×5 @ 石化产品实验室(TableChemlab) ｜ 工作量=1200 ｜ 研究:Oil_Industry_C6，技能:Crafting≥14
 - **对比**：技能 Crafting≥8 vs HSK Crafting≥14
 
 #### 制作碳聚物（`MMT_MakeCarbon_Hand`）
@@ -597,7 +598,69 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.14 贵金属（Precious）
+### 3.14 PetrochemExt（PetrochemExt）
+
+#### 精炼石蜡（10个）（`MMT_MakeParaffins`）
+
+- **MMT**：原油×20 -> 石蜡×10 @ 石化产品实验室, 石化产品实验室 ｜ 工作量=1000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥6
+- **HSK** `ConvertToParaffins`：Matter×50 -> 石蜡(Paraffins)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：首投入 20 vs HSK 50；产出 10 vs HSK 100；工作量 1000 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
+
+#### 制备硫酸盐（10个）（`MMT_MakeSulphates`）
+
+- **MMT**：硫磺×10 -> 硫酸盐×10 @ 石化产品实验室, 石化产品实验室 ｜ 工作量=800 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥6
+- **HSK** `ConvertToSulphates`：Matter×50 -> 硫酸盐(Sulphates)×100 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
+- **对比**：首投入 10 vs HSK 50；产出 10 vs HSK 100；工作量 800 vs HSK 12000；技能 Crafting≥6 vs HSK Crafting≥15
+
+#### 合成碳纤维锭（10个）（`MMT_MakeCarbonAlloy`）
+
+- **MMT**：人造纤维×10 + 碳聚物×10 -> 碳纤维锭×10 @ 石化产品实验室 ｜ 工作量=2800 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥15
+- **HSK** `MakeCarbonAlloy`：人造纤维(SyntheticFibers)×10 + 碳聚物(Carbon)×10 -> 碳纤维锭(CarbonAlloy)×10 @ 石化产品实验室(TableChemlab) ｜ 工作量=2800 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
+- **对比**：数值一致
+
+#### 调配复合粘剂（20个）（`MMT_MakeCompaste`）
+
+- **MMT**：Chemfuel×10 + 合成橡胶×5 + 石蜡×2 -> 复合粘剂×20 @ 纺织机 ｜ 工作量=3200 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥5
+- **HSK** `MakeCompaste`：Chemfuel×10 + 合成橡胶(Rubber)×5 + 石蜡(Paraffins)×2 -> 复合粘剂(Compaste)×20 @ TableLoom ｜ 工作量=3200 ｜ 研究:AdvancedFabrication，技能:Crafting≥5
+- **对比**：数值一致
+
+#### 制备表面活性剂（50个）（`MMT_MakeSurfactant`）
+
+- **MMT**：盐×10 + 硫磺×15 + [Alcohol]×15 -> 表面活性剂×50 @ — ｜ 工作量=4000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥8
+- **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
+- **对比**：数值一致
+
+#### 合成表面活性剂（50个）（`MMT_MakeSurfactant_Compaste`）
+
+- **MMT**：复合粘剂×15 + 聚合物×25 -> 表面活性剂×50 @ — ｜ 工作量=4000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥12,Intellectual≥4
+- **HSK** `MakeSurfactant_Polymers`：复合粘剂(Compaste)×15 + 聚合物(Polymers)×25 -> 表面活性剂(Surfactant)×50 @ DrugLab ｜ 工作量=4000 ｜ 研究:Oil_Industry_C5，技能:Crafting≥12, Intellectual≥4
+- **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥12, Intellectual≥4
+
+#### 提炼硫磺（10个）（`MMT_MakeSulfur`）
+
+- **MMT**：铁矿石×35 -> 硫磺×10 @ 弹药工作台 ｜ 工作量=1200
+- **HSK** `MakeSulfur`：铁矿石(Iron)×35 -> 硫磺(Sulfur)×10 @ 弹药工作台(AmmoBench), TableHeavyAmmunition ｜ 工作量=1200
+- **对比**：数值一致
+
+#### 配制火药（20个）（`MMT_MakePowder`）
+
+- **MMT**：硝石×75 + [MMT_Coal]×20 + 硫磺×20 -> 火药×20 @ 弹药工作台 ｜ 工作量=3000 ｜ 技能:Crafting≥3
+- **HSK** `MakePowder`：硝石(Nitre)×75 + [Coal]×20 + 硫磺(Sulfur)×20 -> 火药(Powder)×20 @ 弹药工作台(AmmoBench), TableHeavyAmmunition ｜ 工作量=3000 ｜ 技能:Crafting≥3
+- **对比**：数值一致
+
+#### 配制凝固汽油（10个）（`MMT_MakeNapalm`）
+
+- **MMT**：Chemfuel×30 + 聚合物×15 -> 凝固汽油×10 @ 弹药工作台 ｜ 工作量=1200 ｜ 技能:Crafting≥5
+- **HSK** `MakeNapalm`：Chemfuel×30 + 聚合物(Polymers)×15 -> 凝固汽油(Napalm)×10 @ 弹药工作台(AmmoBench), TableHeavyAmmunition ｜ 工作量=1200 ｜ 技能:Crafting≥5
+- **对比**：数值一致
+
+#### 合成氧化化合燃料（75个）（`MMT_MakeOxidizedChemfuel`）
+
+- **MMT**：Chemfuel×100 + 硝石×15 + 硫酸盐×15 + 聚合物×5 -> 氧化化合燃料×75 @ 石化产品实验室 ｜ 工作量=10000 ｜ 研究:氧化燃料(MMT_OxidizedFuel)，技能:Crafting≥12
+- **HSK** `MakeOxidizedChemfuel`：Chemfuel×100 + 硝石(Nitre)×10 + 硫酸盐(Sulphates)×10 + Prometheum 或 FSX×5 -> 氧化化合燃料(OxidizedChemfuel)×75 @ 石化产品实验室(TableChemlab) ｜ 工作量=10000 ｜ 研究:BasicGravtech，技能:Crafting≥12
+- **对比**：数值一致
+
+### 3.15 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
@@ -611,7 +674,7 @@
 - **HSK** `ConvertToGold`：Matter×60 -> 金矿(Gold)×20 @ MatterConverter ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.15 木材（Wood）
+### 3.16 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -639,7 +702,9 @@
 - **合成橡胶(Rubber)**：`VulcanizeRubber`（Kiln, TableChemlab，工作量=800）
 - **碎石(CrushedStone)**：`MakeCrushedStone_Electric_Chunk`（TableMachining，工作量=1200）、`MakeCrushedStone_Hand`（TableStonecutter，工作量=1200）、`MakeCrushedStone_Hand_Chunk`（TableStonecutter，工作量=2400）
 - **沙(SandResource)**：`MakeSand_Electric_Chunk`（TableMachining，工作量=1500）、`MakeSand_Hand`（TableStonecutter，工作量=600）、`MakeSand_Hand_Chunk`（TableStonecutter，工作量=3000）
+- **表面活性剂(Surfactant)**：`MakeSurfactant_CoconutSubstitute`（Brewery, DrugLab, ElectricBrewery，工作量=4000）
 - **先进机械组件(AdvMechanism)**：`MakeAdvMechanism_Hand`（FabricationBench，工作量=3200）
+- **碳纤维锭(CarbonAlloy)**：`DisassembleAIPersonaCore`（RobAssem，工作量=4000）
 - **集成电路(Electronics)**：`DeconstructPersonalShield`（TableRecycling，工作量=1000）
 - **机械组件(Mechanism)**：`MakeSimpleMechanism_Hand`（FabricationBench，工作量=1800）
 - **原始零部件(ComponentMedieval)**：`Make_ComponentMedievalBronze`（AdvToolBench, CraftingSpot, FabricationBench，工作量=900）
