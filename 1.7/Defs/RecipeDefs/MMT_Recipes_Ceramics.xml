@@ -78,4 +78,92 @@
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_BasicMetalworking</researchPrerequisite>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_BurnThings</defName>
+    <label>焚烧材料</label>
+    <description>焚烧木材、织物和皮革获取灰烬。产出 3。</description>
+    <jobString>正在焚烧材料。</jobString>
+    <workAmount>400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <requiredGiverWorkType>Hauling</requiredGiverWorkType>
+    <effectWorking>Cremate</effectWorking>
+    <soundWorking>Recipe_Cremate</soundWorking>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricCrematorium</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Textiles</li>
+            <li>Leathers</li>
+          </categories>
+          <thingDefs>
+            <li>WoodLog</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Textiles</li>
+        <li>Leathers</li>
+      </categories>
+      <thingDefs>
+        <li>WoodLog</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_Ash>3</MMT_Ash>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_CremateCorpseCampfire</defName>
+    <label>火化尸体</label>
+    <description>在篝火上火化尸体，获得灰烬。产出 4。</description>
+    <jobString>正在火化。</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cremate</effectWorking>
+    <soundWorking>Recipe_Cremate</soundWorking>
+    <autoStripCorpses>false</autoStripCorpses>
+    <recipeUsers>
+      <li>Campfire</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Corpses</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Corpses</li>
+      </categories>
+      <disallowedCategories>
+        <li>CorpsesMechanoid</li>
+      </disallowedCategories>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <thingDefs>
+        <li>Corpse_Human</li>
+      </thingDefs>
+      <specialFiltersToAllow>
+        <li>AllowCorpsesColonist</li>
+        <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
+        <li>AllowCorpsesStranger</li>
+      </specialFiltersToAllow>
+    </defaultIngredientFilter>
+    <products>
+      <MMT_Ash>4</MMT_Ash>
+    </products>
+  </RecipeDef>
 </Defs>

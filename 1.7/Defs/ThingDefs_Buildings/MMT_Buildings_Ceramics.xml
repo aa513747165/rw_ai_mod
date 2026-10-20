@@ -65,6 +65,7 @@
     <recipes>
       <li>MMT_MakeCeramics</li>
       <li>MMT_MakeClayBricks</li>
+      <li>MMT_BurnThings</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>

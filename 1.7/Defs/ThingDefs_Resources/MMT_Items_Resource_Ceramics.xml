@@ -116,4 +116,29 @@
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
   </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Ash</defName>
+    <label>灰烬</label>
+    <description>在火化炉或篝火中焚烧尸体或其他材料得到的灰烬，可用作农业和化学原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ceramics/Ash/MMT_Ash</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>0.3</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.05</Mass>
+      <Beauty>-5</Beauty>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <tradeability>None</tradeability>
+  </ThingDef>
 </Defs>

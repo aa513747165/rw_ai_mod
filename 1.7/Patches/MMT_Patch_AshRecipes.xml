@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 灰烬产出：对齐 HSK 对 BurnApparel(+2)/CremateCorpse(+4) 的 patch，只加 products 不动其他字段 -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationConditional">
+        <xpath>Defs/RecipeDef[defName="BurnApparel"]/products</xpath>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>Defs/RecipeDef[defName="BurnApparel"]</xpath>
+          <value><products /></value>
+        </nomatch>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/RecipeDef[defName="BurnApparel"]/products</xpath>
+        <value><MMT_Ash>2</MMT_Ash></value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationConditional">
+        <xpath>Defs/RecipeDef[defName="CremateCorpse"]/products</xpath>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>Defs/RecipeDef[defName="CremateCorpse"]</xpath>
+          <value><products /></value>
+        </nomatch>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/RecipeDef[defName="CremateCorpse"]/products</xpath>
+        <value><MMT_Ash>4</MMT_Ash></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
