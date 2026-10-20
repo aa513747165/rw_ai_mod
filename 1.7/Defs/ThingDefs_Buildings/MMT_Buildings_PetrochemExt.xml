@@ -68,6 +68,15 @@
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeCompaste</li>
+      <li>MMT_MakeCloth</li>
+      <li>MMT_MakeFlaxcloth</li>
+      <li>MMT_MakeHempCloth</li>
+      <li>MMT_MakeDevilstrand</li>
+      <li>MMT_MakeSynthread</li>
+      <li>MMT_MakeVelour</li>
+      <li>MMT_MakeKevlar</li>
+      <li>MMT_MakeHyperweave</li>
+      <li>MMT_MakeChitinPlating</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

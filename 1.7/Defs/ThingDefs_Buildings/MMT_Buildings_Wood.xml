@@ -39,6 +39,8 @@
     <recipes>
       <li>MMT_MakeWoodPlanks_Hand</li>
       <li>MMT_MakeKindling_Hand</li>
+      <li>MMT_MakeBambooPlanks_Hand</li>
+      <li>MMT_MakeRedWoodPlanks_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>

@@ -29,4 +29,9 @@
     <xpath>Defs/ThingDef[defName="ComponentSpacer"]/thingCategories</xpath>
     <value><li>MMT_Parts</li></value>
   </Operation>
+  <!-- B8：原版布归入 MMT 基础织物类别（丝绒配方的 [基础织物] 输入需要） -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Cloth"]/thingCategories</xpath>
+    <value><li>MMT_BTextiles</li></value>
+  </Operation>
 </Patch>

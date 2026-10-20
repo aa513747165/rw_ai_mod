@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- B8 新研究：织物与武器部件。其余配方直接引用原版研究（Machining/Gunsmithing/BlowbackOperation/GasOperation/PrecisionRifling/HeavyTurrets/Mortars/Fabrication/ChargedShot/ComplexClothing/AdvancedFabrication/Firefoam/Pemmican） -->
+
+  <!-- 对照 HSK Art_A1（艺术 I） -->
+  <ResearchProjectDef>
+    <defName>MMT_ArtSupplies</defName>
+    <label>艺术用品</label>
+    <description>学习从花卉中提炼染料，并调制绘画用品。</description>
+    <baseCost>400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 对照 HSK Apparel_D1（服装生产 V） -->
+  <ResearchProjectDef>
+    <defName>MMT_SuperFabric</defName>
+    <label>超织物工艺</label>
+    <description>学习将合成纤维与魔菇布编织成超织物的太空时代纺织工艺。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>AdvancedFabrication</li>
+    </prerequisites>
+    <researchViewX>23.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 对照 HSK Rockets_C1（火箭弹 I：1400/Industrial/前置 HeavyTurrets） -->
+  <ResearchProjectDef>
+    <defName>MMT_Rocketry1</defName>
+    <label>火箭弹 I</label>
+    <description>学习制造火箭发射器部件，为重型火力奠定基础。</description>
+    <baseCost>1400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>HeavyTurrets</li>
+    </prerequisites>
+    <researchViewX>23.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- B8 甲壳来源（决策：patch 原版虫类屠宰掉落）：HSK 靠 SK 剪毛组件不可用，对照剪毛量改为一次性屠宰掉落（巨甲虫30/穴居阔步虫45/巨蜘蛛60）。原版虫类无 butcherProducts 节点，需条件双分支 -->
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Megascarab"]/butcherProducts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Megascarab"]/butcherProducts</xpath>
+      <value>
+        <MMT_Chitin>30</MMT_Chitin>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Megascarab"]</xpath>
+      <value>
+        <butcherProducts>
+          <MMT_Chitin>30</MMT_Chitin>
+        </butcherProducts>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Spelopede"]/butcherProducts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Spelopede"]/butcherProducts</xpath>
+      <value>
+        <MMT_Chitin>45</MMT_Chitin>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Spelopede"]</xpath>
+      <value>
+        <butcherProducts>
+          <MMT_Chitin>45</MMT_Chitin>
+        </butcherProducts>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Megaspider"]/butcherProducts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Megaspider"]/butcherProducts</xpath>
+      <value>
+        <MMT_Chitin>60</MMT_Chitin>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Megaspider"]</xpath>
+      <value>
+        <butcherProducts>
+          <MMT_Chitin>60</MMT_Chitin>
+        </butcherProducts>
+      </value>
+    </nomatch>
+  </Operation>
+</Patch>

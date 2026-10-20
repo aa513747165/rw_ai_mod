@@ -43,6 +43,8 @@
     <recipes>
       <li>MMT_MakeWoodPlanks_Electric</li>
       <li>MMT_MakeKindling_Electric</li>
+      <li>MMT_MakeBambooPlanks_Electric</li>
+      <li>MMT_MakeRedWoodPlanks_Electric</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

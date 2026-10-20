@@ -460,4 +460,61 @@
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_OxidizedFuel</researchPrerequisite>
   </RecipeDef>
+  <!-- 表面活性剂（椰子替代）：对照 HSK MakeSurfactant_CoconutSubstitute（B5 遗留，B8 椰子落地后补齐；研究对照原版 Firefoam） -->
+  <RecipeDef>
+    <defName>MMT_MakeSurfactant_CoconutSubstitute</defName>
+    <label>制备表面活性剂（椰子替代，50个）</label>
+    <description>将盐、硫磺和椰子加工成表面活性剂发泡液。产出 50。</description>
+    <jobString>正在制备表面活性剂。</jobString>
+    <workAmount>4000</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Salt</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Sulfur</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_RawCoconut</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_Salt</li>
+        <li>MMT_Sulfur</li>
+        <li>MMT_RawCoconut</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_Surfactant>50</MMT_Surfactant>
+    </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+      <Intellectual>4</Intellectual>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>Firefoam</researchPrerequisite>
+    <recipeUsers>
+      <li>Brewery</li>
+      <li>DrugLab</li>
+    </recipeUsers>
+  </RecipeDef>
 </Defs>
