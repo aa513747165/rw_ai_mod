@@ -44,7 +44,7 @@
     </statBases>
     <stackLimit>75</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_ElectronicsCat</li>
     </thingCategories>
   </ThingDef>
 
@@ -68,7 +68,7 @@
     </statBases>
     <stackLimit>75</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_ElectronicsCat</li>
     </thingCategories>
   </ThingDef>
 
@@ -92,7 +92,7 @@
     </statBases>
     <stackLimit>25</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_ElectronicsCat</li>
     </thingCategories>
   </ThingDef>
 </Defs>

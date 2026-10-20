@@ -20,7 +20,7 @@
     </statBases>
     <stackLimit>300</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 
@@ -44,7 +44,7 @@
     </statBases>
     <stackLimit>600</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 
@@ -68,7 +68,7 @@
     </statBases>
     <stackLimit>75</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 
@@ -92,7 +92,7 @@
     </statBases>
     <stackLimit>75</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 
@@ -116,7 +116,7 @@
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 
@@ -140,7 +140,7 @@
     </statBases>
     <stackLimit>150</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Parts</li>
     </thingCategories>
   </ThingDef>
 </Defs>
