@@ -1359,8 +1359,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 20
-INFRA_WORKTABLE_TOTAL = 17
+INFRA_RESEARCH_TOTAL = 22
+INFRA_WORKTABLE_TOTAL = 19
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
