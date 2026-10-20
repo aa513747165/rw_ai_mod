@@ -43,6 +43,7 @@
       <li>MMT_ExtractSilicon_Hand</li>
       <li>MMT_SmeltSilver_Hand</li>
       <li>MMT_SmeltGold_Hand</li>
+      <li>MMT_SmeltLeadBar_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <building>
@@ -127,6 +128,54 @@
       <mineableYield>75</mineableYield>
       <mineableScatterCommonality>1.1</mineableScatterCommonality>
       <mineableScatterLumpSizeRange>9~17</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableAnglesite</defName>
+    <label>铅矾矿脉</label>
+    <description>露头的铅矾矿矿脉，开采后可获得铅矾矿，用于冶炼铅合金。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(89,74,68)</color>
+      <colorTwo>(134,148,63)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1600</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_Anglesite</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>0.8</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>6~13</mineableScatterLumpSizeRange>
+      <veinMineable>true</veinMineable>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MMT_MineableAluminium</defName>
+    <label>铝土矿脉</label>
+    <description>露头的铝土矿矿脉，开采后可获得铝土矿，铝只能在电力驱动下冶炼。</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(124,124,110)</color>
+      <colorTwo>(175,175,165)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1600</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>MMT_AluminiumOre</mineableThing>
+      <mineableYield>75</mineableYield>
+      <mineableScatterCommonality>0.65</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>11~19</mineableScatterLumpSizeRange>
       <veinMineable>true</veinMineable>
     </building>
   </ThingDef>

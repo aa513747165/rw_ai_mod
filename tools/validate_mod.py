@@ -521,15 +521,20 @@ WOOD_RECIPE_EXPECTATIONS = {
 }
 
 METAL_ORE_EXPECTATIONS = {
-    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre"},
-    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre"},
-    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre"},
+    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre/MMT_IronOre", "value": "2.0", "stack": "600"},
+    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre/MMT_CopperOre", "value": "2.0", "stack": "600"},
+    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre/MMT_TinOre", "value": "2.0", "stack": "600"},
+    "MMT_Anglesite": {"label": "铅矾矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_Anglesite/MMT_Anglesite", "value": "4", "stack": "300"},
+    "MMT_AluminiumOre": {"label": "铝土矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_AluminiumOre/MMT_AluminiumOre", "value": "2", "stack": "600"},
 }
 
 METAL_BAR_EXPECTATIONS = {
-    "MMT_CopperBar": {"label": "铜", "value": "3.0", "stack": "300", "adjective": "铜制", "hp": "1.4", "flammable": "0.1", "work": "1.5"},
-    "MMT_TinBar": {"label": "锡", "value": "3.0", "stack": "300", "adjective": "锡制", "hp": "1.3", "flammable": "0", "work": "1.2"},
-    "MMT_Bronze": {"label": "青铜", "value": "4.0", "stack": "600", "adjective": "青铜制", "hp": "1.6", "flammable": "0", "work": "0.8"},
+    "MMT_CopperBar": {"label": "铜", "value": "3.0", "stack": "300", "adjective": "铜制", "hp": "1.4", "flammable": "0.1", "work": "1.5", "category": "MMT_SLDBar"},
+    "MMT_TinBar": {"label": "锡", "value": "3.0", "stack": "300", "adjective": "锡制", "hp": "1.3", "flammable": "0", "work": "1.2", "category": "MMT_SLDBar"},
+    "MMT_Bronze": {"label": "青铜", "value": "4.0", "stack": "600", "adjective": "青铜制", "hp": "1.6", "flammable": "0", "work": "0.8", "category": "MMT_SLDBar"},
+    "MMT_LeadBar": {"label": "铅合金", "value": "6", "stack": "300", "adjective": "铅制", "hp": "1.35", "flammable": "0.1", "work": "1.7", "category": "MMT_HeavyBar"},
+    "MMT_AluminiumBar": {"label": "铝合金", "value": "3", "stack": "300", "adjective": "铝制", "hp": "1.4", "flammable": "0", "work": "1.45", "category": "MMT_HCMBar"},
+    "MMT_FerrosiliconAlloy": {"label": "斯特合金", "value": "5", "stack": "300", "adjective": "斯特制", "hp": "2.1", "flammable": "0", "work": "1.3", "category": "MMT_SLDBar"},
 }
 
 METAL_FURNACE_RECIPES = [
@@ -540,12 +545,15 @@ METAL_FURNACE_RECIPES = [
     "MMT_ExtractSilicon_Hand",
     "MMT_SmeltSilver_Hand",
     "MMT_SmeltGold_Hand",
+    "MMT_SmeltLeadBar_Hand",
 ]
 
 METAL_MINEABLE_EXPECTATIONS = {
     "MMT_MineableIronOre": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500"},
     "MMT_MineableCopperOre": {"label": "铜矿", "yield_thing": "MMT_CopperOre", "hp": "1800"},
     "MMT_MineableTinOre": {"label": "锡矿", "yield_thing": "MMT_TinOre", "hp": "1300"},
+    "MMT_MineableAnglesite": {"label": "铅矾矿脉", "yield_thing": "MMT_Anglesite", "hp": "1600"},
+    "MMT_MineableAluminium": {"label": "铝土矿脉", "yield_thing": "MMT_AluminiumOre", "hp": "1600"},
 }
 
 METAL_RECIPE_EXPECTATIONS = {
@@ -576,6 +584,13 @@ METAL_RECIPE_EXPECTATIONS = {
         "output": "Steel",
         "output_count": "20",
         "skill": "3",
+    },
+    "MMT_SmeltLeadBar_Hand": {
+        "work": "1100",
+        "inputs": [("thingDefs", "MMT_Anglesite", "10")],
+        "output": "MMT_LeadBar",
+        "output_count": "10",
+        "skill": "2",
     },
 }
 
@@ -740,6 +755,10 @@ ELECTRIC_FURNACE_RECIPES = [
     "MMT_SmeltSilver_Electric",
     "MMT_SmeltGold_Electric",
     "MMT_ExtractSilicon_Electric",
+    "MMT_SmeltLeadBar_Electric",
+    "MMT_SmeltAluminiumBar_Electric",
+    "MMT_MakeFerrosiliconAlloy",
+    "MMT_MakeMetalCan",
 ]
 
 ELECTRIC_RECIPE_EXPECTATIONS = {
@@ -791,6 +810,27 @@ ELECTRIC_RECIPE_EXPECTATIONS = {
         "output": "MMT_Silicon",
         "output_count": "5",
         "skill": "5",
+    },
+    "MMT_SmeltLeadBar_Electric": {
+        "work": "1000",
+        "inputs": [("thingDefs", "MMT_Anglesite", "20")],
+        "output": "MMT_LeadBar",
+        "output_count": "20",
+        "skill": "6",
+    },
+    "MMT_SmeltAluminiumBar_Electric": {
+        "work": "1200",
+        "inputs": [("thingDefs", "MMT_AluminiumOre", "20")],
+        "output": "MMT_AluminiumBar",
+        "output_count": "20",
+        "skill": "7",
+    },
+    "MMT_MakeFerrosiliconAlloy": {
+        "work": "1700",
+        "inputs": [("thingDefs", "Steel", "15"), ("thingDefs", "MMT_Silicon", "10"), ("thingDefs", "MMT_AluminiumBar", "5")],
+        "output": "MMT_FerrosiliconAlloy",
+        "output_count": "30",
+        "skill": "8",
     },
 }
 
@@ -1874,13 +1914,13 @@ def validate_wood() -> None:
 def validate_metal_resources() -> None:
     require_files([METAL_RESOURCE_XML, *METAL_ITEM_TEXTURES])
     defs = def_map(parse_xml(METAL_RESOURCE_XML))
-    assert_equal(set(defs), set(METAL_ORE_EXPECTATIONS) | set(METAL_BAR_EXPECTATIONS), "金属资源 defName 集合")
+    assert_equal(set(defs), set(METAL_ORE_EXPECTATIONS) | set(METAL_BAR_EXPECTATIONS) | {"MMT_MetalCan"}, "金属资源 defName 集合")
 
     for name, expected in METAL_ORE_EXPECTATIONS.items():
         node = defs[name]
         assert_equal(child_text(node, "label"), expected["label"], f"{name} label")
-        assert_equal(child_text(node, "./statBases/MarketValue"), "2.0", f"{name} MarketValue")
-        assert_equal(child_text(node, "stackLimit"), "600", f"{name} stackLimit")
+        assert_equal(child_text(node, "./statBases/MarketValue"), expected["value"], f"{name} MarketValue")
+        assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
         assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
@@ -1894,7 +1934,7 @@ def validate_metal_resources() -> None:
         assert_equal(child_text(node, "stackLimit"), expected["stack"], f"{name} stackLimit")
         assert_equal(child_text(node, "./graphicData/texPath"), "Things/Item/MMT/MMT_Ingot/MMT_Ingot", f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_StackCount", f"{name} graphicClass")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "thingCategories"), [expected["category"]], f"{name} thingCategories")
         assert_equal(li_values(node, "./stuffProps/categories"), ["Metallic"], f"{name} stuff categories")
         assert_equal(child_text(node, "./stuffProps/stuffAdjective"), expected["adjective"], f"{name} stuffAdjective")
         assert_equal(child_text(node, "./stuffProps/statFactors/MaxHitPoints"), expected["hp"], f"{name} MaxHitPoints factor")
@@ -2418,7 +2458,7 @@ def validate_electric() -> None:
     assert_equal(child_text(glower, "glowColor"), "(217,112,33,0)", "电弧炉发光颜色")
 
     recipe_defs = def_map(parse_xml(ELECTRIC_RECIPE_XML))
-    assert_equal(set(recipe_defs), set(ELECTRIC_RECIPE_EXPECTATIONS), "电动配方 defName 集合")
+    assert_equal(set(recipe_defs), set(ELECTRIC_RECIPE_EXPECTATIONS) | {"MMT_MakeMetalCan"}, "电动配方 defName 集合")
 
     resource_names = (
         set(def_map(parse_xml(METAL_RESOURCE_XML)))
@@ -2426,8 +2466,9 @@ def validate_electric() -> None:
         | set(def_map(parse_xml(COAL_RESOURCE_XML)))
         | set(def_map(parse_xml(PRECIOUS_RESOURCE_XML)))
         | set(def_map(parse_xml(RESOURCE_XML)))
+        | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML)))
     )
-    output_names = resource_names | set(def_map(parse_xml(ELECTRONICS_RESOURCE_XML))) | VANILLA_THINGS
+    output_names = resource_names | VANILLA_THINGS
     furnace_recipes = li_values(furnace, "recipes")
 
     for name, expected in ELECTRIC_RECIPE_EXPECTATIONS.items():
@@ -2477,7 +2518,7 @@ def validate_electric() -> None:
 
         for _, value, _ in normalized:
             for item in value:
-                if item not in resource_names:
+                if item not in resource_names | VANILLA_THINGS:
                     fail(f"{name} 使用未知资源: {item}")
         if expected["output"] not in output_names:
             fail(f"{name} 输出不是已定义资源: {expected['output']}")

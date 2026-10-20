@@ -93,7 +93,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>300</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_SLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -133,7 +133,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>300</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_SLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -173,7 +173,7 @@
     <useHitPoints>true</useHitPoints>
     <stackLimit>600</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_SLDBar</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -190,5 +190,234 @@
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Anglesite</defName>
+    <label>铅矾矿</label>
+    <description>铅矾矿是铅的矿石形式。铅是一种重金属，比大多数普通材料密度大。铅柔软而有延展性，熔点相对较低。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_Anglesite/MMT_Anglesite</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(165,185,70)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>4</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.3</Mass>
+    </statBases>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AluminiumOre</defName>
+    <label>铝土矿</label>
+    <description>铝土矿是铝的矿石形式。铝的冶炼无法手工完成，需要电力驱动。铝密度低、抗腐蚀，具有顺磁性。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ore/MMT_AluminiumOre/MMT_AluminiumOre</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(255,200,200)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>2</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <stackLimit>600</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_LeadBar</defName>
+    <label>铅合金</label>
+    <description>由铅矾矿冶炼出的铅锭。密度大的重金属，柔软有延展性，熔点相对较低。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(129,107,100)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>6</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.4</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>MMT_HeavyBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>铅制</stuffAdjective>
+      <color>(114,92,83)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statOffsets>
+        <Beauty>0</Beauty>
+      </statOffsets>
+      <statFactors>
+        <MaxHitPoints>1.35</MaxHitPoints>
+        <Flammability>0.1</Flammability>
+        <Beauty>0.7</Beauty>
+        <WorkToMake>1.7</WorkToMake>
+        <WorkToBuild>1.7</WorkToBuild>
+        <MeleeWeapon_CooldownMultiplier>1.5</MeleeWeapon_CooldownMultiplier>
+        <MoveSpeed>0.8</MoveSpeed>
+        <MarketValue>0.7</MarketValue>
+        <BedRestEffectiveness>0.4</BedRestEffectiveness>
+        <ImmunityGainSpeedFactor>0.25</ImmunityGainSpeedFactor>
+        <WorkTableWorkSpeedFactor>0.8</WorkTableWorkSpeedFactor>
+        <DoorOpenSpeed>0.6</DoorOpenSpeed>
+        <MeleePenetrationFactor>0.45</MeleePenetrationFactor>
+        <Mass>1.2</Mass>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AluminiumBar</defName>
+    <label>铝合金</label>
+    <description>由铝土矿电解冶炼出的铝锭。类似铜但不那么贵重，因高导电性广泛用于电气产业。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(190,205,190)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>3</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>MMT_HCMBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>铝制</stuffAdjective>
+      <color>(175,175,175)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statOffsets>
+        <Beauty>3</Beauty>
+      </statOffsets>
+      <statFactors>
+        <MaxHitPoints>1.4</MaxHitPoints>
+        <Flammability>0</Flammability>
+        <Beauty>1.1</Beauty>
+        <WorkToMake>1.45</WorkToMake>
+        <WorkToBuild>1.45</WorkToBuild>
+        <DoorOpenSpeed>1.4</DoorOpenSpeed>
+        <MeleeWeapon_CooldownMultiplier>0.7</MeleeWeapon_CooldownMultiplier>
+        <MoveSpeed>1.05</MoveSpeed>
+        <MarketValue>0.7</MarketValue>
+        <BedRestEffectiveness>1</BedRestEffectiveness>
+        <ImmunityGainSpeedFactor>1.05</ImmunityGainSpeedFactor>
+        <WorkTableWorkSpeedFactor>1.2</WorkTableWorkSpeedFactor>
+        <MeleePenetrationFactor>0.7</MeleePenetrationFactor>
+        <Mass>0.85</Mass>
+        <Cleanliness>0.6</Cleanliness>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_FerrosiliconAlloy</defName>
+    <label>斯特合金</label>
+    <description>铁硅铝三元合金，可用作其他金属的脱氧剂，比标准铸铁或钢更耐磨。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(131,137,147)</color>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>5</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.3</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>300</stackLimit>
+    <thingCategories>
+      <li>MMT_SLDBar</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Metallic</li>
+      </categories>
+      <stuffAdjective>斯特制</stuffAdjective>
+      <color>(101,107,117)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statFactors>
+        <MaxHitPoints>2.1</MaxHitPoints>
+        <Beauty>0.8</Beauty>
+        <Flammability>0</Flammability>
+        <WorkToMake>1.3</WorkToMake>
+        <WorkToBuild>1.3</WorkToBuild>
+        <DoorOpenSpeed>0.8</DoorOpenSpeed>
+        <MeleeWeapon_CooldownMultiplier>1.1</MeleeWeapon_CooldownMultiplier>
+        <MoveSpeed>0.8</MoveSpeed>
+        <MarketValue>0.7</MarketValue>
+        <BedRestEffectiveness>0.85</BedRestEffectiveness>
+        <ImmunityGainSpeedFactor>0.9</ImmunityGainSpeedFactor>
+        <WorkTableWorkSpeedFactor>1.1</WorkTableWorkSpeedFactor>
+        <MeleePenetrationFactor>1.2</MeleePenetrationFactor>
+        <Mass>1.2</Mass>
+      </statFactors>
+    </stuffProps>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_MetalCan</defName>
+    <label>金属罐</label>
+    <description>做罐头食品所需的空金属罐。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MetalCan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MarketValue>1.7</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <useHitPoints>true</useHitPoints>
+    <stackLimit>200</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
   </ThingDef>
 </Defs>

@@ -48,6 +48,10 @@
       <li>MMT_SmeltSilver_Electric</li>
       <li>MMT_SmeltGold_Electric</li>
       <li>MMT_ExtractSilicon_Electric</li>
+      <li>MMT_SmeltLeadBar_Electric</li>
+      <li>MMT_SmeltAluminiumBar_Electric</li>
+      <li>MMT_MakeFerrosiliconAlloy</li>
+      <li>MMT_MakeMetalCan</li>
       <li>MMT_SmeltNickelBar</li>
       <li>MMT_ExtractCobalt</li>
       <li>MMT_ExtractChromium</li>

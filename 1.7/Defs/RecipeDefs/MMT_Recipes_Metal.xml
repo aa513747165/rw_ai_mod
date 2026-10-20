@@ -159,4 +159,39 @@
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_BasicMetalworking</researchPrerequisite>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_SmeltLeadBar_Hand</defName>
+    <label>提炼铅（10个）</label>
+    <description>将铅矾矿冶炼成铅合金。产出 10。</description>
+    <jobString>正在冶炼铅合金。</jobString>
+    <workAmount>1100</workAmount>
+    <workSpeedStat>SmeltingSpeed</workSpeedStat>
+    <effectWorking>Smelt</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Anglesite</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_Anglesite</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_LeadBar>10</MMT_LeadBar>
+    </products>
+    <skillRequirements>
+      <Crafting>2</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_BasicMetalworking</researchPrerequisite>
+  </RecipeDef>
 </Defs>
