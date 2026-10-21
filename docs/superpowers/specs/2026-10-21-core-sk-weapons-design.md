@@ -1,10 +1,10 @@
 # Core_SK 全武器移植到 MMT 设计
 
 - 日期：2026-10-21
-- 状态：待用户审阅
+- 状态：待用户复审（2026-10-21 已补充 22 个配方产物克隆与炮塔数量修正）
 - HSK 基准：本地 `Hardcore-SK`，`1.7-super-unstable`，HEAD `b99b17d`
 - 目标版本：RimWorld 1.7
-- 范围来源：`Hardcore-SK/Mods/Core_SK`；不包含 HMC、Ratkin 或其他扩展武器包
+- 范围来源：`Hardcore-SK/Mods/Core_SK` 为主；仅为补齐配方产物，额外读取 HSK patch 替换值、Combat Extended 中被引用的武器 Def 和 CE 弹药数值；不包含 HMC、Ratkin 或其他扩展武器包
 
 ## 1. 已确认决策
 
@@ -16,17 +16,19 @@
 6. **研究策略**：压缩为约 20–30 个 MMT 武器研究节点；可对应原版研究的直接引用原版。
 7. **实施方式**：生成器提取/转换初稿，人工分批审查和修正。
 8. **资源授权**：HSK 武器贴图与音效资源均已获授权，可纳入 MMT。
+9. **缺失配方产物**：87 条待处理武器配方中有 22 条产物不是 Core_SK 当前激活 Def；用户已确认全部克隆为 MMT。其中 17 个原版武器/手雷从 HSK `PatchOperationReplaceExtended` 的替换值提取，5 个 CE 自带武器从 Combat Extended Def 转换，仍不引入运行时依赖。
 
 ## 2. 源数据规模
 
 以下数字由本地 XML 解析实际统计，忽略注释掉的 Def：
 
 - `Defs/ThingDefs_Weapons/*.xml`：33 个文件，167 个顶层 ThingDef，其中 27 个抽象、140 个非抽象（含炮塔枪与内联投射物）。
+- 配方产物补充克隆：22 个，其中 17 个来自 HSK 对原版武器的 `PatchOperationReplaceExtended`，5 个来自 Combat Extended 的武器 Def；合并后计划生成 162 个非抽象武器/投射物 ThingDef。
 - `Defs/RecipeDefs_Weapons/*.xml`：17 个文件，103 个 RecipeDef，其中 1 个抽象、102 个非抽象；其中 14 条武器部件配方已由 B8 实现、1 条护盾拆解配方不属于武器范围，本次实际计划处理 87 条。
 - `Defs/ResearchProjectDefs/Research_Weapon.xml`：44 个 ResearchProjectDef。
 - `Defs/ThingDefs_Items/Items_Crate.xml`：26 个炮塔箱 ThingDef。
 - `Defs/RecipeDefs/Recipes_Turrets.xml`：26 条炮塔箱 RecipeDef。
-- `Defs/ThingDefs_Buildings/Buildings_Turrets.xml`：18 个 ThingDef，其中 1 个抽象、17 个可建造炮塔。
+- `Defs/ThingDefs_Buildings/Buildings_Turrets.xml`：18 个 ThingDef，其中 1 个抽象基类、16 个可建造炮塔、1 个 `MinifiedTurret_81mmMortar` 小件定义；MMT 不移植该小件定义，炮塔统一改用原版 `MinifiedThing`。
 - `Defs/SoundDefs/World_Oneshots_Weapons.xml`：88 个 SoundDef。
 
 ## 3. 非目标
@@ -64,7 +66,7 @@
 
 ### W4 炮塔体系
 
-- 炮塔枪、17 个可建造炮塔、26 个炮塔箱、26 条炮塔箱配方。
+- 炮塔枪、16 个可建造炮塔、26 个炮塔箱、26 条炮塔箱配方。
 - 装填类炮塔对应的 MMT 子弹物品与配方。
 - 炮塔按发消耗对应子弹。
 
@@ -110,6 +112,13 @@
 - 贴图、绘制尺寸、装备类型、科技等级、武器标签中原版可识别项。
 - `CompEquippable`、`CompQuality`、`CompProperties_Art`、`CompProperties_Styleable`、`CompProperties_Biocodable`、`CompProperties_Forbiddable` 等原版组件。
 
+### 配方产物克隆
+
+- 生成器先收集 87 条待处理配方的产品；若产品不是 Core_SK 激活武器 Def，则进入 22 项补充克隆清单。
+- 17 个原版来源产品从 HSK `PatchOperationReplaceExtended` 的 `<value>` 提取完整替换内容，再按本章规则转换。
+- 5 个 CE 来源产品直接从 Combat Extended `ThingDefs_Misc/Weapons*.xml` 提取并转换。
+- 补充克隆与普通 Core_SK 武器使用同一命名、投射物、音效、贴图和禁引用规则。
+
 ### Verb 转换
 
 - `CombatExtended.VerbPropertiesCE` 转原版 `VerbProperties`。
@@ -149,6 +158,7 @@
   - `consumeFuelOnlyWhenUsed` 为 true；
   - 武器 verb 设置 `consumeFuelPerShot` 为 1。
 - 炮塔弹药配方只覆盖装填类炮塔所需弹药。
+- 炮塔建筑使用 MMT 自建 `MMT_TurretBuildingBase` 替代 CE/HSK 的 `TurretMannedBase/TurretBase/TurretMortarBase`；HSK `MinifiedTurret_*` 不移植，统一使用原版 `MinifiedThing`。
 - 不移植 CE 自动装填机；如 HSK 炮塔功能依赖自动装填机，MMT 版本以人工补充弹药为准。
 
 ## 9. 配方、工作台与研究
