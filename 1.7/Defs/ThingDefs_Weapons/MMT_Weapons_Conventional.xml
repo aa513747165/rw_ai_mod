@@ -13,6 +13,7 @@
 		<statBases>
 			<Mass>0.85</Mass>
 			<RangedWeapon_Cooldown>0.38</RangedWeapon_Cooldown>
+			<WorkToMake>4000</WorkToMake>
 		</statBases>
 		<verbs>
 			<li>
@@ -52,6 +53,16 @@
 				<armorPenetration>0.006</armorPenetration>
 			</li>
 		</tools>
+		<costList>
+			<Steel>35</Steel>
+			<ComponentIndustrial>1</ComponentIndustrial>
+		</costList>
+		<recipeMaker>
+			<skillRequirements>
+				<Crafting>4</Crafting>
+			</skillRequirements>
+			<researchPrerequisite>Gunsmithing</researchPrerequisite>
+		</recipeMaker>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_FlamethrowerRM</defName>
@@ -533,6 +544,7 @@
 			<MarketValue>750</MarketValue>
 			<Mass>4.2</Mass>
 			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
+			<WorkToMake>12000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>RF1</li>
@@ -859,6 +871,7 @@
 			<MarketValue>2200</MarketValue>
 			<Mass>7</Mass>
 			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
+			<WorkToMake>39500</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>RKT1</li>
@@ -2218,6 +2231,7 @@
 			<MarketValue>1650</MarketValue>
 			<Mass>6.5</Mass>
 			<RangedWeapon_Cooldown>1.4</RangedWeapon_Cooldown>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>SNIP1</li>

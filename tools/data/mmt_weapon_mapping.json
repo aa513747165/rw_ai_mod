@@ -42,7 +42,8 @@
     "MechWeaponCraftingWorkTable": "MMT_MechWeaponTable",
     "HeavyArmsBench": "MMT_AdvWeaponCraftingTable",
     "TableHeavyAmmunition": "MMT_AmmoBench",
-    "CraftingSpot": "CraftingSpot"
+    "CraftingSpot": "CraftingSpot",
+    "TableElectronics": "MMT_HandElectronicsTable"
   },
   "ingredient_defs": {
     "Weapon_Parts": "MMT_WeaponParts",
@@ -77,7 +78,10 @@
     "ComponentMedieval": "MMT_ComponentMedieval",
     "ComponentAdvanced": "MMT_SpacerComponent",
     "ComponentSpacer": "MMT_SpacerComponent",
-    "ComponentUltra": "MMT_UltraComponent"
+    "ComponentUltra": "MMT_UltraComponent",
+    "Carbon": "MMT_Carbon",
+    "AdvMechanism": "MMT_AdvMechanism",
+    "MagneticMaterial": "MMT_MagneticMaterial"
   },
   "ingredient_categories": {
     "SLDBar": "MMT_SLDBar",

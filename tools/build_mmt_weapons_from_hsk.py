@@ -599,9 +599,16 @@ CLONE_BATCH = {
 # 原版可识别的武器 statBases 白名单；CE 精度系字段（SightsEfficiency 等）按 spec 丢弃
 WEAPON_STAT_WHITELIST = {
     "MarketValue", "Mass", "MaxHitPoints", "Flammability", "DeteriorationRate",
-    "RangedWeapon_Cooldown", "Beauty", "SellPriceFactor",
+    "RangedWeapon_Cooldown", "Beauty", "SellPriceFactor", "WorkToMake",
 }
 CE_REMOVE_STATS = {"SightsEfficiency", "ShotSpread", "SwayFactor", "Bulk"}
+
+# 武器材料类别映射：HSK 专有类别归并到原版类别
+WEAPON_STUFF_MAP = {
+    "StrongMetallic": "Metallic", "SolidMetallic": "Metallic", "RuggedMetallic": "Metallic",
+    "WoodLogs": "Woody", "Glass": "Metallic",
+    "Metallic": "Metallic", "Woody": "Woody", "Leathery": "Leathery", "Stony": "Stony",
+}
 
 # 原版 VerbProperties 白名单字段
 VERB_FIELD_WHITELIST = {
@@ -860,10 +867,84 @@ def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: di
         smelt_out = ET.SubElement(out, "smeltProducts")
         for item in smelt:
             ET.SubElement(smelt_out, map_thing_name(item.tag, mapping)).text = item.text
+    # 材料化武器（近战/弓弩）：stuffCategories/costList/costStuffCount + recipeMaker 自动配方
+    stuff = nearest_node(chain, "stuffCategories")
+    if stuff is not None:
+        stuff_out = ET.SubElement(out, "stuffCategories")
+        seen_stuff: set[str] = set()
+        for li in stuff.findall("li"):
+            if not li.text:
+                continue
+            value = WEAPON_STUFF_MAP.get(li.text)
+            if value is None:
+                print(f"[manual_review] {source_name} 材料类别 {li.text} 无映射，按 Metallic 处理")
+                value = "Metallic"
+            if value not in seen_stuff:
+                seen_stuff.add(value)
+                ET.SubElement(stuff_out, "li").text = value
+    cost_stuff = nearest_text(chain, "costStuffCount")
+    if cost_stuff:
+        ET.SubElement(out, "costStuffCount").text = cost_stuff
+    cost_list = nearest_node(chain, "costList")
+    if cost_list is not None:
+        cost_out = ET.SubElement(out, "costList")
+        for item in cost_list:
+            ET.SubElement(cost_out, map_thing_name(item.tag, mapping)).text = item.text
+    # 炮塔枪不走制造配方（炮塔箱链替代），跳过 recipeMaker
+    if base_override != "MMT_BaseTurretGun":
+        recipe_maker = convert_recipe_maker(chain, mapping)
+        if recipe_maker is not None:
+            out.append(recipe_maker)
     for field in ("tradeability", "generateCommonality"):
         value = nearest_text(chain, field)
         if value:
             ET.SubElement(out, field).text = value
+    return out
+
+
+def convert_recipe_maker(chain: list[ET.Element], mapping: dict) -> ET.Element | None:
+    """合并继承链 recipeMaker：工作台/技能/研究映射到 MMT 或原版等价项。"""
+    makers = [node.find("recipeMaker") for node in chain]
+    makers = [m for m in makers if m is not None]
+    if not makers:
+        return None
+    out = ET.Element("recipeMaker")
+
+    def nearest(field: str) -> str | None:
+        for maker in makers:
+            value = maker.findtext(field)
+            if value:
+                return value
+        return None
+
+    work_speed = nearest("workSpeedStat")
+    if work_speed:
+        ET.SubElement(out, "workSpeedStat").text = WORK_SPEED_STAT_MAP.get(work_speed, work_speed)
+    for field in ("workSkill", "effectWorking", "soundWorking"):
+        value = nearest(field)
+        if value:
+            ET.SubElement(out, field).text = value
+    for maker in makers:
+        users = maker.find("recipeUsers")
+        if users is not None:
+            users_out = ET.SubElement(out, "recipeUsers")
+            for li in users.findall("li"):
+                if li.text:
+                    target = mapping["workbenches"].get(li.text, li.text)
+                    if users_out.find(f"li[.='{target}']") is None:
+                        ET.SubElement(users_out, "li").text = target
+            break
+    for maker in makers:
+        skill = maker.find("skillRequirements")
+        if skill is not None:
+            out.append(copy.deepcopy(skill))
+            break
+    unfinished = nearest("unfinishedThingDef")
+    if unfinished:
+        ET.SubElement(out, "unfinishedThingDef").text = UNFINISHED_MAP.get(unfinished, "UnfinishedGun")
+    research = nearest("researchPrerequisite")
+    if research:
+        ET.SubElement(out, "researchPrerequisite").text = mapping["research"].get(research, research)
     return out
 
 

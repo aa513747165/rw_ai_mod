@@ -19,6 +19,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Ranged</li>
@@ -63,6 +64,28 @@
 				<armorPenetration>0.006</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>100</costStuffCount>
+		<costList>
+			<ArchiteCapsule>5</ArchiteCapsule>
+			<MMT_UltraComponent>8</MMT_UltraComponent>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Machining</soundWorking>
+			<recipeUsers>
+				<li>MMT_MechWeaponTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>20</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_ArchotechWeapons</researchPrerequisite>
+		</recipeMaker>
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
 	</ThingDef>
@@ -78,6 +101,9 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 		</statBases>
+		<stuffCategories />
+		<costList />
+		<recipeMaker />
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_BurstLasergun</defName>
@@ -180,6 +206,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Ranged</li>
@@ -235,6 +262,29 @@
 				<armorPenetration>0.014</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>120</costStuffCount>
+		<costList>
+			<ArchiteCapsule>5</ArchiteCapsule>
+			<MMT_WeaponParts>20</MMT_WeaponParts>
+			<MMT_UltraComponent>8</MMT_UltraComponent>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Machining</soundWorking>
+			<recipeUsers>
+				<li>MMT_MechWeaponTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>20</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_ArchotechWeapons</researchPrerequisite>
+		</recipeMaker>
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
 	</ThingDef>
@@ -250,6 +300,9 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 		</statBases>
+		<stuffCategories />
+		<costList />
+		<recipeMaker />
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_ArchotechSMG</defName>
@@ -269,6 +322,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Ranged</li>
@@ -324,6 +378,29 @@
 				<armorPenetration>0.013</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>100</costStuffCount>
+		<costList>
+			<ArchiteCapsule>5</ArchiteCapsule>
+			<MMT_WeaponParts>15</MMT_WeaponParts>
+			<MMT_UltraComponent>6</MMT_UltraComponent>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Machining</soundWorking>
+			<recipeUsers>
+				<li>MMT_MechWeaponTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>20</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_ArchotechWeapons</researchPrerequisite>
+		</recipeMaker>
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
 	</ThingDef>
@@ -338,6 +415,9 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
+		<stuffCategories />
+		<costList />
+		<recipeMaker />
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_AvengerA</defName>
@@ -548,6 +628,8 @@
 			<MMT_WeaponParts>7</MMT_WeaponParts>
 			<MMT_Plastic>6</MMT_Plastic>
 		</smeltProducts>
+		<costList />
+		<recipeMaker />
 		<tradeability>Sellable</tradeability>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
@@ -1719,6 +1801,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Archotech</li>
@@ -1763,6 +1846,30 @@
 				<armorPenetration>0.53</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>90</costStuffCount>
+		<costList>
+			<ArchiteCapsule>5</ArchiteCapsule>
+			<MMT_MagneticMaterial>10</MMT_MagneticMaterial>
+			<MMT_Hexcell>1</MMT_Hexcell>
+			<MMT_UltraComponent>6</MMT_UltraComponent>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Machining</soundWorking>
+			<recipeUsers>
+				<li>MMT_MechWeaponTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>20</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_ArchotechWeapons</researchPrerequisite>
+		</recipeMaker>
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
 	</ThingDef>
@@ -1778,6 +1885,9 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
+		<stuffCategories />
+		<costList />
+		<recipeMaker />
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseMeleeWeapon">
 		<defName>MMT_MeleeWeapon_Archotech2H</defName>
@@ -1798,6 +1908,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>30000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Archotech</li>
@@ -1853,6 +1964,30 @@
 				<armorPenetration>0.53</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>150</costStuffCount>
+		<costList>
+			<ArchiteCapsule>5</ArchiteCapsule>
+			<MMT_MagneticMaterial>15</MMT_MagneticMaterial>
+			<MMT_Hexcell>1</MMT_Hexcell>
+			<MMT_UltraComponent>6</MMT_UltraComponent>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Machining</soundWorking>
+			<recipeUsers>
+				<li>MMT_MechWeaponTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>20</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_ArchotechWeapons</researchPrerequisite>
+		</recipeMaker>
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
 	</ThingDef>
@@ -1868,5 +2003,8 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
+		<stuffCategories />
+		<costList />
+		<recipeMaker />
 	</ThingDef>
 </Defs>

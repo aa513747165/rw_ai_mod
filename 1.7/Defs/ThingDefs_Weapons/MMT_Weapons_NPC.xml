@@ -498,6 +498,7 @@
 			<Mass>2.20</Mass>
 			<MaxHitPoints>100</MaxHitPoints>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>15000</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>NonNeolithicOnlyMelee</li>
@@ -519,6 +520,30 @@
 				<armorPenetration>0.06</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>50</costStuffCount>
+		<costList>
+			<MMT_SpacerComponent>5</MMT_SpacerComponent>
+			<MMT_WeaponParts>12</MMT_WeaponParts>
+			<MMT_IntegratedCircuit>7</MMT_IntegratedCircuit>
+			<MMT_Plastic>25</MMT_Plastic>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Smith</soundWorking>
+			<recipeUsers>
+				<li>MMT_HandElectronicsTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>12</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_MeleeAdvanced</researchPrerequisite>
+		</recipeMaker>
 		<generateCommonality>0.05</generateCommonality>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseMeleeWeapon">
@@ -538,6 +563,7 @@
 			<Mass>1.10</Mass>
 			<MaxHitPoints>100</MaxHitPoints>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>11500</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>NonNeolithicOnlyMelee</li>
@@ -559,6 +585,30 @@
 				<armorPenetration>0.04</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>30</costStuffCount>
+		<costList>
+			<MMT_SpacerComponent>3</MMT_SpacerComponent>
+			<MMT_WeaponParts>12</MMT_WeaponParts>
+			<MMT_IntegratedCircuit>5</MMT_IntegratedCircuit>
+			<MMT_Plastic>35</MMT_Plastic>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_Smith</soundWorking>
+			<recipeUsers>
+				<li>MMT_HandElectronicsTable</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>12</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+			<researchPrerequisite>MMT_MeleeAdvanced</researchPrerequisite>
+		</recipeMaker>
 		<generateCommonality>0.05</generateCommonality>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
@@ -605,6 +655,10 @@
 				<armorPenetration>0.056</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>90</costStuffCount>
 		<tradeability>Sellable</tradeability>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
@@ -645,6 +699,7 @@
 			<MaxHitPoints>100</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.8</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.70</SellPriceFactor>
+			<WorkToMake>2500</WorkToMake>
 		</statBases>
 		<weaponTags>
 			<li>Ranged</li>
@@ -687,6 +742,26 @@
 				<armorPenetration>0.006</armorPenetration>
 			</li>
 		</tools>
+		<stuffCategories>
+			<li>Woody</li>
+		</stuffCategories>
+		<costStuffCount>35</costStuffCount>
+		<costList>
+			<MedicineHerbal>5</MedicineHerbal>
+		</costList>
+		<recipeMaker>
+			<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+			<workSkill>Crafting</workSkill>
+			<effectWorking>Smith</effectWorking>
+			<soundWorking>Recipe_MakeBow</soundWorking>
+			<recipeUsers>
+				<li>CraftingSpot</li>
+			</recipeUsers>
+			<skillRequirements>
+				<Crafting>1</Crafting>
+			</skillRequirements>
+			<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+		</recipeMaker>
 		<tradeability>Sellable</tradeability>
 		<generateCommonality>0.02</generateCommonality>
 	</ThingDef>
