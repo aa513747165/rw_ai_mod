@@ -5274,6 +5274,19 @@ WEAPON_BATCH_FILES = {
 }
 
 
+def validate_weapons_archaic() -> None:
+    weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml"))
+    recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml"))
+    assert_equal(len(weapons), 41, "冷兵器与手雷 Def 数（6 个手雷投射物在 MMT_Projectiles.xml）")
+    assert_equal(len(recipes), 13, "手雷配方数")
+    greatsword = weapons["MMT_MeleeWeapon_GreatSword"]
+    assert_equal(child_text(greatsword, "tools/li/power"), "7", "巨剑首个工具威力")
+    assert "MMT_Weapon_GrenadeFrag" in weapons
+    assert "MMT_CE_Weapon_GrenadeSmoke" in weapons
+    assert "CombatExtended.ToolCE" not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml")
+    print("weapons-archaic: OK")
+
+
 def validate_weapons_conventional() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"))
@@ -5418,6 +5431,7 @@ SUITES = {
     "weapons-projectiles": validate_weapons_projectiles,
     "weapons-research": validate_weapons_research,
     "weapons-conventional": validate_weapons_conventional,
+    "weapons-archaic": validate_weapons_archaic,
     "all": validate_all,
 }
 

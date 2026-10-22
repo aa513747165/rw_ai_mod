@@ -368,7 +368,7 @@ def convert_sound(source_name: str, index: SourceIndex, mapping: dict) -> ET.Ele
 
 
 def copy_texture_file(mapping: dict, index: SourceIndex, tex_path: str) -> Path | None:
-    """按 texPath 从 HSK/CE 复制 png 到 1.7/Textures 同路径；原版打包资源则跳过。"""
+    """按 texPath 从 HSK/CE 复制 png 到 1.7/Textures 同路径；文件夹图形（_a/_b/_c）整目录复制；原版打包资源跳过。"""
     for root in texture_roots(mapping):
         candidate = root / f"{tex_path}.png"
         if candidate.is_file():
@@ -376,6 +376,15 @@ def copy_texture_file(mapping: dict, index: SourceIndex, tex_path: str) -> Path 
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(candidate, dest)
             return dest
+        folder = root / tex_path
+        if folder.is_dir():
+            dest_dir = TEXTURES_DIR / tex_path
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            last: Path | None = None
+            for file in sorted(folder.glob("*.png")):
+                shutil.copyfile(file, dest_dir / file.name)
+                last = dest_dir / file.name
+            return last
     if tex_path in index.vanilla_asset_paths:
         return None
     print(f"[manual_review] 贴图缺失: {tex_path}.png")
@@ -600,11 +609,11 @@ VERB_FIELD_WHITELIST = {
     "burstShotCount", "ticksBetweenBurstShots", "soundCast", "soundCastTail",
     "muzzleFlashScale", "forcedMissRadius", "requireLineOfSight", "consumeFuelPerShot",
     "ai_IsBuildingDestroyer", "ai_AvoidFriendlyFireRadius", "onlyManualCast",
-    "noiseRadius", "forceNormalTimeSpeed",
+    "noiseRadius", "forceNormalTimeSpeed", "label",
 }
 VERB_CLASS_MAP = {
     "CombatExtended.Verb_ShootCE": "Verb_Shoot",
-    "CombatExtended.Verb_ShootCEOneUse": "Verb_ShootOneUse",
+    "CombatExtended.Verb_ShootCEOneUse": "Verb_LaunchProjectile",
     "CombatExtended.Verb_LaunchProjectileCE": "Verb_LaunchProjectile",
     "CombatExtended.Verb_ShootFlareCE": "Verb_Shoot",
     "Verb_Shoot": "Verb_Shoot",
@@ -615,6 +624,7 @@ VERB_CLASS_MAP = {
 VERB_KNOWN_DROPS = {
     "verbClass", "recoilAmount", "recoilPattern", "ai_UseBurstMode", "ai_AimMode",
     "ammoSet", "ejectCasings", "weaponClass", "circularError", "indirectFirePenalty",
+    "ignorePartialLoSBlocker", "rangedFireRulepack",
 }
 
 # 原版 Tool 白名单字段
@@ -730,6 +740,10 @@ def convert_verbs(chain: list[ET.Element], index: SourceIndex, mapping: dict) ->
         target_params = li.find("targetParams")
         if target_params is not None:
             verb.append(copy.deepcopy(target_params))
+        elif verb_class == "Verb_LaunchProjectile":
+            # 手雷类补可瞄准地面参数（原版手雷行为），CE 源通常省略
+            tp = ET.SubElement(verb, "targetParams")
+            ET.SubElement(tp, "canTargetLocations").text = "true"
         for child in li:
             if isinstance(child.tag, str) and child.tag not in VERB_FIELD_WHITELIST and child.tag not in VERB_KNOWN_DROPS and child.tag != "targetParams":
                 print(f"[manual_review] verb 未转换字段 {child.tag}")
@@ -750,7 +764,7 @@ def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: di
         raise KeyError(f"找不到武器源定义: {source_name}")
     chain = def_chain(index, element)
     weapon_classes = nearest_text(chain, "weaponClasses/li") or "Ranged"
-    base = "MMT_BaseMeleeWeapon" if weapon_classes == "Melee" else "MMT_BaseGun"
+    base = "MMT_BaseMeleeWeapon" if weapon_classes in ("Melee", "MeleeBlunt", "MeleePiercer") else "MMT_BaseGun"
     out = ET.Element("ThingDef", {"ParentName": base})
     ET.SubElement(out, "defName").text = mmt_name(source_name)
     label = index.strings_zh.get(f"{source_name}.label") or nearest_text(chain, "label") or source_name
@@ -965,10 +979,15 @@ def build_conventional(index: SourceIndex, mapping: dict, only: set[str]) -> dic
     return build_weapon_batch("conventional", index, mapping, only)
 
 
+def build_archaic(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    return build_weapon_batch("archaic", index, mapping, only)
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
     "conventional": build_conventional,
+    "archaic": build_archaic,
 }
 
 

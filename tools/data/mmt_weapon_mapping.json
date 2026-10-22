@@ -41,7 +41,8 @@
     "AdvWeaponCraftingWorkTable": "MMT_AdvWeaponCraftingTable",
     "MechWeaponCraftingWorkTable": "MMT_MechWeaponTable",
     "HeavyArmsBench": "MMT_AdvWeaponCraftingTable",
-    "TableHeavyAmmunition": "MMT_AmmoBench"
+    "TableHeavyAmmunition": "MMT_AmmoBench",
+    "CraftingSpot": "CraftingSpot"
   },
   "ingredient_defs": {
     "Weapon_Parts": "MMT_WeaponParts",
