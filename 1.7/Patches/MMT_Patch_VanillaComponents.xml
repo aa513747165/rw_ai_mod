@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 零件同名改造（HSK 方案，参照 Core_SK_CoreModule Items_Resource_Manufactured.xml）：
+       保留原版 defName（建筑成本/机械族拆解/任务奖励等引用渠道自动转向 MMT 体系），
+       替换数值与类别；不改贴图保持原版外观（同 CropHarvest patch 先例，MMT 无对应授权贴图）。
+       数值对齐 HSK：不腐坏、堆叠 150、售价系数 0.5。useHitPoints 为 HSK 配合其基类所用，MMT 不需要。
+       注意：patch 在 XML 继承解析之前执行，Replace 的节点均为原版 def 自身已有节点。 -->
+
+  <!-- 普通零部件：类别 Manufactured -> MMT_Parts（MMT_Parts 父类即 Manufactured，存储筛选不受影响） -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/label</xpath>
+        <value><label>零部件</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/description</xpath>
+        <value><description>各种螺丝、螺母、螺栓、连杆、板材与框架，是组装复杂机械与电子设备的基础零件。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/stackLimit</xpath>
+        <value><stackLimit>150</stackLimit></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>70</MaxHitPoints>
+            <MarketValue>40</MarketValue>
+            <Mass>0.5</Mass>
+            <Flammability>0.2</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+            <SellPriceFactor>0.50</SellPriceFactor>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentIndustrial"]/thingCategories</xpath>
+        <value>
+          <thingCategories>
+            <li>MMT_Parts</li>
+          </thingCategories>
+        </value>
+      </li>
+
+      <!-- 高级零部件 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentSpacer"]/label</xpath>
+        <value><label>高级零部件</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentSpacer"]/description</xpath>
+        <value><description>高度集成化、微型化的先进计算与能量导向元件，用于最精密的设备。</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentSpacer"]/stackLimit</xpath>
+        <value><stackLimit>150</stackLimit></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentSpacer"]/statBases</xpath>
+        <value>
+          <statBases>
+            <MaxHitPoints>70</MaxHitPoints>
+            <MarketValue>150</MarketValue>
+            <Mass>0.5</Mass>
+            <Flammability>0.3</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+            <SellPriceFactor>0.50</SellPriceFactor>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="ComponentSpacer"]/thingCategories</xpath>
+        <value>
+          <thingCategories>
+            <li>MMT_Parts</li>
+          </thingCategories>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <!-- 隐藏原版制作配方：两个配方挂在 FabricationBench 的 recipes 列表（RecipeDef 自身无 recipeUsers），
+       只从原版制造台移除对应条目，不删除 RecipeDef——其它 mod 引用该配方或将其挂到自家工作台不受影响。
+       制作渠道由 MMT_MakeComponentIndustrial_*/MMT_MakeComponentSpacer_* 接管（产物即原版 defName） -->
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/ThingDef[defName="FabricationBench"]/recipes/li[.="Make_ComponentIndustrial"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/ThingDef[defName="FabricationBench"]/recipes/li[.="Make_ComponentSpacer"]</xpath>
+  </Operation>
+</Patch>

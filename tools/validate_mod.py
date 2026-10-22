@@ -1611,6 +1611,7 @@ PARTS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Parts.xml"
 PARTS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Parts.xml"
 PARTS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Parts.xml"
 PARTS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Parts.xml"
+PARTS_VANILLA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaComponents.xml"
 
 PARTS_ITEM_TEXTURES = [
     f"1.7/Textures/Things/Item/MMT/MMT_Parts/{name}.png"
@@ -1741,8 +1742,6 @@ INFRA_PATCH_TARGETS = {
     "Gold": "MMT_PRSBar",
     "Silver": "MMT_PRSBar",
     "Uranium": "MMT_RADBar",
-    "ComponentIndustrial": "MMT_Parts",
-    "ComponentSpacer": "MMT_Parts",
     "Cloth": "MMT_BTextiles",
 }
 
@@ -3732,6 +3731,7 @@ def validate_parts() -> None:
         PARTS_BUILDING_XML,
         PARTS_RECIPE_XML,
         PARTS_RESEARCH_XML,
+        PARTS_VANILLA_PATCH_XML,
         METAL_RESOURCE_XML,
         PETROCHEM_RESOURCE_XML,
         ELECTRONICS_RESOURCE_XML,
@@ -3880,6 +3880,45 @@ def validate_parts() -> None:
                 fail(f"{path} 不得使用 RimWorld 1.7 不存在的 {forbidden} 分类")
     if ">SmithingSpeed<" in read_text(PARTS_RECIPE_XML):
         fail("零件配方不得使用未加 MMT_ 前缀的 HSK 属性 SmithingSpeed")
+
+    # 原版零件同名改造 patch：只允许替换节点与移除 FabricationBench 配方条目，禁止删除 def 本体
+    patch_text = read_text(PARTS_VANILLA_PATCH_XML)
+    if 'Defs/RecipeDef[defName="Make_Component' in patch_text:
+        fail("零件 patch 不得直接删除原版 RecipeDef（只从 FabricationBench 摘除，防止其它 mod 引用断裂）")
+    patch = parse_xml(PARTS_VANILLA_PATCH_XML)
+    replace_targets = {}
+    removed_xpaths = []
+    for op in patch.iter():
+        if not isinstance(op.tag, str) or op.tag not in ("Operation", "li"):
+            continue
+        op_class = op.attrib.get("Class", "")
+        xpath = child_text(op, "xpath") if op.find("xpath") is not None else None
+        if xpath is None:
+            continue
+        if op_class == "PatchOperationReplace":
+            target = xpath.split('defName="')[1].split('"')[0]
+            node = xpath.rsplit("/", 1)[-1]
+            replace_targets.setdefault(target, {})[node] = op.find("value")
+        elif op_class == "PatchOperationRemove":
+            removed_xpaths.append(xpath)
+    for target, market_value in (("ComponentIndustrial", "40"), ("ComponentSpacer", "150")):
+        nodes = replace_targets.get(target, {})
+        for required_node in ("label", "description", "stackLimit", "statBases", "thingCategories"):
+            if required_node not in nodes:
+                fail(f"零件 patch 缺少 {target} 的 {required_node} 替换")
+        stats = {child.tag: (child.text or "").strip() for child in nodes["statBases"].find("statBases")}
+        assert_equal(stats.get("MarketValue"), market_value, f"{target} MarketValue（对齐 HSK）")
+        assert_equal(stats.get("DeteriorationRate"), "0", f"{target} DeteriorationRate")
+        assert_equal(stats.get("SellPriceFactor"), "0.50", f"{target} SellPriceFactor")
+        assert_equal(li_values(nodes["thingCategories"], "thingCategories"), ["MMT_Parts"], f"{target} thingCategories")
+    assert_equal(
+        sorted(removed_xpaths),
+        sorted([
+            'Defs/ThingDef[defName="FabricationBench"]/recipes/li[.="Make_ComponentIndustrial"]',
+            'Defs/ThingDef[defName="FabricationBench"]/recipes/li[.="Make_ComponentSpacer"]',
+        ]),
+        "零件 patch 应且只应移除 FabricationBench 的两条原版配方条目",
+    )
     print("parts: OK")
 
 
