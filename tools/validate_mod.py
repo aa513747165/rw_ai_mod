@@ -5274,12 +5274,32 @@ WEAPON_BATCH_FILES = {
 }
 
 
+def validate_weapons_projectiles() -> None:
+    projectiles = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml"))
+    bullet = projectiles["MMT_Bullet_762x51mmNATO_FMJ"]
+    assert_equal(child_text(bullet, "projectile/damageDef"), "Bullet", "7.62 伤害类型")
+    assert_equal(child_text(bullet, "projectile/damageAmountBase"), "20", "7.62 伤害")
+    assert_equal(child_text(bullet, "projectile/armorPenetrationBase"), "0.07", "7.62 穿甲")
+    assert_equal(child_text(bullet, "projectile/speed"), "156", "7.62 速度")
+
+    fifty = projectiles["MMT_Bullet_50BMG_FMJ"]
+    assert_equal(child_text(fifty, "projectile/damageAmountBase"), "42", ".50 伤害")
+    assert_equal(child_text(fifty, "projectile/armorPenetrationBase"), "0.14", ".50 穿甲")
+
+    sounds = def_map(parse_xml("1.7/Defs/SoundDefs/MMT_Sounds_Weapons.xml"))
+    if "MMT_Shot_Tavor" not in sounds:
+        fail("Tavor 音频实际存在（Sounds/Tavor/IWI Tavor.ogg），必须生成 MMT_Shot_Tavor")
+    if "MMT_FlameThrower" in sounds:
+        fail("BurningLoop 音频缺失，FlameThrower 必须走原版 fallback，不得生成 MMT SoundDef")
+    print("weapons-projectiles: OK")
+
+
 def validate_weapons_core() -> None:
     mapping = json.loads(read_text(WEAPON_MAPPING_JSON))
     assert_equal(mapping["thing_prefix"], "MMT_", "武器映射前缀")
     assert_equal(mapping["batches"]["conventional"], WEAPON_BATCH_FILES["conventional"], "常规枪械批次")
-    assert_equal(mapping["sound_fallbacks"]["Shot_Tavor"], "Shot_AssaultRifle", "Tavor 缺失音效 fallback")
     assert_equal(mapping["sound_fallbacks"]["FlameThrower"], "Shot_MiniFlameblaster", "火焰音效 fallback")
+    assert_equal(len(mapping["sound_fallbacks"]), 1, "仅真正缺失的音频才允许 fallback")
     assert_equal(mapping["workbenches"]["HeavyArmsBench"], "MMT_AdvWeaponCraftingTable", "重型武器台映射")
     assert_equal(mapping["workbenches"]["TableHeavyAmmunition"], "MMT_AmmoBench", "重弹药台映射")
     assert_equal(len(mapping["recipe_product_clones"]["patch_replace"]), 17, "patch 克隆产物数")
@@ -5360,6 +5380,7 @@ SUITES = {
     "matter-top": validate_matter_top,
     "textiles-weapons": validate_textiles_weapons,
     "weapons-core": validate_weapons_core,
+    "weapons-projectiles": validate_weapons_projectiles,
     "all": validate_all,
 }
 

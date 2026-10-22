@@ -2,6 +2,7 @@
   "thing_prefix": "MMT_",
   "source_root": "Hardcore-SK/Mods/Core_SK",
   "combat_extended_root": "Hardcore-SK/Mods/CombatExtended",
+  "vanilla_root": "D:/RimWorld v1.7.4979/Data/Core",
   "translation_root": "Hardcore-SK/1.6/Languages/ChineseSimplified (简体中文)/DefInjected",
   "patch_roots": [
     "Hardcore-SK/Mods/Core_SK_CoreModule/Patches",
@@ -70,8 +71,15 @@
     "Woody": "Woody"
   },
   "sound_fallbacks": {
-    "Shot_Tavor": "Shot_AssaultRifle",
     "FlameThrower": "Shot_MiniFlameblaster"
+  },
+  "manual_review": {
+    "projectile_fields_dropped": [
+      "suppressionFactor", "airborneSuppressionFactor", "dangerFactor",
+      "explosionDamageFalloff", "gravityFactor", "soundExplode",
+      "casingFilthDefname", "casingMoteDefname", "secondaryDamage", "mass"
+    ],
+    "notes": "上述为 CE 专属弹道/压制/弹壳/二次伤害字段，原版投射物无法表达，人工确认丢弃；燃烧/爆炸类二次伤害在 W3 特殊投射物审查中单独处理；如新增未识别字段生成器会再次告警"
   },
   "research": {
     "Melee_C1": "LongBlades",
