@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 原版毒品/毒株同名改造（HSK 方案，参照 Core_SK_CoreModule Smokeleaf.xml、
+       Plants_Cultivated_Manufacture.xml、Research_Medicine.xml）：
+       保留原版 defName 与配方本体，仅改原料/属性并挂接 MMT 研究线；
+       原版无 prerequisites/sowResearchPrerequisites 节点的用 Add，已有节点的用 Replace -->
+
+  <Operation Class="PatchOperationSequence">
+    <operations>
+
+      <!-- 大麻烟卷：原料 鲜大麻叶×4 -> MMT 干烟叶×4（对齐 HSK），并加研究前置 MMT_Drugs_A1 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="SmokeleafJoint"]/costList</xpath>
+        <value>
+          <costList>
+            <MMT_DriedLeavesSmokeleaf>4</MMT_DriedLeavesSmokeleaf>
+          </costList>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="SmokeleafJoint"]/recipeMaker</xpath>
+        <value>
+          <researchPrerequisite>MMT_Drugs_A1</researchPrerequisite>
+        </value>
+      </li>
+
+      <!-- 大麻植株：生长期 7.5 -> 10.8 天、产量 9 -> 4、播种技能 4 -> 6、播种研究 MMT_DrugPlants_A1（对齐 HSK） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Smokeleaf"]/plant/growDays</xpath>
+        <value><growDays>10.8</growDays></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Smokeleaf"]/plant/harvestYield</xpath>
+        <value><harvestYield>4</harvestYield></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Smokeleaf"]/plant/sowMinSkill</xpath>
+        <value><sowMinSkill>6</sowMinSkill></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Plant_Smokeleaf"]/plant</xpath>
+        <value>
+          <sowResearchPrerequisites>
+            <li>MMT_DrugPlants_A1</li>
+          </sowResearchPrerequisites>
+        </value>
+      </li>
+
+      <!-- 精神叶植株：生长期 9 -> 6.6 天、产量 8 -> 10、播种技能 6 -> 7、播种研究 MMT_DrugPlants_A2（对齐 HSK） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Psychoid"]/plant/growDays</xpath>
+        <value><growDays>6.6</growDays></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Psychoid"]/plant/harvestYield</xpath>
+        <value><harvestYield>10</harvestYield></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Plant_Psychoid"]/plant/sowMinSkill</xpath>
+        <value><sowMinSkill>7</sowMinSkill></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Plant_Psychoid"]/plant</xpath>
+        <value>
+          <sowResearchPrerequisites>
+            <li>MMT_DrugPlants_A2</li>
+          </sowResearchPrerequisites>
+        </value>
+      </li>
+
+      <!-- ===== 原版毒品研究改挂 MMT 研究线（造价对齐 HSK） ===== -->
+
+      <!-- 精神叶酿造（毒品 II）：500 -> 100，加前置 MMT_Drugs_A1 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]/baseCost</xpath>
+        <value><baseCost>100</baseCost></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]</xpath>
+        <value>
+          <prerequisites>
+            <li>MMT_Drugs_A1</li>
+          </prerequisites>
+        </value>
+      </li>
+
+      <!-- 毒品生产（毒品 IV）：500 -> 1300，加前置 MMT_Drugs_B1 + MMT 高级石化（对齐 HSK 的石化耦合） -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]/baseCost</xpath>
+        <value><baseCost>1300</baseCost></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]</xpath>
+        <value>
+          <prerequisites>
+            <li>MMT_Drugs_B1</li>
+            <li>MMT_AdvancedPetrochemistry</li>
+          </prerequisites>
+        </value>
+      </li>
+
+      <!-- 精神精炼：400 -> 1200，前置 DrugProduction -> MMT_Drugs_C3 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]/baseCost</xpath>
+        <value><baseCost>1200</baseCost></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]/prerequisites</xpath>
+        <value>
+          <prerequisites>
+            <li>MMT_Drugs_C3</li>
+          </prerequisites>
+        </value>
+      </li>
+
+      <!-- 清醒丸生产：600 -> 1000，前置 DrugProduction -> MMT_Drugs_C2 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]/baseCost</xpath>
+        <value><baseCost>1000</baseCost></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]/prerequisites</xpath>
+        <value>
+          <prerequisites>
+            <li>MMT_Drugs_C2</li>
+          </prerequisites>
+        </value>
+      </li>
+
+      <!-- 果汁剂生产：1000 -> 1400，前置 DrugProduction -> WakeUpProduction + PsychiteRefining -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]/baseCost</xpath>
+        <value><baseCost>1400</baseCost></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]/prerequisites</xpath>
+        <value>
+          <prerequisites>
+            <li>WakeUpProduction</li>
+            <li>PsychiteRefining</li>
+          </prerequisites>
+        </value>
+      </li>
+
+      <!-- 青霉素生产：500 -> 1000，前置 DrugProduction -> MMT_Drugs_C2 -->
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]/baseCost</xpath>
+        <value><baseCost>1000</baseCost></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]/prerequisites</xpath>
+        <value>
+          <prerequisites>
+            <li>MMT_Drugs_C2</li>
+          </prerequisites>
+        </value>
+      </li>
+
+    </operations>
+  </Operation>
+</Patch>
