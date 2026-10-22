@@ -5274,6 +5274,28 @@ WEAPON_BATCH_FILES = {
 }
 
 
+def validate_weapons_conventional() -> None:
+    weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml"))
+    recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"))
+    assert_equal(len(weapons), 57, "常规武器数")
+    assert_equal(len(recipes), 58, "常规武器配方数")
+
+    deringer = weapons["MMT_RF_Gun_Deringer"]
+    assert_equal(child_text(deringer, "label"), "M1917史密斯威森左轮", "Deringer 中文名")
+    assert_equal(child_text(deringer, "verbs/li/defaultProjectile"), "MMT_Bullet_45ACP_FMJ", "Deringer 投射物")
+    assert_equal(child_text(deringer, "verbs/li/range"), "31", "Deringer 射程")
+    assert_equal(child_text(deringer, "statBases/RangedWeapon_Cooldown"), "0.31", "Deringer 冷却")
+
+    build = recipes["MMT_BuildHandGun"]
+    assert "MMT_Gun_Revolver" in weapons
+    assert_equal(child_text(build, "products/MMT_Gun_Revolver"), "1", "左轮产品")
+    if "<Gun_Revolver>" in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"):
+        fail("常规武器配方残留未加 MMT_ 前缀的 Gun_Revolver")
+    assert "MMT_PistolComponent" in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml")
+    assert "Weapon_Parts" not in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml")
+    print("weapons-conventional: OK")
+
+
 WEAPON_RESEARCH_TOTAL = 23
 
 
@@ -5395,6 +5417,7 @@ SUITES = {
     "weapons-core": validate_weapons_core,
     "weapons-projectiles": validate_weapons_projectiles,
     "weapons-research": validate_weapons_research,
+    "weapons-conventional": validate_weapons_conventional,
     "all": validate_all,
 }
 

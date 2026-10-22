@@ -20,7 +20,9 @@
     "MakeWeapon_Parts", "MakePistol_Component", "MakeSMG_Component", "MakeShotgun_Component",
     "MakeRifle_Component", "MakeAdvRifle_Component", "MakeSniper_Component", "MakeAdvSniper_Component",
     "MakeHeavy_Component", "MakeCannon_Component", "MakeLauncher_Component", "MakeCharged_Component",
-    "MakeLaser_Component", "MakePlasma_Component"
+    "MakeLaser_Component", "MakePlasma_Component",
+    "ReverseEngineer_ArchotechBow", "ReverseEngineer_ArchotechBlaster",
+    "ReverseEngineer_ArchotechSMG", "ReverseEngineer_ArchotechSword"
   ],
   "recipe_product_clones": {
     "patch_replace": [
@@ -58,6 +60,7 @@
     "Plasma_Component": "MMT_PlasmaComponent",
     "Plastic": "MMT_Plastic",
     "Mechanism": "MMT_Mechanism",
+    "Surfactant": "MMT_Surfactant",
     "ElectronicComponents": "MMT_ElectronicParts",
     "Electronics": "MMT_IntegratedCircuit",
     "Microchips": "MMT_Microchip"

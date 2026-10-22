@@ -298,6 +298,9 @@ def collect_referenced(index: SourceIndex, mapping: dict) -> tuple[set[str], set
             sound = resolve_from_element(index, element, f"verbs/li/{tag}")
             if sound:
                 sounds.add(sound)
+        interact = resolve_from_element(index, element, "soundInteract")
+        if interact:
+            sounds.add(interact)
     return projectiles, sounds
 
 
@@ -566,9 +569,406 @@ def build_research(index: SourceIndex, mapping: dict, only: set[str]) -> dict[st
     }
 
 
+# ===== 武器与配方转换 =====
+
+# 22 个补充克隆的批次归属（计划固定）
+PATCH_GUN_CLONES = [
+    "Gun_BoltActionRifle", "Gun_LMG", "Gun_Minigun", "Gun_IncendiaryLauncher",
+    "Gun_Revolver", "Gun_Autopistol", "Gun_AssaultRifle", "Gun_PumpShotgun",
+    "Gun_ChainShotgun", "Gun_MachinePistol", "Gun_HeavySMG", "Gun_SniperRifle",
+]
+PATCH_GRENADE_CLONES = ["Weapon_GrenadeMolotov", "Weapon_GrenadeFrag", "Weapon_GrenadeTox", "Weapon_GrenadeEMP"]
+CE_GRENADE_CLONES = ["CE_Weapon_GrenadeStickBomb", "CE_Weapon_GrenadeFirefoam", "CE_Weapon_GrenadeFlashbang", "CE_Weapon_GrenadeSmoke"]
+CLONE_BATCH = {
+    **{name: "conventional" for name in PATCH_GUN_CLONES},
+    **{name: "conventional" for name in ["CE_FlareGun"]},
+    **{name: "archaic" for name in PATCH_GRENADE_CLONES},
+    **{name: "archaic" for name in CE_GRENADE_CLONES},
+    "Gun_ChargeRifle": "futuristic",
+}
+
+# 原版可识别的武器 statBases 白名单；CE 精度系字段（SightsEfficiency 等）按 spec 丢弃
+WEAPON_STAT_WHITELIST = {
+    "MarketValue", "Mass", "MaxHitPoints", "Flammability", "DeteriorationRate",
+    "RangedWeapon_Cooldown", "Beauty", "SellPriceFactor",
+}
+CE_REMOVE_STATS = {"SightsEfficiency", "ShotSpread", "SwayFactor", "Bulk"}
+
+# 原版 VerbProperties 白名单字段
+VERB_FIELD_WHITELIST = {
+    "hasStandardCommand", "defaultProjectile", "warmupTime", "range", "minRange",
+    "burstShotCount", "ticksBetweenBurstShots", "soundCast", "soundCastTail",
+    "muzzleFlashScale", "forcedMissRadius", "requireLineOfSight", "consumeFuelPerShot",
+    "ai_IsBuildingDestroyer", "ai_AvoidFriendlyFireRadius", "onlyManualCast",
+    "noiseRadius", "forceNormalTimeSpeed",
+}
+VERB_CLASS_MAP = {
+    "CombatExtended.Verb_ShootCE": "Verb_Shoot",
+    "CombatExtended.Verb_ShootCEOneUse": "Verb_ShootOneUse",
+    "CombatExtended.Verb_LaunchProjectileCE": "Verb_LaunchProjectile",
+    "CombatExtended.Verb_ShootFlareCE": "Verb_Shoot",
+    "Verb_Shoot": "Verb_Shoot",
+    "Verb_ShootOneUse": "Verb_ShootOneUse",
+    "Verb_LaunchProjectile": "Verb_LaunchProjectile",
+}
+# 已确认丢弃的 CE verb 字段（后座/瞄准模式/弹匣/CE 弹道散布等，原版无法表达）
+VERB_KNOWN_DROPS = {
+    "verbClass", "recoilAmount", "recoilPattern", "ai_UseBurstMode", "ai_AimMode",
+    "ammoSet", "ejectCasings", "weaponClass", "circularError", "indirectFirePenalty",
+}
+
+# 原版 Tool 白名单字段
+TOOL_FIELD_WHITELIST = {"label", "capacities", "power", "cooldownTime", "chanceFactor", "linkedBodyPartsGroup"}
+
+# 武器级杂项字段直拷白名单
+WEAPON_MISC_WHITELIST = {"tradeability", "generateCommonality", "soundInteract", "relicChance", "techLevel", "uiIconScale"}
+
+UNFINISHED_MAP = {"UnfinishedWeapon": "UnfinishedGun", "UnfinishedGun": "UnfinishedGun", "UnfinishedMeleeWeapon": "UnfinishedMeleeWeapon"}
+
+# 配方批次覆盖：BuildFireExtinguisher 产物在 npc 文件，但属玩家可制造配方，归入常规批次
+RECIPE_BATCH_OVERRIDES = {"BuildFireExtinguisher": "conventional"}
+
+
+def def_chain(index: SourceIndex, element: ET.Element | None) -> list[ET.Element]:
+    """返回 [自身, 父, ..., 根] 的继承链。"""
+    chain: list[ET.Element] = []
+    seen: set[str] = set()
+    current = element
+    while current is not None:
+        chain.append(current)
+        parent = current.get("ParentName")
+        if not parent or parent in seen:
+            break
+        seen.add(parent)
+        current = index.thing_defs.get(parent)
+    return chain
+
+
+def nearest_node(chain: list[ET.Element], tag: str) -> ET.Element | None:
+    """取链上最近的包含指定子节点的节点副本。"""
+    for node in chain:
+        found = node.find(tag)
+        if found is not None:
+            return found
+    return None
+
+
+def nearest_text(chain: list[ET.Element], path: str) -> str | None:
+    for node in chain:
+        found = node.find(path)
+        if found is not None and found.text:
+            return found.text
+    return None
+
+
+def merge_stat_bases(chain: list[ET.Element], whitelist: set[str]) -> dict[str, str]:
+    """合并继承链 statBases（子覆盖父），并按白名单过滤。"""
+    merged: dict[str, str] = {}
+    for node in reversed(chain):
+        stats = node.find("statBases")
+        if stats is None:
+            continue
+        for stat in stats:
+            if stat.tag in whitelist and stat.text:
+                merged[stat.tag] = stat.text
+    return merged
+
+
+def convert_tools(chain: list[ET.Element]) -> ET.Element | None:
+    """ToolCE -> 原版 Tool：保留威力/冷却/部位，穿甲 sharp/blunt 除以 100。"""
+    tools = nearest_node(chain, "tools")
+    if tools is None:
+        return None
+    out = ET.Element("tools")
+    for li in tools.findall("li"):
+        tool = ET.SubElement(out, "li")
+        for field in ("label", "power", "cooldownTime", "chanceFactor", "linkedBodyPartsGroup"):
+            value = li.findtext(field)
+            if value:
+                ET.SubElement(tool, field).text = value
+        capacities = li.find("capacities")
+        if capacities is not None:
+            tool.append(copy.deepcopy(capacities))
+        sharp = li.findtext("armorPenetrationSharp")
+        blunt = li.findtext("armorPenetrationBlunt")
+        if sharp or blunt:
+            raw = float(sharp or blunt)
+            ET.SubElement(tool, "armorPenetration").text = f"{raw / 100:.3f}".rstrip("0").rstrip(".")
+        for child in li:
+            if isinstance(child.tag, str) and child.tag not in TOOL_FIELD_WHITELIST and child.tag not in ("armorPenetrationSharp", "armorPenetrationBlunt", "id"):
+                print(f"[manual_review] Tool 未转换字段 {child.tag}")
+    return out
+
+
+def convert_verbs(chain: list[ET.Element], index: SourceIndex, mapping: dict) -> ET.Element | None:
+    """VerbPropertiesCE -> 原版 VerbProperties：白名单字段 + 投射物/音效映射。"""
+    verbs = nearest_node(chain, "verbs")
+    if verbs is None:
+        return None
+    fallbacks = mapping["sound_fallbacks"]
+    out = ET.Element("verbs")
+    for li in verbs.findall("li"):
+        verb = ET.SubElement(out, "li")
+        raw_class = li.findtext("verbClass") or "CombatExtended.Verb_ShootCE"
+        verb_class = VERB_CLASS_MAP.get(raw_class)
+        if verb_class is None:
+            print(f"[manual_review] 未知 verbClass {raw_class}，按 Verb_Shoot 处理")
+            verb_class = "Verb_Shoot"
+        ET.SubElement(verb, "verbClass").text = verb_class
+        for field in sorted(VERB_FIELD_WHITELIST):
+            value = li.findtext(field)
+            if not value:
+                continue
+            if field == "defaultProjectile" and value in index.thing_defs:
+                value = mmt_name(value)
+            elif field in ("soundCast", "soundCastTail"):
+                if value in fallbacks:
+                    value = fallbacks[value]
+                elif value in index.sound_defs:
+                    value = mmt_name(value)
+            ET.SubElement(verb, field).text = value
+        target_params = li.find("targetParams")
+        if target_params is not None:
+            verb.append(copy.deepcopy(target_params))
+        for child in li:
+            if isinstance(child.tag, str) and child.tag not in VERB_FIELD_WHITELIST and child.tag not in VERB_KNOWN_DROPS and child.tag != "targetParams":
+                print(f"[manual_review] verb 未转换字段 {child.tag}")
+    return out
+
+
+def map_thing_name(name: str, mapping: dict) -> str:
+    """配料/产物名称映射：配料表 -> 类别表 -> 原样。"""
+    return mapping["ingredient_defs"].get(name) or mapping["ingredient_categories"].get(name) or name
+
+
+def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """单把 HSK/CE 武器转 MMT 原版机制武器。"""
+    element = index.thing_defs.get(source_name)
+    if element is None:
+        element = load_recipe_product_clone(source_name, mapping)
+    if element is None:
+        raise KeyError(f"找不到武器源定义: {source_name}")
+    chain = def_chain(index, element)
+    weapon_classes = nearest_text(chain, "weaponClasses/li") or "Ranged"
+    base = "MMT_BaseMeleeWeapon" if weapon_classes == "Melee" else "MMT_BaseGun"
+    out = ET.Element("ThingDef", {"ParentName": base})
+    ET.SubElement(out, "defName").text = mmt_name(source_name)
+    label = index.strings_zh.get(f"{source_name}.label") or nearest_text(chain, "label") or source_name
+    description = index.strings_zh.get(f"{source_name}.description") or nearest_text(chain, "description") or ""
+    ET.SubElement(out, "label").text = label
+    ET.SubElement(out, "description").text = description
+    graphic = nearest_node(chain, "graphicData")
+    if graphic is not None:
+        out.append(copy.deepcopy(graphic))
+    sound_interact = nearest_text(chain, "soundInteract")
+    if sound_interact:
+        if sound_interact in mapping["sound_fallbacks"]:
+            sound_interact = mapping["sound_fallbacks"][sound_interact]
+        elif sound_interact in index.sound_defs:
+            sound_interact = mmt_name(sound_interact)
+        ET.SubElement(out, "soundInteract").text = sound_interact
+    tech = nearest_text(chain, "techLevel")
+    if tech:
+        ET.SubElement(out, "techLevel").text = tech
+    stats = merge_stat_bases(chain, WEAPON_STAT_WHITELIST)
+    if stats:
+        stat_node = ET.SubElement(out, "statBases")
+        for key in sorted(stats):
+            ET.SubElement(stat_node, key).text = stats[key]
+    tags: list[str] = []
+    for node in reversed(chain):
+        for li in node.findall("./weaponTags/li"):
+            if li.text and not li.text.startswith("CE_") and li.text not in tags:
+                tags.append(li.text)
+    if tags:
+        tag_node = ET.SubElement(out, "weaponTags")
+        for tag in tags:
+            ET.SubElement(tag_node, "li").text = tag
+    classes_node = nearest_node(chain, "weaponClasses")
+    if classes_node is not None:
+        out.append(copy.deepcopy(classes_node))
+    verbs = convert_verbs(chain, index, mapping)
+    if verbs is not None:
+        out.append(verbs)
+    tools = convert_tools(chain)
+    if tools is not None:
+        out.append(tools)
+    smelt = nearest_node(chain, "smeltProducts")
+    if smelt is not None:
+        smelt_out = ET.SubElement(out, "smeltProducts")
+        for item in smelt:
+            ET.SubElement(smelt_out, map_thing_name(item.tag, mapping)).text = item.text
+    for field in ("tradeability", "generateCommonality"):
+        value = nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value
+    return out
+
+
+def recipe_chain(index: SourceIndex, element: ET.Element) -> list[ET.Element]:
+    chain: list[ET.Element] = []
+    seen: set[str] = set()
+    current: ET.Element | None = element
+    while current is not None:
+        chain.append(current)
+        parent = current.get("ParentName")
+        if not parent or parent in seen:
+            break
+        seen.add(parent)
+        current = index.recipe_defs.get(parent)
+    return chain
+
+
+def convert_filter(filter_node: ET.Element, mapping: dict) -> ET.Element:
+    """映射 ingredients/fixedIngredientFilter 的 thingDefs 与 categories。"""
+    out = ET.Element("filter") if filter_node.tag == "filter" else ET.Element(filter_node.tag)
+    for section in filter_node:
+        if section.tag in ("thingDefs", "categories"):
+            mapped = ET.SubElement(out, section.tag)
+            lookup = mapping["ingredient_defs"] if section.tag == "thingDefs" else mapping["ingredient_categories"]
+            for li in section.findall("li"):
+                if li.text:
+                    ET.SubElement(mapped, "li").text = lookup.get(li.text, li.text)
+        else:
+            out.append(copy.deepcopy(section))
+    return out
+
+
+def convert_recipe(source_name: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """HSK 武器配方转 MMT 配方：配料/工作台/研究/产物全部映射。"""
+    element = index.recipe_defs.get(source_name)
+    if element is None:
+        raise KeyError(f"找不到配方源定义: {source_name}")
+    chain = recipe_chain(index, element)
+    out = ET.Element("RecipeDef")
+    ET.SubElement(out, "defName").text = mmt_name(source_name)
+    for field in ("label", "description", "jobString"):
+        value = index.strings_zh.get(f"{source_name}.{field}") or nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value.replace("\\n", "\n")
+    for field in ("workAmount", "workSpeedStat", "workSkill", "workSkillLearnFactor", "effectWorking", "soundWorking"):
+        value = nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value
+    skill = nearest_node(chain, "skillRequirements")
+    if skill is not None:
+        out.append(copy.deepcopy(skill))
+    unfinished = nearest_text(chain, "unfinishedThingDef")
+    if unfinished:
+        ET.SubElement(out, "unfinishedThingDef").text = UNFINISHED_MAP.get(unfinished, "UnfinishedGun")
+    ingredients = element.find("ingredients")
+    if ingredients is not None:
+        ing_out = ET.SubElement(out, "ingredients")
+        for li in ingredients.findall("li"):
+            item = ET.SubElement(ing_out, "li")
+            filter_node = li.find("filter")
+            if filter_node is not None:
+                item.append(convert_filter(filter_node, mapping))
+            count = li.findtext("count")
+            if count:
+                ET.SubElement(item, "count").text = count
+    fixed = element.find("fixedIngredientFilter")
+    if fixed is not None:
+        converted = convert_filter(fixed, mapping)
+        converted.tag = "fixedIngredientFilter"
+        out.append(converted)
+    products = element.find("products")
+    if products is not None:
+        prod_out = ET.SubElement(out, "products")
+        for item in products:
+            ET.SubElement(prod_out, mmt_name(item.tag)).text = item.text
+    users = element.find("recipeUsers")
+    if users is not None:
+        users_out = ET.SubElement(out, "recipeUsers")
+        for li in users.findall("li"):
+            if not li.text:
+                continue
+            target = mapping["workbenches"].get(li.text)
+            if target is None:
+                print(f"[manual_review] 配方 {source_name} 的工作台 {li.text} 无映射，已跳过")
+                continue
+            if users_out.find(f"li[.='{target}']") is None:
+                ET.SubElement(users_out, "li").text = target
+        if not list(users_out):
+            out.remove(users_out)
+            print(f"[manual_review] 配方 {source_name} 无可用工作台")
+    research = element.findtext("researchPrerequisite")
+    if research:
+        ET.SubElement(out, "researchPrerequisite").text = mapping["research"].get(research, research)
+    return out
+
+
+def is_projectile_def(index: SourceIndex, element: ET.Element) -> bool:
+    """判断批次内 Def 是否为投射物（归入核心投射物文件，不生成武器）。"""
+    return resolve_from_element(index, element, "category") == "Projectile"
+
+
+def weapon_names_for_batch(mapping: dict, batch: str) -> list[str]:
+    """批次武器名清单：源文件非投射物 Def + 本批次克隆。"""
+    names = [
+        name
+        for name, element in batch_weapon_elements(mapping, batch)
+    ]
+    names.extend(name for name, b in CLONE_BATCH.items() if b == batch)
+    return names
+
+
+def build_weapon_batch(batch: str, index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    """生成一个武器批次的 ThingDef 与 RecipeDef 文件。"""
+    weapons: list[ET.Element] = []
+    included_products: set[str] = set()
+    for name, element in batch_weapon_elements(mapping, batch):
+        if only and name not in only:
+            continue
+        if is_projectile_def(index, element):
+            continue
+        weapons.append(convert_weapon(name, batch, index, mapping))
+        included_products.add(name)
+    for clone_name, clone_batch in CLONE_BATCH.items():
+        if clone_batch != batch or (only and clone_name not in only):
+            continue
+        weapons.append(convert_weapon(clone_name, batch, index, mapping))
+        included_products.add(clone_name)
+    weapons.sort(key=lambda node: node.findtext("defName") or "")
+    recipes: list[ET.Element] = []
+    for recipe_name, element in sorted(index.recipe_defs.items()):
+        if not is_concrete(element) or recipe_name in mapping["excluded_recipes"]:
+            continue
+        override = RECIPE_BATCH_OVERRIDES.get(recipe_name)
+        if override is not None:
+            if override != batch:
+                continue
+        else:
+            products = element.find("products")
+            if products is None or not list(products):
+                continue
+            product = list(products)[0].tag
+            if product not in included_products:
+                continue
+            if only and product not in only:
+                continue
+        recipes.append(convert_recipe(recipe_name, index, mapping))
+    recipes.sort(key=lambda node: node.findtext("defName") or "")
+    # 复制武器贴图
+    for node in weapons:
+        tex = node.findtext("graphicData/texPath")
+        if tex:
+            copy_texture_file(mapping, index, tex)
+    suffix = batch.capitalize()
+    return {
+        f"ThingDefs_Weapons/MMT_Weapons_{suffix}.xml": serialize_defs(weapons, f"MMT {batch} 批次武器"),
+        f"RecipeDefs/MMT_Recipes_Weapons_{suffix}.xml": serialize_defs(recipes, f"MMT {batch} 批次武器配方"),
+    }
+
+
+def build_conventional(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    return build_weapon_batch("conventional", index, mapping, only)
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
+    "conventional": build_conventional,
 }
 
 
