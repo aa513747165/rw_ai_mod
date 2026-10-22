@@ -22,7 +22,9 @@
 		</weaponTags>
 		<verbs>
 			<li>
-				<verbClass>Verb_ShootMortar</verbClass>
+				<verbClass>Verb_Shoot</verbClass>
+				<isMortar>true</isMortar>
+				<requireLineOfSight>false</requireLineOfSight>
 				<burstShotCount>1</burstShotCount>
 				<defaultProjectile>MMT_Stone_Ball</defaultProjectile>
 				<forceNormalTimeSpeed>false</forceNormalTimeSpeed>
@@ -251,7 +253,9 @@
 		</weaponTags>
 		<verbs>
 			<li>
-				<verbClass>Verb_ShootMortar</verbClass>
+				<verbClass>Verb_Shoot</verbClass>
+				<isMortar>true</isMortar>
+				<requireLineOfSight>false</requireLineOfSight>
 				<defaultProjectile>MMT_Bullet_155mmHowitzerShell_HE</defaultProjectile>
 				<hasStandardCommand>true</hasStandardCommand>
 				<minRange>32</minRange>
@@ -325,7 +329,9 @@
 		</weaponTags>
 		<verbs>
 			<li>
-				<verbClass>Verb_ShootMortar</verbClass>
+				<verbClass>Verb_Shoot</verbClass>
+				<isMortar>true</isMortar>
+				<requireLineOfSight>false</requireLineOfSight>
 				<burstShotCount>2</burstShotCount>
 				<defaultProjectile>MMT_Bullet_130mmRocketMissile</defaultProjectile>
 				<forceNormalTimeSpeed>true</forceNormalTimeSpeed>
@@ -438,7 +444,9 @@
 		</weaponTags>
 		<verbs>
 			<li>
-				<verbClass>Verb_ShootMortar</verbClass>
+				<verbClass>Verb_Shoot</verbClass>
+				<isMortar>true</isMortar>
+				<requireLineOfSight>false</requireLineOfSight>
 				<burstShotCount>3</burstShotCount>
 				<defaultProjectile>MMT_Bullet_130mmRocketMissile</defaultProjectile>
 				<forceNormalTimeSpeed>true</forceNormalTimeSpeed>

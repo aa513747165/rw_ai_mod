@@ -60,7 +60,7 @@
       <li>
         <filter>
           <categories>
-            <li>Metallic</li>
+            <li>MMT_MetallicBar</li>
           </categories>
         </filter>
         <count>10</count>
@@ -76,7 +76,7 @@
     </ingredients>
     <fixedIngredientFilter>
       <categories>
-        <li>Metallic</li>
+        <li>MMT_MetallicBar</li>
       </categories>
       <thingDefs>
         <li>MMT_Concrete</li>

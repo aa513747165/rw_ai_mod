@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<!-- MMT 武器重定价（HSK 价位）后，部分原版 PawnKind 的 weaponMoney 下限买不起带对应 weaponTags 的最便宜武器，
+	     触发 "could end up weaponless" 配置错误。本补丁把下限抬到对应最便宜武器价位（上限保持不低于原值）。 -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Villager"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Villager_Pig"]</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Farmer"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Miner"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Logger"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Hunter"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Scavenger"]/weaponMoney</xpath>
+		<value><weaponMoney>230~300</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Scavenger_Yttakin"]</xpath>
+		<value><weaponMoney>230~300</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Town_Trader"]/weaponMoney</xpath>
+		<value><weaponMoney>230~230</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Town_Trader_Pig"]</xpath>
+		<value><weaponMoney>230~230</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Town_Councilman"]/weaponMoney</xpath>
+		<value><weaponMoney>230~230</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Town_Councilman_Pig"]</xpath>
+		<value><weaponMoney>230~230</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="TradersGuild_Citizen"]/weaponMoney</xpath>
+		<value><weaponMoney>230~250</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Elite"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_EliteTox"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Elite_Acidifier"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Elite_Yttakin"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="PirateBoss"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="PirateBossTox"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Salvager_Elite"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="TradersGuild_Elite"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="TradersGuild_Magister"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="AncientSoldier_Leader"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="WellEquippedTraveler"]/weaponMoney</xpath>
+		<value><weaponMoney>555~600</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Grenadier_EMP"]</xpath>
+		<value><weaponMoney>570~570</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Sniper"]</xpath>
+		<value><weaponMoney>1750~1750</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Sniper_Acidifier"]</xpath>
+		<value><weaponMoney>1750~1750</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Sniper_Yttakin"]</xpath>
+		<value><weaponMoney>1750~1750</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Gunner_Pig"]</xpath>
+		<value><weaponMoney>550~650</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Elite_Pig"]</xpath>
+		<value><weaponMoney>555~1400</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Mechanitor"]/weaponMoney</xpath>
+		<value><weaponMoney>550~900</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Mechanitor_Basic"]</xpath>
+		<value><weaponMoney>550~900</weaponMoney></value>
+	</Operation>
+</Patch>

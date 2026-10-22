@@ -68,9 +68,10 @@
 		</comps>
 	</ThingDef>
 
-	<!-- 炮塔枪基类：不作为装备流通，仅被炮塔建筑引用 -->
+	<!-- 炮塔枪基类：不作为装备流通，仅被炮塔建筑引用；不可熔炼（无 smeltProducts） -->
 	<ThingDef Name="MMT_BaseTurretGun" Abstract="True" ParentName="MMT_BaseGun">
 		<tradeability>None</tradeability>
 		<generateCommonality>0</generateCommonality>
+		<smeltable>false</smeltable>
 	</ThingDef>
 </Defs>

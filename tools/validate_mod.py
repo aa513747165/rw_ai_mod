@@ -415,7 +415,7 @@ RECIPE_EXPECTATIONS = {
     },
 }
 
-VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "Metallic", "MeatRaw", "AnimalProductRaw", "PlantFoodRaw", "FoodRaw"}
+VANILLA_CATEGORIES = {"StoneBlocks", "StoneChunks", "MeatRaw", "AnimalProductRaw", "PlantFoodRaw", "FoodRaw"}
 MMT_CATEGORIES = {"MMT_MetallicBar"}
 VANILLA_WORKTABLES = {"TableStonecutter", "TableMachining", "ButcherSpot", "TableButcher", "FueledStove", "ElectricStove"}
 VANILLA_RESEARCH = {"Stonecutting", "Smithing", "BiofuelRefining", "MicroelectronicsBasics", "Machining", "Gunsmithing", "BlowbackOperation", "GasOperation", "PrecisionRifling", "HeavyTurrets", "Mortars", "Fabrication", "ChargedShot", "ComplexClothing", "AdvancedFabrication", "Firefoam", "Pemmican", "TreeSowing"}
@@ -464,7 +464,7 @@ CONCRETE_RECIPE_EXPECTATIONS = {
     "MMT_MakeReinforcedConcrete_Hand": {
         "work": "1600",
         "inputs": [
-            ("categories", "Metallic", "10"),
+            ("categories", "MMT_MetallicBar", "10"),
             ("thingDefs", "MMT_Concrete", "10"),
         ],
         "output": "MMT_ReinforcedConcrete",
@@ -1733,6 +1733,15 @@ INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 65  # 含药品链 13 项（MMT_Research_Medicine.xml）
 INFRA_WORKTABLE_TOTAL = 31  # 含药品链 5 台（MMT_Buildings_Medicine.xml）与手压油泵
+WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
+RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
+WORKGIVER_EXPECTED_WORKTYPES = {
+    "MMT_DoBillsMining": "Mining",
+    "MMT_DoBillsSmithing": "Smithing",
+    "MMT_DoBillsTailoring": "Tailoring",
+    "MMT_DoBillsMedical": "Doctor",
+    "MMT_DoBillsCrafting": "Crafting",
+}
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -4668,6 +4677,44 @@ def validate_infrastructure() -> None:
     print("infrastructure: OK")
 
 
+def validate_workgivers() -> None:
+    """WorkGiver 覆盖校验：每台带配方的 MMT 工作台必须出现在某个 MMT WorkGiverDef 的
+    fixedBillGiverDefs 中，否则游戏内报 "Can't find a WorkGiver for a BillGiver" 且无人作业。
+    覆盖来源 = 建筑 Def 内嵌 <recipes> 的工作台 ∪ 配方 recipeUsers 中的 MMT_ 目标。"""
+    require_files([WORKGIVERS_XML])
+
+    givers = def_map(parse_xml(WORKGIVERS_XML))
+    assert_equal(set(givers), set(WORKGIVER_EXPECTED_WORKTYPES), "WorkGiver defName 集合")
+    covered: dict[str, str] = {}
+    for name, node in givers.items():
+        assert_equal(child_text(node, "giverClass"), "WorkGiver_DoBill", f"{name} giverClass")
+        assert_equal(child_text(node, "workType"), WORKGIVER_EXPECTED_WORKTYPES[name], f"{name} workType")
+        for bench in li_values(node, "fixedBillGiverDefs"):
+            if bench in covered:
+                fail(f"{bench} 同时挂载在 {covered[bench]} 与 {name}")
+            covered[bench] = name
+
+    needed: set[str] = set()
+    for path in sorted((ROOT / INFRA_BUILDING_DIR).glob("MMT_Buildings_*.xml")):
+        for node in parse_xml(path.relative_to(ROOT).as_posix()).findall("ThingDef"):
+            if node.find("recipes") is not None:
+                needed.add(node.findtext("defName"))
+    for path in sorted((ROOT / RECIPE_DEFS_DIR).glob("MMT_Recipes_*.xml")):
+        for node in parse_xml(path.relative_to(ROOT).as_posix()).iter():
+            if node.tag == "recipeUsers":
+                for li in node.findall("li"):
+                    if li.text.strip().startswith("MMT_"):
+                        needed.add(li.text.strip())
+
+    missing = sorted(needed - set(covered))
+    extra = sorted(set(covered) - needed)
+    if missing:
+        fail(f"工作台缺少 WorkGiver 挂载: {missing}")
+    if extra:
+        fail(f"WorkGiver 挂载了不存在的工作台: {extra}")
+    print(f"workgivers: OK ({len(covered)} 工作台)")
+
+
 def validate_textiles_weapons() -> None:
     require_files([
         CROPS_RESOURCE_XML,
@@ -5495,14 +5542,24 @@ def validate_weapons_vanilla_patch() -> None:
             target = xpath.split('defName="')[1].split('"')[0]
             targets.setdefault(target, []).append(cls)
             node = xpath.rsplit("/", 1)[-1]
-            if cls == "PatchOperationRemove" and node not in ("recipeMaker", "costList", "costStuffCount", "stuffCategories"):
-                fail(f"武器 patch 只允许移除配方/成本节点，实际: {xpath}")
+            if cls == "PatchOperationRemove" and node not in ("costList", "costStuffCount", "stuffCategories"):
+                fail(f"武器 patch 只允许移除成本/材料节点，实际: {xpath}")
+            # 1.7 补丁应用后会再跑一轮继承解析：Remove 掉的 recipeMaker 会被基类重新继承，
+            # 置空必须用 <recipeMaker Inherit="False" IsNull="True"/>（近战武器替换成完整配方则不受限）
+            if node == "recipeMaker" and cls == "PatchOperationReplace":
+                rm = li.find("value/recipeMaker")
+                if rm is not None and len(rm) == 0 and (
+                    rm.attrib.get("Inherit") != "False" or rm.attrib.get("IsNull") != "True"
+                ):
+                    fail(f"空 recipeMaker 置空缺少 Inherit/IsNull 属性: {xpath}")
             if cls == "PatchOperationReplace" and node in ("weaponTags", "weaponClasses", "thingCategories"):
                 fail(f"武器 patch 不得替换派系刷装相关节点: {xpath}")
     assert_equal(set(targets), set(WEAPONS_VANILLA_REPLACEMENTS), "同名替换目标集合")
     for vanilla_name in WEAPONS_VANILLA_REPLACEMENTS:
-        if "PatchOperationAttributeSet" not in targets[vanilla_name]:
-            fail(f"{vanilla_name} 缺少换父（ParentName）操作")
+        # 补丁阶段注入的 ParentName 无法解析到本 mod 抽象基类（继承解析先于补丁应用），
+        # 必须保留原版 BaseGun/BaseMeleeWeapon 继承链，禁止换父
+        if "PatchOperationAttributeSet" in targets[vanilla_name]:
+            fail(f"{vanilla_name} 不得包含换父（ParentName）操作")
     # 孪生 def 不再独立生成（内容经 patch 注入原版 def）
     generated_text = "".join(
         read_text(f"1.7/Defs/ThingDefs_Weapons/MMT_Weapons_{suffix}.xml")
@@ -5561,7 +5618,7 @@ def validate_weapons() -> None:
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
     ]
     total_weapons = sum(len(def_map(parse_xml(p))) for p in weapon_files)
-    assert_equal(total_weapons, 132, "武器总目标数（45+32+26+16+13，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml）")
+    assert_equal(total_weapons, 131, "武器总目标数（45+32+26+16+12，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml；NPC 批次中误植的 MMT_Surfactant 已移除）")
     generated_text = "\n".join(read_text(p) for p in [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
         "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
@@ -5585,7 +5642,7 @@ def validate_weapons() -> None:
 
 def validate_weapons_npc() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml"))
-    assert_equal(len(weapons), 13, "NPC/特殊武器数（Bullet_FireExtinguisher 在 MMT_Projectiles.xml）")
+    assert_equal(len(weapons), 12, "NPC/特殊武器数（Bullet_FireExtinguisher 在 MMT_Projectiles.xml；误植的 MMT_Surfactant 已移除）")
     assert "MMT_Gun_mechlaser" in weapons
     assert "MMT_Gun_SawGun" in weapons
     assert "CombatExtended." not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml")
@@ -5725,7 +5782,8 @@ def validate_weapons_core() -> None:
     assert_equal(mapping["thing_prefix"], "MMT_", "武器映射前缀")
     assert_equal(mapping["batches"]["conventional"], WEAPON_BATCH_FILES["conventional"], "常规枪械批次")
     assert_equal(mapping["sound_fallbacks"]["FlameThrower"], "Shot_MiniFlameblaster", "火焰音效 fallback")
-    assert_equal(len(mapping["sound_fallbacks"]), 1, "仅真正缺失的音频才允许 fallback")
+    assert_equal(mapping["sound_fallbacks"]["HissFlamethrower"], "Flamethrower_Firing_Start", "喷火器音效 fallback（HSK/CE 仓库均无 HissSmall 音频）")
+    assert_equal(len(mapping["sound_fallbacks"]), 2, "仅真正缺失的音频才允许 fallback")
     assert_equal(mapping["workbenches"]["HeavyArmsBench"], "MMT_AdvWeaponCraftingTable", "重型武器台映射")
     assert_equal(mapping["workbenches"]["TableHeavyAmmunition"], "MMT_AmmoBench", "重弹药台映射")
     assert_equal(len(mapping["recipe_product_clones"]["patch_replace"]), 17, "patch 克隆产物数")
@@ -5928,6 +5986,7 @@ def validate_medicine() -> None:
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
+    validate_workgivers()
     validate_resources()
     validate_building()
     validate_recipes()
@@ -5959,6 +6018,7 @@ def validate_all() -> None:
 SUITES = {
     "base": validate_base,
     "infrastructure": validate_infrastructure,
+    "workgivers": validate_workgivers,
     "resources": validate_resources,
     "building": validate_building,
     "recipes": validate_recipes,

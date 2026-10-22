@@ -230,6 +230,10 @@
   <ThingDef ParentName="PlantBase">
     <defName>MMT_PlantNeutroFlower</defName>
     <label>中性花</label>
+    <!-- Nutrition==0，必须声明不可食用；preferability 是 ingestible 的字段，覆盖 PlantBase 继承的 RawBad -->
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
     <description>一种美丽的黄橙色花卉，花瓣是合成中性胺的天然原料。只能在水培条件下种植。</description>
     <statBases>
       <MaxHitPoints>85</MaxHitPoints>

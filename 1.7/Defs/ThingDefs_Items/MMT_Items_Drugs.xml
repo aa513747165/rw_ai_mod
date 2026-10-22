@@ -24,6 +24,7 @@
     </statBases>
     <techLevel>Industrial</techLevel>
     <ingestible>
+      <foodType>Fluid, Processed</foodType>
       <preferability>NeverForNutrition</preferability>
       <maxNumToIngestAtOnce>3</maxNumToIngestAtOnce>
       <drugCategory>Medical</drugCategory>
@@ -67,6 +68,7 @@
     </statBases>
     <techLevel>Industrial</techLevel>
     <ingestible>
+      <foodType>Processed</foodType>
       <preferability>NeverForNutrition</preferability>
       <maxNumToIngestAtOnce>3</maxNumToIngestAtOnce>
       <drugCategory>Medical</drugCategory>
@@ -147,6 +149,8 @@
     </statBases>
     <techLevel>Industrial</techLevel>
     <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
       <drugCategory>Medical</drugCategory>
       <outcomeDoers>
         <li Class="IngestionOutcomeDoer_GiveHediff">

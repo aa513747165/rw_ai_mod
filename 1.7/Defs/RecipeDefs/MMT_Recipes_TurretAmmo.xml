@@ -442,7 +442,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>Metallic</li>
+						<li>MMT_MetallicBar</li>
 					</categories>
 				</filter>
 				<count>5</count>
@@ -451,7 +451,7 @@
 		<fixedIngredientFilter>
 			<categories>
 				<li>Woody</li>
-				<li>Metallic</li>
+				<li>MMT_MetallicBar</li>
 			</categories>
 		</fixedIngredientFilter>
 		<products>

@@ -154,7 +154,7 @@
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>54</speed>
 			<explosionRadius>6</explosionRadius>
-			<preExplosionSpawnThingDef>FilthPrometheum</preExplosionSpawnThingDef>
+			<preExplosionSpawnThingDef>Filth_Fuel</preExplosionSpawnThingDef>
 			<preExplosionSpawnChance>0.2</preExplosionSpawnChance>
 			<flyOverhead>false</flyOverhead>
 			<ai_IsIncendiary>true</ai_IsIncendiary>
@@ -348,7 +348,7 @@
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>20</speed>
 			<explosionRadius>1.2</explosionRadius>
-			<preExplosionSpawnThingDef>FilthPrometheum</preExplosionSpawnThingDef>
+			<preExplosionSpawnThingDef>Filth_Fuel</preExplosionSpawnThingDef>
 			<preExplosionSpawnChance>0.67</preExplosionSpawnChance>
 			<flyOverhead>false</flyOverhead>
 			<ai_IsIncendiary>true</ai_IsIncendiary>
@@ -693,8 +693,6 @@
 			<damageAmountBase>6</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>31</speed>
-			<preExplosionSpawnThingDef>Ammo_Arrow_Stone</preExplosionSpawnThingDef>
-			<preExplosionSpawnChance>0.333</preExplosionSpawnChance>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -708,7 +706,7 @@
 			<damageAmountBase>50</damageAmountBase>
 			<armorPenetrationBase>0.07</armorPenetrationBase>
 			<speed>45</speed>
-			<preExplosionSpawnThingDef>Ammo_BalistaBolt</preExplosionSpawnThingDef>
+			<preExplosionSpawnThingDef>MMT_Ammo_BalistaBolt</preExplosionSpawnThingDef>
 			<preExplosionSpawnChance>0.33</preExplosionSpawnChance>
 		</projectile>
 	</ThingDef>
@@ -723,8 +721,6 @@
 			<damageAmountBase>18</damageAmountBase>
 			<armorPenetrationBase>0.04</armorPenetrationBase>
 			<speed>72</speed>
-			<preExplosionSpawnThingDef>Ammo_Bolt_Metallic</preExplosionSpawnThingDef>
-			<preExplosionSpawnChance>0.6</preExplosionSpawnChance>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -738,8 +734,6 @@
 			<damageAmountBase>9</damageAmountBase>
 			<armorPenetrationBase>0.01</armorPenetrationBase>
 			<speed>46</speed>
-			<preExplosionSpawnThingDef>Ammo_Arrow_Steel</preExplosionSpawnThingDef>
-			<preExplosionSpawnChance>0.6</preExplosionSpawnChance>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">

@@ -46,7 +46,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -57,7 +56,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -101,9 +99,53 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 		</statBases>
-		<stuffCategories />
-		<costList />
-		<recipeMaker />
+		<graphicData>
+			<texPath>Things/Weapons/Archotech/ArchoBow</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Bow_Recurve</soundInteract>
+		<weaponTags>
+			<li>Ranged</li>
+			<li>RangedArchotech</li>
+			<li>Archotech</li>
+		</weaponTags>
+		<weaponClasses>
+			<li>ShortShots</li>
+		</weaponClasses>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<burstShotCount>3</burstShotCount>
+				<defaultProjectile>MMT_Projectile_ArchoArrow</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<range>60</range>
+				<soundCast>Bow_Recurve</soundCast>
+				<warmupTime>0.5</warmupTime>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>limb</label>
+				<power>7</power>
+				<cooldownTime>1.6</cooldownTime>
+				<chanceFactor>0.5</chanceFactor>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.008</armorPenetration>
+			</li>
+			<li>
+				<label>nock</label>
+				<power>8</power>
+				<cooldownTime>1.6</cooldownTime>
+				<chanceFactor>0.5</chanceFactor>
+				<capacities>
+					<li>Poke</li>
+				</capacities>
+				<armorPenetration>0.006</armorPenetration>
+			</li>
+		</tools>
+		<smeltable>false</smeltable>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_BurstLasergun</defName>
@@ -154,7 +196,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -164,7 +205,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -174,7 +214,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -235,7 +274,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -245,7 +283,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -255,7 +292,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -300,9 +336,63 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
 		</statBases>
-		<stuffCategories />
-		<costList />
-		<recipeMaker />
+		<graphicData>
+			<texPath>Things/Weapons/Archotech/ArchoBlaster</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>MMT_ShotM8Avenger</soundInteract>
+		<weaponTags>
+			<li>Ranged</li>
+			<li>RangedArchotech</li>
+			<li>Archotech</li>
+		</weaponTags>
+		<weaponClasses>
+			<li>LongShots</li>
+		</weaponClasses>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<burstShotCount>8</burstShotCount>
+				<defaultProjectile>MMT_Bullet_ArchoBlaster</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<muzzleFlashScale>11</muzzleFlashScale>
+				<range>70</range>
+				<soundCast>MMT_ShotM300Claymore</soundCast>
+				<soundCastTail>GunTail_Medium</soundCastTail>
+				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+				<warmupTime>0.95</warmupTime>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>stock</label>
+				<power>9</power>
+				<cooldownTime>1.6</cooldownTime>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.015</armorPenetration>
+			</li>
+			<li>
+				<label>barrel</label>
+				<power>11</power>
+				<cooldownTime>1.7</cooldownTime>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.018</armorPenetration>
+			</li>
+			<li>
+				<label>muzzle</label>
+				<power>10</power>
+				<cooldownTime>1.4</cooldownTime>
+				<capacities>
+					<li>Poke</li>
+				</capacities>
+				<armorPenetration>0.014</armorPenetration>
+			</li>
+		</tools>
+		<smeltable>false</smeltable>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_ArchotechSMG</defName>
@@ -351,7 +441,6 @@
 				<label>grip</label>
 				<power>8</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Grip</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -361,7 +450,6 @@
 				<label>barrel</label>
 				<power>9</power>
 				<cooldownTime>1.5</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -371,7 +459,6 @@
 				<label>muzzle</label>
 				<power>7</power>
 				<cooldownTime>1.3</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -415,9 +502,63 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
-		<stuffCategories />
-		<costList />
-		<recipeMaker />
+		<graphicData>
+			<texPath>Things/Weapons/Archotech/ArchoSMG</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Interact_SMG</soundInteract>
+		<weaponTags>
+			<li>Ranged</li>
+			<li>RangedArchotech</li>
+			<li>Archotech</li>
+		</weaponTags>
+		<weaponClasses>
+			<li>RangedLight</li>
+		</weaponClasses>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<burstShotCount>15</burstShotCount>
+				<defaultProjectile>MMT_Bullet_ArchoSMG</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<muzzleFlashScale>11</muzzleFlashScale>
+				<range>35</range>
+				<soundCast>MMT_RF_ShotVector</soundCast>
+				<soundCastTail>GunTail_Light</soundCastTail>
+				<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+				<warmupTime>0.8</warmupTime>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>grip</label>
+				<power>8</power>
+				<cooldownTime>1.4</cooldownTime>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.013</armorPenetration>
+			</li>
+			<li>
+				<label>barrel</label>
+				<power>9</power>
+				<cooldownTime>1.5</cooldownTime>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.013</armorPenetration>
+			</li>
+			<li>
+				<label>muzzle</label>
+				<power>7</power>
+				<cooldownTime>1.3</cooldownTime>
+				<capacities>
+					<li>Poke</li>
+				</capacities>
+				<armorPenetration>0.013</armorPenetration>
+			</li>
+		</tools>
+		<smeltable>false</smeltable>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_AvengerA</defName>
@@ -467,7 +608,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -477,7 +617,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -487,7 +626,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -547,7 +685,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -557,7 +694,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -567,7 +703,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -632,7 +767,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -642,7 +776,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -652,7 +785,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -713,7 +845,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -723,7 +854,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -733,7 +863,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -792,7 +921,6 @@
 				<label>grip</label>
 				<power>8</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Grip</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -802,7 +930,6 @@
 				<label>barrel</label>
 				<power>9</power>
 				<cooldownTime>1.5</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -812,7 +939,6 @@
 				<label>muzzle</label>
 				<power>7</power>
 				<cooldownTime>1.3</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -874,7 +1000,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -884,7 +1009,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -894,7 +1018,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -955,7 +1078,6 @@
 				<label>grip</label>
 				<power>8</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Grip</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -965,7 +1087,6 @@
 				<label>barrel</label>
 				<power>9</power>
 				<cooldownTime>1.5</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -975,7 +1096,6 @@
 				<label>muzzle</label>
 				<power>7</power>
 				<cooldownTime>1.3</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1038,7 +1158,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1048,7 +1167,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1058,7 +1176,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1121,7 +1238,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1131,7 +1247,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1141,7 +1256,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1203,7 +1317,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1213,7 +1326,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1223,7 +1335,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1286,7 +1397,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1296,7 +1406,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1306,7 +1415,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1368,7 +1476,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1378,7 +1485,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1388,7 +1494,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1451,7 +1556,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1461,7 +1565,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1471,7 +1574,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1534,7 +1636,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1544,7 +1645,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1554,7 +1654,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1618,7 +1717,6 @@
 				<label>stock</label>
 				<power>9</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Stock</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1628,7 +1726,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1638,7 +1735,6 @@
 				<label>muzzle</label>
 				<power>10</power>
 				<cooldownTime>1.4</cooldownTime>
-				<linkedBodyPartsGroup>Muzzle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1687,7 +1783,6 @@
 				<power>10</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>0.4</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1698,7 +1793,6 @@
 				<power>40</power>
 				<cooldownTime>0.95</cooldownTime>
 				<chanceFactor>0.8</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1709,7 +1803,6 @@
 				<power>44</power>
 				<cooldownTime>0.95</cooldownTime>
 				<chanceFactor>1.15</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1755,9 +1848,52 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
-		<stuffCategories />
-		<costList />
-		<recipeMaker />
+		<graphicData>
+			<texPath>Things/Weapons/Archotech/ArchoShortsword</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>MMT_InteractMelee</soundInteract>
+		<weaponTags>
+			<li>Archotech</li>
+			<li>HitechMelee</li>
+		</weaponTags>
+		<weaponClasses>
+			<li>MeleePiercer</li>
+			<li>Ultratech</li>
+		</weaponClasses>
+		<tools>
+			<li>
+				<label>handle</label>
+				<power>10</power>
+				<cooldownTime>1.5</cooldownTime>
+				<chanceFactor>0.4</chanceFactor>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.07</armorPenetration>
+			</li>
+			<li>
+				<label>point</label>
+				<power>40</power>
+				<cooldownTime>0.95</cooldownTime>
+				<chanceFactor>0.8</chanceFactor>
+				<capacities>
+					<li>Stab</li>
+				</capacities>
+				<armorPenetration>0.37</armorPenetration>
+			</li>
+			<li>
+				<label>edge</label>
+				<power>44</power>
+				<cooldownTime>0.95</cooldownTime>
+				<chanceFactor>1.15</chanceFactor>
+				<capacities>
+					<li>Cut</li>
+				</capacities>
+				<armorPenetration>0.53</armorPenetration>
+			</li>
+		</tools>
+		<smeltable>false</smeltable>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseMeleeWeapon">
 		<defName>MMT_MeleeWeapon_Archotech2H</defName>
@@ -1805,7 +1941,6 @@
 				<power>10</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>0.4</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1816,7 +1951,6 @@
 				<power>60</power>
 				<cooldownTime>1.75</cooldownTime>
 				<chanceFactor>0.8</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1827,7 +1961,6 @@
 				<power>74</power>
 				<cooldownTime>1.65</cooldownTime>
 				<chanceFactor>1.15</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1873,8 +2006,62 @@
 			<MaxHitPoints>10</MaxHitPoints>
 			<RangedWeapon_Cooldown>0.2</RangedWeapon_Cooldown>
 		</statBases>
-		<stuffCategories />
-		<costList />
-		<recipeMaker />
+		<graphicData>
+			<texPath>Things/Weapons/Archotech/ArchoBroadsword</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>MMT_InteractMelee</soundInteract>
+		<weaponTags>
+			<li>Archotech</li>
+			<li>HitechMelee2H</li>
+		</weaponTags>
+		<weaponClasses>
+			<li>MeleePiercer</li>
+			<li>Ultratech</li>
+		</weaponClasses>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<defaultProjectile>MMT_Projectile_ArchoSword</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<muzzleFlashScale>0</muzzleFlashScale>
+				<range>11</range>
+				<soundCast>MMT_InteractMelee</soundCast>
+				<warmupTime>1.5</warmupTime>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>handle</label>
+				<power>10</power>
+				<cooldownTime>1.5</cooldownTime>
+				<chanceFactor>0.4</chanceFactor>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.07</armorPenetration>
+			</li>
+			<li>
+				<label>point</label>
+				<power>60</power>
+				<cooldownTime>1.75</cooldownTime>
+				<chanceFactor>0.8</chanceFactor>
+				<capacities>
+					<li>Stab</li>
+				</capacities>
+				<armorPenetration>0.37</armorPenetration>
+			</li>
+			<li>
+				<label>edge</label>
+				<power>74</power>
+				<cooldownTime>1.65</cooldownTime>
+				<chanceFactor>1.15</chanceFactor>
+				<capacities>
+					<li>Cut</li>
+				</capacities>
+				<armorPenetration>0.53</armorPenetration>
+			</li>
+		</tools>
+		<smeltable>false</smeltable>
 	</ThingDef>
 </Defs>

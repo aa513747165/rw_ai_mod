@@ -35,6 +35,13 @@ PROJECTILE_COPY_FIELDS = (
     "flyOverhead",
     "ai_IsIncendiary",
 )
+# 投射物爆炸生成物映射：HSK 专有物映射到原版/MMT 等价物；DROP 集合为无等价物的引用（连同 SpawnChance 一并丢弃）
+PROJECTILE_SPAWN_THING_MAP = {
+    "FilthPrometheum": "Filth_Fuel",
+    "Ammo_BalistaBolt": "MMT_Ammo_BalistaBolt",
+}
+PROJECTILE_SPAWN_THING_DROP = {"Ammo_Arrow_Stone", "Ammo_Arrow_Steel", "Ammo_Bolt_Metallic"}
+
 # 已明确处理的 CE 字段，不进入人工审查
 PROJECTILE_KNOWN_FIELDS = frozenset(
     {
@@ -118,10 +125,11 @@ WEAPON_BASE_XML = """<?xml version="1.0" encoding="utf-8"?>
 \t\t</comps>
 \t</ThingDef>
 
-\t<!-- 炮塔枪基类：不作为装备流通，仅被炮塔建筑引用 -->
+\t<!-- 炮塔枪基类：不作为装备流通，仅被炮塔建筑引用；不可熔炼（无 smeltProducts） -->
 \t<ThingDef Name="MMT_BaseTurretGun" Abstract="True" ParentName="MMT_BaseGun">
 \t\t<tradeability>None</tradeability>
 \t\t<generateCommonality>0</generateCommonality>
+\t\t<smeltable>false</smeltable>
 \t</ThingDef>
 </Defs>
 """
@@ -331,8 +339,17 @@ def convert_projectile(source_name: str, index: SourceIndex, mapping: dict) -> E
     ET.SubElement(projectile, "speed").text = field("speed", "70")
     for extra in PROJECTILE_COPY_FIELDS:
         value = field(extra)
-        if value is not None:
-            ET.SubElement(projectile, extra).text = value
+        if value is None:
+            continue
+        if extra.endswith("SpawnThingDef"):
+            if value in PROJECTILE_SPAWN_THING_DROP:
+                continue
+            value = PROJECTILE_SPAWN_THING_MAP.get(value, value)
+        elif extra.endswith("SpawnChance"):
+            thing_value = field(extra.replace("Chance", "ThingDef"))
+            if thing_value in PROJECTILE_SPAWN_THING_DROP:
+                continue
+        ET.SubElement(projectile, extra).text = value
     # 人工审查：输出未识别的 CE 投射物字段
     node = index.thing_defs.get(source_name)
     unknown: set[str] = set()
@@ -395,11 +412,11 @@ def copy_sound_assets(mapping: dict, index: SourceIndex, sound_def: ET.Element) 
     """复制 SoundDef 引用的音频文件或文件夹到 1.7/Sounds 同路径；原版打包音频跳过。"""
     copied: list[Path] = []
     for grain in sound_def.iter("li"):
-        clip = grain.find("clipPath")
-        if clip is None or not clip.text:
-            continue
-        clip_path = clip.text
         if grain.get("Class") == "AudioGrain_Folder":
+            folder_clip = grain.find("clipFolderPath")
+            if folder_clip is None or not folder_clip.text:
+                continue
+            clip_path = folder_clip.text
             for root in sound_roots(mapping):
                 folder = root / clip_path
                 if folder.is_dir():
@@ -413,6 +430,10 @@ def copy_sound_assets(mapping: dict, index: SourceIndex, sound_def: ET.Element) 
             else:
                 print(f"[manual_review] 音频文件夹缺失: {clip_path}")
         else:
+            clip = grain.find("clipPath")
+            if clip is None or not clip.text:
+                continue
+            clip_path = clip.text
             for root in sound_roots(mapping):
                 for ext in AUDIO_EXTS:
                     candidate = root / f"{clip_path}{ext}"
@@ -613,7 +634,7 @@ def vanilla_product_names(mapping: dict) -> dict[str, str]:
 PATCH_KEEP_VANILLA_NODES = {"weaponTags", "weaponClasses", "thingCategories"}
 # 孪生 def 缺少而原版 def 自有的节点：从原版 def 移除（原版自动配方/成本由 MMT 武器链配方接管）
 PATCH_REMOVE_IF_TWIN_LACKS = ("recipeMaker", "costList", "costStuffCount", "stuffCategories")
-# 换父到 MMT 基类后补齐 tradeTags（原版该节点在基类上，不换父时由原版基类提供）
+# 原版武器缺 tradeTags 时补齐（影响商人生成）；key 为孪生武器的 MMT 基类名
 PATCH_TRADE_TAGS = {"MMT_BaseGun": "WeaponRanged", "MMT_BaseMeleeWeapon": "WeaponMelee"}
 
 # 原版可识别的武器 statBases 白名单；CE 精度系字段（SightsEfficiency 等）按 spec 丢弃
@@ -636,18 +657,20 @@ VERB_FIELD_WHITELIST = {
     "burstShotCount", "ticksBetweenBurstShots", "soundCast", "soundCastTail",
     "muzzleFlashScale", "forcedMissRadius", "requireLineOfSight", "consumeFuelPerShot",
     "ai_IsBuildingDestroyer", "ai_AvoidFriendlyFireRadius", "onlyManualCast",
-    "noiseRadius", "forceNormalTimeSpeed", "label",
+    "noiseRadius", "forceNormalTimeSpeed", "label", "isMortar",
 }
+# 1.7 没有独立迫击炮 verb 类：原版迫击炮用 Verb_Shoot + isMortar 表达
+MORTAR_VERB_CLASSES = {"CombatExtended.Verb_ShootMortarCE", "Verb_ShootMortar"}
 VERB_CLASS_MAP = {
     "CombatExtended.Verb_ShootCE": "Verb_Shoot",
     "CombatExtended.Verb_ShootCEOneUse": "Verb_LaunchProjectile",
     "CombatExtended.Verb_LaunchProjectileCE": "Verb_LaunchProjectile",
     "CombatExtended.Verb_ShootFlareCE": "Verb_Shoot",
-    "CombatExtended.Verb_ShootMortarCE": "Verb_ShootMortar",
+    "CombatExtended.Verb_ShootMortarCE": "Verb_Shoot",
     "Verb_Shoot": "Verb_Shoot",
     "Verb_ShootOneUse": "Verb_ShootOneUse",
     "Verb_LaunchProjectile": "Verb_LaunchProjectile",
-    "Verb_ShootMortar": "Verb_ShootMortar",
+    "Verb_ShootMortar": "Verb_Shoot",
 }
 # 已确认丢弃的 CE verb 字段（后座/瞄准模式/弹匣/CE 弹道散布等，原版无法表达）
 VERB_KNOWN_DROPS = {
@@ -656,8 +679,8 @@ VERB_KNOWN_DROPS = {
     "ignorePartialLoSBlocker", "rangedFireRulepack",
 }
 
-# 原版 Tool 白名单字段
-TOOL_FIELD_WHITELIST = {"label", "capacities", "power", "cooldownTime", "chanceFactor", "linkedBodyPartsGroup"}
+# 原版 Tool 白名单字段；1.7 已删除武器用 BodyPartGroupDef（Handle/Edge/Barrel 等），不再转换 linkedBodyPartsGroup
+TOOL_FIELD_WHITELIST = {"label", "capacities", "power", "cooldownTime", "chanceFactor"}
 
 # 武器级杂项字段直拷白名单
 WEAPON_MISC_WHITELIST = {"tradeability", "generateCommonality", "soundInteract", "relicChance", "techLevel", "uiIconScale"}
@@ -677,8 +700,9 @@ VANILLA_WEAPON_CLASSES = {
 }
 WEAPON_CLASS_MAP = {"Medieval": "Neolithic"}
 
-# Tool capacities 只保留原版 DamageDef，HSK 专有伤害映射到最近原版近似
-TOOL_CAPACITY_MAP = {"ElectricShock": "Stun"}
+# Tool capacities 只保留原版 ToolCapacityDef，HSK 专有伤害映射到最近原版近似
+# （1.7 无 Stun 容量，电击类近战退化为 Blunt）
+TOOL_CAPACITY_MAP = {"ElectricShock": "Blunt"}
 
 # workSpeedStat 只保留原版 StatDef
 WORK_SPEED_STAT_MAP = {"SmithingSpeed": "GeneralLaborSpeed"}
@@ -723,6 +747,26 @@ def nearest_node(chain: list[ET.Element], tag: str) -> ET.Element | None:
     return None
 
 
+def node_chain(defs: dict[str, ET.Element], element: ET.Element) -> list[ET.Element]:
+    """与 def_chain 相同，但直接作用于 defName/Name 字典（用于原版 def 参照链）。"""
+    chain: list[ET.Element] = []
+    seen: set[str] = set()
+    current: ET.Element | None = element
+    while current is not None:
+        chain.append(current)
+        parent = current.get("ParentName")
+        if not parent or parent in seen:
+            break
+        seen.add(parent)
+        current = defs.get(parent)
+    return chain
+
+
+def is_empty_node(node: ET.Element) -> bool:
+    """无子节点且无文本的空节点（如 <recipeMaker />），patch 语义上视为不存在。"""
+    return len(node) == 0 and not (node.text or "").strip()
+
+
 def nearest_text(chain: list[ET.Element], path: str) -> str | None:
     for node in chain:
         found = node.find(path)
@@ -752,7 +796,7 @@ def convert_tools(chain: list[ET.Element]) -> ET.Element | None:
     out = ET.Element("tools")
     for li in tools.findall("li"):
         tool = ET.SubElement(out, "li")
-        for field in ("label", "power", "cooldownTime", "chanceFactor", "linkedBodyPartsGroup"):
+        for field in ("label", "power", "cooldownTime", "chanceFactor"):
             value = li.findtext(field)
             if value:
                 ET.SubElement(tool, field).text = value
@@ -769,7 +813,8 @@ def convert_tools(chain: list[ET.Element]) -> ET.Element | None:
             raw = float(sharp or blunt)
             ET.SubElement(tool, "armorPenetration").text = f"{raw / 100:.3f}".rstrip("0").rstrip(".")
         for child in li:
-            if isinstance(child.tag, str) and child.tag not in TOOL_FIELD_WHITELIST and child.tag not in ("armorPenetrationSharp", "armorPenetrationBlunt", "id"):
+            # linkedBodyPartsGroup 为有意丢弃（1.7 无对应 BodyPartGroupDef）
+            if isinstance(child.tag, str) and child.tag not in TOOL_FIELD_WHITELIST and child.tag not in ("armorPenetrationSharp", "armorPenetrationBlunt", "id", "linkedBodyPartsGroup"):
                 print(f"[manual_review] Tool 未转换字段 {child.tag}")
     return out
 
@@ -788,7 +833,13 @@ def convert_verbs(chain: list[ET.Element], index: SourceIndex, mapping: dict) ->
         if verb_class is None:
             print(f"[manual_review] 未知 verbClass {raw_class}，按 Verb_Shoot 处理")
             verb_class = "Verb_Shoot"
+        is_mortar = raw_class in MORTAR_VERB_CLASSES
         ET.SubElement(verb, "verbClass").text = verb_class
+        if is_mortar:
+            # 原版迫击炮语义：越障抛射、不强制正常时间流速
+            ET.SubElement(verb, "isMortar").text = "true"
+            if not li.findtext("requireLineOfSight"):
+                ET.SubElement(verb, "requireLineOfSight").text = "false"
         for field in sorted(VERB_FIELD_WHITELIST):
             value = li.findtext(field)
             if not value:
@@ -1093,6 +1144,21 @@ def convert_recipe(source_name: str, index: SourceIndex, mapping: dict) -> ET.El
 def is_projectile_def(index: SourceIndex, element: ET.Element) -> bool:
     """判断批次内 Def 是否为投射物（归入核心投射物文件，不生成武器）。"""
     return resolve_from_element(index, element, "category") == "Projectile"
+
+
+def has_weapon_content(index: SourceIndex, element: ET.Element) -> bool:
+    """武器判定：继承链上存在 verbs 或 tools 节点（排除混入武器源文件的资源类 def）。"""
+    current: ET.Element | None = element
+    seen: set[str] = set()
+    while current is not None:
+        if current.find("verbs") is not None or current.find("tools") is not None:
+            return True
+        parent = current.get("ParentName")
+        if not parent or parent in seen:
+            break
+        seen.add(parent)
+        current = index.thing_defs.get(parent)
+    return False
 
 
 def weapon_names_for_batch(mapping: dict, batch: str) -> list[str]:
@@ -1585,6 +1651,10 @@ def build_npc(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, st
             continue
         if is_projectile_def(index, element):
             continue
+        # 非武器 def 过滤（如 Weapons_Special.xml 里混入的 Surfactant 资源）：武器必须有 verbs 或 tools
+        if not has_weapon_content(index, element):
+            print(f"[manual_review] NPC 批次跳过非武器 def: {name}")
+            continue
         weapons.append(convert_weapon(name, "npc", index, mapping))
     weapons.sort(key=lambda node: node.findtext("defName") or "")
     for node in weapons:
@@ -1628,8 +1698,8 @@ def strip_patch_attributes(node: ET.Element) -> None:
 def build_vanilla_patch(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
     """生成原版武器同名替换 patch：保留原版 defName，注入 MMT 孪生内容。
 
-    每把武器一个 PatchOperationSequence：换父到 MMT 基类（脱离原版基类的 recipeMaker），
-    替换/追加孪生节点（weaponTags/weaponClasses/thingCategories 保留原版值以免破坏派系刷装表），
+    每把武器一个 PatchOperationSequence：保留原版 ParentName 继承链（补丁阶段无法解析
+    本 mod 的抽象基类），替换/追加孪生节点（weaponTags/weaponClasses/thingCategories 保留原版值以免破坏派系刷装表），
     移除孪生缺少的原版自有节点（recipeMaker/costList/材料成本由 MMT 武器链接管）。
     """
     replacements = mapping.get("vanilla_replacements", {})
@@ -1647,18 +1717,33 @@ def build_vanilla_patch(index: SourceIndex, mapping: dict, only: set[str]) -> di
         source_name, batch = sources[twin]
         converted = convert_weapon(source_name, batch, index, mapping)
         vanilla = vanilla_defs[vanilla_name]
+        vanilla_chain = node_chain(vanilla_defs, vanilla)
+        # 原版 verb 带 forcedMissRadius（爆炸投射物必需）且投射物未被换掉时补齐；
+        # 投射物已换成 MMT 版本的（如燃烧发射器）以新投射物是否爆炸为准，不能照抄
+        vanilla_verb = vanilla.find("verbs/li")
+        vanilla_fmr = vanilla_verb.findtext("forcedMissRadius") if vanilla_verb is not None else None
+        vanilla_proj = vanilla_verb.findtext("defaultProjectile") if vanilla_verb is not None else None
+        if vanilla_fmr:
+            conv_verbs = converted.find("verbs")
+            if conv_verbs is not None:
+                for vli in conv_verbs.findall("li"):
+                    if vli.find("forcedMissRadius") is None and vli.findtext("defaultProjectile") == vanilla_proj:
+                        ET.SubElement(vli, "forcedMissRadius").text = vanilla_fmr
+        # 原版继承链上没有 smeltable=true 时（如燃烧瓶默认不可熔炼），注入 smeltProducts 需同时开启
+        vanilla_smeltable = (nearest_text(vanilla_chain, "smeltable") or "").strip().lower() == "true"
         base_xpath = f'Defs/ThingDef[defName="{vanilla_name}"]'
         root.append(ET.Comment(f" {vanilla_name} ← {twin}（{converted.findtext('label')}） "))
         seq = ET.SubElement(root, "Operation", {"Class": "PatchOperationSequence"})
         ops = ET.SubElement(seq, "operations")
-        # 节点流转：换父到 MMT 基类
-        li = ET.SubElement(ops, "li", {"Class": "PatchOperationAttributeSet"})
-        ET.SubElement(li, "xpath").text = base_xpath
-        ET.SubElement(li, "attribute").text = "ParentName"
-        ET.SubElement(li, "value").text = converted.get("ParentName")
+        # 不换父：补丁注入的 ParentName 在补丁阶段无法解析到本 mod 的抽象基类
+        # （继承解析发生在补丁应用之前），保留原版 BaseGun/BaseMeleeWeapon 继承链，
+        # 仅替换/追加孪生内容节点。
         for child in converted:
             tag = child.tag
             if not isinstance(tag, str) or tag == "defName" or tag in PATCH_KEEP_VANILLA_NODES:
+                continue
+            # 空节点（如 <recipeMaker />）视为不存在，交由末尾的移除/置空流程处理
+            if tag in PATCH_REMOVE_IF_TWIN_LACKS and is_empty_node(child):
                 continue
             node = copy.deepcopy(child)
             strip_patch_attributes(node)
@@ -1670,7 +1755,12 @@ def build_vanilla_patch(index: SourceIndex, mapping: dict, only: set[str]) -> di
             ET.SubElement(li, "xpath").text = xpath
             value = ET.SubElement(li, "value")
             value.append(node)
-        # 补齐 tradeTags：原版该节点在武器基类上，换父后丢失会影响商人生成
+            if tag == "smeltProducts" and op_class == "PatchOperationAdd" and not vanilla_smeltable:
+                li2 = ET.SubElement(ops, "li", {"Class": "PatchOperationAdd"})
+                ET.SubElement(li2, "xpath").text = base_xpath
+                value2 = ET.SubElement(li2, "value")
+                ET.SubElement(value2, "smeltable").text = "true"
+        # 补齐 tradeTags：原版武器缺该节点时影响商人生成
         trade_tag = PATCH_TRADE_TAGS.get(converted.get("ParentName") or "")
         if trade_tag and vanilla.find("tradeTags") is None:
             li = ET.SubElement(ops, "li", {"Class": "PatchOperationAdd"})
@@ -1680,7 +1770,18 @@ def build_vanilla_patch(index: SourceIndex, mapping: dict, only: set[str]) -> di
             ET.SubElement(tags, "li").text = trade_tag
         # 流程结束：移除原版自有但孪生没有的节点
         for tag in PATCH_REMOVE_IF_TWIN_LACKS:
-            if vanilla.find(tag) is not None and converted.find(tag) is None:
+            conv_node = converted.find(tag)
+            if vanilla.find(tag) is None or (conv_node is not None and not is_empty_node(conv_node)):
+                continue
+            if tag == "recipeMaker":
+                # 补丁应用后 1.7 会再跑一轮继承解析：Remove 掉的 recipeMaker 会被基类
+                # （BaseMakeableGun/BaseMakeableGrenade）重新继承回来，必须用
+                # Inherit="False" IsNull="True" 显式置空（HSK 补丁同款写法）
+                li = ET.SubElement(ops, "li", {"Class": "PatchOperationReplace"})
+                ET.SubElement(li, "xpath").text = f"{base_xpath}/{tag}"
+                value = ET.SubElement(li, "value")
+                ET.SubElement(value, "recipeMaker", {"Inherit": "False", "IsNull": "True"})
+            else:
                 li = ET.SubElement(ops, "li", {"Class": "PatchOperationRemove"})
                 ET.SubElement(li, "xpath").text = f"{base_xpath}/{tag}"
     return {

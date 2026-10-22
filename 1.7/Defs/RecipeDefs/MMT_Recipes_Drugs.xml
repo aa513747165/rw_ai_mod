@@ -257,7 +257,6 @@
     </skillRequirements>
     <workSkill>Medicine</workSkill>
     <recipeUsers>
-      <li>Kiln</li>
       <li>DrugLab</li>
       <li>MMT_MedicalTable</li>
       <li>MMT_ElectricMedicalTable</li>

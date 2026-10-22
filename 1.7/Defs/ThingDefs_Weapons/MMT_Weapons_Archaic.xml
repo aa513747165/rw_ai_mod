@@ -44,7 +44,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -55,7 +54,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -129,7 +127,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -140,7 +137,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -175,6 +171,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_CE_Weapon_GrenadeFirefoam</defName>
+		<smeltable>false</smeltable>
 		<label>firefoam grenade</label>
 		<description>Special firefighting grenade. Releases a cloud of firefoam upon impact.</description>
 		<graphicData>
@@ -215,7 +212,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -225,6 +221,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_CE_Weapon_GrenadeFlashbang</defName>
+		<smeltable>false</smeltable>
 		<label>flashbang grenade</label>
 		<description>Pyrotechnic charge designed to produce a blinding flash of light and loud noise, temporarily blinding and disorienting anyone nearby.</description>
 		<graphicData>
@@ -265,7 +262,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -275,6 +271,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_CE_Weapon_GrenadeSmoke</defName>
+		<smeltable>false</smeltable>
 		<label>smoke grenade</label>
 		<description>Releases a large cloud of defensive smoke, providing concealment against gunfire.</description>
 		<graphicData>
@@ -317,7 +314,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -327,6 +323,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_CE_Weapon_GrenadeStickBomb</defName>
+		<smeltable>false</smeltable>
 		<label>stick bomb</label>
 		<description>Primitive fuse-lit explosive. A favorite of tribals who use these to fight technologically advanced enemies with heavy armor.</description>
 		<graphicData>
@@ -367,7 +364,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -418,7 +414,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -429,7 +424,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -503,7 +497,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -514,7 +507,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -579,7 +571,6 @@
 				<power>5</power>
 				<cooldownTime>1.4</cooldownTime>
 				<chanceFactor>0.15</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -590,7 +581,6 @@
 				<power>8</power>
 				<cooldownTime>1.4</cooldownTime>
 				<chanceFactor>1.5</chanceFactor>
-				<linkedBodyPartsGroup>Blade</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -647,7 +637,6 @@
 				<power>6</power>
 				<cooldownTime>1.3</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -658,7 +647,6 @@
 				<power>15</power>
 				<cooldownTime>1.35</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -715,7 +703,6 @@
 				<power>5</power>
 				<cooldownTime>1.25</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -726,7 +713,6 @@
 				<power>10</power>
 				<cooldownTime>1.35</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -788,7 +774,6 @@
 				<power>8</power>
 				<cooldownTime>2</cooldownTime>
 				<chanceFactor>0.15</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -799,7 +784,6 @@
 				<power>16</power>
 				<cooldownTime>1.9</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Head</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -810,7 +794,6 @@
 				<power>26</power>
 				<cooldownTime>2.1</cooldownTime>
 				<chanceFactor>1</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -872,7 +855,6 @@
 				<power>7</power>
 				<cooldownTime>1.25</cooldownTime>
 				<chanceFactor>0.2</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -883,7 +865,6 @@
 				<power>18</power>
 				<cooldownTime>1.2</cooldownTime>
 				<chanceFactor>0.9</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -894,7 +875,6 @@
 				<power>20</power>
 				<cooldownTime>1.3</cooldownTime>
 				<chanceFactor>1.25</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -952,7 +932,6 @@
 				<power>6</power>
 				<cooldownTime>1.25</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -963,7 +942,6 @@
 				<power>16</power>
 				<cooldownTime>1.35</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Blade</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -974,7 +952,6 @@
 				<power>12</power>
 				<cooldownTime>1.4</cooldownTime>
 				<chanceFactor>0.23</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1032,7 +1009,6 @@
 				<power>10</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1043,7 +1019,6 @@
 				<power>13</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Head</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1102,7 +1077,6 @@
 				<power>7</power>
 				<cooldownTime>1.25</cooldownTime>
 				<chanceFactor>0.2</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1113,7 +1087,6 @@
 				<power>17</power>
 				<cooldownTime>1.1</cooldownTime>
 				<chanceFactor>1.15</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1124,7 +1097,6 @@
 				<power>21</power>
 				<cooldownTime>1.15</cooldownTime>
 				<chanceFactor>0.8</chanceFactor>
-				<linkedBodyPartsGroup>Blade</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1189,7 +1161,6 @@
 				<power>11</power>
 				<cooldownTime>2</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1200,7 +1171,6 @@
 				<power>26</power>
 				<cooldownTime>2.3</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Head</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1257,7 +1227,6 @@
 				<power>6</power>
 				<cooldownTime>1.25</cooldownTime>
 				<chanceFactor>0.2</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1268,7 +1237,6 @@
 				<power>14</power>
 				<cooldownTime>1.1</cooldownTime>
 				<chanceFactor>0.8</chanceFactor>
-				<linkedBodyPartsGroup>Blade</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1279,7 +1247,6 @@
 				<power>18</power>
 				<cooldownTime>1.1</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1337,7 +1304,6 @@
 				<power>8</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>0.25</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1348,7 +1314,6 @@
 				<power>25</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.75</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1359,7 +1324,6 @@
 				<power>29</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>1.15</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1419,7 +1383,6 @@
 				<power>10</power>
 				<cooldownTime>1.5</cooldownTime>
 				<chanceFactor>0.4</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1430,7 +1393,6 @@
 				<power>30</power>
 				<cooldownTime>1.75</cooldownTime>
 				<chanceFactor>0.8</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1441,7 +1403,6 @@
 				<power>34</power>
 				<cooldownTime>1.65</cooldownTime>
 				<chanceFactor>1.15</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1518,7 +1479,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1529,7 +1489,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1589,7 +1548,6 @@
 				<power>8</power>
 				<cooldownTime>1.9</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1600,7 +1558,6 @@
 				<power>23</power>
 				<cooldownTime>2</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1663,7 +1620,6 @@
 				<power>6</power>
 				<cooldownTime>1.7</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1673,7 +1629,6 @@
 				<label>point</label>
 				<power>14</power>
 				<cooldownTime>1.7</cooldownTime>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1684,7 +1639,6 @@
 				<power>21</power>
 				<cooldownTime>2</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1746,7 +1700,6 @@
 				<power>5</power>
 				<cooldownTime>1.2</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1757,7 +1710,6 @@
 				<power>11</power>
 				<cooldownTime>1.4</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Stab</li>
 				</capacities>
@@ -1767,7 +1719,6 @@
 				<label>edge</label>
 				<power>14</power>
 				<cooldownTime>1.5</cooldownTime>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -1843,7 +1794,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -1854,7 +1804,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -1938,7 +1887,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2000,7 +1948,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2063,7 +2010,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2124,7 +2070,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2186,7 +2131,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2247,7 +2191,6 @@
 				<label>Body</label>
 				<power>2</power>
 				<cooldownTime>1.75</cooldownTime>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -2281,6 +2224,7 @@
 				<ai_AvoidFriendlyFireRadius>5</ai_AvoidFriendlyFireRadius>
 				<ai_IsBuildingDestroyer>false</ai_IsBuildingDestroyer>
 				<defaultProjectile>Proj_GrenadeTox</defaultProjectile>
+				<forcedMissRadius>1.9</forcedMissRadius>
 				<hasStandardCommand>true</hasStandardCommand>
 				<label>throw tox grenade</label>
 				<minRange>3</minRange>

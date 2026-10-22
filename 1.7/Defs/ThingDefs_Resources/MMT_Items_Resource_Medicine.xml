@@ -7,6 +7,8 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_NeutroPetals</defName>
     <label>中性花瓣</label>
+    <!-- CompRottable 需要 tickerType Rare/Normal -->
+    <tickerType>Rare</tickerType>
     <description>中性花摘下的黄橙色花瓣，是合成中性胺的天然原料。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Medicine/MMT_NeutroPetals</texPath>

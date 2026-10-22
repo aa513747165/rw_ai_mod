@@ -50,7 +50,6 @@
 				<power>2</power>
 				<cooldownTime>1.59</cooldownTime>
 				<chanceFactor>0.33</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -60,7 +59,6 @@
 				<label>tank</label>
 				<power>9</power>
 				<cooldownTime>1.68</cooldownTime>
-				<linkedBodyPartsGroup>Head</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -74,6 +72,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_MechPlasma</defName>
+		<smeltable>false</smeltable>
 		<label>机械族-电荷霰弹枪</label>
 		<description>机械族出品的电荷散射武器。</description>
 		<graphicData>
@@ -118,7 +117,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -130,7 +128,7 @@
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_RocketLance</defName>
 		<label>火箭标枪</label>
-		<description />
+		<description>食人魔使用的大型火箭发射器，发射高爆火箭弹，对建筑群有毁灭性打击能力。</description>
 		<graphicData>
 			<texPath>Things/Weapons/Ogre/RocketLance</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -178,7 +176,6 @@
 				<label>barrel</label>
 				<power>13</power>
 				<cooldownTime>1.9</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -195,7 +192,7 @@
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_SawGun</defName>
 		<label>链锯枪</label>
-		<description />
+		<description>食人魔使用的重型速射武器，以大口径弹链供弹，近距离压制力极强。</description>
 		<graphicData>
 			<texPath>Things/Weapons/Ogre/SawGun</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -245,7 +242,6 @@
 				<label>barrel</label>
 				<power>13</power>
 				<cooldownTime>1.9</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -261,6 +257,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_ZeonBlaster</defName>
+		<smeltable>false</smeltable>
 		<label>吉恩冲击枪</label>
 		<description>一种机械族等离子武器。</description>
 		<graphicData>
@@ -305,7 +302,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -316,6 +312,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_lightmechblaster</defName>
+		<smeltable>false</smeltable>
 		<label>机械族-电荷冲击枪</label>
 		<description>机械族的一种轻型电荷武器。</description>
 		<graphicData>
@@ -360,7 +357,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -371,6 +367,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_mechheavylaser</defName>
+		<smeltable>false</smeltable>
 		<label>机械族-重型脉冲光束发射器</label>
 		<description>一种机械族重型脉冲光束武器。</description>
 		<graphicData>
@@ -416,7 +413,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -427,6 +423,7 @@
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_mechlaser</defName>
+		<smeltable>false</smeltable>
 		<label>机械族-脉冲光束发射器</label>
 		<description>一种机械族脉冲光束武器。</description>
 		<graphicData>
@@ -472,7 +469,6 @@
 				<label>barrel</label>
 				<power>11</power>
 				<cooldownTime>1.6</cooldownTime>
-				<linkedBodyPartsGroup>Barrel</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -513,9 +509,8 @@
 				<power>9</power>
 				<cooldownTime>2.65</cooldownTime>
 				<chanceFactor>100</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
-					<li>Stun</li>
+					<li>Blunt</li>
 				</capacities>
 				<armorPenetration>0.06</armorPenetration>
 			</li>
@@ -578,9 +573,8 @@
 				<power>2</power>
 				<cooldownTime>2.3</cooldownTime>
 				<chanceFactor>100</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
-					<li>Stun</li>
+					<li>Blunt</li>
 				</capacities>
 				<armorPenetration>0.04</armorPenetration>
 			</li>
@@ -637,7 +631,6 @@
 				<power>7</power>
 				<cooldownTime>2.2</cooldownTime>
 				<chanceFactor>0.1</chanceFactor>
-				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>
@@ -648,7 +641,6 @@
 				<power>42</power>
 				<cooldownTime>3.0</cooldownTime>
 				<chanceFactor>1.33</chanceFactor>
-				<linkedBodyPartsGroup>Edge</linkedBodyPartsGroup>
 				<capacities>
 					<li>Cut</li>
 				</capacities>
@@ -660,27 +652,6 @@
 		</stuffCategories>
 		<costStuffCount>90</costStuffCount>
 		<tradeability>Sellable</tradeability>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Surfactant</defName>
-		<label>表面活性剂发泡液</label>
-		<description>这种表面活性剂是一种用于灭火的高效发泡基材。可以精炼食盐、硫磺和酒精得到，也可以由各种其他方法制成。</description>
-		<graphicData>
-			<texPath>Things/Item/Resource/SurfactantFuel</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<color>(255,255,255)</color>
-		</graphicData>
-		<soundInteract>Standard_Drop</soundInteract>
-		<techLevel>Industrial</techLevel>
-		<statBases>
-			<Beauty>-5</Beauty>
-			<DeteriorationRate>0</DeteriorationRate>
-			<Flammability>3</Flammability>
-			<MarketValue>0.4</MarketValue>
-			<Mass>0.06</Mass>
-			<MaxHitPoints>100</MaxHitPoints>
-		</statBases>
-		<tradeability>None</tradeability>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_blowgun</defName>
@@ -724,7 +695,6 @@
 				<power>7</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Base</linkedBodyPartsGroup>
 				<capacities>
 					<li>Blunt</li>
 				</capacities>
@@ -735,7 +705,6 @@
 				<power>8</power>
 				<cooldownTime>1.6</cooldownTime>
 				<chanceFactor>0.5</chanceFactor>
-				<linkedBodyPartsGroup>Point</linkedBodyPartsGroup>
 				<capacities>
 					<li>Poke</li>
 				</capacities>

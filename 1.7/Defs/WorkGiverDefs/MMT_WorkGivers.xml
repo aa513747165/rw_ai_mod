@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- MMT 工作台必须通过某个 WorkGiverDef 的 fixedBillGiverDefs 挂载，殖民者才会去执行其配方；
+       否则日志报 "Can't find a WorkGiver for a BillGiver"。新增带配方的工作台时务必同步加入本文件，
+       对应校验套件：python tools/validate_mod.py workgivers -->
+
+  <!-- 采矿类：盐矿、手压油泵（配方 workSkill 为 Mining） -->
+  <WorkGiverDef>
+    <defName>MMT_DoBillsMining</defName>
+    <label>在 MMT 采矿设施作业</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Mining</workType>
+    <priorityInType>100</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MMT_SaltMine</li>
+      <li>MMT_HandOilPump</li>
+    </fixedBillGiverDefs>
+    <verb>开采</verb>
+    <gerund>开采中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- 锻造类：武器/弹药工作台 -->
+  <WorkGiverDef>
+    <defName>MMT_DoBillsSmithing</defName>
+    <label>在 MMT 武器工作台作业</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Smithing</workType>
+    <priorityInType>70</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MMT_WeaponCraftingTable</li>
+      <li>MMT_AdvWeaponCraftingTable</li>
+      <li>MMT_MechWeaponTable</li>
+      <li>MMT_AmmoBench</li>
+    </fixedBillGiverDefs>
+    <verb>锻造</verb>
+    <gerund>锻造中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- 缝制类：织布机 -->
+  <WorkGiverDef>
+    <defName>MMT_DoBillsTailoring</defName>
+    <label>在 MMT 织布机作业</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Tailoring</workType>
+    <priorityInType>100</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MMT_Loom</li>
+    </fixedBillGiverDefs>
+    <verb>织造</verb>
+    <gerund>织造中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- 医疗类：制药台（配方 workSkill 为 Medicine，对照 HSK meditable 挂 Doctor 工作类型） -->
+  <WorkGiverDef>
+    <defName>MMT_DoBillsMedical</defName>
+    <label>在 MMT 制药台作业</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>45</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MMT_MedicalTable</li>
+      <li>MMT_ElectricMedicalTable</li>
+    </fixedBillGiverDefs>
+    <verb>制药</verb>
+    <gerund>制药中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <!-- 手工类：其余全部生产工作台 -->
+  <WorkGiverDef>
+    <defName>MMT_DoBillsCrafting</defName>
+    <label>在 MMT 生产工作台作业</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>85</priorityInType>
+    <fixedBillGiverDefs>
+      <li>MMT_HandFurnace</li>
+      <li>MMT_ElectricArcFurnace</li>
+      <li>MMT_GlassworksTable</li>
+      <li>MMT_ConcreteMixer</li>
+      <li>MMT_EConcreteMixer</li>
+      <li>MMT_HandSawmill</li>
+      <li>MMT_ElectricSawmill</li>
+      <li>MMT_CharcoalKiln</li>
+      <li>MMT_ElectricCharcoalKiln</li>
+      <li>MMT_HandChemTable</li>
+      <li>MMT_ElectricChemLab</li>
+      <li>MMT_HandElectronicsTable</li>
+      <li>MMT_ElectricElectronicsTable</li>
+      <li>MMT_HandAssemblyBench</li>
+      <li>MMT_ElectricAssemblyBench</li>
+      <li>MMT_RoboticAssembler</li>
+      <li>MMT_MatterConverter</li>
+      <li>MMT_Matterfab</li>
+      <li>MMT_ParticleCollider</li>
+      <li>MMT_DryingRack</li>
+      <li>MMT_ElectricDryingRack</li>
+      <li>MMT_NeutroamineRefiner</li>
+    </fixedBillGiverDefs>
+    <verb>制作</verb>
+    <gerund>制作中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+</Defs>
