@@ -464,8 +464,111 @@ def build_core(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, s
     }
 
 
+TECH_LEVEL_ORDER = ["Neolithic", "Medieval", "Industrial", "Spacer", "Ultra", "Archotech"]
+
+# 压缩研究树：23 个新节点（第 24 个 MMT_Rocketry1 已存在于 MMT_Research_TextilesWeapons.xml）
+NEW_RESEARCH_NODES = [
+    "MMT_MeleeAdvanced", "MMT_MeleeUltra",
+    "MMT_BowsBasic",
+    "MMT_GrenadesBasic", "MMT_GrenadesAdvanced",
+    "MMT_GunsAdvanced", "MMT_RiflesAdvanced", "MMT_RiflesMaster",
+    "MMT_GrenadeLaunchers", "MMT_SnipersAdvanced",
+    "MMT_DirectedEnergyWeapons1", "MMT_DirectedEnergyWeapons2",
+    "MMT_ArchotechWeapons",
+    "MMT_SiegeWeapons", "MMT_Turrets1",
+    "MMT_HeavyTurrets2", "MMT_HeavyTurrets3",
+    "MMT_Artillery2", "MMT_Autoturrets2", "MMT_Autoturrets3", "MMT_Autoturrets4",
+    "MMT_Rocketry2", "MMT_Rocketry3",
+]
+
+# HSK 非武器前置研究 -> 现有 MMT 基础设施研究
+NON_WEAPON_RESEARCH = {
+    "Metals_C1": "MMT_BasicMetalworking",
+    "Electronics_C2": "MMT_IntegratedCircuitTech",
+    "Components_D1": "MMT_AdvancedComponents",
+    "Components_D3": "MMT_UltraComponents",
+    "Components_E1": "MMT_UltraComponents",
+    "Stones_C1": "MMT_ConcreteBasic",
+    "Craft_B1": "MMT_Woodworking",
+    "Mechanoids": "MMT_Robotics1",
+}
+
+
+def resolve_research_field(index: SourceIndex, name: str, field: str) -> str | None:
+    """沿 ResearchProjectDef 的 ParentName 链解析字段。"""
+    seen: set[str] = set()
+    current = index.research_defs.get(name)
+    while current is not None:
+        found = current.find(field)
+        if found is not None and found.text:
+            return found.text
+        parent = current.get("ParentName")
+        if not parent or parent in seen:
+            return None
+        seen.add(parent)
+        current = index.research_defs.get(parent)
+    return None
+
+
+def build_research_defs(index: SourceIndex, mapping: dict) -> list[ET.Element]:
+    """按映射表合并 HSK 武器研究为压缩 MMT 节点：成本取最大、科技取最高、前置取映射后并集。"""
+    research_map = mapping["research"]
+    known = set(NEW_RESEARCH_NODES) | set(research_map.values()) | set(NON_WEAPON_RESEARCH.values())
+    defs: list[ET.Element] = []
+    for position, node_name in enumerate(NEW_RESEARCH_NODES):
+        sources = [src for src, target in research_map.items() if target == node_name]
+        if not sources:
+            print(f"[manual_review] 研究节点 {node_name} 没有 HSK 来源")
+            continue
+        costs = [int(resolve_research_field(index, src, "baseCost") or "0") for src in sources]
+        levels = [resolve_research_field(index, src, "techLevel") or "Industrial" for src in sources]
+        tech = max(levels, key=lambda lv: TECH_LEVEL_ORDER.index(lv) if lv in TECH_LEVEL_ORDER else 0)
+        prerequisites: list[str] = []
+        for src in sources:
+            node = index.research_defs.get(src)
+            if node is None:
+                print(f"[manual_review] HSK 研究 {src} 不在索引中")
+                continue
+            for li in node.findall("./prerequisites/li"):
+                if not li.text:
+                    continue
+                target = research_map.get(li.text, NON_WEAPON_RESEARCH.get(li.text, li.text))
+                if target != node_name and target not in prerequisites:
+                    prerequisites.append(target)
+        for pre in prerequisites:
+            if pre not in known:
+                print(f"[manual_review] {node_name} 的前置 {pre} 非武器映射外名称，按原版/既有研究直引")
+        out = ET.Element("ResearchProjectDef")
+        ET.SubElement(out, "defName").text = node_name
+        zh_label = index.strings_zh.get(f"{sources[0]}.label")
+        zh_desc = index.strings_zh.get(f"{sources[0]}.description")
+        ET.SubElement(out, "label").text = zh_label or resolve_research_field(index, sources[0], "label") or node_name
+        ET.SubElement(out, "description").text = zh_desc or resolve_research_field(index, sources[0], "description") or ""
+        ET.SubElement(out, "baseCost").text = str(max(costs))
+        ET.SubElement(out, "techLevel").text = tech
+        ET.SubElement(out, "tab").text = "MMT_ResearchTab"
+        if prerequisites:
+            pre_node = ET.SubElement(out, "prerequisites")
+            for pre in prerequisites:
+                ET.SubElement(pre_node, "li").text = pre
+        # 坐标：武器研究统一放在 Y=6..8 横带，X 每行 8 列间隔 3，避免与既有 MMT 研究重叠
+        ET.SubElement(out, "researchViewX").text = f"{(position % 8) * 3:.2f}"
+        ET.SubElement(out, "researchViewY").text = f"{6 + position // 8:.2f}"
+        defs.append(out)
+    return defs
+
+
+def build_research(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    return {
+        "ResearchProjectDefs/MMT_Research_Weapons.xml": serialize_defs(
+            build_research_defs(index, mapping), "MMT 压缩武器研究树：由 HSK Research_Weapon.xml 合并"
+        ),
+    }
+
+
 BATCH_BUILDERS = {
     "core": build_core,
+    "research": build_research,
 }
 
 

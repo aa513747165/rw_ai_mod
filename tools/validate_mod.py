@@ -5274,6 +5274,19 @@ WEAPON_BATCH_FILES = {
 }
 
 
+WEAPON_RESEARCH_TOTAL = 23
+
+
+def validate_weapons_research() -> None:
+    research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Weapons.xml"))
+    assert_equal(len(research), WEAPON_RESEARCH_TOTAL, "武器研究节点数")
+    coords = [(child_text(r, "researchViewX"), child_text(r, "researchViewY")) for r in research.values()]
+    assert_equal(len(coords), len(set(coords)), "武器研究坐标重复")
+    assert_equal(child_text(research["MMT_Rocketry2"], "baseCost"), "1300", "火箭 II 成本")
+    assert_equal(li_values(research["MMT_Rocketry2"], "prerequisites"), ["MMT_Rocketry1", "SniperTurret", "MMT_GrenadeLaunchers", "Mortars"], "火箭 II 前置")
+    print("weapons-research: OK")
+
+
 def validate_weapons_projectiles() -> None:
     projectiles = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml"))
     bullet = projectiles["MMT_Bullet_762x51mmNATO_FMJ"]
@@ -5381,6 +5394,7 @@ SUITES = {
     "textiles-weapons": validate_textiles_weapons,
     "weapons-core": validate_weapons_core,
     "weapons-projectiles": validate_weapons_projectiles,
+    "weapons-research": validate_weapons_research,
     "all": validate_all,
 }
 
