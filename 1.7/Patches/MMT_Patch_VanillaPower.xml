@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 电线同名改造：原版三种电线的建造成本钢 -> MMT_CopperBar（铜锭），对齐 HSK 用导电材料造电线的思路
+       （HSK 用 Wire；MMT 铜链已完整：MMT_CopperOre -> MMT_CopperBar -> MMT_Wire，用户确认改铜或钢皆可，取铜）。
+       只替换 costList 一项，数量维持原版不变，其余属性（耐久/工作量/贴图）不动。
+       不删除原版 def，其它 mod 引用 PowerConduit 等不受影响。 -->
+
+  <!-- 普通电线：钢 x1 -> 铜锭 x1 -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/ThingDef[defName="PowerConduit"]/costList</xpath>
+    <value>
+      <costList>
+        <MMT_CopperBar>1</MMT_CopperBar>
+      </costList>
+    </value>
+  </Operation>
+
+  <!-- 隐藏电线：钢 x2 -> 铜锭 x2 -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/ThingDef[defName="HiddenConduit"]/costList</xpath>
+    <value>
+      <costList>
+        <MMT_CopperBar>2</MMT_CopperBar>
+      </costList>
+    </value>
+  </Operation>
+
+  <!-- 防水电线：钢 x10 -> 铜锭 x10 -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/ThingDef[defName="WaterproofConduit"]/costList</xpath>
+    <value>
+      <costList>
+        <MMT_CopperBar>10</MMT_CopperBar>
+      </costList>
+    </value>
+  </Operation>
+</Patch>
