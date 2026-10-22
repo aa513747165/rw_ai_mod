@@ -5292,6 +5292,45 @@ TURRET_AMMO_PROJECTILES = {
 }
 
 
+def validate_weapons() -> None:
+    validate_weapons_core()
+    validate_weapons_projectiles()
+    validate_weapons_research()
+    validate_weapons_conventional()
+    validate_weapons_archaic()
+    validate_weapons_futuristic()
+    validate_weapons_turrets()
+    validate_weapons_npc()
+    weapon_files = [
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml",
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml",
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml",
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_TurretGuns.xml",
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
+    ]
+    total_weapons = sum(len(def_map(parse_xml(p))) for p in weapon_files)
+    assert_equal(total_weapons, 155, "武器总目标数（57+41+28+16+13，内联投射物在 MMT_Projectiles.xml）")
+    generated_text = "\n".join(read_text(p) for p in [
+        "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
+        "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
+        *weapon_files,
+        "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml",
+        "1.7/Defs/ThingDefs_Items/MMT_Items_TurretAmmo.xml",
+        "1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_TurretAmmo.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml",
+        "1.7/Defs/ResearchProjectDefs/MMT_Research_Weapons.xml",
+        "1.7/Defs/SoundDefs/MMT_Sounds_Weapons.xml",
+    ])
+    for forbidden in ("CombatExtended.", "SK.", "RightToolForJob."):
+        if forbidden in generated_text:
+            fail(f"武器 Def 残留禁用引用: {forbidden}")
+    print("weapons: OK")
+
+
 def validate_weapons_npc() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml"))
     assert_equal(len(weapons), 13, "NPC/特殊武器数（Bullet_FireExtinguisher 在 MMT_Projectiles.xml）")
@@ -5466,6 +5505,7 @@ def validate_all() -> None:
     validate_petrochem_ext()
     validate_matter_top()
     validate_textiles_weapons()
+    validate_weapons()
     validate_all_xml()
 
 
@@ -5519,6 +5559,7 @@ SUITES = {
     "weapons-futuristic": validate_weapons_futuristic,
     "weapons-turrets": validate_weapons_turrets,
     "weapons-npc": validate_weapons_npc,
+    "weapons": validate_weapons,
     "all": validate_all,
 }
 
