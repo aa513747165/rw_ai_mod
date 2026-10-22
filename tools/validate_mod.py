@@ -5359,6 +5359,7 @@ WEAPON_GENERATED_FILES = [
     "1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml",
     "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml",
     "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml",
+    "1.7/Patches/MMT_Patch_VanillaWeapons.xml",
     "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml",
     "1.7/Defs/RecipeDefs/MMT_Recipes_TurretAmmo.xml",
     "1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml",
@@ -5383,6 +5384,69 @@ def collect_known_def_names() -> set[str]:
                 if name:
                     known.add(name)
     return known
+
+
+WEAPONS_VANILLA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaWeapons.xml"
+# 同名替换映射（与 tools/data/mmt_weapon_mapping.json 的 vanilla_replacements 保持一致）
+WEAPONS_VANILLA_REPLACEMENTS = {
+    "Gun_Revolver": "MMT_Gun_Revolver",
+    "Gun_Autopistol": "MMT_Gun_Autopistol",
+    "Gun_MachinePistol": "MMT_Gun_MachinePistol",
+    "Gun_HeavySMG": "MMT_Gun_HeavySMG",
+    "Gun_PumpShotgun": "MMT_Gun_PumpShotgun",
+    "Gun_ChainShotgun": "MMT_Gun_ChainShotgun",
+    "Gun_BoltActionRifle": "MMT_Gun_BoltActionRifle",
+    "Gun_AssaultRifle": "MMT_Gun_AssaultRifle",
+    "Gun_LMG": "MMT_Gun_LMG",
+    "Gun_SniperRifle": "MMT_Gun_SniperRifle",
+    "Gun_Minigun": "MMT_Gun_Minigun",
+    "Gun_IncendiaryLauncher": "MMT_Gun_IncendiaryLauncher",
+    "Gun_ChargeRifle": "MMT_Gun_ChargeRifle",
+    "Gun_ChargeLance": "MMT_Gun_Mantis",
+    "Weapon_GrenadeFrag": "MMT_Weapon_GrenadeFrag",
+    "Weapon_GrenadeEMP": "MMT_Weapon_GrenadeEMP",
+    "Weapon_GrenadeMolotov": "MMT_Weapon_GrenadeMolotov",
+    "MeleeWeapon_Knife": "MMT_MeleeWeapon_Schiv",
+    "MeleeWeapon_LongSword": "MMT_MeleeWeapon_GreatSword",
+    "MeleeWeapon_Spear": "MMT_MeleeWeapon_Partisan",
+    "MeleeWeapon_Gladius": "MMT_MeleeWeapon_Scimitar",
+    "MeleeWeapon_Mace": "MMT_MeleeWeapon_Morningstar",
+    "MeleeWeapon_BreachAxe": "MMT_NorbalMeleeWeapon_Ax",
+}
+
+
+def validate_weapons_vanilla_patch() -> None:
+    """同名替换 patch：23 把原版武器注入 MMT 孪生内容；不删除原版 def、不替换派系刷装标签。"""
+    require_files([WEAPONS_VANILLA_PATCH_XML])
+    patch = parse_xml(WEAPONS_VANILLA_PATCH_XML)
+    targets: dict[str, list[str]] = {}
+    for op in patch.findall("Operation"):
+        assert_equal(op.attrib.get("Class"), "PatchOperationSequence", "武器 patch 操作类型")
+        for li in op.find("operations"):
+            cls = li.attrib.get("Class")
+            xpath = child_text(li, "xpath")
+            if "RecipeDef" in xpath:
+                fail("武器 patch 不得触碰 RecipeDef")
+            target = xpath.split('defName="')[1].split('"')[0]
+            targets.setdefault(target, []).append(cls)
+            node = xpath.rsplit("/", 1)[-1]
+            if cls == "PatchOperationRemove" and node not in ("recipeMaker", "costList", "costStuffCount", "stuffCategories"):
+                fail(f"武器 patch 只允许移除配方/成本节点，实际: {xpath}")
+            if cls == "PatchOperationReplace" and node in ("weaponTags", "weaponClasses", "thingCategories"):
+                fail(f"武器 patch 不得替换派系刷装相关节点: {xpath}")
+    assert_equal(set(targets), set(WEAPONS_VANILLA_REPLACEMENTS), "同名替换目标集合")
+    for vanilla_name in WEAPONS_VANILLA_REPLACEMENTS:
+        if "PatchOperationAttributeSet" not in targets[vanilla_name]:
+            fail(f"{vanilla_name} 缺少换父（ParentName）操作")
+    # 孪生 def 不再独立生成（内容经 patch 注入原版 def）
+    generated_text = "".join(
+        read_text(f"1.7/Defs/ThingDefs_Weapons/MMT_Weapons_{suffix}.xml")
+        for suffix in ("Conventional", "Archaic", "Futuristic")
+    )
+    for twin in WEAPONS_VANILLA_REPLACEMENTS.values():
+        if f"<defName>{twin}</defName>" in generated_text:
+            fail(f"同名替换孪生 {twin} 不应再生成独立 def")
+    print("weapons-vanilla-patch: OK")
 
 
 def validate_weapon_references() -> None:
@@ -5422,6 +5486,7 @@ def validate_weapons() -> None:
     validate_weapons_futuristic()
     validate_weapons_turrets()
     validate_weapons_npc()
+    validate_weapons_vanilla_patch()
     validate_weapon_references()
     weapon_files = [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml",
@@ -5431,7 +5496,7 @@ def validate_weapons() -> None:
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
     ]
     total_weapons = sum(len(def_map(parse_xml(p))) for p in weapon_files)
-    assert_equal(total_weapons, 155, "武器总目标数（57+41+28+16+13，内联投射物在 MMT_Projectiles.xml）")
+    assert_equal(total_weapons, 132, "武器总目标数（45+32+26+16+13，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml）")
     generated_text = "\n".join(read_text(p) for p in [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
         "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
@@ -5493,11 +5558,12 @@ def validate_weapons_turrets() -> None:
 def validate_weapons_futuristic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml"))
-    assert_equal(len(weapons), 28, "未来武器数")
+    assert_equal(len(weapons), 26, "未来武器数（2 把同名替换孪生移入 patch）")
     assert_equal(len(recipes), 12, "未来武器配方数（4 条 ReverseEngineer 已排除）")
     laser = weapons["MMT_LaserRifle"]
     assert_equal(child_text(laser, "verbs/li/defaultProjectile"), "MMT_Bullet_Laserbeam", "激光步枪投射物")
-    assert "MMT_Gun_ChargeRifle" in weapons
+    if "MMT_Gun_ChargeRifle" in weapons:
+        fail("同名替换孪生 MMT_Gun_ChargeRifle 不应再生成独立 def")
     assert "SK.Graphic_SingleNoColor" not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml")
     print("weapons-futuristic: OK")
 
@@ -5505,11 +5571,12 @@ def validate_weapons_futuristic() -> None:
 def validate_weapons_archaic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml"))
-    assert_equal(len(weapons), 41, "冷兵器与手雷 Def 数（6 个手雷投射物在 MMT_Projectiles.xml）")
+    assert_equal(len(weapons), 32, "冷兵器与手雷 Def 数（3 手雷 + 6 近战同名替换孪生移入 patch，6 个手雷投射物在 MMT_Projectiles.xml）")
     assert_equal(len(recipes), 13, "手雷配方数")
-    greatsword = weapons["MMT_MeleeWeapon_GreatSword"]
-    assert_equal(child_text(greatsword, "tools/li/power"), "7", "巨剑首个工具威力")
-    assert "MMT_Weapon_GrenadeFrag" in weapons
+    katana = weapons["MMT_MeleeWeapon_Katana"]
+    assert_equal(child_text(katana, "tools/li/power"), "7", "武士打刀首个工具威力")
+    if "MMT_Weapon_GrenadeFrag" in weapons:
+        fail("同名替换孪生 MMT_Weapon_GrenadeFrag 不应再生成独立 def")
     assert "MMT_CE_Weapon_GrenadeSmoke" in weapons
     assert "CombatExtended.ToolCE" not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml")
     print("weapons-archaic: OK")
@@ -5518,7 +5585,7 @@ def validate_weapons_archaic() -> None:
 def validate_weapons_conventional() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"))
-    assert_equal(len(weapons), 57, "常规武器数")
+    assert_equal(len(weapons), 45, "常规武器数（12 把同名替换孪生移入 MMT_Patch_VanillaWeapons.xml）")
     assert_equal(len(recipes), 58, "常规武器配方数")
 
     deringer = weapons["MMT_RF_Gun_Deringer"]
@@ -5528,10 +5595,11 @@ def validate_weapons_conventional() -> None:
     assert_equal(child_text(deringer, "statBases/RangedWeapon_Cooldown"), "0.31", "Deringer 冷却")
 
     build = recipes["MMT_BuildHandGun"]
-    assert "MMT_Gun_Revolver" in weapons
-    assert_equal(child_text(build, "products/MMT_Gun_Revolver"), "1", "左轮产品")
-    if "<Gun_Revolver>" in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"):
-        fail("常规武器配方残留未加 MMT_ 前缀的 Gun_Revolver")
+    if "MMT_Gun_Revolver" in weapons:
+        fail("同名替换孪生 MMT_Gun_Revolver 不应再生成独立 def")
+    assert_equal(child_text(build, "products/Gun_Revolver"), "1", "左轮产品（同名替换后产物为原版 defName）")
+    if "MMT_Gun_Revolver" in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml"):
+        fail("常规武器配方残留孪生 defName MMT_Gun_Revolver")
     assert "MMT_PistolComponent" in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml")
     assert "Weapon_Parts" not in read_text("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml")
     print("weapons-conventional: OK")
@@ -5681,6 +5749,7 @@ SUITES = {
     "weapons-futuristic": validate_weapons_futuristic,
     "weapons-turrets": validate_weapons_turrets,
     "weapons-npc": validate_weapons_npc,
+    "weapons-vanilla-patch": validate_weapons_vanilla_patch,
     "weapons": validate_weapons,
     "all": validate_all,
 }

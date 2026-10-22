@@ -370,45 +370,6 @@
 		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_AssaultRifle</defName>
-		<label>M16突击步枪</label>
-		<description>M16是一支轻巧的5.56毫米口径步枪，具有通过导气管由高压气体直接推动枪机框操作启动的回转式枪机，能够以半自动或者全自动模式射击。可以设置3发短点射模式，射程佳，威力较低，射速较高。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/Rifles/M16</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>1450</MarketValue>
-			<Mass>3.5</Mass>
-			<RangedWeapon_Cooldown>0.44</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>RF4</li>
-			<li>AdvancedGun</li>
-			<li>IndustrialGunAdvanced</li>
-			<li>TierTwoRifle</li>
-			<li>AssaultRifle</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>5</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>45</range>
-				<soundCast>Shot_AssaultRifle</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-				<warmupTime>0.66</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_AdvRifleComponent>1</MMT_AdvRifleComponent>
-			<MMT_WeaponParts>5</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_AssaultShotgun</defName>
 		<label>AA-12自动霰弹枪</label>
 		<description>Auto Assault-12（AA-12）最初的设计且熟知的名称为Atchisson Assault Shotgun，是Maxwell Atchisson于1972年开发的一种霰弹枪。最突出的特点是其后座力很小。自专利被出售给Military Police Systems公司以来，目前的2005版本已经发展了18年。原型设计是后来几种武器的基础，包括USAS-12战斗霰弹枪。这种武器只有全自动的。然而，它发射速率为每分钟300发，允许它能用短暂扣动一次扳机的方式来发射一枚霰弹。它可由8枚装弹匣或32枚装弹鼓供弹。</description>
@@ -490,122 +451,6 @@
 			<MMT_ShotgunComponent>1</MMT_ShotgunComponent>
 			<MMT_WeaponParts>10</MMT_WeaponParts>
 			<MMT_Plastic>4</MMT_Plastic>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_Autopistol</defName>
-		<label>帕拉军工P14手枪</label>
-		<description>一种仿造的.45手枪，内部机制和主体框架比起原版略有改进。精准度较高，射程一般，射速和威力还行。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Pistols/ParaOrdnanceP1445</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Revolver</soundInteract>
-		<statBases>
-			<MarketValue>550</MarketValue>
-			<Mass>1.5</Mass>
-			<RangedWeapon_Cooldown>0.32</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>PT1</li>
-			<li>Gun</li>
-			<li>TierTwoPistol</li>
-		</weaponTags>
-		<weaponClasses>
-			<li>RangedLight</li>
-		</weaponClasses>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<defaultProjectile>MMT_Bullet_45ACP_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>28</range>
-				<soundCast>MMT_RF_ShotParaOrdnanceP1445</soundCast>
-				<soundCastTail>GunTail_Light</soundCastTail>
-				<warmupTime>0.35</warmupTime>
-			</li>
-		</verbs>
-		<tools />
-		<smeltProducts>
-			<MMT_PistolComponent>1</MMT_PistolComponent>
-			<MMT_WeaponParts>2</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_BoltActionRifle</defName>
-		<label>李-恩菲尔德步枪</label>
-		<description>一支古老的栓动步枪。射程较远，威力较好，但是射击速度慢。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/Carabines/LeeEnfield</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>750</MarketValue>
-			<Mass>4.2</Mass>
-			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
-			<WorkToMake>12000</WorkToMake>
-		</statBases>
-		<weaponTags>
-			<li>RF1</li>
-			<li>Gun</li>
-			<li>SniperRifle</li>
-			<li>TierOneRifle</li>
-			<li>TierOneSniper</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<defaultProjectile>MMT_Bullet_303British_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>50</range>
-				<soundCast>Shot_BoltActionRifle</soundCast>
-				<soundCastTail>GunTail_Heavy</soundCastTail>
-				<warmupTime>1</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_RifleComponent>1</MMT_RifleComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_ChainShotgun</defName>
-		<label>“打击者”霰弹枪</label>
-		<description>一种看起来不太靠谱的单发自动霰弹枪。射速和威力都让人比较满意，但是射程很短。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/Shotguns/Striker</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>900</MarketValue>
-			<Mass>4.5</Mass>
-			<RangedWeapon_Cooldown>0.8</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>ST2</li>
-			<li>Gun</li>
-			<li>TierTwoPistol</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>4</burstShotCount>
-				<defaultProjectile>MMT_Bullet_12Gauge_Buck</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>16</range>
-				<soundCast>MMT_RF_ShotAA12</soundCast>
-				<soundCastTail>GunTail_Heavy</soundCastTail>
-				<ticksBetweenBurstShots>16</ticksBetweenBurstShots>
-				<warmupTime>0.62</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_ShotgunComponent>1</MMT_ShotgunComponent>
-			<MMT_WeaponParts>6</MMT_WeaponParts>
-			<MMT_Plastic>3</MMT_Plastic>
 		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
@@ -818,95 +663,6 @@
 		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_HeavySMG</defName>
-		<label>M4幽灵冲锋枪</label>
-		<description>M4幽灵冲锋枪是一种可瞬时进入射击状态、火力密集的单兵战斗武器。射程较短，但是密集的火力能够弥补其他的不足。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/SMGs/SpectreM4</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>600</MarketValue>
-			<Mass>3.5</Mass>
-			<RangedWeapon_Cooldown>0.57</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>SMG2</li>
-			<li>Gun</li>
-			<li>TierTwoSMG</li>
-		</weaponTags>
-		<weaponClasses>
-			<li>RangedLight</li>
-		</weaponClasses>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>7</burstShotCount>
-				<defaultProjectile>MMT_Bullet_45ACP_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>28</range>
-				<soundCast>Shot_HeavySMG</soundCast>
-				<soundCastTail>GunTail_Light</soundCastTail>
-				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-				<warmupTime>0.45</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_SMGComponent>1</MMT_SMGComponent>
-			<MMT_WeaponParts>3</MMT_WeaponParts>
-			<MMT_Plastic>3</MMT_Plastic>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_IncendiaryLauncher</defName>
-		<label>T9“炎阳”燃烧弹发射器</label>
-		<description>发射燃料弹，点燃目标周围物体的远程发射器。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Launchers/IncendiaryLauncher</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<soundInteract>MMT_InteractPTUR</soundInteract>
-		<statBases>
-			<MarketValue>2200</MarketValue>
-			<Mass>7</Mass>
-			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
-			<WorkToMake>39500</WorkToMake>
-		</statBases>
-		<weaponTags>
-			<li>RKT1</li>
-			<li>Glaunchers</li>
-			<li>EliteGun</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<ai_AvoidFriendlyFireRadius>4</ai_AvoidFriendlyFireRadius>
-				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
-				<burstShotCount>1</burstShotCount>
-				<defaultProjectile>MMT_Bullet_30x64mmFuel_Incendiary</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<minRange>4</minRange>
-				<muzzleFlashScale>14</muzzleFlashScale>
-				<onlyManualCast>true</onlyManualCast>
-				<range>52</range>
-				<soundCast>Shot_IncendiaryLauncher</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<warmupTime>1.3</warmupTime>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
-		<tools />
-		<smeltProducts>
-			<MMT_HeavyComponent>1</MMT_HeavyComponent>
-			<MMT_WeaponParts>5</MMT_WeaponParts>
-			<MMT_Plastic>4</MMT_Plastic>
-		</smeltProducts>
-		<generateCommonality>0.7</generateCommonality>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_LAW</defName>
 		<label>M72R反坦克火箭筒</label>
 		<description>古代单发反坦克火箭筒的可装填版本，使用特殊的反装甲火箭弹。</description>
@@ -973,47 +729,6 @@
 			<MMT_Plastic>6</MMT_Plastic>
 		</smeltProducts>
 		<generateCommonality>0.7</generateCommonality>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_LMG</defName>
-		<label>L-15轻机枪</label>
-		<description>一种轻型机枪。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/Heavy/L15</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>1900</MarketValue>
-			<Mass>8</Mass>
-			<RangedWeapon_Cooldown>0.45</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>MG2</li>
-			<li>GunHeavy</li>
-			<li>MachineGun</li>
-			<li>BrotherhoodHeavy</li>
-			<li>SectarianHeavy</li>
-			<li>SyndicateMachineGun</li>
-			<li>OrionHeavy</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>16</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>50</range>
-				<soundCast>Shot_Minigun</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-				<warmupTime>1.6</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_HeavyComponent>1</MMT_HeavyComponent>
-			<MMT_WeaponParts>7</MMT_WeaponParts>
-		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_M37A2_USCM</defName>
@@ -1680,46 +1395,6 @@
 		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_MachinePistol</defName>
-		<label>乌兹冲锋枪</label>
-		<description>大名鼎鼎的乌兹冲锋枪。有效射程和威力都比较低，但是开火速率极高，很容易就能瞄准开火。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/SMGs/Uzi</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>550</MarketValue>
-			<Mass>4</Mass>
-			<RangedWeapon_Cooldown>0.52</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>SMG2</li>
-			<li>Gun</li>
-			<li>TierOneSMG</li>
-		</weaponTags>
-		<weaponClasses>
-			<li>RangedLight</li>
-		</weaponClasses>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>8</burstShotCount>
-				<defaultProjectile>MMT_Bullet_9x19mmPara_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>32</range>
-				<soundCast>Shot_MachinePistol</soundCast>
-				<soundCastTail>GunTail_Light</soundCastTail>
-				<ticksBetweenBurstShots>6</ticksBetweenBurstShots>
-				<warmupTime>0.6</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_SMGComponent>1</MMT_SMGComponent>
-			<MMT_WeaponParts>2</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_MarineSturmRifle</defName>
 		<label>TAR-21突击步枪</label>
 		<description>TAR-21是一款采用5.56x45mm NATO弹药的以色列无托结构突击步枪。TAR-21的含义是“Tavor Assault Rifle - 21st Century”（中文翻译为“塔沃尔21世纪突击步枪”）。它是吉瓦提步兵旅（2006年8月起）、戈兰尼步兵旅（2008年8月起）和纳哈尔步兵旅（2010年）的制式武器。采用了北约制式步枪子弹（5.56x45 NATO）和标准的STANAG弹匣（M16的弹匣），而T.A.R. 21更可以安装M203 PI。它的快慢机在握把的上方，可以调成半自动射击、三发点射模式以及全自动射击，大拇指可轻松操作。</description>
@@ -1867,89 +1542,6 @@
 		<generateCommonality>0.7</generateCommonality>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_Minigun</defName>
-		<label>XM214速射机枪</label>
-		<description>一种拥有极致射速的多管武器系统。属于机械族类型装备。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/Heavy/XM214Microgun</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<drawSize>(1.35,1.35)</drawSize>
-		</graphicData>
-		<soundInteract>MMT_InteractPTUR</soundInteract>
-		<statBases>
-			<MarketValue>3100</MarketValue>
-			<Mass>22</Mass>
-			<RangedWeapon_Cooldown>1.2</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>MG3</li>
-			<li>AdvancedGun</li>
-			<li>GunHeavy</li>
-			<li>TierTwoAdvanced</li>
-			<li>Microgun</li>
-			<li>Minigun</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<burstShotCount>100</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>50</range>
-				<soundCast>Shot_Minigun</soundCast>
-				<soundCastTail>GunTail_Medium</soundCastTail>
-				<ticksBetweenBurstShots>1</ticksBetweenBurstShots>
-				<warmupTime>2.5</warmupTime>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_HeavyComponent>1</MMT_HeavyComponent>
-			<MMT_WeaponParts>10</MMT_WeaponParts>
-			<MMT_Plastic>5</MMT_Plastic>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_PumpShotgun</defName>
-		<label>雷明顿870霰弹枪</label>
-		<description>Remington Model 870是一款由雷明顿武器公司生产的、美国历史上销售量最高的泵动式霰弹枪，它被公众广泛应用于体育射击、狩猎和自卫，也被军警等执法单位部门所选用。\n\nM870由美国雷明顿兵工厂于50年代初研制，因其结构紧凑、性能可靠、价格合理，很快成为美国人喜爱的流行武器，同时也被美国军警采用。从50年代初至今，它一直是美国军警界的专用装备，美国边防警卫队尤其钟爱此枪。\n\n[HRT全称为Hostage Rescue Team，即人质解救小组，是FBI SWAT战术小组中最高级别的特别行动单位，其干员完全由来自“三角洲（Delta Force）”和“海豹（SEAL）”等美军特种部队中表现优异的士兵培训而成。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Shotguns/Remington870</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Shotgun</soundInteract>
-		<statBases>
-			<MarketValue>700</MarketValue>
-			<Mass>3.5</Mass>
-			<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>ST1</li>
-			<li>Gun</li>
-			<li>TierOnePistol</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<defaultProjectile>MMT_Bullet_12Gauge_Buck</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>16</range>
-				<soundCast>Shot_Shotgun</soundCast>
-				<soundCastTail>GunTail_Heavy</soundCastTail>
-				<warmupTime>0.65</warmupTime>
-			</li>
-		</verbs>
-		<tools />
-		<smeltProducts>
-			<MMT_ShotgunComponent>1</MMT_ShotgunComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_RPG</defName>
 		<label>RPG-7火箭筒</label>
 		<description>火箭助推式榴弹发射器。</description>
@@ -2016,46 +1608,6 @@
 			<MMT_Plastic>5</MMT_Plastic>
 		</smeltProducts>
 		<generateCommonality>0.7</generateCommonality>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_Revolver</defName>
-		<label>柯尔特M1911</label>
-		<description>古老构造的自动手枪。威力和射程一般，但射击迅速。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Pistols/ColtM1911</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Revolver</soundInteract>
-		<statBases>
-			<MarketValue>200</MarketValue>
-			<Mass>1.25</Mass>
-			<RangedWeapon_Cooldown>0.26</RangedWeapon_Cooldown>
-		</statBases>
-		<weaponTags>
-			<li>PT1</li>
-			<li>Gun</li>
-			<li>TierOnePistol</li>
-		</weaponTags>
-		<weaponClasses>
-			<li>RangedLight</li>
-		</weaponClasses>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<defaultProjectile>MMT_Bullet_45ACP_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>28</range>
-				<soundCast>MMT_ShotPistol</soundCast>
-				<soundCastTail>GunTail_Light</soundCastTail>
-				<warmupTime>0.27</warmupTime>
-			</li>
-		</verbs>
-		<tools />
-		<smeltProducts>
-			<MMT_PistolComponent>1</MMT_PistolComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Gun_SCAR_H</defName>
@@ -2217,43 +1769,6 @@
 		<smeltProducts>
 			<MMT_AdvRifleComponent>1</MMT_AdvRifleComponent>
 			<MMT_WeaponParts>5</MMT_WeaponParts>
-		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Gun_SniperRifle</defName>
-		<label>M24狙击步枪</label>
-		<description>全称为M24狙击武器系统（M24 Sniper Weapon System），发射7.62x51mm北约标准弹。M24由著名的雷明顿700 BDL型步枪衍生而来，是继承了雷明顿700系列步枪闭锁可靠、枪托与机匣接合紧密、精度高、线条流畅、外形优雅等一贯优点的军用版衍生型，于1988年被美国陆军正式采用。\n\nM24之所以被称为"武器系统"，因为它不仅仅是一把步枪，还包括M3望远式瞄准镜，哈里斯S型可拆卸两脚架等其他配件，因此又被誉作“美国现役狙击之魂”。\n雷明顿700系列由美国雷明顿（Remington，或译作雷明登）武器公司于1962年推出，R700P为军用和警用版本，其中美国陆军版称为M24，美海军陆战队版称为M40，两者皆为重枪管。</description>
-		<graphicData DeepReplace="true">
-			<texPath>Things/Weapons/SniperRifles/M24</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<MarketValue>1650</MarketValue>
-			<Mass>6.5</Mass>
-			<RangedWeapon_Cooldown>1.4</RangedWeapon_Cooldown>
-			<WorkToMake>30000</WorkToMake>
-		</statBases>
-		<weaponTags>
-			<li>SNIP1</li>
-			<li>SniperRifle</li>
-			<li>TierTwoSniper</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_Shoot</verbClass>
-				<defaultProjectile>MMT_Bullet_762x51mmNATO_FMJ</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<muzzleFlashScale>9</muzzleFlashScale>
-				<range>65</range>
-				<soundCast>Shot_SniperRifle</soundCast>
-				<soundCastTail>GunTail_Heavy</soundCastTail>
-				<warmupTime>2.1</warmupTime>
-			</li>
-		</verbs>
-		<smeltProducts>
-			<MMT_SniperComponent>1</MMT_SniperComponent>
-			<MMT_WeaponParts>3</MMT_WeaponParts>
-			<MMT_Plastic>4</MMT_Plastic>
 		</smeltProducts>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">

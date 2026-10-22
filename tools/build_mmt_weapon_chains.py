@@ -202,6 +202,37 @@ def main() -> int:
         for node in parse(path).findall("ThingDef"):
             if node.findtext("defName"):
                 weapons[node.findtext("defName")] = node
+    # 同名替换的原版武器：内容经 patch 注入原版 def，按注入节点合成虚拟 def 以正常展示
+    synths: dict[str, ET.Element] = {}
+    vanilla_patch = ROOT / "1.7/Patches/MMT_Patch_VanillaWeapons.xml"
+    if vanilla_patch.is_file():
+        for op in parse(vanilla_patch).findall("Operation"):
+            synth = ET.Element("ThingDef")
+            name: str | None = None
+            operations = op.find("operations")
+            if operations is None:
+                continue
+            for li in operations:
+                xpath = li.findtext("xpath") or ""
+                if 'defName="' in xpath:
+                    name = xpath.split('defName="')[1].split('"')[0]
+                value = li.find("value")
+                if value is not None and len(value):
+                    synth.append(value[0])
+            if name:
+                synths[name] = synth
+                weapons[name] = synth
+                synth_label = synth.findtext("label")
+                if synth_label:
+                    labels[name] = synth_label
+
+    def synth_section(name: str) -> str:
+        """同名替换武器归入原孪生批次段落：电荷系->未来，枪械->常规，其余->冷兵器弓弩与手雷。"""
+        if name.startswith("Gun_Charge"):
+            return "未来与远古武器"
+        if name.startswith("Gun_"):
+            return "常规枪械"
+        return "冷兵器弓弩与手雷"
     buildings = {
         node.findtext("defName"): node
         for node in parse(DEFS / "ThingDefs_Buildings/MMT_Buildings_Turrets.xml").findall("ThingDef")
@@ -246,6 +277,8 @@ def main() -> int:
         add(f"## {title}")
         add("")
         batch = {n.findtext("defName") for n in parse(DEFS / weapon_rel).findall("ThingDef")}
+        # 同名替换的原版武器归入本段（内容在 patch 中，def 文件里已不含孪生）
+        batch |= {name for name in synths if synth_section(name) == title}
         batch_recipes = {r.findtext("defName") for r in parse(DEFS / recipe_rel).findall("RecipeDef")}
         made: set[str] = set()
         for recipe, product in recipes_producing(lambda tag: tag in batch):

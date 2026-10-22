@@ -595,7 +595,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_AssaultRifle>1</MMT_Gun_AssaultRifle>
+			<Gun_AssaultRifle>1</Gun_AssaultRifle>
 		</products>
 		<recipeUsers>
 			<li>MMT_AdvWeaponCraftingTable</li>
@@ -1222,7 +1222,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_BoltActionRifle>1</MMT_Gun_BoltActionRifle>
+			<Gun_BoltActionRifle>1</Gun_BoltActionRifle>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -1301,7 +1301,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_Revolver>1</MMT_Gun_Revolver>
+			<Gun_Revolver>1</Gun_Revolver>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -1476,7 +1476,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_HeavySMG>1</MMT_Gun_HeavySMG>
+			<Gun_HeavySMG>1</Gun_HeavySMG>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -1651,7 +1651,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_IncendiaryLauncher>1</MMT_Gun_IncendiaryLauncher>
+			<Gun_IncendiaryLauncher>1</Gun_IncendiaryLauncher>
 		</products>
 		<recipeUsers>
 			<li>MMT_AdvWeaponCraftingTable</li>
@@ -1807,7 +1807,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_LMG>1</MMT_Gun_LMG>
+			<Gun_LMG>1</Gun_LMG>
 		</products>
 		<recipeUsers>
 			<li>MMT_AdvWeaponCraftingTable</li>
@@ -2898,7 +2898,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_Minigun>1</MMT_Gun_Minigun>
+			<Gun_Minigun>1</Gun_Minigun>
 		</products>
 		<recipeUsers>
 			<li>MMT_AdvWeaponCraftingTable</li>
@@ -2976,7 +2976,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_MachinePistol>1</MMT_Gun_MachinePistol>
+			<Gun_MachinePistol>1</Gun_MachinePistol>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -3064,7 +3064,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_Autopistol>1</MMT_Gun_Autopistol>
+			<Gun_Autopistol>1</Gun_Autopistol>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -3143,7 +3143,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_PumpShotgun>1</MMT_Gun_PumpShotgun>
+			<Gun_PumpShotgun>1</Gun_PumpShotgun>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -3562,7 +3562,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_SniperRifle>1</MMT_Gun_SniperRifle>
+			<Gun_SniperRifle>1</Gun_SniperRifle>
 		</products>
 		<recipeUsers>
 			<li>MMT_WeaponCraftingTable</li>
@@ -3738,7 +3738,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_ChainShotgun>1</MMT_Gun_ChainShotgun>
+			<Gun_ChainShotgun>1</Gun_ChainShotgun>
 		</products>
 		<recipeUsers>
 			<li>MMT_AdvWeaponCraftingTable</li>

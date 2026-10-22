@@ -233,7 +233,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_ChargeRifle>1</MMT_Gun_ChargeRifle>
+			<Gun_ChargeRifle>1</Gun_ChargeRifle>
 		</products>
 		<recipeUsers>
 			<li>MMT_MechWeaponTable</li>
@@ -461,7 +461,7 @@
 			</categories>
 		</fixedIngredientFilter>
 		<products>
-			<MMT_Gun_Mantis>1</MMT_Gun_Mantis>
+			<Gun_ChargeLance>1</Gun_ChargeLance>
 		</products>
 		<recipeUsers>
 			<li>MMT_MechWeaponTable</li>

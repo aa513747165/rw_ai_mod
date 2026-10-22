@@ -596,6 +596,26 @@ CLONE_BATCH = {
     "Gun_ChargeRifle": "futuristic",
 }
 
+# --- 原版武器同名替换（参照 HSK 同名改造方案） ---
+# vanilla_replacements: 原版 defName -> MMT 孪生 defName。
+# 孪生 def 不再生成独立 ThingDef，其内容由 vanillapatch 批次经 XML patch 注入原版 def；
+# 配方产物改写为原版 defName，派系/商人/任务对原版 defName 的引用自动转向 MMT 版本。
+def vanilla_twin_names(mapping: dict) -> set[str]:
+    return set(mapping.get("vanilla_replacements", {}).values())
+
+
+def vanilla_product_names(mapping: dict) -> dict[str, str]:
+    """MMT 孪生 defName -> 原版 defName（配方产物改写用）。"""
+    return {twin: vanilla for vanilla, twin in mapping.get("vanilla_replacements", {}).items()}
+
+
+# patch 注入时保留原版值的节点：派系 pawnKind 按 weaponTags 选武器，替换会破坏原版刷装表
+PATCH_KEEP_VANILLA_NODES = {"weaponTags", "weaponClasses", "thingCategories"}
+# 孪生 def 缺少而原版 def 自有的节点：从原版 def 移除（原版自动配方/成本由 MMT 武器链配方接管）
+PATCH_REMOVE_IF_TWIN_LACKS = ("recipeMaker", "costList", "costStuffCount", "stuffCategories")
+# 换父到 MMT 基类后补齐 tradeTags（原版该节点在基类上，不换父时由原版基类提供）
+PATCH_TRADE_TAGS = {"MMT_BaseGun": "WeaponRanged", "MMT_BaseMeleeWeapon": "WeaponMelee"}
+
 # 原版可识别的武器 statBases 白名单；CE 精度系字段（SightsEfficiency 等）按 spec 丢弃
 WEAPON_STAT_WHITELIST = {
     "MarketValue", "Mass", "MaxHitPoints", "Flammability", "DeteriorationRate",
@@ -1044,9 +1064,11 @@ def convert_recipe(source_name: str, index: SourceIndex, mapping: dict) -> ET.El
         out.append(converted)
     products = element.find("products")
     if products is not None:
+        vanilla_products = vanilla_product_names(mapping)
         prod_out = ET.SubElement(out, "products")
         for item in products:
-            ET.SubElement(prod_out, mmt_name(item.tag)).text = item.text
+            # 同名替换的武器：产物改写为原版 defName（孪生 def 不再生成）
+            ET.SubElement(prod_out, vanilla_products.get(mmt_name(item.tag), mmt_name(item.tag))).text = item.text
     users = element.find("recipeUsers")
     if users is not None:
         users_out = ET.SubElement(out, "recipeUsers")
@@ -1087,18 +1109,26 @@ def build_weapon_batch(batch: str, index: SourceIndex, mapping: dict, only: set[
     """生成一个武器批次的 ThingDef 与 RecipeDef 文件。"""
     weapons: list[ET.Element] = []
     included_products: set[str] = set()
+    twins = vanilla_twin_names(mapping)
     for name, element in batch_weapon_elements(mapping, batch):
         if only and name not in only:
             continue
         if is_projectile_def(index, element):
             continue
-        weapons.append(convert_weapon(name, batch, index, mapping))
+        converted = convert_weapon(name, batch, index, mapping)
         included_products.add(name)
+        # 同名替换的孪生 def 不生成独立 ThingDef（内容由 vanillapatch 注入原版 def）
+        if converted.findtext("defName") in twins:
+            continue
+        weapons.append(converted)
     for clone_name, clone_batch in CLONE_BATCH.items():
         if clone_batch != batch or (only and clone_name not in only):
             continue
-        weapons.append(convert_weapon(clone_name, batch, index, mapping))
+        converted = convert_weapon(clone_name, batch, index, mapping)
         included_products.add(clone_name)
+        if converted.findtext("defName") in twins:
+            continue
+        weapons.append(converted)
     weapons.sort(key=lambda node: node.findtext("defName") or "")
     recipes: list[ET.Element] = []
     for recipe_name, element in sorted(index.recipe_defs.items()):
@@ -1566,6 +1596,103 @@ def build_npc(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, st
     }
 
 
+def serialize_patch(root: ET.Element, comment: str) -> str:
+    """确定性序列化 Patch 根节点：两空格缩进，与手工 patch 文件风格一致。"""
+    if comment:
+        root.insert(0, ET.Comment(comment))
+    ET.indent(root, space="  ")
+    return '<?xml version="1.0" encoding="utf-8"?>\n' + ET.tostring(root, encoding="unicode") + "\n"
+
+
+def load_vanilla_weapon_defs(mapping: dict) -> dict[str, ET.Element]:
+    """加载原版 Core 武器 ThingDef，作为同名替换 patch 目标侧的结构参照。"""
+    root = Path(mapping["vanilla_root"]) / "Defs/ThingDefs_Misc/Weapons"
+    return collect_defs(root, "*.xml", "ThingDef")
+
+
+def twin_source_and_batch(mapping: dict) -> dict[str, tuple[str, str]]:
+    """MMT 孪生 defName -> (HSK 源 defName, 所属批次)。"""
+    result: dict[str, tuple[str, str]] = {}
+    for batch in mapping["batches"]:
+        for name in weapon_names_for_batch(mapping, batch):
+            result.setdefault(mmt_name(name), (name, batch))
+    return result
+
+
+def strip_patch_attributes(node: ET.Element) -> None:
+    """清除 HSK patch 遗留属性（DeepReplace 等），标准 PatchOperation 不识别这些属性。"""
+    for el in node.iter():
+        el.attrib.clear()
+
+
+def build_vanilla_patch(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    """生成原版武器同名替换 patch：保留原版 defName，注入 MMT 孪生内容。
+
+    每把武器一个 PatchOperationSequence：换父到 MMT 基类（脱离原版基类的 recipeMaker），
+    替换/追加孪生节点（weaponTags/weaponClasses/thingCategories 保留原版值以免破坏派系刷装表），
+    移除孪生缺少的原版自有节点（recipeMaker/costList/材料成本由 MMT 武器链接管）。
+    """
+    replacements = mapping.get("vanilla_replacements", {})
+    vanilla_defs = load_vanilla_weapon_defs(mapping)
+    sources = twin_source_and_batch(mapping)
+    root = ET.Element("Patch")
+    for vanilla_name in sorted(replacements):
+        if only and vanilla_name not in only:
+            continue
+        twin = replacements[vanilla_name]
+        if vanilla_name not in vanilla_defs:
+            raise KeyError(f"原版武器不存在: {vanilla_name}")
+        if twin not in sources:
+            raise KeyError(f"孪生武器无生成源: {twin}")
+        source_name, batch = sources[twin]
+        converted = convert_weapon(source_name, batch, index, mapping)
+        vanilla = vanilla_defs[vanilla_name]
+        base_xpath = f'Defs/ThingDef[defName="{vanilla_name}"]'
+        root.append(ET.Comment(f" {vanilla_name} ← {twin}（{converted.findtext('label')}） "))
+        seq = ET.SubElement(root, "Operation", {"Class": "PatchOperationSequence"})
+        ops = ET.SubElement(seq, "operations")
+        # 节点流转：换父到 MMT 基类
+        li = ET.SubElement(ops, "li", {"Class": "PatchOperationAttributeSet"})
+        ET.SubElement(li, "xpath").text = base_xpath
+        ET.SubElement(li, "attribute").text = "ParentName"
+        ET.SubElement(li, "value").text = converted.get("ParentName")
+        for child in converted:
+            tag = child.tag
+            if not isinstance(tag, str) or tag == "defName" or tag in PATCH_KEEP_VANILLA_NODES:
+                continue
+            node = copy.deepcopy(child)
+            strip_patch_attributes(node)
+            if vanilla.find(tag) is not None:
+                op_class, xpath = "PatchOperationReplace", f"{base_xpath}/{tag}"
+            else:
+                op_class, xpath = "PatchOperationAdd", base_xpath
+            li = ET.SubElement(ops, "li", {"Class": op_class})
+            ET.SubElement(li, "xpath").text = xpath
+            value = ET.SubElement(li, "value")
+            value.append(node)
+        # 补齐 tradeTags：原版该节点在武器基类上，换父后丢失会影响商人生成
+        trade_tag = PATCH_TRADE_TAGS.get(converted.get("ParentName") or "")
+        if trade_tag and vanilla.find("tradeTags") is None:
+            li = ET.SubElement(ops, "li", {"Class": "PatchOperationAdd"})
+            ET.SubElement(li, "xpath").text = base_xpath
+            value = ET.SubElement(li, "value")
+            tags = ET.SubElement(value, "tradeTags")
+            ET.SubElement(tags, "li").text = trade_tag
+        # 流程结束：移除原版自有但孪生没有的节点
+        for tag in PATCH_REMOVE_IF_TWIN_LACKS:
+            if vanilla.find(tag) is not None and converted.find(tag) is None:
+                li = ET.SubElement(ops, "li", {"Class": "PatchOperationRemove"})
+                ET.SubElement(li, "xpath").text = f"{base_xpath}/{tag}"
+    return {
+        # 生成目标在 1.7/Patches 而非 Defs（DEFS_DIR/../Patches 归一化后落位正确）
+        "../Patches/MMT_Patch_VanillaWeapons.xml": serialize_patch(
+            root,
+            " 同名替换原版武器（HSK 方案）：保留原版 defName 与 weaponTags/weaponClasses/thingCategories，"
+            "内容由对应 MMT 孪生武器注入，原配方渠道由 MMT 武器链接管。由 build_mmt_weapons_from_hsk.py 的 vanillapatch 批次生成。 ",
+        )
+    }
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
@@ -1574,12 +1701,13 @@ BATCH_BUILDERS = {
     "futuristic": build_futuristic,
     "turrets": build_turrets,
     "npc": build_npc,
+    "vanillapatch": build_vanilla_patch,
 }
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--batch", required=True, choices=["core", "research", "conventional", "archaic", "futuristic", "turrets", "npc", "all"])
+    parser.add_argument("--batch", required=True, choices=["core", "research", "conventional", "archaic", "futuristic", "turrets", "npc", "vanillapatch", "all"])
     parser.add_argument("--only", action="append", default=[], help="只处理指定 defName（可重复），用于最小样本验证")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--write", action="store_true")
