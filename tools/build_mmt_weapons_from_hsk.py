@@ -1412,6 +1412,25 @@ def convert_ammo_recipe(source_name: str, ammo_set: str, index: SourceIndex, map
     return out
 
 
+def build_npc(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    """NPC/特殊武器批次：只生成 Def，不生成配方。"""
+    weapons: list[ET.Element] = []
+    for name, element in batch_weapon_elements(mapping, "npc"):
+        if only and name not in only:
+            continue
+        if is_projectile_def(index, element):
+            continue
+        weapons.append(convert_weapon(name, "npc", index, mapping))
+    weapons.sort(key=lambda node: node.findtext("defName") or "")
+    for node in weapons:
+        tex = node.findtext("graphicData/texPath")
+        if tex:
+            copy_texture_file(mapping, index, tex)
+    return {
+        "ThingDefs_Weapons/MMT_Weapons_NPC.xml": serialize_defs(weapons, "MMT NPC/特殊武器：不提供制造配方"),
+    }
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
@@ -1419,6 +1438,7 @@ BATCH_BUILDERS = {
     "archaic": build_archaic,
     "futuristic": build_futuristic,
     "turrets": build_turrets,
+    "npc": build_npc,
 }
 
 

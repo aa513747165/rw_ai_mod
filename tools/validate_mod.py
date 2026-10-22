@@ -5292,6 +5292,15 @@ TURRET_AMMO_PROJECTILES = {
 }
 
 
+def validate_weapons_npc() -> None:
+    weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml"))
+    assert_equal(len(weapons), 13, "NPC/特殊武器数（Bullet_FireExtinguisher 在 MMT_Projectiles.xml）")
+    assert "MMT_Gun_mechlaser" in weapons
+    assert "MMT_Gun_SawGun" in weapons
+    assert "CombatExtended." not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml")
+    print("weapons-npc: OK")
+
+
 def validate_weapons_turrets() -> None:
     guns = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_TurretGuns.xml"))
     buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml"))
@@ -5509,6 +5518,7 @@ SUITES = {
     "weapons-archaic": validate_weapons_archaic,
     "weapons-futuristic": validate_weapons_futuristic,
     "weapons-turrets": validate_weapons_turrets,
+    "weapons-npc": validate_weapons_npc,
     "all": validate_all,
 }
 
