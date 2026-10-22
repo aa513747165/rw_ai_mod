@@ -1,0 +1,122 @@
+{
+  "thing_prefix": "MMT_",
+  "source_root": "Hardcore-SK/Mods/Core_SK",
+  "combat_extended_root": "Hardcore-SK/Mods/CombatExtended",
+  "translation_root": "Hardcore-SK/1.6/Languages/ChineseSimplified (简体中文)/DefInjected",
+  "patch_roots": [
+    "Hardcore-SK/Mods/Core_SK_CoreModule/Patches",
+    "Hardcore-SK/Mods/Core_SK_DLCModule"
+  ],
+  "batches": {
+    "conventional": ["Weapons_Pistols.xml", "Weapons_SMGs.xml", "Weapons_Carabines.xml", "Weapons_Rifles.xml", "Weapons_Shotguns.xml", "Weapons_SniperRifles.xml", "Weapons_SniperRiflesAdvanced.xml", "Weapons_Heavy.xml", "Weapons_Launchers.xml", "Weapons_Flamethrower.xml"],
+    "archaic": ["Weapons_Bows.xml", "Weapons_Crossbows.xml", "Weapons_Melee_Neolithic.xml", "Weapons_Melee_Medieval.xml", "Weapons_Melee_Midworld.xml", "Weapons_Melee_Hightech.xml", "Weapons_Grenades.xml"],
+    "futuristic": ["Weapons_Archotech.xml", "Weapons_Blasters.xml", "Weapons_Charged.xml", "Weapons_Lasers.xml", "Weapons_Plasma.xml"],
+    "turrets": ["Weapons_Turrets_Heavy.xml", "Weapons_Turrets_Launchers.xml", "Weapons_Turrets_Machineguns.xml", "Weapons_Turrets_Sentry.xml"],
+    "npc": ["Weapons_Mechanoid.xml", "Weapons_Ogre.xml", "Weapons_RangedSpecial.xml", "Weapons_Special.xml"]
+  },
+  "excluded_recipes": [
+    "DeconstructPersonalShield",
+    "MakeWeapon_Parts", "MakePistol_Component", "MakeSMG_Component", "MakeShotgun_Component",
+    "MakeRifle_Component", "MakeAdvRifle_Component", "MakeSniper_Component", "MakeAdvSniper_Component",
+    "MakeHeavy_Component", "MakeCannon_Component", "MakeLauncher_Component", "MakeCharged_Component",
+    "MakeLaser_Component", "MakePlasma_Component"
+  ],
+  "recipe_product_clones": {
+    "patch_replace": [
+      "Gun_BoltActionRifle", "Gun_ChargeRifle", "Weapon_GrenadeMolotov", "Weapon_GrenadeFrag",
+      "Weapon_GrenadeTox", "Weapon_GrenadeEMP", "Gun_LMG", "Gun_Minigun",
+      "Gun_IncendiaryLauncher", "Gun_Revolver", "Gun_Autopistol", "Gun_AssaultRifle",
+      "Gun_PumpShotgun", "Gun_ChainShotgun", "Gun_MachinePistol", "Gun_HeavySMG", "Gun_SniperRifle"
+    ],
+    "combat_extended_defs": [
+      "CE_Weapon_GrenadeStickBomb", "CE_Weapon_GrenadeFirefoam", "CE_Weapon_GrenadeFlashbang",
+      "CE_Weapon_GrenadeSmoke", "CE_FlareGun"
+    ]
+  },
+  "workbenches": {
+    "WeaponCraftingWorkTable": "MMT_WeaponCraftingTable",
+    "AdvWeaponCraftingWorkTable": "MMT_AdvWeaponCraftingTable",
+    "MechWeaponCraftingWorkTable": "MMT_MechWeaponTable",
+    "HeavyArmsBench": "MMT_AdvWeaponCraftingTable",
+    "TableHeavyAmmunition": "MMT_AmmoBench"
+  },
+  "ingredient_defs": {
+    "Weapon_Parts": "MMT_WeaponParts",
+    "Pistol_Component": "MMT_PistolComponent",
+    "SMG_Component": "MMT_SMGComponent",
+    "Shotgun_Component": "MMT_ShotgunComponent",
+    "Rifle_Component": "MMT_RifleComponent",
+    "AdvRifle_Component": "MMT_AdvRifleComponent",
+    "Sniper_Component": "MMT_SniperComponent",
+    "AdvSniper_Component": "MMT_AdvSniperComponent",
+    "Heavy_Component": "MMT_HeavyComponent",
+    "Cannon_Component": "MMT_CannonComponent",
+    "Launcher_Component": "MMT_LauncherComponent",
+    "Charged_Component": "MMT_ChargedComponent",
+    "Laser_Component": "MMT_LaserComponent",
+    "Plasma_Component": "MMT_PlasmaComponent",
+    "Plastic": "MMT_Plastic",
+    "Mechanism": "MMT_Mechanism",
+    "ElectronicComponents": "MMT_ElectronicParts",
+    "Electronics": "MMT_IntegratedCircuit",
+    "Microchips": "MMT_Microchip"
+  },
+  "ingredient_categories": {
+    "SLDBar": "MMT_SLDBar",
+    "USLDBar": "MMT_USLDBar",
+    "HCMBar": "MMT_HCMBar",
+    "Metallic": "Metallic",
+    "Leathers": "Leathers",
+    "Woody": "Woody"
+  },
+  "sound_fallbacks": {
+    "Shot_Tavor": "Shot_AssaultRifle",
+    "FlameThrower": "Shot_MiniFlameblaster"
+  },
+  "research": {
+    "Melee_C1": "LongBlades",
+    "Melee_C2": "MMT_MeleeAdvanced",
+    "Melee_D1": "MMT_MeleeAdvanced",
+    "Melee_E1": "MMT_MeleeUltra",
+    "Melee_Archotech": "MMT_ArchotechWeapons",
+    "Bow_A1": "MMT_BowsBasic",
+    "Bow_B2": "Greatbow",
+    "Bow_C1": "Machining",
+    "Bow_Archotech": "MMT_ArchotechWeapons",
+    "Pistols_C2": "Gunsmithing",
+    "SMG_C2": "BlowbackOperation",
+    "SMG_Archotech": "MMT_ArchotechWeapons",
+    "Rifles_C1": "GasOperation",
+    "Sniper_rifles_C1": "PrecisionRifling",
+    "Grenade_C1": "MMT_GrenadesBasic",
+    "Grenade_C2": "MMT_GrenadesAdvanced",
+    "IED_C1": "MMT_GrenadesAdvanced",
+    "Range_C2": "MMT_GunsAdvanced",
+    "Shotgun_C2": "MMT_GunsAdvanced",
+    "Rifles_C2": "MMT_RiflesAdvanced",
+    "Rifles_C3": "MMT_RiflesMaster",
+    "Heavy_C3": "MultibarrelWeapons",
+    "Grenade_launchers_C1": "MMT_GrenadeLaunchers",
+    "Grenade_launchers_C2": "MMT_GrenadeLaunchers",
+    "Rockets_C1": "MMT_Rocketry1",
+    "Sniper_rifles_D1": "MMT_SnipersAdvanced",
+    "Blaster_weapons_Archotech": "MMT_ArchotechWeapons",
+    "Laser_weapons_D": "MMT_DirectedEnergyWeapons1",
+    "Plasma_weapons_D": "MMT_DirectedEnergyWeapons1",
+    "Charge_weapons_D": "MMT_DirectedEnergyWeapons1",
+    "Laser_weapons_E": "MMT_DirectedEnergyWeapons2",
+    "Plasma_weapons_E": "MMT_DirectedEnergyWeapons2",
+    "Charge_weapons_E": "MMT_DirectedEnergyWeapons2",
+    "Ballista_B1": "MMT_SiegeWeapons",
+    "Turrets_31": "MMT_Turrets1",
+    "Heavy_turrets_C2": "MMT_HeavyTurrets2",
+    "Heavy_turrets_C3": "MMT_HeavyTurrets3",
+    "Artillery_C2": "MMT_Artillery2",
+    "Autoturrets_D2": "MMT_Autoturrets2",
+    "Autoturrets_D3": "MMT_Autoturrets3",
+    "Autoturrets_E1": "MMT_Autoturrets4",
+    "Rockets_C2": "MMT_Rocketry2",
+    "Rockets_D1": "MMT_Rocketry3",
+    "Rockets_D2": "MMT_Rocketry3"
+  }
+}

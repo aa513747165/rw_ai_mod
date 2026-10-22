@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -5243,6 +5244,50 @@ def validate_stone_construction() -> None:
     print("stone-construction: OK")
 
 
+WEAPON_MAPPING_JSON = "tools/data/mmt_weapon_mapping.json"
+WEAPON_GENERATOR_PY = "tools/build_mmt_weapons_from_hsk.py"
+WEAPON_BATCH_FILES = {
+    "conventional": [
+        "Weapons_Pistols.xml", "Weapons_SMGs.xml", "Weapons_Carabines.xml",
+        "Weapons_Rifles.xml", "Weapons_Shotguns.xml", "Weapons_SniperRifles.xml",
+        "Weapons_SniperRiflesAdvanced.xml", "Weapons_Heavy.xml",
+        "Weapons_Launchers.xml", "Weapons_Flamethrower.xml",
+    ],
+    "archaic": [
+        "Weapons_Bows.xml", "Weapons_Crossbows.xml",
+        "Weapons_Melee_Neolithic.xml", "Weapons_Melee_Medieval.xml",
+        "Weapons_Melee_Midworld.xml", "Weapons_Melee_Hightech.xml",
+        "Weapons_Grenades.xml",
+    ],
+    "futuristic": [
+        "Weapons_Archotech.xml", "Weapons_Blasters.xml", "Weapons_Charged.xml",
+        "Weapons_Lasers.xml", "Weapons_Plasma.xml",
+    ],
+    "turrets": [
+        "Weapons_Turrets_Heavy.xml", "Weapons_Turrets_Launchers.xml",
+        "Weapons_Turrets_Machineguns.xml", "Weapons_Turrets_Sentry.xml",
+    ],
+    "npc": [
+        "Weapons_Mechanoid.xml", "Weapons_Ogre.xml",
+        "Weapons_RangedSpecial.xml", "Weapons_Special.xml",
+    ],
+}
+
+
+def validate_weapons_core() -> None:
+    mapping = json.loads(read_text(WEAPON_MAPPING_JSON))
+    assert_equal(mapping["thing_prefix"], "MMT_", "武器映射前缀")
+    assert_equal(mapping["batches"]["conventional"], WEAPON_BATCH_FILES["conventional"], "常规枪械批次")
+    assert_equal(mapping["sound_fallbacks"]["Shot_Tavor"], "Shot_AssaultRifle", "Tavor 缺失音效 fallback")
+    assert_equal(mapping["sound_fallbacks"]["FlameThrower"], "Shot_MiniFlameblaster", "火焰音效 fallback")
+    assert_equal(mapping["workbenches"]["HeavyArmsBench"], "MMT_AdvWeaponCraftingTable", "重型武器台映射")
+    assert_equal(mapping["workbenches"]["TableHeavyAmmunition"], "MMT_AmmoBench", "重弹药台映射")
+    assert_equal(len(mapping["recipe_product_clones"]["patch_replace"]), 17, "patch 克隆产物数")
+    assert_equal(len(mapping["recipe_product_clones"]["combat_extended_defs"]), 5, "CE 克隆产物数")
+    assert_equal(len(mapping["patch_roots"]), 2, "patch 根目录数")
+    print("weapons-core: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -5314,6 +5359,7 @@ SUITES = {
     "petrochem-ext": validate_petrochem_ext,
     "matter-top": validate_matter_top,
     "textiles-weapons": validate_textiles_weapons,
+    "weapons-core": validate_weapons_core,
     "all": validate_all,
 }
 
