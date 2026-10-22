@@ -1227,6 +1227,7 @@ CROPS_PATCH_XML = "1.7/Patches/MMT_Patch_CropHarvest.xml"
 STATS_XML = "1.7/Defs/StatDefs/MMT_Stats_WorkRecipes.xml"
 INSECT_CHITIN_PATCH_XML = "1.7/Patches/MMT_Patch_InsectChitin.xml"
 TEXTILES_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Textiles.xml"
+TEXTILES_VANILLA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaTextiles.xml"
 TEXTILES_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Textiles.xml"
 WEAPON_PARTS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_WeaponParts.xml"
 WEAPON_PARTS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_WeaponParts.xml"
@@ -1742,7 +1743,6 @@ INFRA_PATCH_TARGETS = {
     "Gold": "MMT_PRSBar",
     "Silver": "MMT_PRSBar",
     "Uranium": "MMT_RADBar",
-    "Cloth": "MMT_BTextiles",
 }
 
 
@@ -4730,9 +4730,35 @@ def validate_textiles_weapons() -> None:
             fail(f"甲壳 patch 缺少 {race}")
     if insect_patch.count("MMT_Chitin") < 3:
         fail("甲壳 patch 缺少 MMT_Chitin 掉落")
-    infra_patch = read_text(INFRA_PATCH_XML)
-    if 'defName="Cloth"' not in infra_patch or "MMT_BTextiles" not in infra_patch:
-        fail("原版类别 patch 缺少 Cloth → MMT_BTextiles")
+    # 织物同名改造 patch：4 件原版织物对齐 HSK 经济属性（不腐坏/堆叠），保留 StuffPower 平衡属性
+    textiles_patch = parse_xml(TEXTILES_VANILLA_PATCH_XML)
+    textiles_targets: dict[str, dict[str, ET.Element]] = {}
+    for op in textiles_patch.findall("Operation"):
+        assert_equal(op.attrib.get("Class"), "PatchOperationSequence", "织物 patch 操作类型")
+        for li in op.find("operations"):
+            cls = li.attrib.get("Class")
+            if cls not in ("PatchOperationReplace", "PatchOperationAdd"):
+                fail(f"织物 patch 只允许 Replace/Add，实际: {cls}")
+            xpath = child_text(li, "xpath")
+            target = xpath.split('defName="')[1].split('"')[0]
+            node = xpath.rsplit("/", 1)[-1]
+            if "=" in node:  # Add 操作 xpath 落在 def 上，节点名取 value 首元素
+                node = li.find("value")[0].tag
+            value = li.find("value")
+            if value is not None and len(value):
+                textiles_targets.setdefault(target, {})[node] = value[0]
+    assert_equal(set(textiles_targets), {"Cloth", "DevilstrandCloth", "Synthread", "Hyperweave"}, "织物 patch 目标集合")
+    for name, stack in (("Cloth", "300"), ("DevilstrandCloth", "150"), ("Synthread", "150"), ("Hyperweave", "150")):
+        nodes = textiles_targets[name]
+        stats = {child.tag: (child.text or "").strip() for child in nodes["statBases"]}
+        assert_equal(stats.get("DeteriorationRate"), "0", f"{name} 不腐坏")
+        assert_equal((nodes["stackLimit"].text or "").strip(), stack, f"{name} stackLimit")
+        if "StuffPower_Insulation_Cold" not in stats:
+            fail(f"{name} statBases 必须保留 StuffPower 平衡属性")
+    cloth_cats = [li.text for li in textiles_targets["Cloth"]["thingCategories"].findall("li")]
+    assert_equal(cloth_cats, ["MMT_BTextiles"], "Cloth 类别归 MMT_BTextiles")
+    if "thingCategories" in textiles_targets["DevilstrandCloth"]:
+        fail("DevilstrandCloth 应保持原版 Textiles 类别（MMT 无高阶织物类别）")
 
     # --- 8.2 织物资源 ---
     textile_defs = def_map(parse_xml(TEXTILES_RESOURCE_XML))

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 织物同名改造（HSK 方案，参照 Core_SK_CoreModule Items_Resource_Stuff.xml）：
+       保留原版 defName 与 StuffPower 护甲/隔温系数（平衡敏感不动），仅对齐 HSK 经济属性
+       （不腐坏、堆叠提升、MarketValue/Mass/Flammability），不改贴图保持原版外观。
+       Cloth 类别由 Textiles 改为 MMT_BTextiles（其父类即 Textiles，存储筛选不受影响）；
+       其余三种 MMT 无高阶织物类别，保持 Textiles。label/description 沿用原版本地化，不替换。
+       注意：patch 在 XML 继承解析之前执行；原版织物自身无 stackLimit 节点，用 Add。 -->
+
+  <!-- 布 -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Cloth"]/statBases</xpath>
+        <value>
+          <statBases>
+            <StuffPower_Armor_Sharp>0.36</StuffPower_Armor_Sharp>
+            <StuffPower_Armor_Blunt>0</StuffPower_Armor_Blunt>
+            <StuffPower_Armor_Heat>0.18</StuffPower_Armor_Heat>
+            <StuffPower_Insulation_Cold>18</StuffPower_Insulation_Cold>
+            <StuffPower_Insulation_Heat>18</StuffPower_Insulation_Heat>
+            <MaxHitPoints>100</MaxHitPoints>
+            <MarketValue>1.5</MarketValue>
+            <Mass>0.01</Mass>
+            <Flammability>1.75</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Cloth"]</xpath>
+        <value><stackLimit>300</stackLimit></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Cloth"]/thingCategories</xpath>
+        <value>
+          <thingCategories>
+            <li>MMT_BTextiles</li>
+          </thingCategories>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <!-- 恶魔菇布 -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="DevilstrandCloth"]/statBases</xpath>
+        <value>
+          <statBases>
+            <StuffPower_Armor_Sharp>1.40</StuffPower_Armor_Sharp>
+            <StuffPower_Armor_Blunt>0.36</StuffPower_Armor_Blunt>
+            <StuffPower_Armor_Heat>3.00</StuffPower_Armor_Heat>
+            <StuffPower_Insulation_Cold>20</StuffPower_Insulation_Cold>
+            <StuffPower_Insulation_Heat>24</StuffPower_Insulation_Heat>
+            <MaxHitPoints>100</MaxHitPoints>
+            <MarketValue>8</MarketValue>
+            <Mass>0.02</Mass>
+            <Flammability>0.4</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="DevilstrandCloth"]</xpath>
+        <value><stackLimit>150</stackLimit></value>
+      </li>
+    </operations>
+  </Operation>
+
+  <!-- 合成纤维 -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Synthread"]/statBases</xpath>
+        <value>
+          <statBases>
+            <StuffPower_Armor_Sharp>0.94</StuffPower_Armor_Sharp>
+            <StuffPower_Armor_Blunt>0.26</StuffPower_Armor_Blunt>
+            <StuffPower_Armor_Heat>0.90</StuffPower_Armor_Heat>
+            <StuffPower_Insulation_Cold>22</StuffPower_Insulation_Cold>
+            <StuffPower_Insulation_Heat>22</StuffPower_Insulation_Heat>
+            <MaxHitPoints>150</MaxHitPoints>
+            <MarketValue>13</MarketValue>
+            <Mass>0.04</Mass>
+            <Flammability>1.0</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Synthread"]</xpath>
+        <value><stackLimit>150</stackLimit></value>
+      </li>
+    </operations>
+  </Operation>
+
+  <!-- 太空织物 -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ThingDef[defName="Hyperweave"]/statBases</xpath>
+        <value>
+          <statBases>
+            <StuffPower_Armor_Sharp>2.00</StuffPower_Armor_Sharp>
+            <StuffPower_Armor_Blunt>0.54</StuffPower_Armor_Blunt>
+            <StuffPower_Armor_Heat>2.88</StuffPower_Armor_Heat>
+            <StuffPower_Insulation_Cold>26</StuffPower_Insulation_Cold>
+            <StuffPower_Insulation_Heat>26</StuffPower_Insulation_Heat>
+            <MaxHitPoints>200</MaxHitPoints>
+            <MarketValue>25</MarketValue>
+            <Mass>0.03</Mass>
+            <Flammability>0.5</Flammability>
+            <DeteriorationRate>0</DeteriorationRate>
+          </statBases>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Hyperweave"]</xpath>
+        <value><stackLimit>150</stackLimit></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

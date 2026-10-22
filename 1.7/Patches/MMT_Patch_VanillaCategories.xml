@@ -21,10 +21,5 @@
     <xpath>Defs/ThingDef[defName="Uranium"]/thingCategories</xpath>
     <value><li>MMT_RADBar</li></value>
   </Operation>
-  <!-- 零件的类别归属已由 MMT_Patch_VanillaComponents.xml 同名改造直接处理，此处不再追加 -->
-  <!-- B8：原版布归入 MMT 基础织物类别（丝绒配方的 [基础织物] 输入需要） -->
-  <Operation Class="PatchOperationAdd">
-    <xpath>Defs/ThingDef[defName="Cloth"]/thingCategories</xpath>
-    <value><li>MMT_BTextiles</li></value>
-  </Operation>
+  <!-- 零件类别由 MMT_Patch_VanillaComponents.xml、布的类别由 MMT_Patch_VanillaTextiles.xml 同名改造直接处理，此处不再追加 -->
 </Patch>
