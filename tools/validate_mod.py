@@ -4564,6 +4564,9 @@ def validate_infrastructure() -> None:
                 if node.findtext("designationCategory") is not None:
                     fail(f"{rel} 矿脉 {node.findtext('defName')} 不应有 designationCategory")
                 continue
+            if node.get("ParentName") == "MMT_TurretBuildingBase":
+                # 炮塔使用原版 Security 分类（继承自基类），由 weapons-turrets 套件单独校验
+                continue
             worktable_count += 1
             assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{rel} {node.findtext('defName')} designationCategory")
     assert_equal(worktable_count, INFRA_WORKTABLE_TOTAL, "工作台建筑总数")
@@ -5274,6 +5277,49 @@ WEAPON_BATCH_FILES = {
 }
 
 
+TURRET_AMMO_PROJECTILES = {
+    "MMT_Ammo_BalistaBolt": "MMT_Projectile_BalistaBolt",
+    "MMT_Ammo_StoneBall": "MMT_Stone_Ball",
+    "MMT_Ammo_30x29mmGrenade_HE": "MMT_Bullet_30x29mmGrenade_HE",
+    "MMT_Ammo_120mmCannonShell_HEAT": "MMT_Bullet_120mmCannonShell_HEAT",
+    "MMT_Ammo_155mmHowitzerShell_HE": "MMT_Bullet_155mmHowitzerShell_HE",
+    "MMT_Ammo_SPG9Rocket_Frag": "MMT_Bullet_SPG9Rocket_Frag",
+    "MMT_Ammo_130mmRocketMissile": "MMT_Bullet_130mmRocketMissile",
+    "MMT_Ammo_50BMG_FMJ": "MMT_Bullet_50BMG_FMJ",
+    "MMT_Ammo_762x51mmNATO_FMJ": "MMT_Bullet_762x51mmNATO_FMJ",
+    "MMT_Ammo_30x173mm_FMJ": "MMT_Bullet_30x173mm_FMJ",
+    "MMT_Ammo_20x102mm_FMJ": "MMT_Bullet_20x102mm_FMJ",
+}
+
+
+def validate_weapons_turrets() -> None:
+    guns = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_TurretGuns.xml"))
+    buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml"))
+    ammo = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretAmmo.xml"))
+    crates = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml"))
+    crate_recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml"))
+    assert_equal(len(guns), 16, "炮塔枪数")
+    concrete_buildings = [b for b in buildings.values() if (b.get("Abstract") or "").lower() != "true"]
+    building_total = len(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml").findall("ThingDef"))
+    assert_equal(building_total, 17, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
+    assert_equal(len(concrete_buildings), 16, "可建造炮塔数")
+    assert_equal(len(ammo), 11, "炮塔弹药数")
+    assert_equal(len(crates), 16, "炮塔箱数（9 个无对应建筑的孤儿箱不移植）")
+    assert_equal(len(crate_recipes), 16, "炮塔箱配方数")
+    for ammo_name, projectile_name in TURRET_AMMO_PROJECTILES.items():
+        assert_equal(child_text(ammo[ammo_name], "projectileWhenLoaded"), projectile_name, f"{ammo_name} 投射物")
+
+    m2 = buildings["MMT_Turret_M2Browning"]
+    assert_equal(child_text(m2, "building/turretGunDef"), "MMT_Gun_M2Browning", "M2 炮塔枪")
+    refuelable = m2.find("./comps/li[@Class='CompProperties_Refuelable']")
+    if refuelable is None:
+        fail("M2 炮塔缺少 refuelable")
+    assert_equal(child_text(refuelable, "fuelFilter/thingDefs/li"), "MMT_Ammo_50BMG_FMJ", "M2 弹药")
+    assert_equal(child_text(refuelable, "fuelCapacity"), "150", "M2 弹容量")
+    assert_equal(child_text(guns["MMT_Gun_M2Browning"], "verbs/li/consumeFuelPerShot"), "1", "M2 单发耗弹")
+    print("weapons-turrets: OK")
+
+
 def validate_weapons_futuristic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml"))
@@ -5462,6 +5508,7 @@ SUITES = {
     "weapons-conventional": validate_weapons_conventional,
     "weapons-archaic": validate_weapons_archaic,
     "weapons-futuristic": validate_weapons_futuristic,
+    "weapons-turrets": validate_weapons_turrets,
     "all": validate_all,
 }
 

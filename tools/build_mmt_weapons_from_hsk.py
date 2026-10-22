@@ -616,9 +616,11 @@ VERB_CLASS_MAP = {
     "CombatExtended.Verb_ShootCEOneUse": "Verb_LaunchProjectile",
     "CombatExtended.Verb_LaunchProjectileCE": "Verb_LaunchProjectile",
     "CombatExtended.Verb_ShootFlareCE": "Verb_Shoot",
+    "CombatExtended.Verb_ShootMortarCE": "Verb_ShootMortar",
     "Verb_Shoot": "Verb_Shoot",
     "Verb_ShootOneUse": "Verb_ShootOneUse",
     "Verb_LaunchProjectile": "Verb_LaunchProjectile",
+    "Verb_ShootMortar": "Verb_ShootMortar",
 }
 # 已确认丢弃的 CE verb 字段（后座/瞄准模式/弹匣/CE 弹道散布等，原版无法表达）
 VERB_KNOWN_DROPS = {
@@ -633,7 +635,7 @@ TOOL_FIELD_WHITELIST = {"label", "capacities", "power", "cooldownTime", "chanceF
 # 武器级杂项字段直拷白名单
 WEAPON_MISC_WHITELIST = {"tradeability", "generateCommonality", "soundInteract", "relicChance", "techLevel", "uiIconScale"}
 
-UNFINISHED_MAP = {"UnfinishedWeapon": "UnfinishedGun", "UnfinishedGun": "UnfinishedGun", "UnfinishedMeleeWeapon": "UnfinishedMeleeWeapon"}
+UNFINISHED_MAP = {"UnfinishedWeapon": "UnfinishedGun", "UnfinishedGun": "UnfinishedGun", "UnfinishedMeleeWeapon": "UnfinishedMeleeWeapon", "UnfinishedTurretGun": "UnfinishedGun", "UnfinishedAmmo": "UnfinishedGun"}
 
 # 原版 graphicClass 白名单；SK/CE 自定义图形类一律回退 Graphic_Single
 VANILLA_GRAPHIC_CLASSES = {
@@ -773,7 +775,7 @@ def map_thing_name(name: str, mapping: dict) -> str:
     return mapping["ingredient_defs"].get(name) or mapping["ingredient_categories"].get(name) or name
 
 
-def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: dict) -> ET.Element:
+def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: dict, base_override: str | None = None) -> ET.Element:
     """单把 HSK/CE 武器转 MMT 原版机制武器。"""
     element = index.thing_defs.get(source_name)
     if element is None:
@@ -782,7 +784,10 @@ def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: di
         raise KeyError(f"找不到武器源定义: {source_name}")
     chain = def_chain(index, element)
     weapon_classes = nearest_text(chain, "weaponClasses/li") or "Ranged"
-    base = "MMT_BaseMeleeWeapon" if weapon_classes in ("Melee", "MeleeBlunt", "MeleePiercer") else "MMT_BaseGun"
+    if base_override is not None:
+        base = base_override
+    else:
+        base = "MMT_BaseMeleeWeapon" if weapon_classes in ("Melee", "MeleeBlunt", "MeleePiercer") else "MMT_BaseGun"
     out = ET.Element("ThingDef", {"ParentName": base})
     ET.SubElement(out, "defName").text = mmt_name(source_name)
     label = index.strings_zh.get(f"{source_name}.label") or nearest_text(chain, "label") or source_name
@@ -1005,12 +1010,415 @@ def build_futuristic(index: SourceIndex, mapping: dict, only: set[str]) -> dict[
     return build_weapon_batch("futuristic", index, mapping, only)
 
 
+# ===== 炮塔体系 =====
+
+# ammoSet -> (MMT 弹药物品, MMT 投射物, CE 源弹药 Def, CE 源配方)
+TURRET_AMMO_TABLE = {
+    "AmmoSet_Balista": ("MMT_Ammo_BalistaBolt", "MMT_Projectile_BalistaBolt", "Ammo_BalistaBolt", "MakeAmmo_BalistaBolt"),
+    "AmmoSet_Catapult": ("MMT_Ammo_StoneBall", "MMT_Stone_Ball", "Ammo_StoneBall", "MakeAmmo_StoneBall"),
+    "AmmoSet_30x29mmGrenade": ("MMT_Ammo_30x29mmGrenade_HE", "MMT_Bullet_30x29mmGrenade_HE", "Ammo_30x29mmGrenade_HE", "MakeAmmo_30x29mmGrenade_HE"),
+    "AmmoSet_120mmCannonShell": ("MMT_Ammo_120mmCannonShell_HEAT", "MMT_Bullet_120mmCannonShell_HEAT", "Ammo_120mmCannonShell_HEAT", "MakeAmmo_120mmCannonShell_HEAT"),
+    "AmmoSet_155mmHowitzerShell": ("MMT_Ammo_155mmHowitzerShell_HE", "MMT_Bullet_155mmHowitzerShell_HE", "Ammo_155mmHowitzerShell_HE", "MakeAmmo_155mmHowitzerShell_HE"),
+    "AmmoSet_SPG9Rocket": ("MMT_Ammo_SPG9Rocket_Frag", "MMT_Bullet_SPG9Rocket_Frag", "Ammo_SPG9Rocket_Frag", "MakeAmmo_SPG9Rocket_Frag"),
+    "AmmoSet_130mmRocketMissile": ("MMT_Ammo_130mmRocketMissile", "MMT_Bullet_130mmRocketMissile", "Ammo_130mmRocketMissile", "MakeAmmo_130mmRocketMissile"),
+    "AmmoSet_50BMG": ("MMT_Ammo_50BMG_FMJ", "MMT_Bullet_50BMG_FMJ", "Ammo_50BMG_FMJ", "MakeAmmo_50BMG_FMJ"),
+    "AmmoSet_762x51mmNATO": ("MMT_Ammo_762x51mmNATO_FMJ", "MMT_Bullet_762x51mmNATO_FMJ", "Ammo_762x51mmNATO_FMJ", "MakeAmmo_762x51mmNATO_FMJ"),
+    "AmmoSet_30x173mm": ("MMT_Ammo_30x173mm_FMJ", "MMT_Bullet_30x173mm_FMJ", "Ammo_30x173mm_FMJ", "MakeAmmo_30x173mm_FMJ"),
+    "AmmoSet_20x102mm": ("MMT_Ammo_20x102mm_FMJ", "MMT_Bullet_20x102mm_FMJ", "Ammo_20x102mm_FMJ", "MakeAmmo_20x102mm_FMJ"),
+}
+
+# HSK 材料类别 -> 原版/MMT 类别（炮塔建筑用）
+TURRET_STUFF_MAP = {"RuggedMetallic": "Metallic", "Woody": "Woody", "Metallic": "Metallic"}
+
+TURRET_BUILDING_STATS = {"MaxHitPoints", "Flammability", "WorkToBuild", "Mass", "Beauty", "ShootingAccuracyTurret"}
+
+# MMT 炮塔建筑基类：以原版 Building_TurretGun + CE TurretBase 为模型
+TURRET_BUILDING_BASE_XML = """<ThingDef Name="MMT_TurretBuildingBase" ParentName="BuildingBase" Abstract="True">
+\t\t<thingClass>Building_TurretGun</thingClass>
+\t\t<drawerType>MapMeshAndRealTime</drawerType>
+\t\t<altitudeLayer>Building</altitudeLayer>
+\t\t<tickerType>Normal</tickerType>
+\t\t<passability>PassThroughOnly</passability>
+\t\t<pathCost>50</pathCost>
+\t\t<fillPercent>0.85</fillPercent>
+\t\t<hasTooltip>true</hasTooltip>
+\t\t<terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+\t\t<stealable>false</stealable>
+\t\t<rotatable>false</rotatable>
+\t\t<minifiedDef>MinifiedThing</minifiedDef>
+\t\t<tradeability>None</tradeability>
+\t\t<thingCategories>
+\t\t\t<li>BuildingsSecurity</li>
+\t\t</thingCategories>
+\t\t<designationCategory>Security</designationCategory>
+\t\t<statBases>
+\t\t\t<Flammability>0.7</Flammability>
+\t\t\t<Beauty>-60</Beauty>
+\t\t</statBases>
+\t\t<comps>
+\t\t\t<li Class="CompProperties_Forbiddable"/>
+\t\t</comps>
+\t\t<building>
+\t\t\t<ai_combatDangerous>true</ai_combatDangerous>
+\t\t</building>
+\t\t<placeWorkers>
+\t\t\t<li>PlaceWorker_TurretTop</li>
+\t\t\t<li>PlaceWorker_ShowTurretRadius</li>
+\t\t</placeWorkers>
+\t</ThingDef>"""
+
+
+def turret_gun_ammo(index: SourceIndex, element: ET.Element) -> tuple[str | None, str | None]:
+    """取炮塔枪 CE AmmoUser 的 ammoSet 与 magazineSize。"""
+    for node in def_chain(index, element):
+        for comp in node.findall("./comps/li"):
+            if comp.get("Class") == "CombatExtended.CompProperties_AmmoUser":
+                return comp.findtext("ammoSet"), comp.findtext("magazineSize")
+    return None, None
+
+
+def convert_turret_gun(source_name: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """炮塔枪转换：MMT_BaseTurretGun 基类 + 每发消耗 1 弹药燃料。"""
+    out = convert_weapon(source_name, "turrets", index, mapping, base_override="MMT_BaseTurretGun")
+    for verb in out.findall("./verbs/li"):
+        ET.SubElement(verb, "consumeFuelPerShot").text = "1"
+    return out
+
+
+def convert_turret_building(source_name: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """HSK 炮塔建筑转原版机制：refuelable 按发耗弹、人工/自动组件分派。"""
+    element = index.thing_defs.get(source_name)
+    if element is None:
+        raise KeyError(f"找不到炮塔源定义: {source_name}")
+    chain = def_chain(index, element)
+    out = ET.Element("ThingDef", {"ParentName": "MMT_TurretBuildingBase"})
+    ET.SubElement(out, "defName").text = mmt_name(source_name)
+    label = index.strings_zh.get(f"{source_name}.label") or nearest_text(chain, "label") or source_name
+    description = index.strings_zh.get(f"{source_name}.description") or nearest_text(chain, "description") or ""
+    ET.SubElement(out, "label").text = label
+    ET.SubElement(out, "description").text = description
+    graphic = sanitize_graphic_data(nearest_node(chain, "graphicData"))
+    if graphic is not None:
+        out.append(graphic)
+    icon = nearest_text(chain, "uiIconPath")
+    if icon:
+        ET.SubElement(out, "uiIconPath").text = icon
+    tech = nearest_text(chain, "techLevel")
+    if tech:
+        ET.SubElement(out, "techLevel").text = tech
+    stats = merge_stat_bases(chain, TURRET_BUILDING_STATS)
+    if stats:
+        stat_node = ET.SubElement(out, "statBases")
+        for key in sorted(stats):
+            ET.SubElement(stat_node, key).text = stats[key]
+    size = nearest_text(chain, "size")
+    if size:
+        ET.SubElement(out, "size").text = size
+    stuff = nearest_node(chain, "stuffCategories")
+    if stuff is not None:
+        stuff_out = ET.SubElement(out, "stuffCategories")
+        for li in stuff.findall("li"):
+            if li.text:
+                ET.SubElement(stuff_out, "li").text = TURRET_STUFF_MAP.get(li.text, li.text)
+    cost_stuff = nearest_text(chain, "costStuffCount")
+    if cost_stuff:
+        ET.SubElement(out, "costStuffCount").text = cost_stuff
+    cost_list = nearest_node(chain, "costList")
+    if cost_list is not None:
+        cost_out = ET.SubElement(out, "costList")
+        for item in cost_list:
+            name = item.tag
+            if name.endswith("_Crate"):
+                name = mmt_name(name)
+            else:
+                name = map_thing_name(name, mapping)
+            ET.SubElement(cost_out, name).text = item.text
+    # 节点流转：人工炮塔（TurretMannedBase 系）加 Mannable + 交互格；自动炮塔加电力/闪断/瘫痪
+    parent_names = {node.get("ParentName") for node in chain} | {node.get("Name") for node in chain}
+    manned = "TurretMannedBase" in parent_names or "TurretMortarBase" in parent_names
+    comps = ET.SubElement(out, "comps")
+    if manned:
+        ET.SubElement(out, "hasInteractionCell").text = "True"
+        ET.SubElement(out, "interactionCellOffset").text = "(0,0,-1)"
+        mannable = ET.SubElement(comps, "li", {"Class": "CompProperties_Mannable"})
+        ET.SubElement(mannable, "manWorkType").text = "Violent"
+    else:
+        for cls in ("CompProperties_Flickable", "CompProperties_Breakdownable"):
+            ET.SubElement(comps, "li", {"Class": cls})
+        stunnable = ET.SubElement(comps, "li", {"Class": "CompProperties_Stunnable"})
+        affected = ET.SubElement(stunnable, "affectedDamageDefs")
+        ET.SubElement(affected, "li").text = "EMP"
+        for node in chain:
+            for comp in node.findall("./comps/li"):
+                if comp.get("Class") == "SK.CompProperties_IdlePower":
+                    power = ET.SubElement(comps, "li", {"Class": "CompProperties_Power"})
+                    ET.SubElement(power, "compClass").text = "CompPowerTrader"
+                    watts = comp.findtext("basePowerConsumption")
+                    if watts:
+                        ET.SubElement(power, "basePowerConsumption").text = watts
+    # 装填耗弹：fuelFilter 指向 MMT 弹药，容量取 ammoSet 内最大弹匣
+    gun_name = nearest_text(chain, "building/turretGunDef")
+    ammo_set = None
+    if gun_name and gun_name in index.thing_defs:
+        ammo_set, _ = turret_gun_ammo(index, index.thing_defs[gun_name])
+    if ammo_set and ammo_set in TURRET_AMMO_TABLE:
+        ammo_name = TURRET_AMMO_TABLE[ammo_set][0]
+        capacity = turret_ammo_capacity(index, mapping, ammo_set)
+        refuelable = ET.SubElement(comps, "li", {"Class": "CompProperties_Refuelable"})
+        ET.SubElement(refuelable, "fuelCapacity").text = str(capacity)
+        ET.SubElement(refuelable, "fuelMultiplier").text = "1"
+        ET.SubElement(refuelable, "initialFuelPercent").text = "0"
+        ET.SubElement(refuelable, "consumeFuelOnlyWhenUsed").text = "true"
+        ET.SubElement(refuelable, "showFuelGizmo").text = "true"
+        fuel_filter = ET.SubElement(refuelable, "fuelFilter")
+        thing_defs = ET.SubElement(fuel_filter, "thingDefs")
+        ET.SubElement(thing_defs, "li").text = ammo_name
+    elif ammo_set:
+        print(f"[manual_review] 炮塔 {source_name} 的 ammoSet {ammo_set} 未映射")
+    building = ET.SubElement(out, "building")
+    if gun_name:
+        ET.SubElement(building, "turretGunDef").text = mmt_name(gun_name)
+    top_size = nearest_text(chain, "building/turretTopDrawSize")
+    if top_size:
+        ET.SubElement(building, "turretTopDrawSize").text = top_size
+    research = element.find("researchPrerequisites")
+    if research is not None:
+        research_out = ET.SubElement(out, "researchPrerequisites")
+        for li in research.findall("li"):
+            if li.text:
+                ET.SubElement(research_out, "li").text = mapping["research"].get(li.text, li.text)
+    for field in ("constructionSkillPrerequisite", "specialDisplayRadius"):
+        value = nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value
+    return out
+
+
+def turret_ammo_capacity(index: SourceIndex, mapping: dict, ammo_set: str) -> int:
+    """同一弹药被多个炮塔使用时取最大弹匣容量。"""
+    capacity = 1
+    for name, element in batch_weapon_elements(mapping, "turrets"):
+        if is_projectile_def(index, element):
+            continue
+        gun_set, magazine = turret_gun_ammo(index, element)
+        if gun_set == ammo_set and magazine:
+            capacity = max(capacity, int(float(magazine)))
+    return capacity
+
+
+def build_turret_ammo_item(ammo_set: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """由 CE 弹药物品生成 MMT 炮塔子弹物品：保留价值/质量/贴图，记录对应投射物。"""
+    ammo_name, projectile_name, ce_ammo, _ = TURRET_AMMO_TABLE[ammo_set]
+    source = index.thing_defs.get(ce_ammo)
+    if source is None:
+        raise KeyError(f"找不到 CE 弹药源定义: {ce_ammo}")
+    chain = def_chain(index, source)
+    out = ET.Element("ThingDef")
+    ET.SubElement(out, "thingClass").text = "ThingWithComps"
+    ET.SubElement(out, "defName").text = ammo_name
+    label = index.strings_zh.get(f"{ce_ammo}.label") or nearest_text(chain, "label") or ammo_name
+    ET.SubElement(out, "label").text = label
+    ET.SubElement(out, "description").text = index.strings_zh.get(f"{ce_ammo}.description") or nearest_text(chain, "description") or ""
+    ET.SubElement(out, "category").text = "Item"
+    ET.SubElement(out, "altitudeLayer").text = "Item"
+    ET.SubElement(out, "useHitPoints").text = "true"
+    ET.SubElement(out, "alwaysHaulable").text = "true"
+    ET.SubElement(out, "selectable").text = "true"
+    ET.SubElement(out, "rotatable").text = "false"
+    ET.SubElement(out, "stackLimit").text = "75"
+    ET.SubElement(out, "drawGUIOverlay").text = "true"
+    graphic = sanitize_graphic_data(nearest_node(chain, "graphicData"))
+    if graphic is not None:
+        out.append(graphic)
+    stats = merge_stat_bases(chain, {"MarketValue", "Mass"})
+    if stats:
+        stat_node = ET.SubElement(out, "statBases")
+        for key in sorted(stats):
+            ET.SubElement(stat_node, key).text = stats[key]
+    comps = ET.SubElement(out, "comps")
+    ET.SubElement(comps, "li", {"Class": "CompProperties_Forbiddable"})
+    # 记录弹药对应的投射物（原版字段，供查阅与机制一致性）
+    ET.SubElement(out, "projectileWhenLoaded").text = projectile_name
+    return out
+
+
+def convert_crate(source_name: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """HSK 炮塔箱转 MMT 箱物品：剔除 HSK 类别与 stuffProps。"""
+    element = index.thing_defs.get(source_name)
+    if element is None:
+        raise KeyError(f"找不到炮塔箱源定义: {source_name}")
+    chain = def_chain(index, element)
+    out = ET.Element("ThingDef")
+    ET.SubElement(out, "thingClass").text = "ThingWithComps"
+    ET.SubElement(out, "defName").text = mmt_name(source_name)
+    label = index.strings_zh.get(f"{source_name}.label") or nearest_text(chain, "label") or source_name
+    ET.SubElement(out, "label").text = label
+    ET.SubElement(out, "description").text = index.strings_zh.get(f"{source_name}.description") or nearest_text(chain, "description") or ""
+    ET.SubElement(out, "category").text = "Item"
+    ET.SubElement(out, "resourceReadoutPriority").text = "Middle"
+    ET.SubElement(out, "useHitPoints").text = "true"
+    ET.SubElement(out, "selectable").text = "true"
+    ET.SubElement(out, "altitudeLayer").text = "Item"
+    ET.SubElement(out, "alwaysHaulable").text = "true"
+    ET.SubElement(out, "drawGUIOverlay").text = "true"
+    ET.SubElement(out, "rotatable").text = "false"
+    ET.SubElement(out, "pathCost").text = "15"
+    stack = nearest_text(chain, "stackLimit") or "1"
+    ET.SubElement(out, "stackLimit").text = stack
+    tech = nearest_text(chain, "techLevel")
+    if tech:
+        ET.SubElement(out, "techLevel").text = tech
+    graphic = sanitize_graphic_data(nearest_node(chain, "graphicData"))
+    if graphic is not None:
+        out.append(graphic)
+    for field in ("soundInteract", "soundDrop"):
+        value = nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value
+    ET.SubElement(out, "tickerType").text = "Normal"
+    stats = merge_stat_bases(chain, {"MarketValue", "MaxHitPoints", "Flammability", "DeteriorationRate", "Mass", "SellPriceFactor"})
+    if stats:
+        stat_node = ET.SubElement(out, "statBases")
+        for key in sorted(stats):
+            ET.SubElement(stat_node, key).text = stats[key]
+    comps = ET.SubElement(out, "comps")
+    ET.SubElement(comps, "li", {"Class": "CompProperties_Forbiddable"})
+    trade_tags = nearest_node(chain, "tradeTags")
+    if trade_tags is not None:
+        out.append(copy.deepcopy(trade_tags))
+    return out
+
+
+def turret_related_names(index: SourceIndex, mapping: dict, building_name: str) -> dict[str, str | None]:
+    """由炮塔建筑名推导关联的枪/弹药/箱名，供 --only 最小样本过滤。"""
+    element = index.thing_defs.get(building_name)
+    chain = def_chain(index, element)
+    gun = nearest_text(chain, "building/turretGunDef") if chain else None
+    ammo_set = None
+    if gun and gun in index.thing_defs:
+        ammo_set, _ = turret_gun_ammo(index, index.thing_defs[gun])
+    crate = None
+    for node in chain:
+        for item in node.findall("./costList/*"):
+            if item.tag.endswith("_Crate"):
+                crate = item.tag
+    return {"gun": gun, "ammo_set": ammo_set, "crate": crate}
+
+
+def build_turrets(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    """炮塔批次：炮塔枪、建筑、弹药物品与配方、炮塔箱与箱配方。"""
+    building_names = [
+        name
+        for name, element in sorted(index.thing_defs.items())
+        if is_concrete(element)
+        and name in _turret_building_names(index, mapping)
+    ]
+    if only:
+        building_names = [name for name in building_names if name in only]
+    related = {name: turret_related_names(index, mapping, name) for name in building_names}
+    gun_names = sorted({rel["gun"] for rel in related.values() if rel["gun"]})
+    ammo_sets = sorted({rel["ammo_set"] for rel in related.values() if rel["ammo_set"]})
+    crate_names = sorted({rel["crate"] for rel in related.values() if rel["crate"]})
+
+    guns = [convert_turret_gun(name, index, mapping) for name in gun_names]
+    base = ET.fromstring(TURRET_BUILDING_BASE_XML)
+    buildings = [base] + [convert_turret_building(name, index, mapping) for name in building_names]
+    ammo_items = [build_turret_ammo_item(ammo_set, index, mapping) for ammo_set in ammo_sets]
+    crates = [convert_crate(name, index, mapping) for name in crate_names]
+    ammo_recipes = []
+    for ammo_set in ammo_sets:
+        _, _, _, recipe_name = TURRET_AMMO_TABLE[ammo_set]
+        ammo_recipes.append(convert_ammo_recipe(recipe_name, ammo_set, index, mapping))
+    crate_recipes = []
+    for recipe_name, element in sorted(index.recipe_defs.items()):
+        if not is_concrete(element):
+            continue
+        products = element.find("products")
+        if products is None or not list(products):
+            continue
+        if list(products)[0].tag in crate_names:
+            crate_recipes.append(convert_recipe(recipe_name, index, mapping))
+    crate_recipes.sort(key=lambda node: node.findtext("defName") or "")
+    # 复制炮塔相关贴图与图标
+    for node in guns + buildings[1:] + ammo_items + crates:
+        for tag in ("graphicData/texPath", "uiIconPath"):
+            tex = node.findtext(tag)
+            if tex:
+                copy_texture_file(mapping, index, tex)
+    return {
+        "ThingDefs_Weapons/MMT_Weapons_TurretGuns.xml": serialize_defs(guns, "MMT 炮塔枪：按发消耗对应 MMT 弹药"),
+        "ThingDefs_Buildings/MMT_Buildings_Turrets.xml": serialize_defs(buildings, "MMT 可建造炮塔：refuelable 装填耗弹"),
+        "ThingDefs_Items/MMT_Items_TurretAmmo.xml": serialize_defs(ammo_items, "MMT 炮塔弹药"),
+        "ThingDefs_Items/MMT_Items_TurretCrates.xml": serialize_defs(crates, "MMT 炮塔箱"),
+        "RecipeDefs/MMT_Recipes_TurretAmmo.xml": serialize_defs(ammo_recipes, "MMT 炮塔弹药配方"),
+        "RecipeDefs/MMT_Recipes_TurretCrates.xml": serialize_defs(crate_recipes, "MMT 炮塔箱配方"),
+    }
+
+
+def _turret_building_names(index: SourceIndex, mapping: dict) -> set[str]:
+    """Buildings_Turrets.xml 中的 16 个可建造炮塔（排除 MinifiedTurret_*）。"""
+    path = ROOT / mapping["source_root"] / "Defs/ThingDefs_Buildings/Buildings_Turrets.xml"
+    names: set[str] = set()
+    for node in ET.parse(path).getroot().iter("ThingDef"):
+        name = node.findtext("defName")
+        if name and is_concrete(node) and not name.startswith("MinifiedTurret_"):
+            names.add(name)
+    return names
+
+
+def convert_ammo_recipe(source_name: str, ammo_set: str, index: SourceIndex, mapping: dict) -> ET.Element:
+    """CE 弹药配方转 MMT 炮塔弹药配方：挂 MMT_AmmoBench，产物换 MMT 弹药。"""
+    element = index.recipe_defs.get(source_name)
+    if element is None:
+        raise KeyError(f"找不到弹药配方源定义: {source_name}")
+    chain = recipe_chain(index, element)
+    ammo_name = TURRET_AMMO_TABLE[ammo_set][0]
+    out = ET.Element("RecipeDef")
+    ET.SubElement(out, "defName").text = mmt_name(source_name)
+    for field in ("label", "description", "jobString"):
+        value = index.strings_zh.get(f"{source_name}.{field}") or nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value.replace("\\n", "\n")
+    for field in ("workAmount", "workSpeedStat", "workSkill", "workSkillLearnFactor", "effectWorking", "soundWorking"):
+        value = nearest_text(chain, field)
+        if value:
+            ET.SubElement(out, field).text = value
+    skill = nearest_node(chain, "skillRequirements")
+    if skill is not None:
+        out.append(copy.deepcopy(skill))
+    ingredients = element.find("ingredients")
+    if ingredients is not None:
+        ing_out = ET.SubElement(out, "ingredients")
+        for li in ingredients.findall("li"):
+            item = ET.SubElement(ing_out, "li")
+            filter_node = li.find("filter")
+            if filter_node is not None:
+                item.append(convert_filter(filter_node, mapping))
+            count = li.findtext("count")
+            if count:
+                ET.SubElement(item, "count").text = count
+    fixed = element.find("fixedIngredientFilter")
+    if fixed is not None:
+        converted = convert_filter(fixed, mapping)
+        converted.tag = "fixedIngredientFilter"
+        out.append(converted)
+    products = element.find("products")
+    if products is not None:
+        prod_out = ET.SubElement(out, "products")
+        for item in products:
+            ET.SubElement(prod_out, ammo_name).text = item.text
+    users = ET.SubElement(out, "recipeUsers")
+    ET.SubElement(users, "li").text = "MMT_AmmoBench"
+    return out
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
     "conventional": build_conventional,
     "archaic": build_archaic,
     "futuristic": build_futuristic,
+    "turrets": build_turrets,
 }
 
 
