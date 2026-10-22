@@ -137,7 +137,7 @@ PETROCHEM_ITEM_TEXTURES = [
 PETROCHEM_BUILDING_TEXTURES = [
     f"1.7/Textures/Things/Building/Production/MMT_HandChemTable/MMT_HandChemTable_{side}.png"
     for side in ("east", "north", "south")
-]
+] + ["1.7/Textures/Things/Building/Production/MMT_HandOilPump.png"]
 
 ELECTRONICS_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/MMT_Electronics/Silicon.png",
@@ -746,6 +746,19 @@ PETROCHEM_TABLE_RECIPES = [
 ]
 
 PETROCHEM_RECIPE_EXPECTATIONS = {
+    "MMT_PumpCrudeOil": {
+        "work": "4000",
+        "inputs": [],
+        "output": "MMT_CrudeOil",
+        "output_count": "10",
+        "skill": "3",
+        "speed": "MiningSpeed",
+        "effect": "CutStone",
+        "sound": "Recipe_Smith",
+        "workskill": "Mining",
+        "learn": "0.5",
+        "building": "MMT_HandOilPump",
+    },
     "MMT_DistillPolymers_Hand": {
         "work": "1500",
         "inputs": [("thingDefs", "MMT_CrudeOil", "20")],
@@ -1719,7 +1732,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 65  # 含药品链 13 项（MMT_Research_Medicine.xml）
-INFRA_WORKTABLE_TOTAL = 30  # 含药品链 5 台（MMT_Buildings_Medicine.xml）
+INFRA_WORKTABLE_TOTAL = 31  # 含药品链 5 台（MMT_Buildings_Medicine.xml）与手压油泵
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -2651,7 +2664,7 @@ def validate_petrochem_building() -> None:
     assert_equal(child_text(research, "researchViewY"), "0.00", "石化研究 Y 坐标")
 
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
-    assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_MineableOilSeep"}, "石化建筑 defName 集合")
+    assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_HandOilPump", "MMT_MineableOilSeep"}, "石化建筑 defName 集合")
 
     table = building_defs["MMT_HandChemTable"]
     assert_equal(child_text(table, "label"), "石化产品实验室", "化学台 label")
@@ -2671,6 +2684,23 @@ def validate_petrochem_building() -> None:
     comp_classes = [li.attrib.get("Class") for li in table.findall("./comps/li")]
     if "CompProperties_Power" in comp_classes:
         fail("手动化学实验台不应包含电力组件")
+
+    pump = building_defs["MMT_HandOilPump"]
+    assert_equal(child_text(pump, "label"), "手压油泵", "油泵 label")
+    assert_equal(child_text(pump, "thingClass"), "Building_WorkTable", "油泵 thingClass")
+    assert_equal(child_text(pump, "./graphicData/texPath"), "Things/Building/Production/MMT_HandOilPump", "油泵 texPath")
+    assert_equal(child_text(pump, "./graphicData/graphicClass"), "Graphic_Single", "油泵 graphicClass")
+    assert_equal(li_values(pump, "stuffCategories"), ["Metallic"], "油泵材料分类")
+    assert_equal(child_text(pump, "costStuffCount"), "60", "油泵材料数量")
+    assert_equal(child_text(pump, "./statBases/WorkToBuild"), "1500", "油泵建造工作量")
+    assert_equal(child_text(pump, "size"), "(2,2)", "油泵尺寸")
+    assert_equal(li_values(pump, "recipes"), ["MMT_PumpCrudeOil"], "油泵配方")
+    assert_equal(li_values(pump, "researchPrerequisites"), ["MMT_BasicPetrochemistry"], "油泵研究前置")
+    assert_equal(child_text(pump, "constructionSkillPrerequisite"), "3", "油泵建造技能")
+
+    pump_comp_classes = [li.attrib.get("Class") for li in pump.findall("./comps/li")]
+    if "CompProperties_Power" in pump_comp_classes:
+        fail("手压油泵不应包含电力组件")
 
     seep = building_defs["MMT_MineableOilSeep"]
     assert_equal(seep.attrib.get("ParentName"), "RockBase", "油苗父类")
@@ -2698,18 +2728,20 @@ def validate_petrochem_recipes() -> None:
 
     resource_names = set(def_map(parse_xml(PETROCHEM_RESOURCE_XML))) | set(def_map(parse_xml(WOOD_RESOURCE_XML))) | set(def_map(parse_xml(COAL_RESOURCE_XML))) | set(def_map(parse_xml(SULFUR_RESOURCE_XML)))
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
-    table_recipes = li_values(building_defs["MMT_HandChemTable"], "recipes")
 
     for name, expected in PETROCHEM_RECIPE_EXPECTATIONS.items():
         recipe = recipe_defs[name]
+        work_skill = expected.get("workskill", "Crafting")
+        building_name = expected.get("building", "MMT_HandChemTable")
+        table_recipes = li_values(building_defs[building_name], "recipes")
         child_text(recipe, "label")
         assert_equal(child_text(recipe, "workAmount"), expected["work"], f"{name} workAmount")
         assert_equal(child_text(recipe, "workSpeedStat"), expected["speed"], f"{name} workSpeedStat")
         assert_equal(child_text(recipe, "effectWorking"), expected["effect"], f"{name} effectWorking")
         assert_equal(child_text(recipe, "soundWorking"), expected["sound"], f"{name} soundWorking")
-        assert_equal(child_text(recipe, "workSkill"), "Crafting", f"{name} workSkill")
-        assert_equal(child_text(recipe, "workSkillLearnFactor"), "0.8", f"{name} workSkillLearnFactor")
-        assert_equal(child_text(recipe, "./skillRequirements/Crafting"), expected["skill"], f"{name} Crafting requirement")
+        assert_equal(child_text(recipe, "workSkill"), work_skill, f"{name} workSkill")
+        assert_equal(child_text(recipe, "workSkillLearnFactor"), expected.get("learn", "0.8"), f"{name} workSkillLearnFactor")
+        assert_equal(child_text(recipe, f"./skillRequirements/{work_skill}"), expected["skill"], f"{name} {work_skill} requirement")
 
         actual_inputs = []
         for ingredient in recipe.findall("./ingredients/li"):
@@ -2737,9 +2769,9 @@ def validate_petrochem_recipes() -> None:
         assert_equal((products[0].text or "").strip(), expected["output_count"], f"{name} 输出数量")
 
         if li_values(recipe, "recipeUsers"):
-            fail(f"{name} 应由 MMT_HandChemTable 的 recipes 列表挂载，不应写 recipeUsers")
+            fail(f"{name} 应由 {building_name} 的 recipes 列表挂载，不应写 recipeUsers")
         if name not in table_recipes:
-            fail(f"{name} 未挂载到手动化学实验台")
+            fail(f"{name} 未挂载到 {building_name}")
 
         research = recipe.findtext("researchPrerequisite")
         research = research.strip() if research else None

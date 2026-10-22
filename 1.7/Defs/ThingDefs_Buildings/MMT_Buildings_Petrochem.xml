@@ -64,6 +64,60 @@
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
   </ThingDef>
 
+  <!-- 手压油泵：参考原版深钻井的无电变体，但不依赖地下资源/扫描，任意位置建造后通过配方缓慢压取原油 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_HandOilPump</defName>
+    <label>手压油泵</label>
+    <description>依靠人力往复压取地下浅层原油的泵架。不需要电力，但出油很慢。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_HandOilPump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,3.5)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>80</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>60</costStuffCount>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1500</WorkToBuild>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Mass>80</Mass>
+    </statBases>
+    <size>(2,2)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_PumpCrudeOil</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <building>
+      <uninstallWork>800</uninstallWork>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_BasicPetrochemistry</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
+  </ThingDef>
+
   <ThingDef ParentName="RockBase">
     <defName>MMT_MineableOilSeep</defName>
     <label>油苗</label>

@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+  <!-- 手压采油：石化链起点，参考挖盐（无输入、大工作量、采矿技能），一次压取 10 原油 -->
+  <RecipeDef>
+    <defName>MMT_PumpCrudeOil</defName>
+    <label>压取原油</label>
+    <description>人力往复压取地下浅层原油。费时费力。产出 10。</description>
+    <jobString>正在压取原油。</jobString>
+    <workAmount>4000</workAmount>
+    <workSpeedStat>MiningSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <products>
+      <MMT_CrudeOil>10</MMT_CrudeOil>
+    </products>
+    <skillRequirements>
+      <Mining>3</Mining>
+    </skillRequirements>
+    <workSkill>Mining</workSkill>
+    <workSkillLearnFactor>0.5</workSkillLearnFactor>
+    <researchPrerequisite>MMT_BasicPetrochemistry</researchPrerequisite>
+  </RecipeDef>
+
   <RecipeDef>
     <defName>MMT_DistillPolymers_Hand</defName>
     <label>蒸馏聚合物</label>
