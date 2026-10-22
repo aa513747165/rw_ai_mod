@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 药品链研究：对照 HSK Research_Medicine.xml（Medicine_SK 页），移入 MMT_ResearchTab。
+       原版同名研究（PsychoidBrewing/DrugProduction/MedicineProduction/PsychiteRefining/
+       WakeUpProduction/GoJuiceProduction/PenoxycylineProduction）由 Patches/MMT_Patch_VanillaDrugs.xml
+       改挂到本线前置；视图坐标使用 Y=10/11/12 三个新行 -->
+
+  <!-- ============ 医疗线（Y=10） ============ -->
+
+  <!-- 医疗物资 I：解锁粗制绷带 -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_A1</defName>
+    <label>医疗物资 I</label>
+    <description>学习基础的战场急救，用布料制作粗制绷带止血。</description>
+    <baseCost>150</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 医疗物资 II：解锁绷带包、手工制药台 -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_A2</defName>
+    <label>医疗物资 II</label>
+    <description>改进绷带制作工艺，并搭建专门处理药材的制药台。</description>
+    <baseCost>200</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_A1</li>
+    </prerequisites>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 医疗物资 III：解锁草药包 -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_B1</defName>
+    <label>医疗物资 III</label>
+    <description>掌握草药的精制与配伍，将草药原料加工为效力更强的草药包。</description>
+    <baseCost>400</baseCost>
+    <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_A2</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 医疗物资 IV：解锁基础医药包 -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_B2</defName>
+    <label>医疗物资 IV</label>
+    <description>将芦荟等草药与绷带组合，制作接近工业水准的基础医药包。</description>
+    <baseCost>500</baseCost>
+    <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_B1</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 医疗物资 VI：解锁闪耀世界医药（前置为原版 MedicineProduction，由 patch 挂到 B2 之后） -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_D1</defName>
+    <label>医疗物资 VI</label>
+    <description>融合生物科技、抗生素与高级材料，仿制闪耀世界的先进医药。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MedicineProduction</li>
+    </prerequisites>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 药用植物 I：解锁种植草药根 -->
+  <ResearchProjectDef>
+    <defName>MMT_MedicalPlants_A1</defName>
+    <label>药用植物 I</label>
+    <description>学习培育草药根，稳定获取草药原料。</description>
+    <baseCost>150</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>12.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 药用植物 II：解锁种植芦荟与中性花 -->
+  <ResearchProjectDef>
+    <defName>MMT_MedicalPlants_A2</defName>
+    <label>药用植物 II</label>
+    <description>学习培育芦荟与娇贵的中性花，为高级医药准备原料。</description>
+    <baseCost>200</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_MedicalPlants_A1</li>
+    </prerequisites>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>12.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- ============ 毒品线（Y=11） ============ -->
+
+  <!-- 毒品 I：解锁晾晒架与大麻烟卷 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_A1</defName>
+    <label>毒品 I</label>
+    <description>学习晾晒烟叶并卷制大麻烟卷。</description>
+    <baseCost>75</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 III：解锁电动晾晒架（毒品 II 为原版 PsychoidBrewing，patch 前置 A1） -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_B1</defName>
+    <label>毒品 III</label>
+    <description>用电力设备加速作物脱水干燥，提高毒品原料的处理效率。</description>
+    <baseCost>300</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>PsychoidBrewing</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 V（高级药物合成）：解锁中性胺自然合成、止痛药（毒品 IV 为原版 DrugProduction，patch 前置 B1+高级石化） -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_C2</defName>
+    <label>毒品 V</label>
+    <description>掌握中性胺的实验室合成工艺，是青霉素、清醒丸等高级药物的基础。</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>DrugProduction</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 VI（精神物质精炼）：解锁薄片/雅戈线 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_C3</defName>
+    <label>毒品 VI</label>
+    <description>从精神叶中精炼高纯度精神物质，制备薄片与雅戈。</description>
+    <baseCost>900</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>DrugProduction</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>11.90</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒株种植 I：解锁种植大麻 -->
+  <ResearchProjectDef>
+    <defName>MMT_DrugPlants_A1</defName>
+    <label>毒株种植 I</label>
+    <description>学习种植大麻，获取烟叶原料。</description>
+    <baseCost>100</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>12.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒株种植 II：解锁种植精神叶 -->
+  <ResearchProjectDef>
+    <defName>MMT_DrugPlants_A2</defName>
+    <label>毒株种植 II</label>
+    <description>学习种植精神叶，为精神茶与更烈性的制品准备原料。</description>
+    <baseCost>150</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_DrugPlants_A1</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>12.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

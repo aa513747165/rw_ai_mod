@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 药品链资源与医疗用品：数值对齐 HSK（Items_Resource_Crops/Items_Meals_Medical/Items_Resource_Medicine/DriedMatter.xml），
+       已剔除 CE 专属字段与 SK 基类；类别沿用原版 Medicine/PlantMatter，不新增 MMT 类别 -->
+
+  <!-- 中性花瓣：对照 HSK NeutroPetals（RawDrugsBase，10 天腐烂） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_NeutroPetals</defName>
+    <label>中性花瓣</label>
+    <description>中性花摘下的黄橙色花瓣，是合成中性胺的天然原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_NeutroPetals</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>1.0</MarketValue>
+      <Mass>0.1</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>10</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 芦荟：对照 HSK aloe（本身是 0.45 效力的药品） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_Aloe</defName>
+    <label>芦荟叶</label>
+    <description>一捆从芦荟植株上割下的叶片，可直接用作天然药品，也是调配基础医药包的原料。</description>
+    <thingClass>Medicine</thingClass>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Aloe</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>150</stackLimit>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <MarketValue>5</MarketValue>
+      <Flammability>1.0</Flammability>
+      <MedicalPotency>0.45</MedicalPotency>
+      <DeteriorationRate>6</DeteriorationRate>
+      <Mass>0.15</Mass>
+    </statBases>
+    <thingCategories>
+      <li>Medicine</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 干烟叶：对照 HSK DriedLeavesSmokeleaf（晾晒 100 天腐烂） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_DriedLeavesSmokeleaf</defName>
+    <label>干烟叶</label>
+    <description>经过晾晒脱水的大麻叶，可用于卷制大麻烟卷。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_DriedLeavesSmokeleaf</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <rotatable>false</rotatable>
+    <stackLimit>25</stackLimit>
+    <statBases>
+      <Mass>0.2</Mass>
+      <MarketValue>2.5</MarketValue>
+      <Flammability>1.5</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>100</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 粗制绷带：对照 HSK Bandagekitcrude（效力 0.3） -->
+  <ThingDef ParentName="MedicineBase">
+    <defName>MMT_Bandagekitcrude</defName>
+    <label>粗制绷带</label>
+    <description>一包临时凑合的绷带，做工粗糙，只能用来止血。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Bandagekit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <MarketValue>5</MarketValue>
+      <Flammability>1.0</Flammability>
+      <MedicalPotency>0.3</MedicalPotency>
+      <DeteriorationRate>20</DeteriorationRate>
+      <Mass>0.2</Mass>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 绷带包：对照 HSK Bandagekit（效力 0.4） -->
+  <ThingDef ParentName="MedicineBase">
+    <defName>MMT_Bandagekit</defName>
+    <label>绷带包</label>
+    <description>一包用布料制作的绷带，效力不如真正的医药，但比粗制绷带可靠。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Bandagekit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <MarketValue>5</MarketValue>
+      <Flammability>1.0</Flammability>
+      <MedicalPotency>0.4</MedicalPotency>
+      <DeteriorationRate>20</DeteriorationRate>
+      <Mass>0.25</Mass>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 草药包：对照 HSK HerbMedicine（效力 0.60；HSK 原版即借用原版草药贴图） -->
+  <ThingDef ParentName="MedicineBase">
+    <defName>MMT_HerbMedicine</defName>
+    <label>草药包</label>
+    <description>一包由草药原料精制而成的药剂包，是医疗人员处理伤患的基础物资。</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/Medicine/MedicineHerbal</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <MarketValue>10</MarketValue>
+      <Mass>0.35</Mass>
+      <Flammability>1.0</Flammability>
+      <MedicalPotency>0.60</MedicalPotency>
+      <MedicalQualityMax>0.70</MedicalQualityMax>
+      <DeteriorationRate>15</DeteriorationRate>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>60</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <stackLimit>25</stackLimit>
+  </ThingDef>
+
+  <!-- 基础医药包：对照 HSK Herbmedicine（效力 0.85；HSK 命名仅大小写差异，MMT 改名避免混淆） -->
+  <ThingDef ParentName="MedicineBase">
+    <defName>MMT_BasicMedicineKit</defName>
+    <label>基础医药包</label>
+    <description>一包由芦荟等草药与绷带组合的医药包，效力不及工业化药品。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_BasicMedicineKit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Medieval</techLevel>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <MarketValue>10</MarketValue>
+      <Flammability>1.0</Flammability>
+      <MedicalPotency>0.85</MedicalPotency>
+      <DeteriorationRate>20</DeteriorationRate>
+      <Mass>2</Mass>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>25</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <stackLimit>25</stackLimit>
+  </ThingDef>
+
+  <!-- 抗生素：对照 HSK MedicalDrink（可饮用提升血液过滤，也是闪耀医药原料） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_MedicalDrink</defName>
+    <label>抗生素</label>
+    <description>草药根与啤酒花浓缩提取的药剂，味道极苦，但能增强免疫系统。也是制造闪耀世界医药的关键原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_MedicalDrink</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <stackLimit>25</stackLimit>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <DeteriorationRate>5</DeteriorationRate>
+      <MarketValue>15</MarketValue>
+      <Nutrition>0.01</Nutrition>
+      <Mass>0.2</Mass>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <preferability>NeverForNutrition</preferability>
+      <ingestSound>Ingest_Drink</ingestSound>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_MedicalDrinkBoost</hediffDef>
+          <severity>0.25</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <addictiveness>0</addictiveness>
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

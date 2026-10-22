@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 药品链药物制品：数值对齐 HSK（Drugs/HerbalTea/ActivatedCarbon/Drugs.xml/Methadone.xml）。
+       与 HSK 的差异：草药茶/活性炭去除 SK 专有 IngestionOutcomeDoer_SubtractHediffSeverity（直接削减食物中毒），
+       保留通用 hediff 缓解效果；美沙酮不建自有成瘾体系，chemical 复用原版 Psychite（满足精神类药物戒断需求） -->
+
+  <!-- 草药茶：对照 HSK HerbalTea（缓解疼痛、加速代谢，但令人疲倦） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_HerbalTea</defName>
+    <label>草药茶</label>
+    <description>用多种草药泡制的茶，能轻微缓解疼痛、平复心情并加速身体代谢，但会让人犯困。</description>
+    <descriptionHyperlinks>
+      <HediffDef>FoodPoisoning</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_HerbalTea</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>640</WorkToMake>
+      <MarketValue>36</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>3</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>-0.05</offset>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_HerbalTeaConsumed</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 活性炭丸：对照 HSK ActivatedCarbon（缓解食物中毒症状） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_ActivatedCarbon</defName>
+    <label>活性炭丸</label>
+    <description>简单但有效的解毒药丸，能吸附肠胃中的毒素，缓解食物中毒症状，需要服用数次。</description>
+    <descriptionHyperlinks>
+      <HediffDef>FoodPoisoning</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_ActivatedCarbon</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>640</WorkToMake>
+      <MarketValue>16</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>3</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_ActivatedCarbonConsumed</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 狂暴草：对照 HSK Berserk_herb（战斗兴奋剂，高剂量有心脏病风险；剔除 CE 的 Suppressability） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_BerserkHerb</defName>
+    <label>狂暴草</label>
+    <description>一种强力的镇痛草药，通常在战斗前服用。过量使用有诱发心脏病的风险。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_BerserkHerb</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>200</WorkToMake>
+      <MarketValue>13</MarketValue>
+      <Mass>0.1</Mass>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <techLevel>Neolithic</techLevel>
+    <ingestible>
+      <foodType>Plant, Processed</foodType>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <preferability>NeverForNutrition</preferability>
+      <ingestEffect>Smoke_Joint</ingestEffect>
+      <ingestCommandString>吸食 {0}</ingestCommandString>
+      <ingestReportString>正在吸食 {0}。</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_BerserkHerbHigh</hediffDef>
+          <severity>0.7</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <addictiveness>0</addictiveness>
+        <isCombatEnhancingDrug>true</isCombatEnhancingDrug>
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 美沙酮：对照 HSK Methadone（戒断替代药；MMT 简化：chemical 复用原版 Psychite，
+       服用后满足精神类药物的化学依赖需求，自身无成瘾性） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Methadone</defName>
+    <label>美沙酮</label>
+    <description>一种用于戒断治疗的合成阿片类药物，服用后能压制薄片与雅戈等精神类药物的戒断症状。戒断期结束后应停止服用。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Methadone</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>500</WorkToMake>
+      <MarketValue>16</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_MethadoneHigh</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>Psychite</chemical>
+        <addictiveness>0</addictiveness>
+        <needLevelOffset>1</needLevelOffset>
+        <listOrder>2000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 止痛药：对照 HSK VG_Ibuprofen（每日服用阻断疼痛） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Ibuprofen</defName>
+    <label>止痛药</label>
+    <description>一种阻断疼痛的药物，每天服用一次。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Ibuprofen</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>200</WorkToMake>
+      <MarketValue>11</MarketValue>
+      <Mass>0.005</Mass>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <preferability>NeverForNutrition</preferability>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_IbuprofenHigh</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <addictiveness>0</addictiveness>
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -186,6 +186,81 @@
     </plant>
   </ThingDef>
 
+  <!-- 芦荟：对照 HSK Plant_Aloe（药品链） -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantAloe</defName>
+    <label>芦荟</label>
+    <description>一种多肉药用植物，割下的芦荟叶可直接用作天然药品，也可调配基础医药包。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>4</Beauty>
+      <BeautyOutdoors>4</BeautyOutdoors>
+      <Nutrition>0.15</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantAloe</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>10</sowMinSkill>
+      <sowResearchPrerequisites>
+        <li>MMT_MedicalPlants_A2</li>
+      </sowResearchPrerequisites>
+      <sowTags>
+        <li>Ground</li>
+        <li>Hydroponic</li>
+      </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantAloe_Immature</immatureGraphicPath>
+      <harvestedThingDef>MMT_Aloe</harvestedThingDef>
+      <harvestYield>4</harvestYield>
+      <topWindExposure>0.1</topWindExposure>
+      <growDays>4.7</growDays>
+      <fertilityMin>0.3</fertilityMin>
+      <fertilitySensitivity>1.4</fertilitySensitivity>
+      <visualSizeRange>0.1~0.7</visualSizeRange>
+      <wildOrder>2</wildOrder>
+      <purpose>Health</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- 中性花：对照 HSK Plant_NeutroFlower（仅限水培，产中性胺原料） -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantNeutroFlower</defName>
+    <label>中性花</label>
+    <description>一种美丽的黄橙色花卉，花瓣是合成中性胺的天然原料。只能在水培条件下种植。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>17</Beauty>
+      <BeautyOutdoors>17</BeautyOutdoors>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantNeutroFlower</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>7</sowMinSkill>
+      <sowResearchPrerequisites>
+        <li>MMT_MedicalPlants_A2</li>
+      </sowResearchPrerequisites>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantNeutroFlower_Immature</immatureGraphicPath>
+      <harvestedThingDef>MMT_NeutroPetals</harvestedThingDef>
+      <harvestYield>5</harvestYield>
+      <growDays>6.2</growDays>
+      <fertilitySensitivity>1</fertilitySensitivity>
+      <visualSizeRange>0.2~0.8</visualSizeRange>
+      <wildOrder>2</wildOrder>
+    </plant>
+  </ThingDef>
+
   <!-- 红木：对照 HSK PlantTreeRedwood（野生巨树，不可播种；SK 扩展贴图组件已剔除） -->
   <ThingDef ParentName="TreeBase">
     <defName>MMT_PlantRedwood</defName>
