@@ -635,6 +635,24 @@ WEAPON_MISC_WHITELIST = {"tradeability", "generateCommonality", "soundInteract",
 
 UNFINISHED_MAP = {"UnfinishedWeapon": "UnfinishedGun", "UnfinishedGun": "UnfinishedGun", "UnfinishedMeleeWeapon": "UnfinishedMeleeWeapon"}
 
+# 原版 graphicClass 白名单；SK/CE 自定义图形类一律回退 Graphic_Single
+VANILLA_GRAPHIC_CLASSES = {
+    "Graphic_Single", "Graphic_Multi", "Graphic_StackCount", "Graphic_Random",
+    "Graphic_RandomRotated", "Graphic_Cluster", "Graphic_Terrain",
+}
+
+
+def sanitize_graphic_data(graphic: ET.Element | None) -> ET.Element | None:
+    """剔除 SK/CE 自定义 graphicClass，回退为 Graphic_Single。"""
+    if graphic is None:
+        return None
+    out = copy.deepcopy(graphic)
+    cls = out.find("graphicClass")
+    if cls is not None and cls.text and cls.text not in VANILLA_GRAPHIC_CLASSES:
+        print(f"[manual_review] graphicClass {cls.text} 回退为 Graphic_Single")
+        cls.text = "Graphic_Single"
+    return out
+
 # 配方批次覆盖：BuildFireExtinguisher 产物在 npc 文件，但属玩家可制造配方，归入常规批次
 RECIPE_BATCH_OVERRIDES = {"BuildFireExtinguisher": "conventional"}
 
@@ -771,9 +789,9 @@ def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: di
     description = index.strings_zh.get(f"{source_name}.description") or nearest_text(chain, "description") or ""
     ET.SubElement(out, "label").text = label
     ET.SubElement(out, "description").text = description
-    graphic = nearest_node(chain, "graphicData")
+    graphic = sanitize_graphic_data(nearest_node(chain, "graphicData"))
     if graphic is not None:
-        out.append(copy.deepcopy(graphic))
+        out.append(graphic)
     sound_interact = nearest_text(chain, "soundInteract")
     if sound_interact:
         if sound_interact in mapping["sound_fallbacks"]:
@@ -983,11 +1001,16 @@ def build_archaic(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str
     return build_weapon_batch("archaic", index, mapping, only)
 
 
+def build_futuristic(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, str]:
+    return build_weapon_batch("futuristic", index, mapping, only)
+
+
 BATCH_BUILDERS = {
     "core": build_core,
     "research": build_research,
     "conventional": build_conventional,
     "archaic": build_archaic,
+    "futuristic": build_futuristic,
 }
 
 

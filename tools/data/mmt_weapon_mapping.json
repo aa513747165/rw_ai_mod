@@ -85,6 +85,24 @@
     ],
     "notes": "上述为 CE 专属弹道/压制/弹壳/二次伤害字段，原版投射物无法表达，人工确认丢弃；燃烧/爆炸类二次伤害在 W3 特殊投射物审查中单独处理；如新增未识别字段生成器会再次告警"
   },
+  "projectile_overrides": {
+    "Bullet_Laserbeam": {"damageDef": "Burn", "speed": "200"},
+    "Bullet_Laserbeam_Mantis": {"damageDef": "Burn"},
+    "Bullet_Plasma": {"damageDef": "Burn"},
+    "Bullet_PlasmaPelletBolt": {"damageDef": "Burn"},
+    "Bullet_PlasmaSniper": {"damageDef": "Burn"},
+    "Bullet_ArchoBlaster": {"damageDef": "Burn"},
+    "Bullet_Blaster": {"damageDef": "Burn"},
+    "Bullet_Blaster_BlackWidow": {"damageDef": "Burn"},
+    "Bullet_130mmRocketMissile": {"damageDef": "Bomb"},
+    "Proj_GrenadeFusion": {"damageDef": "Bomb"},
+    "Proj_GrenadeChargedFrag": {"damageDef": "Bomb"},
+    "Proj_GrenadePlasma": {"damageDef": "Flame"},
+    "Bullet_30x64mmFuel_Incendiary": {"damageDef": "Flame"},
+    "Bullet_Flamethrower_Prometheum": {"damageDef": "Flame"},
+    "PoisonDart": {"damageDef": "ScratchToxic"},
+    "Projectile_ArchoSword": {"damageDef": "Blunt"}
+  },
   "research": {
     "Melee_C1": "LongBlades",
     "Melee_C2": "MMT_MeleeAdvanced",

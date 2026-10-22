@@ -5274,6 +5274,18 @@ WEAPON_BATCH_FILES = {
 }
 
 
+def validate_weapons_futuristic() -> None:
+    weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml"))
+    recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml"))
+    assert_equal(len(weapons), 28, "未来武器数")
+    assert_equal(len(recipes), 12, "未来武器配方数（4 条 ReverseEngineer 已排除）")
+    laser = weapons["MMT_LaserRifle"]
+    assert_equal(child_text(laser, "verbs/li/defaultProjectile"), "MMT_Bullet_Laserbeam", "激光步枪投射物")
+    assert "MMT_Gun_ChargeRifle" in weapons
+    assert "SK.Graphic_SingleNoColor" not in read_text("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml")
+    print("weapons-futuristic: OK")
+
+
 def validate_weapons_archaic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml"))
@@ -5322,6 +5334,18 @@ def validate_weapons_research() -> None:
     print("weapons-research: OK")
 
 
+VANILLA_DAMAGE_DEFS = {
+    "AcidBurn", "Arrow", "ArrowHighVelocity", "Beam", "BeamBypassShields", "Bite", "Blunt",
+    "Bomb", "BombSuper", "Bullet", "BulletToxic", "Bullet_TraitIncendiary", "Bullet_TraitTox",
+    "Burn", "Crush", "Cut", "DeadlifeDust", "Decayed", "Demolish", "Deterioration", "Digested",
+    "EMP", "ElectricalBurn", "EnergyBolt", "ExecutionCut", "Extinguish", "Flame", "Frostbite",
+    "MechBandShockwave", "Mining", "MiningBomb", "Nerve", "NerveStun", "NociosphereVaporize",
+    "Poke", "PorcupineBite", "PorcupineScratch", "Psychic", "RangedStab", "Rotting", "Scratch",
+    "ScratchToxic", "Smoke", "Stab", "Stun", "SurgicalCut", "Thump", "TornadoScratch", "ToxGas",
+    "ToxicBite", "VacuumBurn", "Vaporize",
+}
+
+
 def validate_weapons_projectiles() -> None:
     projectiles = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml"))
     bullet = projectiles["MMT_Bullet_762x51mmNATO_FMJ"]
@@ -5333,6 +5357,11 @@ def validate_weapons_projectiles() -> None:
     fifty = projectiles["MMT_Bullet_50BMG_FMJ"]
     assert_equal(child_text(fifty, "projectile/damageAmountBase"), "42", ".50 伤害")
     assert_equal(child_text(fifty, "projectile/armorPenetrationBase"), "0.14", ".50 穿甲")
+
+    for name, node in projectiles.items():
+        damage_def = child_text(node, "projectile/damageDef")
+        if damage_def not in VANILLA_DAMAGE_DEFS:
+            fail(f"{name} 引用非原版 damageDef: {damage_def}")
 
     sounds = def_map(parse_xml("1.7/Defs/SoundDefs/MMT_Sounds_Weapons.xml"))
     if "MMT_Shot_Tavor" not in sounds:
@@ -5432,6 +5461,7 @@ SUITES = {
     "weapons-research": validate_weapons_research,
     "weapons-conventional": validate_weapons_conventional,
     "weapons-archaic": validate_weapons_archaic,
+    "weapons-futuristic": validate_weapons_futuristic,
     "all": validate_all,
 }
 

@@ -70,7 +70,7 @@
 		<description>复合弓使用通常由缆绳和滑轮组成的杠杆系统来弯曲弓臂。滑轮系统为使用者提供机械优势，因此复合弓的弓臂比反曲弓或长弓硬得多。</description>
 		<graphicData>
 			<texPath>Things/Weapons/Bows/BowCompound</texPath>
-			<graphicClass>SK.Graphic_SingleNoColor</graphicClass>
+			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<soundInteract>Bow_Recurve</soundInteract>
 		<techLevel>Industrial</techLevel>
@@ -397,7 +397,7 @@
 		<description>复合弩使用通常由缆绳和滑轮组成的杠杆系统来弯曲弩臂。滑轮系统为使用者提供机械优势，因此复合弩的弩臂比传统弩硬得多。</description>
 		<graphicData>
 			<texPath>Things/Weapons/Crossbows/CrossbowCompound</texPath>
-			<graphicClass>SK.Graphic_SingleNoColor</graphicClass>
+			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<soundInteract>MMT_Crossbow_I_hold</soundInteract>
 		<techLevel>Industrial</techLevel>

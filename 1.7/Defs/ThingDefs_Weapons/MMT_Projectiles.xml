@@ -35,7 +35,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Thermobaric</damageDef>
+			<damageDef>Bomb</damageDef>
 			<damageAmountBase>250</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>0</speed>
@@ -149,7 +149,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>PrometheumFlame</damageDef>
+			<damageDef>Flame</damageDef>
 			<damageAmountBase>10</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>54</speed>
@@ -273,7 +273,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Optic</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>30</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>300</speed>
@@ -299,7 +299,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Optic</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>15</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>170</speed>
@@ -312,7 +312,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Optic</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>30</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>170</speed>
@@ -343,7 +343,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>PrometheumFlame</damageDef>
+			<damageDef>Flame</damageDef>
 			<damageAmountBase>5</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>20</speed>
@@ -375,10 +375,10 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>LaserBurn</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>20</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
-			<speed>70</speed>
+			<speed>200</speed>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -388,7 +388,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>LaserBurn</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>40</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>70</speed>
@@ -414,7 +414,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Plasma</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>18</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>165</speed>
@@ -427,7 +427,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Plasma</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>9</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>150</speed>
@@ -440,7 +440,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Plasma</damageDef>
+			<damageDef>Burn</damageDef>
 			<damageAmountBase>27</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>180</speed>
@@ -545,7 +545,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>ArrowVenom</damageDef>
+			<damageDef>ScratchToxic</damageDef>
 			<damageAmountBase>3</damageAmountBase>
 			<armorPenetrationBase>0.02</armorPenetrationBase>
 			<speed>28</speed>
@@ -558,7 +558,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>BombCharged</damageDef>
+			<damageDef>Bomb</damageDef>
 			<damageAmountBase>105</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>9</speed>
@@ -593,7 +593,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>Thermobaric</damageDef>
+			<damageDef>Bomb</damageDef>
 			<damageAmountBase>205</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>9</speed>
@@ -627,7 +627,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>PlasmaFlame</damageDef>
+			<damageDef>Flame</damageDef>
 			<damageAmountBase>130</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>9</speed>
@@ -676,7 +676,7 @@
 			<graphicClass>Graphic_Single</graphicClass>
 		</graphicData>
 		<projectile>
-			<damageDef>KineticPulse</damageDef>
+			<damageDef>Blunt</damageDef>
 			<damageAmountBase>70</damageAmountBase>
 			<armorPenetrationBase>0.6</armorPenetrationBase>
 			<speed>15</speed>
