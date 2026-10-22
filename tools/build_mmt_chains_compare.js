@@ -29,6 +29,11 @@ const MMT_ALIAS = {
   // B8 作物植物（竹/棕榈为原版 def，patch 收获物，不在此表）
   PlantFlax: 'Plant_Flax', PlantWildRose: 'Plant_WildRose', PlantHypericum: 'Plant_Hypericum',
   PlantMint: 'Plant_Mint', PlantHevea: 'Plant_TreeHevea', PlantRedwood: 'PlantTreeRedwood',
+  // 药品链（与 HSK 同名的 NeutroPetals/DriedLeavesSmokeleaf/Bandagekit/HerbMedicine/MedicalDrink/
+  // HerbalTea/ActivatedCarbon/Methadone/DryingRack/ElectricDryingRack/NeutroamineRefiner 无需别名）
+  Aloe: 'aloe', BasicMedicineKit: 'Herbmedicine', BerserkHerb: 'Berserk_herb',
+  Ibuprofen: 'VG_Ibuprofen', PlantAloe: 'Plant_Aloe', PlantNeutroFlower: 'Plant_NeutroFlower',
+  MedicalTable: 'meditable', ElectricMedicalTable: 'meditable',
 };
 
 // ---------- 读取 MMT Defs ----------

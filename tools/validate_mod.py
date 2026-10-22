@@ -1254,6 +1254,9 @@ CROPS_PLANT_EXPECTATIONS = {
     "MMT_PlantMint": {"harvest": "MMT_MintLeaves", "yield": "5", "grow": "6.5", "sow": ["Hydroponic"], "skill": "12"},
     "MMT_PlantHevea": {"harvest": "MMT_RawCaoutchouc", "yield": "20", "grow": "6.5", "sow": ["Ground"], "skill": "8"},
     "MMT_PlantRedwood": {"harvest": "MMT_RedWoodLog", "yield": "225", "grow": "85", "sow": [], "skill": None},
+    # 药品链植物：允许带 MMT 播种研究前置（sowResearch 字段，区别于被禁止的 HSK 前置）
+    "MMT_PlantAloe": {"harvest": "MMT_Aloe", "yield": "4", "grow": "4.7", "sow": ["Ground", "Hydroponic"], "skill": "10", "sowResearch": ["MMT_MedicalPlants_A2"]},
+    "MMT_PlantNeutroFlower": {"harvest": "MMT_NeutroPetals", "yield": "5", "grow": "6.2", "sow": ["Hydroponic"], "skill": "7", "sowResearch": ["MMT_MedicalPlants_A2"]},
 }
 
 CROPS_ITEM_TEXTURES = [
@@ -1715,8 +1718,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 52
-INFRA_WORKTABLE_TOTAL = 25
+INFRA_RESEARCH_TOTAL = 65  # 含药品链 13 项（MMT_Research_Medicine.xml）
+INFRA_WORKTABLE_TOTAL = 30  # 含药品链 5 台（MMT_Buildings_Medicine.xml）
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
     "MMT_MetallicBar": "Manufactured",
@@ -4701,7 +4704,11 @@ def validate_textiles_weapons() -> None:
                 fail(f"{name} 不应定义播种技能")
         else:
             assert_equal((skill_node.text or "").strip() if skill_node is not None else None, expected["skill"], f"{name} 播种技能")
-        if node.find("./plant/sowResearchPrerequisites") is not None:
+        sow_research_node = node.find("./plant/sowResearchPrerequisites")
+        if "sowResearch" in expected:
+            sow_research = [li.text for li in sow_research_node.findall("li")] if sow_research_node is not None else []
+            assert_equal(sow_research, expected["sowResearch"], f"{name} 播种研究前置")
+        elif sow_research_node is not None:
             fail(f"{name} 不得带 HSK 播种研究前置")
         tex = child_text(node, "./graphicData/texPath")
         if not tex.startswith(f"Things/Plant/MMT/{name}"):
@@ -5695,6 +5702,197 @@ def validate_weapons_core() -> None:
     print("weapons-core: OK")
 
 
+MEDICINE_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Medicine.xml"
+MEDICINE_ITEMS_XML = "1.7/Defs/ThingDefs_Items/MMT_Items_Drugs.xml"
+MEDICINE_HEDIFFS_XML = "1.7/Defs/HediffDefs/MMT_Hediffs_Drugs.xml"
+MEDICINE_PLANTS_XML = "1.7/Defs/ThingDefs_Plants/MMT_Plants_Cultivated.xml"
+MEDICINE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Medicine.xml"
+MEDICINE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Medicine.xml"
+DRUG_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Drugs.xml"
+MEDICINE_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Medicine.xml"
+MEDICINE_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaMedicine.xml"
+DRUG_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaDrugs.xml"
+
+MEDICINE_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_NeutroPetals.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_Aloe.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_DriedLeavesSmokeleaf/DriedLeavesSmokeleaf_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_Bandagekit.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_BasicMedicineKit.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_MedicalDrink.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_HerbalTea/Tea_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_ActivatedCarbon/ActivatedCarbon_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_BerserkHerb/Berserk_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_Ibuprofen/Ibuprofen_a.png",
+    "1.7/Textures/Things/Item/MMT/MMT_Medicine/MMT_Methadone/Methadone_a.png",
+    "1.7/Textures/Things/Plant/MMT/MMT_PlantAloe/AloeA_Harvest.png",
+    "1.7/Textures/Things/Plant/MMT/MMT_PlantAloe_Immature/AloeA_Harvest.png",
+    "1.7/Textures/Things/Plant/MMT/MMT_PlantNeutroFlower/NeuroflowersA_Harvest.png",
+    "1.7/Textures/Things/Plant/MMT/MMT_PlantNeutroFlower_Immature/NeuroflowersA_Harvest.png",
+    "1.7/Textures/Things/Building/Production/MMT_ElectricMedicalTable/MMT_ElectricMedicalTable_south.png",
+    "1.7/Textures/Things/Building/Production/MMT_ElectricMedicalTable/MMT_ElectricMedicalTable_southm.png",
+    "1.7/Textures/Things/Building/Production/MMT_DryingRack.png",
+    "1.7/Textures/Things/Building/Production/MMT_ElectricDryingRack/MMT_ElectricDryingRack_south.png",
+    "1.7/Textures/Things/Building/Production/MMT_NeutroamineRefiner.png",
+]
+
+MEDICINE_RESEARCH_DEFS = {
+    "MMT_Medicine_A1": [],
+    "MMT_Medicine_A2": ["MMT_Medicine_A1"],
+    "MMT_Medicine_B1": ["MMT_Medicine_A2"],
+    "MMT_Medicine_B2": ["MMT_Medicine_B1"],
+    "MMT_Medicine_D1": ["MedicineProduction"],
+    "MMT_MedicalPlants_A1": [],
+    "MMT_MedicalPlants_A2": ["MMT_MedicalPlants_A1"],
+    "MMT_Drugs_A1": [],
+    "MMT_Drugs_B1": ["PsychoidBrewing"],
+    "MMT_Drugs_C2": ["DrugProduction"],
+    "MMT_Drugs_C3": ["DrugProduction"],
+    "MMT_DrugPlants_A1": [],
+    "MMT_DrugPlants_A2": ["MMT_DrugPlants_A1"],
+}
+
+
+def validate_medicine() -> None:
+    """药品链：资源/药物/hediff/植物/建筑/配方/研究/同名改造 patch 的专项校验。"""
+    require_files([
+        MEDICINE_RESOURCE_XML,
+        MEDICINE_ITEMS_XML,
+        MEDICINE_HEDIFFS_XML,
+        MEDICINE_PLANTS_XML,
+        MEDICINE_BUILDING_XML,
+        MEDICINE_RECIPE_XML,
+        DRUG_RECIPE_XML,
+        MEDICINE_RESEARCH_XML,
+        MEDICINE_PATCH_XML,
+        DRUG_PATCH_XML,
+        *MEDICINE_TEXTURES,
+    ])
+
+    # 资源与中间产物
+    resource_defs = def_map(parse_xml(MEDICINE_RESOURCE_XML))
+    assert_equal(
+        set(resource_defs),
+        {"MMT_NeutroPetals", "MMT_Aloe", "MMT_DriedLeavesSmokeleaf", "MMT_Bandagekitcrude",
+         "MMT_Bandagekit", "MMT_HerbMedicine", "MMT_BasicMedicineKit", "MMT_MedicalDrink"},
+        "药品资源 defName 集合",
+    )
+    # 效力阶梯：绷带 0.3/0.4 → 芦荟 0.45 → 草药包 0.60 → 基础医药包 0.85
+    for name, potency in (("MMT_Bandagekitcrude", "0.3"), ("MMT_Bandagekit", "0.4"),
+                          ("MMT_Aloe", "0.45"), ("MMT_HerbMedicine", "0.60"),
+                          ("MMT_BasicMedicineKit", "0.85")):
+        assert_equal(child_text(resource_defs[name], "./statBases/MedicalPotency"), potency, f"{name} 效力")
+
+    # 药物制品与美沙酮 chemical
+    drug_defs = def_map(parse_xml(MEDICINE_ITEMS_XML))
+    assert_equal(
+        set(drug_defs),
+        {"MMT_HerbalTea", "MMT_ActivatedCarbon", "MMT_BerserkHerb", "MMT_Methadone", "MMT_Ibuprofen"},
+        "药物制品 defName 集合",
+    )
+    methadone_drug = next(li for li in drug_defs["MMT_Methadone"].findall("comps/li")
+                          if li.attrib.get("Class") == "CompProperties_Drug")
+    assert_equal(child_text(methadone_drug, "chemical"), "Psychite", "美沙酮 chemical")
+
+    # hediff
+    hediff_defs = def_map(parse_xml(MEDICINE_HEDIFFS_XML))
+    assert_equal(
+        set(hediff_defs),
+        {"MMT_MedicalDrinkBoost", "MMT_HerbalTeaConsumed", "MMT_ActivatedCarbonConsumed",
+         "MMT_BerserkHerbHigh", "MMT_MethadoneHigh", "MMT_IbuprofenHigh"},
+        "hediff defName 集合",
+    )
+
+    # 药用植物：产物、水培限制、播种研究
+    plant_defs = def_map(parse_xml(MEDICINE_PLANTS_XML))
+    aloe = plant_defs["MMT_PlantAloe"]
+    assert_equal(child_text(aloe, "./plant/harvestedThingDef"), "MMT_Aloe", "芦荟产物")
+    assert_equal(child_text(aloe, "./plant/harvestYield"), "4", "芦荟产量")
+    neutro = plant_defs["MMT_PlantNeutroFlower"]
+    assert_equal(child_text(neutro, "./plant/harvestedThingDef"), "MMT_NeutroPetals", "中性花产物")
+    assert_equal(li_values(neutro, "./plant/sowTags"), ["Hydroponic"], "中性花仅限水培")
+    for name in ("MMT_PlantAloe", "MMT_PlantNeutroFlower"):
+        assert_equal(li_values(plant_defs[name], "./plant/sowResearchPrerequisites"),
+                     ["MMT_MedicalPlants_A2"], f"{name} 播种研究")
+
+    # 建筑：五台，电动三台耗电
+    building_defs = def_map(parse_xml(MEDICINE_BUILDING_XML))
+    assert_equal(
+        set(building_defs),
+        {"MMT_MedicalTable", "MMT_ElectricMedicalTable", "MMT_DryingRack",
+         "MMT_ElectricDryingRack", "MMT_NeutroamineRefiner"},
+        "药品建筑 defName 集合",
+    )
+    for name, power in (("MMT_ElectricMedicalTable", "500"), ("MMT_ElectricDryingRack", "400"),
+                        ("MMT_NeutroamineRefiner", "2500")):
+        power_comp = next(li for li in building_defs[name].findall("comps/li")
+                          if li.attrib.get("Class") == "CompProperties_Power")
+        assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
+
+    # 医疗配方：成品药产出与关键输入
+    med_recipes = def_map(parse_xml(MEDICINE_RECIPE_XML))
+    assert_equal(
+        set(med_recipes),
+        {"MMT_MakeBandagekitcrude", "MMT_MakeBandagekitcrudeBulk", "MMT_MakeBandagekit",
+         "MMT_MakeBandagekitBulk", "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit",
+         "MMT_MakeBasicMedicineKitMix", "MMT_BrewMedicalDrink", "MMT_MakeMedicineIndustrial",
+         "MMT_MakeMedicineUltratech"},
+        "医疗配方 defName 集合",
+    )
+    industrial = med_recipes["MMT_MakeMedicineIndustrial"]
+    assert_equal([li.tag for li in industrial.find("products")], ["MedicineIndustrial"], "工业医药产物")
+    industrial_inputs = {td.text: ing.findtext("count") for ing in industrial.findall("ingredients/li")
+                         for td in ing.findall("filter/thingDefs/li")}
+    assert_equal(industrial_inputs.get("Neutroamine"), "2", "工业医药中性胺用量")
+    assert_equal(industrial_inputs.get("MMT_Plastic"), "10", "工业医药塑料用量")
+    ultratech = med_recipes["MMT_MakeMedicineUltratech"]
+    assert_equal([li.tag for li in ultratech.find("products")], ["MedicineUltratech"], "闪耀医药产物")
+    assert_equal(child_text(ultratech, "researchPrerequisite"), "MMT_Medicine_D1", "闪耀医药研究")
+
+    # 毒品配方：中性胺双路径 + 晾晒
+    drug_recipes = def_map(parse_xml(DRUG_RECIPE_XML))
+    assert_equal(
+        set(drug_recipes),
+        {"MMT_MakeNeutroamine", "MMT_RefineNeutroamine", "MMT_DrySmokeleaf", "MMT_DrySmokeleafBulk",
+         "MMT_MakeHerbalTea", "MMT_MakeActivatedCarbon", "MMT_MakeBerserkHerb", "MMT_MakeMethadone",
+         "MMT_MakeIbuprofen", "MMT_MakeIbuprofenBulk"},
+        "毒品配方 defName 集合",
+    )
+    for name in ("MMT_MakeNeutroamine", "MMT_RefineNeutroamine"):
+        assert_equal([li.tag for li in drug_recipes[name].find("products")], ["Neutroamine"],
+                     f"{name} 产物（中性胺双路径）")
+    natural_inputs = {td.text for ing in drug_recipes["MMT_MakeNeutroamine"].findall("ingredients/li")
+                      for td in ing.findall("filter/thingDefs/li")}
+    assert_equal(natural_inputs, {"MMT_NeutroPetals", "MMT_Hypericum"}, "自然合成中性胺输入")
+    refiner_users = li_values(drug_recipes["MMT_RefineNeutroamine"], "recipeUsers")
+    assert_equal(refiner_users, ["MMT_NeutroamineRefiner"], "石化精炼工作台")
+
+    # 研究：集合、前置链、tab
+    research_defs = def_map(parse_xml(MEDICINE_RESEARCH_XML))
+    assert_equal(set(research_defs), set(MEDICINE_RESEARCH_DEFS), "药品研究 defName 集合")
+    for name, prereqs in MEDICINE_RESEARCH_DEFS.items():
+        assert_equal(li_values(research_defs[name], "prerequisites"), prereqs, f"{name} 前置")
+        assert_equal(child_text(research_defs[name], "tab"), "MMT_ResearchTab", f"{name} tab")
+
+    # 同名改造 patch：不删原版 def，只做属性/成本/前置改写
+    med_patch = parse_xml(MEDICINE_PATCH_XML)
+    med_xpaths = [child_text(li, "xpath") for op in med_patch.findall("Operation")
+                  for li in op.find("operations")]
+    assert 'Defs/ThingDef[defName="MedicineIndustrial"]/recipeMaker' in med_xpaths, "隐藏工业医药原版配方"
+    assert 'Defs/ThingDef[defName="MedicineHerbal"]/statBases' in med_xpaths, "草药原料属性改写"
+    assert 'Defs/ResearchProjectDef[defName="MedicineProduction"]/prerequisites' in med_xpaths, "医疗研究前置改写"
+    drug_patch = parse_xml(DRUG_PATCH_XML)
+    drug_xpaths = [child_text(li, "xpath") for op in drug_patch.findall("Operation")
+                   for li in op.find("operations")]
+    assert 'Defs/ThingDef[defName="SmokeleafJoint"]/costList' in drug_xpaths, "烟卷原料改写"
+    for research in ("PsychoidBrewing", "DrugProduction", "PsychiteRefining",
+                     "WakeUpProduction", "GoJuiceProduction", "PenoxycylineProduction"):
+        assert any(f'ResearchProjectDef[defName="{research}"]' in xp for xp in drug_xpaths), f"{research} 前置改写"
+    for plant in ("Plant_Healroot", "Plant_Smokeleaf", "Plant_Psychoid"):
+        assert any(f'ThingDef[defName="{plant}"]' in xp for xp in med_xpaths + drug_xpaths), f"{plant} 种植改写"
+    print("medicine: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -5722,6 +5920,7 @@ def validate_all() -> None:
     validate_matter_top()
     validate_textiles_weapons()
     validate_weapons()
+    validate_medicine()
     validate_all_xml()
 
 
@@ -5777,6 +5976,7 @@ SUITES = {
     "weapons-npc": validate_weapons_npc,
     "weapons-vanilla-patch": validate_weapons_vanilla_patch,
     "weapons": validate_weapons,
+    "medicine": validate_medicine,
     "all": validate_all,
 }
 

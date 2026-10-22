@@ -10,11 +10,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 13 |
-| MMT 配方 | 274 |
-| 与 HSK 数值一致 | 131 |
-| 与 HSK 有数值差异 | 45 |
-| HSK 有对应资源但无对应配方 | 3 |
-| MMT 新增（HSK 无对应资源） | 95 |
+| MMT 配方 | 294 |
+| 与 HSK 数值一致 | 134 |
+| 与 HSK 有数值差异 | 56 |
+| HSK 有对应资源但无对应配方 | 5 |
+| MMT 新增（HSK 无对应资源） | 99 |
 
 ## 2. 矿脉对比
 
@@ -206,7 +206,65 @@
 - **HSK** `make_dirt_Electric`：沙(SandResource)×20 + 肥料(Fertilizer)×10 -> 土堆(Dirt)×30 @ 电动混凝土搅拌机(EConcreteMixer) ｜ 工作量=1500 ｜ 研究:Concrete_C2
 - **对比**：数值一致
 
-### 3.5 电动金属（Electric）
+### 3.5 Drugs（Drugs）
+
+#### 合成中性胺（天然）（`MMT_MakeNeutroamine`）
+
+- **MMT**：中性花瓣×8 + 金丝桃×2 -> Neutroamine×1 @ — ｜ 工作量=700 ｜ 研究:毒品 V(MMT_Drugs_C2)，技能:Medicine≥6,Crafting≥3
+- **HSK** `MakeNaturalNeutroamine`：中性花瓣(NeutroPetals)×8 + 金丝桃(Hypericum)×2 -> Neutroamine×1 @ DrugLab ｜ 工作量=700 ｜ 研究:Drugs_C2，技能:Medicine≥6, Crafting≥3
+- **对比**：技能 Medicine≥6,Crafting≥3 vs HSK Medicine≥6, Crafting≥3
+
+#### 精炼中性胺（石化）（`MMT_RefineNeutroamine`）
+
+- **MMT**：Chemfuel×15 -> Neutroamine×1 @ — ｜ 工作量=1200 ｜ 研究:毒品 V(MMT_Drugs_C2)，技能:Medicine≥6
+- **HSK** `MakeNaturalNeutroamine`：中性花瓣(NeutroPetals)×8 + 金丝桃(Hypericum)×2 -> Neutroamine×1 @ DrugLab ｜ 工作量=700 ｜ 研究:Drugs_C2，技能:Medicine≥6, Crafting≥3
+- **对比**：首投入 15 vs HSK 8；工作量 1200 vs HSK 700；技能 Medicine≥6 vs HSK Medicine≥6, Crafting≥3
+
+#### 晾晒烟叶（`MMT_DrySmokeleaf`）
+
+- **MMT**：SmokeleafLeaves×5 -> 干烟叶×5 @ — ｜ 工作量=2400 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **HSK**：有资源 DriedLeavesSmokeleaf，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 晾晒烟叶（×5）（`MMT_DrySmokeleafBulk`）
+
+- **MMT**：SmokeleafLeaves×25 -> 干烟叶×25 @ — ｜ 工作量=9600 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **HSK**：有资源 DriedLeavesSmokeleaf，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 泡制草药茶（`MMT_MakeHerbalTea`）
+
+- **MMT**：野玫瑰×2 + 金丝桃×1 + 薄荷叶×2 -> 草药茶×6 @ — ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Cooking≥5
+- **HSK** `MakeHerbalTea`：野玫瑰(WildRose)×2 + 金丝桃(Hypericum)×1 + 薄荷叶(MintLeaves)×2 -> 草药茶(HerbalTea)×6 @ Brewery, DrugLab, ElectricBrewery, 手工制药台(meditable) ｜ 工作量=780 ｜ 研究:DrugProduction，技能:Medicine≥3, Cooking≥5
+- **对比**：技能 Medicine≥3,Cooking≥5 vs HSK Medicine≥3, Cooking≥5
+
+#### 烧制活性炭丸（`MMT_MakeActivatedCarbon`）
+
+- **MMT**：木炭 或 原煤×5 -> 活性炭丸×9 @ — ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Crafting≥5
+- **HSK** `MakeActivatedCarbon`：木炭(Charcoal) 或 原煤(Coal)×5 -> 活性炭丸(ActivatedCarbon)×9 @ DrugLab, Kiln, 手工制药台(meditable) ｜ 工作量=780 ｜ 研究:DrugProduction，技能:Medicine≥3, Crafting≥5
+- **对比**：技能 Medicine≥3,Crafting≥5 vs HSK Medicine≥3, Crafting≥5
+
+#### 配制狂暴草（`MMT_MakeBerserkHerb`）
+
+- **MMT**：MedicineHerbal×3 + PsychoidLeaves×3 -> 狂暴草×1 @ — ｜ 工作量=200 ｜ 研究:PsychoidBrewing(PsychoidBrewing)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 合成美沙酮（`MMT_MakeMethadone`）
+
+- **MMT**：Neutroamine×1 -> 美沙酮×1 @ — ｜ 工作量=500 ｜ 研究:PenoxycylineProduction(PenoxycylineProduction)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 合成止痛药（`MMT_MakeIbuprofen`）
+
+- **MMT**：Neutroamine×1 -> 止痛药×1 @ — ｜ 工作量=200 ｜ 研究:毒品 V(MMT_Drugs_C2)
+- **HSK** `VG_BulkIbuprofen`：Neutroamine×4 -> 止痛药(VG_Ibuprofen)×4 @ DrugLab ｜ 工作量=720 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
+- **对比**：首投入 1 vs HSK 4；产出 1 vs HSK 4；工作量 200 vs HSK 720
+
+#### 合成止痛药（×4）（`MMT_MakeIbuprofenBulk`）
+
+- **MMT**：Neutroamine×4 -> 止痛药×4 @ — ｜ 工作量=720 ｜ 研究:PenoxycylineProduction(PenoxycylineProduction)，技能:Medicine≥10
+- **HSK** `VG_BulkIbuprofen`：Neutroamine×4 -> 止痛药(VG_Ibuprofen)×4 @ DrugLab ｜ 工作量=720 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
+- **对比**：数值一致
+
+### 3.6 电动金属（Electric）
 
 #### 提炼铜（20个）（`MMT_SmeltCopperBar_Electric`）
 
@@ -280,7 +338,7 @@
 - **HSK** `MakeMetalCan`：[Metallic]×8 -> 金属罐(MetalCan)×15 @ ElectricSmelter ｜ 工作量=800 ｜ 研究:Metals_C1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.6 电动电子（ElectricElectronics）
+### 3.7 电动电子（ElectricElectronics）
 
 #### 组装电子元件（`MMT_AssembleElectronicParts_Electric`）
 
@@ -300,7 +358,7 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：工作量 2400 vs HSK 3500；技能 Crafting≥14 vs HSK Crafting≥16
 
-### 3.7 电动石化（ElectricPetrochem）
+### 3.8 电动石化（ElectricPetrochem）
 
 #### 电蒸馏聚合物（`MMT_DistillPolymers_Electric`）
 
@@ -332,7 +390,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：工作量 2800 vs HSK 4000；技能 Crafting≥12 vs HSK Crafting≥15
 
-### 3.8 电动木材（ElectricWood）
+### 3.9 电动木材（ElectricWood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Electric`）
 
@@ -364,7 +422,7 @@
 - **HSK** `MakeRedWoodPlanks_Electric`：红木(RedWoodLog)×20 -> 红木木板(RedWoodPlank)×30 @ 电动锯木台(TableSawmillElectric) ｜ 工作量=1200 ｜ 研究:Metals_C1，技能:Crafting≥6
 - **对比**：数值一致
 
-### 3.9 电子（Electronics）
+### 3.10 电子（Electronics）
 
 #### 提炼硅（`MMT_ExtractSilicon_Hand`）
 
@@ -390,7 +448,7 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：技能 Crafting≥12 vs HSK Crafting≥16
 
-### 3.10 玻璃（Glass）
+### 3.11 玻璃（Glass）
 
 #### 将石砖碾磨成碎石（`MMT_MakeCrushedStone_Hand`）
 
@@ -458,7 +516,7 @@
 - **HSK** `MakeReinforcedGlass`：玻璃生料(GlassBatch)×40 + 碳聚物(Carbon)×5 + 人造纤维(SyntheticFibers)×5 -> 强化玻璃块(ReinforcedGlass)×5 @ 玻璃制作台(GlassworkTable) ｜ 工作量=1400 ｜ 研究:Glass_C1，技能:Crafting≥8
 - **对比**：数值一致
 
-### 3.11 Matter（Matter）
+### 3.12 Matter（Matter）
 
 #### 转化为无机物（`MMT_ConvertResourcesRaw`）
 
@@ -544,7 +602,67 @@
 - **HSK** `ConvertToSulphates`：无机物(Matter)×50 -> 硫酸盐(Sulphates)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.12 金属（Metal）
+### 3.13 Medicine（Medicine）
+
+#### 制作粗制绷带（`MMT_MakeBandagekitcrude`）
+
+- **MMT**：[MMT_BTextiles]×7 -> 粗制绷带×1 @ — ｜ 工作量=150 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
+- **HSK** `MakeBandagekitcrude`：[BTextiles]×7 -> 粗制绷带(Bandagekitcrude)×1 @ CraftingSpot, ElectricTailoringBench, HandTailoringBench, LeatherworkerTable, 手工制药台(meditable) ｜ 工作量=150 ｜ 研究:Medicine_A1，技能:Medicine≥1, Crafting≥1
+- **对比**：技能 Medicine≥1,Crafting≥1 vs HSK Medicine≥1, Crafting≥1
+
+#### 制作粗制绷带（×3）（`MMT_MakeBandagekitcrudeBulk`）
+
+- **MMT**：[MMT_BTextiles]×21 -> 粗制绷带×3 @ — ｜ 工作量=450 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
+- **HSK** `MakeBandagekitcrude`：[BTextiles]×7 -> 粗制绷带(Bandagekitcrude)×1 @ CraftingSpot, ElectricTailoringBench, HandTailoringBench, LeatherworkerTable, 手工制药台(meditable) ｜ 工作量=150 ｜ 研究:Medicine_A1，技能:Medicine≥1, Crafting≥1
+- **对比**：首投入 21 vs HSK 7；产出 3 vs HSK 1；工作量 450 vs HSK 150；技能 Medicine≥1,Crafting≥1 vs HSK Medicine≥1, Crafting≥1
+
+#### 制作绷带包（`MMT_MakeBandagekit`）
+
+- **MMT**：[MMT_BTextiles]×10 -> 绷带包×1 @ — ｜ 工作量=250 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
+- **HSK** `MakeBandageKit`：[BTextiles]×10 -> 绷带包(Bandagekit)×1 @ ElectricTailoringBench, HandTailoringBench, 手工制药台(meditable) ｜ 工作量=250 ｜ 研究:Medicine_A2，技能:Medicine≥2, Crafting≥2
+- **对比**：技能 Medicine≥2,Crafting≥2 vs HSK Medicine≥2, Crafting≥2
+
+#### 制作绷带包（×3）（`MMT_MakeBandagekitBulk`）
+
+- **MMT**：[MMT_BTextiles]×30 -> 绷带包×3 @ — ｜ 工作量=750 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
+- **HSK** `MakeBandageKit`：[BTextiles]×10 -> 绷带包(Bandagekit)×1 @ ElectricTailoringBench, HandTailoringBench, 手工制药台(meditable) ｜ 工作量=250 ｜ 研究:Medicine_A2，技能:Medicine≥2, Crafting≥2
+- **对比**：首投入 30 vs HSK 10；产出 3 vs HSK 1；工作量 750 vs HSK 250；技能 Medicine≥2,Crafting≥2 vs HSK Medicine≥2, Crafting≥2
+
+#### 配制草药包（`MMT_MakeHerbMedicine`）
+
+- **MMT**：MedicineHerbal×8 + 灰烬×2 -> 草药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 III(MMT_Medicine_B1)，技能:Medicine≥5
+- **HSK** `MakeHerbMedicine`：MedicineHerbal×8 + 灰烬(Ash)×2 -> 草药包(HerbMedicine)×1 @ ButcherSpot, TableButcher, TableKitchen, 手工制药台(meditable) ｜ 工作量=500 ｜ 研究:Medicine_B1，技能:Medicine≥5
+- **对比**：数值一致
+
+#### 制作基础医药包（芦荟）（`MMT_MakeBasicMedicineKit`）
+
+- **MMT**：芦荟叶×5 + 绷带包×1 -> 基础医药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
+- **HSK** `MakeHerbmedicine`：芦荟叶(aloe)×5 + 绷带包(Bandagekit)×1 -> 基础医药包(Herbmedicine)×1 @ DrugLab, TablePrimitiveProsthetic ｜ 工作量=500 ｜ 研究:Medicine_B2，技能:Medicine≥4, Crafting≥2
+- **对比**：技能 Medicine≥4,Crafting≥2 vs HSK Medicine≥4, Crafting≥2
+
+#### 制作基础医药包（混合草药）（`MMT_MakeBasicMedicineKitMix`）
+
+- **MMT**：野玫瑰×1 + 金丝桃×1 + 薄荷叶 或 芦荟叶×1 + 绷带包×1 -> 基础医药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
+- **HSK** `MakeHerbmedicineMix`：野玫瑰(WildRose)×1 + 金丝桃(Hypericum)×1 + 薄荷叶(MintLeaves) 或 芦荟叶(aloe)×1 + 绷带包(Bandagekit)×1 -> 基础医药包(Herbmedicine)×1 @ DrugLab, TablePrimitiveProsthetic ｜ 工作量=500 ｜ 研究:Medicine_B2，技能:Medicine≥4, Crafting≥2
+- **对比**：技能 Medicine≥4,Crafting≥2 vs HSK Medicine≥4, Crafting≥2
+
+#### 提炼抗生素（`MMT_BrewMedicalDrink`）
+
+- **MMT**：MedicineHerbal×1 + RawHops×10 -> 抗生素×1 @ — ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction(PenoxycylineProduction)，技能:Medicine≥10
+- **HSK** `BrewMedicalDrink`：MedicineHerbal×1 + RawHops 或 Yeast×10 -> 抗生素(MedicalDrink)×1 @ 手工制药台(meditable) ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
+- **对比**：数值一致
+
+#### 制作医药（`MMT_MakeMedicineIndustrial`）
+
+- **MMT**：Neutroamine×2 + MedicineHerbal×6 + 石蜡×10 + 人造纤维×2 + 塑料×10 -> MedicineIndustrial×1 @ — ｜ 工作量=800 ｜ 研究:MedicineProduction(MedicineProduction)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制作闪耀世界医药（`MMT_MakeMedicineUltratech`）
+
+- **MMT**：微芯片集成电路×1 + 抗生素×2 + 生物合成材料×2 + 石蜡×3 + Neutroamine×2 + Synthread×5 + 塑料×20 -> MedicineUltratech×1 @ — ｜ 工作量=1400 ｜ 研究:医疗物资 VI(MMT_Medicine_D1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.14 金属（Metal）
 
 #### 提炼铜（10个）（`MMT_SmeltCopperBar_Hand`）
 
@@ -576,7 +694,7 @@
 - **HSK** `MakeLeadBars_Hand`：铅矾矿(Anglesite)×10 -> 铅合金(LeadBar)×10 @ 熔炉(TableFurnace) ｜ 工作量=1100 ｜ 研究:Craft_B1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.13 零件（Parts）
+### 3.15 零件（Parts）
 
 #### 使用木板组装原始零部件（`MMT_MakeComponentMedieval_Wood`）
 
@@ -662,7 +780,7 @@
 - **HSK** `Make_ComponentUltra`：[RARBar]×15 + [USLDHBar]×10 + [PRSBar]×5 -> 超级零部件(ComponentUltra)×10 @ 自动化装配器(RobAssem) ｜ 工作量=4500 ｜ 研究:Components_E1，技能:Crafting≥13
 - **对比**：数值一致
 
-### 3.14 石化（Petrochem）
+### 3.16 石化（Petrochem）
 
 #### 蒸馏聚合物（`MMT_DistillPolymers_Hand`）
 
@@ -694,7 +812,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.15 PetrochemExt（PetrochemExt）
+### 3.17 PetrochemExt（PetrochemExt）
 
 #### 精炼石蜡（10个）（`MMT_MakeParaffins`）
 
@@ -762,7 +880,7 @@
 - **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂发泡液(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
 - **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥8
 
-### 3.16 贵金属（Precious）
+### 3.18 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
@@ -776,7 +894,7 @@
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.17 Robotics（Robotics）
+### 3.19 Robotics（Robotics）
 
 #### 制造动力电池（`MMT_MakeHexcell`）
 
@@ -802,7 +920,7 @@
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
 
-### 3.18 Textiles（Textiles）
+### 3.20 Textiles（Textiles）
 
 #### 纺织布（`MMT_MakeCloth`）
 
@@ -881,7 +999,7 @@
 - **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.19 TopMaterials（TopMaterials）
+### 3.21 TopMaterials（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -940,36 +1058,36 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.20 TurretAmmo（TurretAmmo）
+### 3.22 TurretAmmo（TurretAmmo）
 
 #### 制作120mm 炮弹（破甲）x1（`MMT_MakeAmmo_120mmCannonShell_HEAT`）
 
-- **MMT**：钢(Steel)×90 + 工业零件(ComponentIndustrial)×2 + FSX×7 -> 120mm 炮弹（破甲）×2 @ — ｜ 工作量=13000 ｜ 技能:Crafting≥4
+- **MMT**：钢(Steel)×90 + 工业零件(ComponentIndustrial)×2 + Chemfuel×7 -> 120mm 炮弹（破甲）×2 @ — ｜ 工作量=13000 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作130mm 制导火箭弹x1（`MMT_MakeAmmo_130mmRocketMissile`）
 
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×42 + [HeavyBar]×8 + Chemfuel×32 + Napalm×5 + 集成电路×1 -> 130mm 制导火箭弹（高爆弹）×1 @ — ｜ 工作量=2000
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×42 + [MMT_HCMBar]×8 + Chemfuel×32 + 凝固汽油×5 + 集成电路×1 -> 130mm 制导火箭弹（高爆弹）×1 @ — ｜ 工作量=2000
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作155mm 炮弹（高爆）x1（`MMT_MakeAmmo_155mmHowitzerShell_HE`）
 
-- **MMT**：钢(Steel)×94 + 工业零件(ComponentIndustrial)×2 + FSX×17 -> 155mm 炮弹（高爆弹）×1 @ — ｜ 工作量=17400 ｜ 技能:Crafting≥4
+- **MMT**：钢(Steel)×94 + 工业零件(ComponentIndustrial)×2 + Chemfuel×17 -> 155mm 炮弹（高爆弹）×1 @ — ｜ 工作量=17400 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作20x102mm  弹药（全金属被甲弹）x40（`MMT_MakeAmmo_20x102mm_FMJ`）
 
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×50 + [HeavyBar]×15 + Powder×9 -> 20x102mm 弹药（全金属被甲弹）×40 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥10
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×50 + [MMT_HCMBar]×15 + 火药×9 -> 20x102mm 弹药（全金属被甲弹）×40 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作30x173mm 弹药（全金属被甲弹）x30（`MMT_MakeAmmo_30x173mm_FMJ`）
 
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×60 + [HeavyBar]×16 + Powder×8 -> 30x173mm 弹药（全金属被甲弹）×30 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥11
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×60 + [MMT_HCMBar]×16 + 火药×8 -> 30x173mm 弹药（全金属被甲弹）×30 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥11
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作30x29mm 榴弹（高爆）x20（`MMT_MakeAmmo_30x29mmGrenade_HE`）
 
-- **MMT**：钢(Steel)×74 + FSX×8 + 工业零件(ComponentIndustrial)×2 -> 30x29mm 榴弹（高爆弹）×100 @ — ｜ 工作量=11800 ｜ 技能:Crafting≥4
+- **MMT**：钢(Steel)×74 + Chemfuel×8 + 工业零件(ComponentIndustrial)×2 -> 30x29mm 榴弹（高爆弹）×100 @ — ｜ 工作量=11800 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作.50  机枪弹（全金属被甲弹）x60（`MMT_MakeAmmo_50BMG_FMJ`）
@@ -984,7 +1102,7 @@
 
 #### 制作弩炮箭x10（`MMT_MakeAmmo_BalistaBolt`）
 
-- **MMT**：[Wooden]×2 + [Metallic]×5 -> 弩炮箭×10 @ — ｜ 工作量=1500
+- **MMT**：[Woody]×2 + [Metallic]×5 -> 弩炮箭×10 @ — ｜ 工作量=1500
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作石球x5（`MMT_MakeAmmo_StoneBall`）
@@ -994,50 +1112,50 @@
 
 #### make SPG-9 (FRAG) rockets x5（`MMT_MakeAmmo_SPG9Rocket_Frag`）
 
-- **MMT**：钢(Steel)×66 + FSX×6 + 工业零件(ComponentIndustrial)×4 -> SPG-9 Rocket (HE)×5 @ — ｜ 工作量=11400 ｜ 技能:Crafting≥4
+- **MMT**：钢(Steel)×66 + Chemfuel×6 + 工业零件(ComponentIndustrial)×4 -> SPG-9 Rocket (HE)×5 @ — ｜ 工作量=11400 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.21 TurretCrates（TurretCrates）
+### 3.23 TurretCrates（TurretCrates）
 
 #### 制作AGS-30组件箱（`MMT_BuildAGCturret_Crate`）
 
-- **MMT**：武器部件×12 + 火炮武器部件×1 + [Metallic]×20 + Rubber×10 -> AGS-30组件箱×1 @ — ｜ 工作量=15500 ｜ 研究:发射器 I(MMT_GrenadeLaunchers)，技能:Crafting≥8
+- **MMT**：武器部件×12 + 火炮武器部件×1 + [Metallic]×20 + 合成橡胶×10 -> AGS-30组件箱×1 @ — ｜ 工作量=15500 ｜ 研究:发射器 I(MMT_GrenadeLaunchers)，技能:Crafting≥8
 - **HSK** `BuildAGCturret_Crate`：武器部件(Weapon_Parts)×12 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×20 + 合成橡胶(Rubber)×10 -> AGS-30组件箱(AGCturret_Crate)×1 @ HeavyArmsBench ｜ 工作量=15500 ｜ 研究:Grenade_launchers_C2，技能:Crafting≥8
 - **对比**：数值一致
 
 #### 制作GAU-8复仇者火炮组件箱（`MMT_BuildAvenger_Crate`）
 
-- **MMT**：武器部件×22 + 火炮武器部件×1 + [Metallic]×60 + Rubber×35 -> GAU-8复仇者火炮组件箱×1 @ — ｜ 工作量=18500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
+- **MMT**：武器部件×22 + 火炮武器部件×1 + [Metallic]×60 + 合成橡胶×35 -> GAU-8复仇者火炮组件箱×1 @ — ｜ 工作量=18500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
 - **HSK** `BuildAvenger_Crate`：武器部件(Weapon_Parts)×22 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×35 -> GAU-8复仇者火炮组件箱(Avenger_Crate)×1 @ HeavyArmsBench ｜ 工作量=18500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
 #### 制作弩炮组件箱（`MMT_BuildBalista_Crate`）
 
-- **MMT**：[Wooden]×90 + [Metallic]×30 -> 弩炮组件箱×1 @ — ｜ 工作量=4500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥3
+- **MMT**：[Woody]×90 + [Metallic]×30 -> 弩炮组件箱×1 @ — ｜ 工作量=4500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥3
 - **HSK** `BuildBalista_Crate`：[Wooden]×90 + [Metallic]×30 -> 弩炮组件箱(Balista_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=4500 ｜ 研究:Ballista_B1，技能:Crafting≥3
 - **对比**：数值一致
 
 #### 制作120mm坦克炮组件箱（`MMT_BuildCannonTurret_Crate`）
 
-- **MMT**：武器部件×14 + 火炮武器部件×2 + [Metallic]×55 + Rubber×25 -> 120mm坦克炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥14
+- **MMT**：武器部件×14 + 火炮武器部件×2 + [Metallic]×55 + 合成橡胶×25 -> 120mm坦克炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥14
 - **HSK** `BuildCannonTurret_Crate`：武器部件(Weapon_Parts)×14 + 火炮武器部件(Cannon_Component)×2 + [Metallic]×55 + 合成橡胶(Rubber)×25 -> 120mm坦克炮组件箱(CannonTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Artillery_C2，技能:Crafting≥14
 - **对比**：数值一致
 
 #### 制作投石机组件箱（`MMT_BuildCatapult_Crate`）
 
-- **MMT**：[Wooden]×160 + [Metallic]×60 -> 投石机组件箱×1 @ — ｜ 工作量=10500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥5
+- **MMT**：[Woody]×160 + [Metallic]×60 -> 投石机组件箱×1 @ — ｜ 工作量=10500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥5
 - **HSK** `BuildCatapult_Crate`：[Wooden]×160 + [Metallic]×60 -> 投石机组件箱(Catapult_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=10500 ｜ 研究:Ballista_B1，技能:Crafting≥5
 - **对比**：数值一致
 
 #### 制作155mm 榴弹炮组件箱（`MMT_BuildHowitzerTurret_Crate`）
 
-- **MMT**：武器部件×18 + 火炮武器部件×2 + [Metallic]×70 + Rubber×35 -> 155mm榴弹炮组件箱×1 @ — ｜ 工作量=20500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥15
+- **MMT**：武器部件×18 + 火炮武器部件×2 + [Metallic]×70 + 合成橡胶×35 -> 155mm榴弹炮组件箱×1 @ — ｜ 工作量=20500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥15
 - **HSK** `BuildHowitzerTurret_Crate`：武器部件(Weapon_Parts)×18 + 火炮武器部件(Cannon_Component)×2 + [Metallic]×70 + 合成橡胶(Rubber)×35 -> 155mm榴弹炮组件箱(HowitzerTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=20500 ｜ 研究:Artillery_C2，技能:Crafting≥15
 - **对比**：数值一致
 
 #### 制作FGM-148“标枪”反坦克导弹组件箱（`MMT_BuildLightMissileSystem_Crate`）
 
-- **MMT**：武器部件×16 + 发射器部件×1 + [Metallic]×35 + Rubber×15 -> FGM-148“标枪”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 II(MMT_Rocketry2)，技能:Crafting≥13
+- **MMT**：武器部件×16 + 发射器部件×1 + [Metallic]×35 + 合成橡胶×15 -> FGM-148“标枪”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 II(MMT_Rocketry2)，技能:Crafting≥13
 - **HSK** `BuildLightMissileSystem_Crate`：武器部件(Weapon_Parts)×16 + 发射器部件(Launcher_Component)×1 + [Metallic]×35 + 合成橡胶(Rubber)×15 -> FGM-148“标枪”反坦克导弹组件箱(LightMissileSystem_Crate)×1 @ HeavyArmsBench ｜ 工作量=16500 ｜ 研究:Rockets_C2，技能:Crafting≥13
 - **对比**：数值一致
 
@@ -1067,7 +1185,7 @@
 
 #### 制作20mm厄利孔机炮组件箱（`MMT_BuildOerlikonautocannon_Crate`）
 
-- **MMT**：武器部件×15 + 火炮武器部件×1 + [Metallic]×45 + Rubber×15 -> 20x102mm厄利孔机炮组件箱×1 @ — ｜ 工作量=13500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥12
+- **MMT**：武器部件×15 + 火炮武器部件×1 + [Metallic]×45 + 合成橡胶×15 -> 20x102mm厄利孔机炮组件箱×1 @ — ｜ 工作量=13500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥12
 - **HSK** `BuildOerlikonautocannon_Crate`：武器部件(Weapon_Parts)×15 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×45 + 合成橡胶(Rubber)×15 -> 20x102mm厄利孔机炮组件箱(Oerlikonautocannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=13500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥12
 - **对比**：数值一致
 
@@ -1085,17 +1203,17 @@
 
 #### 制作BGM-71“陶式”反坦克导弹组件箱（`MMT_BuildTOW_Crate`）
 
-- **MMT**：武器部件×15 + 发射器部件×1 + [Metallic]×30 + Rubber×15 -> BGM-71“陶式”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥13
+- **MMT**：武器部件×15 + 发射器部件×1 + [Metallic]×30 + 合成橡胶×15 -> BGM-71“陶式”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥13
 - **HSK** `BuildTOW_Crate`：武器部件(Weapon_Parts)×15 + 发射器部件(Launcher_Component)×1 + [Metallic]×30 + 合成橡胶(Rubber)×15 -> BGM-71“陶式”反坦克导弹组件箱(TOW_Crate)×1 @ HeavyArmsBench ｜ 工作量=16500 ｜ 研究:Rockets_D1，技能:Crafting≥13
 - **对比**：数值一致
 
 #### 制作20mm火神炮组件箱（`MMT_BuildVulcanCannon_Crate`）
 
-- **MMT**：武器部件×20 + 火炮武器部件×1 + [Metallic]×60 + Rubber×25 -> 20mm火神炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
+- **MMT**：武器部件×20 + 火炮武器部件×1 + [Metallic]×60 + 合成橡胶×25 -> 20mm火神炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
 - **HSK** `BuildVulcanCannon_Crate`：武器部件(Weapon_Parts)×20 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×25 -> 20mm火神炮组件箱(VulcanCannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
-### 3.22 WeaponParts（WeaponParts）
+### 3.24 WeaponParts（WeaponParts）
 
 #### 制造武器部件（`MMT_MakeWeaponParts`）
 
@@ -1181,56 +1299,56 @@
 - **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.23 Weapons_Archaic（Weapons_Archaic）
+### 3.25 Weapons_Archaic（Weapons_Archaic）
 
 #### 制作EMP手榴弹（`MMT_MakeEMPGrenades`）
 
-- **MMT**：[Metallic]×36 + 工业零件(ComponentIndustrial)×7 + 电子元件×4 -> EMP手榴弹×5 @ — ｜ 工作量=6000 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥11
+- **MMT**：[Metallic]×36 + 工业零件(ComponentIndustrial)×7 + 电子元件×4 -> Weapon_GrenadeEMP×5 @ — ｜ 工作量=6000 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥11
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作泡沫手榴弹（`MMT_MakeFirefoamGrenade`）
 
-- **MMT**：[Metallic]×30 + 表面活性剂发泡液×15 + Powder 或 FSX×3 + 工业零件(ComponentIndustrial)×4 -> firefoam grenade×5 @ — ｜ 工作量=4000 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥7
+- **MMT**：[Metallic]×30 + 表面活性剂发泡液×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×4 -> firefoam grenade×5 @ — ｜ 工作量=4000 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥7
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作震撼手榴弹（`MMT_MakeFlashbangGrenades`）
 
-- **MMT**：[Metallic]×25 + Powder×6 + 工业零件(ComponentIndustrial)×4 -> flashbang grenade×5 @ — ｜ 工作量=6000 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥9
+- **MMT**：[Metallic]×25 + 火药×6 + 工业零件(ComponentIndustrial)×4 -> flashbang grenade×5 @ — ｜ 工作量=6000 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥9
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作破片手榴弹（`MMT_MakeFragGrenades`）
 
-- **MMT**：[Metallic]×30 + Powder 或 FSX×7 + 工业零件(ComponentIndustrial)×4 -> 破片手榴弹×5 @ — ｜ 工作量=4000 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥7
+- **MMT**：[Metallic]×30 + 火药 或 Chemfuel×7 + 工业零件(ComponentIndustrial)×4 -> Weapon_GrenadeFrag×5 @ — ｜ 工作量=4000 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥7
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作温压手榴弹（`MMT_MakeFusionGrenades`）
 
-- **MMT**：[Metallic]×15 + 武器部件×3 + 太空零件(ComponentSpacer)×3 + 光束武器部件×1 -> 温压手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **MMT**：[Metallic]×15 + 武器部件×3 + 高级零部件×3 + 光束武器部件×1 -> 温压手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作电荷手榴弹（`MMT_MakeGrenadeChargedFrag`）
 
-- **MMT**：[Metallic]×15 + 武器部件×3 + 太空零件(ComponentSpacer)×3 + 电荷武器部件×1 -> 电荷手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **MMT**：[Metallic]×15 + 武器部件×3 + 高级零部件×3 + 电荷武器部件×1 -> 电荷手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作高爆手榴弹（`MMT_MakeHighExplosiveGrenades`）
 
-- **MMT**：[Metallic]×24 + Powder 或 FSX×5 + 工业零件(ComponentIndustrial)×3 -> 高爆手榴弹×5 @ — ｜ 工作量=3600 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥6
+- **MMT**：[Metallic]×24 + 火药 或 Chemfuel×5 + 工业零件(ComponentIndustrial)×3 -> 高爆手榴弹×5 @ — ｜ 工作量=3600 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作燃烧手榴弹（`MMT_MakeIncendiaryGrenade`）
 
-- **MMT**：工业零件(ComponentIndustrial)×4 + Napalm 或 Prometheum×5 + [Metallic]×30 -> 燃烧手榴弹×5 @ — ｜ 工作量=3500 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥9
+- **MMT**：工业零件(ComponentIndustrial)×4 + 凝固汽油×5 + [Metallic]×30 -> 燃烧手榴弹×5 @ — ｜ 工作量=3500 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥9
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作莫洛托夫燃烧瓶（`MMT_MakeMolotov`）
 
-- **MMT**：Glass×30 + Chemfuel×30 + [BTextiles]×30 -> 莫洛托夫燃烧瓶×5 @ — ｜ 工作量=3500 ｜ 研究:Greatbow(Greatbow)，技能:Crafting≥5
+- **MMT**：玻璃块×30 + Chemfuel×30 + [MMT_BTextiles]×30 -> Weapon_GrenadeMolotov×5 @ — ｜ 工作量=3500 ｜ 研究:Greatbow(Greatbow)，技能:Crafting≥5
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作等离子手榴弹（`MMT_MakePlasmaGrenades`）
 
-- **MMT**：[Metallic]×15 + 武器部件×3 + 太空零件(ComponentSpacer)×3 + 离子武器部件×1 -> 等离子手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **MMT**：[Metallic]×15 + 武器部件×3 + 高级零部件×3 + 离子武器部件×1 -> 等离子手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作烟雾手榴弹（`MMT_MakeSmokeGrenade`）
@@ -1240,15 +1358,15 @@
 
 #### 制作木柄炸弹（`MMT_MakeStickBomb`）
 
-- **MMT**：ComponentMedieval×15 + FSX×3 + [BTextiles]×30 -> stick bomb×5 @ — ｜ 工作量=3000 ｜ 研究:RecurveBow(RecurveBow)，技能:Crafting≥3
+- **MMT**：原始零部件×15 + Chemfuel×3 + [MMT_BTextiles]×30 -> stick bomb×5 @ — ｜ 工作量=3000 ｜ 研究:RecurveBow(RecurveBow)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作毒气手榴弹 x10（`MMT_MakeToxGrenade`）
 
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [HeavyBar]×4 + [Chemical]×15 + Powder 或 FSX×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [MMT_HCMBar]×4 + Chemfuel×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.24 Weapons_Conventional（Weapons_Conventional）
+### 3.26 Weapons_Conventional（Weapons_Conventional）
 
 #### 制作伯莱塔93R冲锋手枪（`MMT_Build93RBurstPistol`）
 
@@ -1282,7 +1400,7 @@
 
 #### 制作M16突击步枪（`MMT_BuildAssaultRifle`）
 
-- **MMT**：步枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×5 + [Metallic]×16 + 塑料×15 + [Leathers]×10 -> M16突击步枪×1 @ — ｜ 工作量=18000 ｜ 研究:步枪 II(MMT_RiflesAdvanced)，技能:Crafting≥13
+- **MMT**：步枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×5 + [Metallic]×16 + 塑料×15 + [Leathers]×10 -> Gun_AssaultRifle×1 @ — ｜ 工作量=18000 ｜ 研究:步枪 II(MMT_RiflesAdvanced)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作伯莱塔Cx4卡宾枪（`MMT_BuildCXfour`）
@@ -1322,12 +1440,12 @@
 
 #### 制作李-恩菲尔德步枪（`MMT_BuildGun_BoltActionRifle`）
 
-- **MMT**：步枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×10 -> 李-恩菲尔德步枪×1 @ — ｜ 工作量=12200 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥3
+- **MMT**：步枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×10 -> Gun_BoltActionRifle×1 @ — ｜ 工作量=12200 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作柯尔特M1911自动手枪（`MMT_BuildHandGun`）
 
-- **MMT**：手枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×4 + [Metallic]×10 + [Leathers]×5 -> 柯尔特M1911×1 @ — ｜ 工作量=8500 ｜ 研究:Gunsmithing(Gunsmithing)，技能:Crafting≥3
+- **MMT**：手枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×4 + [Metallic]×10 + [Leathers]×5 -> Gun_Revolver×1 @ — ｜ 工作量=8500 ｜ 研究:Gunsmithing(Gunsmithing)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作MA39X突击步枪（`MMT_BuildHeavyCombatRifle`）
@@ -1337,7 +1455,7 @@
 
 #### 制造 M4幽灵冲锋枪（`MMT_BuildHeavySMG`）
 
-- **MMT**：冲锋枪部件×1 + 武器部件×2 + 工业零件(ComponentIndustrial)×4 + [Metallic]×15 + 塑料×15 + [Leathers]×12 -> M4幽灵冲锋枪×1 @ — ｜ 工作量=15000 ｜ 研究:BlowbackOperation(BlowbackOperation)，技能:Crafting≥7
+- **MMT**：冲锋枪部件×1 + 武器部件×2 + 工业零件(ComponentIndustrial)×4 + [Metallic]×15 + 塑料×15 + [Leathers]×12 -> Gun_HeavySMG×1 @ — ｜ 工作量=15000 ｜ 研究:BlowbackOperation(BlowbackOperation)，技能:Crafting≥7
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 黑卡蒂II反器材狙击步枪（`MMT_BuildHecateII`）
@@ -1347,7 +1465,7 @@
 
 #### 制作T9“炎阳”燃烧弹发射器（`MMT_BuildIncendiaryLauncher`）
 
-- **MMT**：重型武器部件×1 + 武器部件×6 + 工业零件(ComponentIndustrial)×7 + [Metallic]×20 + 塑料×16 + [Leathers]×12 -> T9“炎阳”燃烧弹发射器×1 @ — ｜ 工作量=19000 ｜ 研究:发射器 I(MMT_GrenadeLaunchers)，技能:Crafting≥14
+- **MMT**：重型武器部件×1 + 武器部件×6 + 工业零件(ComponentIndustrial)×7 + [Metallic]×20 + 塑料×16 + [Leathers]×12 -> Gun_IncendiaryLauncher×1 @ — ｜ 工作量=19000 ｜ 研究:发射器 I(MMT_GrenadeLaunchers)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M72反坦克火箭筒（`MMT_BuildLAW`）
@@ -1357,7 +1475,7 @@
 
 #### 制作L-15轻机枪（`MMT_BuildLMG`）
 
-- **MMT**：重型武器部件×1 + 武器部件×5 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×15 -> L-15轻机枪×1 @ — ｜ 工作量=19500 ｜ 研究:HeavyTurrets(HeavyTurrets)，技能:Crafting≥14
+- **MMT**：重型武器部件×1 + 武器部件×5 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×15 -> Gun_LMG×1 @ — ｜ 工作量=19500 ｜ 研究:HeavyTurrets(HeavyTurrets)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M249班用机枪（`MMT_BuildM249`）
@@ -1387,7 +1505,7 @@
 
 #### 制作M56智能机枪（`MMT_BuildM56_USCM`）
 
-- **MMT**：重型武器部件×1 + 武器部件×7 + 高级零件(ComponentAdvanced)×4 + [Metallic]×20 + 塑料×20 + [Leathers]×12 -> M56智能机枪×1 @ — ｜ 工作量=19900 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥16
+- **MMT**：重型武器部件×1 + 武器部件×7 + 高级零部件×4 + [Metallic]×20 + 塑料×20 + [Leathers]×12 -> M56智能机枪×1 @ — ｜ 工作量=19900 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥16
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M5火箭筒（`MMT_BuildM5_USCM`）
@@ -1422,22 +1540,22 @@
 
 #### 制作XM214速射机枪（`MMT_BuildMinigun`）
 
-- **MMT**：重型武器部件×1 + 武器部件×13 + 高级零件(ComponentAdvanced)×10 + [Metallic]×36 + 塑料×25 + [Leathers]×10 -> XM214速射机枪×1 @ — ｜ 工作量=28000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥18
+- **MMT**：重型武器部件×1 + 武器部件×13 + 高级零部件×10 + [Metallic]×36 + 塑料×25 + [Leathers]×10 -> Gun_Minigun×1 @ — ｜ 工作量=28000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥18
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 乌兹冲锋枪（`MMT_BuildPDW`）
 
-- **MMT**：冲锋枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×10 -> 乌兹冲锋枪×1 @ — ｜ 工作量=13600 ｜ 研究:BlowbackOperation(BlowbackOperation)，技能:Crafting≥6
+- **MMT**：冲锋枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×10 -> Gun_MachinePistol×1 @ — ｜ 工作量=13600 ｜ 研究:BlowbackOperation(BlowbackOperation)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作“帕拉军工”P14 手枪（`MMT_BuildParaOrdnancePFourteenFortyfive`）
 
-- **MMT**：手枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×3 + [Metallic]×12 + 塑料×12 + [Leathers]×10 -> 帕拉军工P14手枪×1 @ — ｜ 工作量=8800 ｜ 研究:Gunsmithing(Gunsmithing)，技能:Crafting≥7
+- **MMT**：手枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×3 + [Metallic]×12 + 塑料×12 + [Leathers]×10 -> Gun_Autopistol×1 @ — ｜ 工作量=8800 ｜ 研究:Gunsmithing(Gunsmithing)，技能:Crafting≥7
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 雷明顿870霰弹枪（`MMT_BuildPumpShotgun`）
 
-- **MMT**：霰弹枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×7 -> 雷明顿870霰弹枪×1 @ — ｜ 工作量=12000 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥6
+- **MMT**：霰弹枪部件×1 + 武器部件×1 + 工业零件(ComponentIndustrial)×6 + [Metallic]×20 + [Leathers]×7 -> Gun_PumpShotgun×1 @ — ｜ 工作量=12000 ｜ 研究:GasOperation(GasOperation)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作RPG-7火箭筒（`MMT_BuildRPG`）
@@ -1462,7 +1580,7 @@
 
 #### 制作M24狙击步枪（`MMT_BuildSniperRifle`）
 
-- **MMT**：狙击枪部件×1 + 武器部件×9 + 工业零件(ComponentIndustrial)×9 + [Metallic]×15 + 塑料×22 + [Leathers]×7 -> M24狙击步枪×1 @ — ｜ 工作量=16600 ｜ 研究:PrecisionRifling(PrecisionRifling)，技能:Crafting≥13
+- **MMT**：狙击枪部件×1 + 武器部件×9 + 工业零件(ComponentIndustrial)×9 + [Metallic]×15 + 塑料×22 + [Leathers]×7 -> Gun_SniperRifle×1 @ — ｜ 工作量=16600 ｜ 研究:PrecisionRifling(PrecisionRifling)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作司芬克斯AT2000手枪（`MMT_BuildSphinxPistol`）
@@ -1472,7 +1590,7 @@
 
 #### 制造 “打击者”霰弹枪（`MMT_BuildStrikerShotgun`）
 
-- **MMT**：霰弹枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×4 + [Metallic]×15 + 塑料×15 + [Leathers]×8 -> “打击者”霰弹枪×1 @ — ｜ 工作量=16200 ｜ 研究:枪械 II(MMT_GunsAdvanced)，技能:Crafting≥10
+- **MMT**：霰弹枪部件×1 + 武器部件×4 + 工业零件(ComponentIndustrial)×4 + [Metallic]×15 + 塑料×15 + [Leathers]×8 -> Gun_ChainShotgun×1 @ — ｜ 工作量=16200 ｜ 研究:枪械 II(MMT_GunsAdvanced)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 SRS99反器材狙击步枪（`MMT_BuildTAMSR`）
@@ -1540,69 +1658,69 @@
 - **MMT**：重型武器部件×1 + 武器部件×8 + 工业零件(ComponentIndustrial)×10 + [Metallic]×35 + 塑料×30 -> M60E4通用机枪×1 @ — ｜ 工作量=24000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.25 Weapons_Futuristic（Weapons_Futuristic）
+### 3.27 Weapons_Futuristic（Weapons_Futuristic）
 
 #### 制造A-1BW黑寡妇（`MMT_BuildBlackWidow`）
 
-- **MMT**：光束武器部件×1 + Hexcell×1 + 武器部件×7 + ComponentUltra×8 + [MMT_USLDBar]×20 + 塑料×35 -> A-1BW“黑寡妇”×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
+- **MMT**：光束武器部件×1 + 动力电池×1 + 武器部件×7 + 超级零部件×8 + [MMT_USLDBar]×20 + 塑料×35 -> A-1BW“黑寡妇”×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M12“仲裁者”光束枪（`MMT_BuildBurstLaserRifle`）
 
-- **MMT**：光束武器部件×1 + 武器部件×9 + ComponentUltra×9 + [MMT_USLDBar]×25 + 塑料×40 -> M12“仲裁者”光束枪×1 @ — ｜ 工作量=25000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
+- **MMT**：光束武器部件×1 + 武器部件×9 + 超级零部件×9 + [MMT_USLDBar]×25 + 塑料×40 -> M12“仲裁者”光束枪×1 @ — ｜ 工作量=25000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作R3“溶媒”电荷步枪（`MMT_BuildChargeRifle`）
 
-- **MMT**：电荷武器部件×1 + 武器部件×5 + 太空零件(ComponentSpacer)×10 + [MMT_USLDBar]×20 + 塑料×27 -> R3“溶媒”电荷步枪×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
+- **MMT**：电荷武器部件×1 + 武器部件×5 + 高级零部件×10 + [MMT_USLDBar]×20 + 塑料×27 -> Gun_ChargeRifle×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M10“铆钉”光束枪（`MMT_BuildHeavyLaserRifle`）
 
-- **MMT**：光束武器部件×1 + 武器部件×8 + ComponentUltra×9 + [MMT_USLDBar]×22 + 塑料×35 -> M10“铆钉”光束枪×1 @ — ｜ 工作量=24000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥16
+- **MMT**：光束武器部件×1 + 武器部件×8 + 超级零部件×9 + [MMT_USLDBar]×22 + 塑料×35 -> M10“铆钉”光束枪×1 @ — ｜ 工作量=24000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥16
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M8“亡魂”光束枪（`MMT_BuildLaserRifle`）
 
-- **MMT**：光束武器部件×1 + 武器部件×6 + 太空零件(ComponentSpacer)×9 + [MMT_USLDBar]×20 + 塑料×35 -> M8“亡魂”光束枪×1 @ — ｜ 工作量=23000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥15
+- **MMT**：光束武器部件×1 + 武器部件×6 + 高级零部件×9 + [MMT_USLDBar]×20 + 塑料×35 -> M8“亡魂”光束枪×1 @ — ｜ 工作量=23000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M6“螳螂”光束枪（`MMT_BuildMantis`）
 
-- **MMT**：光束武器部件×1 + 武器部件×7 + 太空零件(ComponentSpacer)×9 + [MMT_USLDBar]×20 + 塑料×35 -> M6“螳螂”光束枪×1 @ — ｜ 工作量=24000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
+- **MMT**：光束武器部件×1 + 武器部件×7 + 高级零部件×9 + [MMT_USLDBar]×20 + 塑料×35 -> Gun_ChargeLance×1 @ — ｜ 工作量=24000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作C3“巫师”（`MMT_BuildPlasmaCarbine`）
 
-- **MMT**：离子武器部件×1 + 武器部件×6 + 太空零件(ComponentSpacer)×10 + [MMT_USLDBar]×25 + 塑料×35 -> C3“巫师”×1 @ — ｜ 工作量=26000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥15
+- **MMT**：离子武器部件×1 + 武器部件×6 + 高级零部件×10 + [MMT_USLDBar]×25 + 塑料×35 -> C3“巫师”×1 @ — ｜ 工作量=26000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作C1“晋升”（`MMT_BuildPlasmaPistol`）
 
-- **MMT**：离子武器部件×1 + 武器部件×4 + 太空零件(ComponentSpacer)×8 + [MMT_USLDBar]×12 + 塑料×20 -> C1“晋升”×1 @ — ｜ 工作量=18000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
+- **MMT**：离子武器部件×1 + 武器部件×4 + 高级零部件×8 + [MMT_USLDBar]×12 + 塑料×20 -> C1“晋升”×1 @ — ｜ 工作量=18000 ｜ 研究:激光武器 I(MMT_DirectedEnergyWeapons1)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作C2“月咒”（`MMT_BuildPlasmaPrecision`）
 
-- **MMT**：离子武器部件×1 + 武器部件×6 + ComponentUltra×10 + [MMT_USLDBar]×22 + 塑料×35 -> C2“月咒”×1 @ — ｜ 工作量=25000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥16
+- **MMT**：离子武器部件×1 + 武器部件×6 + 超级零部件×10 + [MMT_USLDBar]×22 + 塑料×35 -> C2“月咒”×1 @ — ｜ 工作量=25000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥16
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作C7“灾引”（`MMT_BuildPlasmaRifle`）
 
-- **MMT**：离子武器部件×1 + 武器部件×6 + ComponentUltra×10 + [MMT_USLDBar]×22 + 塑料×35 -> C7“灾引”×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
+- **MMT**：离子武器部件×1 + 武器部件×6 + 超级零部件×10 + [MMT_USLDBar]×22 + 塑料×35 -> C7“灾引”×1 @ — ｜ 工作量=27000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作C5“魔咒”（`MMT_BuildPlasmaShotgun`）
 
-- **MMT**：离子武器部件×1 + 武器部件×7 + ComponentUltra×11 + [MMT_USLDBar]×22 + 塑料×35 -> C5“魔咒”×1 @ — ｜ 工作量=26000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
+- **MMT**：离子武器部件×1 + 武器部件×7 + 超级零部件×11 + [MMT_USLDBar]×22 + 塑料×35 -> C5“魔咒”×1 @ — ｜ 工作量=26000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥17
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作R6“撕裂者”电荷步枪（`MMT_BuildSplitter`）
 
-- **MMT**：电荷武器部件×1 + 武器部件×6 + ComponentUltra×12 + FerrosiliconAlloy×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
+- **MMT**：电荷武器部件×1 + 武器部件×6 + 超级零部件×12 + 斯特合金×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.26 木材（Wood）
+### 3.28 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -1700,5 +1818,13 @@
 ### 4.14 电线(Wire)
 
 - `MakeWires_Hand`：[HCMBar]×10 -> 电线(Wire)×20 @ FabricationBench ｜ 工作量=800 ｜ 研究:Craft_0，技能:Crafting≥3 ｜ **MMT 未实现**
+
+### 4.15 绷带包(Bandagekit)
+
+- `MakeBandageKitBulk`：[BTextiles]×30 -> 绷带包(Bandagekit)×3 @ ElectricTailoringBench, HandTailoringBench, 手工制药台(meditable) ｜ 工作量=750 ｜ 研究:Medicine_A2，技能:Medicine≥2, Crafting≥2 ｜ **MMT 未实现**
+
+### 4.16 粗制绷带(Bandagekitcrude)
+
+- `MakeBandagekitcrudeBulk`：[BTextiles]×21 -> 粗制绷带(Bandagekitcrude)×3 @ CraftingSpot, ElectricTailoringBench, HandTailoringBench, LeatherworkerTable, 手工制药台(meditable) ｜ 工作量=450 ｜ 研究:Medicine_A1，技能:Medicine≥1, Crafting≥1 ｜ **MMT 未实现**
 
 
