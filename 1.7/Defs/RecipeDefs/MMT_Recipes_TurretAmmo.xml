@@ -35,7 +35,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FSX</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>7</count>
@@ -45,7 +45,7 @@
 			<thingDefs>
 				<li>Steel</li>
 				<li>ComponentIndustrial</li>
-				<li>FSX</li>
+				<li>Chemfuel</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
@@ -79,7 +79,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>HeavyBar</li>
+						<li>MMT_HCMBar</li>
 					</categories>
 				</filter>
 				<count>8</count>
@@ -95,7 +95,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Napalm</li>
+						<li>MMT_Napalm</li>
 					</thingDefs>
 				</filter>
 				<count>5</count>
@@ -110,17 +110,17 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>Chemfuel</li>
+				<li>MMT_Napalm</li>
+				<li>MMT_Powder</li>
+				<li>MMT_IntegratedCircuit</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
-				<li>HeavyBar</li>
+				<li>MMT_HCMBar</li>
 			</categories>
-			<thingDefs>
-				<li>Chemfuel</li>
-				<li>Napalm</li>
-				<li>Powder</li>
-				<li>MMT_IntegratedCircuit</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Ammo_130mmRocketMissile>1</MMT_Ammo_130mmRocketMissile>
@@ -163,7 +163,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FSX</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>17</count>
@@ -173,7 +173,7 @@
 			<thingDefs>
 				<li>Steel</li>
 				<li>ComponentIndustrial</li>
-				<li>FSX</li>
+				<li>Chemfuel</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
@@ -210,7 +210,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>HeavyBar</li>
+						<li>MMT_HCMBar</li>
 					</categories>
 				</filter>
 				<count>15</count>
@@ -218,21 +218,21 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
+						<li>MMT_Powder</li>
 					</thingDefs>
 				</filter>
 				<count>9</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Powder</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
-				<li>HeavyBar</li>
+				<li>MMT_HCMBar</li>
 			</categories>
-			<thingDefs>
-				<li>Powder</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Ammo_20x102mm_FMJ>40</MMT_Ammo_20x102mm_FMJ>
@@ -268,7 +268,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>HeavyBar</li>
+						<li>MMT_HCMBar</li>
 					</categories>
 				</filter>
 				<count>16</count>
@@ -276,21 +276,21 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
+						<li>MMT_Powder</li>
 					</thingDefs>
 				</filter>
 				<count>8</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Powder</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
-				<li>HeavyBar</li>
+				<li>MMT_HCMBar</li>
 			</categories>
-			<thingDefs>
-				<li>Powder</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Ammo_30x173mm_FMJ>30</MMT_Ammo_30x173mm_FMJ>
@@ -325,7 +325,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FSX</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>8</count>
@@ -342,7 +342,7 @@
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>Steel</li>
-				<li>FSX</li>
+				<li>Chemfuel</li>
 				<li>ComponentIndustrial</li>
 			</thingDefs>
 		</fixedIngredientFilter>
@@ -434,7 +434,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>Wooden</li>
+						<li>Woody</li>
 					</categories>
 				</filter>
 				<count>2</count>
@@ -450,7 +450,7 @@
 		</ingredients>
 		<fixedIngredientFilter>
 			<categories>
-				<li>Wooden</li>
+				<li>Woody</li>
 				<li>Metallic</li>
 			</categories>
 		</fixedIngredientFilter>
@@ -520,7 +520,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FSX</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>6</count>
@@ -537,7 +537,7 @@
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>Steel</li>
-				<li>FSX</li>
+				<li>Chemfuel</li>
 				<li>ComponentIndustrial</li>
 			</thingDefs>
 		</fixedIngredientFilter>

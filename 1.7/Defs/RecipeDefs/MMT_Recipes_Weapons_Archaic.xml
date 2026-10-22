@@ -7,7 +7,7 @@
 		<description>制造一组EMP手榴弹。这些用于直接手投的电磁脉冲手雷对电子设备的危害极大，从弹着点开始的影响半径大约为3格。</description>
 		<jobString>正在制作EMP手榴弹。</jobString>
 		<workAmount>6000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -43,14 +43,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
-			<categories>
-				<li>MMT_SLDBar</li>
-				<li>MMT_USLDBar</li>
-			</categories>
 			<thingDefs>
 				<li>ComponentIndustrial</li>
 				<li>MMT_ElectronicParts</li>
 			</thingDefs>
+			<categories>
+				<li>MMT_SLDBar</li>
+				<li>MMT_USLDBar</li>
+			</categories>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeEMP>5</MMT_Weapon_GrenadeEMP>
@@ -66,7 +66,7 @@
 		<description>制作泡沫手榴弹。</description>
 		<jobString>正在制作泡沫手榴弹。</jobString>
 		<workAmount>4000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -95,8 +95,8 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
-						<li>FSX</li>
+						<li>MMT_Powder</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -111,16 +111,16 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Surfactant</li>
+				<li>MMT_Powder</li>
+				<li>Chemfuel</li>
+				<li>ComponentIndustrial</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>MMT_Surfactant</li>
-				<li>Powder</li>
-				<li>FSX</li>
-				<li>ComponentIndustrial</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_CE_Weapon_GrenadeFirefoam>5</MMT_CE_Weapon_GrenadeFirefoam>
@@ -136,7 +136,7 @@
 		<description>制造一组闪光震撼手榴弹。闪光震撼弹是一种投掷式的实体武器，对电子设备或基于电子原理运转的实体造成损害，对非电子实体基本无效。其爆炸影响范围是弹着点周边3x3的范围。</description>
 		<jobString>正在制作震撼手榴弹。</jobString>
 		<workAmount>6000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -157,7 +157,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
+						<li>MMT_Powder</li>
 					</thingDefs>
 				</filter>
 				<count>6</count>
@@ -172,14 +172,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Powder</li>
+				<li>ComponentIndustrial</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>Powder</li>
-				<li>ComponentIndustrial</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_CE_Weapon_GrenadeFlashbang>5</MMT_CE_Weapon_GrenadeFlashbang>
@@ -195,7 +195,7 @@
 		<description>老式破片手榴弹。</description>
 		<jobString>正在制作破片手榴弹。</jobString>
 		<workAmount>4000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -216,8 +216,8 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
-						<li>FSX</li>
+						<li>MMT_Powder</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>7</count>
@@ -232,15 +232,15 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Powder</li>
+				<li>Chemfuel</li>
+				<li>ComponentIndustrial</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>Powder</li>
-				<li>FSX</li>
-				<li>ComponentIndustrial</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeFrag>5</MMT_Weapon_GrenadeFrag>
@@ -256,7 +256,7 @@
 		<description>普通破片手榴弹的升级版本，里面包含了更多更强的爆炸物质。</description>
 		<jobString>正在制作温压手榴弹。</jobString>
 		<workAmount>7000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -285,7 +285,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -300,14 +300,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_WeaponParts</li>
+				<li>MMT_SpacerComponent</li>
+				<li>MMT_LaserComponent</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
-				<li>MMT_LaserComponent</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeFusion>5</MMT_Weapon_GrenadeFusion>
@@ -323,7 +323,7 @@
 		<description>一个小而圆但非常致命的高能手榴弹。电荷手榴弹能挽救很多生命，也能解决很多问题，会产生大量危险的破片。</description>
 		<jobString>正在制作电荷手榴弹。</jobString>
 		<workAmount>7000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -352,7 +352,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -367,14 +367,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_WeaponParts</li>
+				<li>MMT_SpacerComponent</li>
+				<li>MMT_ChargedComponent</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
-				<li>MMT_ChargedComponent</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeChargedFrag>5</MMT_Weapon_GrenadeChargedFrag>
@@ -390,7 +390,7 @@
 		<description>老式高爆手榴弹。</description>
 		<jobString>正在制作高爆手榴弹</jobString>
 		<workAmount>3600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -411,8 +411,8 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
-						<li>FSX</li>
+						<li>MMT_Powder</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>5</count>
@@ -427,15 +427,15 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_Powder</li>
+				<li>Chemfuel</li>
+				<li>ComponentIndustrial</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>Powder</li>
-				<li>FSX</li>
-				<li>ComponentIndustrial</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeHighExplosive>5</MMT_Weapon_GrenadeHighExplosive>
@@ -451,7 +451,7 @@
 		<description>在手雷中混入少量的不稳定等离子材料，爆炸的时候会向四周猛烈喷发高温火焰。</description>
 		<jobString>正在制作燃烧手榴弹。</jobString>
 		<workAmount>3500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -472,8 +472,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Napalm</li>
-						<li>Prometheum</li>
+						<li>MMT_Napalm</li>
 					</thingDefs>
 				</filter>
 				<count>5</count>
@@ -490,8 +489,7 @@
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>ComponentIndustrial</li>
-				<li>Napalm</li>
-				<li>Prometheum</li>
+				<li>MMT_Napalm</li>
 			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
@@ -512,7 +510,7 @@
 		<description>一种简易的投掷式燃烧武器，能够轻易的将你的敌人烧成灰烬。</description>
 		<jobString>制作莫洛托夫燃烧瓶</jobString>
 		<workAmount>3500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -525,7 +523,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Glass</li>
+						<li>MMT_Glass</li>
 					</thingDefs>
 				</filter>
 				<count>30</count>
@@ -541,20 +539,20 @@
 			<li>
 				<filter>
 					<categories>
-						<li>BTextiles</li>
+						<li>MMT_BTextiles</li>
 					</categories>
 				</filter>
 				<count>30</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
-			<categories>
-				<li>BTextiles</li>
-			</categories>
 			<thingDefs>
-				<li>Glass</li>
+				<li>MMT_Glass</li>
 				<li>Chemfuel</li>
 			</thingDefs>
+			<categories>
+				<li>MMT_BTextiles</li>
+			</categories>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadeMolotov>5</MMT_Weapon_GrenadeMolotov>
@@ -571,7 +569,7 @@
 		<description>混合了部分不稳定等离子变化材料的武器，爆破面积小但是非常致命。</description>
 		<jobString>正在制作等离子手榴弹。</jobString>
 		<workAmount>7000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -600,7 +598,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -615,14 +613,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_WeaponParts</li>
+				<li>MMT_SpacerComponent</li>
+				<li>MMT_PlasmaComponent</li>
+			</thingDefs>
 			<categories>
 				<li>MMT_USLDBar</li>
 			</categories>
-			<thingDefs>
-				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
-				<li>MMT_PlasmaComponent</li>
-			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_Weapon_GrenadePlasma>5</MMT_Weapon_GrenadePlasma>
@@ -638,7 +636,7 @@
 		<description>制作烟雾手榴弹。</description>
 		<jobString>正在制作烟雾手榴弹。</jobString>
 		<workAmount>6000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -674,14 +672,14 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
-			<categories>
-				<li>MMT_SLDBar</li>
-				<li>MMT_USLDBar</li>
-			</categories>
 			<thingDefs>
 				<li>MMT_Plastic</li>
 				<li>ComponentIndustrial</li>
 			</thingDefs>
+			<categories>
+				<li>MMT_SLDBar</li>
+				<li>MMT_USLDBar</li>
+			</categories>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_CE_Weapon_GrenadeSmoke>5</MMT_CE_Weapon_GrenadeSmoke>
@@ -697,7 +695,7 @@
 		<description>制作木柄炸弹。</description>
 		<jobString>正在制作木柄炸弹。</jobString>
 		<workAmount>3000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -710,7 +708,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentMedieval</li>
+						<li>MMT_ComponentMedieval</li>
 					</thingDefs>
 				</filter>
 				<count>15</count>
@@ -718,7 +716,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FSX</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -726,20 +724,20 @@
 			<li>
 				<filter>
 					<categories>
-						<li>BTextiles</li>
+						<li>MMT_BTextiles</li>
 					</categories>
 				</filter>
 				<count>30</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
-			<categories>
-				<li>BTextiles</li>
-			</categories>
 			<thingDefs>
-				<li>ComponentMedieval</li>
-				<li>FSX</li>
+				<li>MMT_ComponentMedieval</li>
+				<li>Chemfuel</li>
 			</thingDefs>
+			<categories>
+				<li>MMT_BTextiles</li>
+			</categories>
 		</fixedIngredientFilter>
 		<products>
 			<MMT_CE_Weapon_GrenadeStickBomb>5</MMT_CE_Weapon_GrenadeStickBomb>
@@ -775,24 +773,24 @@
 			<li>
 				<filter>
 					<categories>
-						<li>HeavyBar</li>
+						<li>MMT_HCMBar</li>
 					</categories>
 				</filter>
 				<count>4</count>
 			</li>
 			<li>
 				<filter>
-					<categories>
-						<li>Chemical</li>
-					</categories>
+					<thingDefs>
+						<li>Chemfuel</li>
+					</thingDefs>
 				</filter>
 				<count>15</count>
 			</li>
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Powder</li>
-						<li>FSX</li>
+						<li>MMT_Powder</li>
+						<li>Chemfuel</li>
 					</thingDefs>
 				</filter>
 				<count>3</count>
@@ -809,14 +807,13 @@
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>ComponentIndustrial</li>
-				<li>FSX</li>
-				<li>Powder</li>
+				<li>Chemfuel</li>
+				<li>MMT_Powder</li>
 			</thingDefs>
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
-				<li>HeavyBar</li>
-				<li>Chemical</li>
+				<li>MMT_HCMBar</li>
 			</categories>
 		</fixedIngredientFilter>
 		<products>

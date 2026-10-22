@@ -823,7 +823,7 @@
 			<li>Gun</li>
 			<li>TierTwoSMG</li>
 		</weaponTags>
-		<weaponClasses DeepReplace="true">
+		<weaponClasses>
 			<li>RangedLight</li>
 		</weaponClasses>
 		<verbs>
@@ -1684,7 +1684,7 @@
 			<li>Gun</li>
 			<li>TierOneSMG</li>
 		</weaponTags>
-		<weaponClasses DeepReplace="true">
+		<weaponClasses>
 			<li>RangedLight</li>
 		</weaponClasses>
 		<verbs>

@@ -1783,7 +1783,7 @@
 			<li>Norbhammar</li>
 		</weaponTags>
 		<weaponClasses>
-			<li>Medieval</li>
+			<li>Neolithic</li>
 		</weaponClasses>
 		<verbs>
 			<li>
@@ -1817,9 +1817,9 @@
 			</li>
 		</tools>
 		<smeltProducts>
-			<Bronze>3</Bronze>
-			<ComponentMedieval>2</ComponentMedieval>
-			<FSX>1</FSX>
+			<MMT_Bronze>3</MMT_Bronze>
+			<MMT_ComponentMedieval>2</MMT_ComponentMedieval>
+			<Chemfuel>1</Chemfuel>
 		</smeltProducts>
 		<tradeability>Sellable</tradeability>
 	</ThingDef>
@@ -1880,7 +1880,7 @@
 		</tools>
 		<smeltProducts>
 			<Plasteel>3</Plasteel>
-			<ComponentSpacer>1</ComponentSpacer>
+			<MMT_SpacerComponent>1</MMT_SpacerComponent>
 			<MMT_WeaponParts>1</MMT_WeaponParts>
 		</smeltProducts>
 		<generateCommonality>0.5</generateCommonality>
@@ -1981,7 +1981,7 @@
 			</li>
 		</tools>
 		<smeltProducts>
-			<Napalm>4</Napalm>
+			<MMT_Napalm>4</MMT_Napalm>
 			<MMT_WeaponParts>3</MMT_WeaponParts>
 		</smeltProducts>
 		<generateCommonality>0.7</generateCommonality>
@@ -2023,7 +2023,7 @@
 		</verbs>
 		<smeltProducts>
 			<Steel>4</Steel>
-			<Powder>2</Powder>
+			<MMT_Powder>2</MMT_Powder>
 			<ComponentIndustrial>1</ComponentIndustrial>
 		</smeltProducts>
 	</ThingDef>
@@ -2084,7 +2084,7 @@
 		</tools>
 		<smeltProducts>
 			<Plasteel>3</Plasteel>
-			<ComponentSpacer>1</ComponentSpacer>
+			<MMT_SpacerComponent>1</MMT_SpacerComponent>
 			<MMT_WeaponParts>1</MMT_WeaponParts>
 		</smeltProducts>
 		<generateCommonality>0.3</generateCommonality>
@@ -2146,7 +2146,7 @@
 		</tools>
 		<smeltProducts>
 			<Steel>4</Steel>
-			<Powder>2</Powder>
+			<MMT_Powder>2</MMT_Powder>
 			<ComponentIndustrial>1</ComponentIndustrial>
 		</smeltProducts>
 	</ThingDef>
@@ -2188,9 +2188,9 @@
 			</li>
 		</verbs>
 		<smeltProducts>
-			<Glass>3</Glass>
+			<MMT_Glass>3</MMT_Glass>
 			<Cloth>3</Cloth>
-			<Napalm>1</Napalm>
+			<MMT_Napalm>1</MMT_Napalm>
 		</smeltProducts>
 		<generateCommonality>0.7</generateCommonality>
 	</ThingDef>
@@ -2251,7 +2251,7 @@
 		</tools>
 		<smeltProducts>
 			<Plasteel>3</Plasteel>
-			<ComponentSpacer>1</ComponentSpacer>
+			<MMT_SpacerComponent>1</MMT_SpacerComponent>
 			<MMT_WeaponParts>1</MMT_WeaponParts>
 		</smeltProducts>
 		<generateCommonality>0.4</generateCommonality>

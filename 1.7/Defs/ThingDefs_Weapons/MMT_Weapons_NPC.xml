@@ -514,7 +514,7 @@
 				<chanceFactor>100</chanceFactor>
 				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
-					<li>ElectricShock</li>
+					<li>Stun</li>
 				</capacities>
 				<armorPenetration>0.06</armorPenetration>
 			</li>
@@ -554,7 +554,7 @@
 				<chanceFactor>100</chanceFactor>
 				<linkedBodyPartsGroup>Handle</linkedBodyPartsGroup>
 				<capacities>
-					<li>ElectricShock</li>
+					<li>Stun</li>
 				</capacities>
 				<armorPenetration>0.04</armorPenetration>
 			</li>

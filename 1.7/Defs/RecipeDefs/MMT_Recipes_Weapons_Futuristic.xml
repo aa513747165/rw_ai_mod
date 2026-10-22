@@ -9,7 +9,7 @@
 内置能量电池，可切换为激光射击模式。</description>
 		<jobString>正在制造A-1BW黑寡妇。</jobString>
 		<workAmount>27000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -30,7 +30,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>Hexcell</li>
+						<li>MMT_Hexcell</li>
 					</thingDefs>
 				</filter>
 				<count>1</count>
@@ -46,7 +46,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>8</count>
@@ -71,9 +71,9 @@
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>MMT_LaserComponent</li>
-				<li>Hexcell</li>
+				<li>MMT_Hexcell</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -94,7 +94,7 @@
 		<description>只有最富有和最强大的军阀才买得起这种受到精密制造权管理（FRM）技术保护，由超高纳米技术制成的多路脉冲光束发射器。</description>
 		<jobString>正在制作M12“仲裁者”光束枪。</jobString>
 		<workAmount>25000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -123,7 +123,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>9</count>
@@ -149,7 +149,7 @@
 			<thingDefs>
 				<li>MMT_LaserComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -170,7 +170,7 @@
 		<description>一种发射电荷弹药的步枪。</description>
 		<jobString>正在制作R3“溶媒”电荷步枪</jobString>
 		<workAmount>27000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -199,7 +199,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>10</count>
@@ -225,7 +225,7 @@
 			<thingDefs>
 				<li>MMT_ChargedComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -246,7 +246,7 @@
 		<description>使用超高纳米技术制造的重型脉冲光束发射器。</description>
 		<jobString>正在制作M10“铆钉”光束枪。</jobString>
 		<workAmount>24000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -275,7 +275,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>9</count>
@@ -301,7 +301,7 @@
 			<thingDefs>
 				<li>MMT_LaserComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -322,7 +322,7 @@
 		<description>一种通用的，多功能的军用级突击步枪。短点射拥有较高射击精度，全自动模式更加致命。在短时间内精确射击，在全自动射击时致命。亡魂在穿透护甲、护甲和生物屏障方面非常有效。亡魂拥有极高的模块化设计，其组件在市场上也非常便宜，而且这种步枪以坚韧、可靠、易于使用和易于升级而著称，广受各类军事组织和雇佣军们青睐。</description>
 		<jobString>正在制作M8“亡魂”光束枪。</jobString>
 		<workAmount>23000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -351,7 +351,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>9</count>
@@ -377,7 +377,7 @@
 			<thingDefs>
 				<li>MMT_LaserComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -398,7 +398,7 @@
 		<description>一种非常强大的脉冲光束狙击步枪，单发射击就能干掉大多数的目标。射速较慢，但是精度很高。对于装甲有较高的穿透力，但是对护盾和生物屏障效果较弱。</description>
 		<jobString>正在制作M6“螳螂”光束枪。</jobString>
 		<workAmount>24000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -427,7 +427,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>9</count>
@@ -453,7 +453,7 @@
 			<thingDefs>
 				<li>MMT_LaserComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -474,7 +474,7 @@
 		<description>一种中近距离作战使用的轻型离子步枪。</description>
 		<jobString>正在制作C3“巫师”。</jobString>
 		<workAmount>26000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -503,7 +503,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>10</count>
@@ -529,7 +529,7 @@
 			<thingDefs>
 				<li>MMT_PlasmaComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -550,7 +550,7 @@
 		<description>一种具有高精准度的等离子手枪。</description>
 		<jobString>正在制作C1“晋升”</jobString>
 		<workAmount>18000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -579,7 +579,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentSpacer</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>8</count>
@@ -605,7 +605,7 @@
 			<thingDefs>
 				<li>MMT_PlasmaComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -626,7 +626,7 @@
 		<description>一种等离子狙击步枪，精准度很高，但是射速较慢。</description>
 		<jobString>正在制作C2“月咒”</jobString>
 		<workAmount>25000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -655,7 +655,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>10</count>
@@ -681,7 +681,7 @@
 			<thingDefs>
 				<li>MMT_PlasmaComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -702,7 +702,7 @@
 		<description>制造C7“灾引”多路等离子急速发射器，拥有极好的停止力和较远的射程。</description>
 		<jobString>正在制作C7“灾引”</jobString>
 		<workAmount>27000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -731,7 +731,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>10</count>
@@ -757,7 +757,7 @@
 			<thingDefs>
 				<li>MMT_PlasmaComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -778,7 +778,7 @@
 		<description>这是一种极其稀少的等离子霰弹枪。 在较近距离上能造成极高的伤害，但是在较远的距离上效果呈指数式下跌。能够有效对抗装甲、护盾以及生物屏障。虽然它是人类设计的武器，但只能让克罗根人使用，因为它产生的单发后坐力几乎可以撞断人类脆弱的手臂。这种武器受到制造权管理（FRM）技术的保护，几乎不可能复制，而且造价昂贵得令人望而却步。</description>
 		<jobString>正在制作C5“魔咒”。</jobString>
 		<workAmount>26000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -807,7 +807,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>11</count>
@@ -833,7 +833,7 @@
 			<thingDefs>
 				<li>MMT_PlasmaComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentUltra</li>
+				<li>MMT_UltraComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -854,7 +854,7 @@
 		<description>一种发射电荷弹药的步枪。</description>
 		<jobString>正在制作R6“撕裂者”电荷步枪</jobString>
 		<workAmount>30000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -883,7 +883,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentUltra</li>
+						<li>MMT_UltraComponent</li>
 					</thingDefs>
 				</filter>
 				<count>12</count>
@@ -891,7 +891,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>FerrosiliconAlloy</li>
+						<li>MMT_FerrosiliconAlloy</li>
 					</thingDefs>
 				</filter>
 				<count>7</count>
@@ -917,7 +917,7 @@
 			<thingDefs>
 				<li>MMT_ChargedComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentSpacer</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>

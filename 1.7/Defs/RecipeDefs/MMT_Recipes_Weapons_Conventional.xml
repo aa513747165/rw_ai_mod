@@ -8,7 +8,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制作伯莱塔93R冲锋手枪。</jobString>
 		<workAmount>9300</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -96,7 +96,7 @@
 弹药： 12 号子弹</description>
 		<jobString>正在制造 AA-12自动霰弹枪。</jobString>
 		<workAmount>19000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -183,7 +183,7 @@
 弹药： 7.62x39mm 苏制子弹</description>
 		<jobString>正在制作AK-47突击步枪。</jobString>
 		<workAmount>19000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -270,7 +270,7 @@
 弹药： .50 BMG</description>
 		<jobString>正在制造 AR-50狙击步枪。</jobString>
 		<workAmount>25000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -357,7 +357,7 @@
 弹药： 14.5x114mm</description>
 		<jobString>正在制造 PTRD反坦克步枪。</jobString>
 		<workAmount>21000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -435,7 +435,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作斯太尔AUG突击步枪。</jobString>
 		<workAmount>19500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -522,7 +522,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作M16突击步枪。</jobString>
 		<workAmount>18000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -609,7 +609,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制作伯莱塔Cx4卡宾枪。</jobString>
 		<workAmount>14000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -697,7 +697,7 @@
 弹药：.45 自动手枪弹</description>
 		<jobString>正在制作M1917史密斯威森左轮。</jobString>
 		<workAmount>8500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -776,7 +776,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作法玛斯G2突击步枪。</jobString>
 		<workAmount>17500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -864,7 +864,7 @@
 产出：1</description>
 		<jobString>正在制作灭火器。</jobString>
 		<workAmount>8800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -932,7 +932,7 @@
 		<description>一种没有使用传统的背负式燃料罐，而使用便携式加压罐体的非常规设计喷火器。对于使用者来说方便了不少，但是也增加了重装填的频率。</description>
 		<jobString>正在制作RM2喷火器。</jobString>
 		<workAmount>17000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1010,7 +1010,7 @@
 		<description>一种古老的单发信号枪，用于信号或照明。枪管太细，只能发射照明弹。产出：1</description>
 		<jobString>正在制作信号枪。</jobString>
 		<workAmount>8800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1071,7 +1071,7 @@
  弹药： 7.62x39mm 苏制子弹</description>
 		<jobString>正在制作加利尔ACE轻机枪。</jobString>
 		<workAmount>20500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1158,7 +1158,7 @@
 弹药： .303英制弹药</description>
 		<jobString>正在制作李-恩菲尔德步枪。</jobString>
 		<workAmount>12200</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1237,7 +1237,7 @@
 弹药：.45 自动手枪弹</description>
 		<jobString>正在制作柯尔特M1911自动手枪。</jobString>
 		<workAmount>8500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1316,7 +1316,7 @@
  弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作MA39X突击步枪。</jobString>
 		<workAmount>20500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1403,7 +1403,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制造 M4幽灵冲锋枪</jobString>
 		<workAmount>15000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1491,7 +1491,7 @@
 弹药： .50 BMG</description>
 		<jobString>正在制造 黑卡蒂II反器材狙击步枪。</jobString>
 		<workAmount>25000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1578,7 +1578,7 @@
 弹药： 30x64mm 燃料弹</description>
 		<jobString>正在制作T9“炎阳”燃烧弹发射器。</jobString>
 		<workAmount>19000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1665,7 +1665,7 @@
 弹药： M72 LAW</description>
 		<jobString>正在制作M72反坦克火箭筒。</jobString>
 		<workAmount>22000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1743,7 +1743,7 @@
  弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作L-15轻机枪</jobString>
 		<workAmount>19500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1821,7 +1821,7 @@
  弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作M249班用机枪。</jobString>
 		<workAmount>23000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1899,7 +1899,7 @@
 弹药：12号子弹</description>
 		<jobString>正在制造 M37A2泵动霰弹枪。</jobString>
 		<workAmount>11800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -1978,7 +1978,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制造 M3“注油枪”冲锋枪。</jobString>
 		<workAmount>13600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2057,7 +2057,7 @@
 弹药： 7.62x51mm 北约标准弹</description>
 		<jobString>正在制造 M42A狙击步枪。</jobString>
 		<workAmount>16900</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2145,7 +2145,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作M4A1卡宾枪。</jobString>
 		<workAmount>15000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2233,7 +2233,7 @@
  弹药： .50 机枪弹</description>
 		<jobString>正在制作M56智能机枪。</jobString>
 		<workAmount>19900</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2262,7 +2262,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentAdvanced</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>4</count>
@@ -2296,7 +2296,7 @@
 			<thingDefs>
 				<li>MMT_HeavyComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentAdvanced</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -2320,7 +2320,7 @@
 弹药： RPG-7 榴弹</description>
 		<jobString>正在制作M5火箭筒。</jobString>
 		<workAmount>23000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2397,7 +2397,7 @@
 		<description>制作M79榴弹发射器，这是一种发射榴弹的发射器武器。</description>
 		<jobString>正在制作M79榴弹发射器。</jobString>
 		<workAmount>15000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2485,7 +2485,7 @@
 弹药： .50 BMG</description>
 		<jobString>正在制造 M82A1反器材步枪。</jobString>
 		<workAmount>22500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2572,7 +2572,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制造 MP5A3冲锋枪。</jobString>
 		<workAmount>14600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2660,7 +2660,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作TAR-21 突击步枪。</jobString>
 		<workAmount>21000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2738,7 +2738,7 @@
 弹药： 40x46mm 榴弹</description>
 		<jobString>正在制作米尔科姆榴弹发射器。</jobString>
 		<workAmount>21000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2825,7 +2825,7 @@
  弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作XM214速射机枪。</jobString>
 		<workAmount>28000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2854,7 +2854,7 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>ComponentAdvanced</li>
+						<li>MMT_SpacerComponent</li>
 					</thingDefs>
 				</filter>
 				<count>10</count>
@@ -2888,7 +2888,7 @@
 			<thingDefs>
 				<li>MMT_HeavyComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>ComponentAdvanced</li>
+				<li>MMT_SpacerComponent</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -2912,7 +2912,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制造 乌兹冲锋枪。</jobString>
 		<workAmount>13600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -2991,7 +2991,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制作“帕拉军工”P14 手枪</jobString>
 		<workAmount>8800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3079,7 +3079,7 @@
 弹药：12 号子弹</description>
 		<jobString>正在制造 雷明顿870霰弹枪。</jobString>
 		<workAmount>12000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3158,7 +3158,7 @@
 弹药： RPG-7 榴弹</description>
 		<jobString>正在制作RPG-7。</jobString>
 		<workAmount>23000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3236,7 +3236,7 @@
 口径为7.62x51mm NATO。</description>
 		<jobString>正在制作FN SCAR-H突击步枪。</jobString>
 		<workAmount>19200</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3323,7 +3323,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作西格SG553突击步枪。</jobString>
 		<workAmount>19500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3410,7 +3410,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制造 MP5K冲锋枪。</jobString>
 		<workAmount>15600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3489,7 +3489,7 @@
 弹药： 7.62x51mm 北约标准弹</description>
 		<jobString>正在制作M24狙击步枪。</jobString>
 		<workAmount>16600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3577,7 +3577,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制作司芬克斯AT2000手枪。</jobString>
 		<workAmount>8800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3665,7 +3665,7 @@
 弹药：12号子弹</description>
 		<jobString>正在制造 “打击者”霰弹枪。</jobString>
 		<workAmount>16200</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3752,7 +3752,7 @@
 弹药： 14.5x114mm</description>
 		<jobString>正在制造 SRS99反器材狙击步枪。</jobString>
 		<workAmount>23000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3839,7 +3839,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制造 TMP消声冲锋枪。</jobString>
 		<workAmount>15000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -3918,7 +3918,7 @@
 弹药： 12号子弹</description>
 		<jobString>正在制造 M90近程突击霰弹枪。</jobString>
 		<workAmount>19000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4005,7 +4005,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作MA5 ICWS突击步枪。</jobString>
 		<workAmount>20000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4092,7 +4092,7 @@
 弹药： 12 号子弹</description>
 		<jobString>正在制造 M45战术霰弹枪。</jobString>
 		<workAmount>17500</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4179,7 +4179,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制作TEC-9冲锋手枪。</jobString>
 		<workAmount>9200</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4267,7 +4267,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制造 UMP45冲锋枪。</jobString>
 		<workAmount>14900</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4355,7 +4355,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制作USC半自动卡宾枪。</jobString>
 		<workAmount>14000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4443,7 +4443,7 @@
 弹药： .45 自动手枪弹</description>
 		<jobString>正在制造 K10“短剑”冲锋枪。</jobString>
 		<workAmount>15600</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4531,7 +4531,7 @@
 弹药： 9x19mm 子弹</description>
 		<jobString>正在制作维克多CP1手枪。</jobString>
 		<workAmount>8800</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4611,7 +4611,7 @@
 弹药： 7.62x51mm 北约标准弹</description>
 		<jobString>正在制造 瓦尔特WA2000狙击步枪。</jobString>
 		<workAmount>21000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4698,7 +4698,7 @@
 弹药： 5.56x45mm 北约标准弹</description>
 		<jobString>正在制作XM8军用步枪。</jobString>
 		<workAmount>20000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>
@@ -4785,7 +4785,7 @@
 弹药：7.62x51mm北约标准弹</description>
 		<jobString>制作M60E4通用机枪</jobString>
 		<workAmount>24000</workAmount>
-		<workSpeedStat>SmithingSpeed</workSpeedStat>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
 		<workSkill>Crafting</workSkill>
 		<workSkillLearnFactor>0.8</workSkillLearnFactor>
 		<effectWorking>Smith</effectWorking>

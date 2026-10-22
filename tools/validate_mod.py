@@ -5292,6 +5292,88 @@ TURRET_AMMO_PROJECTILES = {
 }
 
 
+GAME_DATA_DIR = ROOT.parent / "RimWorld v1.7.4979" / "Data"
+if not GAME_DATA_DIR.is_dir():
+    GAME_DATA_DIR = Path("D:/RimWorld v1.7.4979/Data")
+
+WEAPON_REFERENCE_FIELDS = {
+    "defaultProjectile", "projectileWhenLoaded", "turretGunDef", "minifiedDef",
+    "unfinishedThingDef", "soundCast", "soundCastTail", "soundInteract", "soundDrop",
+    "soundWorking", "effectWorking", "damageDef", "researchPrerequisite",
+    "workSpeedStat", "workSkill",
+}
+WEAPON_REFERENCE_LISTS = {
+    "thingDefs", "categories", "recipeUsers", "prerequisites", "researchPrerequisites",
+    "stuffCategories", "thingCategories", "affectedDamageDefs", "capacities", "weaponClasses",
+}
+WEAPON_REFERENCE_DICTS = {"products", "costList", "smeltProducts"}
+WEAPON_GENERATED_FILES = [
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_TurretGuns.xml",
+    "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
+    "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml",
+    "1.7/Defs/ThingDefs_Items/MMT_Items_TurretAmmo.xml",
+    "1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml",
+    "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Conventional.xml",
+    "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml",
+    "1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml",
+    "1.7/Defs/RecipeDefs/MMT_Recipes_TurretAmmo.xml",
+    "1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml",
+    "1.7/Defs/ResearchProjectDefs/MMT_Research_Weapons.xml",
+    "1.7/Defs/SoundDefs/MMT_Sounds_Weapons.xml",
+]
+
+
+def collect_known_def_names() -> set[str]:
+    """可解析名集合：MMT 全部 Def + 原版与全 DLC Def。"""
+    known: set[str] = set()
+    for pattern_root in (ROOT / "1.7/Defs", GAME_DATA_DIR):
+        for path in sorted(pattern_root.glob("**/*.xml") if pattern_root == ROOT / "1.7/Defs" else pattern_root.glob("*/Defs/**/*.xml")):
+            try:
+                root = ET.parse(path).getroot()
+            except ET.ParseError:
+                continue
+            for node in root.iter():
+                if not isinstance(node.tag, str):
+                    continue
+                name = node.findtext("defName") or node.get("Name")
+                if name:
+                    known.add(name)
+    return known
+
+
+def validate_weapon_references() -> None:
+    """武器相关生成文件的引用闭合：所有被引用 def 必须在 MMT 或原版/DLC 中存在。"""
+    known = collect_known_def_names()
+    dangling: list[str] = []
+    for rel in WEAPON_GENERATED_FILES:
+        root = parse_xml(rel)
+        for node in root.iter():
+            if not isinstance(node.tag, str):
+                continue
+            if node.tag in WEAPON_REFERENCE_FIELDS and node.text and node.text.strip() not in known:
+                dangling.append(f"{rel}: {node.tag}={node.text.strip()}")
+        for node in root.iter():
+            if node.tag in WEAPON_REFERENCE_LISTS:
+                for li in node.findall("li"):
+                    if li.text and li.text.strip() not in known:
+                        dangling.append(f"{rel}: {node.tag}/li={li.text.strip()}")
+        for node in root.iter():
+            if node.tag in WEAPON_REFERENCE_DICTS:
+                for child in node:
+                    if child.tag not in known:
+                        dangling.append(f"{rel}: {node.tag}/{child.tag}")
+    if dangling:
+        for entry in dangling[:20]:
+            print(f"  [dangling] {entry}")
+        fail(f"武器引用闭合检查失败：{len(dangling)} 个悬空引用")
+    print("weapons-references: OK")
+
+
 def validate_weapons() -> None:
     validate_weapons_core()
     validate_weapons_projectiles()
@@ -5301,6 +5383,7 @@ def validate_weapons() -> None:
     validate_weapons_futuristic()
     validate_weapons_turrets()
     validate_weapons_npc()
+    validate_weapon_references()
     weapon_files = [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Conventional.xml",
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml",

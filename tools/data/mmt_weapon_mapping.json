@@ -64,15 +64,34 @@
     "Surfactant": "MMT_Surfactant",
     "ElectronicComponents": "MMT_ElectronicParts",
     "Electronics": "MMT_IntegratedCircuit",
-    "Microchips": "MMT_Microchip"
+    "Microchips": "MMT_Microchip",
+    "Glass": "MMT_Glass",
+    "Bronze": "MMT_Bronze",
+    "Rubber": "MMT_Rubber",
+    "FerrosiliconAlloy": "MMT_FerrosiliconAlloy",
+    "Hexcell": "MMT_Hexcell",
+    "Napalm": "MMT_Napalm",
+    "Powder": "MMT_Powder",
+    "Prometheum": "MMT_Napalm",
+    "FSX": "Chemfuel",
+    "ComponentMedieval": "MMT_ComponentMedieval",
+    "ComponentAdvanced": "MMT_SpacerComponent",
+    "ComponentSpacer": "MMT_SpacerComponent",
+    "ComponentUltra": "MMT_UltraComponent"
   },
   "ingredient_categories": {
     "SLDBar": "MMT_SLDBar",
     "USLDBar": "MMT_USLDBar",
     "HCMBar": "MMT_HCMBar",
+    "BTextiles": "MMT_BTextiles",
+    "HeavyBar": "MMT_HCMBar",
+    "Wooden": "Woody",
     "Metallic": "Metallic",
     "Leathers": "Leathers",
     "Woody": "Woody"
+  },
+  "category_to_thingdef": {
+    "Chemical": "Chemfuel"
   },
   "sound_fallbacks": {
     "FlameThrower": "Shot_MiniFlameblaster"

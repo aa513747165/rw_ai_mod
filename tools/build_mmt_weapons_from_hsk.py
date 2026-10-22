@@ -643,6 +643,19 @@ VANILLA_GRAPHIC_CLASSES = {
     "Graphic_RandomRotated", "Graphic_Cluster", "Graphic_Terrain",
 }
 
+# weaponClasses 只保留原版值，HSK 专有类映射到最近原版类
+VANILLA_WEAPON_CLASSES = {
+    "Ranged", "RangedLight", "RangedHeavy", "ShortShots", "LongShots",
+    "Melee", "MeleeBlunt", "MeleePiercer", "Neolithic", "Ultratech",
+}
+WEAPON_CLASS_MAP = {"Medieval": "Neolithic"}
+
+# Tool capacities 只保留原版 DamageDef，HSK 专有伤害映射到最近原版近似
+TOOL_CAPACITY_MAP = {"ElectricShock": "Stun"}
+
+# workSpeedStat 只保留原版 StatDef
+WORK_SPEED_STAT_MAP = {"SmithingSpeed": "GeneralLaborSpeed"}
+
 
 def sanitize_graphic_data(graphic: ET.Element | None) -> ET.Element | None:
     """剔除 SK/CE 自定义 graphicClass，回退为 Graphic_Single。"""
@@ -718,7 +731,11 @@ def convert_tools(chain: list[ET.Element]) -> ET.Element | None:
                 ET.SubElement(tool, field).text = value
         capacities = li.find("capacities")
         if capacities is not None:
-            tool.append(copy.deepcopy(capacities))
+            caps = copy.deepcopy(capacities)
+            for cap in caps.findall("li"):
+                if cap.text in TOOL_CAPACITY_MAP:
+                    cap.text = TOOL_CAPACITY_MAP[cap.text]
+            tool.append(caps)
         sharp = li.findtext("armorPenetrationSharp")
         blunt = li.findtext("armorPenetrationBlunt")
         if sharp or blunt:
@@ -823,7 +840,15 @@ def convert_weapon(source_name: str, batch: str, index: SourceIndex, mapping: di
             ET.SubElement(tag_node, "li").text = tag
     classes_node = nearest_node(chain, "weaponClasses")
     if classes_node is not None:
-        out.append(copy.deepcopy(classes_node))
+        classes_out = ET.SubElement(out, "weaponClasses")
+        for li in classes_node.findall("li"):
+            if not li.text:
+                continue
+            value = WEAPON_CLASS_MAP.get(li.text, li.text)
+            if value not in VANILLA_WEAPON_CLASSES:
+                print(f"[manual_review] weaponClasses {li.text} 非原版值，已丢弃")
+                continue
+            ET.SubElement(classes_out, "li").text = value
     verbs = convert_verbs(chain, index, mapping)
     if verbs is not None:
         out.append(verbs)
@@ -857,17 +882,42 @@ def recipe_chain(index: SourceIndex, element: ET.Element) -> list[ET.Element]:
 
 
 def convert_filter(filter_node: ET.Element, mapping: dict) -> ET.Element:
-    """映射 ingredients/fixedIngredientFilter 的 thingDefs 与 categories。"""
+    """映射 ingredients/fixedIngredientFilter 的 thingDefs 与 categories；无对应 ThingCategory 的类别降级并入 thingDefs。"""
     out = ET.Element("filter") if filter_node.tag == "filter" else ET.Element(filter_node.tag)
+    thing_names: list[str] = []
+    category_names: list[str] = []
+    others: list[ET.Element] = []
     for section in filter_node:
-        if section.tag in ("thingDefs", "categories"):
-            mapped = ET.SubElement(out, section.tag)
-            lookup = mapping["ingredient_defs"] if section.tag == "thingDefs" else mapping["ingredient_categories"]
+        if section.tag == "thingDefs":
             for li in section.findall("li"):
                 if li.text:
-                    ET.SubElement(mapped, "li").text = lookup.get(li.text, li.text)
+                    name = mapping["ingredient_defs"].get(li.text, li.text)
+                    if name not in thing_names:
+                        thing_names.append(name)
+        elif section.tag == "categories":
+            for li in section.findall("li"):
+                if not li.text:
+                    continue
+                if li.text in mapping.get("category_to_thingdef", {}):
+                    name = mapping["category_to_thingdef"][li.text]
+                    if name not in thing_names:
+                        thing_names.append(name)
+                else:
+                    name = mapping["ingredient_categories"].get(li.text, li.text)
+                    if name not in category_names:
+                        category_names.append(name)
         else:
-            out.append(copy.deepcopy(section))
+            others.append(copy.deepcopy(section))
+    if thing_names:
+        things = ET.SubElement(out, "thingDefs")
+        for name in thing_names:
+            ET.SubElement(things, "li").text = name
+    if category_names:
+        cats = ET.SubElement(out, "categories")
+        for name in category_names:
+            ET.SubElement(cats, "li").text = name
+    for node in others:
+        out.append(node)
     return out
 
 
@@ -886,6 +936,8 @@ def convert_recipe(source_name: str, index: SourceIndex, mapping: dict) -> ET.El
     for field in ("workAmount", "workSpeedStat", "workSkill", "workSkillLearnFactor", "effectWorking", "soundWorking"):
         value = nearest_text(chain, field)
         if value:
+            if field == "workSpeedStat":
+                value = WORK_SPEED_STAT_MAP.get(value, value)
             ET.SubElement(out, field).text = value
     skill = nearest_node(chain, "skillRequirements")
     if skill is not None:
@@ -1382,6 +1434,8 @@ def convert_ammo_recipe(source_name: str, ammo_set: str, index: SourceIndex, map
     for field in ("workAmount", "workSpeedStat", "workSkill", "workSkillLearnFactor", "effectWorking", "soundWorking"):
         value = nearest_text(chain, field)
         if value:
+            if field == "workSpeedStat":
+                value = WORK_SPEED_STAT_MAP.get(value, value)
             ET.SubElement(out, field).text = value
     skill = nearest_node(chain, "skillRequirements")
     if skill is not None:

@@ -496,9 +496,9 @@
 		</tools>
 		<smeltProducts>
 			<MMT_LaserComponent>1</MMT_LaserComponent>
-			<Hexcell>1</Hexcell>
+			<MMT_Hexcell>1</MMT_Hexcell>
 			<MMT_WeaponParts>4</MMT_WeaponParts>
-			<ComponentUltra>5</ComponentUltra>
+			<MMT_UltraComponent>5</MMT_UltraComponent>
 			<MMT_Plastic>10</MMT_Plastic>
 		</smeltProducts>
 		<tradeability>Sellable</tradeability>
