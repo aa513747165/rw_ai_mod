@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 超频模块：贴靠在自动研磨机/自动筛子旁，每个使相邻自动机处理速度 +10%（间隔 / (1+0.1n)）。
+       通电才生效，可放多个叠加；需研究"自动机增效" -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_OverclockModule</defName>
+    <label>超频模块</label>
+    <description>为相邻的自动研磨机、自动筛子提供超频驱动的增效装置。每个通电的超频模块使相邻自动机处理速度提高 10%。需要持续供电。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_OverclockModule/MMT_OverclockModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <costList>
+      <Steel>25</Steel>
+      <MMT_Mechanism>2</MMT_Mechanism>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1500</WorkToBuild>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Mass>15</Mass>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <tickerType>Never</tickerType>
+    <rotatable>false</rotatable>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="MyModeTest.CompProperties_ProcessorModule">
+        <moduleType>Overclock</moduleType>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>MMT_AutoBoost</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 并行模块：贴靠在自动研磨机/自动筛子旁，每个使每轮多一次生产（多耗一轮料多产一轮产物）。
+       通电才生效，可放多个叠加；需研究"自动机增效" -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ParallelModule</defName>
+    <label>并行模块</label>
+    <description>为相邻的自动研磨机、自动筛子扩展并行加工单元的增效装置。每个通电的并行模块使自动机每轮多消耗一份输入并多产出一份产物。需要持续供电。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ParallelModule/MMT_ParallelModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <costList>
+      <Steel>30</Steel>
+      <MMT_Mechanism>3</MMT_Mechanism>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1800</WorkToBuild>
+      <MaxHitPoints>140</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Mass>18</Mass>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <tickerType>Never</tickerType>
+    <rotatable>false</rotatable>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="MyModeTest.CompProperties_ProcessorModule">
+        <moduleType>Parallel</moduleType>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>MMT_AutoBoost</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

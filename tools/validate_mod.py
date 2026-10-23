@@ -79,6 +79,7 @@ OREPOWDER_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_OrePowder.xm
 GRINDER_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Grinder.xml"
 SIEVE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sieve.xml"
 AUTOPROC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_AutoProcessor.xml"
+MODULE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ProcessorModules.xml"
 ORESIFT_CS = "Source/MyModeTest/OreSiftPool.cs"
 AUTOPROC_CS = "Source/MyModeTest/AutoProcessor.cs"
 
@@ -110,6 +111,11 @@ AUTOPROC_TEXTURES = [
     "1.7/Textures/Things/Building/Production/MMT_AutoGrinder/MMT_AutoGrinder.png",
     *[f"1.7/Textures/Things/Building/Production/MMT_Hopper/MMT_Hopper_{side}.png"
       for side in ("south", "east", "north")],
+]
+
+MODULE_TEXTURES = [
+    "1.7/Textures/Things/Building/Production/MMT_OverclockModule/MMT_OverclockModule.png",
+    "1.7/Textures/Things/Building/Production/MMT_ParallelModule/MMT_ParallelModule.png",
 ]
 
 CERAMICS_ITEM_TEXTURES = [
@@ -1757,8 +1763,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 67  # 含药品链 13 项与无中生有链 2 项（MMT_Research_OrePowder.xml）
-INFRA_WORKTABLE_TOTAL = 38  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3）
+INFRA_RESEARCH_TOTAL = 68  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）
+INFRA_WORKTABLE_TOTAL = 40  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6018,10 +6024,12 @@ def validate_orepowder() -> None:
         GRINDER_BUILDING_XML,
         SIEVE_BUILDING_XML,
         AUTOPROC_BUILDING_XML,
+        MODULE_BUILDING_XML,
         ORESIFT_CS,
         AUTOPROC_CS,
         *OREPOWDER_TEXTURES,
         *AUTOPROC_TEXTURES,
+        *MODULE_TEXTURES,
     ])
 
     # 矿粉物品
@@ -6087,13 +6095,30 @@ def validate_orepowder() -> None:
         assert_equal(child_text(proc, "intervalTicks"), "2500", f"{name} 处理间隔")
         assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoOreProcessing"], f"{name} 研究前置")
 
-    # 研究：矿粉筛选（切石+电力）→ 自动化矿料处理（+微电子）
+    # 增效模块：超频/并行 1x1 贴靠模块（CompProcessorModule 标记 + 电力）
+    module_defs = def_map(parse_xml(MODULE_BUILDING_XML))
+    assert_equal(set(module_defs), {"MMT_OverclockModule", "MMT_ParallelModule"}, "增效模块 defName 集合")
+    for name, power, mtype in (("MMT_OverclockModule", "150", "Overclock"),
+                               ("MMT_ParallelModule", "200", "Parallel")):
+        d = module_defs[name]
+        assert_equal(child_text(d, "size"), "(1,1)", f"{name} 尺寸")
+        power_comp = next(li for li in d.findall("comps/li")
+                          if li.attrib.get("Class") == "CompProperties_Power")
+        assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
+        mod = next(li for li in d.findall("comps/li")
+                   if li.attrib.get("Class") == "MyModeTest.CompProperties_ProcessorModule")
+        assert_equal(child_text(mod, "moduleType"), mtype, f"{name} 模块类型")
+        assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoBoost"], f"{name} 研究前置")
+
+    # 研究：矿粉筛选（切石+电力）→ 自动化矿料处理（+微电子）→ 自动机增效
     research_defs = def_map(parse_xml(OREPOWDER_RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_OreSifting", "MMT_AutoOreProcessing"}, "无中生有研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_OreSifting", "MMT_AutoOreProcessing", "MMT_AutoBoost"}, "无中生有研究 defName 集合")
     assert_equal(li_values(research_defs["MMT_OreSifting"], "prerequisites"),
                  ["Stonecutting", "Electricity"], "矿粉筛选前置研究")
     assert_equal(li_values(research_defs["MMT_AutoOreProcessing"], "prerequisites"),
                  ["MMT_OreSifting", "Microelectronics"], "自动化矿料处理前置研究")
+    assert_equal(li_values(research_defs["MMT_AutoBoost"], "prerequisites"),
+                 ["MMT_AutoOreProcessing"], "自动机增效前置研究")
     for name in research_defs:
         assert_equal(child_text(research_defs[name], "tab"), "MMT_ResearchTab", f"{name} tab")
 
@@ -6107,7 +6132,9 @@ def validate_orepowder() -> None:
     assert "brrainz.harmony" in about, "About.xml 缺少 Harmony modDependencies"
     auto_src = (ROOT / AUTOPROC_CS).read_text(encoding="utf-8")
     for token in ("CompProperties_AutoProcessor", "CompAutoProcessor", "isHopper",
-                  "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent"):
+                  "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent",
+                  "CompProperties_ProcessorModule", "CompProcessorModule", "ModuleType",
+                  "CountModules"):
         assert token in auto_src, f"AutoProcessor.cs 缺少关键实现: {token}"
     print("orepowder: OK")
 
