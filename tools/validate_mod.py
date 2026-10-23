@@ -1763,7 +1763,7 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 68  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）
+INFRA_RESEARCH_TOTAL = 63  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究
 INFRA_WORKTABLE_TOTAL = 40  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
@@ -5759,7 +5759,7 @@ def validate_weapons_conventional() -> None:
     print("weapons-conventional: OK")
 
 
-WEAPON_RESEARCH_TOTAL = 23
+WEAPON_RESEARCH_TOTAL = 18  # 已剔除 5 个无解锁内容的研究（弓I/心灵武器/炮塔I/自动炮塔II/自动炮塔IV）
 
 
 def validate_weapons_research() -> None:

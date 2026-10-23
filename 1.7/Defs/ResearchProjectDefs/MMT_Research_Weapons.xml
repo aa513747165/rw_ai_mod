@@ -17,30 +17,6 @@
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
-		<defName>MMT_MeleeUltra</defName>
-		<label>心灵武器</label>
-		<description>它的名字里面有＂枪＂，那它算不算是＂利刃＂？</description>
-		<baseCost>2000</baseCost>
-		<techLevel>Ultra</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_MeleeAdvanced</li>
-			<li>MMT_UltraComponents</li>
-		</prerequisites>
-		<researchViewX>3.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_BowsBasic</defName>
-		<label>弓I</label>
-		<description>好箭恒好</description>
-		<baseCost>100</baseCost>
-		<techLevel>Neolithic</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
 		<defName>MMT_GrenadesBasic</defName>
 		<label>手榴弹 I</label>
 		<description>随它吧，随它吧
@@ -52,7 +28,7 @@
 			<li>MMT_ConcreteBasic</li>
 			<li>Machining</li>
 		</prerequisites>
-		<researchViewX>9.00</researchViewX>
+		<researchViewX>3.00</researchViewX>
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -65,7 +41,7 @@
 		<prerequisites>
 			<li>MMT_GrenadesBasic</li>
 		</prerequisites>
-		<researchViewX>12.00</researchViewX>
+		<researchViewX>6.00</researchViewX>
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -80,7 +56,7 @@
 			<li>GasOperation</li>
 			<li>MMT_IntegratedCircuitTech</li>
 		</prerequisites>
-		<researchViewX>15.00</researchViewX>
+		<researchViewX>9.00</researchViewX>
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -93,7 +69,7 @@
 		<prerequisites>
 			<li>MMT_GunsAdvanced</li>
 		</prerequisites>
-		<researchViewX>18.00</researchViewX>
+		<researchViewX>12.00</researchViewX>
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -106,7 +82,7 @@
 		<prerequisites>
 			<li>MMT_RiflesAdvanced</li>
 		</prerequisites>
-		<researchViewX>21.00</researchViewX>
+		<researchViewX>15.00</researchViewX>
 		<researchViewY>6.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -118,7 +94,6 @@
 		<tab>MMT_ResearchTab</tab>
 		<prerequisites>
 			<li>HeavyTurrets</li>
-			<li>MMT_Turrets1</li>
 		</prerequisites>
 		<researchViewX>0.00</researchViewX>
 		<researchViewY>7.00</researchViewY>
@@ -171,7 +146,6 @@
 		<techLevel>Archotech</techLevel>
 		<tab>MMT_ResearchTab</tab>
 		<prerequisites>
-			<li>MMT_MeleeUltra</li>
 			<li>Machining</li>
 			<li>BlowbackOperation</li>
 			<li>ChargedShot</li>
@@ -194,20 +168,6 @@
 		<researchViewY>7.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
-		<defName>MMT_Turrets1</defName>
-		<label>炮塔 I</label>
-		<description>怎么阻止那些凶神恶煞的巨婴扯掉我的聪明脑袋？</description>
-		<baseCost>1000</baseCost>
-		<techLevel>Industrial</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>HeavyTurrets</li>
-			<li>MMT_SiegeWeapons</li>
-		</prerequisites>
-		<researchViewX>18.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
 		<defName>MMT_HeavyTurrets2</defName>
 		<label>重型炮塔 II</label>
 		<description>如果这还不够用...</description>
@@ -217,7 +177,7 @@
 		<prerequisites>
 			<li>SniperTurret</li>
 		</prerequisites>
-		<researchViewX>21.00</researchViewX>
+		<researchViewX>18.00</researchViewX>
 		<researchViewY>7.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -249,20 +209,6 @@
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
-		<defName>MMT_Autoturrets2</defName>
-		<label>自动炮塔 II</label>
-		<description>...用更多的枪</description>
-		<baseCost>2000</baseCost>
-		<techLevel>Spacer</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>GunTurrets</li>
-			<li>MMT_HeavyTurrets2</li>
-		</prerequisites>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
 		<defName>MMT_Autoturrets3</defName>
 		<label>自动炮塔 III</label>
 		<description>我警告你，别碰它</description>
@@ -271,22 +217,8 @@
 		<tab>MMT_ResearchTab</tab>
 		<prerequisites>
 			<li>MMT_Artillery2</li>
-			<li>MMT_Autoturrets2</li>
 		</prerequisites>
-		<researchViewX>9.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_Autoturrets4</defName>
-		<label>自动炮塔 IV</label>
-		<description>我们有光束枪。我们无所不能。</description>
-		<baseCost>2500</baseCost>
-		<techLevel>Ultra</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_DirectedEnergyWeapons2</li>
-		</prerequisites>
-		<researchViewX>12.00</researchViewX>
+		<researchViewX>6.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -302,7 +234,7 @@
 			<li>MMT_GrenadeLaunchers</li>
 			<li>Mortars</li>
 		</prerequisites>
-		<researchViewX>15.00</researchViewX>
+		<researchViewX>9.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
@@ -315,7 +247,7 @@
 		<prerequisites>
 			<li>MMT_Rocketry2</li>
 		</prerequisites>
-		<researchViewX>18.00</researchViewX>
+		<researchViewX>12.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
 </Defs>
