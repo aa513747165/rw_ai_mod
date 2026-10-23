@@ -128,7 +128,7 @@
       <li Class="CompProperties_Breakdownable" />
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
-        <inputCount>1</inputCount>
+        <inputCount>25</inputCount>
         <outputDef>MMT_OrePowder</outputDef>
         <outputCountRange>40~40</outputCountRange>
         <inputCategories>

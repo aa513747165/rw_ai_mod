@@ -6073,7 +6073,7 @@ def validate_orepowder() -> None:
     fixed_filter = hopper.find("./building/fixedStorageSettings/filter")
     assert_equal(li_values(fixed_filter, "categories"), ["StoneChunks"], "进料口固定类别")
     assert_equal(li_values(fixed_filter, "thingDefs"), ["MMT_OrePowder"], "进料口固定物品")
-    for name, power, count, out_range in (("MMT_AutoGrinder", "500", "1", "40~40"),
+    for name, power, count, out_range in (("MMT_AutoGrinder", "500", "25", "40~40"),
                                           ("MMT_AutoSieve", "400", "20", "6~10")):
         d = auto_defs[name]
         assert_equal(child_text(d, "./building/wantsHopperAdjacent"), "true", f"{name} 需相邻进料口")
