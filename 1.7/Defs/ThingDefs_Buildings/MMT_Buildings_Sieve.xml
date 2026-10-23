@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 手动筛子：程序化生成贴图（木框+筛网+矿粉堆，2x2 方形画布） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_HandSieve</defName>
+    <label>手动筛子</label>
+    <description>木制筛架，手工淘洗矿粉以分离矿石。筛出什么全凭运气——常见矿脉的矿石最容易被筛到。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_HandSieve/MMT_HandSieve</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Woody</li>
+    </stuffCategories>
+    <costStuffCount>75</costStuffCount>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>600</WorkToBuild>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-4</Beauty>
+      <Cleanliness>-2</Cleanliness>
+      <Mass>25</Mass>
+    </statBases>
+    <size>(2,2)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_SiftOrePowder_Hand</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <!-- 电动筛子：程序化生成贴图（金属框+电机盒，2x2），恒定 250W -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricSieve</defName>
+    <label>电动筛子</label>
+    <description>电机驱动振动的金属筛架，批量淘洗矿粉，产量比手工筛分高得多。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricSieve/MMT_ElectricSieve</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>60</costStuffCount>
+    <costList>
+      <MMT_Mechanism>2</MMT_Mechanism>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1200</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-8</Beauty>
+      <Cleanliness>-2</Cleanliness>
+      <Mass>35</Mass>
+    </statBases>
+    <size>(2,2)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_SiftOrePowder_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>250</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_OreSifting</li>
+    </researchPrerequisites>
+  </ThingDef>
+</Defs>

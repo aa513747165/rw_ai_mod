@@ -6,5 +6,17 @@
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
-  <description>参考 HSK 资源生产流程实现的独立玻璃生产链。</description>
+  <!-- 运行时依赖 Harmony Mod（C# 补丁需要），加载顺序置于其后 -->
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopId>2009463077</steamWorkshopId>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <description>参考 HSK 资源生产流程实现的独立资源生产 Mod。</description>
 </ModMetaData>

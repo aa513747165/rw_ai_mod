@@ -111,6 +111,10 @@
       <li>MMT_DryingRack</li>
       <li>MMT_ElectricDryingRack</li>
       <li>MMT_NeutroamineRefiner</li>
+      <li>MMT_HandGrinder</li>
+      <li>MMT_ElectricGrinder</li>
+      <li>MMT_HandSieve</li>
+      <li>MMT_ElectricSieve</li>
     </fixedBillGiverDefs>
     <verb>制作</verb>
     <gerund>制作中</gerund>

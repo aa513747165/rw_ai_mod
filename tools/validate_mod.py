@@ -73,6 +73,12 @@ AGRICULTURE_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Agri
 AGRICULTURE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Agriculture.xml"
 AGRICULTURE_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Agriculture.xml"
 AGRICULTURE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Agriculture.xml"
+OREPOWDER_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_OrePowder.xml"
+OREPOWDER_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_OrePowder.xml"
+OREPOWDER_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_OrePowder.xml"
+GRINDER_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Grinder.xml"
+SIEVE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sieve.xml"
+ORESIFT_CS = "Source/MyModeTest/OreSiftPool.cs"
 
 AGRICULTURE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Dirt.png",
@@ -84,6 +90,18 @@ AGRICULTURE_ITEM_TEXTURES = [
 AGRICULTURE_BUILDING_TEXTURES = [
     "1.7/Textures/Things/Building/Production/MMT_SaltMine.png",
     *[f"1.7/Textures/Things/Building/Production/MMT_EConcreteMixer/MMT_EConcreteMixer_{side}{mask}.png" for side in ("east", "north", "south") for mask in ("", "m")],
+]
+
+OREPOWDER_TEXTURES = [
+    "1.7/Textures/Things/Item/MMT/OrePowder.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder.png",
+    "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder_m.png",
+    "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder.png",
+    "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder_m.png",
+    *[f"1.7/Textures/Things/Building/Production/MMT_{kind}Sieve/MMT_{kind}Sieve_{side}{mask}.png"
+      for kind in ("Hand", "Electric", "Auto")
+      for side in ("south", "east", "north")
+      for mask in ("", "m")],
 ]
 
 CERAMICS_ITEM_TEXTURES = [
@@ -1731,8 +1749,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 65  # 含药品链 13 项（MMT_Research_Medicine.xml）
-INFRA_WORKTABLE_TOTAL = 31  # 含药品链 5 台（MMT_Buildings_Medicine.xml）与手压油泵
+INFRA_RESEARCH_TOTAL = 66  # 含药品链 13 项（MMT_Research_Medicine.xml）与矿粉筛选 1 项（MMT_Research_OrePowder.xml）
+INFRA_WORKTABLE_TOTAL = 35  # 含药品链 5 台、手压油泵与无中生有链 4 台（研磨机/筛子各 2）
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -5983,6 +6001,76 @@ def validate_medicine() -> None:
     print("medicine: OK")
 
 
+def validate_orepowder() -> None:
+    """无中生有链（研磨+筛选）：矿粉物品/配方/研磨机/筛子/研究/Harmony 补丁的专项校验。"""
+    require_files([
+        OREPOWDER_RESOURCE_XML,
+        OREPOWDER_RECIPE_XML,
+        OREPOWDER_RESEARCH_XML,
+        GRINDER_BUILDING_XML,
+        SIEVE_BUILDING_XML,
+        ORESIFT_CS,
+        *OREPOWDER_TEXTURES,
+    ])
+
+    # 矿粉物品
+    resource_defs = def_map(parse_xml(OREPOWDER_RESOURCE_XML))
+    assert_equal(set(resource_defs), {"MMT_OrePowder"}, "矿粉 defName 集合")
+    powder = resource_defs["MMT_OrePowder"]
+    assert_equal(child_text(powder, "./graphicData/texPath"), "Things/Item/MMT/OrePowder", "矿粉贴图路径")
+    assert_equal(child_text(powder, "stackLimit"), "900", "矿粉堆叠上限")
+
+    # 配方：研磨固定产出矿粉；筛选 products 为空（随机产出由 C# Harmony 补丁生成）
+    recipes = def_map(parse_xml(OREPOWDER_RECIPE_XML))
+    assert_equal(
+        set(recipes),
+        {"MMT_GrindOrePowder_Hand", "MMT_GrindOrePowder_Electric",
+         "MMT_SiftOrePowder_Hand", "MMT_SiftOrePowder_Electric"},
+        "无中生有配方 defName 集合",
+    )
+    for name, yield_, users in (("MMT_GrindOrePowder_Hand", "40", ["MMT_HandGrinder"]),
+                                ("MMT_GrindOrePowder_Electric", "60", ["MMT_ElectricGrinder"])):
+        products = {li.tag: li.text for li in recipes[name].find("products")}
+        assert_equal(products, {"MMT_OrePowder": yield_}, f"{name} 产物")
+        assert_equal(li_values(recipes[name], "recipeUsers"), users, f"{name} 工作台")
+    for name, users, cost in (("MMT_SiftOrePowder_Hand", ["MMT_HandSieve"], "15"),
+                              ("MMT_SiftOrePowder_Electric", ["MMT_ElectricSieve"], "20")):
+        assert_equal(recipes[name].find("products"), None, f"{name} 无固定产物（C# 随机）")
+        assert_equal(li_values(recipes[name], "recipeUsers"), users, f"{name} 工作台")
+        inputs = {td.text: ing.findtext("count") for ing in recipes[name].findall("ingredients/li")
+                  for td in ing.findall("filter/thingDefs/li")}
+        assert_equal(inputs, {"MMT_OrePowder": cost}, f"{name} 矿粉消耗")
+
+    # 建筑：研磨机 2 台 + 筛子 2 台，电动档耗电且需研究
+    grinders = def_map(parse_xml(GRINDER_BUILDING_XML))
+    sieves = def_map(parse_xml(SIEVE_BUILDING_XML))
+    assert_equal(set(grinders), {"MMT_HandGrinder", "MMT_ElectricGrinder"}, "研磨机 defName 集合")
+    assert_equal(set(sieves), {"MMT_HandSieve", "MMT_ElectricSieve"}, "筛子 defName 集合")
+    for name, defs, power in (("MMT_ElectricGrinder", grinders, "300"),
+                              ("MMT_ElectricSieve", sieves, "250")):
+        power_comp = next(li for li in defs[name].findall("comps/li")
+                          if li.attrib.get("Class") == "CompProperties_Power")
+        assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
+        assert_equal(li_values(defs[name], "researchPrerequisites"), ["MMT_OreSifting"], f"{name} 研究前置")
+
+    # 研究：矿粉筛选，前置切石+电力
+    research_defs = def_map(parse_xml(OREPOWDER_RESEARCH_XML))
+    assert_equal(set(research_defs), {"MMT_OreSifting"}, "无中生有研究 defName 集合")
+    assert_equal(li_values(research_defs["MMT_OreSifting"], "prerequisites"),
+                 ["Stonecutting", "Electricity"], "矿粉筛选前置研究")
+    assert_equal(child_text(research_defs["MMT_OreSifting"], "tab"), "MMT_ResearchTab", "矿粉筛选 tab")
+
+    # Harmony 补丁与依赖声明（静态存在性校验，运行时行为需进游戏确认）
+    cs_src = (ROOT / ORESIFT_CS).read_text(encoding="utf-8")
+    for token in ("HarmonyPatch", "MakeRecipeProducts", "mineableScatterCommonality",
+                  "isResourceRock", "MineableComponentsIndustrial",
+                  "MMT_SiftOrePowder_Hand", "MMT_SiftOrePowder_Electric"):
+        assert token in cs_src, f"OreSiftPool.cs 缺少关键实现: {token}"
+    about = (ROOT / "About/About.xml").read_text(encoding="utf-8")
+    assert "brrainz.harmony" in about, "About.xml 缺少 Harmony modDependencies"
+    print("orepowder: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -6012,6 +6100,7 @@ def validate_all() -> None:
     validate_textiles_weapons()
     validate_weapons()
     validate_medicine()
+    validate_orepowder()
     validate_all_xml()
 
 
@@ -6069,6 +6158,7 @@ SUITES = {
     "weapons-vanilla-patch": validate_weapons_vanilla_patch,
     "weapons": validate_weapons,
     "medicine": validate_medicine,
+    "orepowder": validate_orepowder,
     "all": validate_all,
 }
 

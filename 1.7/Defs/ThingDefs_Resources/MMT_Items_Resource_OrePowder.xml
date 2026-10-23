@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 无中生有链原料：矿粉，由研磨机粉碎岩块得到，可在筛子中筛出随机矿石 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_OrePowder</defName>
+    <label>矿粉</label>
+    <description>岩块经精细研磨得到的粉末，混杂着微量矿物颗粒。用筛子淘洗可以分离出有用的矿石。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/OrePowder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>0.4</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>900</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>

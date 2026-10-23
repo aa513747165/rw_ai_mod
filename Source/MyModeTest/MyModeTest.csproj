@@ -14,6 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Harmony 仅编译期引用（ExcludeAssets=runtime 不复制到输出目录），运行时依赖 Harmony Mod -->
+    <PackageReference Include="Lib.Harmony" Version="2.3.6" ExcludeAssets="runtime" />
     <Reference Include="Assembly-CSharp">
       <HintPath>$(RimWorldPath)\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 手动研磨机：对照 HSK Millstone（磨盘贴图，1x1 石制） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_HandGrinder</defName>
+    <label>手动研磨机</label>
+    <description>手推石磨，将岩块慢慢碾成矿粉。无需电力，但效率较低。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1,1)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>50</costStuffCount>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>800</WorkToBuild>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Beauty>-6</Beauty>
+      <Cleanliness>-2</Cleanliness>
+      <Mass>40</Mass>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_GrindOrePowder_Hand</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+  <!-- 电动研磨机：对照 HSK MillElectric（1x1 金属机身，恒定 300W） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricGrinder</defName>
+    <label>电动研磨机</label>
+    <description>电机驱动的研磨装置，粉碎岩块的效率远超手推磨。需要持续供电。</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1,1)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>50</costStuffCount>
+    <costList>
+      <MMT_Mechanism>4</MMT_Mechanism>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1500</WorkToBuild>
+      <MaxHitPoints>210</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-8</Beauty>
+      <Cleanliness>-2</Cleanliness>
+      <Mass>50</Mass>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_GrindOrePowder_Electric</li>
+    </recipes>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>300</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_OreSifting</li>
+    </researchPrerequisites>
+  </ThingDef>
+</Defs>

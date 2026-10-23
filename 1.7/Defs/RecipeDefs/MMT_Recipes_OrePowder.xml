@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 无中生有链：研磨（岩块→矿粉）与筛选（矿粉→随机矿石，随机产出由 C# Harmony 补丁实现） -->
+
+  <RecipeDef>
+    <defName>MMT_GrindOrePowder_Hand</defName>
+    <label>研磨矿粉</label>
+    <description>在手动研磨机上将岩块细磨成矿粉。产出 40。</description>
+    <jobString>正在研磨矿粉。</jobString>
+    <workAmount>2400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <recipeUsers>
+      <li>MMT_HandGrinder</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>StoneChunks</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_OrePowder>40</MMT_OrePowder>
+    </products>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>Stonecutting</researchPrerequisite>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_GrindOrePowder_Electric</defName>
+    <label>研磨矿粉</label>
+    <description>在电动研磨机上快速将岩块细磨成矿粉。产出 60。</description>
+    <jobString>正在快速研磨矿粉。</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>MMT_ElectricGrinder</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>StoneChunks</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_OrePowder>60</MMT_OrePowder>
+    </products>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+  </RecipeDef>
+
+  <!-- 筛选配方：products 留空（参照原版火葬配方），实际产出由 Harmony 补丁按矿脉权重随机生成 -->
+  <RecipeDef>
+    <defName>MMT_SiftOrePowder_Hand</defName>
+    <label>筛选矿粉</label>
+    <description>在筛子上淘洗矿粉，分离出随机矿石。矿脉越常见筛出的概率越高。消耗矿粉 15。</description>
+    <jobString>正在筛选矿粉。</jobString>
+    <workAmount>1800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Smelt</soundWorking>
+    <recipeUsers>
+      <li>MMT_HandSieve</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_OrePowder</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_OrePowder</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>Stonecutting</researchPrerequisite>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_SiftOrePowder_Electric</defName>
+    <label>筛选矿粉</label>
+    <description>电动筛分批量淘洗矿粉，分离出随机矿石，产量更高。消耗矿粉 20。</description>
+    <jobString>正在批量筛选矿粉。</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>MMT_ElectricSieve</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_OrePowder</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_OrePowder</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+  </RecipeDef>
+</Defs>

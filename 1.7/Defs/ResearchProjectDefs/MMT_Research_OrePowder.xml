@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 无中生有链研究：解锁电动研磨机与电动筛子（手动版仅需切石） -->
+  <ResearchProjectDef>
+    <defName>MMT_OreSifting</defName>
+    <label>矿粉筛选</label>
+    <description>研究如何将岩块细磨成矿粉并淘洗出其中的矿物颗粒，建造电动研磨机与电动筛子。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Stonecutting</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
