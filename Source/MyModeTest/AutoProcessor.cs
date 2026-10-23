@@ -110,6 +110,8 @@ namespace MyModeTest
     {
         // 生产线列表：lanes.Count 可能大于目标线数（超额线跑完退役）
         private List<ProcessorLane> lanes = new List<ProcessorLane> { new ProcessorLane() };
+        // 缺料冷却：料不够时间隔 250 tick 再扫料口，避免空闲线每 tick 空扫
+        private int inputRetryCooldown;
 
         private CompProperties_AutoProcessor Props
         {
@@ -126,6 +128,7 @@ namespace MyModeTest
         {
             base.PostExposeData();
             Scribe_Collections.Look(ref lanes, "lanes", LookMode.Deep);
+            Scribe_Values.Look(ref inputRetryCooldown, "inputRetryCooldown");
             // 旧存档无 lanes 节点时兜底为 1 条空闲线
             if (Scribe.mode == LoadSaveMode.PostLoadInit && (lanes == null || lanes.Count == 0))
                 lanes = new List<ProcessorLane> { new ProcessorLane() };
@@ -154,28 +157,64 @@ namespace MyModeTest
                 if (!lanes[i].running)
                     lanes.RemoveAt(i);
 
-            // 逐线推进：活跃空闲线尝试预扣料启动；运行线倒计时，到点产出并回到空闲
+            // 先推进运行中的线：倒计时到点产出并回到空闲
+            bool hasIdle = false;
             for (int i = 0; i < lanes.Count; i++)
             {
                 ProcessorLane lane = lanes[i];
-                if (!lane.running)
+                if (lane.running)
                 {
-                    // 节点流转：超额退役线不再启动新轮
-                    if (i >= targetCount)
-                        continue;
-                    // 流程开始：料够一轮则预扣并启动本轮倒计时
-                    if (TryConsumeInput())
+                    if (--lane.ticksRemaining <= 0)
                     {
-                        lane.running = true;
-                        lane.ticksTotal = interval;
-                        lane.ticksRemaining = interval;
+                        // 流程结束：本轮产出，回到空闲等待下一轮
+                        ProduceOnce();
+                        lane.running = false;
                     }
                 }
-                else if (--lane.ticksRemaining <= 0)
+                else if (i < targetCount)
                 {
-                    // 流程结束：本轮产出，回到空闲等待下一轮
-                    ProduceOnce();
-                    lane.running = false;
+                    hasIdle = true;
+                }
+            }
+
+            // 再启动空闲线：料口每 tick 至多扫一次，扫描结果在各线间共享
+            if (!hasIdle)
+                return;
+            if (inputRetryCooldown > 0)
+            {
+                inputRetryCooldown--;
+                return;
+            }
+            // 流程开始：汇总相邻进料口中可接受的输入物品
+            List<Thing> sources = new List<Thing>();
+            int available;
+            ScanHoppers(sources, out available);
+            int startable = available / Props.inputCount;
+            if (startable <= 0)
+            {
+                // 缺料：250 tick 后再试
+                inputRetryCooldown = 250;
+                return;
+            }
+            for (int i = 0; i < lanes.Count && startable > 0; i++)
+            {
+                ProcessorLane lane = lanes[i];
+                if (lane.running || i >= targetCount)
+                    continue;
+                // 预扣一轮输入并启动本轮倒计时
+                ConsumeFrom(sources, Props.inputCount);
+                lane.running = true;
+                lane.ticksTotal = interval;
+                lane.ticksRemaining = interval;
+                startable--;
+            }
+            // 仍有空闲线未启动说明料已分完，进入冷却
+            for (int i = 0; i < lanes.Count; i++)
+            {
+                if (!lanes[i].running && i < targetCount)
+                {
+                    inputRetryCooldown = 250;
+                    break;
                 }
             }
         }
@@ -215,35 +254,20 @@ namespace MyModeTest
             return System.Math.Max(60, (int)(Props.intervalTicks / speedFactor));
         }
 
-        /// <summary>当前目标线数 = 1 + 通电并行模块数（供 ITab 判断退役线）。</summary>
-        internal int TargetLaneCount
+        /// <summary>汇总目标线数与当前一轮处理间隔（一次模块扫描，供 ITab 展示）。</summary>
+        internal void GetDisplayInfo(out int intervalTicks, out int targetLanes)
         {
-            get
-            {
-                int overclock, parallel;
-                CountModules(out overclock, out parallel);
-                return 1 + parallel;
-            }
+            int overclock, parallel;
+            CountModules(out overclock, out parallel);
+            intervalTicks = CurrentIntervalTicks(overclock);
+            targetLanes = 1 + parallel;
         }
 
-        /// <summary>当前一轮处理间隔（供 ITab 展示）。</summary>
-        internal int IntervalTicksNow
+        /// <summary>扫描相邻进料口，汇总可接受的输入物品与总数量（每 tick 至多调用一次）。</summary>
+        private void ScanHoppers(List<Thing> sources, out int available)
         {
-            get
-            {
-                int overclock, parallel;
-                CountModules(out overclock, out parallel);
-                return CurrentIntervalTicks(overclock);
-            }
-        }
-
-        /// <summary>汇总相邻进料口可接受的输入，够一轮则预扣并返回 true。</summary>
-        private bool TryConsumeInput()
-        {
+            available = 0;
             Map map = parent.Map;
-            // 流程开始：汇总相邻进料口中可接受的输入物品
-            int available = 0;
-            List<Thing> sources = new List<Thing>();
             foreach (IntVec3 cell in GenAdj.CellsAdjacent8WayAndInside(parent))
             {
                 List<Thing> things = cell.GetThingList(map);
@@ -266,18 +290,17 @@ namespace MyModeTest
                     }
                 }
             }
-            if (available < Props.inputCount)
-                return false;
+        }
 
-            // 预扣一轮输入
-            int need = Props.inputCount;
-            for (int i = 0; i < sources.Count && need > 0; i++)
+        /// <summary>从已汇总的输入物品中依次扣除 count 个（预扣一轮用料）。</summary>
+        private static void ConsumeFrom(List<Thing> sources, int count)
+        {
+            for (int i = 0; i < sources.Count && count > 0; i++)
             {
-                int take = System.Math.Min(need, sources[i].stackCount);
+                int take = System.Math.Min(count, sources[i].stackCount);
                 sources[i].SplitOff(take).Destroy();
-                need -= take;
+                count -= take;
             }
-            return true;
         }
 
         /// <summary>产出一份产物：固定产物或矿石池随机（筛选），放到出料格。</summary>
@@ -333,12 +356,13 @@ namespace MyModeTest
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(rect);
 
-            // 顶部：当前处理周期（含超频效果）
-            listing.Label("处理周期: " + comp.IntervalTicksNow.ToStringTicksToPeriod());
+            // 顶部：当前处理周期（含超频效果）；一次模块扫描同时取目标线数
+            int intervalNow, target;
+            comp.GetDisplayInfo(out intervalNow, out target);
+            listing.Label("处理周期: " + intervalNow.ToStringTicksToPeriod());
             listing.Gap(6f);
 
             // 逐线进度条：超额线（并行模块已拆）标注退役待完成
-            int target = comp.TargetLaneCount;
             for (int i = 0; i < comp.Lanes.Count; i++)
             {
                 ProcessorLane lane = comp.Lanes[i];
