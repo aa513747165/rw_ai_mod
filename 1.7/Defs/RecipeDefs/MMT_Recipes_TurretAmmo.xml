@@ -373,10 +373,19 @@
 				</filter>
 				<count>50</count>
 			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MMT_Powder</li>
+					</thingDefs>
+				</filter>
+				<count>25</count>
+			</li>
 		</ingredients>
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>Steel</li>
+				<li>MMT_Powder</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
@@ -406,10 +415,19 @@
 				</filter>
 				<count>26</count>
 			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MMT_Powder</li>
+					</thingDefs>
+				</filter>
+				<count>13</count>
+			</li>
 		</ingredients>
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>Steel</li>
+				<li>MMT_Powder</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 		<products>
