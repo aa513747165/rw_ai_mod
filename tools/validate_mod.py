@@ -82,6 +82,7 @@ AUTOPROC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_AutoProcesso
 MODULE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ProcessorModules.xml"
 ORESIFT_CS = "Source/MyModeTest/OreSiftPool.cs"
 AUTOPROC_CS = "Source/MyModeTest/AutoProcessor.cs"
+ITAB_KEYS_XML = "1.7/Languages/ChineseSimplified/Keyed/MMT_InspectorTabs.xml"
 
 AGRICULTURE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Dirt.png",
@@ -6094,6 +6095,7 @@ def validate_orepowder() -> None:
         assert_equal(child_text(proc, "outputCountRange"), out_range, f"{name} 产出数量")
         assert_equal(child_text(proc, "intervalTicks"), "2500", f"{name} 处理间隔")
         assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoOreProcessing"], f"{name} 研究前置")
+        assert "MyModeTest.ITab_AutoProcessor" in li_values(d, "inspectorTabs"), f"{name} 处理进度页签"
 
     # 增效模块：超频/并行 1x1 贴靠模块（CompProcessorModule 标记 + 电力）
     module_defs = def_map(parse_xml(MODULE_BUILDING_XML))
@@ -6134,8 +6136,11 @@ def validate_orepowder() -> None:
     for token in ("CompProperties_AutoProcessor", "CompAutoProcessor", "isHopper",
                   "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent",
                   "CompProperties_ProcessorModule", "CompProcessorModule", "ModuleType",
-                  "CountModules"):
+                  "CountModules", "ProcessorLane", "ITab_AutoProcessor"):
         assert token in auto_src, f"AutoProcessor.cs 缺少关键实现: {token}"
+    # 页签标题 Keyed 翻译（labelKey = MMT_TabAutoProcessor）
+    itab_keys = (ROOT / ITAB_KEYS_XML).read_text(encoding="utf-8")
+    assert "MMT_TabAutoProcessor" in itab_keys, "Keyed 翻译缺少 MMT_TabAutoProcessor"
     print("orepowder: OK")
 
 

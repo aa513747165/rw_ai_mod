@@ -118,6 +118,9 @@
       <wantsHopperAdjacent>true</wantsHopperAdjacent>
     </building>
     <tickerType>Normal</tickerType>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_AutoProcessor</li>
+    </inspectorTabs>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
@@ -191,6 +194,9 @@
       <wantsHopperAdjacent>true</wantsHopperAdjacent>
     </building>
     <tickerType>Normal</tickerType>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_AutoProcessor</li>
+    </inspectorTabs>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
