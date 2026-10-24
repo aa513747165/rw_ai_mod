@@ -149,7 +149,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>Woody</li>
+						<li>MMT_Woody</li>
 					</categories>
 				</filter>
 				<count>90</count>
@@ -165,7 +165,7 @@
 		</ingredients>
 		<fixedIngredientFilter>
 			<categories>
-				<li>Woody</li>
+				<li>MMT_Woody</li>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>
@@ -262,7 +262,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>Woody</li>
+						<li>MMT_Woody</li>
 					</categories>
 				</filter>
 				<count>160</count>
@@ -278,7 +278,7 @@
 		</ingredients>
 		<fixedIngredientFilter>
 			<categories>
-				<li>Woody</li>
+				<li>MMT_Woody</li>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
 			</categories>

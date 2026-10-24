@@ -37,6 +37,8 @@
       <Mass>25</Mass>
     </statBases>
     <size>(2,2)</size>
+    <defaultPlacingRot>North</defaultPlacingRot>
+    <rotatable>false</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_SiftOrePowder_Hand</li>
@@ -91,6 +93,8 @@
       <Mass>35</Mass>
     </statBases>
     <size>(2,2)</size>
+    <defaultPlacingRot>North</defaultPlacingRot>
+    <rotatable>false</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_SiftOrePowder_Electric</li>

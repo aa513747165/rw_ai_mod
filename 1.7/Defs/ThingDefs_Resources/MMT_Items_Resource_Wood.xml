@@ -19,6 +19,7 @@
     <stackLimit>300</stackLimit>
     <thingCategories>
       <li>ResourcesRaw</li>
+      <li>MMT_Woody</li>
     </thingCategories>
     <stuffProps>
       <categories>
@@ -113,6 +114,7 @@
     <stackLimit>300</stackLimit>
     <thingCategories>
       <li>ResourcesRaw</li>
+      <li>MMT_Woody</li>
     </thingCategories>
     <burnableByRecipe>True</burnableByRecipe>
     <stuffProps>
@@ -179,6 +181,7 @@
     <techLevel>Neolithic</techLevel>
     <thingCategories>
       <li>ResourcesRaw</li>
+      <li>MMT_Woody</li>
     </thingCategories>
     <burnableByRecipe>True</burnableByRecipe>
     <stuffProps>

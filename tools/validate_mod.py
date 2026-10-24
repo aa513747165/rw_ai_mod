@@ -1251,7 +1251,7 @@ PETROCHEM_EXT_RECIPE_EXPECTATIONS = {
     "MMT_MakeSulphates": {"work": "800", "inputs": [("thingDefs", "MMT_Sulfur", "10")], "output": "MMT_Sulphates", "output_count": "10", "skill": "6", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_AdvancedPetrochemistry"},
     "MMT_MakeCarbonAlloy": {"work": "2800", "inputs": [("thingDefs", "MMT_SyntheticFibers", "10"), ("thingDefs", "MMT_Carbon", "10")], "output": "MMT_CarbonAlloy", "output_count": "10", "skill": "15", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_AdvancedPetrochemistry"},
     "MMT_MakeCompaste": {"work": "3200", "inputs": [("thingDefs", "Chemfuel", "10"), ("thingDefs", "MMT_Rubber", "5"), ("thingDefs", "MMT_Paraffins", "2")], "output": "MMT_Compaste", "output_count": "20", "skill": "5", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry"},
-    "MMT_MakeSurfactant": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("categories", "Alcohol", "15")], "output": "MMT_Surfactant", "output_count": "50", "skill": "8", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["Brewery", "DrugLab"]},
+    "MMT_MakeSurfactant": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("categories", "MMT_Alcohol", "15")], "output": "MMT_Surfactant", "output_count": "50", "skill": "8", "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["Brewery", "DrugLab"]},
     "MMT_MakeSurfactant_Compaste": {"work": "4000", "inputs": [("thingDefs", "MMT_Compaste", "15"), ("thingDefs", "MMT_Polymers", "25")], "output": "MMT_Surfactant", "output_count": "50", "skill": "12", "skill2": ("Intellectual", "4"), "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "MMT_AdvancedPetrochemistry", "users": ["DrugLab"]},
     "MMT_MakeSurfactant_CoconutSubstitute": {"work": "4000", "inputs": [("thingDefs", "MMT_Salt", "10"), ("thingDefs", "MMT_Sulfur", "15"), ("thingDefs", "MMT_RawCoconut", "25")], "output": "MMT_Surfactant", "output_count": "50", "skill": "12", "skill2": ("Intellectual", "4"), "speed": "DrugCookingSpeed", "effect": None, "sound": "Recipe_Drug", "research": "Firefoam", "users": ["Brewery", "DrugLab"]},
     "MMT_MakeSulfur": {"work": "1200", "inputs": [("thingDefs", "MMT_IronOre", "35")], "output": "MMT_Sulfur", "output_count": "10", "skill": None, "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
@@ -1787,6 +1787,8 @@ INFRA_EXPECTED_CATEGORIES = {
     "MMT_RARBar": "MMT_MetallicBar",
     "MMT_RADBar": "MMT_MetallicBar",
     "MMT_Coal": "ResourcesRaw",
+    "MMT_Woody": "ResourcesRaw",
+    "MMT_Alcohol": "Drugs",
     "MMT_FuelCat": "Manufactured",
     "MMT_Parts": "Manufactured",
     "MMT_WeaponParts": "Manufactured",
@@ -1801,6 +1803,8 @@ INFRA_PATCH_TARGETS = {
     "Gold": "MMT_PRSBar",
     "Silver": "MMT_PRSBar",
     "Uranium": "MMT_RADBar",
+    "WoodLog": "MMT_Woody",
+    "Beer": "MMT_Alcohol",
 }
 
 
@@ -2328,7 +2332,8 @@ def validate_wood_resources() -> None:
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), expected["graphic"], f"{name} graphicClass")
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        expected_cats = ["ResourcesRaw", "MMT_Woody"] if (expected["stuff"] or expected.get("stuff_lite")) else ["ResourcesRaw"]
+        assert_equal(li_values(node, "thingCategories"), expected_cats, f"{name} thingCategories")
 
         if expected["stuff"]:
             assert_equal(li_values(node, "./stuffProps/categories"), ["Woody"], f"{name} stuff categories")
@@ -4224,7 +4229,7 @@ def validate_petrochem_ext() -> None:
         | set(def_map(parse_xml(METAL_RESOURCE_XML)))
         | set(def_map(parse_xml(CROPS_RESOURCE_XML)))
     )
-    allowed_categories = {"Alcohol", "MMT_Coal"}
+    allowed_categories = {"MMT_Alcohol", "MMT_Coal"}
 
     for name, expected in PETROCHEM_EXT_RECIPE_EXPECTATIONS.items():
         recipe = recipe_defs[name]
@@ -6048,15 +6053,19 @@ def validate_orepowder() -> None:
          "MMT_SiftOrePowder_Hand", "MMT_SiftOrePowder_Electric"},
         "无中生有配方 defName 集合",
     )
-    for name, yield_, users in (("MMT_GrindOrePowder_Hand", "40", ["MMT_HandGrinder"]),
-                                ("MMT_GrindOrePowder_Electric", "60", ["MMT_ElectricGrinder"])):
+    for name, yield_, building in (("MMT_GrindOrePowder_Hand", "10", "MMT_HandGrinder"),
+                                   ("MMT_GrindOrePowder_Electric", "10", "MMT_ElectricGrinder")):
         products = {li.tag: li.text for li in recipes[name].find("products")}
         assert_equal(products, {"MMT_OrePowder": yield_}, f"{name} 产物")
-        assert_equal(li_values(recipes[name], "recipeUsers"), users, f"{name} 工作台")
-    for name, users, cost in (("MMT_SiftOrePowder_Hand", ["MMT_HandSieve"], "15"),
-                              ("MMT_SiftOrePowder_Electric", ["MMT_ElectricSieve"], "20")):
+        assert_equal(li_values(recipes[name], "recipeUsers"), [], f"{name} 不得重复写 recipeUsers")
+        assert_equal(li_values(def_map(parse_xml(GRINDER_BUILDING_XML))[building], "recipes"), [name],
+                     f"{building} 配方单点挂载")
+    for name, building, cost in (("MMT_SiftOrePowder_Hand", "MMT_HandSieve", "15"),
+                                 ("MMT_SiftOrePowder_Electric", "MMT_ElectricSieve", "20")):
         assert_equal(recipes[name].find("products"), None, f"{name} 无固定产物（C# 随机）")
-        assert_equal(li_values(recipes[name], "recipeUsers"), users, f"{name} 工作台")
+        assert_equal(li_values(recipes[name], "recipeUsers"), [], f"{name} 不得重复写 recipeUsers")
+        assert_equal(li_values(def_map(parse_xml(SIEVE_BUILDING_XML))[building], "recipes"), [name],
+                     f"{building} 配方单点挂载")
         inputs = {td.text: ing.findtext("count") for ing in recipes[name].findall("ingredients/li")
                   for td in ing.findall("filter/thingDefs/li")}
         assert_equal(inputs, {"MMT_OrePowder": cost}, f"{name} 矿粉消耗")
@@ -6066,6 +6075,9 @@ def validate_orepowder() -> None:
     sieves = def_map(parse_xml(SIEVE_BUILDING_XML))
     assert_equal(set(grinders), {"MMT_HandGrinder", "MMT_ElectricGrinder"}, "研磨机 defName 集合")
     assert_equal(set(sieves), {"MMT_HandSieve", "MMT_ElectricSieve"}, "筛子 defName 集合")
+    for name, rotation in (("MMT_HandSieve", "North"), ("MMT_ElectricSieve", "North")):
+        assert_equal(child_text(sieves[name], "rotatable"), "false", f"{name} 禁止旋转")
+        assert_equal(child_text(sieves[name], "defaultPlacingRot"), rotation, f"{name} 默认朝向")
     for name, defs, power in (("MMT_ElectricGrinder", grinders, "300"),
                               ("MMT_ElectricSieve", sieves, "250")):
         power_comp = next(li for li in defs[name].findall("comps/li")
@@ -6082,10 +6094,12 @@ def validate_orepowder() -> None:
     fixed_filter = hopper.find("./building/fixedStorageSettings/filter")
     assert_equal(li_values(fixed_filter, "categories"), ["StoneChunks"], "进料口固定类别")
     assert_equal(li_values(fixed_filter, "thingDefs"), ["MMT_OrePowder"], "进料口固定物品")
-    for name, power, count, out_range in (("MMT_AutoGrinder", "500", "25", "40~40"),
-                                          ("MMT_AutoSieve", "400", "20", "6~10")):
+    for name, power, count, out_range in (("MMT_AutoGrinder", "500", "1", "10~10"),
+                                          ("MMT_AutoSieve", "400", "25", "6~10")):
         d = auto_defs[name]
         assert_equal(child_text(d, "./building/wantsHopperAdjacent"), "true", f"{name} 需相邻进料口")
+        if child_text(d, "passability") == "Impassable":
+            assert_equal(child_text(d, "fillPercent"), "1", f"{name} 不可通行建筑必须完全遮挡视线")
         power_comp = next(li for li in d.findall("comps/li")
                           if li.attrib.get("Class") == "CompProperties_Power")
         assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
@@ -6096,6 +6110,8 @@ def validate_orepowder() -> None:
         assert_equal(child_text(proc, "intervalTicks"), "2500", f"{name} 处理间隔")
         assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoOreProcessing"], f"{name} 研究前置")
         assert "MyModeTest.ITab_AutoProcessor" in li_values(d, "inspectorTabs"), f"{name} 处理进度页签"
+    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "false", "自动筛子禁止旋转")
+    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "South", "自动筛子默认朝向")
 
     # 增效模块：超频/并行 1x1 贴靠模块（CompProcessorModule 标记 + 电力）
     module_defs = def_map(parse_xml(MODULE_BUILDING_XML))
@@ -6118,7 +6134,7 @@ def validate_orepowder() -> None:
     assert_equal(li_values(research_defs["MMT_OreSifting"], "prerequisites"),
                  ["Stonecutting", "Electricity"], "矿粉筛选前置研究")
     assert_equal(li_values(research_defs["MMT_AutoOreProcessing"], "prerequisites"),
-                 ["MMT_OreSifting", "Microelectronics"], "自动化矿料处理前置研究")
+                 ["MMT_OreSifting", "MicroelectronicsBasics"], "自动化矿料处理前置研究")
     assert_equal(li_values(research_defs["MMT_AutoBoost"], "prerequisites"),
                  ["MMT_AutoOreProcessing"], "自动机增效前置研究")
     for name in research_defs:

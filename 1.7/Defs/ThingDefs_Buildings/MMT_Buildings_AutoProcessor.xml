@@ -74,7 +74,7 @@
     </researchPrerequisites>
   </ThingDef>
 
-  <!-- 自动研磨机：RockCrusher 静态帧贴图，每 2500 tick 从相邻进料口消耗 1 岩块产 40 矿粉 -->
+  <!-- 自动研磨机：RockCrusher 静态帧贴图，每 2500 tick 从相邻进料口消耗 1 岩块产 10 矿粉（岩块堆叠上限 1，进料口一格一份，输入数不能超过 1） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoGrinder</defName>
     <label>自动研磨机</label>
@@ -89,7 +89,7 @@
     </graphicData>
     <passability>Impassable</passability>
     <pathCost>90</pathCost>
-    <fillPercent>0.8</fillPercent>
+    <fillPercent>1</fillPercent>
     <blockWind>true</blockWind>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
@@ -131,9 +131,9 @@
       <li Class="CompProperties_Breakdownable" />
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
-        <inputCount>25</inputCount>
+        <inputCount>1</inputCount>
         <outputDef>MMT_OrePowder</outputDef>
-        <outputCountRange>40~40</outputCountRange>
+        <outputCountRange>10~10</outputCountRange>
         <inputCategories>
           <li>StoneChunks</li>
         </inputCategories>
@@ -148,7 +148,7 @@
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
   </ThingDef>
 
-  <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），每 2500 tick 消耗 20 矿粉随机产 6~10 矿石 -->
+  <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoSieve</defName>
     <label>自动筛子</label>
@@ -162,7 +162,7 @@
     </graphicData>
     <passability>Impassable</passability>
     <pathCost>90</pathCost>
-    <fillPercent>0.8</fillPercent>
+    <fillPercent>1</fillPercent>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <hasInteractionCell>true</hasInteractionCell>
@@ -189,6 +189,8 @@
       <Mass>60</Mass>
     </statBases>
     <size>(2,2)</size>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <rotatable>false</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <building>
       <wantsHopperAdjacent>true</wantsHopperAdjacent>
@@ -207,7 +209,7 @@
       <li Class="CompProperties_Breakdownable" />
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
-        <inputCount>20</inputCount>
+        <inputCount>25</inputCount>
         <outputCountRange>6~10</outputCountRange>
         <inputDefs>
           <li>MMT_OrePowder</li>

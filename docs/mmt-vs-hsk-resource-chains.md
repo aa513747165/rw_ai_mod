@@ -698,12 +698,12 @@
 
 #### 研磨矿粉（`MMT_GrindOrePowder_Hand`）
 
-- **MMT**：[StoneChunks]×25 -> 矿粉×40 @ 手动研磨机 ｜ 工作量=2400 ｜ 研究:Stonecutting(Stonecutting)
+- **MMT**：[StoneChunks]×1 -> 矿粉×10 @ 手动研磨机 ｜ 工作量=2400 ｜ 研究:Stonecutting(Stonecutting)
 - **HSK**：无对应资源（MMT 新增）
 
 #### 研磨矿粉（`MMT_GrindOrePowder_Electric`）
 
-- **MMT**：[StoneChunks]×25 -> 矿粉×60 @ 电动研磨机 ｜ 工作量=1200
+- **MMT**：[StoneChunks]×1 -> 矿粉×10 @ 电动研磨机 ｜ 工作量=1200
 - **HSK**：无对应资源（MMT 新增）
 
 #### 筛选矿粉（`MMT_SiftOrePowder_Hand`）

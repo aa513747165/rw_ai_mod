@@ -2442,7 +2442,7 @@
 			<li>
 				<filter>
 					<categories>
-						<li>Woody</li>
+						<li>MMT_Woody</li>
 					</categories>
 				</filter>
 				<count>20</count>
@@ -2465,7 +2465,7 @@
 			<categories>
 				<li>MMT_SLDBar</li>
 				<li>MMT_USLDBar</li>
-				<li>Woody</li>
+				<li>MMT_Woody</li>
 				<li>Leathers</li>
 			</categories>
 		</fixedIngredientFilter>

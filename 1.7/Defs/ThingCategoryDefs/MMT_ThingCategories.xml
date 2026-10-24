@@ -46,6 +46,18 @@
     <label>放射性类</label>
     <parent>MMT_MetallicBar</parent>
   </ThingCategoryDef>
+  <!-- 木质材料聚合根：替代 1.7 已移除的原版 Woody ThingCategory（原料过滤用；stuffProps 的 Woody 材料分类不受影响） -->
+  <ThingCategoryDef>
+    <defName>MMT_Woody</defName>
+    <label>木材类</label>
+    <parent>ResourcesRaw</parent>
+  </ThingCategoryDef>
+  <!-- 酒类聚合：替代 1.7 不存在的原版 Alcohol ThingCategory（表面活性剂配方原料过滤用） -->
+  <ThingCategoryDef>
+    <defName>MMT_Alcohol</defName>
+    <label>酒类</label>
+    <parent>Drugs</parent>
+  </ThingCategoryDef>
   <!-- 煤类：对应 HSK Coal（HSK parent 为 HSK 自有类别 Extracted，MMT 改用原版 ResourcesRaw） -->
   <ThingCategoryDef>
     <defName>MMT_Coal</defName>

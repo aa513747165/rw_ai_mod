@@ -194,7 +194,7 @@
       <li>
         <filter>
           <categories>
-            <li>Alcohol</li>
+            <li>MMT_Alcohol</li>
           </categories>
         </filter>
         <count>15</count>
@@ -206,7 +206,7 @@
         <li>MMT_Sulfur</li>
       </thingDefs>
       <categories>
-        <li>Alcohol</li>
+        <li>MMT_Alcohol</li>
       </categories>
     </fixedIngredientFilter>
     <products>

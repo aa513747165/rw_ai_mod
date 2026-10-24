@@ -21,5 +21,15 @@
     <xpath>Defs/ThingDef[defName="Uranium"]/thingCategories</xpath>
     <value><li>MMT_RADBar</li></value>
   </Operation>
+  <!-- 原版原木归入 MMT_Woody，使木材类过滤的配方能选中原版原木 -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="WoodLog"]/thingCategories</xpath>
+    <value><li>MMT_Woody</li></value>
+  </Operation>
+  <!-- 原版啤酒归入 MMT_Alcohol，使酒类过滤的配方（如表面活性剂）能选中原版啤酒 -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Beer"]/thingCategories</xpath>
+    <value><li>MMT_Alcohol</li></value>
+  </Operation>
   <!-- 零件类别由 MMT_Patch_VanillaComponents.xml、布的类别由 MMT_Patch_VanillaTextiles.xml 同名改造直接处理，此处不再追加 -->
 </Patch>
