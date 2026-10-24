@@ -14,7 +14,7 @@
     <tickerType>Rare</tickerType>
     <techLevel>Industrial</techLevel>
     <statBases>
-      <MarketValue>7</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>2</Flammability>
       <Mass>0.05</Mass>

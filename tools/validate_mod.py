@@ -188,13 +188,13 @@ ELECTRONICS_BUILDING_TEXTURES = [
 COAL_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Coal.png"]
 
 COAL_RESOURCE_EXPECTATIONS = {
-    "MMT_Coal": {"label": "原煤", "value": "2.0", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
+    "MMT_Coal": {"label": "原煤", "value": "1", "stack": "600", "flammable": "3", "tex": "Things/Item/MMT/MMT_Coal"},
 }
 
 SULFUR_ITEM_TEXTURES = ["1.7/Textures/Things/Item/MMT/MMT_Sulfur.png"]
 
 SULFUR_RESOURCE_EXPECTATIONS = {
-    "MMT_Sulfur": {"label": "硫磺", "value": "7", "stack": "300", "flammable": "2", "tex": "Things/Item/MMT/MMT_Sulfur"},
+    "MMT_Sulfur": {"label": "硫磺", "value": "1", "stack": "300", "flammable": "2", "tex": "Things/Item/MMT/MMT_Sulfur"},
 }
 
 PRECIOUS_ITEM_TEXTURES = [
@@ -204,8 +204,8 @@ PRECIOUS_ITEM_TEXTURES = [
 ]
 
 PRECIOUS_RESOURCE_EXPECTATIONS = {
-    "MMT_SilverOre": {"label": "白银", "value": "1.0", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre"},
-    "MMT_GoldOre": {"label": "金矿", "value": "25.0", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
+    "MMT_SilverOre": {"label": "白银", "value": "1", "stack": "1800", "tex": "Things/Item/MMT/MMT_Ore/MMT_SilverOre"},
+    "MMT_GoldOre": {"label": "金矿", "value": "1", "stack": "300", "tex": "Things/Item/MMT/MMT_Ore/MMT_GoldOre"},
 }
 
 # 原版矿脉改造（HSK 做法：不删 def，patch 替换产出物）。MMT 不再自带铁/银/金矿脉 def，
@@ -687,11 +687,11 @@ WOOD_RECIPE_EXPECTATIONS = {
 }
 
 METAL_ORE_EXPECTATIONS = {
-    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre", "value": "2.0", "stack": "600"},
-    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre", "value": "2.0", "stack": "600"},
-    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre", "value": "2.0", "stack": "600"},
-    "MMT_Anglesite": {"label": "铅矾矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_Anglesite", "value": "4", "stack": "300"},
-    "MMT_AluminiumOre": {"label": "铝土矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_AluminiumOre", "value": "2", "stack": "600"},
+    "MMT_IronOre": {"label": "铁矿石", "tex": "Things/Item/MMT/MMT_Ore/MMT_IronOre", "value": "1", "stack": "600"},
+    "MMT_CopperOre": {"label": "铜矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_CopperOre", "value": "1", "stack": "600"},
+    "MMT_TinOre": {"label": "锡矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_TinOre", "value": "1", "stack": "600"},
+    "MMT_Anglesite": {"label": "铅矾矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_Anglesite", "value": "1", "stack": "300"},
+    "MMT_AluminiumOre": {"label": "铝土矿", "tex": "Things/Item/MMT/MMT_Ore/MMT_AluminiumOre", "value": "1", "stack": "600"},
 }
 
 METAL_BAR_EXPECTATIONS = {
@@ -760,7 +760,7 @@ METAL_RECIPE_EXPECTATIONS = {
 }
 
 PETROCHEM_RESOURCE_EXPECTATIONS = {
-    "MMT_CrudeOil": {"label": "原油", "value": "3.0", "stack": "300", "flammable": "5"},
+    "MMT_CrudeOil": {"label": "原油", "value": "1", "stack": "300", "flammable": "5"},
     "MMT_Polymers": {"label": "聚合物", "value": "1.5", "stack": "600", "flammable": "5"},
     "MMT_Plastic": {"label": "塑料", "value": "9.0", "stack": "300", "flammable": "2"},
     "MMT_Rubber": {"label": "合成橡胶", "value": "11.0", "stack": "300", "flammable": "2"},
@@ -1599,9 +1599,9 @@ ADVANCED_ORE_ITEM_TEXTURES = [
 ]
 
 ADVANCED_ORE_EXPECTATIONS = {
-    "MMT_NickelOre": {"label": "镍矿", "value": "4.0", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre"},
-    "MMT_IlmeniteOre": {"label": "钛铁矿", "value": "8.0", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre"},
-    "MMT_WolframiteOre": {"label": "黑钨矿", "value": "9.0", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre"},
+    "MMT_NickelOre": {"label": "镍矿", "value": "1", "color": "(42,208,206)", "tex": "Things/Item/MMT/MMT_Ore/MMT_NickelOre"},
+    "MMT_IlmeniteOre": {"label": "钛铁矿", "value": "1", "color": "(160,178,195)", "tex": "Things/Item/MMT/MMT_Ore/MMT_IlmeniteOre"},
+    "MMT_WolframiteOre": {"label": "黑钨矿", "value": "1", "color": "(230,230,255)", "tex": "Things/Item/MMT/MMT_Ore/MMT_WolframiteOre"},
 }
 
 ADVANCED_ALLOY_EXPECTATIONS = {
@@ -2711,7 +2711,7 @@ def validate_petrochem_building() -> None:
     assert_equal(child_text(research, "researchViewY"), "0.00", "石化研究 Y 坐标")
 
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
-    assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_HandOilPump", "MMT_MineableOilSeep"}, "石化建筑 defName 集合")
+    assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_HandOilPump"}, "石化建筑 defName 集合")
 
     table = building_defs["MMT_HandChemTable"]
     assert_equal(child_text(table, "label"), "石化产品实验室", "化学台 label")
@@ -2748,16 +2748,6 @@ def validate_petrochem_building() -> None:
     pump_comp_classes = [li.attrib.get("Class") for li in pump.findall("./comps/li")]
     if "CompProperties_Power" in pump_comp_classes:
         fail("手压油泵不应包含电力组件")
-
-    seep = building_defs["MMT_MineableOilSeep"]
-    assert_equal(seep.attrib.get("ParentName"), "RockBase", "油苗父类")
-    assert_equal(child_text(seep, "label"), "油苗", "油苗 label")
-    assert_equal(child_text(seep, "./graphicData/texPath"), "Things/Building/Linked/RockFlecked_Atlas", "油苗 texPath")
-    assert_equal(child_text(seep, "./statBases/MaxHitPoints"), "1500", "油苗耐久")
-    assert_equal(child_text(seep, "./building/isResourceRock"), "true", "油苗 isResourceRock")
-    assert_equal(child_text(seep, "./building/mineableThing"), "MMT_CrudeOil", "油苗 mineableThing")
-    assert_equal(child_text(seep, "./building/mineableYield"), "75", "油苗 mineableYield")
-    assert_equal(child_text(seep, "./building/veinMineable"), "true", "油苗 veinMineable")
 
     for path in PETROCHEM_BUILDING_TEXTURES:
         assert_png(path)

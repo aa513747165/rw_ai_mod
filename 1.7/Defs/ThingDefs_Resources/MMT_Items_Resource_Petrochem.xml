@@ -3,7 +3,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_CrudeOil</defName>
     <label>原油</label>
-    <description>从油苗中开采出的未精炼石油，可在化学实验台蒸馏成聚合物。</description>
+    <description>用手压油泵从地下浅层压取的未精炼石油，可在化学实验台蒸馏成聚合物。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_Petro/CrudeOil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -13,7 +13,7 @@
     <tickerType>Rare</tickerType>
     <techLevel>Industrial</techLevel>
     <statBases>
-      <MarketValue>3.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>5</Flammability>
       <Mass>0.1</Mass>

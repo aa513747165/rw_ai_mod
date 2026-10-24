@@ -12,7 +12,7 @@
     <tickerType>Rare</tickerType>
     <techLevel>Neolithic</techLevel>
     <statBases>
-      <MarketValue>0.4</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.5</Mass>

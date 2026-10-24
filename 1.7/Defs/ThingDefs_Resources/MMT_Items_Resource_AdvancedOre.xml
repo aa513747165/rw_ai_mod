@@ -13,7 +13,7 @@
     <soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType>
     <statBases>
-      <MarketValue>4.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.4</Mass>
@@ -37,7 +37,7 @@
     <soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType>
     <statBases>
-      <MarketValue>8.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.15</Mass>
@@ -61,7 +61,7 @@
     <soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType>
     <statBases>
-      <MarketValue>9.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.2</Mass>

@@ -117,28 +117,4 @@
     </researchPrerequisites>
     <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
   </ThingDef>
-
-  <ThingDef ParentName="RockBase">
-    <defName>MMT_MineableOilSeep</defName>
-    <label>油苗</label>
-    <description>地表渗出的原油矿脉，开采后可获得原油，用于蒸馏聚合物。</description>
-    <graphicData>
-      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
-      <color>(45,42,40)</color>
-      <colorTwo>(65,34,34)</colorTwo>
-    </graphicData>
-    <statBases>
-      <MaxHitPoints>1500</MaxHitPoints>
-    </statBases>
-    <building>
-      <isResourceRock>true</isResourceRock>
-      <mineableThing>MMT_CrudeOil</mineableThing>
-      <mineableYield>75</mineableYield>
-      <mineableScatterCommonality>0.8</mineableScatterCommonality>
-      <mineableScatterLumpSizeRange>10~18</mineableScatterLumpSizeRange>
-      <veinMineable>true</veinMineable>
-    </building>
-  </ThingDef>
 </Defs>

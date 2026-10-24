@@ -14,7 +14,7 @@
     <tickerType>Rare</tickerType>
     <techLevel>Medieval</techLevel>
     <statBases>
-      <MarketValue>1.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.5</Mass>
@@ -39,7 +39,7 @@
     <tickerType>Rare</tickerType>
     <techLevel>Medieval</techLevel>
     <statBases>
-      <MarketValue>25.0</MarketValue>
+      <MarketValue>1</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0</Flammability>
       <Mass>0.5</Mass>

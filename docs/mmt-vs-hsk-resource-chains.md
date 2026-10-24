@@ -9,7 +9,7 @@
 
 | 项 | 数量 |
 | --- | --- |
-| MMT 矿脉 | 13 |
+| MMT 矿脉 | 12 |
 | MMT 配方 | 299 |
 | 与 HSK 数值一致 | 134 |
 | 与 HSK 有数值差异 | 56 |
@@ -30,7 +30,6 @@
 | 锡矿(MMT_MineableTinOre) | 锡矿 | 75 | 9~17 / 1.1 / 1300 | Tin Ore Deposits(`MineableTin`) | 75 | 9~17 / 1.1 / 1300 | 产量一致 |
 | 铅矾矿脉(MMT_MineableAnglesite) | 铅矾矿 | 75 | 6~13 / 0.8 / 1600 | Anglesite Deposits(`MineableLead`) | 75 | 6~13 / 0.8 / 6000 | 产量一致 |
 | 铝土矿脉(MMT_MineableAluminium) | 铝土矿 | 75 | 11~19 / 0.65 / 1600 | Bauxite Ore Deposits(`MineableAluminium`) | 75 | 11~19 / 0.65 / 5500 | 产量一致 |
-| 油苗(MMT_MineableOilSeep) | 原油 | 75 | 10~18 / 0.8 / 1500 | — | — | — | MMT 新增资源 |
 | 硝石矿脉(MMT_MineableNitre) | 硝石 | 75 | 8~16 / 1.05 / 1800 | Nitre Deposits(`MineableNitre`) | 75 | 8~16 / 1.05 / 1800 | 产量一致 |
 | 硫磺矿脉(MMT_MineableSulfur) | 硫磺 | 75 | 10~16 / 0.8 / 1500 | — | — | — | HSK 无矿脉（仅深钻等） |
 
@@ -867,7 +866,7 @@
 
 #### 制备表面活性剂（50个）（`MMT_MakeSurfactant`）
 
-- **MMT**：盐×10 + 硫磺×15 + [Alcohol]×15 -> 表面活性剂×50 @ — ｜ 工作量=4000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥8
+- **MMT**：盐×10 + 硫磺×15 + [MMT_Alcohol]×15 -> 表面活性剂×50 @ — ｜ 工作量=4000 ｜ 研究:高级石化工艺(MMT_AdvancedPetrochemistry)，技能:Crafting≥8
 - **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
 - **对比**：数值一致
 
@@ -1129,7 +1128,7 @@
 
 #### 制作弩炮箭x10（`MMT_MakeAmmo_BalistaBolt`）
 
-- **MMT**：[Woody]×2 + [MMT_MetallicBar]×5 -> 弩炮箭×10 @ — ｜ 工作量=1500
+- **MMT**：[MMT_Woody]×2 + [MMT_MetallicBar]×5 -> 弩炮箭×10 @ — ｜ 工作量=1500
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作石球x5（`MMT_MakeAmmo_StoneBall`）
@@ -1158,7 +1157,7 @@
 
 #### 制作弩炮组件箱（`MMT_BuildBalista_Crate`）
 
-- **MMT**：[Woody]×90 + [MMT_MetallicBar]×30 -> 弩炮组件箱×1 @ — ｜ 工作量=4500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥3
+- **MMT**：[MMT_Woody]×90 + [MMT_MetallicBar]×30 -> 弩炮组件箱×1 @ — ｜ 工作量=4500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥3
 - **HSK** `BuildBalista_Crate`：[Wooden]×90 + [Metallic]×30 -> 弩炮组件箱(Balista_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=4500 ｜ 研究:Ballista_B1，技能:Crafting≥3
 - **对比**：数值一致
 
@@ -1170,7 +1169,7 @@
 
 #### 制作投石机组件箱（`MMT_BuildCatapult_Crate`）
 
-- **MMT**：[Woody]×160 + [MMT_MetallicBar]×60 -> 投石机组件箱×1 @ — ｜ 工作量=10500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥5
+- **MMT**：[MMT_Woody]×160 + [MMT_MetallicBar]×60 -> 投石机组件箱×1 @ — ｜ 工作量=10500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥5
 - **HSK** `BuildCatapult_Crate`：[Wooden]×160 + [Metallic]×60 -> 投石机组件箱(Catapult_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=10500 ｜ 研究:Ballista_B1，技能:Crafting≥5
 - **对比**：数值一致
 
@@ -1542,7 +1541,7 @@
 
 #### 制作M79榴弹发射器（`MMT_BuildM79GL`）
 
-- **MMT**：步枪部件×2 + 武器部件×3 + 工业零件(ComponentIndustrial)×3 + [MMT_MetallicBar]×20 + [Woody]×20 + [Leathers]×10 -> M79榴弹发射器×1 @ — ｜ 工作量=15000 ｜ 研究:枪械 II(MMT_GunsAdvanced)，技能:Crafting≥9
+- **MMT**：步枪部件×2 + 武器部件×3 + 工业零件(ComponentIndustrial)×3 + [MMT_MetallicBar]×20 + [MMT_Woody]×20 + [Leathers]×10 -> M79榴弹发射器×1 @ — ｜ 工作量=15000 ｜ 研究:枪械 II(MMT_GunsAdvanced)，技能:Crafting≥9
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 M82A1反器材步枪（`MMT_BuildM82Gun`）
