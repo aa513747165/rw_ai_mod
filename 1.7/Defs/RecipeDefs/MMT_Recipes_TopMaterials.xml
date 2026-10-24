@@ -223,6 +223,63 @@
     <researchPrerequisite>MMT_AdvancedComponents</researchPrerequisite>
   </RecipeDef>
 
+  <!-- 合成伪人格核心：材料为拆解产出的 2 倍，在自动化装配器组装 -->
+  <RecipeDef>
+    <defName>MMT_MakeAIPersonaCore</defName>
+    <label>合成伪人格核心</label>
+    <description>以高科技合金与生物微芯片合成一枚伪人格核心。材料消耗为拆解产出的两倍。</description>
+    <jobString>正在合成伪人格核心。</jobString>
+    <workAmount>8000</workAmount>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>MMT_RoboticAssembler</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_BioMicrochips</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_AlphaPoly</li>
+          </thingDefs>
+        </filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_CarbonAlloy</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_BioMicrochips</li>
+        <li>MMT_AlphaPoly</li>
+        <li>MMT_CarbonAlloy</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <AIPersonaCore>1</AIPersonaCore>
+    </products>
+    <skillRequirements>
+      <Crafting>16</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_PersonaCoreCrafting</researchPrerequisite>
+  </RecipeDef>
+
   <!-- α聚合物：对照 HSK ProduceAPoly（挂量子加工台，配方无研究前置，靠建筑解锁） -->
   <RecipeDef>
     <defName>MMT_ProduceAPoly</defName>

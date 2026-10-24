@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 核燃料棒：铀浓缩组装而成，核能反应堆的燃料（参考 HSK RimAtomics FuelRods） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_FuelRod</defName>
+    <label>核燃料棒</label>
+    <description>封装了浓缩铀的燃料棒，可装入核能反应堆持续发电。</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/MMT_FuelRod</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>100</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>2.0</Mass>
+    </statBases>
+    <stackLimit>25</stackLimit>
+    <thingCategories>
+      <li>MMT_FuelCat</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>

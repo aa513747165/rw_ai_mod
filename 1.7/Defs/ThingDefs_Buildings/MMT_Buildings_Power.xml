@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 原煤发电机：发电量与原版化学发电机相同（1000W），贴图为 HSK 燃煤蒸汽发电机 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_CoalGenerator</defName>
+    <label>原煤发电机</label>
+    <description>以原煤为燃料的蒸汽发电机组，发电量与化学发电机相同。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/MMT_CoalGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>1</fillPercent>
+    <blockWind>true</blockWind>
+    <canOverlapZones>false</canOverlapZones>
+    <altitudeLayer>Building</altitudeLayer>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>3000</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-20</Beauty>
+      <Mass>60</Mass>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-1000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>6.0</fuelConsumptionRate>
+        <fuelCapacity>75</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Coal</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <autoRefuelPercent>0.3</autoRefuelPercent>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <fuelLabel>原煤储量</fuelLabel>
+        <fuelGizmoLabel>原煤</fuelGizmoLabel>
+        <outOfFuelMessage>无法发电：需要原煤</outOfFuelMessage>
+        <fuelIconPath>Things/Item/MMT/MMT_Coal</fuelIconPath>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+    </comps>
+    <tickerType>Normal</tickerType>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>Electricity</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 核能反应堆：以核燃料棒为燃料的大功率发电机（简化燃料棒版，参考 HSK 边缘核能） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_NuclearReactor</defName>
+    <label>核能反应堆</label>
+    <description>以核燃料棒为燃料的大型反应堆，输出 20000W 电力。燃料棒在电动电子工艺台由铀制成。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/MMT_CoalGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(5,5)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(3,3)</size>
+    <passability>Impassable</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>1</fillPercent>
+    <blockWind>true</blockWind>
+    <canOverlapZones>false</canOverlapZones>
+    <altitudeLayer>Building</altitudeLayer>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>12000</WorkToBuild>
+      <MaxHitPoints>800</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <Beauty>-30</Beauty>
+      <Mass>200</Mass>
+    </statBases>
+    <costList>
+      <Steel>300</Steel>
+      <MMT_CarbonAlloy>60</MMT_CarbonAlloy>
+      <ComponentIndustrial>10</ComponentIndustrial>
+      <MMT_AdvMechanism>4</MMT_AdvMechanism>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-20000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>0.1</fuelConsumptionRate>
+        <fuelCapacity>5</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_FuelRod</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <autoRefuelPercent>0.2</autoRefuelPercent>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <fuelLabel>燃料棒储量</fuelLabel>
+        <fuelGizmoLabel>燃料棒</fuelGizmoLabel>
+        <outOfFuelMessage>无法发电：需要核燃料棒</outOfFuelMessage>
+        <fuelIconPath>Things/Item/Resource/MMT_FuelRod</fuelIconPath>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+    </comps>
+    <tickerType>Normal</tickerType>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_NuclearPower</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

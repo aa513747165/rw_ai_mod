@@ -34,6 +34,11 @@ const MMT_ALIAS = {
   Aloe: 'aloe', BasicMedicineKit: 'Herbmedicine', BerserkHerb: 'Berserk_herb',
   Ibuprofen: 'VG_Ibuprofen', PlantAloe: 'Plant_Aloe', PlantNeutroFlower: 'Plant_NeutroFlower',
   MedicalTable: 'meditable', ElectricMedicalTable: 'meditable',
+  // 后继更新一新增
+  TurretKPV: 'Turret_KPV', Gun_KPV: 'Gun_KPV', Ammo_145x114mm_FMJ: 'Ammo_145x114mm_FMJ',
+  FuelRod: 'FuelRods', NuclearReactor: 'ReactorCoreA', CoalGenerator: 'ChemfuelPoweredGenerator',
+  MultiAnalyzer: 'MultiAnalyzer', LabStation: 'LabStation', LabTerminal: 'LabTerminal',
+  NuclearPower: 'RimatomicsActivate',
 };
 
 // ---------- 读取 MMT Defs ----------

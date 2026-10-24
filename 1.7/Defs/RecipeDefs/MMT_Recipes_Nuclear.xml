@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 核燃料棒配方：铀在电动电子工艺台浓缩组装（参考 HSK RimAtomics 铀浓缩+燃料棒装配链的简化版） -->
+  <RecipeDef>
+    <defName>MMT_MakeFuelRod</defName>
+    <label>组装核燃料棒</label>
+    <description>将铀浓缩并封装为核燃料棒。产出 1。</description>
+    <jobString>正在组装核燃料棒。</jobString>
+    <workAmount>8000</workAmount>
+    <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>100</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>MMT_SLDBar</li>
+          </categories>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Uranium</li>
+      </thingDefs>
+      <categories>
+        <li>MMT_SLDBar</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_FuelRod>1</MMT_FuelRod>
+    </products>
+    <recipeUsers>
+      <li>MMT_ElectricElectronicsTable</li>
+    </recipeUsers>
+    <researchPrerequisite>MMT_NuclearPower</researchPrerequisite>
+  </RecipeDef>
+</Defs>

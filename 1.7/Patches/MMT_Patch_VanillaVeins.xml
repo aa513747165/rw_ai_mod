@@ -45,7 +45,8 @@
             <isResourceRock>true</isResourceRock>
             <mineableThing>MMT_IronOre</mineableThing>
             <mineableYield>75</mineableYield>
-            <mineableScatterCommonality>1.0</mineableScatterCommonality>
+            <!-- 占比提高 50%（1.0 → 1.5）；该值同时是矿粉筛选矿石池的权重 -->
+            <mineableScatterCommonality>1.5</mineableScatterCommonality>
             <mineableScatterLumpSizeRange>15~25</mineableScatterLumpSizeRange>
             <veinMineable>true</veinMineable>
           </building>

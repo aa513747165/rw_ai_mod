@@ -211,7 +211,7 @@ PRECIOUS_RESOURCE_EXPECTATIONS = {
 # 原版矿脉改造（HSK 做法：不删 def，patch 替换产出物）。MMT 不再自带铁/银/金矿脉 def，
 # 玻璃钢矿脉改造为稀有钛铁来源；零件矿脉照 HSK 保留原版不动。
 VANILLA_VEIN_EXPECTATIONS = {
-    "MineableSteel": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500", "yield": "75", "commonality": "1.0", "lump": "15~25"},
+    "MineableSteel": {"label": "铁矿", "yield_thing": "MMT_IronOre", "hp": "1500", "yield": "75", "commonality": "1.5", "lump": "15~25"},
     "MineableSilver": {"label": "银矿", "yield_thing": "MMT_SilverOre", "hp": "1500", "yield": "75", "commonality": "1.0", "lump": "10~16"},
     "MineableGold": {"label": "金矿", "yield_thing": "MMT_GoldOre", "hp": "1500", "yield": "75", "commonality": "0.5", "lump": "8~14"},
     "MineablePlasteel": {"label": "钛铁矿", "yield_thing": "MMT_IlmeniteOre", "hp": "10000", "yield": "75", "commonality": "0.05", "lump": "2~8"},
@@ -1509,6 +1509,7 @@ TOP_MATERIALS_RECIPE_EXPECTATIONS = {
     "MMT_BuildBiosyntheticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Biomatter", "15"), ("thingDefs", "MMT_SyntheticFibers", "9"), ("thingDefs", "MMT_Plastic", "30")], "output": "MMT_BiosyntheticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
     "MMT_MakeBioelectronicDevices": {"work": "7000", "inputs": [("thingDefs", "MMT_Biomatter", "60"), ("thingDefs", "Hyperweave", "15"), ("thingDefs", "MMT_Microchip", "2")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "18", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
     "MMT_DisassembleAIPersonaCore": {"work": "4000", "inputs": [("thingDefs", "AIPersonaCore", "1")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"], "extra_products": {"MMT_AlphaPoly": "30", "MMT_CarbonAlloy": "40"}},
+    "MMT_MakeAIPersonaCore": {"work": "8000", "inputs": [("thingDefs", "MMT_BioMicrochips", "2"), ("thingDefs", "MMT_AlphaPoly", "60"), ("thingDefs", "MMT_CarbonAlloy", "80")], "output": "AIPersonaCore", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_PersonaCoreCrafting", "users": ["MMT_RoboticAssembler"]},
     "MMT_ProduceAPoly": {"work": "8000", "inputs": [("thingDefs", "MMT_DepletedUranium", "5"), ("thingDefs", "MMT_CarbonAlloy", "5"), ("thingDefs", "MMT_Antimatter", "3")], "output": "MMT_AlphaPoly", "output_count": "15", "skill": "19", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_ProduceBPoly": {"work": "12000", "inputs": [("thingDefs", "MMT_AlphaPoly", "3"), ("thingDefs", "MMT_BiosyntheticMaterial", "5")], "output": "MMT_BetaPoly", "output_count": "5", "skill": "20", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_MakeAntimatter": {"work": "10000", "inputs": [("thingDefs", "MMT_Matter", "50"), ("thingDefs", "Uranium", "20")], "output": "MMT_Antimatter", "output_count": "2", "skill": "15", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
@@ -1764,8 +1765,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 63  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究
-INFRA_WORKTABLE_TOTAL = 40  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）
+INFRA_RESEARCH_TOTAL = 69  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项
+INFRA_WORKTABLE_TOTAL = 46  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 1、电力 2、研究设施 3
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -1774,6 +1775,7 @@ WORKGIVER_EXPECTED_WORKTYPES = {
     "MMT_DoBillsTailoring": "Tailoring",
     "MMT_DoBillsMedical": "Doctor",
     "MMT_DoBillsCrafting": "Crafting",
+    "MMT_OperateChunkDrill": "Mining",
 }
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
@@ -1796,6 +1798,8 @@ INFRA_EXPECTED_CATEGORIES = {
     "MMT_GlassCat": "Manufactured",
     "MMT_SuperMaterialCat": "Manufactured",
     "MMT_BTextiles": "Textiles",
+    "MMT_AmmoCat": "Manufactured",
+    "MMT_TurretCrateCat": "Manufactured",
 }
 INFRA_PATCH_TARGETS = {
     "Steel": "MMT_SLDBar",
@@ -3515,7 +3519,7 @@ def validate_electric_electronics() -> None:
     ])
 
     research_defs = def_map(parse_xml(ELECTRIC_ELECTRONICS_RESEARCH_XML))
-    assert_equal(set(research_defs), {"MMT_ElectricElectronics"}, "电动电子研究 defName 集合")
+    assert_equal(set(research_defs), {"MMT_ElectricElectronics", "MMT_PersonaCoreCrafting"}, "电动电子研究 defName 集合")
     research = research_defs["MMT_ElectricElectronics"]
     assert_equal(child_text(research, "label"), "电动电子工艺", "电动电子研究 label")
     assert_equal(child_text(research, "baseCost"), "2200", "电动电子研究 baseCost")
@@ -4727,7 +4731,9 @@ def validate_workgivers() -> None:
     assert_equal(set(givers), set(WORKGIVER_EXPECTED_WORKTYPES), "WorkGiver defName 集合")
     covered: dict[str, str] = {}
     for name, node in givers.items():
-        assert_equal(child_text(node, "giverClass"), "WorkGiver_DoBill", f"{name} giverClass")
+        # 手动采石机是自定义 Scanner WorkGiver（无账单），其余均为 WorkGiver_DoBill
+        expected_giver_class = "MyModeTest.WorkGiver_ChunkDrill" if name == "MMT_OperateChunkDrill" else "WorkGiver_DoBill"
+        assert_equal(child_text(node, "giverClass"), expected_giver_class, f"{name} giverClass")
         assert_equal(child_text(node, "workType"), WORKGIVER_EXPECTED_WORKTYPES[name], f"{name} workType")
         for bench in li_values(node, "fixedBillGiverDefs"):
             if bench in covered:
@@ -5480,6 +5486,7 @@ TURRET_AMMO_PROJECTILES = {
     "MMT_Ammo_762x51mmNATO_FMJ": "MMT_Bullet_762x51mmNATO_FMJ",
     "MMT_Ammo_30x173mm_FMJ": "MMT_Bullet_30x173mm_FMJ",
     "MMT_Ammo_20x102mm_FMJ": "MMT_Bullet_20x102mm_FMJ",
+    "MMT_Ammo_145x114mm_FMJ": "MMT_Bullet_145x114mm_FMJ",
 }
 
 
@@ -5658,7 +5665,7 @@ def validate_weapons() -> None:
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
     ]
     total_weapons = sum(len(def_map(parse_xml(p))) for p in weapon_files)
-    assert_equal(total_weapons, 131, "武器总目标数（45+32+26+16+12，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml；NPC 批次中误植的 MMT_Surfactant 已移除）")
+    assert_equal(total_weapons, 132, "武器总目标数（45+32+26+17+12，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml；NPC 批次中误植的 MMT_Surfactant 已移除；含 KPV 炮塔枪）")
     generated_text = "\n".join(read_text(p) for p in [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
         "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
@@ -5695,16 +5702,21 @@ def validate_weapons_turrets() -> None:
     ammo = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretAmmo.xml"))
     crates = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml"))
     crate_recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml"))
-    assert_equal(len(guns), 16, "炮塔枪数")
+    assert_equal(len(guns), 17, "炮塔枪数")
     concrete_buildings = [b for b in buildings.values() if (b.get("Abstract") or "").lower() != "true"]
     building_total = len(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml").findall("ThingDef"))
-    assert_equal(building_total, 17, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
-    assert_equal(len(concrete_buildings), 16, "可建造炮塔数")
-    assert_equal(len(ammo), 11, "炮塔弹药数")
+    assert_equal(building_total, 18, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
+    assert_equal(len(concrete_buildings), 17, "可建造炮塔数")
+    assert_equal(len(ammo), 12, "炮塔弹药数")
     assert_equal(len(crates), 16, "炮塔箱数（9 个无对应建筑的孤儿箱不移植）")
     assert_equal(len(crate_recipes), 16, "炮塔箱配方数")
     for ammo_name, projectile_name in TURRET_AMMO_PROJECTILES.items():
         assert_equal(child_text(ammo[ammo_name], "projectileWhenLoaded"), projectile_name, f"{ammo_name} 投射物")
+    # 弹药与板条箱必须挂类别，否则不会出现在储存筛选里（无储存选项问题修复）
+    for ammo_name, ammo_def in ammo.items():
+        assert_equal(li_values(ammo_def, "thingCategories"), ["MMT_AmmoCat"], f"{ammo_name} 弹药类别")
+    for crate_name, crate_def in crates.items():
+        assert "MMT_TurretCrateCat" in li_values(crate_def, "thingCategories"), f"{crate_name} 板条箱类别"
 
     m2 = buildings["MMT_Turret_M2Browning"]
     assert_equal(child_text(m2, "building/turretGunDef"), "MMT_Gun_M2Browning", "M2 炮塔枪")
@@ -5767,7 +5779,7 @@ def validate_weapons_conventional() -> None:
     print("weapons-conventional: OK")
 
 
-WEAPON_RESEARCH_TOTAL = 18  # 已剔除 5 个无解锁内容的研究（弓I/心灵武器/炮塔I/自动炮塔II/自动炮塔IV）
+WEAPON_RESEARCH_TOTAL = 19  # 已剔除 5 个无解锁内容的研究（弓I/心灵武器/炮塔I/自动炮塔II/自动炮塔IV），含 KPV 重机枪塔
 
 
 def validate_weapons_research() -> None:
@@ -6087,7 +6099,8 @@ def validate_orepowder() -> None:
         assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
         assert_equal(li_values(defs[name], "researchPrerequisites"), ["MMT_OreSifting"], f"{name} 研究前置")
 
-    # 自动化建筑：进料口 + 自动研磨机/筛子（CompAutoProcessor 无人值守）
+    # 自动化建筑：进料口（遗留，供旧存档兼容）+ 自动研磨机/筛子（CompAutoProcessor 无人值守，
+    # 原料即燃料：燃料仓 CompRefuelable 装料，电力驱动保持不变）
     auto_defs = def_map(parse_xml(AUTOPROC_BUILDING_XML))
     assert_equal(set(auto_defs), {"MMT_Hopper", "MMT_AutoGrinder", "MMT_AutoSieve"}, "自动化建筑 defName 集合")
     hopper = auto_defs["MMT_Hopper"]
@@ -6096,15 +6109,21 @@ def validate_orepowder() -> None:
     fixed_filter = hopper.find("./building/fixedStorageSettings/filter")
     assert_equal(li_values(fixed_filter, "categories"), ["StoneChunks"], "进料口固定类别")
     assert_equal(li_values(fixed_filter, "thingDefs"), ["MMT_OrePowder"], "进料口固定物品")
-    for name, power, count, out_range in (("MMT_AutoGrinder", "500", "1", "10~10"),
-                                          ("MMT_AutoSieve", "400", "25", "6~10")):
+    for name, power, count, out_range, capacity in (("MMT_AutoGrinder", "500", "1", "10~10", "60"),
+                                                    ("MMT_AutoSieve", "400", "25", "6~10", "500")):
         d = auto_defs[name]
-        assert_equal(child_text(d, "./building/wantsHopperAdjacent"), "true", f"{name} 需相邻进料口")
+        if d.find("./building/wantsHopperAdjacent") is not None:
+            fail(f"{name} 不应再要求相邻进料口（已改内置燃料仓）")
         if child_text(d, "passability") == "Impassable":
             assert_equal(child_text(d, "fillPercent"), "1", f"{name} 不可通行建筑必须完全遮挡视线")
         power_comp = next(li for li in d.findall("comps/li")
                           if li.attrib.get("Class") == "CompProperties_Power")
         assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
+        fuel_comp = next(li for li in d.findall("comps/li")
+                         if li.attrib.get("Class") == "CompProperties_Refuelable")
+        assert_equal(child_text(fuel_comp, "fuelCapacity"), capacity, f"{name} 燃料仓容量")
+        if fuel_comp.find("fuelConsumptionRate") is not None:
+            fail(f"{name} 不得有被动燃料消耗（fuelConsumptionRate 应保持默认 0）")
         proc = next(li for li in d.findall("comps/li")
                     if li.attrib.get("Class") == "MyModeTest.CompProperties_AutoProcessor")
         assert_equal(child_text(proc, "inputCount"), count, f"{name} 每轮输入")
@@ -6112,6 +6131,13 @@ def validate_orepowder() -> None:
         assert_equal(child_text(proc, "intervalTicks"), "2500", f"{name} 处理间隔")
         assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoOreProcessing"], f"{name} 研究前置")
         assert "MyModeTest.ITab_AutoProcessor" in li_values(d, "inspectorTabs"), f"{name} 处理进度页签"
+    # 燃料过滤器：研磨机吃岩块类别、筛子吃矿粉
+    grinder_fuel = next(li for li in auto_defs["MMT_AutoGrinder"].findall("comps/li")
+                        if li.attrib.get("Class") == "CompProperties_Refuelable")
+    assert_equal(li_values(grinder_fuel.find("fuelFilter"), "categories"), ["StoneChunks"], "研磨机燃料=岩块")
+    sieve_fuel = next(li for li in auto_defs["MMT_AutoSieve"].findall("comps/li")
+                      if li.attrib.get("Class") == "CompProperties_Refuelable")
+    assert_equal(li_values(sieve_fuel.find("fuelFilter"), "thingDefs"), ["MMT_OrePowder"], "筛子燃料=矿粉")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "false", "自动筛子禁止旋转")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "South", "自动筛子默认朝向")
 
@@ -6162,6 +6188,128 @@ def validate_orepowder() -> None:
     print("orepowder: OK")
 
 
+def validate_chunkdrill() -> None:
+    """手动采石机链（仿深钻机）：建筑 Def + JobDef + WorkGiverDef + C# comp/giver/driver + 贴图。"""
+    require_files([
+        "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml",
+        "1.7/Defs/JobDefs/MMT_Jobs.xml",
+        "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml",
+        "1.7/Textures/Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill.png",
+        "Source/MyModeTest/ChunkDrill.cs",
+    ])
+    building = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml"))["MMT_ChunkDrill"]
+    assert_equal(li_values(building, "researchPrerequisites"), ["Stonecutting"], "采石机研究前置")
+    assert_equal(child_text(building, "designationCategory"), "MMT_Production", "采石机建筑分类")
+    drill_comp = next(li for li in building.findall("comps/li")
+                      if li.attrib.get("Class") == "MyModeTest.CompProperties_ChunkDrill")
+    assert_equal(child_text(drill_comp, "workTicksPerChunk"), "10000", "采石机单块工作量")
+    if any(li.attrib.get("Class") == "CompProperties_Power" for li in building.findall("comps/li")):
+        fail("采石机为手动建筑，不应有电力 comp")
+
+    job = def_map(parse_xml("1.7/Defs/JobDefs/MMT_Jobs.xml"))["MMT_OperateChunkDrill"]
+    assert_equal(child_text(job, "driverClass"), "MyModeTest.JobDriver_OperateChunkDrill", "采石 JobDriver")
+
+    givers = def_map(parse_xml("1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"))
+    giver = givers["MMT_OperateChunkDrill"]
+    assert_equal(child_text(giver, "giverClass"), "MyModeTest.WorkGiver_ChunkDrill", "采石 WorkGiver")
+    assert_equal(child_text(giver, "workType"), "Mining", "采石工作类型")
+
+    cs_src = read_text("Source/MyModeTest/ChunkDrill.cs")
+    for token in ("CompProperties_ChunkDrill", "CompChunkDrill", "WorkGiver_ChunkDrill",
+                  "JobDriver_OperateChunkDrill", "DeepDrillingSpeed", "StoneChunks",
+                  "ThingPlaceMode.Near", "Scribe_Values.Look"):
+        assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
+    print("chunkdrill: OK")
+
+
+def validate_power() -> None:
+    """电力链：原煤发电机（1000W，烧 MMT_Coal）+ 核能反应堆（20000W，烧核燃料棒）+ 燃料棒配方/研究。"""
+    require_files([
+        "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml",
+        "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Nuclear.xml",
+        "1.7/Defs/RecipeDefs/MMT_Recipes_Nuclear.xml",
+        "1.7/Defs/ResearchProjectDefs/MMT_Research_Nuclear.xml",
+        "1.7/Textures/Things/Building/Power/MMT_CoalGenerator.png",
+        "1.7/Textures/Things/Item/Resource/MMT_FuelRod.png",
+    ])
+    buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml"))
+    for name, watts, fuel, cap in (("MMT_CoalGenerator", "-1000", "MMT_Coal", "75"),
+                                   ("MMT_NuclearReactor", "-20000", "MMT_FuelRod", "5")):
+        d = buildings[name]
+        power = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+        assert_equal(child_text(power, "compClass"), "CompPowerPlant", f"{name} 电力 comp 类型")
+        assert_equal(child_text(power, "basePowerConsumption"), watts, f"{name} 发电量")
+        fuel_comp = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Refuelable")
+        assert_equal(li_values(fuel_comp.find("fuelFilter"), "thingDefs"), [fuel], f"{name} 燃料")
+        assert_equal(child_text(fuel_comp, "fuelCapacity"), cap, f"{name} 燃料容量")
+    assert_equal(li_values(buildings["MMT_CoalGenerator"], "researchPrerequisites"), ["Electricity"], "原煤发电机研究前置")
+    assert_equal(li_values(buildings["MMT_NuclearReactor"], "researchPrerequisites"), ["MMT_NuclearPower"], "核反应堆研究前置")
+
+    rod = def_map(parse_xml("1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Nuclear.xml"))["MMT_FuelRod"]
+    assert_equal(li_values(rod, "thingCategories"), ["MMT_FuelCat"], "燃料棒类别（须可储存筛选）")
+
+    recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Nuclear.xml"))
+    make_rod = recipes["MMT_MakeFuelRod"]
+    assert_equal(child_text(make_rod, "products/MMT_FuelRod"), "1", "燃料棒产出")
+    assert_equal(li_values(make_rod, "recipeUsers"), ["MMT_ElectricElectronicsTable"], "燃料棒工作台")
+    assert_equal(child_text(make_rod, "researchPrerequisite"), "MMT_NuclearPower", "燃料棒研究前置")
+
+    research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Nuclear.xml"))["MMT_NuclearPower"]
+    assert_equal(li_values(research, "prerequisites"), ["MMT_ElectricElectronics"], "核能研究前置")
+    print("power: OK")
+
+
+def validate_science() -> None:
+    """研究设施链（按 HSK）：多元分析仪/实验站/研究终端 + 研究项目 + 高科技研究台链接补丁。"""
+    require_files([
+        "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Research.xml",
+        "1.7/Defs/ResearchProjectDefs/MMT_Research_Science.xml",
+        "1.7/Patches/MMT_Patch_VanillaResearch.xml",
+        "1.7/Textures/Things/Building/Research/MMT_MultiAnalyzer.png",
+        "1.7/Textures/Things/Building/Research/MMT_LabStation/MMT_LabStation_south.png",
+        "1.7/Textures/Things/Building/Research/MMT_LabTerminal/MMT_LabTerminal_south.png",
+    ])
+    buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Research.xml"))
+    for name, factor, research in (("MMT_MultiAnalyzer", "0.1", "MMT_MultiAnalyzerTech"),
+                                   ("MMT_LabStation", "0.2", "MMT_LabStationTech"),
+                                   ("MMT_LabTerminal", "0.08", "MMT_LabTerminalTech")):
+        d = buildings[name]
+        facility = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Facility")
+        assert_equal(child_text(facility, "statOffsets/ResearchSpeedFactor"), factor, f"{name} 研究速度加成")
+        assert_equal(child_text(facility, "maxSimultaneous"), "1", f"{name} 同时链接数")
+        assert_equal(li_values(d, "researchPrerequisites"), [research], f"{name} 研究前置")
+
+    research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Science.xml"))
+    assert_equal(li_values(research["MMT_LabTerminalTech"], "prerequisites"), ["MicroelectronicsBasics"], "研究终端前置")
+    assert_equal(li_values(research["MMT_MultiAnalyzerTech"], "prerequisites"), ["MMT_LabTerminalTech"], "多元分析仪前置")
+    assert_equal(li_values(research["MMT_LabStationTech"], "prerequisites"), ["MMT_MultiAnalyzerTech"], "实验站前置")
+
+    patch = read_text("1.7/Patches/MMT_Patch_VanillaResearch.xml")
+    for token in ("HiTechResearchBench", "linkableFacilities",
+                  "MMT_MultiAnalyzer", "MMT_LabStation", "MMT_LabTerminal"):
+        assert token in patch, f"研究台补丁缺少: {token}"
+    print("science: OK")
+
+
+def validate_persona_core() -> None:
+    """人格核心合成：材料=拆解产出 2 倍，在自动化装配器，研究挂在电动电子工艺之后。"""
+    recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_TopMaterials.xml"))
+    make = recipes["MMT_MakeAIPersonaCore"]
+    assert_equal(child_text(make, "products/AIPersonaCore"), "1", "人格核心产出")
+    assert_equal(li_values(make, "recipeUsers"), ["MMT_RoboticAssembler"], "人格核心工作台")
+    assert_equal(child_text(make, "researchPrerequisite"), "MMT_PersonaCoreCrafting", "人格核心研究前置")
+    ingredients_text = ET.tostring(make.find("ingredients"), encoding="unicode")
+    for token in ("MMT_BioMicrochips", "MMT_AlphaPoly", "MMT_CarbonAlloy"):
+        assert token in ingredients_text, f"人格核心配方缺少材料 {token}"
+    counts = [child_text(li, "count") for li in make.findall("ingredients/li")]
+    assert_equal(counts, ["2", "60", "80"], "人格核心材料数量（拆解 2 倍）")
+
+    research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricElectronics.xml"))
+    crafting = research["MMT_PersonaCoreCrafting"]
+    assert_equal(li_values(crafting, "prerequisites"), ["MMT_ElectricElectronics"], "人格核心研究前置")
+    print("persona-core: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -6192,6 +6340,10 @@ def validate_all() -> None:
     validate_weapons()
     validate_medicine()
     validate_orepowder()
+    validate_chunkdrill()
+    validate_power()
+    validate_science()
+    validate_persona_core()
     validate_all_xml()
 
 
@@ -6250,6 +6402,10 @@ SUITES = {
     "weapons": validate_weapons,
     "medicine": validate_medicine,
     "orepowder": validate_orepowder,
+    "chunkdrill": validate_chunkdrill,
+    "power": validate_power,
+    "science": validate_science,
+    "persona-core": validate_persona_core,
     "all": validate_all,
 }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 给原版高科技研究台注入 MMT 研究设施链接（多元分析仪/实验站/研究终端），
+       对照 HSK 在 HiTechResearchBench 的 linkableFacilities 中加入 LabStation/LabTerminal 的做法 -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="HiTechResearchBench"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+    <value>
+      <li>MMT_MultiAnalyzer</li>
+      <li>MMT_LabStation</li>
+      <li>MMT_LabTerminal</li>
+    </value>
+  </Operation>
+</Patch>

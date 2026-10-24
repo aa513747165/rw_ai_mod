@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 核能发电：解锁核燃料棒配方与核能反应堆（参考 HSK 边缘核能的简化版） -->
+  <ResearchProjectDef>
+    <defName>MMT_NuclearPower</defName>
+    <label>核能发电</label>
+    <description>掌握铀燃料棒的封装工艺与反应堆的建造技术，解锁核能反应堆（20000W）与核燃料棒配方。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ElectricElectronics</li>
+    </prerequisites>
+    <researchViewX>21.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

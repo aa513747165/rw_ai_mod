@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 多元分析仪：对照原版 MultiAnalyzer / HSK 用法，链接高科技研究台 +10% 研究速度（贴图 HSK MultiAnalyzer） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_MultiAnalyzer</defName>
+    <label>多元分析仪</label>
+    <description>放置在高科技研究台附近可提高研究速度。每台研究台只能连接一台多元分析仪。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Research/MMT_MultiAnalyzer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>2.46875</drawSize>
+    </graphicData>
+    <uiIconScale>0.85</uiIconScale>
+    <size>(2,2)</size>
+    <rotatable>false</rotatable>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.5</fillPercent>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>10000</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <Plasteel>50</Plasteel>
+      <Gold>20</Gold>
+      <ComponentIndustrial>8</ComponentIndustrial>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Facility">
+        <statOffsets>
+          <ResearchSpeedFactor>0.1</ResearchSpeedFactor>
+        </statOffsets>
+        <maxSimultaneous>1</maxSimultaneous>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_MultiAnalyzerTech</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 实验站：对照 HSK LabStation，链接研究台 +20% 研究速度（贴图 HSK station） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_LabStation</defName>
+    <label>实验站</label>
+    <description>完整的实验操作台，放置在高科技研究台附近可显著提高研究速度。每台研究台只能连接一座实验站。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Research/MMT_LabStation/MMT_LabStation</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,1)</drawSize>
+    </graphicData>
+    <size>(3,1)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.6</fillPercent>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Mass>80</Mass>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <MMT_Glass>20</MMT_Glass>
+      <ComponentIndustrial>6</ComponentIndustrial>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>400</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Facility">
+        <statOffsets>
+          <ResearchSpeedFactor>0.2</ResearchSpeedFactor>
+        </statOffsets>
+        <maxSimultaneous>1</maxSimultaneous>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_LabStationTech</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 研究终端：对照 HSK LabTerminal，链接研究台 +8% 研究速度（贴图 HSK terminal） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_LabTerminal</defName>
+    <label>研究终端</label>
+    <description>辅助计算终端，放置在高科技研究台附近可小幅提高研究速度。每台研究台只能连接一台研究终端。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Research/MMT_LabTerminal/MMT_LabTerminal</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <size>(1,1)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.4</fillPercent>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>3000</WorkToBuild>
+      <Mass>20</Mass>
+      <Flammability>0.8</Flammability>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>250</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Facility">
+        <statOffsets>
+          <ResearchSpeedFactor>0.08</ResearchSpeedFactor>
+        </statOffsets>
+        <maxSimultaneous>1</maxSimultaneous>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_LabTerminalTech</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 研究设施研究链（按 HSK：终端 -> 分析仪 -> 实验站） -->
+  <ResearchProjectDef>
+    <defName>MMT_LabTerminalTech</defName>
+    <label>研究终端</label>
+    <description>解锁研究终端：链接高科技研究台可小幅提高研究速度。</description>
+    <baseCost>600</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>MMT_MultiAnalyzerTech</defName>
+    <label>多元分析仪</label>
+    <description>解锁多元分析仪：链接高科技研究台可提高研究速度。</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_LabTerminalTech</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>18.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>MMT_LabStationTech</defName>
+    <label>实验站</label>
+    <description>解锁实验站：链接高科技研究台可显著提高研究速度。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_MultiAnalyzerTech</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>21.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

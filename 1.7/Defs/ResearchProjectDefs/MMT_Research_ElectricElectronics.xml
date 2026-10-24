@@ -13,4 +13,17 @@
     <researchViewX>18.00</researchViewX>
     <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>MMT_PersonaCoreCrafting</defName>
+    <label>人格核心合成</label>
+    <description>逆向工程伪人格核心的构造，解锁在自动化装配器上合成伪人格核心的配方。材料消耗为拆解产出的两倍。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ElectricElectronics</li>
+    </prerequisites>
+    <researchViewX>21.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

@@ -10,11 +10,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 299 |
+| MMT 配方 | 302 |
 | 与 HSK 数值一致 | 134 |
 | 与 HSK 有数值差异 | 56 |
-| HSK 有对应资源但无对应配方 | 5 |
-| MMT 新增（HSK 无对应资源） | 104 |
+| HSK 有对应资源但无对应配方 | 6 |
+| MMT 新增（HSK 无对应资源） | 106 |
 
 ## 2. 矿脉对比
 
@@ -693,7 +693,14 @@
 - **HSK** `MakeLeadBars_Hand`：铅矾矿(Anglesite)×10 -> 铅合金(LeadBar)×10 @ 熔炉(TableFurnace) ｜ 工作量=1100 ｜ 研究:Craft_B1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.15 OrePowder（OrePowder）
+### 3.15 Nuclear（Nuclear）
+
+#### 组装核燃料棒（`MMT_MakeFuelRod`）
+
+- **MMT**：Uranium×100 + [MMT_SLDBar]×20 -> 核燃料棒×1 @ — ｜ 工作量=8000 ｜ 研究:核能发电(MMT_NuclearPower)，技能:Crafting≥12
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.16 OrePowder（OrePowder）
 
 #### 研磨矿粉（`MMT_GrindOrePowder_Hand`）
 
@@ -715,7 +722,7 @@
 - **MMT**：矿粉×20 -> — @ 电动筛子 ｜ 工作量=900
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.16 零件（Parts）
+### 3.17 零件（Parts）
 
 #### 使用木板组装原始零部件（`MMT_MakeComponentMedieval_Wood`）
 
@@ -801,7 +808,7 @@
 - **HSK** `Make_ComponentUltra`：[RARBar]×15 + [USLDHBar]×10 + [PRSBar]×5 -> 超级零部件(ComponentUltra)×10 @ 自动化装配器(RobAssem) ｜ 工作量=4500 ｜ 研究:Components_E1，技能:Crafting≥13
 - **对比**：数值一致
 
-### 3.17 石化（Petrochem）
+### 3.18 石化（Petrochem）
 
 #### 压取原油（`MMT_PumpCrudeOil`）
 
@@ -838,7 +845,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.18 PetrochemExt（PetrochemExt）
+### 3.19 PetrochemExt（PetrochemExt）
 
 #### 精炼石蜡（10个）（`MMT_MakeParaffins`）
 
@@ -906,7 +913,7 @@
 - **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
 - **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥8
 
-### 3.19 贵金属（Precious）
+### 3.20 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
@@ -920,7 +927,7 @@
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.20 Robotics（Robotics）
+### 3.21 Robotics（Robotics）
 
 #### 制造动力电池（`MMT_MakeHexcell`）
 
@@ -946,7 +953,7 @@
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
 
-### 3.21 Textiles（Textiles）
+### 3.22 Textiles（Textiles）
 
 #### 纺织布（`MMT_MakeCloth`）
 
@@ -1025,7 +1032,7 @@
 - **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.22 TopMaterials（TopMaterials）
+### 3.23 TopMaterials（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -1050,6 +1057,11 @@
 - **MMT**：AIPersonaCore×1 -> 生物电子元件×1 + α阿尔法聚合物×30 + 碳纤维锭×40 @ — ｜ 工作量=4000 ｜ 研究:高级零件(MMT_AdvancedComponents)，技能:Crafting≥16
 - **HSK** `DisassembleAIPersonaCore`：AIPersonaCore×1 -> 生物电子元件(BioMicrochips)×1 + α阿尔法聚合物(AlphaPoly)×30 + 碳纤维锭(CarbonAlloy)×40 @ 自动化装配器(RobAssem) ｜ 工作量=4000 ｜ 研究:Components_D2，技能:Crafting≥16
 - **对比**：数值一致
+
+#### 合成伪人格核心（`MMT_MakeAIPersonaCore`）
+
+- **MMT**：生物电子元件×2 + α阿尔法聚合物×60 + 碳纤维锭×80 -> AIPersonaCore×1 @ — ｜ 工作量=8000 ｜ 研究:人格核心合成(MMT_PersonaCoreCrafting)，技能:Crafting≥16
+- **HSK**：有资源 AIPersonaCore，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
 
 #### 制造α阿尔法聚合物（`MMT_ProduceAPoly`）
 
@@ -1084,7 +1096,7 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.23 TurretAmmo（TurretAmmo）
+### 3.24 TurretAmmo（TurretAmmo）
 
 #### 制作120mm 炮弹（破甲）x1（`MMT_MakeAmmo_120mmCannonShell_HEAT`）
 
@@ -1141,7 +1153,12 @@
 - **MMT**：钢(Steel)×66 + Chemfuel×6 + 工业零件(ComponentIndustrial)×4 -> SPG-9 Rocket (HE)×5 @ — ｜ 工作量=11400 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.24 TurretCrates（TurretCrates）
+#### 制作14.5x114mm 机枪弹（全金属被甲弹）x100（`MMT_MakeAmmo_145x114mm_FMJ`）
+
+- **MMT**：钢(Steel)×40 + 火药×6 -> 14.5x114mm 机枪弹（全金属被甲弹）×100 @ — ｜ 工作量=4000 ｜ 技能:Crafting≥5
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.25 TurretCrates（TurretCrates）
 
 #### 制作AGS-30组件箱（`MMT_BuildAGCturret_Crate`）
 
@@ -1239,7 +1256,7 @@
 - **HSK** `BuildVulcanCannon_Crate`：武器部件(Weapon_Parts)×20 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×25 -> 20mm火神炮组件箱(VulcanCannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
-### 3.25 WeaponParts（WeaponParts）
+### 3.26 WeaponParts（WeaponParts）
 
 #### 制造武器部件（`MMT_MakeWeaponParts`）
 
@@ -1325,7 +1342,7 @@
 - **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.26 Weapons_Archaic（Weapons_Archaic）
+### 3.27 Weapons_Archaic（Weapons_Archaic）
 
 #### 制作EMP手榴弹（`MMT_MakeEMPGrenades`）
 
@@ -1392,7 +1409,7 @@
 - **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [MMT_HCMBar]×4 + Chemfuel×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.27 Weapons_Conventional（Weapons_Conventional）
+### 3.28 Weapons_Conventional（Weapons_Conventional）
 
 #### 制作伯莱塔93R冲锋手枪（`MMT_Build93RBurstPistol`）
 
@@ -1684,7 +1701,7 @@
 - **MMT**：重型武器部件×1 + 武器部件×8 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×35 + 塑料×30 -> M60E4通用机枪×1 @ — ｜ 工作量=24000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.28 Weapons_Futuristic（Weapons_Futuristic）
+### 3.29 Weapons_Futuristic（Weapons_Futuristic）
 
 #### 制造A-1BW黑寡妇（`MMT_BuildBlackWidow`）
 
@@ -1746,7 +1763,7 @@
 - **MMT**：电荷武器部件×1 + 武器部件×6 + 超级零部件×12 + 斯特合金×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.29 木材（Wood）
+### 3.30 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
