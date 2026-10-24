@@ -986,4 +986,72 @@
 		<constructionSkillPrerequisite>13</constructionSkillPrerequisite>
 		<specialDisplayRadius>5</specialDisplayRadius>
 	</ThingDef>
+	<!-- KPV 14.5mm 自动机枪塔：前中期无人自动炮塔，对应 HSK Turret_KPV（贴图 HSK KPVT 系列） -->
+	<ThingDef ParentName="MMT_TurretBuildingBase">
+		<defName>MMT_TurretKPV</defName>
+		<label>KPV自动机枪塔</label>
+		<description>由AI控制的14.5mm KPV自动机枪塔，前中期可靠的无人防御火力。
+电力需求：300W
+弹种：14.5x114mm机枪弹</description>
+		<graphicData>
+			<texPath>Things/Building/Security/KPVT_Base</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(2,2)</drawSize>
+			<shadowData>
+				<volume>(0.3, 0.6, 0.3)</volume>
+			</shadowData>
+		</graphicData>
+		<uiIconPath>Things/Building/Security/KPVT_ico</uiIconPath>
+		<techLevel>Industrial</techLevel>
+		<statBases>
+			<Beauty>-60</Beauty>
+			<Flammability>0.5</Flammability>
+			<Mass>90</Mass>
+			<MaxHitPoints>150</MaxHitPoints>
+			<WorkToBuild>1500</WorkToBuild>
+		</statBases>
+		<size>(2,2)</size>
+		<stuffCategories>
+			<li>Metallic</li>
+		</stuffCategories>
+		<costStuffCount>80</costStuffCount>
+		<costList>
+			<MMT_Mechanism>2</MMT_Mechanism>
+			<ComponentIndustrial>2</ComponentIndustrial>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Flickable" />
+			<li Class="CompProperties_Breakdownable" />
+			<li Class="CompProperties_Stunnable">
+				<affectedDamageDefs>
+					<li>EMP</li>
+				</affectedDamageDefs>
+			</li>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>300</basePowerConsumption>
+			</li>
+			<li Class="CompProperties_Refuelable">
+				<fuelCapacity>200</fuelCapacity>
+				<fuelMultiplier>1</fuelMultiplier>
+				<initialFuelPercent>0</initialFuelPercent>
+				<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+				<showFuelGizmo>true</showFuelGizmo>
+				<fuelFilter>
+					<thingDefs>
+						<li>MMT_Ammo_145x114mm_FMJ</li>
+					</thingDefs>
+				</fuelFilter>
+			</li>
+		</comps>
+		<building>
+			<turretGunDef>MMT_Gun_KPV</turretGunDef>
+			<turretTopDrawSize>2.2</turretTopDrawSize>
+		</building>
+		<researchPrerequisites>
+			<li>MMT_HeavyMachineGunTurret</li>
+		</researchPrerequisites>
+		<constructionSkillPrerequisite>7</constructionSkillPrerequisite>
+		<specialDisplayRadius>40</specialDisplayRadius>
+	</ThingDef>
 </Defs>

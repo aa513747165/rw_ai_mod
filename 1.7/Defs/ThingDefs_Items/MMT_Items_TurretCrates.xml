@@ -7,6 +7,9 @@
 		<label>AGS-30组件箱</label>
 		<description>用于建造30mm AGS-30榴弹发射器，一种需要人工操作的固定式炮塔。使用30mm规格榴弹。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -45,6 +48,9 @@
 		<label>GAU-8复仇者火炮组件箱</label>
 		<description>用于建造30x173mm GAU-8复仇者火炮，一种需要人工操作的固定式炮塔。使用30x173mm规格弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -83,6 +89,9 @@
 		<label>弩炮组件箱</label>
 		<description>用它来建造一个能发射巨大弩箭的弩炮。只能人工操作。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -118,6 +127,9 @@
 		<label>120mm坦克炮组件箱</label>
 		<description>用于建造120mm坦克炮，一种需要人工操作的固定式炮塔。使用120mm炮弹。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -156,6 +168,9 @@
 		<label>投石机组件箱</label>
 		<description>用它来建造一个能发射燃烧或者爆炸石球的投石机。只能人工操作。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -191,6 +206,9 @@
 		<label>155mm榴弹炮组件箱</label>
 		<description>用于建造155m榴弹炮，一种需要人工操作的固定式炮塔。使用155mm规格炮弹。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -229,6 +247,9 @@
 		<label>FGM-148“标枪”反坦克导弹组件箱</label>
 		<description>用于建造FGM-148“标枪”反坦克导弹，一种需要人工操作的固定式炮塔。使用反坦克导弹作为弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -267,6 +288,9 @@
 		<label>M2 .50勃朗宁机枪组件箱</label>
 		<description>用于建造.50勃朗宁机枪，一种需要人工操作的固定式炮塔。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -305,6 +329,9 @@
 		<label>130mm中型导弹系统组件箱</label>
 		<description>用于建造130mm中型导弹系统，一种需要人工操作的固定式炮塔。使用130mm导弹作为弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -343,6 +370,9 @@
 		<label>M134速射机枪组件箱</label>
 		<description>用于建造M134速射机枪，一种需要人工操作的固定式炮塔。使用7.62x51mm弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -381,6 +411,9 @@
 		<label>35mm哨戒炮塔组件箱</label>
 		<description>用于建造30mm自动炮塔，一种无人自动炮塔。需要电力才能运作。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -419,6 +452,9 @@
 		<label>20x102mm厄利孔机炮组件箱</label>
 		<description>用于建造厄利孔机炮，一种固定式的人工操作炮塔。使用20x102mm口径弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -457,6 +493,9 @@
 		<label>130mm重型导弹系统组件箱</label>
 		<description>用于建造130mm重型导弹系统，一种需要人工操作的固定式炮塔。使用130mm导弹作为弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -495,6 +534,9 @@
 		<label>自动反坦克火箭发射系统组件箱</label>
 		<description>用于建造自动反坦克火箭发射系统，一种无人自动炮塔。需要电力才能运作。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -533,6 +575,9 @@
 		<label>BGM-71“陶式”反坦克导弹组件箱</label>
 		<description>用于建造BGM-71“陶式”反坦克导弹，一种需要人工操作的固定式炮塔。使用反坦克导弹作为弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>
@@ -571,6 +616,9 @@
 		<label>20mm火神炮组件箱</label>
 		<description>用于建造20mm火神炮，一种需要人工操作的固定式炮塔。运作需要800W电力，并且使用20mmx20规格弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
 		<resourceReadoutPriority>Middle</resourceReadoutPriority>
 		<useHitPoints>true</useHitPoints>
 		<selectable>true</selectable>

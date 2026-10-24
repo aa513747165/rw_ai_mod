@@ -566,4 +566,50 @@
 			<li>MMT_AmmoBench</li>
 		</recipeUsers>
 	</RecipeDef>
+	<!-- KPV 14.5mm 机枪弹配方：对应 HSK MakeAmmo_145x114mm_FMJ（缩减为 x100/批，前中期材料） -->
+	<RecipeDef>
+		<defName>MMT_MakeAmmo_145x114mm_FMJ</defName>
+		<label>制作14.5x114mm 机枪弹（全金属被甲弹）x100</label>
+		<description>制作100发 14.5x114mm 机枪弹（全金属被甲弹）。</description>
+		<jobString>正在制作14.5x114mm 机枪弹（全金属被甲弹）。</jobString>
+		<workAmount>4000</workAmount>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+		<workSkill>Crafting</workSkill>
+		<workSkillLearnFactor>0.8</workSkillLearnFactor>
+		<effectWorking>Cook</effectWorking>
+		<soundWorking>Recipe_Machining</soundWorking>
+		<skillRequirements>
+			<Crafting>5</Crafting>
+		</skillRequirements>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>Steel</li>
+					</thingDefs>
+				</filter>
+				<count>40</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MMT_Powder</li>
+					</thingDefs>
+				</filter>
+				<count>6</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>Steel</li>
+				<li>MMT_Powder</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+		<products>
+			<MMT_Ammo_145x114mm_FMJ>100</MMT_Ammo_145x114mm_FMJ>
+		</products>
+		<recipeUsers>
+			<li>MMT_AmmoBench</li>
+		</recipeUsers>
+	</RecipeDef>
 </Defs>

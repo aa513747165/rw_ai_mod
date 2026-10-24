@@ -606,4 +606,40 @@
 		</verbs>
 		<tradeability>None</tradeability>
 	</ThingDef>
+	<ThingDef ParentName="MMT_BaseTurretGun">
+		<defName>MMT_Gun_KPV</defName>
+		<label>14.5mm KPV重机枪</label>
+		<description>安装在基座上的14.5mm KPV重机枪，全自动射击，对应 HSK 的 KPV 机枪塔。</description>
+		<graphicData>
+			<texPath>Things/Building/Security/KPVT_Top</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Interact_Rifle</soundInteract>
+		<statBases>
+			<MarketValue>1500</MarketValue>
+			<Mass>1</Mass>
+			<RangedWeapon_Cooldown>1.8</RangedWeapon_Cooldown>
+		</statBases>
+		<weaponTags>
+			<li>Gun</li>
+			<li>TurretGun</li>
+		</weaponTags>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<burstShotCount>8</burstShotCount>
+				<defaultProjectile>MMT_Bullet_145x114mm_FMJ</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<minRange>4</minRange>
+				<muzzleFlashScale>10</muzzleFlashScale>
+				<range>40</range>
+				<soundCast>Shot_Minigun</soundCast>
+				<soundCastTail>GunTail_Heavy</soundCastTail>
+				<ticksBetweenBurstShots>6</ticksBetweenBurstShots>
+				<warmupTime>1.50</warmupTime>
+				<consumeFuelPerShot>1</consumeFuelPerShot>
+			</li>
+		</verbs>
+		<tradeability>None</tradeability>
+	</ThingDef>
 </Defs>

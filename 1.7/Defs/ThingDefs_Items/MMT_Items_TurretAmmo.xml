@@ -7,6 +7,9 @@
 		<label>120mm 炮弹（破甲）</label>
 		<description>用于艾布拉姆斯主战坦克配备的120mm口径弹药。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -32,6 +35,9 @@
 		<label>130mm 制导火箭弹（高爆弹）</label>
 		<description>130mm 制导火箭弹</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -58,6 +64,9 @@
 		<label>155mm 炮弹（高爆弹）</label>
 		<description>155毫米（6.1英寸）是一种标准火炮口径。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -83,6 +92,9 @@
 		<label>20x102mm 弹药（全金属被甲弹）</label>
 		<description>20mm是特定尺寸火炮和机炮使用的弹药口径。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -109,6 +121,9 @@
 		<label>30x173mm 弹药（全金属被甲弹）</label>
 		<description>30x173mm是特定尺寸火炮和机炮使用的弹药口径。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -135,6 +150,9 @@
 		<label>30x29mm 榴弹（高爆弹）</label>
 		<description>榴弹发射器使用的低速小型榴弹。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -161,6 +179,9 @@
 		<label>.50 机枪弹（全金属被甲弹）</label>
 		<description>重机枪和反器材步枪使用的大口径子弹。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -187,6 +208,9 @@
 		<label>7.62x51mm 北约标准弹（全金属被甲弹）</label>
 		<description>全威力子弹，多用于机枪，狙击步枪和某些突击步枪。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -213,6 +237,9 @@
 		<label>弩炮箭</label>
 		<description>大型弩炮</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -239,6 +266,9 @@
 		<label>石球</label>
 		<description>从投石机发射，着地后爆炸。</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -265,6 +295,9 @@
 		<label>SPG-9 Rocket (HE)</label>
 		<description>Tube launched rocket-propelled grenade used by SPG-9 recoilless launcher and the BMP-1's 2A28 Grom cannon. After being fired, a rocket motor kicks in to propel the grenade further.</description>
 		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
 		<altitudeLayer>Item</altitudeLayer>
 		<useHitPoints>true</useHitPoints>
 		<alwaysHaulable>true</alwaysHaulable>
@@ -284,5 +317,35 @@
 			<li Class="CompProperties_Forbiddable" />
 		</comps>
 		<projectileWhenLoaded>MMT_Bullet_SPG9Rocket_Frag</projectileWhenLoaded>
+	</ThingDef>
+	<!-- KPV 14.5mm 机枪弹：前中期自动机枪塔弹药，对应 HSK Ammo_145x114mm_FMJ -->
+	<ThingDef>
+		<thingClass>ThingWithComps</thingClass>
+		<defName>MMT_Ammo_145x114mm_FMJ</defName>
+		<label>14.5x114mm 机枪弹（全金属被甲弹）</label>
+		<description>14.5x114mm 大口径机枪弹，用于 KPV 重机枪塔。</description>
+		<category>Item</category>
+		<thingCategories>
+			<li>MMT_AmmoCat</li>
+		</thingCategories>
+		<altitudeLayer>Item</altitudeLayer>
+		<useHitPoints>true</useHitPoints>
+		<alwaysHaulable>true</alwaysHaulable>
+		<selectable>true</selectable>
+		<rotatable>false</rotatable>
+		<stackLimit>75</stackLimit>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<graphicData>
+			<texPath>Things/Ammo/HighCaliber/FMJ</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<statBases>
+			<MarketValue>0.4</MarketValue>
+			<Mass>0.186</Mass>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Forbiddable" />
+		</comps>
+		<projectileWhenLoaded>MMT_Bullet_145x114mm_FMJ</projectileWhenLoaded>
 	</ThingDef>
 </Defs>

@@ -99,4 +99,16 @@
     <label>基础织物</label>
     <parent>Textiles</parent>
   </ThingCategoryDef>
+  <!-- 弹药聚合：炮塔弹药归入此类，否则无 thingCategories 的物品不会出现在储存筛选里 -->
+  <ThingCategoryDef>
+    <defName>MMT_AmmoCat</defName>
+    <label>弹药</label>
+    <parent>Manufactured</parent>
+  </ThingCategoryDef>
+  <!-- 炮塔板条箱聚合：同理补储存筛选 -->
+  <ThingCategoryDef>
+    <defName>MMT_TurretCrateCat</defName>
+    <label>炮塔板条箱</label>
+    <parent>Manufactured</parent>
+  </ThingCategoryDef>
 </Defs>
