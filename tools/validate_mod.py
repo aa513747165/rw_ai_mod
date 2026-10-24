@@ -4703,8 +4703,20 @@ def validate_infrastructure() -> None:
     patch = parse_xml(INFRA_PATCH_XML)
     ops = patch.findall("Operation")
     seen = {}
+    add_ops: list[ET.Element] = []
     for op in ops:
-        assert_equal(op.attrib.get("Class"), "PatchOperationAdd", "patch 操作类型")
+        cls = op.attrib.get("Class")
+        if cls == "PatchOperationConditional":
+            # 目标 def 自身未定义节点（继承自基类）时需条件补丁：match 追加 li，nomatch 补建节点
+            for branch in (op.find("match"), op.find("nomatch")):
+                if branch is None:
+                    fail("条件 patch 必须同时给出 match 与 nomatch 分支")
+                assert_equal(branch.attrib.get("Class"), "PatchOperationAdd", "条件 patch 分支操作类型")
+            add_ops.append(op.find("match"))
+        else:
+            assert_equal(cls, "PatchOperationAdd", "patch 操作类型")
+            add_ops.append(op)
+    for op in add_ops:
         xpath = child_text(op, "xpath")
         target = xpath.split('defName="')[1].split('"')[0]
         value = child_text(op, "value/li")

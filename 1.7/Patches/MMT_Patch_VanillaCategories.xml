@@ -26,10 +26,24 @@
     <xpath>Defs/ThingDef[defName="WoodLog"]/thingCategories</xpath>
     <value><li>MMT_Woody</li></value>
   </Operation>
-  <!-- 原版啤酒归入 MMT_Alcohol，使酒类过滤的配方（如表面活性剂）能选中原版啤酒 -->
-  <Operation Class="PatchOperationAdd">
+  <!-- 原版啤酒归入 MMT_Alcohol，使酒类过滤的配方（如表面活性剂）能选中原版啤酒。
+       Beer 自身未定义 thingCategories（继承自 DrugBase），补丁无法匹配继承节点，
+       故用条件补丁：有节点则追加，无节点则补建节点。注意：继承的列表字段会与显式节点合并，
+       因此补建节点时只写 MMT_Alcohol，不可重复写入 Drugs，否则报 duplicate thingCategory -->
+  <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Beer"]/thingCategories</xpath>
-    <value><li>MMT_Alcohol</li></value>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Beer"]/thingCategories</xpath>
+      <value><li>MMT_Alcohol</li></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Beer"]</xpath>
+      <value>
+        <thingCategories>
+          <li>MMT_Alcohol</li>
+        </thingCategories>
+      </value>
+    </nomatch>
   </Operation>
   <!-- 零件类别由 MMT_Patch_VanillaComponents.xml、布的类别由 MMT_Patch_VanillaTextiles.xml 同名改造直接处理，此处不再追加 -->
 </Patch>
