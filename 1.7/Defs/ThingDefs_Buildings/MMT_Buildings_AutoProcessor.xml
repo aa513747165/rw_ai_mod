@@ -74,11 +74,11 @@
     </researchPrerequisites>
   </ThingDef>
 
-  <!-- 自动研磨机：RockCrusher 静态帧贴图，每 2500 tick 从相邻进料口消耗 1 岩块产 10 矿粉（岩块堆叠上限 1，进料口一格一份，输入数不能超过 1） -->
+  <!-- 自动研磨机：RockCrusher 静态帧贴图，内置岩块仓（燃料式），每 2500 tick 消耗 1 岩块产 10 矿粉。需要持续供电。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoGrinder</defName>
     <label>自动研磨机</label>
-    <description>重型破碎研磨机组，从相邻进料口自动吞入岩块并碾成矿粉。无人值守但处理速度较慢。需要持续供电。</description>
+    <description>重型破碎研磨机组，内置岩块仓，填装岩块后自动碾成矿粉。无人值守但处理速度较慢。需要持续供电。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoGrinder/MMT_AutoGrinder</texPath>
@@ -114,9 +114,6 @@
     </statBases>
     <size>(2,2)</size>
     <designationCategory>MMT_Production</designationCategory>
-    <building>
-      <wantsHopperAdjacent>true</wantsHopperAdjacent>
-    </building>
     <tickerType>Normal</tickerType>
     <inspectorTabs>
       <li>MyModeTest.ITab_AutoProcessor</li>
@@ -129,6 +126,23 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
+      <!-- 原料仓：岩块即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
+           省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
+      <li Class="CompProperties_Refuelable">
+        <fuelCapacity>60</fuelCapacity>
+        <fuelFilter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </fuelFilter>
+        <fuelLabel>岩块储量</fuelLabel>
+        <fuelGizmoLabel>岩块</fuelGizmoLabel>
+        <outOfFuelMessage>需要补充岩块</outOfFuelMessage>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <autoRefuelPercent>0.5</autoRefuelPercent>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
         <inputCount>1</inputCount>
@@ -148,11 +162,11 @@
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
   </ThingDef>
 
-  <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石 -->
+  <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），内置矿粉仓（燃料式），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石。需要持续供电。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoSieve</defName>
     <label>自动筛子</label>
-    <description>带料斗与振动电机的全自动筛分机组，从相邻进料口持续吞入矿粉并筛出矿石。筛出什么全凭矿脉权重。需要持续供电。</description>
+    <description>带料斗与振动电机的全自动筛分机组，内置矿粉仓，填装矿粉后持续筛出矿石。筛出什么全凭矿脉权重。需要持续供电。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoSieve/MMT_AutoSieve</texPath>
@@ -192,9 +206,6 @@
     <defaultPlacingRot>South</defaultPlacingRot>
     <rotatable>false</rotatable>
     <designationCategory>MMT_Production</designationCategory>
-    <building>
-      <wantsHopperAdjacent>true</wantsHopperAdjacent>
-    </building>
     <tickerType>Normal</tickerType>
     <inspectorTabs>
       <li>MyModeTest.ITab_AutoProcessor</li>
@@ -207,6 +218,23 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
+      <!-- 原料仓：矿粉即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
+           省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
+      <li Class="CompProperties_Refuelable">
+        <fuelCapacity>500</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_OrePowder</li>
+          </thingDefs>
+        </fuelFilter>
+        <fuelLabel>矿粉储量</fuelLabel>
+        <fuelGizmoLabel>矿粉</fuelGizmoLabel>
+        <outOfFuelMessage>需要补充矿粉</outOfFuelMessage>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <autoRefuelPercent>0.5</autoRefuelPercent>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
         <inputCount>25</inputCount>

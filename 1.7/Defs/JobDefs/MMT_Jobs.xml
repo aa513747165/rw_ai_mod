@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 手动采石机作业：无限作业 toil，进度存 CompChunkDrill -->
+  <JobDef>
+    <defName>MMT_OperateChunkDrill</defName>
+    <driverClass>MyModeTest.JobDriver_OperateChunkDrill</driverClass>
+    <reportString>正在采石（TargetA）。</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+</Defs>

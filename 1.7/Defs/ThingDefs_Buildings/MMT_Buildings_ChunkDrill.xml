@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 手动采石机：仿深钻机模式，殖民者以采矿工作持续操作，无需电力与矿脉，
+       进度满后在交互格产出一块随机岩块（贴图为 HSK 新石器切石台） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ChunkDrill</defName>
+    <label>手动采石机</label>
+    <description>手摇冲击钻架，殖民者操作它从基岩中凿出岩块。无需电力与矿脉，产出岩块种类随机。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <designationCategory>MMT_Production</designationCategory>
+    <rotatable>true</rotatable>
+    <tickerType>Never</tickerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>2500</WorkToBuild>
+      <MaxHitPoints>250</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>40</Mass>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>60</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="MyModeTest.CompProperties_ChunkDrill">
+        <workTicksPerChunk>10000</workTicksPerChunk>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>Stonecutting</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

@@ -102,8 +102,10 @@ namespace MyModeTest
 
     /// <summary>
     /// 自动处理 Comp：通电且开机时维护多条独立生产线（默认 1 条，
-    /// 每个相邻通电的并行模块 +1 条）。每条线空闲时从相邻进料口（isHopper 存储建筑）
-    /// 预扣一轮输入并启动倒计时，跑满后产出到出料格并自动开始下一轮，实现无人值守加工。
+    /// 每个相邻通电的并行模块 +1 条）。每条线空闲时预扣一轮输入并启动倒计时，
+    /// 跑满后产出到出料格并自动开始下一轮，实现无人值守加工。
+    /// 输入模式二选一：建筑带 CompRefuelable 时走燃料模式（原料即燃料，按轮从燃料仓扣）；
+    /// 否则从相邻进料口（isHopper 存储建筑）取料。两种模式都需要通电。
     /// 相邻的超频模块缩短所有线的处理间隔；并行模块被拆后，超额的运行中线跑完当前轮再退役。
     /// </summary>
     public class CompAutoProcessor : ThingComp
@@ -136,13 +138,15 @@ namespace MyModeTest
 
         public override void CompTick()
         {
-            // 断电或手动关闭时所有线冻结
+            // 断电或手动关闭时所有线冻结（燃料模式同样需要电力驱动机组）
             CompPowerTrader power = parent.GetComp<CompPowerTrader>();
             if (power == null || !power.PowerOn)
                 return;
             CompFlickable flick = parent.GetComp<CompFlickable>();
             if (flick != null && !flick.SwitchIsOn)
                 return;
+            // 带燃料仓的建筑走燃料模式：原料即燃料，按轮从燃料仓预扣，不再扫进料口
+            CompRefuelable fuel = parent.GetComp<CompRefuelable>();
 
             // 统计相邻通电的增效模块：超频提速、并行增加线数
             int overclock, parallel;
@@ -185,7 +189,40 @@ namespace MyModeTest
                 inputRetryCooldown--;
                 return;
             }
-            // 流程开始：汇总相邻进料口中可接受的输入物品
+            if (fuel != null)
+            {
+                // 燃料模式：燃料即原料，够一整轮才启动（对齐预扣语义，防燃料残渣空轮）
+                int fuelStartable = (int)(fuel.Fuel / Props.inputCount);
+                if (fuelStartable <= 0)
+                {
+                    // 缺料：250 tick 后再试
+                    inputRetryCooldown = 250;
+                    return;
+                }
+                for (int i = 0; i < lanes.Count && fuelStartable > 0; i++)
+                {
+                    ProcessorLane lane = lanes[i];
+                    if (lane.running || i >= targetCount)
+                        continue;
+                    // 预扣一轮输入并启动本轮倒计时
+                    fuel.ConsumeFuel(Props.inputCount);
+                    lane.running = true;
+                    lane.ticksTotal = interval;
+                    lane.ticksRemaining = interval;
+                    fuelStartable--;
+                }
+                // 仍有空闲线未启动说明料已分完，进入冷却
+                for (int i = 0; i < lanes.Count; i++)
+                {
+                    if (!lanes[i].running && i < targetCount)
+                    {
+                        inputRetryCooldown = 250;
+                        break;
+                    }
+                }
+                return;
+            }
+            // 进料口模式：汇总相邻进料口中可接受的输入物品
             List<Thing> sources = new List<Thing>();
             int available;
             ScanHoppers(sources, out available);

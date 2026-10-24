@@ -23,6 +23,21 @@
     <prioritizeSustains>true</prioritizeSustains>
   </WorkGiverDef>
 
+  <!-- 手动采石机：仿原版 Drill（priorityInType=50，低于直接采矿） -->
+  <WorkGiverDef>
+    <defName>MMT_OperateChunkDrill</defName>
+    <label>操作手动采石机</label>
+    <giverClass>MyModeTest.WorkGiver_ChunkDrill</giverClass>
+    <workType>Mining</workType>
+    <priorityInType>50</priorityInType>
+    <verb>采石</verb>
+    <gerund>采石中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByMechs>false</canBeDoneByMechs>
+  </WorkGiverDef>
+
   <!-- 锻造类：武器/弹药工作台 -->
   <WorkGiverDef>
     <defName>MMT_DoBillsSmithing</defName>
