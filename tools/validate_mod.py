@@ -5899,6 +5899,24 @@ MEDICINE_RESEARCH_DEFS = {
     "MMT_DrugPlants_A2": ["MMT_DrugPlants_A1"],
 }
 
+# 原版研究窗口仅横向滚动（1 Y=100px，窗口高封顶屏幕高-35），Y 必须 ≤8；
+# 种植 Y=3 / 医疗 Y=4 / 毒品主线 Y=5 / 毒品支线 Y=5.7（与武器行 Y=6 的节点横向错开）
+MEDICINE_RESEARCH_COORDS = {
+    "MMT_Medicine_A1": ("0.00", "4.00"),
+    "MMT_Medicine_A2": ("1.00", "4.00"),
+    "MMT_Medicine_B1": ("2.00", "4.00"),
+    "MMT_Medicine_B2": ("3.00", "4.00"),
+    "MMT_Medicine_D1": ("5.00", "4.00"),
+    "MMT_MedicalPlants_A1": ("0.00", "3.00"),
+    "MMT_MedicalPlants_A2": ("1.00", "3.00"),
+    "MMT_Drugs_A1": ("0.00", "5.00"),
+    "MMT_Drugs_B1": ("2.00", "5.00"),
+    "MMT_Drugs_C2": ("4.00", "5.00"),
+    "MMT_Drugs_C3": ("4.00", "5.70"),
+    "MMT_DrugPlants_A1": ("2.00", "3.00"),
+    "MMT_DrugPlants_A2": ("3.00", "3.00"),
+}
+
 
 def validate_medicine() -> None:
     """药品链：资源/药物/hediff/植物/建筑/配方/研究/同名改造 patch 的专项校验。"""
@@ -6014,12 +6032,15 @@ def validate_medicine() -> None:
     refiner_users = li_values(drug_recipes["MMT_RefineNeutroamine"], "recipeUsers")
     assert_equal(refiner_users, ["MMT_NeutroamineRefiner"], "石化精炼工作台")
 
-    # 研究：集合、前置链、tab
+    # 研究：集合、前置链、tab、视图坐标
     research_defs = def_map(parse_xml(MEDICINE_RESEARCH_XML))
     assert_equal(set(research_defs), set(MEDICINE_RESEARCH_DEFS), "药品研究 defName 集合")
     for name, prereqs in MEDICINE_RESEARCH_DEFS.items():
         assert_equal(li_values(research_defs[name], "prerequisites"), prereqs, f"{name} 前置")
         assert_equal(child_text(research_defs[name], "tab"), "MMT_ResearchTab", f"{name} tab")
+    for name, (x, y) in MEDICINE_RESEARCH_COORDS.items():
+        assert_equal(child_text(research_defs[name], "researchViewX"), x, f"{name} X 坐标")
+        assert_equal(child_text(research_defs[name], "researchViewY"), y, f"{name} Y 坐标")
 
     # 同名改造 patch：不删原版 def，只做属性/成本/前置改写
     med_patch = parse_xml(MEDICINE_PATCH_XML)
@@ -6028,6 +6049,7 @@ def validate_medicine() -> None:
     assert 'Defs/ThingDef[defName="MedicineIndustrial"]/recipeMaker' in med_xpaths, "隐藏工业医药原版配方"
     assert 'Defs/ThingDef[defName="MedicineHerbal"]/statBases' in med_xpaths, "草药原料属性改写"
     assert 'Defs/ResearchProjectDef[defName="MedicineProduction"]/prerequisites' in med_xpaths, "医疗研究前置改写"
+    assert 'Defs/ResearchProjectDef[defName="MedicineProduction"]/researchViewX' in med_xpaths, "医疗研究移入 MMT 页坐标"
     drug_patch = parse_xml(DRUG_PATCH_XML)
     drug_xpaths = [child_text(li, "xpath") for op in drug_patch.findall("Operation")
                    for li in op.find("operations")]
@@ -6035,6 +6057,16 @@ def validate_medicine() -> None:
     for research in ("PsychoidBrewing", "DrugProduction", "PsychiteRefining",
                      "WakeUpProduction", "GoJuiceProduction", "PenoxycylineProduction"):
         assert any(f'ResearchProjectDef[defName="{research}"]' in xp for xp in drug_xpaths), f"{research} 前置改写"
+        assert f'Defs/ResearchProjectDef[defName="{research}"]/researchViewX' in drug_xpaths, f"{research} 移入 MMT 页坐标"
+    # 七个原版医疗/毒品研究均须 Add tab=MMT_ResearchTab（否则仍留在原版 Main 页，链路线断开）
+    tab_adds = [
+        child_text(li, "xpath")
+        for patch in (med_patch, drug_patch)
+        for op in patch.findall("Operation")
+        for li in op.find("operations")
+        if li.findtext("value/tab") == "MMT_ResearchTab"
+    ]
+    assert_equal(len(tab_adds), 7, "原版研究移入 MMT 页数量")
     for plant in ("Plant_Healroot", "Plant_Smokeleaf", "Plant_Psychoid"):
         assert any(f'ThingDef[defName="{plant}"]' in xp for xp in med_xpaths + drug_xpaths), f"{plant} 种植改写"
     print("medicine: OK")

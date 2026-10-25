@@ -70,36 +70,62 @@
 
       <!-- ===== 原版毒品研究改挂 MMT 研究线（造价对齐 HSK） ===== -->
 
-      <!-- 精神叶酿造（毒品 II）：500 -> 100，加前置 MMT_Drugs_A1 -->
+      <!-- 精神叶酿造（毒品 II）：500 -> 100，加前置 MMT_Drugs_A1，移入 MMT 页（X=1,Y=5） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]/baseCost</xpath>
         <value><baseCost>100</baseCost></value>
       </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]/label</xpath>
+        <value><label>毒品 II</label></value>
+      </li>
       <li Class="PatchOperationAdd">
         <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]</xpath>
         <value>
+          <tab>MMT_ResearchTab</tab>
           <prerequisites>
             <li>MMT_Drugs_A1</li>
           </prerequisites>
         </value>
       </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]/researchViewX</xpath>
+        <value><researchViewX>1.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychoidBrewing"]/researchViewY</xpath>
+        <value><researchViewY>5.00</researchViewY></value>
+      </li>
 
-      <!-- 毒品生产（毒品 IV）：500 -> 1300，加前置 MMT_Drugs_B1 + MMT 高级石化（对齐 HSK 的石化耦合） -->
+      <!-- 毒品生产（毒品 IV）：500 -> 1300，加前置 MMT_Drugs_B1 + MMT 高级石化（对齐 HSK 的石化耦合），移入 MMT 页（X=3,Y=5） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]/baseCost</xpath>
         <value><baseCost>1300</baseCost></value>
       </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]/label</xpath>
+        <value><label>毒品 IV</label></value>
+      </li>
       <li Class="PatchOperationAdd">
         <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]</xpath>
         <value>
+          <tab>MMT_ResearchTab</tab>
           <prerequisites>
             <li>MMT_Drugs_B1</li>
             <li>MMT_AdvancedPetrochemistry</li>
           </prerequisites>
         </value>
       </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]/researchViewX</xpath>
+        <value><researchViewX>3.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="DrugProduction"]/researchViewY</xpath>
+        <value><researchViewY>5.00</researchViewY></value>
+      </li>
 
-      <!-- 精神精炼：400 -> 1200，前置 DrugProduction -> MMT_Drugs_C3 -->
+      <!-- 精神精炼：400 -> 1200，前置 DrugProduction -> MMT_Drugs_C3，移入 MMT 页（X=5,Y=5.7） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]/baseCost</xpath>
         <value><baseCost>1200</baseCost></value>
@@ -112,8 +138,20 @@
           </prerequisites>
         </value>
       </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]</xpath>
+        <value><tab>MMT_ResearchTab</tab></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]/researchViewX</xpath>
+        <value><researchViewX>5.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PsychiteRefining"]/researchViewY</xpath>
+        <value><researchViewY>5.70</researchViewY></value>
+      </li>
 
-      <!-- 清醒丸生产：600 -> 1000，前置 DrugProduction -> MMT_Drugs_C2 -->
+      <!-- 清醒丸生产：600 -> 1000，前置 DrugProduction -> MMT_Drugs_C2，移入 MMT 页（X=5,Y=5） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]/baseCost</xpath>
         <value><baseCost>1000</baseCost></value>
@@ -126,8 +164,20 @@
           </prerequisites>
         </value>
       </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]</xpath>
+        <value><tab>MMT_ResearchTab</tab></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]/researchViewX</xpath>
+        <value><researchViewX>5.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="WakeUpProduction"]/researchViewY</xpath>
+        <value><researchViewY>5.00</researchViewY></value>
+      </li>
 
-      <!-- 果汁剂生产：1000 -> 1400，前置 DrugProduction -> WakeUpProduction + PsychiteRefining -->
+      <!-- 果汁剂生产：1000 -> 1400，前置 DrugProduction -> WakeUpProduction + PsychiteRefining，移入 MMT 页（X=6,Y=5） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]/baseCost</xpath>
         <value><baseCost>1400</baseCost></value>
@@ -141,8 +191,20 @@
           </prerequisites>
         </value>
       </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]</xpath>
+        <value><tab>MMT_ResearchTab</tab></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]/researchViewX</xpath>
+        <value><researchViewX>6.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="GoJuiceProduction"]/researchViewY</xpath>
+        <value><researchViewY>5.00</researchViewY></value>
+      </li>
 
-      <!-- 青霉素生产：500 -> 1000，前置 DrugProduction -> MMT_Drugs_C2 -->
+      <!-- 青霉素生产：500 -> 1000，前置 DrugProduction -> MMT_Drugs_C2，移入 MMT 页（X=7,Y=5.7，避开武器行 X=6） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]/baseCost</xpath>
         <value><baseCost>1000</baseCost></value>
@@ -154,6 +216,18 @@
             <li>MMT_Drugs_C2</li>
           </prerequisites>
         </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]</xpath>
+        <value><tab>MMT_ResearchTab</tab></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]/researchViewX</xpath>
+        <value><researchViewX>7.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="PenoxycylineProduction"]/researchViewY</xpath>
+        <value><researchViewY>5.70</researchViewY></value>
       </li>
 
     </operations>

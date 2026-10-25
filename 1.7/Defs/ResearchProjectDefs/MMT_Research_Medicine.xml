@@ -3,9 +3,11 @@
   <!-- 药品链研究：对照 HSK Research_Medicine.xml（Medicine_SK 页），移入 MMT_ResearchTab。
        原版同名研究（PsychoidBrewing/DrugProduction/MedicineProduction/PsychiteRefining/
        WakeUpProduction/GoJuiceProduction/PenoxycylineProduction）由 Patches/MMT_Patch_VanillaDrugs.xml
-       改挂到本线前置；视图坐标使用 Y=10/11/12 三个新行 -->
+       与 MMT_Patch_VanillaMedicine.xml 改挂到本线前置、移入本页并重新排坐标；
+       原版研究窗口只有横向滚动（1 Y 单位=100px，窗口高度封顶屏幕高-35），Y 必须 ≤8，
+       故本链使用 Y=3(种植)/4(医疗)/5(毒品主线)/5.7(毒品支线) 四个空行 -->
 
-  <!-- ============ 医疗线（Y=10） ============ -->
+  <!-- ============ 医疗线（Y=4） ============ -->
 
   <!-- 医疗物资 I：解锁粗制绷带 -->
   <ResearchProjectDef>
@@ -16,7 +18,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>MMT_ResearchTab</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 医疗物资 II：解锁绷带包、手工制药台 -->
@@ -31,7 +33,7 @@
       <li>MMT_Medicine_A1</li>
     </prerequisites>
     <researchViewX>1.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 医疗物资 III：解锁草药包 -->
@@ -46,7 +48,7 @@
       <li>MMT_Medicine_A2</li>
     </prerequisites>
     <researchViewX>2.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 医疗物资 IV：解锁基础医药包 -->
@@ -61,7 +63,7 @@
       <li>MMT_Medicine_B1</li>
     </prerequisites>
     <researchViewX>3.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 医疗物资 VI：解锁闪耀世界医药（前置为原版 MedicineProduction，由 patch 挂到 B2 之后） -->
@@ -76,7 +78,7 @@
       <li>MedicineProduction</li>
     </prerequisites>
     <researchViewX>5.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 药用植物 I：解锁种植草药根 -->
@@ -88,7 +90,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>MMT_ResearchTab</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>12.00</researchViewY>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 药用植物 II：解锁种植芦荟与中性花 -->
@@ -103,10 +105,10 @@
       <li>MMT_MedicalPlants_A1</li>
     </prerequisites>
     <researchViewX>1.00</researchViewX>
-    <researchViewY>12.00</researchViewY>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- ============ 毒品线（Y=11） ============ -->
+  <!-- ============ 毒品线（Y=5，支线 Y=5.7） ============ -->
 
   <!-- 毒品 I：解锁晾晒架与大麻烟卷 -->
   <ResearchProjectDef>
@@ -117,7 +119,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>MMT_ResearchTab</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>11.00</researchViewY>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 毒品 III：解锁电动晾晒架（毒品 II 为原版 PsychoidBrewing，patch 前置 A1） -->
@@ -132,7 +134,7 @@
       <li>PsychoidBrewing</li>
     </prerequisites>
     <researchViewX>2.00</researchViewX>
-    <researchViewY>11.00</researchViewY>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 毒品 V（高级药物合成）：解锁中性胺自然合成、止痛药（毒品 IV 为原版 DrugProduction，patch 前置 B1+高级石化） -->
@@ -147,7 +149,7 @@
       <li>DrugProduction</li>
     </prerequisites>
     <researchViewX>4.00</researchViewX>
-    <researchViewY>11.00</researchViewY>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 毒品 VI（精神物质精炼）：解锁薄片/雅戈线 -->
@@ -162,7 +164,7 @@
       <li>DrugProduction</li>
     </prerequisites>
     <researchViewX>4.00</researchViewX>
-    <researchViewY>11.90</researchViewY>
+    <researchViewY>5.70</researchViewY>
   </ResearchProjectDef>
 
   <!-- 毒株种植 I：解锁种植大麻 -->
@@ -174,7 +176,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>MMT_ResearchTab</tab>
     <researchViewX>2.00</researchViewX>
-    <researchViewY>12.00</researchViewY>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 毒株种植 II：解锁种植精神叶 -->
@@ -189,6 +191,6 @@
       <li>MMT_DrugPlants_A1</li>
     </prerequisites>
     <researchViewX>3.00</researchViewX>
-    <researchViewY>12.00</researchViewY>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

@@ -65,10 +65,15 @@
         </value>
       </li>
 
-      <!-- 原版研究 MedicineProduction（医疗物资 V）：造价 1500 -> 1000，前置 DrugProduction -> MMT_Medicine_B2（对齐 HSK 医疗线） -->
+      <!-- 原版研究 MedicineProduction（医疗物资 V）：造价 1500 -> 1000，前置 DrugProduction -> MMT_Medicine_B2（对齐 HSK 医疗线），
+           移入 MMT 页（X=4,Y=4，位于 B2 与 D1 之间） -->
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]/baseCost</xpath>
         <value><baseCost>1000</baseCost></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]/label</xpath>
+        <value><label>医疗物资 V</label></value>
       </li>
       <li Class="PatchOperationReplace">
         <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]/prerequisites</xpath>
@@ -77,6 +82,18 @@
             <li>MMT_Medicine_B2</li>
           </prerequisites>
         </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]</xpath>
+        <value><tab>MMT_ResearchTab</tab></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]/researchViewX</xpath>
+        <value><researchViewX>4.00</researchViewX></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>Defs/ResearchProjectDef[defName="MedicineProduction"]/researchViewY</xpath>
+        <value><researchViewY>4.00</researchViewY></value>
       </li>
 
     </operations>
