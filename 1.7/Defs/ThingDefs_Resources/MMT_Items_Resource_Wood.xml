@@ -81,7 +81,7 @@
     </statBases>
     <stackLimit>600</stackLimit>
     <thingCategories>
-      <li>ResourcesRaw</li>
+      <li>MMT_Coal</li>
     </thingCategories>
   </ThingDef>
 

@@ -6,16 +6,18 @@ using Verse.AI;
 namespace MyModeTest
 {
     /// <summary>
-    /// 手动采石机参数：钻出一块岩块所需的基础工作量与可选固定岩块池。
+    /// 手动采石机参数：钻出一份产物所需的基础工作量与产物配置（粗矿石）。
     /// </summary>
     public class CompProperties_ChunkDrill : CompProperties
     {
-        /// <summary>DeepDrillingSpeed=1 时钻出一块岩块所需 tick（10000 ≈ 4 游戏小时）。</summary>
+        /// <summary>DeepDrillingSpeed=1 时钻出一份产物所需 tick（10000 ≈ 4 游戏小时）。</summary>
         public int workTicksPerChunk = 10000;
         /// <summary>每 tick 采矿技能经验（对齐原版深钻 0.065）。</summary>
         public float skillXpPerTick = 0.065f;
-        /// <summary>可选固定岩块池；为空时从 StoneChunks 类别全部子项均匀随机（含其它 mod 岩块）。</summary>
-        public List<ThingDef> chunkDefs;
+        /// <summary>产出的物品 def（粗矿石）。</summary>
+        public ThingDef productDef;
+        /// <summary>每次产出的数量。</summary>
+        public int productCount = 25;
 
         public CompProperties_ChunkDrill()
         {
@@ -25,7 +27,7 @@ namespace MyModeTest
 
     /// <summary>
     /// 手动采石 Comp：不 tick。进度只在 JobDriver 的 tickAction 里按 pawn 的
-    /// DeepDrillingSpeed 累积，满额在交互格产出一块岩块。进度存 Comp（可换班/读档续钻）。
+    /// DeepDrillingSpeed 累积，满额在交互格产出一份粗矿石。进度存 Comp（可换班/读档续钻）。
     /// </summary>
     public class CompChunkDrill : ThingComp
     {
@@ -64,12 +66,12 @@ namespace MyModeTest
 
         private void TryProduceChunk()
         {
-            ThingDef def = (Props.chunkDefs != null && Props.chunkDefs.Count > 0)
-                ? Props.chunkDefs.RandomElement()
-                : ThingCategoryDefOf.StoneChunks.childThingDefs.RandomElementWithFallback();
+            ThingDef def = Props.productDef;
             if (def == null)
                 return;
-            GenPlace.TryPlaceThing(ThingMaker.MakeThing(def), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
+            Thing thing = ThingMaker.MakeThing(def);
+            thing.stackCount = Props.productCount;
+            GenPlace.TryPlaceThing(thing, parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
 
         public override void PostExposeData()
@@ -114,7 +116,10 @@ namespace MyModeTest
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            return JobMaker.MakeJob(MMT_DefOf.MMT_OperateChunkDrill, t);
+            // 必须带 expiryInterval + checkOverrideOnExpiry（对齐原版深钻 1500）：
+            // 作业 toil 是 Never 完成模式，主思考树只在作业过期时才会重跑，
+            // 否则小人饿了/困了也不会被打断，一直钻到倒地。
+            return JobMaker.MakeJob(MMT_DefOf.MMT_OperateChunkDrill, t, 1500, checkOverrideOnExpiry: true);
         }
     }
 

@@ -98,6 +98,7 @@ AGRICULTURE_BUILDING_TEXTURES = [
 
 OREPOWDER_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/OrePowder.png",
+    "1.7/Textures/Things/Item/MMT/CoarseOre.png",
     "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder.png",
     "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder_m.png",
     "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder.png",
@@ -587,6 +588,7 @@ WOOD_RESOURCE_EXPECTATIONS = {
         "graphic": "Graphic_Single",
         "tech": "Medieval",
         "stuff": False,
+        "cats": ["MMT_Coal"],
     },
     "MMT_BambooPlank": {
         "label": "竹板",
@@ -2336,7 +2338,7 @@ def validate_wood_resources() -> None:
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), expected["graphic"], f"{name} graphicClass")
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
-        expected_cats = ["ResourcesRaw", "MMT_Woody"] if (expected["stuff"] or expected.get("stuff_lite")) else ["ResourcesRaw"]
+        expected_cats = expected.get("cats") or (["ResourcesRaw", "MMT_Woody"] if (expected["stuff"] or expected.get("stuff_lite")) else ["ResourcesRaw"])
         assert_equal(li_values(node, "thingCategories"), expected_cats, f"{name} thingCategories")
 
         if expected["stuff"]:
@@ -4012,7 +4014,7 @@ def validate_coal() -> None:
         assert_equal(child_text(node, "./graphicData/texPath"), expected["tex"], f"{name} texPath")
         assert_equal(child_text(node, "./graphicData/graphicClass"), "Graphic_Single", f"{name} graphicClass")
         assert_equal(child_text(node, "techLevel"), "Medieval", f"{name} techLevel")
-        assert_equal(li_values(node, "thingCategories"), ["ResourcesRaw"], f"{name} thingCategories")
+        assert_equal(li_values(node, "thingCategories"), ["MMT_Coal"], f"{name} thingCategories")
         if node.find("stuffProps") is not None:
             fail(f"{name} 不应定义 stuffProps")
 
@@ -4690,6 +4692,9 @@ def validate_infrastructure() -> None:
     assert_equal(set(categories), set(INFRA_EXPECTED_CATEGORIES), "类别 defName 集合")
     for name, expected_parent in INFRA_EXPECTED_CATEGORIES.items():
         assert_equal(child_text(categories[name], "parent"), expected_parent, f"{name} parent")
+        icon = child_text(categories[name], "iconPath")
+        if not (ROOT / "1.7/Textures" / f"{icon}.png").is_file():
+            fail(f"{name} iconPath 贴图不存在: {icon}")
 
     patch_text = read_text(INFRA_PATCH_XML)
     if "PatchOperationReplace" in patch_text or "PatchOperationRemove" in patch_text:
@@ -6052,26 +6057,40 @@ def validate_orepowder() -> None:
         *MODULE_TEXTURES,
     ])
 
-    # 矿粉物品
+    # 粗矿石/矿粉物品
     resource_defs = def_map(parse_xml(OREPOWDER_RESOURCE_XML))
-    assert_equal(set(resource_defs), {"MMT_OrePowder"}, "矿粉 defName 集合")
+    assert_equal(set(resource_defs), {"MMT_CoarseOre", "MMT_OrePowder"}, "粗矿石/矿粉 defName 集合")
+    coarse = resource_defs["MMT_CoarseOre"]
+    assert_equal(child_text(coarse, "./graphicData/texPath"), "Things/Item/MMT/CoarseOre", "粗矿石贴图路径")
+    assert_equal(child_text(coarse, "stackLimit"), "900", "粗矿石堆叠上限")
     powder = resource_defs["MMT_OrePowder"]
     assert_equal(child_text(powder, "./graphicData/texPath"), "Things/Item/MMT/OrePowder", "矿粉贴图路径")
     assert_equal(child_text(powder, "stackLimit"), "900", "矿粉堆叠上限")
 
-    # 配方：研磨固定产出矿粉；筛选 products 为空（随机产出由 C# Harmony 补丁生成）
+    # 配方：破碎（切石桌 1 岩块→25 粗矿石）；研磨固定 25 粗矿石→25 矿粉；
+    # 筛选 products 为空（随机产出由 C# Harmony 补丁生成）
     recipes = def_map(parse_xml(OREPOWDER_RECIPE_XML))
     assert_equal(
         set(recipes),
-        {"MMT_GrindOrePowder_Hand", "MMT_GrindOrePowder_Electric",
+        {"MMT_CrushCoarseOre", "MMT_GrindOrePowder_Hand", "MMT_GrindOrePowder_Electric",
          "MMT_SiftOrePowder_Hand", "MMT_SiftOrePowder_Electric"},
         "无中生有配方 defName 集合",
     )
-    for name, yield_, building in (("MMT_GrindOrePowder_Hand", "10", "MMT_HandGrinder"),
-                                   ("MMT_GrindOrePowder_Electric", "10", "MMT_ElectricGrinder")):
+    crush = recipes["MMT_CrushCoarseOre"]
+    crush_products = {li.tag: li.text for li in crush.find("products")}
+    assert_equal(crush_products, {"MMT_CoarseOre": "25"}, "MMT_CrushCoarseOre 产物")
+    assert_equal(li_values(crush, "recipeUsers"), ["TableStonecutter"], "MMT_CrushCoarseOre 挂切石桌")
+    crush_inputs = [(cat.text, ing.findtext("count")) for ing in crush.findall("ingredients/li")
+                    for cat in ing.findall("filter/categories/li")]
+    assert_equal(crush_inputs, [("StoneChunks", "1")], "MMT_CrushCoarseOre 岩块消耗")
+    for name, yield_, building in (("MMT_GrindOrePowder_Hand", "25", "MMT_HandGrinder"),
+                                   ("MMT_GrindOrePowder_Electric", "25", "MMT_ElectricGrinder")):
         products = {li.tag: li.text for li in recipes[name].find("products")}
         assert_equal(products, {"MMT_OrePowder": yield_}, f"{name} 产物")
         assert_equal(li_values(recipes[name], "recipeUsers"), [], f"{name} 不得重复写 recipeUsers")
+        grind_inputs = {td.text: ing.findtext("count") for ing in recipes[name].findall("ingredients/li")
+                        for td in ing.findall("filter/thingDefs/li")}
+        assert_equal(grind_inputs, {"MMT_CoarseOre": "25"}, f"{name} 粗矿石消耗")
         assert_equal(li_values(def_map(parse_xml(GRINDER_BUILDING_XML))[building], "recipes"), [name],
                      f"{building} 配方单点挂载")
     for name, building, cost in (("MMT_SiftOrePowder_Hand", "MMT_HandSieve", "15"),
@@ -6109,7 +6128,7 @@ def validate_orepowder() -> None:
     fixed_filter = hopper.find("./building/fixedStorageSettings/filter")
     assert_equal(li_values(fixed_filter, "categories"), ["StoneChunks"], "进料口固定类别")
     assert_equal(li_values(fixed_filter, "thingDefs"), ["MMT_OrePowder"], "进料口固定物品")
-    for name, power, count, out_range, capacity in (("MMT_AutoGrinder", "500", "1", "10~10", "60"),
+    for name, power, count, out_range, capacity in (("MMT_AutoGrinder", "500", "25", "25~25", "250"),
                                                     ("MMT_AutoSieve", "400", "25", "6~10", "500")):
         d = auto_defs[name]
         if d.find("./building/wantsHopperAdjacent") is not None:
@@ -6131,10 +6150,10 @@ def validate_orepowder() -> None:
         assert_equal(child_text(proc, "intervalTicks"), "2500", f"{name} 处理间隔")
         assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoOreProcessing"], f"{name} 研究前置")
         assert "MyModeTest.ITab_AutoProcessor" in li_values(d, "inspectorTabs"), f"{name} 处理进度页签"
-    # 燃料过滤器：研磨机吃岩块类别、筛子吃矿粉
+    # 燃料过滤器：研磨机吃粗矿石、筛子吃矿粉
     grinder_fuel = next(li for li in auto_defs["MMT_AutoGrinder"].findall("comps/li")
                         if li.attrib.get("Class") == "CompProperties_Refuelable")
-    assert_equal(li_values(grinder_fuel.find("fuelFilter"), "categories"), ["StoneChunks"], "研磨机燃料=岩块")
+    assert_equal(li_values(grinder_fuel.find("fuelFilter"), "thingDefs"), ["MMT_CoarseOre"], "研磨机燃料=粗矿石")
     sieve_fuel = next(li for li in auto_defs["MMT_AutoSieve"].findall("comps/li")
                       if li.attrib.get("Class") == "CompProperties_Refuelable")
     assert_equal(li_values(sieve_fuel.find("fuelFilter"), "thingDefs"), ["MMT_OrePowder"], "筛子燃料=矿粉")
@@ -6203,6 +6222,8 @@ def validate_chunkdrill() -> None:
     drill_comp = next(li for li in building.findall("comps/li")
                       if li.attrib.get("Class") == "MyModeTest.CompProperties_ChunkDrill")
     assert_equal(child_text(drill_comp, "workTicksPerChunk"), "10000", "采石机单块工作量")
+    assert_equal(child_text(drill_comp, "productDef"), "MMT_CoarseOre", "采石机产物=粗矿石")
+    assert_equal(child_text(drill_comp, "productCount"), "25", "采石机单次产量")
     if any(li.attrib.get("Class") == "CompProperties_Power" for li in building.findall("comps/li")):
         fail("采石机为手动建筑，不应有电力 comp")
 
@@ -6216,7 +6237,7 @@ def validate_chunkdrill() -> None:
 
     cs_src = read_text("Source/MyModeTest/ChunkDrill.cs")
     for token in ("CompProperties_ChunkDrill", "CompChunkDrill", "WorkGiver_ChunkDrill",
-                  "JobDriver_OperateChunkDrill", "DeepDrillingSpeed", "StoneChunks",
+                  "JobDriver_OperateChunkDrill", "DeepDrillingSpeed", "productDef", "productCount",
                   "ThingPlaceMode.Near", "Scribe_Values.Look"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
     print("chunkdrill: OK")

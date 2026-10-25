@@ -5,110 +5,131 @@
     <defName>MMT_MetallicBar</defName>
     <label>金属锭类</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_HCMBar</defName>
     <label>高传导率类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_PRSBar</defName>
     <label>贵重类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_SLDBar</defName>
     <label>硬质类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_HeavyBar</defName>
     <label>重质类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_USLDBar</defName>
     <label>高硬质类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_USLDHBar</defName>
     <label>高硬质超重类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_RARBar</defName>
     <label>稀有类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_RADBar</defName>
     <label>放射性类</label>
     <parent>MMT_MetallicBar</parent>
+    <iconPath>Things/Item/MMT/MMT_Ingot/MMT_Ingot_a</iconPath>
   </ThingCategoryDef>
   <!-- 木质材料聚合根：替代 1.7 已移除的原版 Woody ThingCategory（原料过滤用；stuffProps 的 Woody 材料分类不受影响） -->
   <ThingCategoryDef>
     <defName>MMT_Woody</defName>
     <label>木材类</label>
     <parent>ResourcesRaw</parent>
+    <iconPath>Things/Item/MMT/WoodPlank/WoodPlank_a</iconPath>
   </ThingCategoryDef>
   <!-- 酒类聚合：替代 1.7 不存在的原版 Alcohol ThingCategory（表面活性剂配方原料过滤用） -->
   <ThingCategoryDef>
     <defName>MMT_Alcohol</defName>
     <label>酒类</label>
     <parent>Drugs</parent>
+    <iconPath>Things/Item/MMT/MMT_Medicine/MMT_MedicalDrink</iconPath>
   </ThingCategoryDef>
   <!-- 煤类：对应 HSK Coal（HSK parent 为 HSK 自有类别 Extracted，MMT 改用原版 ResourcesRaw） -->
   <ThingCategoryDef>
     <defName>MMT_Coal</defName>
     <label>煤类</label>
     <parent>ResourcesRaw</parent>
+    <iconPath>Things/Item/MMT/MMT_Coal</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_FuelCat</defName>
     <label>燃料</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_Hexcell</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_Parts</defName>
     <label>部件和机械结构</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_Parts/Mechanism</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_WeaponParts</defName>
     <label>武器部件</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_WeaponParts/MMT_WeaponParts</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_ElectronicsCat</defName>
     <label>电子</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_Electronics/Microchip</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_GlassCat</defName>
     <label>玻璃制品</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/Glass/Glass_a</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_SuperMaterialCat</defName>
     <label>超材料</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_Matter</iconPath>
   </ThingCategoryDef>
   <ThingCategoryDef>
     <defName>MMT_BTextiles</defName>
     <label>基础织物</label>
     <parent>Textiles</parent>
+    <iconPath>Things/Item/MMT/MMT_Textiles/MMT_HempCloth/MMT_HempCloth_a</iconPath>
   </ThingCategoryDef>
   <!-- 弹药聚合：炮塔弹药归入此类，否则无 thingCategories 的物品不会出现在储存筛选里 -->
   <ThingCategoryDef>
     <defName>MMT_AmmoCat</defName>
     <label>弹药</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Ammo/Cannon/Tank/HEATFS/HEATFS_a</iconPath>
   </ThingCategoryDef>
   <!-- 炮塔板条箱聚合：同理补储存筛选 -->
   <ThingCategoryDef>
     <defName>MMT_TurretCrateCat</defName>
     <label>炮塔板条箱</label>
     <parent>Manufactured</parent>
+    <iconPath>Things/Item/Resource/WeaponCrate</iconPath>
   </ThingCategoryDef>
 </Defs>

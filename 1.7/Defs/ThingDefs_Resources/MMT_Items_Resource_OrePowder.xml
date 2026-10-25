@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 无中生有链原料：矿粉，由研磨机粉碎岩块得到，可在筛子中筛出随机矿石 -->
+  <!-- 无中生有链原料：粗矿石，由切石桌破碎岩块或手动采石机采集得到，可研磨成矿粉 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CoarseOre</defName>
+    <label>粗矿石</label>
+    <description>岩块经初步破碎得到的粗矿石，混杂着各类矿物碎屑。用研磨机细磨可以得到矿粉。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/CoarseOre</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MarketValue>1</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+    </statBases>
+    <stackLimit>900</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 无中生有链原料：矿粉，由研磨机粉碎粗矿石得到，可在筛子中筛出随机矿石 -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_OrePowder</defName>
     <label>矿粉</label>
-    <description>岩块经精细研磨得到的粉末，混杂着微量矿物颗粒。用筛子淘洗可以分离出有用的矿石。</description>
+    <description>粗矿石经精细研磨得到的粉末，混杂着微量矿物颗粒。用筛子淘洗可以分离出有用的矿石。</description>
     <graphicData>
       <texPath>Things/Item/MMT/OrePowder</texPath>
       <graphicClass>Graphic_Single</graphicClass>

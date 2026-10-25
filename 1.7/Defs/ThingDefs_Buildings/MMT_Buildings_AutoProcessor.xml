@@ -74,11 +74,11 @@
     </researchPrerequisites>
   </ThingDef>
 
-  <!-- 自动研磨机：RockCrusher 静态帧贴图，内置岩块仓（燃料式），每 2500 tick 消耗 1 岩块产 10 矿粉。需要持续供电。 -->
+  <!-- 自动研磨机：RockCrusher 静态帧贴图，内置粗矿石仓（燃料式），每 2500 tick 消耗 25 粗矿石产 25 矿粉。需要持续供电。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoGrinder</defName>
     <label>自动研磨机</label>
-    <description>重型破碎研磨机组，内置岩块仓，填装岩块后自动碾成矿粉。无人值守但处理速度较慢。需要持续供电。</description>
+    <description>重型破碎研磨机组，内置粗矿石仓，填装粗矿石后自动碾成矿粉。无人值守但处理速度较慢。需要持续供电。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoGrinder/MMT_AutoGrinder</texPath>
@@ -126,18 +126,18 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <!-- 原料仓：岩块即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
+      <!-- 原料仓：粗矿石即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
            省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
       <li Class="CompProperties_Refuelable">
-        <fuelCapacity>60</fuelCapacity>
+        <fuelCapacity>250</fuelCapacity>
         <fuelFilter>
-          <categories>
-            <li>StoneChunks</li>
-          </categories>
+          <thingDefs>
+            <li>MMT_CoarseOre</li>
+          </thingDefs>
         </fuelFilter>
-        <fuelLabel>岩块储量</fuelLabel>
-        <fuelGizmoLabel>岩块</fuelGizmoLabel>
-        <outOfFuelMessage>需要补充岩块</outOfFuelMessage>
+        <fuelLabel>粗矿石储量</fuelLabel>
+        <fuelGizmoLabel>粗矿石</fuelGizmoLabel>
+        <outOfFuelMessage>需要补充粗矿石</outOfFuelMessage>
         <showFuelGizmo>true</showFuelGizmo>
         <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
         <autoRefuelPercent>0.5</autoRefuelPercent>
@@ -145,12 +145,12 @@
       </li>
       <li Class="MyModeTest.CompProperties_AutoProcessor">
         <intervalTicks>2500</intervalTicks>
-        <inputCount>1</inputCount>
+        <inputCount>25</inputCount>
         <outputDef>MMT_OrePowder</outputDef>
-        <outputCountRange>10~10</outputCountRange>
-        <inputCategories>
-          <li>StoneChunks</li>
-        </inputCategories>
+        <outputCountRange>25~25</outputCountRange>
+        <inputDefs>
+          <li>MMT_CoarseOre</li>
+        </inputDefs>
       </li>
     </comps>
     <placeWorkers>

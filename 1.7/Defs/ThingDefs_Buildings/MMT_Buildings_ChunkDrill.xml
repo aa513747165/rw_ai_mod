@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 手动采石机：仿深钻机模式，殖民者以采矿工作持续操作，无需电力与矿脉，
-       进度满后在交互格产出一块随机岩块（贴图为 HSK 新石器切石台） -->
+       进度满后在交互格产出 25 个粗矿石（贴图为 HSK 新石器切石台） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ChunkDrill</defName>
     <label>手动采石机</label>
-    <description>手摇冲击钻架，殖民者操作它从基岩中凿出岩块。无需电力与矿脉，产出岩块种类随机。</description>
+    <description>手摇冲击钻架，殖民者操作它从基岩中凿出粗矿石。无需电力与矿脉，每次产出 25 个粗矿石。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill</texPath>
@@ -44,6 +44,8 @@
       <li Class="CompProperties_Breakdownable" />
       <li Class="MyModeTest.CompProperties_ChunkDrill">
         <workTicksPerChunk>10000</workTicksPerChunk>
+        <productDef>MMT_CoarseOre</productDef>
+        <productCount>25</productCount>
       </li>
     </comps>
     <placeWorkers>

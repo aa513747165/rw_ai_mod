@@ -10,11 +10,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 302 |
+| MMT 配方 | 303 |
 | 与 HSK 数值一致 | 134 |
 | 与 HSK 有数值差异 | 56 |
 | HSK 有对应资源但无对应配方 | 6 |
-| MMT 新增（HSK 无对应资源） | 106 |
+| MMT 新增（HSK 无对应资源） | 107 |
 
 ## 2. 矿脉对比
 
@@ -702,14 +702,19 @@
 
 ### 3.16 OrePowder（OrePowder）
 
+#### 破碎粗矿石（`MMT_CrushCoarseOre`）
+
+- **MMT**：[StoneChunks]×1 -> 粗矿石×25 @ — ｜ 工作量=2400 ｜ 研究:Stonecutting(Stonecutting)
+- **HSK**：无对应资源（MMT 新增）
+
 #### 研磨矿粉（`MMT_GrindOrePowder_Hand`）
 
-- **MMT**：[StoneChunks]×1 -> 矿粉×10 @ 手动研磨机 ｜ 工作量=2400 ｜ 研究:Stonecutting(Stonecutting)
+- **MMT**：粗矿石×25 -> 矿粉×25 @ 手动研磨机 ｜ 工作量=2400 ｜ 研究:Stonecutting(Stonecutting)
 - **HSK**：无对应资源（MMT 新增）
 
 #### 研磨矿粉（`MMT_GrindOrePowder_Electric`）
 
-- **MMT**：[StoneChunks]×1 -> 矿粉×10 @ 电动研磨机 ｜ 工作量=1200
+- **MMT**：粗矿石×25 -> 矿粉×25 @ 电动研磨机 ｜ 工作量=1200
 - **HSK**：无对应资源（MMT 新增）
 
 #### 筛选矿粉（`MMT_SiftOrePowder_Hand`）
