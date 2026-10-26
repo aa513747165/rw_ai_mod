@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>MMT_Teleportation</defName>
     <label>折跃传送</label>
-    <description>掌握跨地图瞬时传送技术，解锁折跃传送台：将舱内人员与物资直接投送到已有地图的据点，并可从目标地图框选召回。每次传送需要大量电网蓄电并进入冷却。</description>
+    <description>掌握跨地图瞬时传送技术，解锁折跃传送台：将舱内人员与物资直接投送到已有地图的据点，并可从目标地图框选召回。传送台接入电网后自动蓄电，每次传送消耗全部蓄电并进入冷却。</description>
     <baseCost>6000</baseCost>
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>

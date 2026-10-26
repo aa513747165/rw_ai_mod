@@ -4,12 +4,13 @@
        质量上限、ITab_ContentsTransporter 全免费，装载/取消 gizmo 由原版自带）；
        自定义 CompTeleportPad 提供"启动传送"（世界地图选已有地图目标瞬间空降）
        与召回执行端（配合 Architect 菜单的召回框选 Designator）。
-       待机 3000W，每次传送抽取电网 15000Wd 蓄电并冷却 12 小时。
+       待机 3000W；开启并通电时以 3000Wd/天自动蓄电（内置储能上限 15000Wd，约 5 天充满），
+       每次传送消耗全部 15000Wd 内部蓄电并冷却 12 小时；蓄满后即使电网断电也可发射。
        贴图为 HSK 蓝色传送门（Core_SK Genstep/Blueportal，已授权）。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_TeleportPad</defName>
     <label>折跃传送台</label>
-    <description>量子折跃装置，可将舱内的人员和物资瞬间传送到世界地图上已有地图的据点（敌对据点/任务地点/己方基地），也可从目标地图框选召回。每次传送消耗 15000Wd 电网蓄电并需要 12 小时冷却。</description>
+    <description>量子折跃装置，可将舱内的人员和物资瞬间传送到世界地图上已有地图的据点（敌对据点/任务地点/己方基地），也可从目标地图框选召回。接入电网并保持开启即可自动蓄电（3000Wd/天），每次传送消耗全部 15000Wd 蓄电并需要 12 小时冷却。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_TeleportPad</texPath>
@@ -59,6 +60,7 @@
       <li Class="MyModeTest.CompProperties_TeleportPad">
         <energyCostWd>15000</energyCostWd>
         <cooldownTicks>30000</cooldownTicks>
+        <chargeRateWdPerDay>3000</chargeRateWdPerDay>
       </li>
     </comps>
     <inspectorTabs>

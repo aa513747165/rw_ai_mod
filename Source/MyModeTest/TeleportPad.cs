@@ -13,11 +13,14 @@ namespace MyModeTest
     /// </summary>
     public class CompProperties_TeleportPad : CompProperties
     {
-        /// <summary>单次传送（去程/回程各算一次）从电网电池抽取的电量（Wd）。</summary>
+        /// <summary>单次传送（去程/回程各算一次）消耗的内部蓄电（Wd）。</summary>
         public float energyCostWd = 15000f;
 
         /// <summary>传送后冷却 tick（30000 = 12 游戏小时）。</summary>
         public int cooldownTicks = 30000;
+
+        /// <summary>开启并通电时的蓄电速度（Wd/天；默认 3000 ≈ 待机功耗，5 天充满）。</summary>
+        public float chargeRateWdPerDay = 3000f;
 
         public CompProperties_TeleportPad()
         {
@@ -34,6 +37,9 @@ namespace MyModeTest
     {
         /// <summary>冷却结束的游戏 tick（存档持久化，默认 0 兼容旧存档）。</summary>
         private int cooldownUntilTick;
+
+        /// <summary>内部蓄电（Wd）：开启并通电时自动累积，传送时消耗（存档持久化）。</summary>
+        private float storedChargeWd;
 
         private CompProperties_TeleportPad Props
         {
@@ -54,6 +60,28 @@ namespace MyModeTest
         {
             base.PostExposeData();
             Scribe_Values.Look(ref cooldownUntilTick, "cooldownUntilTick");
+            Scribe_Values.Look(ref storedChargeWd, "storedChargeWd");
+        }
+
+        /// <summary>开启并通电时按 chargeRateWdPerDay 自动蓄电，充满 energyCostWd 即止。</summary>
+        public override void CompTick()
+        {
+            base.CompTick();
+            if (storedChargeWd >= Props.energyCostWd)
+                return;
+            if (!IsCharging())
+                return;
+            storedChargeWd = Mathf.Min(Props.energyCostWd, storedChargeWd + Props.chargeRateWdPerDay / 60000f);
+        }
+
+        /// <summary>当前是否正在蓄电：开关打开且电网能供应待机功耗。</summary>
+        public bool IsCharging()
+        {
+            CompFlickable flick = parent.GetComp<CompFlickable>();
+            if (flick != null && !flick.SwitchIsOn)
+                return false;
+            CompPowerTrader power = Power;
+            return power != null && power.PowerOn;
         }
 
         public bool OnCooldown
@@ -61,16 +89,14 @@ namespace MyModeTest
             get { return Find.TickManager.TicksGame < cooldownUntilTick; }
         }
 
-        /// <summary>电网当前蓄电（Wd），直接读同 PowerNet 全部电池的汇总。</summary>
+        /// <summary>传送台当前内部蓄电（Wd）。</summary>
         public float StoredCharge()
         {
-            CompPowerTrader power = Power;
-            if (power == null || power.PowerNet == null)
-                return 0f;
-            return power.PowerNet.CurrentStoredEnergy();
+            return storedChargeWd;
         }
 
-        /// <summary>能否执行一次传送；不可用时给出中文原因（供 gizmo 禁用提示与召回校验）。</summary>
+        /// <summary>能否执行一次传送；不可用时给出中文原因（供 gizmo 禁用提示与召回校验）。
+        /// 只要求内部蓄电充足：蓄满后即使电网暂时断电也可发射。</summary>
         public bool CanTeleportNow(out string reason)
         {
             if (!parent.Spawned)
@@ -84,20 +110,15 @@ namespace MyModeTest
                 reason = "传送台未开启";
                 return false;
             }
-            CompPowerTrader power = Power;
-            if (power == null || !power.PowerOn)
-            {
-                reason = "传送台未通电";
-                return false;
-            }
             if (OnCooldown)
             {
                 reason = "传送冷却中（剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod() + "）";
                 return false;
             }
-            if (StoredCharge() < Props.energyCostWd)
+            if (storedChargeWd < Props.energyCostWd)
             {
-                reason = "电网蓄电不足（" + StoredCharge().ToString("F0") + "/" + Props.energyCostWd.ToString("F0") + " Wd）";
+                reason = "蓄电不足（" + storedChargeWd.ToString("F0") + "/" + Props.energyCostWd.ToString("F0")
+                    + " Wd；保持开启并通电即可自动蓄电）";
                 return false;
             }
             reason = null;
@@ -112,7 +133,7 @@ namespace MyModeTest
             // 启动传送：舱内为空、装载进行中、电力/冷却不满足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上指定的已有地图目标（敌对据点/任务地点/己方基地）。消耗电网蓄电并进入冷却。";
+            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上指定的已有地图目标（敌对据点/任务地点/己方基地）。消耗内部蓄电并进入冷却。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
@@ -197,7 +218,7 @@ namespace MyModeTest
             }
             if (!TryDrainCharge(Props.energyCostWd))
             {
-                Messages.Message("传送失败：电网蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
             cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
@@ -256,7 +277,7 @@ namespace MyModeTest
             }
             if (!TryDrainCharge(Props.energyCostWd))
             {
-                Messages.Message("召回失败：电网蓄电不足", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("召回失败：蓄电不足", MessageTypeDefOf.RejectInput, false);
                 return;
             }
             cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
@@ -295,21 +316,12 @@ namespace MyModeTest
 
         // ---- 电力 ----
 
-        /// <summary>从同电网电池按序抽电；蓄电不足时不扣任何电并返回 false。</summary>
+        /// <summary>消耗内部蓄电；蓄电不足时不扣任何电并返回 false。</summary>
         private bool TryDrainCharge(float amount)
         {
-            CompPowerTrader power = Power;
-            if (power == null || power.PowerNet == null || power.PowerNet.CurrentStoredEnergy() < amount)
+            if (storedChargeWd < amount)
                 return false;
-            float remaining = amount;
-            foreach (CompPowerBattery bat in power.PowerNet.batteryComps)
-            {
-                if (remaining <= 0f)
-                    break;
-                float draw = Mathf.Min(bat.StoredEnergy, remaining);
-                bat.DrawPower(draw);
-                remaining -= draw;
-            }
+            storedChargeWd -= amount;
             return true;
         }
 
@@ -330,7 +342,13 @@ namespace MyModeTest
 
         public override string CompInspectStringExtra()
         {
-            string text = "电网蓄电: " + StoredCharge().ToString("F0") + "/" + Props.energyCostWd.ToString("F0") + " Wd";
+            string text = "蓄电: " + storedChargeWd.ToString("F0") + "/" + Props.energyCostWd.ToString("F0") + " Wd";
+            if (storedChargeWd >= Props.energyCostWd)
+                text += "（已满）";
+            else if (IsCharging())
+                text += "（充电中，" + Props.chargeRateWdPerDay.ToString("F0") + " Wd/天）";
+            else
+                text += "（未充电：需要开启开关并通电）";
             if (OnCooldown)
                 text += "\n传送冷却: 剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
             if (Transporter != null)
@@ -385,7 +403,7 @@ namespace MyModeTest
             }
             if (pads.Count == 0)
             {
-                Messages.Message("没有可用的折跃传送台（需已开启、通电、电网蓄电充足且不在冷却中）", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("没有可用的折跃传送台（需已开启、蓄电充足且不在冷却中）", MessageTypeDefOf.RejectInput, false);
                 return;
             }
 

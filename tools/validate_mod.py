@@ -1983,6 +1983,13 @@ def validate_base() -> None:
         if expected not in mod_source:
             fail(f"MyModeTestMod.cs 缺少: {expected}")
 
+    # 研究窗口纵向滚动转译器（原版 DrawRightRect viewRect 高度写死，Y>8 研究不可达）
+    scroll_patch = read_text("Source/MyModeTest/ResearchScrollPatch.cs")
+    for expected in ("HarmonyPatch(typeof(MainTabWindow_Research), \"DrawRightRect\")",
+                     "Transpiler", "EnsureContentHeight", "ViewSize", "CurTab", "OpCodes.Sub"):
+        if expected not in scroll_patch:
+            fail(f"ResearchScrollPatch.cs 缺少: {expected}")
+
     solution = read_text("MyModeTest.sln")
     if "Source\\MyModeTest\\MyModeTest.csproj" not in solution:
         fail("解决方案未包含 MyModeTest.csproj")
@@ -6540,8 +6547,9 @@ def validate_teleport() -> None:
     transporter = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Transporter")
     assert_equal(child_text(transporter, "massCapacity"), "1000", "传送台舱内容量")
     tp_comp = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "MyModeTest.CompProperties_TeleportPad")
-    assert_equal(child_text(tp_comp, "energyCostWd"), "15000", "单次传送抽电量")
+    assert_equal(child_text(tp_comp, "energyCostWd"), "15000", "单次传送耗电量")
     assert_equal(child_text(tp_comp, "cooldownTicks"), "30000", "传送冷却（12 小时）")
+    assert_equal(child_text(tp_comp, "chargeRateWdPerDay"), "3000", "传送台蓄电速度（Wd/天）")
 
     research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml"))
     tp_research = research["MMT_Teleportation"]
@@ -6560,7 +6568,7 @@ def validate_teleport() -> None:
                   "WorldTargeter.BeginTargeting", "MapParentAt", "HasMap",
                   "DropCellFinder.RandomDropSpot", "TryFindDropSpotNear",
                   "innerContainer", "GenSpawn.Spawn", "Notify_Teleported",
-                  "CurrentStoredEnergy", "batteryComps", "DrawPower",
+                  "storedChargeWd", "chargeRateWdPerDay", "IsCharging", "CompTick",
                   "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
                   "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry"):
