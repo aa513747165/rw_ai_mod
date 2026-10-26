@@ -250,11 +250,11 @@
 		<researchViewX>12.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
-	<!-- KPV 自动机枪塔研究：前中期无人防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁） -->
+	<!-- KPV 重机枪塔研究：前中期有人操作防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁） -->
 	<ResearchProjectDef>
 		<defName>MMT_HeavyMachineGunTurret</defName>
 		<label>重机枪塔</label>
-		<description>解锁 KPV 14.5mm 自动机枪塔：一种无人值守的自动重机枪防御设施。</description>
+		<description>解锁 14.5mm KPV 重机枪塔：一种需要人工操作的固定式重机枪防御设施。</description>
 		<baseCost>700</baseCost>
 		<techLevel>Industrial</techLevel>
 		<tab>MMT_ResearchTab</tab>

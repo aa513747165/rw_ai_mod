@@ -325,6 +325,47 @@
 	</ThingDef>
 	<ThingDef>
 		<thingClass>ThingWithComps</thingClass>
+		<defName>MMT_KPVTurret_Crate</defName>
+		<label>14.5mm KPV重机枪组件箱</label>
+		<description>用于建造14.5mm KPV重机枪，一种需要人工操作的固定式炮塔。使用14.5x114mm机枪弹。</description>
+		<category>Item</category>
+		<thingCategories>
+			<li>MMT_TurretCrateCat</li>
+		</thingCategories>
+		<resourceReadoutPriority>Middle</resourceReadoutPriority>
+		<useHitPoints>true</useHitPoints>
+		<selectable>true</selectable>
+		<altitudeLayer>Item</altitudeLayer>
+		<alwaysHaulable>true</alwaysHaulable>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<rotatable>false</rotatable>
+		<pathCost>15</pathCost>
+		<stackLimit>1</stackLimit>
+		<techLevel>Industrial</techLevel>
+		<graphicData>
+			<texPath>Things/Item/Resource/WeaponCrate</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Standard_Drop</soundInteract>
+		<soundDrop>Standard_Drop</soundDrop>
+		<tickerType>Normal</tickerType>
+		<statBases>
+			<DeteriorationRate>0</DeteriorationRate>
+			<Flammability>1</Flammability>
+			<MarketValue>3100</MarketValue>
+			<Mass>90</Mass>
+			<MaxHitPoints>100</MaxHitPoints>
+			<SellPriceFactor>0.70</SellPriceFactor>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Forbiddable" />
+		</comps>
+		<tradeTags>
+			<li>NormalCrate</li>
+		</tradeTags>
+	</ThingDef>
+	<ThingDef>
+		<thingClass>ThingWithComps</thingClass>
 		<defName>MMT_MediumMissileSystem_Crate</defName>
 		<label>130mm中型导弹系统组件箱</label>
 		<description>用于建造130mm中型导弹系统，一种需要人工操作的固定式炮塔。使用130mm导弹作为弹药。</description>

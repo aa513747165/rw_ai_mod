@@ -5713,8 +5713,8 @@ def validate_weapons_turrets() -> None:
     assert_equal(building_total, 18, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
     assert_equal(len(concrete_buildings), 17, "可建造炮塔数")
     assert_equal(len(ammo), 12, "炮塔弹药数")
-    assert_equal(len(crates), 16, "炮塔箱数（9 个无对应建筑的孤儿箱不移植）")
-    assert_equal(len(crate_recipes), 16, "炮塔箱配方数")
+    assert_equal(len(crates), 17, "炮塔箱数（9 个无对应建筑的孤儿箱不移植，含 KPV 箱）")
+    assert_equal(len(crate_recipes), 17, "炮塔箱配方数（含 KPV 箱配方）")
     for ammo_name, projectile_name in TURRET_AMMO_PROJECTILES.items():
         assert_equal(child_text(ammo[ammo_name], "projectileWhenLoaded"), projectile_name, f"{ammo_name} 投射物")
     # 弹药与板条箱必须挂类别，否则不会出现在储存筛选里（无储存选项问题修复）
@@ -5731,6 +5731,20 @@ def validate_weapons_turrets() -> None:
     assert_equal(child_text(refuelable, "fuelFilter/thingDefs/li"), "MMT_Ammo_50BMG_FMJ", "M2 弹药")
     assert_equal(child_text(refuelable, "fuelCapacity"), "150", "M2 弹容量")
     assert_equal(child_text(guns["MMT_Gun_M2Browning"], "verbs/li/consumeFuelPerShot"), "1", "M2 单发耗弹")
+
+    # KPV 重机枪塔：有人操作（对照 HSK Turret_KPV），无电力 comp，箱式建造，炮塔顶部绘制尺寸与其它机枪塔一致
+    kpv = buildings["MMT_TurretKPV"]
+    comp_classes = {li.attrib.get("Class") for li in kpv.findall("comps/li")}
+    if "CompProperties_Mannable" not in comp_classes:
+        fail("KPV 炮塔应为有人操作（CompProperties_Mannable）")
+    if "CompProperties_Power" in comp_classes:
+        fail("KPV 炮塔为人工操作，不应有电力 comp")
+    assert_equal(child_text(kpv, "building/turretTopDrawSize"), "4", "KPV 炮塔顶部绘制尺寸")
+    assert_equal(child_text(kpv, "costList/MMT_KPVTurret_Crate"), "1", "KPV 建造成本=组件箱")
+    assert_equal(li_values(kpv, "researchPrerequisites"), ["MMT_HeavyMachineGunTurret"], "KPV 研究前置")
+    kpv_recipe = crate_recipes["MMT_BuildKPVTurret_Crate"]
+    assert_equal(li_values(kpv_recipe, "recipeUsers"), ["MMT_WeaponCraftingTable"], "KPV 箱配方挂武器加工台")
+    assert_equal(child_text(kpv_recipe, "products/MMT_KPVTurret_Crate"), "1", "KPV 箱配方产出")
     print("weapons-turrets: OK")
 
 

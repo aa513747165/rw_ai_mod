@@ -986,13 +986,11 @@
 		<constructionSkillPrerequisite>13</constructionSkillPrerequisite>
 		<specialDisplayRadius>5</specialDisplayRadius>
 	</ThingDef>
-	<!-- KPV 14.5mm 自动机枪塔：前中期无人自动炮塔，对应 HSK Turret_KPV（贴图 HSK KPVT 系列） -->
+	<!-- KPV 14.5mm 重机枪塔：前中期有人操作炮塔，对应 HSK Turret_KPV（贴图 HSK KPVT 系列） -->
 	<ThingDef ParentName="MMT_TurretBuildingBase">
 		<defName>MMT_TurretKPV</defName>
-		<label>KPV自动机枪塔</label>
-		<description>由AI控制的14.5mm KPV自动机枪塔，前中期可靠的无人防御火力。
-电力需求：300W
-弹种：14.5x114mm机枪弹</description>
+		<label>14.5mm KPV重机枪</label>
+		<description>一种需要手动操作，固定的14.5mm KPV重机枪。使用14.5x114mm机枪弹，每次点射发射8发弹药。</description>
 		<graphicData>
 			<texPath>Things/Building/Security/KPVT_Base</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
@@ -1016,20 +1014,11 @@
 		</stuffCategories>
 		<costStuffCount>80</costStuffCount>
 		<costList>
-			<MMT_Mechanism>2</MMT_Mechanism>
-			<ComponentIndustrial>2</ComponentIndustrial>
+			<MMT_KPVTurret_Crate>1</MMT_KPVTurret_Crate>
 		</costList>
 		<comps>
-			<li Class="CompProperties_Flickable" />
-			<li Class="CompProperties_Breakdownable" />
-			<li Class="CompProperties_Stunnable">
-				<affectedDamageDefs>
-					<li>EMP</li>
-				</affectedDamageDefs>
-			</li>
-			<li Class="CompProperties_Power">
-				<compClass>CompPowerTrader</compClass>
-				<basePowerConsumption>300</basePowerConsumption>
+			<li Class="CompProperties_Mannable">
+				<manWorkType>Violent</manWorkType>
 			</li>
 			<li Class="CompProperties_Refuelable">
 				<fuelCapacity>200</fuelCapacity>
@@ -1044,9 +1033,11 @@
 				</fuelFilter>
 			</li>
 		</comps>
+		<hasInteractionCell>True</hasInteractionCell>
+		<interactionCellOffset>(0,0,-1)</interactionCellOffset>
 		<building>
 			<turretGunDef>MMT_Gun_KPV</turretGunDef>
-			<turretTopDrawSize>2.2</turretTopDrawSize>
+			<turretTopDrawSize>4</turretTopDrawSize>
 		</building>
 		<researchPrerequisites>
 			<li>MMT_HeavyMachineGunTurret</li>

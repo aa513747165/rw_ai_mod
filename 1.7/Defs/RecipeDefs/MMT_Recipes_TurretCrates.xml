@@ -477,6 +477,66 @@
 		</products>
 		<researchPrerequisite>SniperTurret</researchPrerequisite>
 	</RecipeDef>
+	<!-- KPV 重机枪箱：对照 HSK BuildKPV_Crate（武器零件17 + 重型部件1 + 金属锭50），挂武器加工台 -->
+	<RecipeDef>
+		<defName>MMT_BuildKPVTurret_Crate</defName>
+		<label>制作14.5mm KPV重机枪组件箱</label>
+		<description>用于建造14.5mm KPV重机枪，一种固定式的人工操作炮塔。使用14.5x114mm机枪弹。</description>
+		<jobString>正在制作14.5mm KPV重机枪组件箱。</jobString>
+		<workAmount>11500</workAmount>
+		<workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+		<workSkill>Crafting</workSkill>
+		<workSkillLearnFactor>0.8</workSkillLearnFactor>
+		<effectWorking>Smith</effectWorking>
+		<soundWorking>Interact_Repair</soundWorking>
+		<skillRequirements>
+			<Crafting>7</Crafting>
+		</skillRequirements>
+		<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MMT_WeaponParts</li>
+					</thingDefs>
+				</filter>
+				<count>17</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MMT_HeavyComponent</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+			<li>
+				<filter>
+					<categories>
+						<li>MMT_MetallicBar</li>
+					</categories>
+				</filter>
+				<count>50</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MMT_WeaponParts</li>
+				<li>MMT_HeavyComponent</li>
+			</thingDefs>
+			<categories>
+				<li>MMT_SLDBar</li>
+				<li>MMT_USLDBar</li>
+			</categories>
+		</fixedIngredientFilter>
+		<products>
+			<MMT_KPVTurret_Crate>1</MMT_KPVTurret_Crate>
+		</products>
+		<recipeUsers>
+			<li>MMT_WeaponCraftingTable</li>
+		</recipeUsers>
+		<researchPrerequisite>MMT_HeavyMachineGunTurret</researchPrerequisite>
+	</RecipeDef>
 	<RecipeDef>
 		<defName>MMT_BuildMediumMissileSystem_Crate</defName>
 		<label>制作130mm中型导弹系统组件箱</label>
