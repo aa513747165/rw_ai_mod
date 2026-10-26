@@ -6596,7 +6596,7 @@ def validate_shield() -> None:
     assert any(li.attrib.get("Class") == "CompProperties_UseEffectDestroySelf"
                for li in item.findall("comps/li")), "护盾物品缺用后销毁 comp"
 
-    # 建筑：拦截外部投射物 + 7500 tick（游戏内 3 小时）后自毁 + 光圈常显（drawWithNoSelection），
+    # 建筑：拦截外部投射物 + 30000 tick（游戏内 12 小时）后自毁 + 光圈常显（drawWithNoSelection），
     # 参数对齐 Royalty BroadshieldProjector
     buildings = def_map(parse_xml(SHIELD_BUILDING_XML))
     assert_equal(set(buildings), {"MMT_ShieldProjector"}, "护盾建筑 defName 集合")
@@ -6608,7 +6608,7 @@ def validate_shield() -> None:
     assert_equal(child_text(interceptor, "interceptOutgoingProjectiles"), "false", "护盾不拦向外弹道")
     delay = next(li for li in projector.findall("comps/li")
                  if li.attrib.get("Class") == "CompProperties_DestroyAfterDelay")
-    assert_equal(child_text(delay, "delayTicks"), "7500", "护盾燃尽倒计时（游戏内 3 小时）")
+    assert_equal(child_text(delay, "delayTicks"), "30000", "护盾燃尽倒计时（游戏内 12 小时）")
     assert_equal(child_text(interceptor, "drawWithNoSelection"), "true",
                  "护盾光圈常显（玩家阵营空闲脉动恒为 0，必须开 drawWithNoSelection）")
     assert projector.find("designationCategory") is None, "护盾建筑不可建造，不应有建造分类"

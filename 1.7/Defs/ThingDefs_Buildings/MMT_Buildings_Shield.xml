@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），游戏内3小时（7500 tick）后燃尽自毁；
+  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），游戏内12小时（30000 tick）后燃尽自毁；
        护盾光圈常显靠 drawWithNoSelection=true：空闲脉动 alpha 对玩家阵营的护盾恒为 0（原版设定），
        调 minIdleAlpha 无效，必须用该字段让"选中态"高亮脉动（0.2~0.62）在不选中时也绘制；
        结构对齐 Royalty BroadshieldProjector，但拦截半径改为 2.5（5×5 圆形范围，单兵掩体尺度），贴图/音效/特效直接引用 Royalty -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ShieldProjector</defName>
     <label>临时护盾投影器</label>
-    <description>部署式护盾发生器展开的低角度能量护盾，拦截外部射入的投射物，内部人员仍可向外射击，护盾光圈全程可见。内置电源约可维持3小时，倒计时结束后焚毁。</description>
+    <description>部署式护盾发生器展开的低角度能量护盾，拦截外部射入的投射物，内部人员仍可向外射击，护盾光圈全程可见。内置电源约可维持12小时，倒计时结束后焚毁。</description>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <drawerType>MapMeshAndRealTime</drawerType>
     <pathCost>0</pathCost>
@@ -61,8 +61,8 @@
         <activeSound>Broadshield_Ambience</activeSound>
       </li>
       <li Class="CompProperties_DestroyAfterDelay">
-        <!-- 游戏内 3 小时：3 × 2500 tick -->
-        <delayTicks>7500</delayTicks>
+        <!-- 游戏内 12 小时：12 × 2500 tick（检查面板按现实秒显示，1 倍速约 500 秒） -->
+        <delayTicks>30000</delayTicks>
         <destroyMode>KillFinalize</destroyMode>
         <countdownLabel>燃尽剩余</countdownLabel>
       </li>
