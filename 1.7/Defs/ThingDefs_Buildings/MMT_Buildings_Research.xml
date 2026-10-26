@@ -74,7 +74,7 @@
       <texPath>Things/Building/Research/MMT_LabStation/MMT_LabStation</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,1)</drawSize>
+      <drawSize>(3,2.5)</drawSize>
     </graphicData>
     <size>(3,1)</size>
     <altitudeLayer>Building</altitudeLayer>
