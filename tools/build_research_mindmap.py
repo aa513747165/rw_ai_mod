@@ -171,7 +171,8 @@ def main():
     for name in sorted(leftovers):
         out.append("  " + node_line(name, projects, cross_links) + "（前置成环，未挂树）")
 
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
+    # 带 BOM 写出：Markmap 部分查看器在 Windows 上按 ANSI(GBK) 解析无 BOM 文件导致中文乱码
+    with open(OUT_PATH, "w", encoding="utf-8-sig") as f:
         f.write("\n".join(out) + "\n")
     print("已生成 {}（{} 项研究，{} 棵根）".format(OUT_PATH, len(projects), len(roots)))
     return 0
