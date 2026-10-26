@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 原煤发电机：发电量与原版化学发电机相同（1000W），贴图为 HSK 燃煤蒸汽发电机 -->
+  <!-- 原煤发电机：发电量 2500W，贴图为原版化学发电机改色（炭黑燃料桶） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_CoalGenerator</defName>
     <label>原煤发电机</label>
-    <description>以原煤为燃料的蒸汽发电机组，发电量与化学发电机相同。</description>
+    <description>以原煤为燃料的蒸汽发电机组，输出 2500W 电力。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Power/MMT_CoalGenerator</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,3)</drawSize>
+      <drawSize>(2,2)</drawSize>
       <drawRotated>false</drawRotated>
     </graphicData>
+    <uiIconPath>Things/Building/Power/MMT_CoalGenerator</uiIconPath>
     <size>(2,2)</size>
     <passability>Impassable</passability>
     <pathCost>90</pathCost>
@@ -39,7 +40,7 @@
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerPlant</compClass>
-        <basePowerConsumption>-1000</basePowerConsumption>
+        <basePowerConsumption>-2500</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <shortCircuitInRain>true</shortCircuitInRain>
       </li>
@@ -72,19 +73,20 @@
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
 
-  <!-- 核能反应堆：以核燃料棒为燃料的大功率发电机（简化燃料棒版，参考 HSK 边缘核能） -->
+  <!-- 核能反应堆：以核燃料棒为燃料的大功率发电机（贴图为 HSK 内置 Rimatomics 堆芯A） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_NuclearReactor</defName>
     <label>核能反应堆</label>
     <description>以核燃料棒为燃料的大型反应堆，输出 20000W 电力。燃料棒在电动电子工艺台由铀制成。</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Things/Building/Power/MMT_CoalGenerator</texPath>
+      <texPath>Things/Building/Power/MMT_NuclearReactor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(5,5)</drawSize>
+      <drawSize>(3,3)</drawSize>
       <drawRotated>false</drawRotated>
     </graphicData>
+    <uiIconPath>Things/Building/Power/MMT_NuclearReactor</uiIconPath>
     <size>(3,3)</size>
     <passability>Impassable</passability>
     <pathCost>90</pathCost>

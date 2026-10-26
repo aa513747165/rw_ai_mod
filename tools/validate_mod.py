@@ -6276,17 +6276,18 @@ def validate_chunkdrill() -> None:
 
 
 def validate_power() -> None:
-    """电力链：原煤发电机（1000W，烧 MMT_Coal）+ 核能反应堆（20000W，烧核燃料棒）+ 燃料棒配方/研究。"""
+    """电力链：原煤发电机（2500W，烧 MMT_Coal，原版化学发电机改色贴图）+ 核能反应堆（20000W，烧核燃料棒，Rimatomics 堆芯贴图）+ 燃料棒配方/研究。"""
     require_files([
         "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml",
         "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Nuclear.xml",
         "1.7/Defs/RecipeDefs/MMT_Recipes_Nuclear.xml",
         "1.7/Defs/ResearchProjectDefs/MMT_Research_Nuclear.xml",
         "1.7/Textures/Things/Building/Power/MMT_CoalGenerator.png",
+        "1.7/Textures/Things/Building/Power/MMT_NuclearReactor.png",
         "1.7/Textures/Things/Item/Resource/MMT_FuelRod.png",
     ])
     buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml"))
-    for name, watts, fuel, cap in (("MMT_CoalGenerator", "-1000", "MMT_Coal", "75"),
+    for name, watts, fuel, cap in (("MMT_CoalGenerator", "-2500", "MMT_Coal", "75"),
                                    ("MMT_NuclearReactor", "-20000", "MMT_FuelRod", "5")):
         d = buildings[name]
         power = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
@@ -6297,6 +6298,13 @@ def validate_power() -> None:
         assert_equal(child_text(fuel_comp, "fuelCapacity"), cap, f"{name} 燃料容量")
     assert_equal(li_values(buildings["MMT_CoalGenerator"], "researchPrerequisites"), ["Electricity"], "原煤发电机研究前置")
     assert_equal(li_values(buildings["MMT_NuclearReactor"], "researchPrerequisites"), ["MMT_NuclearPower"], "核反应堆研究前置")
+    # 贴图修复回归：drawSize 必须与 size 一致（否则占地与贴图不符），且提供 uiIconPath（建筑菜单图标）
+    for name, size in (("MMT_CoalGenerator", "(2,2)"), ("MMT_NuclearReactor", "(3,3)")):
+        d = buildings[name]
+        assert_equal(child_text(d, "size"), size, f"{name} 占地")
+        assert_equal(child_text(d, "graphicData/drawSize"), size, f"{name} 绘制尺寸=占地")
+        assert_equal(child_text(d, "graphicData/texPath"), f"Things/Building/Power/{name}", f"{name} 贴图路径")
+        assert_equal(child_text(d, "uiIconPath"), f"Things/Building/Power/{name}", f"{name} 菜单图标")
 
     rod = def_map(parse_xml("1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Nuclear.xml"))["MMT_FuelRod"]
     assert_equal(li_values(rod, "thingCategories"), ["MMT_FuelCat"], "燃料棒类别（须可储存筛选）")
