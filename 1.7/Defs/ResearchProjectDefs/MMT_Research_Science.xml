@@ -11,8 +11,8 @@
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <researchViewX>15.00</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
   </ResearchProjectDef>
   <ResearchProjectDef>
     <defName>MMT_MultiAnalyzerTech</defName>
@@ -25,8 +25,8 @@
       <li>MMT_LabTerminalTech</li>
     </prerequisites>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
-    <researchViewX>18.00</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
   </ResearchProjectDef>
   <ResearchProjectDef>
     <defName>MMT_LabStationTech</defName>
@@ -39,7 +39,7 @@
       <li>MMT_MultiAnalyzerTech</li>
     </prerequisites>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
-    <researchViewX>21.00</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

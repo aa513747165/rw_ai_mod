@@ -13,8 +13,8 @@
 			<li>MMT_IntegratedCircuitTech</li>
 			<li>MMT_AdvancedComponents</li>
 		</prerequisites>
-		<researchViewX>0.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>11.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_GrenadesBasic</defName>
@@ -29,7 +29,7 @@
 			<li>Machining</li>
 		</prerequisites>
 		<researchViewX>3.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewY>7.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_GrenadesAdvanced</defName>
@@ -41,8 +41,8 @@
 		<prerequisites>
 			<li>MMT_GrenadesBasic</li>
 		</prerequisites>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewX>4.00</researchViewX>
+		<researchViewY>7.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_GunsAdvanced</defName>
@@ -56,8 +56,8 @@
 			<li>GasOperation</li>
 			<li>MMT_IntegratedCircuitTech</li>
 		</prerequisites>
-		<researchViewX>9.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewX>0.00</researchViewX>
+		<researchViewY>12.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_RiflesAdvanced</defName>
@@ -69,8 +69,8 @@
 		<prerequisites>
 			<li>MMT_GunsAdvanced</li>
 		</prerequisites>
-		<researchViewX>12.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>12.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_RiflesMaster</defName>
@@ -82,8 +82,8 @@
 		<prerequisites>
 			<li>MMT_RiflesAdvanced</li>
 		</prerequisites>
-		<researchViewX>15.00</researchViewX>
-		<researchViewY>6.00</researchViewY>
+		<researchViewX>2.00</researchViewX>
+		<researchViewY>12.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_GrenadeLaunchers</defName>
@@ -96,7 +96,7 @@
 			<li>HeavyTurrets</li>
 		</prerequisites>
 		<researchViewX>0.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_SnipersAdvanced</defName>
@@ -108,8 +108,8 @@
 		<prerequisites>
 			<li>PrecisionRifling</li>
 		</prerequisites>
-		<researchViewX>3.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>4.00</researchViewX>
+		<researchViewY>12.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_DirectedEnergyWeapons1</defName>
@@ -121,8 +121,8 @@
 		<prerequisites>
 			<li>ChargedShot</li>
 		</prerequisites>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>0.00</researchViewX>
+		<researchViewY>13.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_DirectedEnergyWeapons2</defName>
@@ -135,8 +135,8 @@
 			<li>MMT_DirectedEnergyWeapons1</li>
 			<li>MMT_UltraComponents</li>
 		</prerequisites>
-		<researchViewX>9.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>13.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_ArchotechWeapons</defName>
@@ -150,8 +150,8 @@
 			<li>BlowbackOperation</li>
 			<li>ChargedShot</li>
 		</prerequisites>
-		<researchViewX>12.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>14.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_SiegeWeapons</defName>
@@ -164,8 +164,8 @@
 			<li>RecurveBow</li>
 			<li>MMT_Woodworking</li>
 		</prerequisites>
-		<researchViewX>15.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>0.00</researchViewX>
+		<researchViewY>1.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_HeavyTurrets2</defName>
@@ -177,8 +177,8 @@
 		<prerequisites>
 			<li>SniperTurret</li>
 		</prerequisites>
-		<researchViewX>18.00</researchViewX>
-		<researchViewY>7.00</researchViewY>
+		<researchViewX>5.00</researchViewX>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_HeavyTurrets3</defName>
@@ -190,8 +190,8 @@
 		<prerequisites>
 			<li>MMT_HeavyTurrets2</li>
 		</prerequisites>
-		<researchViewX>0.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>6.00</researchViewX>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_Artillery2</defName>
@@ -205,8 +205,8 @@
 			<li>SniperTurret</li>
 			<li>Mortars</li>
 		</prerequisites>
-		<researchViewX>3.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_Autoturrets3</defName>
@@ -218,8 +218,8 @@
 		<prerequisites>
 			<li>MMT_Artillery2</li>
 		</prerequisites>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>2.00</researchViewX>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_Rocketry2</defName>
@@ -234,8 +234,8 @@
 			<li>MMT_GrenadeLaunchers</li>
 			<li>Mortars</li>
 		</prerequisites>
-		<researchViewX>9.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>1.00</researchViewX>
+		<researchViewY>16.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
 		<defName>MMT_Rocketry3</defName>
@@ -247,8 +247,8 @@
 		<prerequisites>
 			<li>MMT_Rocketry2</li>
 		</prerequisites>
-		<researchViewX>12.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>2.00</researchViewX>
+		<researchViewY>16.00</researchViewY>
 	</ResearchProjectDef>
 	<!-- KPV 重机枪塔研究：前中期有人操作防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁） -->
 	<ResearchProjectDef>
@@ -261,7 +261,7 @@
 		<prerequisites>
 			<li>GunTurrets</li>
 		</prerequisites>
-		<researchViewX>15.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
+		<researchViewX>4.00</researchViewX>
+		<researchViewY>15.00</researchViewY>
 	</ResearchProjectDef>
 </Defs>

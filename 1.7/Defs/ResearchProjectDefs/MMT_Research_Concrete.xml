@@ -10,8 +10,8 @@
     <prerequisites>
       <li>Stonecutting</li>
     </prerequisites>
-    <researchViewX>7.00</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 混凝土 II：解锁电动混凝土搅拌机与电动配方，对照 HSK Concrete_C2（1000 点，工业） -->
@@ -25,7 +25,7 @@
     <prerequisites>
       <li>MMT_ConcreteBasic</li>
     </prerequisites>
-    <researchViewX>8.00</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

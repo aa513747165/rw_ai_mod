@@ -11,7 +11,7 @@
       <li>MMT_BasicMetalworking</li>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <researchViewX>11.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

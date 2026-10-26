@@ -10,7 +10,7 @@
     <prerequisites>
       <li>BiofuelRefining</li>
     </prerequisites>
-    <researchViewX>13.00</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

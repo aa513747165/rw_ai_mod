@@ -12,8 +12,8 @@
       <li>Stonecutting</li>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>4.00</researchViewX>
-    <researchViewY>2.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 自动化矿料处理：解锁自动研磨机/自动筛子/矿料进料口，实现无中生有闭环 -->
@@ -28,22 +28,22 @@
       <li>MMT_OreSifting</li>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <researchViewX>5.00</researchViewX>
-    <researchViewY>3.00</researchViewY>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 自动机增效：解锁超频模块与并行模块，贴靠自动机叠加提速/增产 -->
+  <!-- 自动机增效：解锁超频模块与并行模块的制作，安装进自动机叠加提速/增产 -->
   <ResearchProjectDef>
     <defName>MMT_AutoBoost</defName>
     <label>自动机增效</label>
-    <description>研究自动加工机组的超频驱动与并行扩展技术，建造超频模块与并行模块，贴靠自动研磨机与自动筛子即可提升其处理速度或并行产出。</description>
+    <description>研究自动加工机组的超频驱动与并行扩展技术，在电动装配台制作超频模块与并行模块，由殖民者安装进自动研磨机、自动筛子或自动采石机，提升其处理速度或并行产出。</description>
     <baseCost>2500</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_AutoOreProcessing</li>
     </prerequisites>
-    <researchViewX>6.00</researchViewX>
-    <researchViewY>3.00</researchViewY>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

@@ -10,8 +10,8 @@
     <prerequisites>
       <li>Stonecutting</li>
     </prerequisites>
-    <researchViewX>4.00</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -25,7 +25,7 @@
       <li>MMT_Glassworking</li>
       <li>MMT_BasicPetrochemistry</li>
     </prerequisites>
-    <researchViewX>5.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

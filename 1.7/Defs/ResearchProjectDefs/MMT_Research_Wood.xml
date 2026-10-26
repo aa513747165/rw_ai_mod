@@ -8,7 +8,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>MMT_ResearchTab</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -22,6 +22,6 @@
       <li>MMT_Woodworking</li>
     </prerequisites>
     <researchViewX>1.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

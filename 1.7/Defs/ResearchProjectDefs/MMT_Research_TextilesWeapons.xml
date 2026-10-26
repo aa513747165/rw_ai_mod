@@ -10,7 +10,7 @@
     <baseCost>400</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>MMT_ResearchTab</tab>
-    <researchViewX>2.00</researchViewX>
+    <researchViewX>4.00</researchViewX>
     <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
 
@@ -25,8 +25,8 @@
     <prerequisites>
       <li>AdvancedFabrication</li>
     </prerequisites>
-    <researchViewX>23.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>10.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 对照 HSK Rockets_C1（火箭弹 I：1400/Industrial/前置 HeavyTurrets） -->
@@ -40,7 +40,7 @@
     <prerequisites>
       <li>HeavyTurrets</li>
     </prerequisites>
-    <researchViewX>23.00</researchViewX>
-    <researchViewY>2.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>16.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

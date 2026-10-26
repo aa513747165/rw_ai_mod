@@ -7,8 +7,8 @@
     <baseCost>600</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>MMT_ResearchTab</tab>
-    <researchViewX>15.00</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>8.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -21,8 +21,8 @@
     <prerequisites>
       <li>MMT_ComponentCrafting</li>
     </prerequisites>
-    <researchViewX>15.00</researchViewX>
-    <researchViewY>1.00</researchViewY>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>8.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -36,7 +36,7 @@
       <li>MMT_AdvancedComponents</li>
       <li>MMT_AdvancedAlloys</li>
     </prerequisites>
-    <researchViewX>15.00</researchViewX>
-    <researchViewY>2.00</researchViewY>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>8.00</researchViewY>
   </ResearchProjectDef>
 </Defs>
