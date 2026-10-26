@@ -130,6 +130,11 @@
       <li>MMT_ElectricGrinder</li>
       <li>MMT_HandSieve</li>
       <li>MMT_ElectricSieve</li>
+      <li>MMT_PrimitiveProstheticsTable</li>
+      <li>MMT_BasicProstheticsTable</li>
+      <li>MMT_SyntheticsTable</li>
+      <li>MMT_BionicsTable</li>
+      <li>MMT_UpgradingStation</li>
     </fixedBillGiverDefs>
     <verb>制作</verb>
     <gerund>制作中</gerund>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 仿生链材料:对照 HSK Core_SK BodyParts_Bones.xml(ArtificialBone)
+       与 Items_Resource_Electronics.xml(MAAI_Chip);人造骨头由人造器官组装台配方制作,
+       医疗助理芯片沿用 recipeMaker 在机器人装配台(MMT_RoboticAssembler)生产 -->
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ArtificialBone</defName>
+    <label>人造骨头</label>
+    <description>精心制作的人造合成骨头。对修复受损的骨骼很有帮助。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/ArtificialBone</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>60</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1</Flammability>
+      <Mass>0.1</Mass>
+    </statBases>
+    <stackLimit>25</stackLimit>
+    <thingCategories>
+      <li>BodyPartsBionic</li>
+    </thingCategories>
+    <tradeTags>
+      <li>Exotic</li>
+    </tradeTags>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_MedicalAssistantChip</defName>
+    <label>医疗助理芯片</label>
+    <description>医疗助理人工智能芯片。一种先进的精密植入物，其携带的AI芯片能够协助处理所有复杂的操作过程。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/EPOEMAAIChip</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <healthAffectsPrice>false</healthAffectsPrice>
+    <statBases>
+      <MarketValue>500</MarketValue>
+      <MaxHitPoints>70</MaxHitPoints>
+      <Mass>0.6</Mass>
+      <Flammability>0.6</Flammability>
+      <DeteriorationRate>2.0</DeteriorationRate>
+    </statBases>
+    <stackLimit>50</stackLimit>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <costList>
+      <Gold>10</Gold>
+      <MMT_CarbonAlloy>15</MMT_CarbonAlloy>
+      <MMT_SpacerComponent>5</MMT_SpacerComponent>
+      <MMT_BioMicrochips>2</MMT_BioMicrochips>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>10000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Machining</soundWorking>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers>
+        <li>MMT_RoboticAssembler</li>
+      </recipeUsers>
+      <productCount>5</productCount>
+    </recipeMaker>
+  </ThingDef>
+</Defs>

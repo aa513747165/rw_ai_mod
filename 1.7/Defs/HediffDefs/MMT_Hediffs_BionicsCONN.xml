@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- CONN 仿生 Hediff(组九~十三);CE/EBF comp 已剔除,CONN 自定义 comp 转 MMT 实现 -->
+  <!-- 手电光圈 mote:由 MyModeTest.HediffComp_LightEffect 在植入者身上维持 -->
+  <ThingDef ParentName="MoteBase">
+    <defName>MMT_Mote_Flashlight</defName>
+    <thingClass>MoteAttached</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote />
+    <graphicData>
+      <texPath>Things/Flashlight/SpotLight_Mote</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+  </ThingDef>
+
+  <!-- 机械眼 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_IndependentEye</defName>
+    <label>机械眼</label>
+    <description>一种单独使用的全自动机械眼，可实现 270° 全侧视野。 它通过使用特殊的神经网络控制器连接到中枢神经系统，为用户的大脑提供信息。 它可以在维护期间轻松取出来进行保养。 这种仿真版本还可以浮出眼窝并围绕载体旋转以监控该区域安全，从而获得梦寐以求像鹰一样的视野。</description>
+    <labelNoun>一个机械眼</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.5</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>0.10</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_IndependentEye</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 能量连接 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_EnergyLink</defName>
+    <label>能量脊柱</label>
+    <description>一种由钛合金制成的先进人造脊柱。 生物凝胶神经束沿着铰接式的金制核心向下延伸，并被治愈系统包裹环绕。 它与生物脊柱的性能相似，并提供一个高科技护盾控制器来增强它的防护能力。</description>
+    <labelNoun>一个能量脊柱</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_EnergyLink</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 外刃 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_OuterBlade</defName>
+    <label>外置肘刀</label>
+    <description>一种以战斗为导向的前臂改造，包括在尺骨末端带有伸缩刀片的机械装置。 它在战斗中是致命的，由于采用了液压系统，这种弹射的塑钢武器几乎可以穿透任何东西。 刀片可以缩回并且易于隐藏。</description>
+    <labelNoun>一个外置肘刀</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.9</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MeleeHitChance>+2</MeleeHitChance>
+      					<SharpDamageMultiplier>1.25</SharpDamageMultiplier>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+      				<tools>
+      					<li>
+      						<label>arm</label>
+      						<capacities>
+      							<li>Stab</li>
+      						</capacities>
+      						<power>26</power>
+      						<cooldownTime>1.3</cooldownTime>
+      						</li>
+      				</tools>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_OuterBlade</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 动力臂 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_PowerArms</defName>
+    <label>动力臂</label>
+    <description>一种以战斗为导向的肩部替代品，由机械手和伺服电机组成的武器平台。 这种身体的增强极大地增加了其主人的战斗力。</description>
+    <labelNoun>一个动力臂</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.50</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					
+      					<CarryingCapacity>+55</CarryingCapacity>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+      				<tools>
+      					<li>
+      						<label>arm</label>
+      						<capacities>
+      							<li>Blunt</li>
+      						</capacities>
+      						<power>20</power>
+      						<cooldownTime>1.25</cooldownTime>
+      						</li>
+      				</tools>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_PowerArms</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 暗影行者 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Shadowrunner</defName>
+    <label>暗影狂奔</label>
+    <description>一种机械肺替代品和增强器，它可以过滤掉空气中的任何有毒或污染的物质。 这种特殊类型的肺最初是为了执行生物危害环境中的危险任务而制造的。 后来它升级为一个烟雾释放器，可由用户自己控制， 并且有效地让他远离周边敌人的视线。</description>
+    <labelNoun>一个暗影狂奔仿生肺的清理设备</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.40</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<HuntingStealth>0.50</HuntingStealth>
+      					<ToxicResistance>0.50</ToxicResistance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Shadowrunner</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 外骨骼装甲 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_ExoskeletonArmor</defName>
+    <label>外骨骼装甲</label>
+    <description>一种全身外骨骼加装装甲的移植。 对移植者来说是非常危险的。 但结果是值得的，它整体的保护性能和恢复力得到了极大的提升。 外骨骼装甲直接在身体中与骨骼融为一体。</description>
+    <labelNoun>一个外骨骼装甲</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ArmorRating_Blunt>10.5</ArmorRating_Blunt>
+      					<ArmorRating_Heat>0.15</ArmorRating_Heat>
+      					<ArmorRating_Sharp>6.5</ArmorRating_Sharp>
+      				</statOffsets>
+      			</li>
+    </stages>
+  </HediffDef>
+
+  <!-- 皮肤装甲板 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Dermalplating</defName>
+    <label>镀层皮肤</label>
+    <description>一种全身皮肤增加镀层的移植。 对移植者来说是非常危险。 但结果是值得的，它整体的保护性能和恢复力得到了极大的提升。 皮肤镀层在身体中与皮肤合为一体。</description>
+    <labelNoun>一个镀层皮肤</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<painFactor>0.5</painFactor>
+      				<statOffsets>
+      					<ArmorRating_Blunt>4.5</ArmorRating_Blunt>
+      					<ArmorRating_Heat>0.1</ArmorRating_Heat>
+      					<ArmorRating_Sharp>3.5</ArmorRating_Sharp>
+      				</statOffsets>
+      			</li>
+    </stages>
+  </HediffDef>
+
+  <!-- 狮心 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Lionheart</defName>
+    <label>勇士之心</label>
+    <description>先进的人造心脏，带有肾上腺素注射器和自适应战斗系统。</description>
+    <labelNoun>一个勇士之心</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.6, 0.4)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.10</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<foodPoisoningChanceFactor>-0.20</foodPoisoningChanceFactor>
+      				<statOffsets>
+      					<MeleeDamageFactor>1.4</MeleeDamageFactor>
+      					<MeleeDodgeChance>10</MeleeDodgeChance>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.12</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Lionheart</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 变焦眼 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Zoom</defName>
+    <label>变焦仿生眼</label>
+    <description>增强型的人造眼睛。它通过生物凝胶神经链接，内部拥有信号预处理器、自我修复模块、广谱传感器和突触脉冲发射器，它几乎在各个方面都优于生物眼。这种神经连接的原型设备可以使用户自由的放大或缩小目标。</description>
+    <labelNoun>一个仿生眼</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MedicalTendQualityOffset>0.1</MedicalTendQualityOffset>
+      					<MedicalTendSpeed>0.15</MedicalTendSpeed>
+      				</statOffsets>
+      				<statFactors>
+      					<SightsEfficiency>1.15</SightsEfficiency>
+      					<ShotSpread>0.92</ShotSpread>
+      					<SwayFactor>0.90</SwayFactor>
+      				</statFactors>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Zoom</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 能量拳 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_EnergyFist</defName>
+    <label>动力手</label>
+    <description>一种以战斗为导向的手部替代品，由一只革新科技的手和含有泵动系统的手腕组成的。这种泵可以快速并精准的出拳。机械触发装置可以让你控制其纯粹的力量，其强大的速度提升装置链接在神经接口上，并由极致科技的微型电池供电。</description>
+    <labelNoun>一个动力手</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.50</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+      				<tools>
+      					<li>
+      						<label>arm</label>
+      						<capacities>
+      							<li>Poke</li>
+      						</capacities>
+      						<power>19.0</power>
+      						<cooldownTime>0.9</cooldownTime>
+      						</li>
+      				</tools>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_EnergyFist</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 弹性跟腱 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_ElasticAchilles</defName>
+    <label>弹性跟腱</label>
+    <description>这种仿生腿模块可以让一个骨头上没有任何肉的人站起来， 它旨在消除近战中人类的最后一个弱点，即阿喀琉斯之踵，使用更具弹性和不那么敏感的版本代替它。 深受重型地面单位的青睐。 它附带了所有的零件，可以进行完整的改造。</description>
+    <labelNoun>一个仿生阿喀琉斯之踵</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.20</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<TrapSpringChance>-0.1</TrapSpringChance>
+      					<MeleeHitChance>4</MeleeHitChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_ElasticAchilles</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 独眼巨人目镜 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_CyclopsVisor</defName>
+    <label>镭射目镜</label>
+    <description>一种混合仿生眼和目标采集系统，具有完全校正的滤光镜和数据扫描功能。它可以通过中枢神经系统与记忆连接。能增强视力和敏锐度。</description>
+    <labelNoun>一个镭射目镜</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.20</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<RangedWeapon_Cooldown>-0.2</RangedWeapon_Cooldown>
+      					<AimingDelayFactor>-0.2</AimingDelayFactor>
+      				</statOffsets>
+      				<statFactors>
+      					<SightsEfficiency>1.15</SightsEfficiency>
+      					<ShotSpread>0.92</ShotSpread>
+      					<SwayFactor>0.90</SwayFactor>
+      				</statFactors>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_CyclopsVisor</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 激光侦测器 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_LaserDetection</defName>
+    <label>激光探测装置</label>
+    <description>安装在耳旁的激光探测装置。它使用激光扫描环境，并在一个可伸出的镜片上显示所有重要数据。在大幅提高视觉效率的同时，通过高雅的自动标记器提升目标识别效率（植入体）</description>
+    <labelNoun>激光探测装置</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<AimingDelayFactor>-0.10</AimingDelayFactor>
+      				</statOffsets>
+      				<statFactors>
+      					<SightsEfficiency>1.25</SightsEfficiency>
+      					<ShotSpread>0.95</ShotSpread>
+      					<SwayFactor>0.80</SwayFactor>
+      				</statFactors>
+      				<capMods>
+      					<li>
+      						<capacity>Sight</capacity>
+      						<offset>0.10</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_LightEffect">
+      				<visualMote>MMT_Mote_Flashlight</visualMote>
+      				<size>1.5</size>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_LaserDetection</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 传感耳侧 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_SensoricEarside</defName>
+    <label>耳道传感组件</label>
+    <description>一种耳道传感装置和目标标记系统，取代了耳朵。这可以让你在很远的地方就能听到针头掉落的声音（PS可以取代双筒望远镜）</description>
+    <labelNoun>一个耳道传感组件</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0, 0.8, 0.5)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.20</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MedicalTendQualityOffset>0.10</MedicalTendQualityOffset>
+      					<AimingDelayFactor>-0.10</AimingDelayFactor>
+      					<MeleeDodgeChance>0.07</MeleeDodgeChance>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Hearing</capacity>
+      						<offset>0.18</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_SensoricEarside</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 狂战士芯片 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_BerserkerChip</defName>
+    <label>狂战士芯片</label>
+    <description>一种大脑植入物，可以给使用者带来肾上腺素的刺激。大幅提高使用者的近战能力，并有效抑制疼痛。虽然它确实能让使用者完成更多的任务，但事实证明，疼痛是有原因的。当你感觉不到它时，你很容易受到更严重的伤害。</description>
+    <labelNoun>一个狂战士芯片</labelNoun>
+    <hediffClass>MyModeTest.HediffBerserkGizmo</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 1)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<painFactor>0.5</painFactor>
+      				<statOffsets>
+      					<MeleeHitChance>10</MeleeHitChance>
+      					<MeleeDodgeChance>0.1</MeleeDodgeChance>
+      					<PainShockThreshold>0.75</PainShockThreshold>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>0.10</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_BerserkerChip</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 心灵扭曲 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Mindtwist</defName>
+    <label>心灵钝化装置</label>
+    <description>心灵钝化装置可以去除安装者的心灵敏感度。它直接与使用者的大脑互动，并断开大脑区域之间不需要的链接。由于确立突触连接需要时间，它不会立即去除心灵敏感度。</description>
+    <labelNoun>心灵钝化装置</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 1)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<PsychicSensitivity>-1</PsychicSensitivity>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_ThoughtsRemover">
+      				<thoughtsToClear>
+      					<li>KnowPrisonerSold</li>
+      					<li>KnowGuestOrganHarvested</li>
+      					<li>ButcheredHumanlikeCorpse</li>
+      					<li>KnowButcheredHumanlikeCorpse</li>
+      					<li>WitnessedDeathNonAlly</li>
+      					<li>ColonistBanished</li>
+      					<li>ColonistBanishedToDie</li>
+      					<li>PrisonerBanishedToDie</li>
+      					<li>KnowGuestExecuted</li>
+      					<li>KnowColonistExecuted</li>
+      					<li>KnowPrisonerDiedInnocent</li>
+      				</thoughtsToClear>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_BodyPartsArtificialtwist</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 缪斯芯片 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_MuseChip</defName>
+    <label>灵感激发芯片</label>
+    <description>一个携带虚拟身份 "EVE "的大脑植入物，与他的主人的生命形态相伴。它控制着一个巨大的数据库，并对所有相关的信息进行过滤，确保做出最佳选择。</description>
+    <labelNoun>一个灵感激发芯片</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 1)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MentalBreakThreshold>-0.15</MentalBreakThreshold>
+      					<GlobalLearningFactor>0.25</GlobalLearningFactor>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_MuseChip</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 神经增强器 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_NeuroEnhancer</defName>
+    <label>神经增强器</label>
+    <description>一种大脑植入物，可以直接访问星际框架平台。当找到网络时，它会进行连接，并向用户提供有关任何给定情况的信息。 您可以在大脑中看电视，并有足够的时间游玩任何事情。 在您的脑海中创造艺术或根据您的想象力构建蓝图。</description>
+    <labelNoun>一个神经增强器</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 1)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<GlobalLearningFactor>0.33</GlobalLearningFactor>
+      					<WorkSpeedGlobal>0.10</WorkSpeedGlobal>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_RecreationGiver">
+      				<recreationToGive>0.10</recreationToGive>
+      				<eachNumberOfTicks>7500</eachNumberOfTicks>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_NeuroEnhancer</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 战斗AI -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_CombatAI</defName>
+    <label>战斗AI</label>
+    <description>一种大脑植入物，在战斗中对使用者的精确性稍加控制。这个最初的设计是在银河系中的一场战争中由某个人形派别制造的，目的是创造终极士兵。他们最终被打败并被铲除，但他们的一些发明被保留到现在。</description>
+    <labelNoun>一个战斗AI</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 1)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MentalBreakThreshold>-0.18</MentalBreakThreshold>
+      					<AimingDelayFactor>-0.25</AimingDelayFactor>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>0.10</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_CombatAI</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 高能肺 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_EnergeticLung</defName>
+    <label>动力肺</label>
+    <description>一个带有液氧分配器的仿生肺，是为人类在没有制氧机的时代进行太空旅行而制造的。它有一个额外的液氧罐，能够有效地长时间不呼吸。一对这样的模块可以构成人类基础的呼吸系统。这个独特的模块在一瞬间取代了多年的（憋气）练习和呼吸控制。</description>
+    <labelNoun>一个仿生肺</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.40</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_CONN_EnergeticLung</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 高能肾 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_EnergeticKidney</defName>
+    <label>动力肾</label>
+    <description>一个增强耐力和力量的仿生肾。在这种混合设计中，肾脏被一个反应性过滤器所取代。它向身体内部释放免疫毒蛋白，保护使用者免受致命疾病的影响。</description>
+    <labelNoun>一个仿生肾</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.40</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ImmunityGainSpeedFactor>0.05</ImmunityGainSpeedFactor>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_EnergeticKidney</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 能量核心 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_EnergyCore</defName>
+    <label>动力心脏</label>
+    <description>一种先进的人工心脏。拥有合成的肌肉纤维，可以像真正的心脏一样跳动，除此之外还有一个高速泵，可以在高压下快速循环。它几乎在所有方面都比生物心脏好，其先进的超级核心是由一个类机械的动力电池建立的。</description>
+    <labelNoun>一个动力心脏</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<partEfficiencyOffset>0.50</partEfficiencyOffset>
+      				<statOffsets>
+      					<MoveSpeed>0.15</MoveSpeed>
+      					<RestRateMultiplier>0.50</RestRateMultiplier>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_EnergyCore</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 自主病毒杀手 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Autonomicviruskiller</defName>
+    <label>自主杀毒型肝</label>
+    <description>通过机械性抗体增强免疫系统，并搜索并摧毁血液循环中的任何危险。用于在危险环境中的特殊战斗医务人员。</description>
+    <labelNoun>一个自主杀毒型肝</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ImmunityGainSpeedFactor>0.2</ImmunityGainSpeedFactor>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>BloodPumping</capacity>
+      						<offset>0.09</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Autonomicviruskiller</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 奥鲁姆 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Aurum</defName>
+    <label>贸易助手装置（金之眼）</label>
+    <description>一个改良的眼部装置，可以在虹膜上反射出一个屏幕。使用代理分析当前的贸易伙伴，并跟踪对话、登记股票、比较市场价格和管理信用。这种模式充当了一种在商业行会之间谨慎转移资金的方式。所有者可以不受限制的绕过黑市防火墙，算作是禁忌商品。</description>
+    <labelNoun>一个贸易助手装置（金之眼）</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<TradePriceImprovement>0.20</TradePriceImprovement>
+      					<NegotiationAbility>0.20</NegotiationAbility>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Aurum</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 黑珍珠 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_BlackPearl</defName>
+    <label>黑珍珠（眼）</label>
+    <description>一个具有独特元素和全侧布满触发装置的改进型人造眼。 它拥有广泛的功能，但最突出的还是夜视功能。 黑珍珠曾经是士兵之间的重要象征。 其核心基本上是一个机器人的眼球模块，是由阿尔法海军陆战队从一个机械人体内取出。 在人类黑暗时代，他们被视为战利品。 但这个名字还是与它漆黑的颜色相关，实际上大脑无法分析并读取数据序列。 它现在也可以被工人使用，因为它对视觉的改善效果很大。</description>
+    <labelNoun>一个黑色的眼睛</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.35</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_CONN_BlackPearl</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 悬浮脚 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_HoverFeet</defName>
+    <label>悬浮脚板</label>
+    <description>一个安装在轨道适配器上的自我维持的悬浮板，直接与脚内的骨头相连。年轻的街头帮派曾经利用这一点在犯罪后逃离城市。可以通过滑翔提高运动速度。</description>
+    <labelNoun>一个悬浮脚板</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_CONN_HoverFeet</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 绿拇指 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Greenthumb</defName>
+    <label>园艺拇指</label>
+    <description>为农民创造的专用仿生体，可帮助殖民地快速开拓。它取代了拇指，成为了一种可配置且功能齐全手指装置。手掌内的所有东西都可以被一个学习型纳米电脑扫描，该电脑包含各种类型的动植物的信息。指甲在数据扫描和加载时发出绿色的光。</description>
+    <labelNoun>一个园艺拇指</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.05</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<PlantHarvestYield>0.08</PlantHarvestYield>
+      					<PlantWorkSpeed>0.08</PlantWorkSpeed>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Greenthumb</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 压缩颚 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_CompressionJaw</defName>
+    <label>机械加压颚</label>
+    <description>一种带有液压伺服马达的人工颚部替代品。塑料外壳加金齿的组合可以轻松地粉碎钢铁，并允许载体在几秒钟内完成进食。其极快的速度也能让携带者说话自如。</description>
+    <labelNoun>一个机械加压颚</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.33</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<EatingSpeed>0.30</EatingSpeed>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_CompressionJaw</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 压缩胃 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_CompressionStomach</defName>
+    <label>机械加压胃</label>
+    <description>一个强大的仿生胃，由于其内部的液压伺服马达，它可以使用难以想象的速度消化食物。由于集成了盐酸混合器，即使是吞下石头也可以很快消化他。</description>
+    <labelNoun>一个机械加压胃</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.35</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ImmunityGainSpeedFactor>0.05</ImmunityGainSpeedFactor>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_CompressionStomach</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 手电 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_FlashLight</defName>
+    <label>手电装置</label>
+    <description>一个可以照亮黑暗的手电装置，安装在耳朵的一侧。</description>
+    <labelNoun>一个手电装置</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ConstructionSpeedFactor>0.05</ConstructionSpeedFactor>
+      					<MiningSpeed>0.10</MiningSpeed>
+      				</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Sight</capacity>
+      						<offset>0.05</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_LightEffect">
+      				<visualMote>MMT_Mote_Flashlight</visualMote>
+      				<size>1.5</size>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_CONN_FlashLight</spawnThingOnRemoved>
+  </HediffDef>
+
+  <!-- 肌肉线 -->
+  <HediffDef>
+    <defName>MMT_CONN_hediff_Musclewire</defName>
+    <label>机械肌肉</label>
+    <description>与身体所有肌肉的经脉通道连接完全融合，大幅度提高运动速度和敏捷性。</description>
+    <labelNoun>一个机械肌肉</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.6, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.15</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CONN_Musclewire</spawnThingOnRemoved>
+  </HediffDef>
+</Defs>

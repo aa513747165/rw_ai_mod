@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 仿生/义肢研究树:对照 HSK Core_SK Research_Medicine.xml 义肢制造/义肢安装双线,
+       制造线锚定原版 Bionics,安装线锚定原版 Prosthetics;HSK 临床医学前置映射到
+       MMT_Medicine 链(Clinical_B1→MMT_Medicine_B1 等,VitalsMonitor/Clinical_E1 用原版)。
+       制造线 Y=6.5,安装线 Y=7.5(避开已有整数行)。 -->
+
+  <!-- 义肢制造 I -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_B1</defName>
+    <label>义肢制造 I</label>
+    <description>学习用木石与简单零件制作最基础的义肢。解锁原始假肢工作台，以及眼罩、钩手、义齿的制作。</description>
+    <baseCost>300</baseCost>
+    <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_B1</li>
+    </prerequisites>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 II -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_C1</defName>
+    <label>义肢制造 II</label>
+    <description>掌握工业级义肢组装技术。解锁生命维持系统的制作。</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_B1</li>
+    </prerequisites>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 III -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_C2</defName>
+    <label>义肢制造 III</label>
+    <description>改进义肢生产线。解锁假肢工作台，可制作玻璃眼等进阶简易义肢。</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_C1</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 IV -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_D1</defName>
+    <label>义肢制造 IV</label>
+    <description>结合生命监测技术，为人造器官制造打下基础。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>VitalsMonitor</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 V -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_D2</defName>
+    <label>义肢制造 V</label>
+    <description>掌握人造器官与神经刺激的制造。解锁肌肉刺激器等植入物。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_D1</li>
+      <li>MMT_ProsthesisInstall_C3</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 VI -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_D3</defName>
+    <label>义肢制造 VI</label>
+    <description>建立合成人造组织工艺。解锁人造器官组装台、人造骨头与七种功能肋骨。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_C2</li>
+    </prerequisites>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 VII -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_D4</defName>
+    <label>义肢制造 VII</label>
+    <description>掌握高端合成材料植入。解锁合成皮肤、神经肌肉结构、飞螳镰刃等部件。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_D3</li>
+    </prerequisites>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 IX -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E1</defName>
+    <label>义肢制造 IX</label>
+    <description>神经机械技术入门。解锁神经机械体工作台与防护性外骨骼。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Bionics</li>
+    </prerequisites>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 X -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E2</defName>
+    <label>义肢制造 X</label>
+    <description>神经机械技术进阶。解锁暗影行者、外骨骼装甲、皮肤装甲板等 CONN 高级仿生。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_E1</li>
+    </prerequisites>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 XI -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E3</defName>
+    <label>义肢制造 XI</label>
+    <description>神经机械战斗化改造。解锁能量连接、外刃、动力臂、能量拳等战斗仿生。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_E2</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 XII -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E4</defName>
+    <label>义肢制造 XII</label>
+    <description>闪耀世界脑机接口技术。解锁战术角膜植入体与全部辅助AI核心。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Bionics</li>
+    </prerequisites>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 XIII -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E5</defName>
+    <label>义肢制造 XIII</label>
+    <description>顶级神经机械工艺。解锁机械眼、变焦眼、黑珍珠、悬浮脚等 CONN 顶级仿生。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Bionics</li>
+    </prerequisites>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢制造 XIV -->
+  <ResearchProjectDef>
+    <defName>MMT_Prosthesis_E6</defName>
+    <label>义肢制造 XIV</label>
+    <description>神经机械技术巅峰。解锁最终级仿生部件。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Prosthesis_E5</li>
+    </prerequisites>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 II -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_C1</defName>
+    <label>义肢安装 II</label>
+    <description>训练医生安装基础义肢。解锁生命维持系统(血泵/呼吸器等)的安装手术。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Prosthetics</li>
+    </prerequisites>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 III -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_C2</defName>
+    <label>义肢安装 III</label>
+    <description>提高义肢手术水平。解锁简易假手、假足、假腿、假臂与人造鼻、人造骨盆的安装。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_B2</li>
+      <li>MMT_ProsthesisInstall_C1</li>
+    </prerequisites>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 IV -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_C3</defName>
+    <label>义肢安装 IV</label>
+    <description>进一步规范义肢手术流程。</description>
+    <baseCost>1100</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_C2</li>
+      <li>VitalsMonitor</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 V -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_D1</defName>
+    <label>义肢安装 V</label>
+    <description>掌握人造器官移植。解锁功能肋骨与合成器官的安装手术。</description>
+    <baseCost>1400</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_C3</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 VI -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_D2</defName>
+    <label>义肢安装 VI</label>
+    <description>提高人造器官手术成功率。</description>
+    <baseCost>1400</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_D1</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 VII -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_D3</defName>
+    <label>义肢安装 VII</label>
+    <description>掌握仿生体移植。解锁仿生手、仿生足、仿生耳等 Bionics 级部件的安装。</description>
+    <baseCost>1400</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_D2</li>
+      <li>MMT_Medicine_D1</li>
+    </prerequisites>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 VIII -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_D4</defName>
+    <label>义肢安装 VIII</label>
+    <description>掌握脊椎与神经级仿生安装。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_D3</li>
+      <li>MMT_Medicine_D1</li>
+    </prerequisites>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 IX -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_E1</defName>
+    <label>义肢安装 IX</label>
+    <description>掌握脑机接口手术。解锁辅助AI核心与防护性外骨骼的安装。</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_D4</li>
+    </prerequisites>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 义肢安装 X -->
+  <ResearchProjectDef>
+    <defName>MMT_ProsthesisInstall_E2</defName>
+    <label>义肢安装 X</label>
+    <description>神经机械手术巅峰。解锁外骨骼、战术角膜植入体等顶级部件的安装。</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ProsthesisInstall_E1</li>
+      <li>MedicineProduction</li>
+    </prerequisites>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>7.50</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

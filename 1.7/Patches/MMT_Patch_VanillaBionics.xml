@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 原版同名仿生/义肢部件改造(对照 HSK AutoGenPatches/BodyParts):
+       替换 costList 为 MMT 材料链,追加 recipeMaker 改到 MMT 工作台与研究。
+       安装手术沿用原版(Human 自带 InstallXxx),数值保留原版。 -->
+
+  <!-- 神经机械仿生臂(ArchotechArm) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="ArchotechArm"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="ArchotechArm"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ArchotechArm"]</xpath>
+    <value>
+    <costList>
+      <MMT_UltraComponent>4</MMT_UltraComponent>
+      <MMT_Biomatter>40</MMT_Biomatter>
+      <MMT_SyntheticFibers>12</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_ArtificialBone>5</MMT_ArtificialBone>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>12000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>18</Crafting>
+      </skillRequirements>
+      <recipeUsers>
+        <li>MMT_UpgradingStation</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 神经机械仿生眼(ArchotechEye) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="ArchotechEye"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="ArchotechEye"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ArchotechEye"]</xpath>
+    <value>
+    <costList>
+      <MMT_UltraComponent>2</MMT_UltraComponent>
+      <MMT_Biomatter>15</MMT_Biomatter>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_Paraffins>10</MMT_Paraffins>
+      <MMT_ReinforcedGlass>5</MMT_ReinforcedGlass>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>12000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>18</Crafting>
+      </skillRequirements>
+      <recipeUsers>
+        <li>MMT_UpgradingStation</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 神经机械仿生腿(ArchotechLeg) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="ArchotechLeg"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="ArchotechLeg"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="ArchotechLeg"]</xpath>
+    <value>
+    <costList>
+      <MMT_UltraComponent>4</MMT_UltraComponent>
+      <MMT_Biomatter>45</MMT_Biomatter>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_SyntheticFibers>15</MMT_SyntheticFibers>
+      <MMT_ArtificialBone>5</MMT_ArtificialBone>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>12000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>18</Crafting>
+      </skillRequirements>
+      <recipeUsers>
+        <li>MMT_UpgradingStation</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生臂(BionicArm) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicArm"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicArm"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicArm"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>5</MMT_SpacerComponent>
+      <MMT_Biomatter>30</MMT_Biomatter>
+      <MMT_SyntheticFibers>15</MMT_SyntheticFibers>
+      <MMT_ArtificialBone>5</MMT_ArtificialBone>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生耳(BionicEar) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicEar"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicEar"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicEar"]</xpath>
+    <value>
+    <costList>
+      <MMT_Biomatter>25</MMT_Biomatter>
+      <MMT_SyntheticFibers>7</MMT_SyntheticFibers>
+      <MMT_Paraffins>13</MMT_Paraffins>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生眼(BionicEye) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicEye"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicEye"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicEye"]</xpath>
+    <value>
+    <costList>
+      <MMT_Biomatter>20</MMT_Biomatter>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_Paraffins>15</MMT_Paraffins>
+      <MMT_ReinforcedGlass>10</MMT_ReinforcedGlass>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生心脏(BionicHeart) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicHeart"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicHeart"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicHeart"]</xpath>
+    <value>
+    <costList>
+      <Hyperweave>15</Hyperweave>
+      <MMT_CarbonAlloy>4</MMT_CarbonAlloy>
+      <MMT_SyntheticFibers>10</MMT_SyntheticFibers>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSkill>Crafting</workSkill>
+      <workAmount>7500</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_SyntheticsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生颌(BionicJaw) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicJaw"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicJaw"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicJaw"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>6</MMT_SpacerComponent>
+      <MMT_Biomatter>25</MMT_Biomatter>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_ArtificialBone>1</MMT_ArtificialBone>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生腿(BionicLeg) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicLeg"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicLeg"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicLeg"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>6</MMT_SpacerComponent>
+      <MMT_Biomatter>40</MMT_Biomatter>
+      <MMT_SyntheticFibers>20</MMT_SyntheticFibers>
+      <MMT_ArtificialBone>5</MMT_ArtificialBone>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生脊椎(BionicSpine) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicSpine"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicSpine"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicSpine"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>6</MMT_SpacerComponent>
+      <MMT_Biomatter>45</MMT_Biomatter>
+      <MMT_SyntheticFibers>25</MMT_SyntheticFibers>
+      <MMT_ArtificialBone>4</MMT_ArtificialBone>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 合成胃(BionicStomach) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicStomach"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicStomach"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicStomach"]</xpath>
+    <value>
+    <costList>
+      <Hyperweave>23</Hyperweave>
+      <MMT_CarbonAlloy>3</MMT_CarbonAlloy>
+      <MMT_SyntheticFibers>7</MMT_SyntheticFibers>
+      <MMT_IntegratedCircuit>2</MMT_IntegratedCircuit>
+    </costList>
+    <recipeMaker>
+      <workSkill>Crafting</workSkill>
+      <workAmount>7500</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_SyntheticsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 仿生舌(BionicTongue) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="BionicTongue"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="BionicTongue"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="BionicTongue"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>3</MMT_SpacerComponent>
+      <MMT_Biomatter>20</MMT_Biomatter>
+      <MMT_SyntheticFibers>10</MMT_SyntheticFibers>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 义齿(Denture) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Denture"]</xpath>
+    <value>
+    <costList>
+      <MMT_ComponentMedieval>8</MMT_ComponentMedieval>
+      <MMT_Mechanism>2</MMT_Mechanism>
+    </costList>
+    <recipeMaker>
+      <workSkill>Crafting</workSkill>
+      <workAmount>2500</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>3</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_B1</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_PrimitiveProstheticsTable</li>
+        <li>MMT_BasicProstheticsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 乐丝芯片(Joywire) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Joywire"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="Joywire"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Joywire"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>3</MMT_SpacerComponent>
+      <MMT_Plastic>15</MMT_Plastic>
+      <MMT_IntegratedCircuit>2</MMT_IntegratedCircuit>
+      <MMT_SyntheticFibers>7</MMT_SyntheticFibers>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 止痛芯片(Painstopper) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Painstopper"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="Painstopper"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Painstopper"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>4</MMT_SpacerComponent>
+      <MMT_Plastic>14</MMT_Plastic>
+      <Neutroamine>10</Neutroamine>
+      <MMT_IntegratedCircuit>2</MMT_IntegratedCircuit>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+  <!-- 动力爪(PowerClaw) -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="PowerClaw"]/costList</xpath>
+    <operation Class="PatchOperationRemove">
+      <xpath>Defs/ThingDef[defName="PowerClaw"]/costList</xpath>
+    </operation>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="PowerClaw"]</xpath>
+    <value>
+    <costList>
+      <MMT_SpacerComponent>7</MMT_SpacerComponent>
+      <MMT_Biomatter>35</MMT_Biomatter>
+      <MMT_SyntheticFibers>11</MMT_SyntheticFibers>
+      <MMT_ScytherBlade>2</MMT_ScytherBlade>
+      <MMT_Microchip>1</MMT_Microchip>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>8000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>Bionics</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_BionicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    </value>
+  </Operation>
+
+</Patch>

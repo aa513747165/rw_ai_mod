@@ -1,0 +1,1455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 仿生 Hediff(组一~八):partEfficiency/capMods/statOffsets 数值对照 HSK -->
+  <!-- 眼罩 -->
+  <HediffDef>
+    <defName>MMT_EyePatch</defName>
+    <label>眼罩</label>
+    <description>把眼窝罩住。挺吓人的。</description>
+    <labelNoun>眼罩</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(148,117,14)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_EyePatch</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 钩手 -->
+  <HediffDef>
+    <defName>MMT_HookHand</defName>
+    <label>钩手</label>
+    <description>代替缺失的手。哦呀，挺吓人的。</description>
+    <labelNoun>钩手</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(148,117,14)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.3</partEfficiency>
+    </addedPartProps>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+      				<tools>
+      					<li>
+      						<label>fist</label>
+      						<capacities>
+      							<li>Scratch</li>
+      						</capacities>
+      						<power>10</power>
+      						<cooldownTime>1.3</cooldownTime>
+      						</li>
+      				</tools>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_HookHand</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 玻璃眼 -->
+  <HediffDef>
+    <defName>MMT_GlassEye</defName>
+    <label>玻璃眼</label>
+    <description>替换缺失的眼睛。比眼罩好些。</description>
+    <labelNoun>玻璃眼</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(102,178,255)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Talking</capacity>
+      						<offset>0.09</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GlassEye</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 人造鼻 -->
+  <HediffDef>
+    <defName>MMT_ArtificialNose</defName>
+    <label>人造鼻</label>
+    <description>用来代替缺失的鼻子。填补脸中央的空洞。</description>
+    <labelNoun>人造鼻</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(102,178,255)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.7</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_ArtificialNose</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 简易的假手 -->
+  <HediffDef>
+    <defName>MMT_SimpleProstheticHand</defName>
+    <label>简易的假手</label>
+    <description>用来代替缺失的手，不是很舒服但是相当有效。</description>
+    <labelNoun>简易的假手</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(102,178,255)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.7</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_SimpleProstheticHand</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 简易的假足 -->
+  <HediffDef>
+    <defName>MMT_SimpleProstheticFoot</defName>
+    <label>简易的假足</label>
+    <description>用来代替缺失的脚，不是很舒服但是相当有效。</description>
+    <labelNoun>简易的假脚</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(102,178,255)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.8</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_SimpleProstheticFoot</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 人造骨盆 -->
+  <HediffDef>
+    <defName>MMT_ArtificialPelvis</defName>
+    <label>人造骨盆</label>
+    <description>R用来代替缺失的骨盆。如果你不想在地上到处爬的话，还是非常有用的。</description>
+    <labelNoun>人造骨盆</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(102,178,255)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.8</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>MMT_ArtificialPelvis</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 仿生手 -->
+  <HediffDef>
+    <defName>MMT_BionicHand</defName>
+    <label>仿生手</label>
+    <description>比起普通的手，能让使用者更快地完成任务。</description>
+    <labelNoun>一只仿生手</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.1</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.1</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicHand</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 仿生足 -->
+  <HediffDef>
+    <defName>MMT_BionicFoot</defName>
+    <label>仿生足</label>
+    <description>这种假体能给你更快的行走速度，而且任何时候都不会被绊倒。</description>
+    <labelNoun>一个仿生足</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.1</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.08</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicFoot</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 仿生脖颈 -->
+  <HediffDef>
+    <defName>MMT_BionicNeck</defName>
+    <label>仿生脖颈</label>
+    <description>比起普通的脖子，能让使用者更好的做到挑战，比如让你的脖子转180度之类的。</description>
+    <labelNoun>一个仿生脖颈</labelNoun>
+    <hediffClass>Hediff_AddedPartNoRemoveSubparts</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.1</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Talking</capacity>
+      						<offset>0.1</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicNeck</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 脑激励器 -->
+  <HediffDef>
+    <defName>MMT_BrainStimulator</defName>
+    <label>脑激励器</label>
+    <description>一种向大脑发出电击的小型设备，可略微提高意识和活动能力。</description>
+    <labelNoun>一个脑激励器</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.65, 0.3, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.7</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>+0.07</offset>
+      					</li>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>+0.10</offset>
+      					</li>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>+0.12</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BrainStimulator</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- AI芯片 -->
+  <HediffDef>
+    <defName>MMT_AIChip</defName>
+    <label>AI芯片</label>
+    <description>通过特殊的化学物质和电脉冲，这种小小的芯片可以完全恢复使用者的意识和行动能力。</description>
+    <labelNoun>一个AI芯片</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.65, 0.3, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.2</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Talking</capacity>
+      						<offset>0.14</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.07</offset>
+      					</li>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.15</offset>
+      					</li>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>0.20</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_AIChip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 合成肺 -->
+  <HediffDef>
+    <defName>MMT_BionicLung</defName>
+    <label>合成肺</label>
+    <description>高科技的呼吸替代体。会发出轻柔的呼吸声。</description>
+    <labelNoun>合成肺</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(188,39,242)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Breathing</capacity>
+      						<offset>0.06</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.05</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicLung</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 合成肝 -->
+  <HediffDef>
+    <defName>MMT_BionicLiver</defName>
+    <label>合成肝</label>
+    <description>增强型肝，通过使用更优良的合成织物来增强代谢率。</description>
+    <labelNoun>合成肝</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(188,39,242)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<offset>0.09</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicLiver</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 合成肾 -->
+  <HediffDef>
+    <defName>MMT_BionicKidney</defName>
+    <label>合成肾</label>
+    <description>增强型肾，通过使用更优良的合成织物来增强代谢率。</description>
+    <labelNoun>合成肾</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(188,39,242)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<offset>0.08</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_BionicKidney</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 肌肉刺激器 -->
+  <HediffDef>
+    <defName>MMT_MuscleStimulatorArms</defName>
+    <label>肌肉刺激器</label>
+    <description>已安装在手臂的肌肉刺激器。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(188,39,242)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<partEfficiencyOffset>0.10</partEfficiencyOffset>
+      				<statOffsets>
+      					<CarryingCapacity>+50</CarryingCapacity>
+      					<MeleeHitChance>3</MeleeHitChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MuscleStimulator</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 肌肉刺激器 -->
+  <HediffDef>
+    <defName>MMT_MuscleStimulatorLegs</defName>
+    <label>肌肉刺激器</label>
+    <description>已安装在腿部的肌肉刺激器。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(188,39,242)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<partEfficiencyOffset>0.10</partEfficiencyOffset>
+      				<statOffsets>
+      					<MoveSpeed>0.12</MoveSpeed>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MuscleStimulator</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 医疗肋骨 -->
+  <HediffDef>
+    <defName>MMT_MedicalRib</defName>
+    <label>医疗肋骨</label>
+    <description>一根人造肋骨，内置小型的血液过滤器和抗生素释放器，让使用者的保持健康。</description>
+    <labelNoun>医疗肋骨</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<offset>0.1</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MedicalRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 迷幻肋骨 -->
+  <HediffDef>
+    <defName>MMT_DruggedRib</defName>
+    <label>迷幻肋骨</label>
+    <description>一根人造肋骨，内置小型的酒精释放器，让使用者的保持愉悦。</description>
+    <labelNoun>迷幻肋骨</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<offset>-0.05</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_DruggedRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 肾上腺素肋骨 -->
+  <HediffDef>
+    <defName>MMT_AdrenalineRib</defName>
+    <label>肾上腺素肋骨</label>
+    <description>一根人造肋骨，内置小型的肾上腺素释放器，让使用者的保持活力和清醒。</description>
+    <labelNoun>肾上腺素肋骨</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.05</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_AdrenalineRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 止痛肋骨 -->
+  <HediffDef>
+    <defName>MMT_PainkillerRib</defName>
+    <label>止痛肋骨</label>
+    <description>一根人造肋骨，内置小型的吗啡释放器，麻痹使用者的痛觉。</description>
+    <labelNoun>止痛肋骨</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<painOffset>-0.08</painOffset>
+      				<painFactor>0.9</painFactor>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_PainkillerRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 加热肋骨 -->
+  <HediffDef>
+    <defName>MMT_HeaterRib</defName>
+    <label>加热肋骨</label>
+    <description>一种人工肋骨，包含一个微型反应炉，从内部给身体提供热量。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ComfyTemperatureMax>-2</ComfyTemperatureMax>
+      					<ComfyTemperatureMin>-12.5</ComfyTemperatureMin>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_HeaterRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 冷却肋骨 -->
+  <HediffDef>
+    <defName>MMT_CoolerRib</defName>
+    <label>冷却肋骨</label>
+    <description>一种人工肋骨，包含一个微型冷却装置，从内部给身体降温。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ComfyTemperatureMax>12.5</ComfyTemperatureMax>
+      					<ComfyTemperatureMin>2</ComfyTemperatureMin>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CoolerRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 止血肋骨 -->
+  <HediffDef>
+    <defName>MMT_CoagulatorRib</defName>
+    <label>止血肋骨</label>
+    <description>一种人工肋骨，包含一个微型凝血装置，受伤时可以帮助及时止血。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<totalBleedFactor>0.9</totalBleedFactor>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CoagulatorRib</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械仿生耳 -->
+  <HediffDef>
+    <defName>MMT_GTEar</defName>
+    <label>神经机械仿生耳</label>
+    <description>普通仿生耳的先进升级版。作为普通仿生件的第二代升级版，其通常装备于高级别军事部队。</description>
+    <labelNoun>神经机械仿生耳</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Hearing</capacity>
+      						<offset>0.21</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTEar</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械心 -->
+  <HediffDef>
+    <defName>MMT_GTHeart</defName>
+    <label>神经机械心</label>
+    <description>强大的心脏增强装置，可替代标准的人类心脏。自带的安全管理系统可以精密调整血流供应量，不会给身体器官带来额外负荷。</description>
+    <labelNoun>神经机械心</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodPumping</capacity>
+      						<offset>0.15</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.1</offset>
+      					</li>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.1</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTHeart</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械肺 -->
+  <HediffDef>
+    <defName>MMT_GTLung</defName>
+    <label>神经机械肺</label>
+    <description>强大的肺部增强装置，可替代标准的人类肺部。和神经机械心可以完美匹配，加速内循环，从而提高身体效率。</description>
+    <labelNoun>神经机械肺</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Breathing</capacity>
+      						<offset>0.16</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.15</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTLung</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械肾 -->
+  <HediffDef>
+    <defName>MMT_GTKidney</defName>
+    <label>神经机械肾</label>
+    <description>一种强大的腹部器官增强装置，可以取代标准的人类肾脏。 提高血液过滤效率。</description>
+    <labelNoun>神经机械肾</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<offset>0.16</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTKidney</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械肝 -->
+  <HediffDef>
+    <defName>MMT_GTLiver</defName>
+    <label>神经机械肝</label>
+    <description>一种强大的腹部器官增强装置，可以取代标准的人类肝脏。提高血液过滤效率和代谢效率。</description>
+    <labelNoun>神经机械肝</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<offset>0.16</offset>
+      					</li>
+      					<li>
+      						<capacity>Metabolism</capacity>
+      						<offset>1</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTLiver</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械胃 -->
+  <HediffDef>
+    <defName>MMT_GTStomach</defName>
+    <label>神经机械胃</label>
+    <description>已安装的腹部强力增强装置，可以取代标准的人类胃部。提高消化效率和代谢效率。</description>
+    <labelNoun>神经机械胃</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<makeImmuneTo>
+      					<li>GutWorms</li>
+      				</makeImmuneTo>
+      				<foodPoisoningChanceFactor>0.5</foodPoisoningChanceFactor>
+      				<capMods>
+      					<li>
+      						<capacity>Eating</capacity>
+      						<offset>0.16</offset>
+      					</li>
+      					<li>
+      						<capacity>Metabolism</capacity>
+      						<offset>1</offset>
+      					</li>
+      				</capMods>
+      				
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTstomach</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械仿生手 -->
+  <HediffDef>
+    <defName>MMT_GTHand</defName>
+    <label>神经机械仿生手</label>
+    <description>作为普通仿生件的第二代升级版，这种仿生件应用了由纳米纤维生产的仿制人造肌肉。比起全臂替换的方式略有不足，这仅仅是手部的替换。</description>
+    <labelNoun>神经机械仿生手</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.2</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTHand</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械仿生足 -->
+  <HediffDef>
+    <defName>MMT_GTFoot</defName>
+    <label>神经机械仿生足</label>
+    <description>作为普通仿生件的第二代升级版，这种仿生件应用了由纳米纤维生产的仿制人造肌肉。比起全腿替换的方式略有不足，这仅仅是足部的替换。</description>
+    <labelNoun>神经机械仿生足</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.20</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTFoot</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械颌 -->
+  <HediffDef>
+    <defName>MMT_GTDentures</defName>
+    <label>神经机械颌</label>
+    <description>作为普通仿生件的第二代升级版，使用纳米机械以极小的尺寸瞬间分解食物。</description>
+    <labelNoun>神经机械颌</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Talking</capacity>
+      						<offset>0.22</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTDentures</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械仿生脊柱 -->
+  <HediffDef>
+    <defName>MMT_GTSpine</defName>
+    <label>神经机械仿生脊柱</label>
+    <description>一具人体脊柱的强力替代装置。由于采用了极佳的纳米合成材料组成，配备精密的伺服控制系统，此种仿生装置能极大的提高操作性和移动力。</description>
+    <labelNoun>神经机械仿生脊柱</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.21</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.18</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTSpine</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械仿生脖颈 -->
+  <HediffDef>
+    <defName>MMT_GTNeck</defName>
+    <label>神经机械仿生脖颈</label>
+    <description>作为普通仿生件的第二代升级版，这种仿生件应用了由纳米纤维生产的仿制人造肌肉。比起全臂替换的方式略有不足，这仅仅是手部的替换。</description>
+    <labelNoun>神经机械仿生脖颈</labelNoun>
+    <hediffClass>Hediff_AddedPartNoRemoveSubparts</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.25</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Talking</capacity>
+      						<offset>0.2</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_GTNeck</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 外骨骼 -->
+  <HediffDef>
+    <defName>MMT_ExoskeletonSuit</defName>
+    <label>外骨骼</label>
+    <description>这个高科技设备由两个部件组成：接替背部的轻便骨骼结构、增加使用者力量的伺服马达。</description>
+    <labelNoun>外骨骼</labelNoun>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.65, 0.3, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<CarryingCapacity>25</CarryingCapacity>
+      					</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.2</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.2</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_ExoskeletonSuit</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 防护性外骨骼 -->
+  <HediffDef>
+    <defName>MMT_ProtectiveExoskeleton</defName>
+    <label>防护性外骨骼</label>
+    <description>由轻巧的骨架结构和伺服电机组成的高科技设备来支撑人体，以及用于保护使用者的伤害缓解系统。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.15</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li> 
+      				<statFactors>
+      					<IncomingDamageFactor>0.80</IncomingDamageFactor>
+      				</statFactors>
+      				<statOffsets>
+      					<CarryingCapacity>25</CarryingCapacity>
+      					</statOffsets>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.15</offset>
+      					</li>
+      					<li>
+      						<capacity>Moving</capacity>
+      						<offset>0.12</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_ReactOnDamage">
+      				<damageDefIncoming>EMP</damageDefIncoming>
+      				<createHediff>EMP_ProtectiveExoskeleton</createHediff>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_ProtectiveExoskeleton</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 战术角膜植入体 -->
+  <HediffDef>
+    <defName>MMT_TacticalCorneaImplant</defName>
+    <label>战术角膜植入体</label>
+    <description>一种增强的植入体，为使用者提供潜在目标的附加信息并标明最佳射击角度。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<partEfficiencyOffset>0.1</partEfficiencyOffset>
+      				<statOffsets>
+      					<AimingDelayFactor>-0.15</AimingDelayFactor>
+      					<MeleeHitChance>3</MeleeHitChance>
+      					<MeleeDodgeChance>0.1</MeleeDodgeChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（建造） -->
+  <HediffDef>
+    <defName>MMT_ConstructorCore</defName>
+    <label>辅助AI（建造）</label>
+    <description>在闪耀世界，对于复杂工作，教育和训练不再是必要的。永久性安装在大脑中的AI会与使用者沟通并提供指导。安装前需要研究脑部手术。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<ConstructionSpeed>+0.25</ConstructionSpeed>
+      					<ConstructSuccessChance>0.15</ConstructSuccessChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（农业） -->
+  <HediffDef>
+    <defName>MMT_FarmerCore</defName>
+    <label>辅助AI（农业）</label>
+    <description>在闪耀世界，对于复杂工作，教育和训练不再是必要的。永久性安装在大脑中的AI会与使用者沟通并提供指导。安装前需要研究脑部手术。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<PlantWorkSpeed>+0.25</PlantWorkSpeed>
+      					<PlantHarvestYield>0.15</PlantHarvestYield>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（采矿） -->
+  <HediffDef>
+    <defName>MMT_MinerCore</defName>
+    <label>辅助AI（采矿）</label>
+    <description>在闪耀世界，对于复杂工作，教育和训练不再是必要的。永久性安装在大脑中的AI会与使用者沟通并提供指导。安装前需要研究脑部手术。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MiningSpeed>+0.25</MiningSpeed>
+      					<MiningYield>+0.15</MiningYield>
+      					<SmoothingSpeed>+0.15</SmoothingSpeed>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（医疗） -->
+  <HediffDef>
+    <defName>MMT_DoctorCore</defName>
+    <label>辅助AI（医疗）</label>
+    <description>在闪耀世界，对于复杂工作，教育和训练不再是必要的。永久性安装在大脑中的AI会与使用者沟通并提供指导。安装前需要研究脑部手术。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<MedicalSurgerySuccessChance>+0.20</MedicalSurgerySuccessChance>
+      					<MedicalTendQuality>+0.15</MedicalTendQuality>
+      					<MedicalTendSpeed>+0.15</MedicalTendSpeed>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（外交） -->
+  <HediffDef>
+    <defName>MMT_DiplomatCore</defName>
+    <label>辅助AI（外交）</label>
+    <description>在闪耀世界，对于复杂工作，教育和训练不再是必要的。永久性安装在大脑中的AI会与使用者沟通并提供指导。安装前需要研究脑部手术。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<NegotiationAbility>+0.20</NegotiationAbility>
+      					<SocialImpact>+0.1</SocialImpact>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（射击） -->
+  <HediffDef>
+    <defName>MMT_AuxiliaryAI_Sharpshooter</defName>
+    <label>辅助AI（射击）</label>
+    <description>一套专门的战斗AI辅助系统，旨在大大提高用户的精准度，偏向于远距离武器。由于该系统的复杂性，可以集中和简化大部分的脑力过程，所以不能与其他辅助AI一起使用。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<statOffsets>
+      					<AimingDelayFactor>0.20</AimingDelayFactor>
+      					<MeleeHitChance>-3</MeleeHitChance>
+      					<MeleeDodgeChance>-8</MeleeDodgeChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_ReactOnDamage">
+      				<damageDefIncoming>EMP</damageDefIncoming>
+      				<createHediff>EMP_Disorientation</createHediff>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（作战） -->
+  <HediffDef>
+    <defName>MMT_AuxiliaryAI_Commando</defName>
+    <label>辅助AI（作战）</label>
+    <description>专门为支持用户应对战斗压力而设计的战斗AI辅助系统。由于该系统的复杂性，可以集中和简化大部分的脑力过程，因此不能与其他辅助AI一起使用。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<painFactor>0.85</painFactor>
+      				<statOffsets>
+      					<AimingDelayFactor>-0.15</AimingDelayFactor>
+      					<MentalBreakThreshold>-0.06</MentalBreakThreshold>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_ReactOnDamage">
+      				<damageDefIncoming>EMP</damageDefIncoming>
+      				<createHediff>EMP_Disorientation</createHediff>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 辅助AI（格斗） -->
+  <HediffDef>
+    <defName>MMT_AuxiliaryAI_Brawler</defName>
+    <label>辅助AI（格斗）</label>
+    <description>专为战斗而设计的AI系统，在高危情况下，通过过滤发送至大脑的无关电信号和化学信号来辅助用户，从而提高整体作战能力。由于该系统的复杂性，可以集中和简化大部分的脑力过程，因此不能与其他辅助AI一起使用。</description>
+    <hediffClass>Hediff_Implant</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<painFactor>0.85</painFactor>
+      				<statOffsets>
+      					<MentalBreakThreshold>-0.14</MentalBreakThreshold>
+      					<MeleeHitChance>+8</MeleeHitChance>
+      					<MeleeDodgeChance>+15</MeleeDodgeChance>
+      				</statOffsets>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_ReactOnDamage">
+      				<damageDefIncoming>EMP</damageDefIncoming>
+      				<createHediff>EMP_Disorientation</createHediff>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_MAAI_Chip</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 生命维持系统 -->
+  <HediffDef>
+    <defName>MMT_LifesupportHeart</defName>
+    <label>血泵</label>
+    <description>一台已经安装好的血泵。这是一种最为简单的能够保持病人生存的医疗器具。</description>
+    <labelNoun>血泵</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.5</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodPumping</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_lifesupport</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 生命维持系统 -->
+  <HediffDef>
+    <defName>MMT_LifesupportLung</defName>
+    <label>呼吸器</label>
+    <description>一台已经安装好的呼吸器。这是一种最为简单的能够保持病人生存的医疗器具。</description>
+    <labelNoun>呼吸器</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.3</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Breathing</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_lifesupport</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 生命维持系统 -->
+  <HediffDef>
+    <defName>MMT_LifesupportKidney</defName>
+    <label>尿液过滤器</label>
+    <description>一台已经安装好的滤尿器。这是一种最为简单的能够保持病人生存的医疗器具。</description>
+    <labelNoun>尿液过滤器</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.3</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_lifesupport</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 生命维持系统 -->
+  <HediffDef>
+    <defName>MMT_LifesupportLiver</defName>
+    <label>血液过滤器</label>
+    <description>一台已经安装好的血液过滤器器。这是一种最为简单的能够保持病人生存的医疗器具。</description>
+    <labelNoun>血液过滤器</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.6</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>BloodFiltration</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      					<li>
+      						<capacity>Metabolism</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_lifesupport</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 生命维持系统 -->
+  <HediffDef>
+    <defName>MMT_LifesupportStomach</defName>
+    <label>喂食管</label>
+    <description>一具已经安装好的喂食管。这是一种最为简单的能够保持病人生存的医疗器具。</description>
+    <labelNoun>喂食管</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>0.3</partEfficiency>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Eating</capacity>
+      						<setMax>1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_lifesupport</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 年龄加速器 -->
+  <HediffDef>
+    <defName>MMT_SenexiumAccelleratedAging</defName>
+    <label>成长加速器x60</label>
+    <description>成长加速器x60</description>
+    <labelNoun>成长加速器</labelNoun>
+    <hediffClass>SK.Hediff_Senexium</hediffClass>
+    <defaultLabelColor>(0.3,0.65,0.55)</defaultLabelColor>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+      				<disappearsAfterTicks>
+      					<min>420000</min>
+      					<max>480000</max>
+      				</disappearsAfterTicks>
+      			</li>
+    </comps>
+  </HediffDef>
+
+  <!-- 机体优化纳米机器人 -->
+  <HediffDef>
+    <defName>MMT_OrganicOptimized</defName>
+    <label>生体优化纳米机器人</label>
+    <description>注入的生体优化纳米机器人可改善和发挥肉体的全部潜能。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(244,210,131)</defaultLabelColor>
+    <isBad>false</isBad>
+    <stages>
+      <li>
+      				<label>Fresh</label>
+      				<painFactor>1.25</painFactor>
+      				<restFallFactorOffset>0.5</restFallFactorOffset>
+      				<hungerRateFactorOffset>1</hungerRateFactorOffset>
+      				<partEfficiencyOffset>-0.1</partEfficiencyOffset>
+      				<capMods>
+      					<li>
+      						<capacity>Consciousness</capacity>
+      						<setMax>0.1</setMax>
+      					</li>
+      				</capMods>
+      			</li>
+      			<li>
+      				<label>Adapting</label>
+      				<minSeverity>0.25</minSeverity>
+      				<painFactor>1.25</painFactor>
+      				<restFallFactorOffset>0.25</restFallFactorOffset>
+      				<hungerRateFactorOffset>0.5</hungerRateFactorOffset>
+      				<partEfficiencyOffset>-0.1</partEfficiencyOffset>
+      			</li>
+      			<li>
+      				<label>Optimizing</label>
+      				<minSeverity>0.75</minSeverity>
+      				<partEfficiencyOffset>0.05</partEfficiencyOffset>
+      			</li>
+      			<li>
+      				<minSeverity>0.99</minSeverity>
+      				<partEfficiencyOffset>0.15</partEfficiencyOffset>
+      			</li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+      				<severityPerDay>0.33</severityPerDay>
+      			</li>
+    </comps>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 仿生尾巴 -->
+  <HediffDef>
+    <defName>MMT_OBionicTail</defName>
+    <label>仿生尾巴</label>
+    <description>一条仿生尾巴。</description>
+    <labelNoun>仿生尾</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.0</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.20</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_OBionicTail</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 先进钢爪 -->
+  <HediffDef>
+    <defName>MMT_PlasteelClaws</defName>
+    <label>先进钢爪</label>
+    <description>一具安装好的先进爪子。可以用来作为奥瑞森人缺失爪子的替代品。</description>
+    <labelNoun>先进钢爪</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.1</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+      				<tools>
+      					<li>
+      						<label>fist</label>
+      						<capacities>
+      							<li>Scratch</li>
+      						</capacities>
+      						<power>17</power>
+      						<cooldownTime>1.3</cooldownTime>
+      						</li>
+      				</tools>
+      			</li>
+    </comps>
+    <spawnThingOnRemoved>MMT_PlasteelClaws</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+
+  <!-- 神经机械尾 -->
+  <HediffDef>
+    <defName>MMT_CyberneticTail</defName>
+    <label>神经机械尾</label>
+    <description>一个更好的尾巴。简直就像有了第三只手！</description>
+    <labelNoun>神经机械尾</labelNoun>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <addedPartProps>
+      <partEfficiency>1.2</partEfficiency>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+      				<capMods>
+      					<li>
+      						<capacity>Manipulation</capacity>
+      						<offset>0.3</offset>
+      					</li>
+      				</capMods>
+      			</li>
+    </stages>
+    <spawnThingOnRemoved>MMT_CyberneticTail</spawnThingOnRemoved>
+    <priceImpact>true</priceImpact>
+  </HediffDef>
+</Defs>

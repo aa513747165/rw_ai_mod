@@ -39,6 +39,8 @@ const MMT_ALIAS = {
   FuelRod: 'FuelRods', NuclearReactor: 'ReactorCoreA', CoalGenerator: 'ChemfuelPoweredGenerator',
   MultiAnalyzer: 'MultiAnalyzer', LabStation: 'LabStation', LabTerminal: 'LabTerminal',
   NuclearPower: 'RimatomicsActivate',
+  // 仿生链材料（其余仿生部件/工作台/研究为 MMT_ 前缀同名或结构性移植，不在此表）
+  ArtificialBone: 'ArtificialBone', MedicalAssistantChip: 'MAAI_Chip',
 };
 
 // ---------- 读取 MMT Defs ----------

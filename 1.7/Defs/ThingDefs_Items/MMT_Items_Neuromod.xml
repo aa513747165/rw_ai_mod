@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 神经调制使用品(组十四,非植入;特殊效果由 MMT C# comp 实现) -->
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_CONN_NeuromodBooster</defName>
+    <label>神经调节增强器</label>
+    <description>一种小型装置，穿透眼球以有效重新映射现有大脑结构。通常只会带来小幅改善……</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/Neuromod</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <tradeTags><li>ExoticMisc</li></tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1500</MarketValue>
+    </statBases>
+    <costList>
+      <Gold>15</Gold>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>18</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用神经调节增强器</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_LearnSkillRandom</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_CONN_Brainwash</defName>
+    <label>洗脑</label>
+    <description>用于抹除记忆的洗脑装置。移除任何与你的故事无关的性格特质。</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/Brainwash</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1600</MarketValue>
+    </statBases>
+    <costList>
+      <Neutroamine>150</Neutroamine>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>13</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用洗脑</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_TraitReset</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_CONN_PassionGiver</defName>
+    <label>激情赋予器</label>
+    <description>注射纳米机器人，改变你的脑细胞，为你灌输一项随机激情。</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/PassionGiver</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <tradeTags><li>ExoticMisc</li></tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1100</MarketValue>
+    </statBases>
+    <costList>
+      <Gold>20</Gold>
+      <PsychoidLeaves>75</PsychoidLeaves>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>14</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用激情赋予器</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_PassionGiver</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_CONN_TraitGiver</defName>
+    <label>特性赋予器</label>
+    <description>注射纳米机器人，改变你的脑细胞，为你灌输一项随机性格特质。</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/TraitGiver</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <tradeTags><li>ExoticMisc</li></tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1400</MarketValue>
+    </statBases>
+    <costList>
+      <Neutroamine>70</Neutroamine>
+      <Gold>17</Gold>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>16</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用特性赋予器</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_TraitGiver</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_NeurotrainersClearer</defName>
+    <label>想法清除器</label>
+    <description>这个洗脑装置可以抹去你短期内的记忆，使用后会影响你现在的想法。</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/MindClearer</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <tradeTags><li>ExoticMisc</li></tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1100</MarketValue>
+    </statBases>
+    <costList>
+      <Neutroamine>75</Neutroamine>
+      <Gold>15</Gold>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>6</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>16</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用想法清除器</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_ThoughtsClearer</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MechSerumBase">
+    <defName>MMT_CONN_Reconditioner</defName>
+    <label>重塑器</label>
+    <description>注射纳米机器人，改变你的脑细胞以抹除长期记忆。本质上是为使用者创造一段可以相信的新人生。</description>
+    <graphicData><texPath>Things/Item/MMT/MMT_Bionics/Reconditioner</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>false</drawGUIOverlay>
+    <thingCategories><li>Neurotrainers</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <tradeTags><li>ExoticMisc</li></tradeTags>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <DeteriorationRate>1.0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <MarketValue>1100</MarketValue>
+    </statBases>
+    <costList>
+      <Neutroamine>75</Neutroamine>
+      <Gold>15</Gold>
+      <MMT_Glass>10</MMT_Glass>
+      <MMT_SyntheticFibers>8</MMT_SyntheticFibers>
+      <MMT_BioMicrochips>1</MMT_BioMicrochips>
+      <MMT_UltraComponent>1</MMT_UltraComponent>
+    </costList>
+    <recipeMaker>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Medicine>17</Medicine>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E2</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_ElectricElectronicsTable</li>
+      </recipeUsers>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Usable"><useJob>UseItem</useJob><useLabel>使用重塑器</useLabel></li>
+      <li Class="CompProperties_UseEffect"><compClass>MyModeTest.CompUseEffect_Reconditioner</compClass></li>
+      <li Class="CompProperties_UseEffectDestroySelf" />
+    </comps>
+  </ThingDef>
+</Defs>

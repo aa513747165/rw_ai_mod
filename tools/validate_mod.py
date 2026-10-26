@@ -91,6 +91,23 @@ SHIELD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Shield.xml"
 SHIELD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Shield.xml"
 SHIELD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Shield.xml"
 SHIELD_BENCH_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Parts.xml"
+# 仿生链(生成物,由 tools/build_mmt_bionics_from_hsk.py 产出)
+BIONICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Bionics.xml"
+BIONICS_ITEM_XMLS = [
+    "1.7/Defs/ThingDefs_Items/MMT_Items_Bionics.xml",
+    "1.7/Defs/ThingDefs_Items/MMT_Items_BionicsAdv.xml",
+    "1.7/Defs/ThingDefs_Items/MMT_Items_BionicsCONN.xml",
+    "1.7/Defs/ThingDefs_Items/MMT_Items_Neuromod.xml",
+]
+BIONICS_HEDIFF_XMLS = [
+    "1.7/Defs/HediffDefs/MMT_Hediffs_Bionics.xml",
+    "1.7/Defs/HediffDefs/MMT_Hediffs_BionicsCONN.xml",
+]
+BIONICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Bionics.xml"
+BIONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Bionics.xml"
+BIONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Bionics.xml"
+BIONICS_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaBionics.xml"
+BIONICS_CS = "Source/MyModeTest/BionicsComps.cs"
 SHIELD_CS = "Source/MyModeTest/ShieldDeployer.cs"
 
 AGRICULTURE_ITEM_TEXTURES = [
@@ -1732,6 +1749,7 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeMineralSonarModule",
     "MMT_MakeOverclockModule",
     "MMT_MakeParallelModule",
+    "MMT_MakeDeployableShield",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
@@ -1778,8 +1796,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 71  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项
-INFRA_WORKTABLE_TOTAL = 47  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1
+INFRA_RESEARCH_TOTAL = 93  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项
+INFRA_WORKTABLE_TOTAL = 52  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 5；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -4701,6 +4719,9 @@ def validate_infrastructure() -> None:
             if node.get("ParentName") == "MMT_TurretBuildingBase":
                 # 炮塔使用原版 Security 分类（继承自基类），由 weapons-turrets 套件单独校验
                 continue
+            if node.findtext("defName") == "MMT_ShieldProjector":
+                # 临时护盾投影器由发生器生成、非玩家建造，无 designationCategory
+                continue
             worktable_count += 1
             assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{rel} {node.findtext('defName')} designationCategory")
     assert_equal(worktable_count, INFRA_WORKTABLE_TOTAL, "工作台建筑总数")
@@ -4773,6 +4794,15 @@ def validate_workgivers() -> None:
                 for li in node.findall("li"):
                     if li.text.strip().startswith("MMT_"):
                         needed.add(li.text.strip())
+    # recipeMaker 内联配方(仿生链等):工作台引用在 ThingDefs 的 recipeMaker/recipeUsers
+    for pattern in ("1.7/Defs/ThingDefs_Items/MMT_Items_*.xml",
+                    "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_*.xml"):
+        for path in sorted(ROOT.glob(pattern)):
+            for node in parse_xml(path.relative_to(ROOT).as_posix()).iter():
+                if node.tag == "recipeUsers":
+                    for li in node.findall("li"):
+                        if li.text.strip().startswith("MMT_"):
+                            needed.add(li.text.strip())
 
     missing = sorted(needed - set(covered))
     extra = sorted(set(covered) - needed)
@@ -6577,6 +6607,163 @@ def validate_shield() -> None:
     print("shield: OK")
 
 
+def validate_bionics() -> None:
+    """仿生链(HSK Core_SK BodyParts + CyberneticOrganism_SK 移植,111 件,不含卫生仿生):
+    物品/Hediff/安装手术/研究树/五级工作台/原版部件补丁/CONN 特殊 comp/贴图。"""
+    require_files(
+        [BIONICS_RESOURCE_XML, BIONICS_RECIPE_XML, BIONICS_RESEARCH_XML,
+         BIONICS_BUILDING_XML, BIONICS_PATCH_XML, BIONICS_CS]
+        + BIONICS_ITEM_XMLS + BIONICS_HEDIFF_XMLS + [
+            "1.7/Textures/Things/Building/Production/MMT_PrimitiveProstheticsTable/MMT_PrimitiveProstheticsTable_south.png",
+            "1.7/Textures/Things/Building/Production/MMT_BasicProstheticsTable/MMT_BasicProstheticsTable_south.png",
+            "1.7/Textures/Things/Building/Production/MMT_SyntheticsTable/MMT_SyntheticsTable_south.png",
+            "1.7/Textures/Things/Building/Production/MMT_BionicsTable/MMT_BionicsTable_south.png",
+            "1.7/Textures/Things/Building/Production/MMT_UpgradingStation/MMT_UpgradingStation_south.png",
+            "1.7/Textures/Things/Item/MMT/MMT_Bionics/BionicHand.png",
+            "1.7/Textures/Things/Item/MMT/MMT_Bionics/ArtificialBone.png",
+            "1.7/Textures/Things/Item/MMT/MMT_Bionics/EPOEMAAIChip/EPOEMAAIChip_a.png",
+            "1.7/Textures/Things/Flashlight/SpotLight_Mote.png",
+        ])
+
+    # ---- 工作台 ----
+    benches = def_map(parse_xml(BIONICS_BUILDING_XML))
+    for name, research, power in (
+            ("MMT_PrimitiveProstheticsTable", "MMT_Prosthesis_B1", None),
+            ("MMT_BasicProstheticsTable", "MMT_Prosthesis_C2", "350"),
+            ("MMT_SyntheticsTable", "MMT_Prosthesis_D3", "850"),
+            ("MMT_BionicsTable", "Bionics", "950"),
+            ("MMT_UpgradingStation", "MMT_Prosthesis_E1", "1350")):
+        d = benches[name]
+        assert_equal(li_values(d, "researchPrerequisites"), [research], f"{name} 研究前置")
+        if power is not None:
+            pw = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+            assert_equal(child_text(pw, "basePowerConsumption"), power, f"{name} 功耗")
+    assert_equal(li_values(benches["MMT_SyntheticsTable"], "recipes"),
+                 ["MMT_MakeArtificialBone", "MMT_MakeArtificialBoneBulk"], "人造器官组装台配方")
+
+    # ---- 材料 ----
+    res = def_map(parse_xml(BIONICS_RESOURCE_XML))
+    chip = res["MMT_MedicalAssistantChip"]
+    assert_equal(li_values(chip, "recipeMaker/recipeUsers"), ["MMT_RoboticAssembler"], "医疗助理芯片工作台")
+    assert "MMT_ArtificialBone" in res, "缺人造骨头"
+
+    # ---- 研究树 ----
+    research = def_map(parse_xml(BIONICS_RESEARCH_XML))
+    making = ["B1", "C1", "C2", "D1", "D2", "D3", "D4", "E1", "E2", "E3", "E4", "E5", "E6"]
+    install = ["C1", "C2", "C3", "D1", "D2", "D3", "D4", "E1", "E2"]
+    for t in making:
+        d = research["MMT_Prosthesis_" + t]
+        assert_equal(child_text(d, "tab"), "MMT_ResearchTab", f"义肢制造 {t} 页签")
+        assert_equal(child_text(d, "researchViewY"), "6.50", f"义肢制造 {t} 行")
+    for t in install:
+        assert "MMT_ProsthesisInstall_" + t in research, f"缺义肢安装 {t}"
+    assert_equal(li_values(research["MMT_Prosthesis_B1"], "prerequisites"), ["MMT_Medicine_B1"], "制造 B1 前置")
+    assert_equal(li_values(research["MMT_Prosthesis_C1"], "prerequisites"), ["MMT_Prosthesis_B1"], "制造 C1 前置")
+    assert_equal(li_values(research["MMT_Prosthesis_E1"], "prerequisites"), ["Bionics"], "制造 E1 前置")
+    assert_equal(li_values(research["MMT_ProsthesisInstall_C1"], "prerequisites"), ["Prosthetics"], "安装 C1 前置")
+    assert_equal(li_values(research["MMT_ProsthesisInstall_E2"], "prerequisites"),
+                 ["MMT_ProsthesisInstall_E1", "MedicineProduction"], "安装 E2 前置")
+
+    # ---- 物品 ----
+    items: dict[str, ET.Element] = {}
+    for f in BIONICS_ITEM_XMLS:
+        items.update(def_map(parse_xml(f)))
+    assert_equal(len(items), 93, "仿生物品总数(111 - 18 原版同名件)")
+    hand = items["MMT_BionicHand"]
+    cost = {c.tag: c.text for c in hand.find("costList")}
+    assert_equal(cost, {"MMT_SpacerComponent": "4", "MMT_Biomatter": "25", "MMT_SyntheticFibers": "16",
+                        "MMT_ArtificialBone": "2", "MMT_Microchip": "1"}, "仿生手材料")
+    assert_equal(child_text(hand, "recipeMaker/researchPrerequisite"), "Bionics", "仿生手研究")
+    assert_equal(li_values(hand, "recipeMaker/recipeUsers"), ["MMT_BionicsTable"], "仿生手工作台")
+    zoom = items["MMT_CONN_Zoom"]
+    zoom_cost = {c.tag: c.text for c in zoom.find("costList")}
+    assert zoom_cost.get("BionicEye") == "1", "变焦眼应以原版仿生眼为原料(升级链)"
+    assert_equal(li_values(zoom, "recipeMaker/recipeUsers"), ["MMT_UpgradingStation"], "变焦眼工作台")
+    # 神经调制 6 件的 compClass
+    neuro_comp = {
+        "MMT_CONN_NeuromodBooster": "MyModeTest.CompUseEffect_LearnSkillRandom",
+        "MMT_CONN_Brainwash": "MyModeTest.CompUseEffect_TraitReset",
+        "MMT_CONN_PassionGiver": "MyModeTest.CompUseEffect_PassionGiver",
+        "MMT_CONN_TraitGiver": "MyModeTest.CompUseEffect_TraitGiver",
+        "MMT_NeurotrainersClearer": "MyModeTest.CompUseEffect_ThoughtsClearer",
+        "MMT_CONN_Reconditioner": "MyModeTest.CompUseEffect_Reconditioner",
+    }
+    for dn, cls in neuro_comp.items():
+        d = items[dn]
+        cc = d.find("comps/li[@Class='CompProperties_UseEffect']/compClass")
+        assert cc is not None and cc.text == cls, f"{dn} 使用效果 compClass 应为 {cls}"
+
+    # ---- Hediff ----
+    hediffs: dict[str, ET.Element] = {}
+    for f in BIONICS_HEDIFF_XMLS:
+        hediffs.update({el.findtext("defName"): el for el in parse_xml(f)
+                        if el.tag == "HediffDef" and el.findtext("defName")})
+    assert_equal(len(hediffs), 87, "仿生 Hediff 总数(含生命维持 5 变体等)")
+    hh = hediffs["MMT_BionicHand"]
+    assert_equal(child_text(hh, "addedPartProps/partEfficiency"), "1.1", "仿生手部件效率")
+    assert_equal(child_text(hh, "stages/li/capMods/li/offset"), "0.1", "仿生手操作加成")
+    assert_equal(child_text(hediffs["MMT_CONN_hediff_BerserkerChip"], "hediffClass"),
+                 "MyModeTest.HediffBerserkGizmo", "狂战士芯片 hediffClass")
+    assert "MMT_Mote_Flashlight" in hediffs or def_map(parse_xml(BIONICS_HEDIFF_XMLS[1])).get("MMT_Mote_Flashlight") is not None, "缺手电 mote"
+
+    # ---- 安装手术 ----
+    recipes = parse_xml(BIONICS_RECIPE_XML)
+    installs = [el for el in recipes if el.tag == "RecipeDef"
+                and ((el.findtext("defName") or "").startswith("MMT_Install")
+                     or el.findtext("defName") == "MMT_OrganicOptimizing")]  # HSK 原名无 Install 前缀
+    assert_equal(len(installs), 87, "安装手术总数")
+    for rec in installs:
+        dn = rec.findtext("defName")
+        assert_equal(li_values(rec, "recipeUsers"), ["Human"], f"{dn} 应挂 Human")
+        assert rec.find("appliedOnFixedBodyParts/li") is not None, f"{dn} 缺安装部位"
+        adds = rec.findtext("addsHediff")
+        assert adds and adds.startswith("MMT_") and adds in hediffs, f"{dn} addsHediff 无法解析: {adds}"
+        rr = rec.findtext("researchPrerequisite")
+        assert rr is None or not rr.startswith(("Prosthesis_", "Clinical_")), f"{dn} 研究未映射: {rr}"
+        for ing in rec.findall("ingredients/li"):
+            for li in ing.findall("filter/thingDefs/li"):
+                assert li.text in items or li.text in VANILLA_BIONIC_ITEMS, f"{dn} 引用了未知部件 {li.text}"
+    # 材料配方
+    assert_equal(child_text(def_map(recipes)["MMT_MakeArtificialBone"], "products/MMT_ArtificialBone"),
+                 "1", "人造骨头产出")
+
+    # ---- 交叉引用:全部材料/成本 defName 可解析 ----
+    known = collect_known_def_names()
+    for dn, d in items.items():
+        cost = d.find("costList")
+        if cost is not None:
+            for c in cost:
+                assert c.tag in known, f"{dn} 材料 {c.tag} 不可解析"
+        tex = d.findtext("graphicData/texPath")
+        assert tex, f"{dn} 缺 texPath"
+        tp = ROOT / "1.7/Textures" / (tex + ".png")
+        assert tp.is_file() or (ROOT / "1.7/Textures" / tex).is_dir(), f"{dn} 贴图缺失: {tex}"
+
+    # ---- 无 CE/EBF/CONN 残留 ----
+    for f in BIONICS_ITEM_XMLS + BIONICS_HEDIFF_XMLS + [BIONICS_RECIPE_XML]:
+        text = read_text(f)
+        for token in ("CombatExtended", "EBF.", "CONN."):
+            assert token not in text, f"{f} 残留 {token}"
+
+    # ---- 原版补丁 ----
+    patch = read_text(BIONICS_PATCH_XML)
+    for dn in VANILLA_BIONIC_ITEMS_PATCHED:
+        assert f'Defs/ThingDef[defName="{dn}"]' in patch, f"原版补丁缺 {dn}"
+    assert "MMT_BionicsTable" in patch and "MMT_UpgradingStation" in patch, "补丁缺工作台引用"
+    print("bionics: OK")
+
+
+# 原版同名部件(MMT 不新建 Def,仅补丁改造;补丁内有制作信息的 16 件)
+VANILLA_BIONIC_ITEMS_PATCHED = [
+    "ArchotechArm", "ArchotechEye", "ArchotechLeg",
+    "BionicArm", "BionicEar", "BionicEye", "BionicHeart", "BionicJaw", "BionicLeg",
+    "BionicSpine", "BionicStomach", "BionicTongue", "Denture",
+    "Joywire", "Painstopper", "PowerClaw",
+]
+# 原版同名部件全集(含保持原版的 SimpleProstheticArm/Leg),供安装手术材料引用校验
+VANILLA_BIONIC_ITEMS = VANILLA_BIONIC_ITEMS_PATCHED + ["SimpleProstheticArm", "SimpleProstheticLeg"]
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -6613,6 +6800,7 @@ def validate_all() -> None:
     validate_persona_core()
     validate_teleport()
     validate_shield()
+    validate_bionics()
     validate_all_xml()
 
 
@@ -6677,6 +6865,7 @@ SUITES = {
     "persona-core": validate_persona_core,
     "teleport": validate_teleport,
     "shield": validate_shield,
+    "bionics": validate_bionics,
     "all": validate_all,
 }
 

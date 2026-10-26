@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-`myModeTest`（简称 MMT）是 RimWorld 1.7 的独立资源生产 Mod，参考 Hardcore SK（HSK）的资源生产链实现，但**不依赖 HSK 的程序集或 Def**。核心内容是若干条完整的资源加工链：玻璃、混凝土、木材、金属、石化、电子、电力（电力木/电力石化/电力电子）、陶瓷、农业、矿粉（磨矿/筛矿）、高级合金、零件、煤、硫、贵金属、医药、武器（古代/常规/未来/炮塔/NPC）、核能与物质等。每条链通常包含：资源 ThingDef → 配方 RecipeDef → 建筑 ThingDef（手工 + 电动，部分含自动版）→ 研究 ResearchProjectDef。
+`myModeTest`（简称 MMT）是 RimWorld 1.7 的独立资源生产 Mod，参考 Hardcore SK（HSK）的资源生产链实现，但**不依赖 HSK 的程序集或 Def**。核心内容是若干条完整的资源加工链：玻璃、混凝土、木材、金属、石化、电子、电力（电力木/电力石化/电力电子）、陶瓷、农业、矿粉（磨矿/筛矿）、高级合金、零件、煤、硫、贵金属、医药、武器（古代/常规/未来/炮塔/NPC）、核能与物质、仿生/义肢（含 CyberneticOrganism_SK 的 CONN 系列，不含 Dubs 卫生仿生）等。每条链通常包含：资源 ThingDef → 配方 RecipeDef → 建筑 ThingDef（手工 + 电动，部分含自动版）→ 研究 ResearchProjectDef。
 
 绝大部分内容以纯 XML Def 实现，C# 仅承担少量无法 XML 表达的运行时逻辑（Harmony 补丁、自定义 Building Comp、矿石随机池等）。
 
@@ -28,7 +28,7 @@
 - `1.7/Assemblies/`：C# 编译输出目录（`.dll/.pdb/.deps.json` 已被 .gitignore 忽略）。
 - `Source/MyModeTest/`：C# 工程（见下）。
 - `tools/`：构建与文档生成脚本（Python + Node.js）。
-- `docs/`：从 HSK 提取/对比生成的链路文档（多为**生成物**，改 Def 后需重跑对应脚本）。
+- `docs/`：从 HSK 提取/对比生成的链路文档（多为**生成物**，改 Def 后需重跑对应脚本）。其中 `hsk-bionic-chains.md` 由一次性脚本 `docs/temp/extract_hsk_bionics.py` 生成（HSK 全部仿生配件：材料/制作/安装/作用）。
 - `docs/temp/`：一次性提取脚本与中间 JSON，属临时产物，**不要在正式文档中引用**。
 - `.superpowers/`：历史任务工作区（如 `sdd/2026-10-21-core-sk-weapons`）。
 - `data/`、根目录 `后继更新一.txt`：待办/需求记录。
@@ -56,6 +56,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
 其他工具脚本：
 
 - `tools/build_mmt_weapons_from_hsk.py`：从本地 HSK/CE XML 批量生成 MMT 武器 Def，人工覆盖写入 `tools/data/mmt_weapon_mapping.json`，支持 `--write` 落盘与 `--check` 比对。
+- `tools/build_mmt_bionics_from_hsk.py`：从 HSK 生成全部仿生链 Def（物品/Hediff/安装手术/研究树/原版部件补丁）并复制贴图；复用 `docs/temp/extract_hsk_bionics.py` 的解析索引，材料/研究/工作台经内置映射表转 MMT defName。仿生链 XML 均为**生成物**，要改就改脚本重跑。
 - `tools/apply_research_layout.py`：一次性布局工具，按内置 mapping 重排研究的 `researchViewX/Y`。
 
 ## 测试策略
@@ -73,6 +74,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
   - `OreSiftPool.cs`：筛选配方的随机矿石池（`[StaticConstructorOnStartup]`，扫描全部 `isResourceRock` 矿脉按权重入池，含黑名单）。
   - `AutoProcessor.cs`：自动处理机 Comp（营养膏机模式，定时从相邻进料口消耗输入并产出；outputDef 为空时走矿石池随机）。
   - `ChunkDrill.cs`：手动采石机 Comp（产粗矿石，含工作量与采矿经验参数）。
+  - `BionicsComps.cs`：仿生链 CONN 特殊效果重实现（狂战士芯片狂暴 gizmo、精神扭曲思想清除、缪斯娱乐供给、手电照明 mote、六种神经调制使用品效果），对照 CONN.dll 行为简化实现。
 - C# 注释与日志均用中文。
 
 ## 代码与命名约定

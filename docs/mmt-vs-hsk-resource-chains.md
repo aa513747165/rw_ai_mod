@@ -10,11 +10,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 303 |
+| MMT 配方 | 396 |
 | 与 HSK 数值一致 | 134 |
 | 与 HSK 有数值差异 | 56 |
 | HSK 有对应资源但无对应配方 | 6 |
-| MMT 新增（HSK 无对应资源） | 107 |
+| MMT 新增（HSK 无对应资源） | 200 |
 
 ## 2. 矿脉对比
 
@@ -26,7 +26,7 @@
 | 压实的盐(MMT_MineableSalt) | 盐 | 150 | 5~10 / 1.2 / 900 | Compacted salt(`MineableSalt`) | 150 | 5~10 / 1.2 / 900 | 产量一致 |
 | 粘土矿脉(MMT_MineableSoftClay) | 软粘土 | 75 | 8~15 / 0.7 / 1400 | — | — | — | MMT 新增资源 |
 | 煤矿(MMT_MineableCoal) | 原煤 | 75 | 11~18 / 1.2 / 1500 | Coal Ore Deposits(`MineableCoal`) | 75 | 11~18 / 1.2 / 1500 | 产量一致 |
-| 铜矿(MMT_MineableCopperOre) | 铜矿 | 75 | 15~25 / 0.95 / 1800 | Copper Ore Deposits(`MineableCopper`) | 75 | 15~25 / 0.95 / 1800 | 产量一致 |
+| 铜矿(MMT_MineableCopperOre) | 铜矿 | 75 | 15~25 / 1.425 / 1800 | Copper Ore Deposits(`MineableCopper`) | 75 | 15~25 / 0.95 / 1800 | 产量一致 |
 | 锡矿(MMT_MineableTinOre) | 锡矿 | 75 | 9~17 / 1.1 / 1300 | Tin Ore Deposits(`MineableTin`) | 75 | 9~17 / 1.1 / 1300 | 产量一致 |
 | 铅矾矿脉(MMT_MineableAnglesite) | 铅矾矿 | 75 | 6~13 / 0.8 / 1600 | Anglesite Deposits(`MineableLead`) | 75 | 6~13 / 0.8 / 6000 | 产量一致 |
 | 铝土矿脉(MMT_MineableAluminium) | 铝土矿 | 75 | 11~19 / 0.65 / 1600 | Bauxite Ore Deposits(`MineableAluminium`) | 75 | 11~19 / 0.65 / 5500 | 产量一致 |
@@ -147,7 +147,454 @@
 - **HSK** `VG_Minesalt`：— -> 盐(Salt)×5 @ VG_SaltMine ｜ 工作量=1800
 - **对比**：数值一致
 
-### 3.3 Ceramics（Ceramics）
+### 3.3 Bionics（Bionics）
+
+#### 制造人造骨骼（`MMT_MakeArtificialBone`）
+
+- **MMT**：生物质×5 + 高级零部件×4 + 石蜡×2 + 塑料×10 -> 人造骨头×1 @ 人造器官组装台 ｜ 工作量=200 ｜ 研究:义肢制造 VI(MMT_Prosthesis_D3)，技能:Crafting≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制造人造骨骼（x4）（`MMT_MakeArtificialBoneBulk`）
+
+- **MMT**：生物质×20 + 高级零部件×16 + 石蜡×8 + 塑料×40 -> 人造骨头×4 @ 人造器官组装台 ｜ 工作量=720 ｜ 研究:义肢制造 VI(MMT_Prosthesis_D3)，技能:Crafting≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装眼罩（`MMT_InstallEyePatch`）
+
+- **MMT**：[Medicine]×1 + 眼罩×1 -> — @ — ｜ 工作量=950
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装钩手（`MMT_InstallHookHand`）
+
+- **MMT**：[Medicine]×1 + 钩手×1 -> — @ — ｜ 工作量=950 ｜ 研究:Prosthetics(Prosthetics)，技能:Medicine≥1
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装玻璃眼（`MMT_InstallGlassEye`）
+
+- **MMT**：[Medicine]×1 + 玻璃眼×1 -> — @ — ｜ 工作量=2200 ｜ 研究:Prosthetics(Prosthetics)，技能:Medicine≥2
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装人造鼻（`MMT_InstallArtificialNose`）
+
+- **MMT**：[Medicine]×1 + 人造鼻×1 -> — @ — ｜ 工作量=2100 ｜ 研究:义肢安装 III(MMT_ProsthesisInstall_C2)，技能:Medicine≥4
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装简易的假手（`MMT_InstallSimpleProstheticHand`）
+
+- **MMT**：[Medicine]×1 + 简易的假手×1 -> — @ — ｜ 工作量=2400 ｜ 研究:义肢安装 III(MMT_ProsthesisInstall_C2)，技能:Medicine≥3
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装简易的假足（`MMT_InstallSimpleProstheticFoot`）
+
+- **MMT**：[Medicine]×1 + 简易的假足×1 -> — @ — ｜ 工作量=2400 ｜ 研究:义肢安装 III(MMT_ProsthesisInstall_C2)，技能:Medicine≥3
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装人造骨盆（`MMT_InstallArtificialPelvis`）
+
+- **MMT**：[Medicine]×1 + 人造骨盆×1 -> — @ — ｜ 工作量=2600 ｜ 研究:义肢安装 III(MMT_ProsthesisInstall_C2)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装仿生手（`MMT_InstallBionicHand`）
+
+- **MMT**：[Medicine]×1 + 仿生手×1 -> — @ — ｜ 工作量=3300 ｜ 研究:义肢安装 VII(MMT_ProsthesisInstall_D3)，技能:Medicine≥11
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装仿生足（`MMT_InstallBionicFoot`）
+
+- **MMT**：[Medicine]×1 + 仿生足×1 -> — @ — ｜ 工作量=3000 ｜ 研究:义肢安装 VII(MMT_ProsthesisInstall_D3)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装仿生脖颈（`MMT_InstallBionicNeck`）
+
+- **MMT**：[Medicine]×1 + 仿生脖颈×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 VII(MMT_ProsthesisInstall_D3)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装脑激励器（`MMT_InstallBrainStimulator`）
+
+- **MMT**：[Medicine]×1 + 脑激励器×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 VIII(MMT_ProsthesisInstall_D4)，技能:Medicine≥6
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装AI芯片（`MMT_InstallAIChip`）
+
+- **MMT**：[Medicine]×1 + AI芯片×1 -> — @ — ｜ 工作量=4600 ｜ 研究:义肢安装 VIII(MMT_ProsthesisInstall_D4)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装合成肺（`MMT_InstallBionicLung`）
+
+- **MMT**：[Medicine]×1 + 合成肺×1 -> — @ — ｜ 工作量=3200 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装合成肝（`MMT_InstallBionicLiver`）
+
+- **MMT**：[Medicine]×1 + 合成肝×1 -> — @ — ｜ 工作量=3200 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装合成肾（`MMT_InstallBionicKidney`）
+
+- **MMT**：[Medicine]×1 + 合成肾×1 -> — @ — ｜ 工作量=3200 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装肌肉刺激器（`MMT_InstallMuscleStimulatorArms`）
+
+- **MMT**：[Medicine]×1 + 肌肉刺激器×1 -> — @ — ｜ 工作量=1500 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装肌肉刺激器（`MMT_InstallMuscleStimulatorLegs`）
+
+- **MMT**：[Medicine]×1 + 肌肉刺激器×1 -> — @ — ｜ 工作量=1500 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装医疗肋骨（`MMT_InstallMedicalRib`）
+
+- **MMT**：[Medicine]×1 + 医疗肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装迷幻肋骨（`MMT_InstallDruggedRib`）
+
+- **MMT**：[Medicine]×1 + 迷幻肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装肾上腺素肋骨（`MMT_InstallAdrenalineRib`）
+
+- **MMT**：[Medicine]×1 + 肾上腺素肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装止痛肋骨（`MMT_InstallPainkillerRib`）
+
+- **MMT**：[Medicine]×1 + 止痛肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装加热肋骨（`MMT_InstallHeaterRib`）
+
+- **MMT**：[Medicine]×1 + 加热肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装冷却肋骨（`MMT_InstallCoolerRib`）
+
+- **MMT**：[Medicine]×1 + 冷却肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装止血肋骨（`MMT_InstallCoagulatorRib`）
+
+- **MMT**：[Medicine]×1 + 止血肋骨×1 -> — @ — ｜ 工作量=1700 ｜ 研究:义肢安装 V(MMT_ProsthesisInstall_D1)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械仿生耳（`MMT_InstallGTEar`）
+
+- **MMT**：[Medicine]×1 + 神经机械仿生耳×1 -> — @ — ｜ 工作量=2700 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械心（`MMT_InstallGTHeart`）
+
+- **MMT**：[Medicine]×1 + 神经机械心×1 -> — @ — ｜ 工作量=4200 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥19
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械肺（`MMT_InstallGTLung`）
+
+- **MMT**：[Medicine]×1 + 神经机械肺×1 -> — @ — ｜ 工作量=3800 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械肾（`MMT_InstallGTKidney`）
+
+- **MMT**：[Medicine]×1 + 神经机械肾×1 -> — @ — ｜ 工作量=3800 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械肝（`MMT_InstallGTLiver`）
+
+- **MMT**：[Medicine]×1 + 神经机械肝×1 -> — @ — ｜ 工作量=3800 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械胃（`MMT_InstallGTStomach`）
+
+- **MMT**：[Medicine]×1 + 神经机械胃×1 -> — @ — ｜ 工作量=3800 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械仿生手（`MMT_InstallGTHand`）
+
+- **MMT**：[Medicine]×1 + 神经机械仿生手×1 -> — @ — ｜ 工作量=3500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械仿生足（`MMT_InstallGTFoot`）
+
+- **MMT**：[Medicine]×1 + 神经机械仿生足×1 -> — @ — ｜ 工作量=3500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械颌（`MMT_InstallGTDentures`）
+
+- **MMT**：[Medicine]×1 + 神经机械颌×1 -> — @ — ｜ 工作量=3400 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械仿生脊柱（`MMT_InstallGTSpine`）
+
+- **MMT**：[Medicine]×1 + 神经机械仿生脊柱×1 -> — @ — ｜ 工作量=4800 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥19
+- **HSK**：无对应资源（MMT 新增）
+
+#### 神经机械仿生脖颈（`MMT_InstallGTNeck`）
+
+- **MMT**：[Medicine]×1 + 神经机械仿生脖颈×1 -> — @ — ｜ 工作量=4100 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装外骨骼（`MMT_InstallExoskeletonSuit`）
+
+- **MMT**：[Medicine]×1 + 外骨骼×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥18
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装防护性外骨骼（`MMT_InstallProtectiveExoskeleton`）
+
+- **MMT**：[Medicine]×1 + 防护性外骨骼×1 -> — @ — ｜ 工作量=3500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装战术角膜植入物（`MMT_InstallTacticalCorneaImplant`）
+
+- **MMT**：[Medicine]×1 + 战术角膜植入体×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（建造）（`MMT_InstallConstructorCore`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（建造）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（种植）（`MMT_InstallFarmerCore`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（农业）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（采矿）（`MMT_InstallMinerCore`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（采矿）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（医疗）（`MMT_InstallDoctorCore`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（医疗）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（社交）（`MMT_InstallDiplomatCore`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（外交）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（射击）（`MMT_InstallAuxiliaryAI_Sharpshooter`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（射击）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（作战）（`MMT_InstallAuxiliaryAI_Commando`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（作战）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装辅助AI（格斗）（`MMT_InstallAuxiliaryAI_Brawler`）
+
+- **MMT**：[Medicine]×1 + 辅助AI（格斗）×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装血泵（`MMT_InstallLifeSupportHeart`）
+
+- **MMT**：[Medicine]×1 + 生命维持系统×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 II(MMT_ProsthesisInstall_C1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装呼吸机（`MMT_InstallLifeSupportLung`）
+
+- **MMT**：[Medicine]×1 + 生命维持系统×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 II(MMT_ProsthesisInstall_C1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装尿液过滤器（`MMT_InstallLifeSupportKidney`）
+
+- **MMT**：[Medicine]×1 + 生命维持系统×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 II(MMT_ProsthesisInstall_C1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装血液过滤器（`MMT_InstallLifeSupportLiver`）
+
+- **MMT**：[Medicine]×1 + 生命维持系统×1 -> — @ — ｜ 工作量=3400 ｜ 研究:义肢安装 II(MMT_ProsthesisInstall_C1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装喂食管（`MMT_InstallLifeSupportStomach`）
+
+- **MMT**：[Medicine]×1 + 生命维持系统×1 -> — @ — ｜ 工作量=3600 ｜ 研究:义肢安装 II(MMT_ProsthesisInstall_C1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装年龄加速器（`MMT_InstallSenexium`）
+
+- **MMT**：[Medicine]×1 + 年龄加速器×1 -> — @ — ｜ 工作量=2500 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 优化自然身体部件（`MMT_OrganicOptimizing`）
+
+- **MMT**：[Medicine]×1 + 机体优化纳米机器人×1 -> — @ — ｜ 工作量=3000 ｜ 技能:Medicine≥7
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装仿生尾（`MMT_InstallBionicTail`）
+
+- **MMT**：[Medicine]×1 + 仿生尾巴×1 -> — @ — ｜ 工作量=4000 ｜ 研究:义肢安装 VII(MMT_ProsthesisInstall_D3)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装高级爪（`MMT_InstallPlasteelClaws`）
+
+- **MMT**：[Medicine]×1 + 先进钢爪×1 -> — @ — ｜ 工作量=4000 ｜ 研究:义肢安装 VII(MMT_ProsthesisInstall_D3)，技能:Medicine≥11
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经机械尾（`MMT_InstallCyberneticTail`）
+
+- **MMT**：[Medicine]×1 + 神经机械尾×1 -> — @ — ｜ 工作量=1000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥11
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装机械眼（`MMT_InstallCONN_IndependentEye`）
+
+- **MMT**：[Medicine]×1 + 机械眼×1 -> — @ — ｜ 工作量=3500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装能量连接（`MMT_InstallCONN_EnergyLink`）
+
+- **MMT**：[Medicine]×3 + 能量连接×1 -> — @ — ｜ 工作量=10000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装外刃（`MMT_InstallCONN_OuterBlade`）
+
+- **MMT**：[Medicine]×2 + 外刃×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装动力臂（`MMT_InstallCONN_PowerArms`）
+
+- **MMT**：[Medicine]×2 + 动力臂×1 -> — @ — ｜ 工作量=3500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装暗影行者（`MMT_InstallCONN_Shadowrunner`）
+
+- **MMT**：[Medicine]×2 + 暗影行者×1 -> — @ — ｜ 工作量=6500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装外骨骼装甲（`MMT_InstallCONN_ExoskeletonArmor`）
+
+- **MMT**：[Medicine]×4 + 外骨骼装甲×1 -> — @ — ｜ 工作量=12000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装皮肤装甲板（`MMT_InstallCONN_Dermalplating`）
+
+- **MMT**：[Medicine]×3 + 皮肤装甲板×1 -> — @ — ｜ 工作量=9000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装狮心（`MMT_InstallCONN_Lionheart`）
+
+- **MMT**：[Medicine]×3 + 狮心×1 -> — @ — ｜ 工作量=4000 ｜ 研究:义肢安装 VI(MMT_ProsthesisInstall_D2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装变焦眼（`MMT_InstallCONN_Zoom`）
+
+- **MMT**：[Medicine]×1 + 变焦眼×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装能量拳（`MMT_InstallCONN_EnergyFist`）
+
+- **MMT**：[Medicine]×2 + 能量拳×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装弹性跟腱（`MMT_InstallCONN_ElasticAchilles`）
+
+- **MMT**：[Medicine]×2 + 弹性跟腱×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装独眼巨人目镜（`MMT_InstallCONN_CyclopsVisor`）
+
+- **MMT**：[Medicine]×1 + 独眼巨人目镜×1 -> — @ — ｜ 工作量=8500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装激光侦测器（`MMT_InstallCONN_LaserDetection`）
+
+- **MMT**：[Medicine]×2 + 激光侦测器×1 -> — @ — ｜ 工作量=4200 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装传感耳侧（`MMT_InstallCONN_SensoricEarside`）
+
+- **MMT**：[Medicine]×2 + 传感耳侧×1 -> — @ — ｜ 工作量=0 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥11
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装狂战士芯片（`MMT_InstallCONN_BerserkerChip`）
+
+- **MMT**：[Medicine]×3 + 狂战士芯片×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装心灵扭曲（`MMT_InstallCONN_Mindtwist`）
+
+- **MMT**：[Medicine]×2 + 心灵扭曲×1 -> — @ — ｜ 工作量=9000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥16
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装缪斯芯片（`MMT_InstallCONN_MuseChip`）
+
+- **MMT**：[Medicine]×2 + 缪斯芯片×1 -> — @ — ｜ 工作量=8000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装神经增强器（`MMT_InstallCONN_NeuroEnhancer`）
+
+- **MMT**：[Medicine]×3 + 神经增强器×1 -> — @ — ｜ 工作量=8000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装战斗AI（`MMT_InstallCONN_CombatAI`）
+
+- **MMT**：[Medicine]×3 + 战斗AI×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥17
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装高能肺（`MMT_InstallCONN_EnergeticLung`）
+
+- **MMT**：[Medicine]×2 + 高能肺×1 -> — @ — ｜ 工作量=9500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装高能肾（`MMT_InstallCONN_EnergeticKidney`）
+
+- **MMT**：[Medicine]×2 + 高能肾×1 -> — @ — ｜ 工作量=9500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装能量核心（`MMT_InstallCONN_EnergyCore`）
+
+- **MMT**：[Medicine]×3 + 能量核心×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装自主病毒杀手（`MMT_InstallCONN_AutonomicViruskiller`）
+
+- **MMT**：[Medicine]×2 + 自主病毒杀手×1 -> — @ — ｜ 工作量=2000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装奥鲁姆（`MMT_InstallCONN_Aurum`）
+
+- **MMT**：[Medicine]×1 + 奥鲁姆×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装黑珍珠（`MMT_InstallCONN_BlackPearl`）
+
+- **MMT**：[Medicine]×1 + 黑珍珠×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装悬浮脚（`MMT_InstallCONN_HoverFeet`）
+
+- **MMT**：[Medicine]×1 + 悬浮脚×1 -> — @ — ｜ 工作量=8500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装绿拇指（`MMT_InstallCONN_Greenthumb`）
+
+- **MMT**：[Medicine]×2 + 绿拇指×1 -> — @ — ｜ 工作量=4500 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装压缩颚（`MMT_InstallCONN_CompressionJaw`）
+
+- **MMT**：[Medicine]×2 + 压缩颚×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装压缩胃（`MMT_InstallCONN_CompressionStomach`）
+
+- **MMT**：[Medicine]×2 + 压缩胃×1 -> — @ — ｜ 工作量=6000 ｜ 研究:义肢安装 X(MMT_ProsthesisInstall_E2)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装手电（`MMT_InstallCONN_FlashLight`）
+
+- **MMT**：[Medicine]×2 + 手电×1 -> — @ — ｜ 工作量=2000 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 安装肌肉线（`MMT_InstallCONN_Musclewire`）
+
+- **MMT**：[Medicine]×1 + 肌肉线×1 -> — @ — ｜ 工作量=7500 ｜ 研究:义肢安装 IX(MMT_ProsthesisInstall_E1)，技能:Medicine≥13
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.4 Ceramics（Ceramics）
 
 #### 烧制陶瓷（10个）（`MMT_MakeCeramics`）
 
@@ -173,7 +620,7 @@
 - **HSK** `BurnApparel`：— -> 灰烬(Ash)×2 @ Campfire, ElectricCrematorium, Kiln ｜ 工作量=200 ｜ 研究:Craft_0
 - **对比**：产出 4 vs HSK 2；工作量 800 vs HSK 200
 
-### 3.4 混凝土（Concrete）
+### 3.5 混凝土（Concrete）
 
 #### 搅拌混凝土（`MMT_MixConcrete_Hand`）
 
@@ -205,7 +652,7 @@
 - **HSK** `make_dirt_Electric`：沙(SandResource)×20 + 肥料(Fertilizer)×10 -> 土堆(Dirt)×30 @ 电动混凝土搅拌机(EConcreteMixer) ｜ 工作量=1500 ｜ 研究:Concrete_C2
 - **对比**：数值一致
 
-### 3.5 Drugs（Drugs）
+### 3.6 Drugs（Drugs）
 
 #### 合成中性胺（天然）（`MMT_MakeNeutroamine`）
 
@@ -215,29 +662,29 @@
 
 #### 精炼中性胺（石化）（`MMT_RefineNeutroamine`）
 
-- **MMT**：Chemfuel×15 -> Neutroamine×1 @ — ｜ 工作量=1200 ｜ 研究:毒品 V(MMT_Drugs_C2)，技能:Medicine≥6
+- **MMT**：Chemfuel×15 -> Neutroamine×1 @ 中性胺精炼厂 ｜ 工作量=1200 ｜ 研究:毒品 V(MMT_Drugs_C2)，技能:Medicine≥6
 - **HSK** `MakeNaturalNeutroamine`：中性花瓣(NeutroPetals)×8 + 金丝桃(Hypericum)×2 -> Neutroamine×1 @ DrugLab ｜ 工作量=700 ｜ 研究:Drugs_C2，技能:Medicine≥6, Crafting≥3
 - **对比**：首投入 15 vs HSK 8；工作量 1200 vs HSK 700；技能 Medicine≥6 vs HSK Medicine≥6, Crafting≥3
 
 #### 晾晒烟叶（`MMT_DrySmokeleaf`）
 
-- **MMT**：SmokeleafLeaves×5 -> 干烟叶×5 @ — ｜ 工作量=2400 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **MMT**：SmokeleafLeaves×5 -> 干烟叶×5 @ 晾晒架, 电动晾晒架 ｜ 工作量=2400 ｜ 研究:毒品 I(MMT_Drugs_A1)
 - **HSK**：有资源 DriedLeavesSmokeleaf，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
 
 #### 晾晒烟叶（×5）（`MMT_DrySmokeleafBulk`）
 
-- **MMT**：SmokeleafLeaves×25 -> 干烟叶×25 @ — ｜ 工作量=9600 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **MMT**：SmokeleafLeaves×25 -> 干烟叶×25 @ 晾晒架, 电动晾晒架 ｜ 工作量=9600 ｜ 研究:毒品 I(MMT_Drugs_A1)
 - **HSK**：有资源 DriedLeavesSmokeleaf，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
 
 #### 泡制草药茶（`MMT_MakeHerbalTea`）
 
-- **MMT**：野玫瑰×2 + 金丝桃×1 + 薄荷叶×2 -> 草药茶×6 @ — ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Cooking≥5
+- **MMT**：野玫瑰×2 + 金丝桃×1 + 薄荷叶×2 -> 草药茶×6 @ 手工制药台, 电动制药台 ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Cooking≥5
 - **HSK** `MakeHerbalTea`：野玫瑰(WildRose)×2 + 金丝桃(Hypericum)×1 + 薄荷叶(MintLeaves)×2 -> 草药茶(HerbalTea)×6 @ Brewery, DrugLab, ElectricBrewery, 手工制药台(meditable) ｜ 工作量=780 ｜ 研究:DrugProduction，技能:Medicine≥3, Cooking≥5
 - **对比**：技能 Medicine≥3,Cooking≥5 vs HSK Medicine≥3, Cooking≥5
 
 #### 烧制活性炭丸（`MMT_MakeActivatedCarbon`）
 
-- **MMT**：木炭 或 原煤×5 -> 活性炭丸×9 @ — ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Crafting≥5
+- **MMT**：木炭 或 原煤×5 -> 活性炭丸×9 @ 手工制药台, 电动制药台 ｜ 工作量=780 ｜ 研究:DrugProduction(DrugProduction)，技能:Medicine≥3,Crafting≥5
 - **HSK** `MakeActivatedCarbon`：木炭(Charcoal) 或 原煤(Coal)×5 -> 活性炭丸(ActivatedCarbon)×9 @ DrugLab, Kiln, 手工制药台(meditable) ｜ 工作量=780 ｜ 研究:DrugProduction，技能:Medicine≥3, Crafting≥5
 - **对比**：技能 Medicine≥3,Crafting≥5 vs HSK Medicine≥3, Crafting≥5
 
@@ -263,7 +710,7 @@
 - **HSK** `VG_BulkIbuprofen`：Neutroamine×4 -> 止痛药(VG_Ibuprofen)×4 @ DrugLab ｜ 工作量=720 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
 - **对比**：数值一致
 
-### 3.6 电动金属（Electric）
+### 3.7 电动金属（Electric）
 
 #### 提炼铜（20个）（`MMT_SmeltCopperBar_Electric`）
 
@@ -337,7 +784,7 @@
 - **HSK** `MakeMetalCan`：[Metallic]×8 -> 金属罐(MetalCan)×15 @ ElectricSmelter ｜ 工作量=800 ｜ 研究:Metals_C1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.7 电动电子（ElectricElectronics）
+### 3.8 电动电子（ElectricElectronics）
 
 #### 组装电子元件（`MMT_AssembleElectronicParts_Electric`）
 
@@ -357,7 +804,7 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：工作量 2400 vs HSK 3500；技能 Crafting≥14 vs HSK Crafting≥16
 
-### 3.8 电动石化（ElectricPetrochem）
+### 3.9 电动石化（ElectricPetrochem）
 
 #### 电蒸馏聚合物（`MMT_DistillPolymers_Electric`）
 
@@ -389,7 +836,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：工作量 2800 vs HSK 4000；技能 Crafting≥12 vs HSK Crafting≥15
 
-### 3.9 电动木材（ElectricWood）
+### 3.10 电动木材（ElectricWood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Electric`）
 
@@ -421,7 +868,7 @@
 - **HSK** `MakeRedWoodPlanks_Electric`：红木(RedWoodLog)×20 -> 红木木板(RedWoodPlank)×30 @ 电动锯木台(TableSawmillElectric) ｜ 工作量=1200 ｜ 研究:Metals_C1，技能:Crafting≥6
 - **对比**：数值一致
 
-### 3.10 电子（Electronics）
+### 3.11 电子（Electronics）
 
 #### 提炼硅（`MMT_ExtractSilicon_Hand`）
 
@@ -447,7 +894,7 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：技能 Crafting≥12 vs HSK Crafting≥16
 
-### 3.11 玻璃（Glass）
+### 3.12 玻璃（Glass）
 
 #### 将石砖碾磨成碎石（`MMT_MakeCrushedStone_Hand`）
 
@@ -515,7 +962,7 @@
 - **HSK** `MakeReinforcedGlass`：玻璃生料(GlassBatch)×40 + 碳聚物(Carbon)×5 + 人造纤维(SyntheticFibers)×5 -> 强化玻璃块(ReinforcedGlass)×5 @ 玻璃制作台(GlassworkTable) ｜ 工作量=1400 ｜ 研究:Glass_C1，技能:Crafting≥8
 - **对比**：数值一致
 
-### 3.12 Matter（Matter）
+### 3.13 Matter（Matter）
 
 #### 转化为无机物（`MMT_ConvertResourcesRaw`）
 
@@ -601,67 +1048,67 @@
 - **HSK** `ConvertToSulphates`：无机物(Matter)×50 -> 硫酸盐(Sulphates)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.13 Medicine（Medicine）
+### 3.14 Medicine（Medicine）
 
 #### 制作粗制绷带（`MMT_MakeBandagekitcrude`）
 
-- **MMT**：[MMT_BTextiles]×7 -> 粗制绷带×1 @ — ｜ 工作量=150 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
+- **MMT**：[MMT_BTextiles]×7 -> 粗制绷带×1 @ 手工制药台 ｜ 工作量=150 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
 - **HSK** `MakeBandagekitcrude`：[BTextiles]×7 -> 粗制绷带(Bandagekitcrude)×1 @ CraftingSpot, ElectricTailoringBench, HandTailoringBench, LeatherworkerTable, 手工制药台(meditable) ｜ 工作量=150 ｜ 研究:Medicine_A1，技能:Medicine≥1, Crafting≥1
 - **对比**：技能 Medicine≥1,Crafting≥1 vs HSK Medicine≥1, Crafting≥1
 
 #### 制作粗制绷带（×3）（`MMT_MakeBandagekitcrudeBulk`）
 
-- **MMT**：[MMT_BTextiles]×21 -> 粗制绷带×3 @ — ｜ 工作量=450 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
+- **MMT**：[MMT_BTextiles]×21 -> 粗制绷带×3 @ 手工制药台 ｜ 工作量=450 ｜ 研究:医疗物资 I(MMT_Medicine_A1)，技能:Medicine≥1,Crafting≥1
 - **HSK** `MakeBandagekitcrude`：[BTextiles]×7 -> 粗制绷带(Bandagekitcrude)×1 @ CraftingSpot, ElectricTailoringBench, HandTailoringBench, LeatherworkerTable, 手工制药台(meditable) ｜ 工作量=150 ｜ 研究:Medicine_A1，技能:Medicine≥1, Crafting≥1
 - **对比**：首投入 21 vs HSK 7；产出 3 vs HSK 1；工作量 450 vs HSK 150；技能 Medicine≥1,Crafting≥1 vs HSK Medicine≥1, Crafting≥1
 
 #### 制作绷带包（`MMT_MakeBandagekit`）
 
-- **MMT**：[MMT_BTextiles]×10 -> 绷带包×1 @ — ｜ 工作量=250 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
+- **MMT**：[MMT_BTextiles]×10 -> 绷带包×1 @ 手工制药台, 电动制药台 ｜ 工作量=250 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
 - **HSK** `MakeBandageKit`：[BTextiles]×10 -> 绷带包(Bandagekit)×1 @ ElectricTailoringBench, HandTailoringBench, 手工制药台(meditable) ｜ 工作量=250 ｜ 研究:Medicine_A2，技能:Medicine≥2, Crafting≥2
 - **对比**：技能 Medicine≥2,Crafting≥2 vs HSK Medicine≥2, Crafting≥2
 
 #### 制作绷带包（×3）（`MMT_MakeBandagekitBulk`）
 
-- **MMT**：[MMT_BTextiles]×30 -> 绷带包×3 @ — ｜ 工作量=750 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
+- **MMT**：[MMT_BTextiles]×30 -> 绷带包×3 @ 手工制药台, 电动制药台 ｜ 工作量=750 ｜ 研究:医疗物资 II(MMT_Medicine_A2)，技能:Medicine≥2,Crafting≥2
 - **HSK** `MakeBandageKit`：[BTextiles]×10 -> 绷带包(Bandagekit)×1 @ ElectricTailoringBench, HandTailoringBench, 手工制药台(meditable) ｜ 工作量=250 ｜ 研究:Medicine_A2，技能:Medicine≥2, Crafting≥2
 - **对比**：首投入 30 vs HSK 10；产出 3 vs HSK 1；工作量 750 vs HSK 250；技能 Medicine≥2,Crafting≥2 vs HSK Medicine≥2, Crafting≥2
 
 #### 配制草药包（`MMT_MakeHerbMedicine`）
 
-- **MMT**：MedicineHerbal×8 + 灰烬×2 -> 草药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 III(MMT_Medicine_B1)，技能:Medicine≥5
+- **MMT**：MedicineHerbal×8 + 灰烬×2 -> 草药包×1 @ 手工制药台, 电动制药台 ｜ 工作量=500 ｜ 研究:医疗物资 III(MMT_Medicine_B1)，技能:Medicine≥5
 - **HSK** `MakeHerbMedicine`：MedicineHerbal×8 + 灰烬(Ash)×2 -> 草药包(HerbMedicine)×1 @ ButcherSpot, TableButcher, TableKitchen, 手工制药台(meditable) ｜ 工作量=500 ｜ 研究:Medicine_B1，技能:Medicine≥5
 - **对比**：数值一致
 
 #### 制作基础医药包（芦荟）（`MMT_MakeBasicMedicineKit`）
 
-- **MMT**：芦荟叶×5 + 绷带包×1 -> 基础医药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
+- **MMT**：芦荟叶×5 + 绷带包×1 -> 基础医药包×1 @ 手工制药台, 电动制药台 ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
 - **HSK** `MakeHerbmedicine`：芦荟叶(aloe)×5 + 绷带包(Bandagekit)×1 -> 基础医药包(Herbmedicine)×1 @ DrugLab, TablePrimitiveProsthetic ｜ 工作量=500 ｜ 研究:Medicine_B2，技能:Medicine≥4, Crafting≥2
 - **对比**：技能 Medicine≥4,Crafting≥2 vs HSK Medicine≥4, Crafting≥2
 
 #### 制作基础医药包（混合草药）（`MMT_MakeBasicMedicineKitMix`）
 
-- **MMT**：野玫瑰×1 + 金丝桃×1 + 薄荷叶 或 芦荟叶×1 + 绷带包×1 -> 基础医药包×1 @ — ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
+- **MMT**：野玫瑰×1 + 金丝桃×1 + 薄荷叶 或 芦荟叶×1 + 绷带包×1 -> 基础医药包×1 @ 手工制药台, 电动制药台 ｜ 工作量=500 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
 - **HSK** `MakeHerbmedicineMix`：野玫瑰(WildRose)×1 + 金丝桃(Hypericum)×1 + 薄荷叶(MintLeaves) 或 芦荟叶(aloe)×1 + 绷带包(Bandagekit)×1 -> 基础医药包(Herbmedicine)×1 @ DrugLab, TablePrimitiveProsthetic ｜ 工作量=500 ｜ 研究:Medicine_B2，技能:Medicine≥4, Crafting≥2
 - **对比**：技能 Medicine≥4,Crafting≥2 vs HSK Medicine≥4, Crafting≥2
 
 #### 提炼抗生素（`MMT_BrewMedicalDrink`）
 
-- **MMT**：MedicineHerbal×1 + RawHops×10 -> 抗生素×1 @ — ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction(PenoxycylineProduction)，技能:Medicine≥10
+- **MMT**：MedicineHerbal×1 + RawHops×10 -> 抗生素×1 @ 电动制药台 ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction(PenoxycylineProduction)，技能:Medicine≥10
 - **HSK** `BrewMedicalDrink`：MedicineHerbal×1 + RawHops 或 Yeast×10 -> 抗生素(MedicalDrink)×1 @ 手工制药台(meditable) ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
 - **对比**：数值一致
 
 #### 制作医药（`MMT_MakeMedicineIndustrial`）
 
-- **MMT**：Neutroamine×2 + MedicineHerbal×6 + 石蜡×10 + 人造纤维×2 + 塑料×10 -> MedicineIndustrial×1 @ — ｜ 工作量=800 ｜ 研究:MedicineProduction(MedicineProduction)，技能:Medicine≥10
+- **MMT**：Neutroamine×2 + MedicineHerbal×6 + 石蜡×10 + 人造纤维×2 + 塑料×10 -> MedicineIndustrial×1 @ 电动制药台 ｜ 工作量=800 ｜ 研究:MedicineProduction(MedicineProduction)，技能:Medicine≥10
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作闪耀世界医药（`MMT_MakeMedicineUltratech`）
 
-- **MMT**：微芯片集成电路×1 + 抗生素×2 + 生物合成材料×2 + 石蜡×3 + Neutroamine×2 + Synthread×5 + 塑料×20 -> MedicineUltratech×1 @ — ｜ 工作量=1400 ｜ 研究:医疗物资 VI(MMT_Medicine_D1)，技能:Medicine≥15
+- **MMT**：微芯片集成电路×1 + 抗生素×2 + 生物合成材料×2 + 石蜡×3 + Neutroamine×2 + Synthread×5 + 塑料×20 -> MedicineUltratech×1 @ 电动制药台 ｜ 工作量=1400 ｜ 研究:医疗物资 VI(MMT_Medicine_D1)，技能:Medicine≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.14 金属（Metal）
+### 3.15 金属（Metal）
 
 #### 提炼铜（10个）（`MMT_SmeltCopperBar_Hand`）
 
@@ -693,14 +1140,14 @@
 - **HSK** `MakeLeadBars_Hand`：铅矾矿(Anglesite)×10 -> 铅合金(LeadBar)×10 @ 熔炉(TableFurnace) ｜ 工作量=1100 ｜ 研究:Craft_B1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.15 Nuclear（Nuclear）
+### 3.16 Nuclear（Nuclear）
 
 #### 组装核燃料棒（`MMT_MakeFuelRod`）
 
 - **MMT**：Uranium×100 + [MMT_SLDBar]×20 -> 核燃料棒×1 @ — ｜ 工作量=8000 ｜ 研究:核能发电(MMT_NuclearPower)，技能:Crafting≥12
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.16 OrePowder（OrePowder）
+### 3.17 OrePowder（OrePowder）
 
 #### 破碎粗矿石（`MMT_CrushCoarseOre`）
 
@@ -727,7 +1174,7 @@
 - **MMT**：矿粉×20 -> — @ 电动筛子 ｜ 工作量=900
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.17 零件（Parts）
+### 3.18 零件（Parts）
 
 #### 使用木板组装原始零部件（`MMT_MakeComponentMedieval_Wood`）
 
@@ -813,7 +1260,7 @@
 - **HSK** `Make_ComponentUltra`：[RARBar]×15 + [USLDHBar]×10 + [PRSBar]×5 -> 超级零部件(ComponentUltra)×10 @ 自动化装配器(RobAssem) ｜ 工作量=4500 ｜ 研究:Components_E1，技能:Crafting≥13
 - **对比**：数值一致
 
-### 3.18 石化（Petrochem）
+### 3.19 石化（Petrochem）
 
 #### 压取原油（`MMT_PumpCrudeOil`）
 
@@ -850,7 +1297,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.19 PetrochemExt（PetrochemExt）
+### 3.20 PetrochemExt（PetrochemExt）
 
 #### 精炼石蜡（10个）（`MMT_MakeParaffins`）
 
@@ -918,7 +1365,7 @@
 - **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
 - **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥8
 
-### 3.20 贵金属（Precious）
+### 3.21 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
@@ -932,7 +1379,19 @@
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.21 Robotics（Robotics）
+### 3.22 ProcessorModules（ProcessorModules）
+
+#### 组装超频模块（`MMT_MakeOverclockModule`）
+
+- **MMT**：钢(Steel)×25 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 -> 超频模块×1 @ 电动装配台 ｜ 工作量=1500 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
+- **HSK**：无对应资源（MMT 新增）
+
+#### 组装并行模块（`MMT_MakeParallelModule`）
+
+- **MMT**：钢(Steel)×30 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 -> 并行模块×1 @ 电动装配台 ｜ 工作量=1800 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.23 Robotics（Robotics）
 
 #### 制造动力电池（`MMT_MakeHexcell`）
 
@@ -958,7 +1417,14 @@
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
 
-### 3.22 Textiles（Textiles）
+### 3.24 Shield（Shield）
+
+#### 组装部署式护盾发生器（`MMT_MakeDeployableShield`）
+
+- **MMT**：钢(Steel)×25 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 + 电线×5 -> 部署式护盾发生器×1 @ 电动装配台 ｜ 工作量=4000 ｜ 研究:部署式护盾技术(MMT_DeployableShieldTech)，技能:Crafting≥6
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.25 Textiles（Textiles）
 
 #### 纺织布（`MMT_MakeCloth`）
 
@@ -1037,7 +1503,7 @@
 - **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.23 TopMaterials（TopMaterials）
+### 3.26 TopMaterials（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -1101,7 +1567,7 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.24 TurretAmmo（TurretAmmo）
+### 3.27 TurretAmmo（TurretAmmo）
 
 #### 制作120mm 炮弹（破甲）x1（`MMT_MakeAmmo_120mmCannonShell_HEAT`）
 
@@ -1163,7 +1629,7 @@
 - **MMT**：钢(Steel)×40 + 火药×6 -> 14.5x114mm 机枪弹（全金属被甲弹）×100 @ — ｜ 工作量=4000 ｜ 技能:Crafting≥5
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.25 TurretCrates（TurretCrates）
+### 3.28 TurretCrates（TurretCrates）
 
 #### 制作AGS-30组件箱（`MMT_BuildAGCturret_Crate`）
 
@@ -1213,6 +1679,11 @@
 - **HSK** `BuildMGTurret_Crate`：武器部件(Weapon_Parts)×14 + 重型武器部件(Heavy_Component)×1 + [Metallic]×40 -> M2 .50勃朗宁机枪组件箱(MGTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=11500 ｜ 研究:SniperTurret，技能:Crafting≥7
 - **对比**：数值一致
 
+#### 制作14.5mm KPV重机枪组件箱（`MMT_BuildKPVTurret_Crate`）
+
+- **MMT**：武器部件×17 + 重型武器部件×1 + [MMT_MetallicBar]×50 -> 14.5mm KPV重机枪组件箱×1 @ — ｜ 工作量=11500 ｜ 研究:重机枪塔(MMT_HeavyMachineGunTurret)，技能:Crafting≥7
+- **HSK**：无对应资源（MMT 新增）
+
 #### 制作130mm中型导弹系统组件箱（`MMT_BuildMediumMissileSystem_Crate`）
 
 - **MMT**：武器部件×10 + 发射器部件×2 + [MMT_MetallicBar]×35 -> 130mm中型导弹系统组件箱×1 @ — ｜ 工作量=18500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥14
@@ -1261,7 +1732,7 @@
 - **HSK** `BuildVulcanCannon_Crate`：武器部件(Weapon_Parts)×20 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×25 -> 20mm火神炮组件箱(VulcanCannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
-### 3.26 WeaponParts（WeaponParts）
+### 3.29 WeaponParts（WeaponParts）
 
 #### 制造武器部件（`MMT_MakeWeaponParts`）
 
@@ -1347,7 +1818,7 @@
 - **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.27 Weapons_Archaic（Weapons_Archaic）
+### 3.30 Weapons_Archaic（Weapons_Archaic）
 
 #### 制作EMP手榴弹（`MMT_MakeEMPGrenades`）
 
@@ -1414,7 +1885,7 @@
 - **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [MMT_HCMBar]×4 + Chemfuel×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.28 Weapons_Conventional（Weapons_Conventional）
+### 3.31 Weapons_Conventional（Weapons_Conventional）
 
 #### 制作伯莱塔93R冲锋手枪（`MMT_Build93RBurstPistol`）
 
@@ -1706,7 +2177,7 @@
 - **MMT**：重型武器部件×1 + 武器部件×8 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×35 + 塑料×30 -> M60E4通用机枪×1 @ — ｜ 工作量=24000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.29 Weapons_Futuristic（Weapons_Futuristic）
+### 3.32 Weapons_Futuristic（Weapons_Futuristic）
 
 #### 制造A-1BW黑寡妇（`MMT_BuildBlackWidow`）
 
@@ -1768,7 +2239,7 @@
 - **MMT**：电荷武器部件×1 + 武器部件×6 + 超级零部件×12 + 斯特合金×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.30 木材（Wood）
+### 3.33 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
