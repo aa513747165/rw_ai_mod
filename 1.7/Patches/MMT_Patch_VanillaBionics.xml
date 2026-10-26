@@ -7,9 +7,9 @@
   <!-- 神经机械仿生臂(ArchotechArm) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="ArchotechArm"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="ArchotechArm"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="ArchotechArm"]</xpath>
@@ -41,9 +41,9 @@
   <!-- 神经机械仿生眼(ArchotechEye) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="ArchotechEye"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="ArchotechEye"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="ArchotechEye"]</xpath>
@@ -75,9 +75,9 @@
   <!-- 神经机械仿生腿(ArchotechLeg) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="ArchotechLeg"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="ArchotechLeg"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="ArchotechLeg"]</xpath>
@@ -109,9 +109,9 @@
   <!-- 仿生臂(BionicArm) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicArm"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicArm"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicArm"]</xpath>
@@ -144,9 +144,9 @@
   <!-- 仿生耳(BionicEar) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicEar"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicEar"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicEar"]</xpath>
@@ -178,9 +178,9 @@
   <!-- 仿生眼(BionicEye) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicEye"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicEye"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicEye"]</xpath>
@@ -213,9 +213,9 @@
   <!-- 仿生心脏(BionicHeart) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicHeart"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicHeart"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicHeart"]</xpath>
@@ -246,9 +246,9 @@
   <!-- 仿生颌(BionicJaw) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicJaw"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicJaw"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicJaw"]</xpath>
@@ -281,9 +281,9 @@
   <!-- 仿生腿(BionicLeg) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicLeg"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicLeg"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicLeg"]</xpath>
@@ -316,9 +316,9 @@
   <!-- 仿生脊椎(BionicSpine) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicSpine"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicSpine"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicSpine"]</xpath>
@@ -351,9 +351,9 @@
   <!-- 合成胃(BionicStomach) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicStomach"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicStomach"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicStomach"]</xpath>
@@ -384,9 +384,9 @@
   <!-- 仿生舌(BionicTongue) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="BionicTongue"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="BionicTongue"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="BionicTongue"]</xpath>
@@ -418,9 +418,9 @@
   <!-- 义齿(Denture) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="Denture"]</xpath>
@@ -450,9 +450,9 @@
   <!-- 乐丝芯片(Joywire) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Joywire"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="Joywire"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="Joywire"]</xpath>
@@ -479,9 +479,9 @@
   <!-- 止痛芯片(Painstopper) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Painstopper"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="Painstopper"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="Painstopper"]</xpath>
@@ -508,9 +508,9 @@
   <!-- 动力爪(PowerClaw) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="PowerClaw"]/costList</xpath>
-    <operation Class="PatchOperationRemove">
+    <match Class="PatchOperationRemove">
       <xpath>Defs/ThingDef[defName="PowerClaw"]/costList</xpath>
-    </operation>
+    </match>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="PowerClaw"]</xpath>

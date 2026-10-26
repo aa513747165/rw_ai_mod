@@ -195,7 +195,7 @@
     <label>仿生脖颈</label>
     <description>比起普通的脖子，能让使用者更好的做到挑战，比如让你的脖子转180度之类的。</description>
     <labelNoun>一个仿生脖颈</labelNoun>
-    <hediffClass>Hediff_AddedPartNoRemoveSubparts</hediffClass>
+    <hediffClass>MyModeTest.Hediff_AddedPartNoRemoveSubparts</hediffClass>
     <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
     <isBad>false</isBad>
     <addedPartProps>
@@ -871,7 +871,7 @@
     <label>神经机械仿生脖颈</label>
     <description>作为普通仿生件的第二代升级版，这种仿生件应用了由纳米纤维生产的仿制人造肌肉。比起全臂替换的方式略有不足，这仅仅是手部的替换。</description>
     <labelNoun>神经机械仿生脖颈</labelNoun>
-    <hediffClass>Hediff_AddedPartNoRemoveSubparts</hediffClass>
+    <hediffClass>MyModeTest.Hediff_AddedPartNoRemoveSubparts</hediffClass>
     <defaultLabelColor>(0.5, 0.5, 0.9)</defaultLabelColor>
     <isBad>false</isBad>
     <addedPartProps>
@@ -1307,9 +1307,10 @@
     <label>成长加速器x60</label>
     <description>成长加速器x60</description>
     <labelNoun>成长加速器</labelNoun>
-    <hediffClass>SK.Hediff_Senexium</hediffClass>
+    <hediffClass>MyModeTest.Hediff_AgeAccelerator</hediffClass>
     <defaultLabelColor>(0.3,0.65,0.55)</defaultLabelColor>
     <isBad>false</isBad>
+    <initialSeverity>60</initialSeverity>
     <comps>
       <li Class="HediffCompProperties_Disappears">
       				<disappearsAfterTicks>

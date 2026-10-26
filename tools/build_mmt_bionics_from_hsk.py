@@ -142,6 +142,9 @@ CLASS_MAP = {
     "CONN.HediffCompProperties_ThoughtsRemover": "MyModeTest.HediffCompProperties_ThoughtsRemover",
     "CONN.HediffCompProperties_RecreationGiver": "MyModeTest.HediffCompProperties_RecreationGiver",
     "CONN.CompProperties_LightEffect": "MyModeTest.HediffCompProperties_LightEffect",
+    # Core_SK 专有 hediff 类 -> MMT 实现
+    "Hediff_AddedPartNoRemoveSubparts": "MyModeTest.Hediff_AddedPartNoRemoveSubparts",
+    "SK.Hediff_Senexium": "MyModeTest.Hediff_AgeAccelerator",
 }
 
 # 组十四:使用类物品 compClass 映射
@@ -274,6 +277,10 @@ def emit_hediff(hdn, item_dn):
     if color:
         out.append('    <defaultLabelColor>%s</defaultLabelColor>' % esc(color))
     out.append('    <isBad>false</isBad>')
+    # initialSeverity 透传(如年龄加速器 severity=60 决定加速倍率)
+    sev = ext.get_scalar(hd, "initialSeverity")
+    if sev:
+        out.append('    <initialSeverity>%s</initialSeverity>' % esc(sev))
 
     # addedPartProps(白名单字段)
     ap = None

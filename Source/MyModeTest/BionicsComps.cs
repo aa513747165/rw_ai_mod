@@ -358,4 +358,33 @@ namespace MyModeTest
             }
         }
     }
+
+    /// <summary>
+    /// 不移除子部件的仿生部件(对照 HSK Hediff_AddedPartNoRemoveSubparts):
+    /// 安装时仅恢复本体部件,不把子部件标记为缺失,用于脖颈等需要保留头部的部位。
+    /// </summary>
+    public class Hediff_AddedPartNoRemoveSubparts : Hediff_Implant
+    {
+        public override void PostAdd(DamageInfo? dinfo)
+        {
+            base.PostAdd(dinfo);
+            pawn.health.RestorePart(Part, this, checkStateChange: false);
+        }
+    }
+
+    /// <summary>
+    /// 年龄加速器(对照 HSK SK.Hediff_Senexium):按 severity 倍率加速生物学年龄,
+    /// severity 60 即 60 倍老化。每 tick 在正常推进之外追加 severity-1 个生物年龄 tick。
+    /// </summary>
+    public class Hediff_AgeAccelerator : HediffWithComps
+    {
+        public override void Tick()
+        {
+            base.Tick();
+            if (pawn?.ageTracker != null && !pawn.Dead && Severity > 1f)
+            {
+                pawn.ageTracker.AgeBiologicalTicks += (long)(Severity - 1f);
+            }
+        }
+    }
 }
