@@ -227,10 +227,12 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>找一件可达、未禁用、可预定的模块物品（不可达时视为没有）。</summary>
+        /// <summary>找一件可达、未禁用、可预定的模块物品（不可达时视为没有）。
+        /// 搜索根必须用小人位置而非建筑位置：研磨机/筛子本体 Impassable，中心格不属于任何通行区域，
+        /// 以建筑位置为根的 ClosestThingReachable 会把所有模块判为"不可达"（采石机 PassThroughOnly 才有区域，故之前只有它能装）。</summary>
         private Thing FindModuleItem(Pawn selPawn, ThingDef itemDef)
         {
-            return GenClosest.ClosestThingReachable(parent.Position, parent.Map, ThingRequest.ForDef(itemDef),
+            return GenClosest.ClosestThingReachable(selPawn.Position, parent.Map, ThingRequest.ForDef(itemDef),
                 PathEndMode.ClosestTouch, TraverseParms.For(selPawn), 9999f,
                 t => !t.IsForbidden(selPawn) && selPawn.CanReserve(t, 1, -1, null, false));
         }
