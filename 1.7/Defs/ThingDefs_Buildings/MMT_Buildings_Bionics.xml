@@ -52,6 +52,8 @@
       <li>MMT_Prosthesis_B1</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 假肢工作台 -->
@@ -114,6 +116,8 @@
       <li>MMT_Prosthesis_C2</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 人造器官组装台 -->
@@ -182,6 +186,8 @@
       <li>MMT_Prosthesis_D3</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>16</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 仿生体工作台 -->
@@ -246,6 +252,8 @@
       <li>Bionics</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>17</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 神经机械体工作台 -->
@@ -310,5 +318,7 @@
       <li>MMT_Prosthesis_E1</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>18</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

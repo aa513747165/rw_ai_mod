@@ -71,6 +71,8 @@
       <li>Electricity</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 核能反应堆：以核燃料棒为燃料的大功率发电机（贴图为 HSK 内置 Rimatomics 堆芯A） -->
@@ -146,5 +148,7 @@
       <li>MMT_NuclearPower</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

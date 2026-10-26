@@ -46,6 +46,10 @@ VANILLA_ITEMS = {
     "ArchotechEye", "ArchotechArm", "ArchotechLeg",
 }
 
+# 1.7 已移除物品 ThingDef 的原版部件(假牙改为手术直接安装,只需药品):
+# 不对其生成补丁(补丁会因找不到 ThingDef 节点而失败)
+VANILLA_ITEMS_REMOVED_17 = {"Denture"}
+
 def item_ref(dn):
     """物品引用名:原版同名件保留原 defName,其余加 MMT_ 前缀。"""
     return dn if dn in VANILLA_ITEMS else "MMT_" + dn
@@ -660,7 +664,7 @@ def emit_patch():
            '       替换 costList 为 MMT 材料链,追加 recipeMaker 改到 MMT 工作台与研究。',
            '       安装手术沿用原版(Human 自带 InstallXxx),数值保留原版。 -->', '']
     n = 0
-    for dn in sorted(VANILLA_ITEMS):
+    for dn in sorted(VANILLA_ITEMS - VANILLA_ITEMS_REMOVED_17):
         item = ext.defs.get(("ThingDef", dn))
         if item is None:
             warn.append("原版部件无 HSK 定义,跳过: " + dn)
@@ -674,9 +678,9 @@ def emit_patch():
         out.append('  <!-- %s(%s) -->' % (cn, dn))
         out.append('  <Operation Class="PatchOperationConditional">')
         out.append('    <xpath>Defs/ThingDef[defName="%s"]/costList</xpath>' % dn)
-        out.append('    <operation Class="PatchOperationRemove">')
+        out.append('    <match Class="PatchOperationRemove">')
         out.append('      <xpath>Defs/ThingDef[defName="%s"]/costList</xpath>' % dn)
-        out.append('    </operation>')
+        out.append('    </match>')
         out.append('  </Operation>')
         val = []
         if cost:

@@ -4713,6 +4713,13 @@ def validate_infrastructure() -> None:
     assert_equal(child_text(designation, "label"), "MMT 生产", "建筑分类 label")
 
     worktable_count = 0
+    # MMT 抽象基类的 building 提供情况(1.7 原版 BuildingBase 不再自带 BuildingProperties,
+    # 可建造 def 整条继承链缺 <building> 会让 ThingDefGenerator_Buildings 抛 NRE 并触发游戏重置 mod 配置)
+    mmt_base_has_building: dict[str, bool] = {}
+    for path in sorted((ROOT / "1.7/Defs").rglob("*.xml")):
+        for node in parse_xml(path.relative_to(ROOT).as_posix()).iter("ThingDef"):
+            if node.get("Name"):
+                mmt_base_has_building[node.get("Name")] = node.find("building") is not None
     for path in sorted((ROOT / INFRA_BUILDING_DIR).glob("MMT_Buildings_*.xml")):
         rel = path.relative_to(ROOT).as_posix()
         for node in parse_xml(rel).findall("ThingDef"):
@@ -4730,6 +4737,9 @@ def validate_infrastructure() -> None:
                 continue
             worktable_count += 1
             assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{rel} {node.findtext('defName')} designationCategory")
+            has_building = node.find("building") is not None or mmt_base_has_building.get(node.get("ParentName"), False)
+            if not has_building:
+                fail(f"{rel} {node.findtext('defName')} 缺 <building>(1.7 BuildingBase 不再提供)")
     assert_equal(worktable_count, INFRA_WORKTABLE_TOTAL, "工作台建筑总数")
 
     categories = def_map(parse_xml(INFRA_CATEGORIES_XML))
@@ -6824,15 +6834,16 @@ def validate_bionics() -> None:
     print("bionics: OK")
 
 
-# 原版同名部件(MMT 不新建 Def,仅补丁改造;补丁内有制作信息的 16 件)
+# 原版同名部件(MMT 不新建 Def,仅补丁改造;补丁内有制作信息的 15 件)
+# 注:Denture(义齿)在 1.7 已无 ThingDef(手术直接安装,只需药品),不打补丁
 VANILLA_BIONIC_ITEMS_PATCHED = [
     "ArchotechArm", "ArchotechEye", "ArchotechLeg",
     "BionicArm", "BionicEar", "BionicEye", "BionicHeart", "BionicJaw", "BionicLeg",
-    "BionicSpine", "BionicStomach", "BionicTongue", "Denture",
+    "BionicSpine", "BionicStomach", "BionicTongue",
     "Joywire", "Painstopper", "PowerClaw",
 ]
-# 原版同名部件全集(含保持原版的 SimpleProstheticArm/Leg),供安装手术材料引用校验
-VANILLA_BIONIC_ITEMS = VANILLA_BIONIC_ITEMS_PATCHED + ["SimpleProstheticArm", "SimpleProstheticLeg"]
+# 原版同名部件全集(含保持原版的 SimpleProstheticArm/Leg 与 1.7 无物品的 Denture),供安装手术材料引用校验
+VANILLA_BIONIC_ITEMS = VANILLA_BIONIC_ITEMS_PATCHED + ["SimpleProstheticArm", "SimpleProstheticLeg", "Denture"]
 
 
 def validate_all() -> None:

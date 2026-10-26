@@ -200,6 +200,8 @@
       <li>MMT_Drugs_A1</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 电动晾晒架：对照 HSK ElectricDryingRack（批量/更快） -->
@@ -264,6 +266,8 @@
       <li>MMT_Drugs_B1</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 中性胺精炼厂：对照 HSK/Rimefeller NeutroamineRefiner（烧化合燃料产中性胺） -->
@@ -329,5 +333,7 @@
       <li>MMT_Drugs_C2</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

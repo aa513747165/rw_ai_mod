@@ -56,6 +56,8 @@
       <li>Stonecutting</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 电动采石机：电动版手动采石机，殖民者操作但钻速更快，需供电 400W（贴图为原版深钻机改蓝） -->
@@ -119,6 +121,8 @@
       <li>MMT_OreSifting</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 自动采石机：无人值守自运转，通电后持续产出粗矿石但速度较慢，需供电 800W（贴图为原版深钻机改橙） -->
@@ -188,5 +192,7 @@
       <li>MMT_AutoOreProcessing</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

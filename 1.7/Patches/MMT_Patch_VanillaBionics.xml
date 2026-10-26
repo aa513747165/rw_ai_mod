@@ -415,38 +415,6 @@
     </value>
   </Operation>
 
-  <!-- 义齿(Denture) -->
-  <Operation Class="PatchOperationConditional">
-    <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
-    <match Class="PatchOperationRemove">
-      <xpath>Defs/ThingDef[defName="Denture"]/costList</xpath>
-    </match>
-  </Operation>
-  <Operation Class="PatchOperationAdd">
-    <xpath>Defs/ThingDef[defName="Denture"]</xpath>
-    <value>
-    <costList>
-      <MMT_ComponentMedieval>8</MMT_ComponentMedieval>
-      <MMT_Mechanism>2</MMT_Mechanism>
-    </costList>
-    <recipeMaker>
-      <workSkill>Crafting</workSkill>
-      <workAmount>2500</workAmount>
-      <effectWorking>Smith</effectWorking>
-      <soundWorking>Recipe_Smith</soundWorking>
-      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
-      <skillRequirements>
-        <Crafting>3</Crafting>
-      </skillRequirements>
-      <researchPrerequisite>MMT_Prosthesis_B1</researchPrerequisite>
-      <recipeUsers>
-        <li>MMT_PrimitiveProstheticsTable</li>
-        <li>MMT_BasicProstheticsTable</li>
-      </recipeUsers>
-    </recipeMaker>
-    </value>
-  </Operation>
-
   <!-- 乐丝芯片(Joywire) -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Joywire"]/costList</xpath>

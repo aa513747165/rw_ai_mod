@@ -89,6 +89,8 @@
       <li>MMT_MatterConversion1</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>18</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 量子加工台：对照 HSK Matterfab（工作 20000W/待机 2000W 折中为恒定 8000W） -->
@@ -168,6 +170,8 @@
       <li>MMT_MatterConversion3</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>16</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 粒子对撞台：对照 HSK HadronCollider（自定义类改配方制产反物质，恒定 15000W 自平衡） -->
@@ -243,5 +247,7 @@
       <li>MMT_MatterConversion2</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>18</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

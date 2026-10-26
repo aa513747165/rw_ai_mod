@@ -162,6 +162,8 @@
       <li>MMT_AutoOreProcessing</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），内置矿粉仓（燃料式），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石。需要持续供电。 -->
@@ -255,5 +257,7 @@
       <li>MMT_AutoOreProcessing</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>

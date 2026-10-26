@@ -50,6 +50,8 @@
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>
     </placeWorkers>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 
   <!-- 电动筛子：程序化生成贴图（金属框+电机盒，2x2），恒定 250W -->
@@ -118,5 +120,7 @@
     <researchPrerequisites>
       <li>MMT_OreSifting</li>
     </researchPrerequisites>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
   </ThingDef>
 </Defs>
