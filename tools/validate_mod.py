@@ -79,7 +79,8 @@ OREPOWDER_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_OrePowder.xm
 GRINDER_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Grinder.xml"
 SIEVE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Sieve.xml"
 AUTOPROC_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_AutoProcessor.xml"
-MODULE_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ProcessorModules.xml"
+MODULE_ITEM_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_ProcessorModules.xml"
+MODULE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ProcessorModules.xml"
 ORESIFT_CS = "Source/MyModeTest/OreSiftPool.cs"
 AUTOPROC_CS = "Source/MyModeTest/AutoProcessor.cs"
 ITAB_KEYS_XML = "1.7/Languages/ChineseSimplified/Keyed/MMT_InspectorTabs.xml"
@@ -116,8 +117,8 @@ AUTOPROC_TEXTURES = [
 ]
 
 MODULE_TEXTURES = [
-    "1.7/Textures/Things/Building/Production/MMT_OverclockModule/MMT_OverclockModule.png",
-    "1.7/Textures/Things/Building/Production/MMT_ParallelModule/MMT_ParallelModule.png",
+    "1.7/Textures/Things/Item/MMT/MMT_OverclockModule.png",
+    "1.7/Textures/Things/Item/MMT/MMT_ParallelModule.png",
 ]
 
 CERAMICS_ITEM_TEXTURES = [
@@ -1768,7 +1769,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 70  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项
-INFRA_WORKTABLE_TOTAL = 49  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1
+INFRA_WORKTABLE_TOTAL = 47  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6111,7 +6112,8 @@ def validate_orepowder() -> None:
         GRINDER_BUILDING_XML,
         SIEVE_BUILDING_XML,
         AUTOPROC_BUILDING_XML,
-        MODULE_BUILDING_XML,
+        MODULE_ITEM_XML,
+        MODULE_RECIPE_XML,
         ORESIFT_CS,
         AUTOPROC_CS,
         *OREPOWDER_TEXTURES,
@@ -6222,20 +6224,42 @@ def validate_orepowder() -> None:
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "false", "自动筛子禁止旋转")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "South", "自动筛子默认朝向")
 
-    # 增效模块：超频/并行 1x1 贴靠模块（CompProcessorModule 标记 + 电力）
-    module_defs = def_map(parse_xml(MODULE_BUILDING_XML))
-    assert_equal(set(module_defs), {"MMT_OverclockModule", "MMT_ParallelModule"}, "增效模块 defName 集合")
-    for name, power, mtype in (("MMT_OverclockModule", "150", "Overclock"),
-                               ("MMT_ParallelModule", "200", "Parallel")):
+    # 增效模块：超频/并行为可制作物品（安装进自动设备槽位生效，拆除返还）
+    module_defs = def_map(parse_xml(MODULE_ITEM_XML))
+    assert_equal(set(module_defs), {"MMT_OverclockModule", "MMT_ParallelModule"}, "增效模块物品 defName 集合")
+    for name, tex, value in (("MMT_OverclockModule", "Things/Item/MMT/MMT_OverclockModule", "180"),
+                             ("MMT_ParallelModule", "Things/Item/MMT/MMT_ParallelModule", "220")):
         d = module_defs[name]
-        assert_equal(child_text(d, "size"), "(1,1)", f"{name} 尺寸")
-        power_comp = next(li for li in d.findall("comps/li")
-                          if li.attrib.get("Class") == "CompProperties_Power")
-        assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
-        mod = next(li for li in d.findall("comps/li")
-                   if li.attrib.get("Class") == "MyModeTest.CompProperties_ProcessorModule")
-        assert_equal(child_text(mod, "moduleType"), mtype, f"{name} 模块类型")
-        assert_equal(li_values(d, "researchPrerequisites"), ["MMT_AutoBoost"], f"{name} 研究前置")
+        assert_equal(child_text(d, "./graphicData/texPath"), tex, f"{name} 贴图路径")
+        assert_equal(child_text(d, "stackLimit"), "10", f"{name} 堆叠上限")
+        assert_equal(child_text(d, "./statBases/MarketValue"), value, f"{name} 市场价值")
+        assert_equal(li_values(d, "thingCategories"), ["MMT_ElectronicsCat"], f"{name} 物品类别")
+    # 配方：挂电动装配台，材料对齐原贴靠建筑造价，研究前置 MMT_AutoBoost
+    module_recipes = def_map(parse_xml(MODULE_RECIPE_XML))
+    assert_equal(set(module_recipes), {"MMT_MakeOverclockModule", "MMT_MakeParallelModule"}, "增效模块配方 defName 集合")
+    parts_bench_recipes = None
+    for name, product, steel, mech, comp in (("MMT_MakeOverclockModule", "MMT_OverclockModule", "25", "2", "2"),
+                                             ("MMT_MakeParallelModule", "MMT_ParallelModule", "30", "3", "3")):
+        r = module_recipes[name]
+        products = {li.tag: li.text for li in r.find("products")}
+        assert_equal(products, {product: "1"}, f"{name} 产物")
+        inputs = {td.text: ing.findtext("count") for ing in r.findall("ingredients/li")
+                  for td in ing.findall("filter/thingDefs/li")}
+        assert_equal(inputs, {"Steel": steel, "MMT_Mechanism": mech, "ComponentIndustrial": comp},
+                     f"{name} 材料")
+        assert_equal(child_text(r, "researchPrerequisite"), "MMT_AutoBoost", f"{name} 研究前置")
+        assert_equal(li_values(r, "recipeUsers"), [], f"{name} 不得重复写 recipeUsers")
+        if parts_bench_recipes is None:
+            parts_bench_recipes = li_values(
+                def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Parts.xml"))["MMT_ElectricAssemblyBench"],
+                "recipes")
+        assert name in parts_bench_recipes, f"{name} 未挂电动装配台"
+    # 三台自动设备：槽位 Comp + 增效模块页签
+    for name in ("MMT_AutoGrinder", "MMT_AutoSieve"):
+        d = auto_defs[name]
+        assert any(li.attrib.get("Class") == "MyModeTest.CompProperties_ModuleSlots"
+                   for li in d.findall("comps/li")), f"{name} 缺模块槽位 Comp"
+        assert "MyModeTest.ITab_ModuleSlots" in li_values(d, "inspectorTabs"), f"{name} 缺增效模块页签"
 
     # 研究：矿粉筛选（切石+电力）→ 自动化矿料处理（+微电子）→ 自动机增效
     research_defs = def_map(parse_xml(OREPOWDER_RESEARCH_XML))
@@ -6260,12 +6284,18 @@ def validate_orepowder() -> None:
     auto_src = (ROOT / AUTOPROC_CS).read_text(encoding="utf-8")
     for token in ("CompProperties_AutoProcessor", "CompAutoProcessor", "isHopper",
                   "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent",
-                  "CompProperties_ProcessorModule", "CompProcessorModule", "ModuleType",
-                  "CountModules", "ProcessorLane", "ITab_AutoProcessor"):
+                  "CompProperties_ModuleSlots", "CompModuleSlots", "ModuleType",
+                  "GetModuleCounts", "InstallThing", "Uninstall", "PostDeSpawn",
+                  "CompFloatMenuOptions", "JobDriver_InstallModule",
+                  "ProcessorLane", "ITab_AutoProcessor", "ITab_ModuleSlots"):
         assert token in auto_src, f"AutoProcessor.cs 缺少关键实现: {token}"
-    # 页签标题 Keyed 翻译（labelKey = MMT_TabAutoProcessor）
+    # 页签标题 Keyed 翻译（labelKey = MMT_TabAutoProcessor / MMT_TabModuleSlots）
     itab_keys = (ROOT / ITAB_KEYS_XML).read_text(encoding="utf-8")
     assert "MMT_TabAutoProcessor" in itab_keys, "Keyed 翻译缺少 MMT_TabAutoProcessor"
+    assert "MMT_TabModuleSlots" in itab_keys, "Keyed 翻译缺少 MMT_TabModuleSlots"
+    # 安装作业 JobDef
+    job = def_map(parse_xml("1.7/Defs/JobDefs/MMT_Jobs.xml"))["MMT_InstallProcessorModule"]
+    assert_equal(child_text(job, "driverClass"), "MyModeTest.JobDriver_InstallModule", "安装模块 JobDriver")
     print("orepowder: OK")
 
 
@@ -6324,8 +6354,13 @@ def validate_chunkdrill() -> None:
                   "ThingPlaceMode.Near", "Scribe_Values.Look",
                   "autoDrill", "autoWorkPerTick", "CompTick", "PotentialWorkThingsGlobal",
                   "MMT_ElectricChunkDrill", "CompPowerTrader",
-                  "CompProcessorModule.CountAdjacentPowered", "ModuleType.Overclock"):
+                  "CompModuleSlots", "InstalledOverclock"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
+    # 自动采石机：槽位 Comp + 增效模块页签
+    auto_drill = buildings["MMT_AutoChunkDrill"]
+    assert any(li.attrib.get("Class") == "MyModeTest.CompProperties_ModuleSlots"
+               for li in auto_drill.findall("comps/li")), "自动采石机缺模块槽位 Comp"
+    assert "MyModeTest.ITab_ModuleSlots" in li_values(auto_drill, "inspectorTabs"), "自动采石机缺增效模块页签"
     print("chunkdrill: OK")
 
 
