@@ -6,7 +6,7 @@
        配方经各仿生物品 recipeMaker.recipeUsers 自动注册;人造骨头两个显式配方挂在人造器官组装台。 -->
 
   <!-- 原始假肢工作台(无电力) -->
-  <ThingDef>
+  <ThingDef ParentName="BuildingBase">
     <defName>MMT_PrimitiveProstheticsTable</defName>
     <label>原始假肢工作台</label>
     <description>为生产基本假肢而配备的工作台。</description>
@@ -57,7 +57,7 @@
   </ThingDef>
 
   <!-- 假肢工作台 -->
-  <ThingDef>
+  <ThingDef ParentName="BuildingBase">
     <defName>MMT_BasicProstheticsTable</defName>
     <label>假肢工作台</label>
     <description>用于生产非常简单的假肢的工作台。需要电力才能正常运作。</description>
@@ -121,7 +121,7 @@
   </ThingDef>
 
   <!-- 人造器官组装台 -->
-  <ThingDef>
+  <ThingDef ParentName="BuildingBase">
     <defName>MMT_SyntheticsTable</defName>
     <label>人造器官组装台</label>
     <description>一个配备了极其强大纳米打印机的工作站，能够生产人造器官和AI芯片。需要电力才能正常运作。</description>
@@ -191,7 +191,7 @@
   </ThingDef>
 
   <!-- 仿生体工作台 -->
-  <ThingDef>
+  <ThingDef ParentName="BuildingBase">
     <defName>MMT_BionicsTable</defName>
     <label>仿生体工作台</label>
     <description>为生产高科技仿生义肢而配备的工作台。需要电力才能正常运作。</description>
@@ -257,7 +257,7 @@
   </ThingDef>
 
   <!-- 神经机械体工作台 -->
-  <ThingDef>
+  <ThingDef ParentName="BuildingBase">
     <defName>MMT_UpgradingStation</defName>
     <label>神经机械体工作台</label>
     <description>用于生产神经机械体植入物和配件的工作台。需要电力才能正常运作。</description>

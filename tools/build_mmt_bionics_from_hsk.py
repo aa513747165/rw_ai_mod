@@ -51,7 +51,10 @@ VANILLA_ITEMS = {
 VANILLA_ITEMS_REMOVED_17 = {"Denture"}
 
 def item_ref(dn):
-    """物品引用名:原版同名件保留原 defName,其余加 MMT_ 前缀。"""
+    """物品引用名:材料映射表优先(MAAI_Chip->MMT_MedicalAssistantChip 等),
+    原版同名件保留原 defName,其余加 MMT_ 前缀。"""
+    if dn in MAT_MAP:
+        return MAT_MAP[dn]
     return dn if dn in VANILLA_ITEMS else "MMT_" + dn
 
 # ---- HSK 材料 -> MMT/原版 defName ----
@@ -127,6 +130,15 @@ STAT_DROP = {
     "CONN_HealthPointAddedToPart", "CONN_ShieldMultiplier", "CONN_ShieldRechargeRateMultiplier",
     "CarryWeight", "ShotSpread", "SightsEfficiency", "SwayFactor",
 }
+
+# EMP 反应 hediff(HSK 专有)-> MMT 版本(手维护于 1.7/Defs/HediffDefs/MMT_Hediffs_EMP.xml)
+EMP_HEDIFF_MAP = {
+    "EMP_Disorientation": "MMT_EMP_Disorientation",
+    "EMP_ProtectiveExoskeleton": "MMT_EMP_ProtectiveExoskeleton",
+}
+
+# Orassan 种族专用部件(尾巴/爪):MMT 无该种族,人类身体无 OTail/HandClaws 部位,整体跳过
+ORASSAN_ONLY = {"OBionicTail", "PlasteelClaws", "CyberneticTail"}
 
 # HSK 中本就无安装配方的材料型物品(不告警)
 MATERIALS_ONLY = {
@@ -235,6 +247,13 @@ def convert_comp(li):
         if vm is not None and vm.text:
             vm.text = "MMT_Mote_Flashlight"
         return ser_wrap(li)
+    if cls == "HediffCompProperties_ReactOnDamage":
+        # EMP 反应 hediff 为 HSK 专有,MMT 版本手维护于 HediffDefs/MMT_Hediffs_EMP.xml
+        li = copy.deepcopy(li)
+        ch = li.find("createHediff")
+        if ch is not None and ch.text:
+            ch.text = EMP_HEDIFF_MAP.get(ch.text, "MMT_" + ch.text)
+        return ser_wrap(li)
     if cls == "HediffCompProperties_VerbGiver":
         li = copy.deepcopy(li)
         tools = li.find("tools")
@@ -303,19 +322,20 @@ def emit_hediff(hdn, item_dn):
         if len(seg) > 2:
             out += seg
 
-    # stages(子优先;剔除 CE/CONN 专有 statOffsets)
+    # stages(子优先;剔除 CE/CONN 专有 statOffsets/statFactors)
     for node in ext.chain(hd):
         st = node.find("stages")
         if st is not None and len(st):
             st = copy.deepcopy(st)
             for stage in st.findall("li"):
-                so = stage.find("statOffsets")
-                if so is not None:
-                    for c in list(so):
-                        if c.tag in STAT_DROP:
-                            so.remove(c)
-                    if not len(so):
-                        stage.remove(so)
+                for tag in ("statOffsets", "statFactors"):
+                    so = stage.find(tag)
+                    if so is not None:
+                        for c in list(so):
+                            if c.tag in STAT_DROP:
+                                so.remove(c)
+                        if not len(so):
+                            stage.remove(so)
             out.append('    <stages>')
             out.append(indent_block(ser(st).strip(), "      "))
             out.append('    </stages>')
@@ -877,6 +897,8 @@ def main():
     for gi, group in enumerate(ext.GROUPS[:-1]):
         for dn in group[2]:
             if dn in VANILLA_ITEMS:
+                continue
+            if dn in ORASSAN_ONLY:
                 continue
             item_cn = get_cn(dn) or dn
             if gi == 13:

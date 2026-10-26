@@ -8,7 +8,7 @@
     <description>一次性便携护盾装置。部署后在原地展开一个临时能量护盾，拦截外部射入的投射物，护盾内的友军仍可向外射击；内置电源能量有限，燃尽后装置自动焚毁。</description>
     <category>Item</category>
     <thingCategories>
-      <li>ItemsExotic</li>
+      <li>ItemsMisc</li>
     </thingCategories>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <useHitPoints>true</useHitPoints>

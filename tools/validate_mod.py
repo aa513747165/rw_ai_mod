@@ -102,6 +102,8 @@ BIONICS_ITEM_XMLS = [
 BIONICS_HEDIFF_XMLS = [
     "1.7/Defs/HediffDefs/MMT_Hediffs_Bionics.xml",
     "1.7/Defs/HediffDefs/MMT_Hediffs_BionicsCONN.xml",
+    # EMP 反应 Hediff(手维护,ReactOnDamage 的 createHediff 目标)
+    "1.7/Defs/HediffDefs/MMT_Hediffs_EMP.xml",
 ]
 BIONICS_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Bionics.xml"
 BIONICS_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Bionics.xml"
@@ -6749,7 +6751,7 @@ def validate_bionics() -> None:
     items: dict[str, ET.Element] = {}
     for f in BIONICS_ITEM_XMLS:
         items.update(def_map(parse_xml(f)))
-    assert_equal(len(items), 93, "仿生物品总数(111 - 18 原版同名件)")
+    assert_equal(len(items), 90, "仿生物品总数(111 - 18 原版同名件 - 3 Orassan 专用件)")
     hand = items["MMT_BionicHand"]
     cost = {c.tag: c.text for c in hand.find("costList")}
     assert_equal(cost, {"MMT_SpacerComponent": "4", "MMT_Biomatter": "25", "MMT_SyntheticFibers": "16",
@@ -6779,7 +6781,7 @@ def validate_bionics() -> None:
     for f in BIONICS_HEDIFF_XMLS:
         hediffs.update({el.findtext("defName"): el for el in parse_xml(f)
                         if el.tag == "HediffDef" and el.findtext("defName")})
-    assert_equal(len(hediffs), 87, "仿生 Hediff 总数(含生命维持 5 变体等)")
+    assert_equal(len(hediffs), 86, "仿生 Hediff 总数(含生命维持 5 变体、EMP 反应 2 条,不含 3 件 Orassan 专用)")
     hh = hediffs["MMT_BionicHand"]
     assert_equal(child_text(hh, "addedPartProps/partEfficiency"), "1.1", "仿生手部件效率")
     assert_equal(child_text(hh, "stages/li/capMods/li/offset"), "0.1", "仿生手操作加成")
@@ -6792,7 +6794,7 @@ def validate_bionics() -> None:
     installs = [el for el in recipes if el.tag == "RecipeDef"
                 and ((el.findtext("defName") or "").startswith("MMT_Install")
                      or el.findtext("defName") == "MMT_OrganicOptimizing")]  # HSK 原名无 Install 前缀
-    assert_equal(len(installs), 87, "安装手术总数")
+    assert_equal(len(installs), 84, "安装手术总数(87 - 3 Orassan 专用)")
     for rec in installs:
         dn = rec.findtext("defName")
         assert_equal(li_values(rec, "recipeUsers"), ["Human"], f"{dn} 应挂 Human")
@@ -6825,6 +6827,20 @@ def validate_bionics() -> None:
         text = read_text(f)
         for token in ("CombatExtended", "EBF.", "CONN."):
             assert token not in text, f"{f} 残留 {token}"
+    # ---- 无 HSK/CE 专有引用残留(2026-10-26 启动红字回归) ----
+    for f in BIONICS_ITEM_XMLS + BIONICS_HEDIFF_XMLS + [BIONICS_RECIPE_XML]:
+        text = read_text(f)
+        for token in ("ShotSpread", "SightsEfficiency", "SwayFactor",  # CE stat
+                      "MMT_MAAI_Chip",  # 应为 MMT_MedicalAssistantChip
+                      "OTail", "LeftHandClaws", "RightHandClaws",  # Orassan 种族部位
+                      "<createHediff>EMP_"):  # 应为 MMT_EMP_*
+            assert token not in text, f"{f} 残留 {token}"
+    # spawnThingOnRemoved 均可解析
+    for dn, d in hediffs.items():
+        sp = d.findtext("spawnThingOnRemoved")
+        if sp:
+            assert sp in items or sp in VANILLA_BIONIC_ITEMS or sp in collect_known_def_names(), \
+                f"{dn} spawnThingOnRemoved 不可解析: {sp}"
 
     # ---- 原版补丁 ----
     patch = read_text(BIONICS_PATCH_XML)

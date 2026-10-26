@@ -256,11 +256,6 @@
       					<MedicalTendQualityOffset>0.1</MedicalTendQualityOffset>
       					<MedicalTendSpeed>0.15</MedicalTendSpeed>
       				</statOffsets>
-      				<statFactors>
-      					<SightsEfficiency>1.15</SightsEfficiency>
-      					<ShotSpread>0.92</ShotSpread>
-      					<SwayFactor>0.90</SwayFactor>
-      				</statFactors>
       			</li>
     </stages>
     <spawnThingOnRemoved>MMT_CONN_Zoom</spawnThingOnRemoved>
@@ -342,11 +337,6 @@
       					<RangedWeapon_Cooldown>-0.2</RangedWeapon_Cooldown>
       					<AimingDelayFactor>-0.2</AimingDelayFactor>
       				</statOffsets>
-      				<statFactors>
-      					<SightsEfficiency>1.15</SightsEfficiency>
-      					<ShotSpread>0.92</ShotSpread>
-      					<SwayFactor>0.90</SwayFactor>
-      				</statFactors>
       			</li>
     </stages>
     <spawnThingOnRemoved>MMT_CONN_CyclopsVisor</spawnThingOnRemoved>
@@ -366,11 +356,6 @@
       				<statOffsets>
       					<AimingDelayFactor>-0.10</AimingDelayFactor>
       				</statOffsets>
-      				<statFactors>
-      					<SightsEfficiency>1.25</SightsEfficiency>
-      					<ShotSpread>0.95</ShotSpread>
-      					<SwayFactor>0.80</SwayFactor>
-      				</statFactors>
       				<capMods>
       					<li>
       						<capacity>Sight</capacity>

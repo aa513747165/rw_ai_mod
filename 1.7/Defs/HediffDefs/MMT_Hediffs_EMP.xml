@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- EMP 反应 Hediff:对照 HSK Core_SK Hediffs_Injuries.xml 的 EMP_Disorientation/EMP_ProtectiveExoskeleton,
+       由仿生 Hediff 的 HediffCompProperties_ReactOnDamage 在被 EMP 击中时附加(手维护,非生成物) -->
+
+  <!-- 定向障碍:脑部植入物被 EMP 脉冲击中的后遗症 -->
+  <HediffDef>
+    <defName>MMT_EMP_Disorientation</defName>
+    <label>定向障碍</label>
+    <description>电击对大脑造成的后遗症。通常由 EMP 脉冲击中脑部植入物产生的反馈引起。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>480~840</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <ShootingAccuracyPawn>-25</ShootingAccuracyPawn>
+          <AimingDelayFactor>+1.00</AimingDelayFactor>
+          <MeleeHitChance>-8</MeleeHitChance>
+          <MeleeDodgeChance>-15</MeleeDodgeChance>
+          <WorkSpeedGlobal>-0.80</WorkSpeedGlobal>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <setMax>0.3</setMax>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <setMax>0.3</setMax>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <setMax>0.3</setMax>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 外骨骼瘫痪:EMP 使防护外骨骼的减伤功能失效并拖累使用者 -->
+  <HediffDef>
+    <defName>MMT_EMP_ProtectiveExoskeleton</defName>
+    <label>外骨骼瘫痪</label>
+    <description>EMP 脉冲瘫痪了防护外骨骼的伤害缓冲功能,外骨骼暂时成为拖累使用者的死重。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>3600~5400</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <IncomingDamageFactor>1.176</IncomingDamageFactor>
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.25</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.25</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>
