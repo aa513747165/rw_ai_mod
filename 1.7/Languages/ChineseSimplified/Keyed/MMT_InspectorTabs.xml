@@ -2,4 +2,6 @@
 <LanguageData>
   <!-- 自动处理机"处理进度"页签标题（ITab_AutoProcessor.labelKey） -->
   <MMT_TabAutoProcessor>处理进度</MMT_TabAutoProcessor>
+  <!-- 自动设备"增效模块"页签标题（ITab_ModuleSlots.labelKey） -->
+  <MMT_TabModuleSlots>增效模块</MMT_TabModuleSlots>
 </LanguageData>

@@ -117,6 +117,7 @@
     <tickerType>Normal</tickerType>
     <inspectorTabs>
       <li>MyModeTest.ITab_AutoProcessor</li>
+      <li>MyModeTest.ITab_ModuleSlots</li>
     </inspectorTabs>
     <comps>
       <li Class="CompProperties_Power">
@@ -126,6 +127,7 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
+      <li Class="MyModeTest.CompProperties_ModuleSlots" />
       <!-- 原料仓：粗矿石即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
            省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
       <li Class="CompProperties_Refuelable">
@@ -209,6 +211,7 @@
     <tickerType>Normal</tickerType>
     <inspectorTabs>
       <li>MyModeTest.ITab_AutoProcessor</li>
+      <li>MyModeTest.ITab_ModuleSlots</li>
     </inspectorTabs>
     <comps>
       <li Class="CompProperties_Power">
@@ -218,6 +221,7 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
+      <li Class="MyModeTest.CompProperties_ModuleSlots" />
       <!-- 原料仓：矿粉即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
            省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
       <li Class="CompProperties_Refuelable">

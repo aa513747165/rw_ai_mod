@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 超频模块：安装在自动研磨机/自动筛子/自动采石机内，每个使处理速度 +10%（间隔 / (1+0.1n)），
+       单台最多 5 个；拆除设备时返还。需研究"自动机增效" -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_OverclockModule</defName>
+    <label>超频模块</label>
+    <description>自动加工机组的超频驱动模块，由殖民者安装进自动研磨机、自动筛子或自动采石机内生效。每个使设备处理速度提高 10%，单台最多安装 5 个。拆除设备时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_OverclockModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>180</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>2</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+  </ThingDef>
+
+  <!-- 并行模块：安装在自动研磨机/自动筛子内，每个使生产线 +1 条（每轮多耗一份料多产一份产物），
+       单台最多 3 个；拆除设备时返还。需研究"自动机增效" -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ParallelModule</defName>
+    <label>并行模块</label>
+    <description>自动加工机组的并行加工扩展模块，由殖民者安装进自动研磨机或自动筛子内生效。每个使设备每轮多消耗一份输入并多产出一份产物，单台最多安装 3 个。拆除设备时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ParallelModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>220</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>2.5</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+  </ThingDef>
+</Defs>

@@ -7,4 +7,11 @@
     <reportString>正在采石（TargetA）。</reportString>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
+
+  <!-- 安装增效模块作业：取模块物品搬到自动设备装入槽位（JobDriver_InstallModule） -->
+  <JobDef>
+    <defName>MMT_InstallProcessorModule</defName>
+    <driverClass>MyModeTest.JobDriver_InstallModule</driverClass>
+    <reportString>正在安装增效模块（TargetA）。</reportString>
+  </JobDef>
 </Defs>

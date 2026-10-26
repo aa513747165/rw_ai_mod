@@ -118,6 +118,8 @@
       <li>MMT_MakeSpacerComponent</li>
       <li>MMT_MakeReinforcedConcrete_Electric</li>
       <li>MMT_MakeMineralSonarModule</li>
+      <li>MMT_MakeOverclockModule</li>
+      <li>MMT_MakeParallelModule</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
