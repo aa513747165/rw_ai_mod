@@ -6323,7 +6323,8 @@ def validate_chunkdrill() -> None:
                   "JobDriver_OperateChunkDrill", "DeepDrillingSpeed", "productDef", "productCount",
                   "ThingPlaceMode.Near", "Scribe_Values.Look",
                   "autoDrill", "autoWorkPerTick", "CompTick", "PotentialWorkThingsGlobal",
-                  "MMT_ElectricChunkDrill", "CompPowerTrader"):
+                  "MMT_ElectricChunkDrill", "CompPowerTrader",
+                  "CompProcessorModule.CountAdjacentPowered", "ModuleType.Overclock"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
     print("chunkdrill: OK")
 

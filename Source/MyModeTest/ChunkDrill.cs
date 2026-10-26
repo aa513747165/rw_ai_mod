@@ -65,13 +65,14 @@ namespace MyModeTest
             AddProgress(driller.GetStatValue(StatDefOf.DeepDrillingSpeed));
         }
 
-        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度。</summary>
+        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度；相邻超频模块每个提速 10%。</summary>
         public override void CompTick()
         {
             base.CompTick();
             if (!Props.autoDrill || !CanDrillNow())
                 return;
-            AddProgress(Props.autoWorkPerTick);
+            int overclock = CompProcessorModule.CountAdjacentPowered(parent, ModuleType.Overclock);
+            AddProgress(Props.autoWorkPerTick * (1f + 0.1f * overclock));
         }
 
         /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>
@@ -103,7 +104,15 @@ namespace MyModeTest
 
         public override string CompInspectStringExtra()
         {
-            return "采石进度: " + Progress.ToStringPercent();
+            string text = "采石进度: " + Progress.ToStringPercent();
+            // 自动版显示相邻生效的超频模块计数（手动/电动版由殖民者操作，不受模块影响）
+            if (Props.autoDrill)
+            {
+                int overclock = CompProcessorModule.CountAdjacentPowered(parent, ModuleType.Overclock);
+                if (overclock > 0)
+                    text += "\n超频模块 x" + overclock;
+            }
+            return text;
         }
     }
 

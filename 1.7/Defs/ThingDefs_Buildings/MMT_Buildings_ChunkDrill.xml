@@ -125,7 +125,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoChunkDrill</defName>
     <label>自动采石机</label>
-    <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。</description>
+    <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。可贴靠超频模块提升钻速。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoChunkDrill</texPath>

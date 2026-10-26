@@ -72,6 +72,31 @@ namespace MyModeTest
         {
             get { return (CompProperties_ProcessorModule)props; }
         }
+
+        /// <summary>统计建筑相邻 8 格内通电的指定类型增效模块数量（断电模块不计），供各自动机组共用。</summary>
+        public static int CountAdjacentPowered(Thing parent, ModuleType type)
+        {
+            int count = 0;
+            foreach (IntVec3 cell in GenAdj.CellsAdjacent8WayAndInside(parent))
+            {
+                List<Thing> things = cell.GetThingList(parent.Map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Building b = things[i] as Building;
+                    if (b == null)
+                        continue;
+                    CompProcessorModule module = b.GetComp<CompProcessorModule>();
+                    if (module == null || module.Props.moduleType != type)
+                        continue;
+                    // 断电模块不生效
+                    CompPowerTrader power = b.GetComp<CompPowerTrader>();
+                    if (power != null && !power.PowerOn)
+                        continue;
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 
     /// <summary>
