@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 部署式护盾技术：解锁在电动装配台组装一次性部署式护盾发生器；前置 原版护盾腰带 + 集成电路技术 -->
+  <ResearchProjectDef>
+    <defName>MMT_DeployableShieldTech</defName>
+    <label>部署式护盾技术</label>
+    <description>研究便携式低角度护盾投影技术，在电动装配台组装一次性部署式护盾发生器：使用后展开临时能量护盾，拦截外部射入的投射物，内部人员仍可向外射击。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>ShieldBelt</li>
+      <li>MMT_IntegratedCircuitTech</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

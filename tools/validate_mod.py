@@ -86,6 +86,12 @@ MODULE_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_ProcessorModules.xml"
 ORESIFT_CS = "Source/MyModeTest/OreSiftPool.cs"
 AUTOPROC_CS = "Source/MyModeTest/AutoProcessor.cs"
 ITAB_KEYS_XML = "1.7/Languages/ChineseSimplified/Keyed/MMT_InspectorTabs.xml"
+SHIELD_ITEM_XML = "1.7/Defs/ThingDefs_Items/MMT_Items_Shield.xml"
+SHIELD_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Shield.xml"
+SHIELD_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_Shield.xml"
+SHIELD_RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_Shield.xml"
+SHIELD_BENCH_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Parts.xml"
+SHIELD_CS = "Source/MyModeTest/ShieldDeployer.cs"
 
 AGRICULTURE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Dirt.png",
@@ -1772,7 +1778,7 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 70  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项
+INFRA_RESEARCH_TOTAL = 71  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项
 INFRA_WORKTABLE_TOTAL = 47  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
@@ -6514,6 +6520,63 @@ def validate_teleport() -> None:
     print("teleport: OK")
 
 
+def validate_shield() -> None:
+    """部署式护盾：使用型物品（CompUsable + 自定义生成建筑效果）+ 临时护盾建筑（复用 Royalty 弹道拦截/限时销毁 comp）+ 配方/研究 + Royalty 依赖。"""
+    require_files([SHIELD_ITEM_XML, SHIELD_BUILDING_XML, SHIELD_RECIPE_XML, SHIELD_RESEARCH_XML, SHIELD_CS])
+
+    # 物品：使用型（UseItem），使用后生成护盾建筑并自毁
+    items = def_map(parse_xml(SHIELD_ITEM_XML))
+    assert_equal(set(items), {"MMT_DeployableShield"}, "护盾物品 defName 集合")
+    item = items["MMT_DeployableShield"]
+    usable = next(li for li in item.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Usable")
+    assert_equal(child_text(usable, "useJob"), "UseItem", "护盾物品使用作业")
+    spawn = next(li for li in item.findall("comps/li")
+                 if li.attrib.get("Class") == "MyModeTest.CompProperties_UseEffectSpawnBuilding")
+    assert_equal(child_text(spawn, "buildingDef"), "MMT_ShieldProjector", "使用效果生成建筑")
+    assert any(li.attrib.get("Class") == "CompProperties_UseEffectDestroySelf"
+               for li in item.findall("comps/li")), "护盾物品缺用后销毁 comp"
+
+    # 建筑：拦截外部投射物 + 1800 tick 后自毁，参数对齐 Royalty BroadshieldProjector
+    buildings = def_map(parse_xml(SHIELD_BUILDING_XML))
+    assert_equal(set(buildings), {"MMT_ShieldProjector"}, "护盾建筑 defName 集合")
+    projector = buildings["MMT_ShieldProjector"]
+    assert_equal(child_text(projector, "tickerType"), "Normal", "护盾建筑需 Normal tick 驱动倒计时")
+    interceptor = next(li for li in projector.findall("comps/li")
+                       if li.attrib.get("Class") == "CompProperties_ProjectileInterceptor")
+    assert_equal(child_text(interceptor, "radius"), "4.9", "护盾半径")
+    assert_equal(child_text(interceptor, "interceptOutgoingProjectiles"), "false", "护盾不拦向外弹道")
+    delay = next(li for li in projector.findall("comps/li")
+                 if li.attrib.get("Class") == "CompProperties_DestroyAfterDelay")
+    assert_equal(child_text(delay, "delayTicks"), "1800", "护盾燃尽倒计时")
+    assert projector.find("designationCategory") is None, "护盾建筑不可建造，不应有建造分类"
+
+    # 配方：产出 1 个，挂电动装配台，需部署式护盾技术
+    recipes = def_map(parse_xml(SHIELD_RECIPE_XML))
+    assert_equal(set(recipes), {"MMT_MakeDeployableShield"}, "护盾配方 defName 集合")
+    make = recipes["MMT_MakeDeployableShield"]
+    assert_equal(child_text(make, "products/MMT_DeployableShield"), "1", "护盾配方产出")
+    assert_equal(child_text(make, "researchPrerequisite"), "MMT_DeployableShieldTech", "护盾配方研究前置")
+    bench = def_map(parse_xml(SHIELD_BENCH_XML))["MMT_ElectricAssemblyBench"]
+    assert "MMT_MakeDeployableShield" in li_values(bench, "recipes"), "护盾配方未挂到电动装配台"
+
+    # 研究：MMT 研究页，前置 原版护盾腰带 + 集成电路技术，坐标查 LAYOUT 表
+    research = def_map(parse_xml(SHIELD_RESEARCH_XML))["MMT_DeployableShieldTech"]
+    assert_equal(child_text(research, "tab"), "MMT_ResearchTab", "护盾研究页签")
+    assert_equal(child_text(research, "baseCost"), "2000", "护盾研究点数")
+    assert_equal(li_values(research, "prerequisites"), ["ShieldBelt", "MMT_IntegratedCircuitTech"], "护盾研究前置")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_DeployableShieldTech", "x"), "护盾研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_DeployableShieldTech", "y"), "护盾研究 Y 坐标")
+
+    # Royalty 硬依赖 + C# 关键实现
+    about = read_text("About/About.xml")
+    assert "Ludeon.RimWorld.Royalty" in about, "About.xml 缺少 Royalty 依赖声明"
+    cs_src = read_text(SHIELD_CS)
+    for token in ("CompProperties_UseEffectSpawnBuilding", "CompUseEffect_SpawnBuilding",
+                  "buildingDef", "GenSpawn.Spawn", "SetFaction"):
+        assert token in cs_src, f"ShieldDeployer.cs 缺少关键实现: {token}"
+    print("shield: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -6549,6 +6612,7 @@ def validate_all() -> None:
     validate_science()
     validate_persona_core()
     validate_teleport()
+    validate_shield()
     validate_all_xml()
 
 
@@ -6612,6 +6676,7 @@ SUITES = {
     "science": validate_science,
     "persona-core": validate_persona_core,
     "teleport": validate_teleport,
+    "shield": validate_shield,
     "all": validate_all,
 }
 

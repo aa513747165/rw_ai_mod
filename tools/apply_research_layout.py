@@ -81,6 +81,7 @@ LAYOUT = {
     "MMT_Robotics1": (0, 11),
     "MMT_MeleeAdvanced": (1, 11),
     "MMT_NuclearPower": (2, 11),
+    "MMT_DeployableShieldTech": (3, 11),
     # y=12 枪械
     "MMT_GunsAdvanced": (0, 12),
     "MMT_RiflesAdvanced": (1, 12),

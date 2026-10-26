@@ -120,6 +120,7 @@
       <li>MMT_MakeMineralSonarModule</li>
       <li>MMT_MakeOverclockModule</li>
       <li>MMT_MakeParallelModule</li>
+      <li>MMT_MakeDeployableShield</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>
