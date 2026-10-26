@@ -109,6 +109,12 @@ BIONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Bionics.xml"
 BIONICS_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaBionics.xml"
 BIONICS_CS = "Source/MyModeTest/BionicsComps.cs"
 SHIELD_CS = "Source/MyModeTest/ShieldDeployer.cs"
+# 生命备份链(手写,非生成物)
+STATEBACKUP_ITEM_XML = "1.7/Defs/ThingDefs_Items/MMT_Items_StateBackup.xml"
+STATEBACKUP_HEDIFF_XML = "1.7/Defs/HediffDefs/MMT_Hediffs_StateBackup.xml"
+STATEBACKUP_ABILITY_XML = "1.7/Defs/AbilityDefs/MMT_Abilities_StateBackup.xml"
+STATEBACKUP_RECIPE_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_StateBackup.xml"
+STATEBACKUP_CS = "Source/MyModeTest/StateBackup.cs"
 
 AGRICULTURE_ITEM_TEXTURES = [
     "1.7/Textures/Things/Item/MMT/Dirt.png",
@@ -6607,6 +6613,71 @@ def validate_shield() -> None:
     print("shield: OK")
 
 
+def validate_statebackup() -> None:
+    """生命备份链:脑部植入物(安装时自动备份健康快照+技能刷新备份+死亡时销毁并回档)。
+    物品/Hediff/技能/安装手术/C# 实现引用闭环与贴图存在性。"""
+    require_files([STATEBACKUP_ITEM_XML, STATEBACKUP_HEDIFF_XML, STATEBACKUP_ABILITY_XML,
+                   STATEBACKUP_RECIPE_XML, STATEBACKUP_CS,
+                   "1.7/Textures/Things/Item/MMT/MMT_Bionics/EPOEMAAIChip/EPOEMAAIChip.png"])
+
+    # ---- 技能:即时自我施放 + 自定义效果 comp ----
+    abilities = def_map(parse_xml(STATEBACKUP_ABILITY_XML))
+    assert_equal(set(abilities), {"MMT_Ability_StateBackup"}, "状态备份技能 defName 集合")
+    ability = abilities["MMT_Ability_StateBackup"]
+    assert_equal(child_text(ability, "targetRequired"), "false", "状态备份技能需即时施放")
+    assert_equal(child_text(ability, "verbProperties/targetParams/canTargetSelf"), "true",
+                 "状态备份技能需可自我目标")
+    effect = ability.find("comps/li[@Class='CompProperties_AbilityEffect']")
+    assert effect is not None, "状态备份技能缺少 AbilityEffect comp"
+    assert_equal(child_text(effect, "compClass"), "MyModeTest.CompAbilityEffect_SaveBackup",
+                 "状态备份技能效果类")
+
+    # ---- Hediff:备份 comp + 技能授予 comp,死亡销毁不掉落 ----
+    hediffs = def_map(parse_xml(STATEBACKUP_HEDIFF_XML))
+    assert_equal(set(hediffs), {"MMT_StateBackupImplant"}, "生命备份 Hediff defName 集合")
+    hediff = hediffs["MMT_StateBackupImplant"]
+    assert_equal(child_text(hediff, "hediffClass"), "HediffWithComps", "生命备份 hediffClass")
+    classes = [li.attrib.get("Class") for li in hediff.findall("comps/li")]
+    assert "MyModeTest.HediffCompProperties_StateBackup" in classes, "生命备份缺少状态备份 comp"
+    give = next((li for li in hediff.findall("comps/li")
+                 if li.attrib.get("Class") == "HediffCompProperties_GiveAbility"), None)
+    assert give is not None, "生命备份缺少 GiveAbility comp"
+    assert_equal(li_values(give, "abilityDefs"), ["MMT_Ability_StateBackup"], "授予的技能")
+    assert hediff.find("spawnThingOnRemoved") is None, "植入物触发/取出时不应掉落(spawnThingOnRemoved)"
+
+    # ---- 物品:继承仿生件基类,升级台制造 ----
+    items = def_map(parse_xml(STATEBACKUP_ITEM_XML))
+    assert_equal(set(items), {"MMT_StateBackupCore"}, "生命备份物品 defName 集合")
+    item = items["MMT_StateBackupCore"]
+    assert_equal(item.attrib.get("ParentName"), "MMT_BodyPartBase", "生命备份核心基类")
+    assert_equal(child_text(item, "graphicData/texPath"),
+                 "Things/Item/MMT/MMT_Bionics/EPOEMAAIChip/EPOEMAAIChip", "生命备份核心贴图")
+    assert_equal(li_values(item, "recipeMaker/recipeUsers"), ["MMT_UpgradingStation"], "制造工作台")
+    assert_equal(child_text(item, "recipeMaker/researchPrerequisite"), "MMT_Prosthesis_E5",
+                 "制造研究前置")
+
+    # ---- 手术:脑部安装,addsHediff 闭环 ----
+    recipes = def_map(parse_xml(STATEBACKUP_RECIPE_XML))
+    assert_equal(set(recipes), {"MMT_InstallStateBackupCore"}, "安装手术 defName 集合")
+    recipe = recipes["MMT_InstallStateBackupCore"]
+    assert_equal(child_text(recipe, "addsHediff"), "MMT_StateBackupImplant", "手术添加 Hediff")
+    assert_equal(li_values(recipe, "appliedOnFixedBodyParts"), ["Brain"], "植入部位")
+    assert_equal(child_text(recipe, "researchPrerequisite"), "MMT_ProsthesisInstall_D4",
+                 "手术研究前置")
+    ingredients_text = ET.tostring(recipe.find("ingredients"), encoding="unicode")
+    assert "MMT_StateBackupCore" in ingredients_text, "手术缺少植入物材料"
+
+    # ---- C# 实现关键点 ----
+    cs_src = read_text(STATEBACKUP_CS)
+    for token in ("HediffCompProperties_StateBackup", "HediffComp_StateBackup",
+                  "CompAbilityEffect_SaveBackup", "HediffSnapshot",
+                  "CompPostPostAdd", "CompExposeData",
+                  "HarmonyPatch(typeof(Pawn), \"Kill\")",
+                  "RemoveHediff", "AddHediff", "Scribe_Collections.Look"):
+        assert token in cs_src, f"StateBackup.cs 缺少关键实现: {token}"
+    print("statebackup: OK")
+
+
 def validate_bionics() -> None:
     """仿生链(HSK Core_SK BodyParts + CyberneticOrganism_SK 移植,111 件,不含卫生仿生):
     物品/Hediff/安装手术/研究树/五级工作台/原版部件补丁/CONN 特殊 comp/贴图。"""
@@ -6800,6 +6871,7 @@ def validate_all() -> None:
     validate_persona_core()
     validate_teleport()
     validate_shield()
+    validate_statebackup()
     validate_bionics()
     validate_all_xml()
 
@@ -6865,6 +6937,7 @@ SUITES = {
     "persona-core": validate_persona_core,
     "teleport": validate_teleport,
     "shield": validate_shield,
+    "statebackup": validate_statebackup,
     "bionics": validate_bionics,
     "all": validate_all,
 }
