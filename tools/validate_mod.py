@@ -8,6 +8,8 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from apply_research_layout import LAYOUT as RESEARCH_LAYOUT
+
 ROOT = Path(__file__).resolve().parents[1]
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
@@ -1242,8 +1244,8 @@ PETROCHEM_EXT_RESOURCE_EXPECTATIONS = {
 }
 
 PETROCHEM_EXT_RESEARCH_EXPECTATIONS = {
-    "MMT_AdvancedPetrochemistry": {"label": "高级石化工艺", "cost": "1500", "tech": "Industrial", "prereqs": ["MMT_ElectricPetrochemistry"], "x": "16.00", "y": "1.00"},
-    "MMT_OxidizedFuel": {"label": "氧化燃料", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedPetrochemistry"], "x": "17.00", "y": "2.00"},
+    "MMT_AdvancedPetrochemistry": {"label": "高级石化工艺", "cost": "1500", "tech": "Industrial", "prereqs": ["MMT_ElectricPetrochemistry"]},
+    "MMT_OxidizedFuel": {"label": "氧化燃料", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedPetrochemistry"]},
 }
 
 PETROCHEM_EXT_LOOM_RECIPES = ["MMT_MakeCompaste", "MMT_MakeCloth", "MMT_MakeFlaxcloth", "MMT_MakeHempCloth", "MMT_MakeDevilstrand", "MMT_MakeSynthread", "MMT_MakeVelour", "MMT_MakeKevlar", "MMT_MakeHyperweave", "MMT_MakeChitinPlating"]
@@ -1407,9 +1409,9 @@ WEAPON_PARTS_RECIPE_EXPECTATIONS = {
 }
 
 TEXTILES_WEAPONS_RESEARCH_EXPECTATIONS = {
-    "MMT_ArtSupplies": {"label": "艺术用品", "cost": "400", "tech": "Industrial", "prereqs": [], "x": "2.00", "y": "0.00"},
-    "MMT_SuperFabric": {"label": "超织物工艺", "cost": "2000", "tech": "Spacer", "prereqs": ["AdvancedFabrication"], "x": "23.00", "y": "1.00"},
-    "MMT_Rocketry1": {"label": "火箭弹 I", "cost": "1400", "tech": "Industrial", "prereqs": ["HeavyTurrets"], "x": "23.00", "y": "2.00"},
+    "MMT_ArtSupplies": {"label": "艺术用品", "cost": "400", "tech": "Industrial", "prereqs": []},
+    "MMT_SuperFabric": {"label": "超织物工艺", "cost": "2000", "tech": "Spacer", "prereqs": ["AdvancedFabrication"]},
+    "MMT_Rocketry1": {"label": "火箭弹 I", "cost": "1400", "tech": "Industrial", "prereqs": ["HeavyTurrets"]},
 }
 
 MATTER_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Matter.xml"
@@ -1462,9 +1464,9 @@ SUPER_ALLOYS_RESOURCE_EXPECTATIONS = {
 }
 
 MATTER_RESEARCH_EXPECTATIONS = {
-    "MMT_MatterConversion1": {"label": "物质转换 I", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_BasicElectronics", "MMT_ComponentCrafting"], "x": "19.00", "y": "1.00"},
-    "MMT_MatterConversion2": {"label": "物质转换 II", "cost": "2400", "tech": "Ultra", "prereqs": ["MMT_UltraComponents", "MMT_MatterConversion1"], "x": "20.00", "y": "2.00"},
-    "MMT_MatterConversion3": {"label": "物质转换 III", "cost": "2500", "tech": "Ultra", "prereqs": ["MMT_MatterConversion2"], "x": "21.00", "y": "2.00"},
+    "MMT_MatterConversion1": {"label": "物质转换 I", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_BasicElectronics", "MMT_ComponentCrafting"]},
+    "MMT_MatterConversion2": {"label": "物质转换 II", "cost": "2400", "tech": "Ultra", "prereqs": ["MMT_UltraComponents", "MMT_MatterConversion1"]},
+    "MMT_MatterConversion3": {"label": "物质转换 III", "cost": "2500", "tech": "Ultra", "prereqs": ["MMT_MatterConversion2"]},
 }
 
 MATTER_CONVERTER_RECIPES = [
@@ -1696,9 +1698,9 @@ PARTS_RESOURCE_EXPECTATIONS = {
 }
 
 PARTS_RESEARCH_EXPECTATIONS = {
-    "MMT_ComponentCrafting": {"label": "零件加工", "cost": "600", "tech": "Industrial", "prereqs": [], "x": "15.00", "y": "0.00"},
-    "MMT_AdvancedComponents": {"label": "高级零件", "cost": "1600", "tech": "Spacer", "prereqs": ["MMT_ComponentCrafting"], "x": "15.00", "y": "1.00"},
-    "MMT_UltraComponents": {"label": "超级零件", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedComponents", "MMT_AdvancedAlloys"], "x": "15.00", "y": "2.00"},
+    "MMT_ComponentCrafting": {"label": "零件加工", "cost": "600", "tech": "Industrial", "prereqs": []},
+    "MMT_AdvancedComponents": {"label": "高级零件", "cost": "1600", "tech": "Spacer", "prereqs": ["MMT_ComponentCrafting"]},
+    "MMT_UltraComponents": {"label": "超级零件", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_AdvancedComponents", "MMT_AdvancedAlloys"]},
 }
 
 PARTS_HAND_BENCH_RECIPES = [
@@ -1722,6 +1724,8 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeSpacerComponent",
     "MMT_MakeReinforcedConcrete_Electric",
     "MMT_MakeMineralSonarModule",
+    "MMT_MakeOverclockModule",
+    "MMT_MakeParallelModule",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
@@ -1879,6 +1883,12 @@ def assert_equal(actual: object, expected: object, label: str) -> None:
         fail(f"{label}: 期望 {expected!r}，实际 {actual!r}")
 
 
+def research_coord(def_name: str, axis: str) -> str:
+    # 研究视图坐标的唯一事实来源是 apply_research_layout.LAYOUT，此处统一查表，避免两处硬编码漂移
+    x, y = RESEARCH_LAYOUT[def_name]
+    return "{:.2f}".format(x if axis == "x" else y)
+
+
 def assert_png(path: str) -> None:
     # 校验 PNG 魔数、IHDR 块类型以及宽高均大于 0
     data = (ROOT / path).read_bytes()
@@ -1992,8 +2002,8 @@ def validate_building() -> None:
     assert_equal(child_text(reinforced, "baseCost"), "1500", "强化玻璃研究 baseCost")
     assert_equal(child_text(reinforced, "techLevel"), "Industrial", "强化玻璃研究 techLevel")
     assert_equal(li_values(reinforced, "prerequisites"), ["MMT_Glassworking", "MMT_BasicPetrochemistry"], "强化玻璃研究前置")
-    assert_equal(child_text(reinforced, "researchViewX"), "5.00", "强化玻璃研究 X 坐标")
-    assert_equal(child_text(reinforced, "researchViewY"), "1.00", "强化玻璃研究 Y 坐标")
+    assert_equal(child_text(reinforced, "researchViewX"), research_coord("MMT_ReinforcedGlassTech", "x"), "强化玻璃研究 X 坐标")
+    assert_equal(child_text(reinforced, "researchViewY"), research_coord("MMT_ReinforcedGlassTech", "y"), "强化玻璃研究 Y 坐标")
 
     building_defs = def_map(parse_xml(BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_GlassworksTable"}, "建筑 defName 集合")
@@ -2191,8 +2201,8 @@ def validate_concrete_building() -> None:
     assert_equal(child_text(research, "baseCost"), "1000", "混凝土研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "混凝土研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["Stonecutting"], "混凝土研究前置")
-    assert_equal(child_text(research, "researchViewX"), "7.00", "混凝土研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "0.00", "混凝土研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_ConcreteBasic", "x"), "混凝土研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_ConcreteBasic", "y"), "混凝土研究 Y 坐标")
 
     building_defs = def_map(parse_xml(CONCRETE_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ConcreteMixer", "MMT_EConcreteMixer"}, "混凝土建筑 defName 集合")
@@ -2377,16 +2387,16 @@ def validate_wood_building() -> None:
     assert_equal(child_text(woodworking, "baseCost"), "300", "木工研究 baseCost")
     assert_equal(child_text(woodworking, "techLevel"), "Neolithic", "木工研究 techLevel")
     assert_equal(li_values(woodworking, "prerequisites"), [], "木工研究前置")
-    assert_equal(child_text(woodworking, "researchViewX"), "0.00", "木工研究 X 坐标")
-    assert_equal(child_text(woodworking, "researchViewY"), "1.00", "木工研究 Y 坐标")
+    assert_equal(child_text(woodworking, "researchViewX"), research_coord("MMT_Woodworking", "x"), "木工研究 X 坐标")
+    assert_equal(child_text(woodworking, "researchViewY"), research_coord("MMT_Woodworking", "y"), "木工研究 Y 坐标")
 
     charcoal = research_defs["MMT_CharcoalBurning"]
     assert_equal(child_text(charcoal, "label"), "木炭烧制", "烧炭研究 label")
     assert_equal(child_text(charcoal, "baseCost"), "500", "烧炭研究 baseCost")
     assert_equal(child_text(charcoal, "techLevel"), "Medieval", "烧炭研究 techLevel")
     assert_equal(li_values(charcoal, "prerequisites"), ["MMT_Woodworking"], "烧炭研究前置")
-    assert_equal(child_text(charcoal, "researchViewX"), "1.00", "烧炭研究 X 坐标")
-    assert_equal(child_text(charcoal, "researchViewY"), "1.00", "烧炭研究 Y 坐标")
+    assert_equal(child_text(charcoal, "researchViewX"), research_coord("MMT_CharcoalBurning", "x"), "烧炭研究 X 坐标")
+    assert_equal(child_text(charcoal, "researchViewY"), research_coord("MMT_CharcoalBurning", "y"), "烧炭研究 Y 坐标")
 
     building_defs = def_map(parse_xml(WOOD_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandSawmill", "MMT_CharcoalKiln"}, "木材建筑 defName 集合")
@@ -2562,8 +2572,8 @@ def validate_metal_building() -> None:
     assert_equal(child_text(research, "baseCost"), "800", "金属研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Medieval", "金属研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["Smithing"], "金属研究前置")
-    assert_equal(child_text(research, "researchViewX"), "10.00", "金属研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "0.00", "金属研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_BasicMetalworking", "x"), "金属研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_BasicMetalworking", "y"), "金属研究 Y 坐标")
 
     building_defs = def_map(parse_xml(METAL_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandFurnace", *METAL_MINEABLE_EXPECTATIONS}, "金属建筑 defName 集合")
@@ -2714,8 +2724,8 @@ def validate_petrochem_building() -> None:
     assert_equal(child_text(research, "baseCost"), "1200", "石化研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "石化研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["BiofuelRefining"], "石化研究前置")
-    assert_equal(child_text(research, "researchViewX"), "13.00", "石化研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "0.00", "石化研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_BasicPetrochemistry", "x"), "石化研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_BasicPetrochemistry", "y"), "石化研究 Y 坐标")
 
     building_defs = def_map(parse_xml(PETROCHEM_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandChemTable", "MMT_HandOilPump"}, "石化建筑 defName 集合")
@@ -2880,23 +2890,23 @@ def validate_electronics_building() -> None:
     assert_equal(child_text(robotics, "techLevel"), "Spacer", "机器人工程研究 techLevel")
     assert_equal(child_text(robotics, "tab"), "MMT_ResearchTab", "机器人工程研究 tab")
     assert_equal(li_values(robotics, "prerequisites"), ["MMT_BasicElectronics"], "机器人工程研究前置")
-    assert_equal(child_text(robotics, "researchViewX"), "22.00", "机器人工程研究 X 坐标")
-    assert_equal(child_text(robotics, "researchViewY"), "1.00", "机器人工程研究 Y 坐标")
+    assert_equal(child_text(robotics, "researchViewX"), research_coord("MMT_Robotics1", "x"), "机器人工程研究 X 坐标")
+    assert_equal(child_text(robotics, "researchViewY"), research_coord("MMT_Robotics1", "y"), "机器人工程研究 Y 坐标")
     research = research_defs["MMT_BasicElectronics"]
     assert_equal(child_text(research, "label"), "基础电子工艺", "电子研究 label")
     assert_equal(child_text(research, "baseCost"), "1600", "电子研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "电子研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["MicroelectronicsBasics"], "电子研究前置")
-    assert_equal(child_text(research, "researchViewX"), "16.00", "电子研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "0.00", "电子研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_BasicElectronics", "x"), "电子研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_BasicElectronics", "y"), "电子研究 Y 坐标")
 
     ic_research = research_defs["MMT_IntegratedCircuitTech"]
     assert_equal(child_text(ic_research, "label"), "集成电路技术", "集成电路研究 label")
     assert_equal(child_text(ic_research, "baseCost"), "2000", "集成电路研究 baseCost")
     assert_equal(child_text(ic_research, "techLevel"), "Industrial", "集成电路研究 techLevel")
     assert_equal(li_values(ic_research, "prerequisites"), ["MMT_BasicElectronics"], "集成电路研究前置")
-    assert_equal(child_text(ic_research, "researchViewX"), "17.00", "集成电路研究 X 坐标")
-    assert_equal(child_text(ic_research, "researchViewY"), "1.00", "集成电路研究 Y 坐标")
+    assert_equal(child_text(ic_research, "researchViewX"), research_coord("MMT_IntegratedCircuitTech", "x"), "集成电路研究 X 坐标")
+    assert_equal(child_text(ic_research, "researchViewY"), research_coord("MMT_IntegratedCircuitTech", "y"), "集成电路研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRONICS_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_HandElectronicsTable"}, "电子建筑 defName 集合")
@@ -3165,8 +3175,8 @@ def validate_electric() -> None:
     assert_equal(child_text(research, "baseCost"), "2000", "电动研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "电动研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["MMT_BasicMetalworking", "MicroelectronicsBasics"], "电动研究前置")
-    assert_equal(child_text(research, "researchViewX"), "11.00", "电动研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "1.00", "电动研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_ElectricSmelting", "x"), "电动研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_ElectricSmelting", "y"), "电动研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRIC_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ElectricArcFurnace"}, "电动建筑 defName 集合")
@@ -3290,8 +3300,8 @@ def validate_electric_wood() -> None:
     assert_equal(child_text(research, "baseCost"), "1500", "电动木材研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "电动木材研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["MMT_CharcoalBurning", "MicroelectronicsBasics"], "电动木材研究前置")
-    assert_equal(child_text(research, "researchViewX"), "2.00", "电动木材研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "1.00", "电动木材研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_ElectricWoodworking", "x"), "电动木材研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_ElectricWoodworking", "y"), "电动木材研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRIC_WOOD_BUILDING_XML))
     assert_equal(set(building_defs), set(ELECTRIC_WOOD_BUILDING_EXPECTATIONS), "电动木材建筑 defName 集合")
@@ -3402,8 +3412,8 @@ def validate_electric_petrochem() -> None:
     assert_equal(child_text(research, "baseCost"), "1800", "电动石化研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "电动石化研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["MMT_BasicPetrochemistry", "MicroelectronicsBasics"], "电动石化研究前置")
-    assert_equal(child_text(research, "researchViewX"), "14.00", "电动石化研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "1.00", "电动石化研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_ElectricPetrochemistry", "x"), "电动石化研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_ElectricPetrochemistry", "y"), "电动石化研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRIC_PETROCHEM_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ElectricChemLab"}, "电动石化建筑 defName 集合")
@@ -3528,8 +3538,8 @@ def validate_electric_electronics() -> None:
     assert_equal(child_text(research, "baseCost"), "2200", "电动电子研究 baseCost")
     assert_equal(child_text(research, "techLevel"), "Industrial", "电动电子研究 techLevel")
     assert_equal(li_values(research, "prerequisites"), ["MMT_IntegratedCircuitTech"], "电动电子研究前置")
-    assert_equal(child_text(research, "researchViewX"), "18.00", "电动电子研究 X 坐标")
-    assert_equal(child_text(research, "researchViewY"), "2.00", "电动电子研究 Y 坐标")
+    assert_equal(child_text(research, "researchViewX"), research_coord("MMT_ElectricElectronics", "x"), "电动电子研究 X 坐标")
+    assert_equal(child_text(research, "researchViewY"), research_coord("MMT_ElectricElectronics", "y"), "电动电子研究 Y 坐标")
 
     building_defs = def_map(parse_xml(ELECTRIC_ELECTRONICS_BUILDING_XML))
     assert_equal(set(building_defs), {"MMT_ElectricElectronicsTable"}, "电动电子建筑 defName 集合")
@@ -3654,15 +3664,15 @@ def validate_advanced_alloys() -> None:
     assert_equal(child_text(refining, "baseCost"), "1600", "精炼研究 baseCost")
     assert_equal(child_text(refining, "techLevel"), "Industrial", "精炼研究 techLevel")
     assert_equal(li_values(refining, "prerequisites"), ["MMT_ElectricSmelting"], "精炼研究前置")
-    assert_equal(child_text(refining, "researchViewX"), "12.00", "精炼研究 X 坐标")
-    assert_equal(child_text(refining, "researchViewY"), "2.00", "精炼研究 Y 坐标")
+    assert_equal(child_text(refining, "researchViewX"), research_coord("MMT_AdvancedMetalRefining", "x"), "精炼研究 X 坐标")
+    assert_equal(child_text(refining, "researchViewY"), research_coord("MMT_AdvancedMetalRefining", "y"), "精炼研究 Y 坐标")
     alloys = research_defs["MMT_AdvancedAlloys"]
     assert_equal(child_text(alloys, "label"), "高级合金", "合金研究 label")
     assert_equal(child_text(alloys, "baseCost"), "2300", "合金研究 baseCost")
     assert_equal(child_text(alloys, "techLevel"), "Spacer", "合金研究 techLevel")
     assert_equal(li_values(alloys, "prerequisites"), ["MMT_AdvancedMetalRefining"], "合金研究前置")
-    assert_equal(child_text(alloys, "researchViewX"), "13.00", "合金研究 X 坐标")
-    assert_equal(child_text(alloys, "researchViewY"), "3.00", "合金研究 Y 坐标")
+    assert_equal(child_text(alloys, "researchViewX"), research_coord("MMT_AdvancedAlloys", "x"), "合金研究 X 坐标")
+    assert_equal(child_text(alloys, "researchViewY"), research_coord("MMT_AdvancedAlloys", "y"), "合金研究 Y 坐标")
 
     ore_defs = def_map(parse_xml(ADVANCED_ORE_RESOURCE_XML))
     assert_equal(set(ore_defs), set(ADVANCED_ORE_EXPECTATIONS), "高级矿石 defName 集合")
@@ -3827,8 +3837,8 @@ def validate_parts() -> None:
         assert_equal(child_text(node, "baseCost"), expected["cost"], f"{name} baseCost")
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
-        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
-        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+        assert_equal(child_text(node, "researchViewX"), research_coord(name, "x"), f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), research_coord(name, "y"), f"{name} Y 坐标")
 
     resource_defs = def_map(parse_xml(PARTS_RESOURCE_XML))
     assert_equal(set(resource_defs), set(PARTS_RESOURCE_EXPECTATIONS), "零件资源 defName 集合")
@@ -4197,8 +4207,8 @@ def validate_petrochem_ext() -> None:
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
         assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
-        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
-        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+        assert_equal(child_text(node, "researchViewX"), research_coord(name, "x"), f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), research_coord(name, "y"), f"{name} Y 坐标")
 
     recipe_defs = def_map(parse_xml(PETROCHEM_EXT_RECIPE_XML))
     assert_equal(set(recipe_defs), set(PETROCHEM_EXT_RECIPE_EXPECTATIONS), "石化扩展配方 defName 集合")
@@ -4423,8 +4433,8 @@ def validate_matter_top() -> None:
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
         assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
-        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
-        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+        assert_equal(child_text(node, "researchViewX"), research_coord(name, "x"), f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), research_coord(name, "y"), f"{name} Y 坐标")
 
     resource_names = (
         set(matter_defs)
@@ -5082,8 +5092,8 @@ def validate_textiles_weapons() -> None:
         assert_equal(child_text(node, "techLevel"), expected["tech"], f"{name} techLevel")
         assert_equal(child_text(node, "tab"), "MMT_ResearchTab", f"{name} tab")
         assert_equal(li_values(node, "prerequisites"), expected["prereqs"], f"{name} 前置")
-        assert_equal(child_text(node, "researchViewX"), expected["x"], f"{name} X 坐标")
-        assert_equal(child_text(node, "researchViewY"), expected["y"], f"{name} Y 坐标")
+        assert_equal(child_text(node, "researchViewX"), research_coord(name, "x"), f"{name} X 坐标")
+        assert_equal(child_text(node, "researchViewY"), research_coord(name, "y"), f"{name} Y 坐标")
 
     # --- 贴图 ---
     for path in (*CROPS_ITEM_TEXTURES, *TEXTILES_ITEM_TEXTURES, *WEAPON_PARTS_ITEM_TEXTURES, *WEAPON_PARTS_BUILDING_TEXTURES):
@@ -5430,16 +5440,16 @@ def validate_stone_construction() -> None:
     assert_equal(child_text(agriculture_research, "baseCost"), "150", "农业 I baseCost")
     assert_equal(child_text(agriculture_research, "techLevel"), "Neolithic", "农业 I techLevel")
     assert_equal(child_text(agriculture_research, "tab"), "MMT_ResearchTab", "农业 I tab")
-    assert_equal(child_text(agriculture_research, "researchViewX"), "0.00", "农业 I 坐标X")
-    assert_equal(child_text(agriculture_research, "researchViewY"), "2.00", "农业 I 坐标Y")
+    assert_equal(child_text(agriculture_research, "researchViewX"), research_coord("MMT_AgricultureBasic", "x"), "农业 I 坐标X")
+    assert_equal(child_text(agriculture_research, "researchViewY"), research_coord("MMT_AgricultureBasic", "y"), "农业 I 坐标Y")
 
     concrete_research = def_map(parse_xml(CONCRETE_RESEARCH_XML))["MMT_ConcreteAdvanced"]
     assert_equal(child_text(concrete_research, "baseCost"), "1000", "混凝土 II baseCost")
     assert_equal(child_text(concrete_research, "techLevel"), "Industrial", "混凝土 II techLevel")
     assert_equal(child_text(concrete_research, "tab"), "MMT_ResearchTab", "混凝土 II tab")
     assert_equal(li_values(concrete_research, "prerequisites"), ["MMT_ConcreteBasic"], "混凝土 II 前置")
-    assert_equal(child_text(concrete_research, "researchViewX"), "8.00", "混凝土 II 坐标X")
-    assert_equal(child_text(concrete_research, "researchViewY"), "0.00", "混凝土 II 坐标Y")
+    assert_equal(child_text(concrete_research, "researchViewX"), research_coord("MMT_ConcreteAdvanced", "x"), "混凝土 II 坐标X")
+    assert_equal(child_text(concrete_research, "researchViewY"), research_coord("MMT_ConcreteAdvanced", "y"), "混凝土 II 坐标Y")
 
     for path in (*AGRICULTURE_ITEM_TEXTURES, *AGRICULTURE_BUILDING_TEXTURES):
         assert_png(path)
@@ -5914,22 +5924,10 @@ MEDICINE_RESEARCH_DEFS = {
     "MMT_DrugPlants_A2": ["MMT_DrugPlants_A1"],
 }
 
-# 原版研究窗口仅横向滚动（1 Y=100px，窗口高封顶屏幕高-35），Y 必须 ≤8；
-# 种植 Y=3 / 医疗 Y=4 / 毒品主线 Y=5 / 毒品支线 Y=5.7（与武器行 Y=6 的节点横向错开）
+# 视图坐标以 apply_research_layout.LAYOUT 为准，此处由查表生成
 MEDICINE_RESEARCH_COORDS = {
-    "MMT_Medicine_A1": ("0.00", "4.00"),
-    "MMT_Medicine_A2": ("1.00", "4.00"),
-    "MMT_Medicine_B1": ("2.00", "4.00"),
-    "MMT_Medicine_B2": ("3.00", "4.00"),
-    "MMT_Medicine_D1": ("5.00", "4.00"),
-    "MMT_MedicalPlants_A1": ("0.00", "3.00"),
-    "MMT_MedicalPlants_A2": ("1.00", "3.00"),
-    "MMT_Drugs_A1": ("0.00", "5.00"),
-    "MMT_Drugs_B1": ("2.00", "5.00"),
-    "MMT_Drugs_C2": ("4.00", "5.00"),
-    "MMT_Drugs_C3": ("4.00", "5.70"),
-    "MMT_DrugPlants_A1": ("2.00", "3.00"),
-    "MMT_DrugPlants_A2": ("3.00", "3.00"),
+    name: (research_coord(name, "x"), research_coord(name, "y"))
+    for name in MEDICINE_RESEARCH_DEFS
 }
 
 
