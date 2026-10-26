@@ -5,4 +5,14 @@
     <label>MMT 生产</label>
     <order>350</order>
   </DesignationCategoryDef>
+
+  <!-- MMT 传送：挂召回框选 Designator（specialDesignatorClasses 免 Harmony patch） -->
+  <DesignationCategoryDef>
+    <defName>MMT_Teleport</defName>
+    <label>MMT 传送</label>
+    <order>360</order>
+    <specialDesignatorClasses>
+      <li>MyModeTest.Designator_RecallTeleport</li>
+    </specialDesignatorClasses>
+  </DesignationCategoryDef>
 </Defs>
