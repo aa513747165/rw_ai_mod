@@ -1768,7 +1768,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 69  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项
-INFRA_WORKTABLE_TOTAL = 46  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 1、电力 2、研究设施 3
+INFRA_WORKTABLE_TOTAL = 48  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 3（手动/电动/自动）、电力 2、研究设施 3
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6270,15 +6270,20 @@ def validate_orepowder() -> None:
 
 
 def validate_chunkdrill() -> None:
-    """手动采石机链（仿深钻机）：建筑 Def + JobDef + WorkGiverDef + C# comp/giver/driver + 贴图。"""
+    """采石机链（仿深钻机）：手动/电动/自动三台建筑 Def + JobDef + WorkGiverDef + C# comp/giver/driver + 贴图。"""
     require_files([
         "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml",
         "1.7/Defs/JobDefs/MMT_Jobs.xml",
         "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml",
         "1.7/Textures/Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill.png",
+        "1.7/Textures/Things/Building/Production/MMT_ElectricChunkDrill.png",
+        "1.7/Textures/Things/Building/Production/MMT_AutoChunkDrill.png",
         "Source/MyModeTest/ChunkDrill.cs",
     ])
-    building = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml"))["MMT_ChunkDrill"]
+    buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml"))
+    assert_equal(set(buildings), {"MMT_ChunkDrill", "MMT_ElectricChunkDrill", "MMT_AutoChunkDrill"},
+                 "采石机建筑 defName 集合")
+    building = buildings["MMT_ChunkDrill"]
     assert_equal(li_values(building, "researchPrerequisites"), ["Stonecutting"], "采石机研究前置")
     assert_equal(child_text(building, "designationCategory"), "MMT_Production", "采石机建筑分类")
     drill_comp = next(li for li in building.findall("comps/li")
@@ -6288,6 +6293,22 @@ def validate_chunkdrill() -> None:
     assert_equal(child_text(drill_comp, "productCount"), "25", "采石机单次产量")
     if any(li.attrib.get("Class") == "CompProperties_Power" for li in building.findall("comps/li")):
         fail("采石机为手动建筑，不应有电力 comp")
+
+    # 电动版：有人操作、更快、需供电；自动版：无人自运转、更慢、耗电更高
+    for name, watts, ticks, auto, research in (
+            ("MMT_ElectricChunkDrill", "400", "6000", False, "MMT_OreSifting"),
+            ("MMT_AutoChunkDrill", "800", "12000", True, "MMT_AutoOreProcessing")):
+        d = buildings[name]
+        comp = next(li for li in d.findall("comps/li")
+                    if li.attrib.get("Class") == "MyModeTest.CompProperties_ChunkDrill")
+        assert_equal(child_text(comp, "workTicksPerChunk"), ticks, f"{name} 单块工作量")
+        assert_equal(child_text(comp, "productDef"), "MMT_CoarseOre", f"{name} 产物=粗矿石")
+        power = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+        assert_equal(child_text(power, "basePowerConsumption"), watts, f"{name} 耗电")
+        assert_equal(comp.findtext("autoDrill"), "true" if auto else None, f"{name} autoDrill 标记")
+        assert_equal(li_values(d, "researchPrerequisites"), [research], f"{name} 研究前置")
+    assert_equal(child_text(buildings["MMT_AutoChunkDrill"], "tickerType"), "Normal",
+                 "自动采石机需 Normal tick 驱动 CompTick 自运转")
 
     job = def_map(parse_xml("1.7/Defs/JobDefs/MMT_Jobs.xml"))["MMT_OperateChunkDrill"]
     assert_equal(child_text(job, "driverClass"), "MyModeTest.JobDriver_OperateChunkDrill", "采石 JobDriver")
@@ -6300,7 +6321,9 @@ def validate_chunkdrill() -> None:
     cs_src = read_text("Source/MyModeTest/ChunkDrill.cs")
     for token in ("CompProperties_ChunkDrill", "CompChunkDrill", "WorkGiver_ChunkDrill",
                   "JobDriver_OperateChunkDrill", "DeepDrillingSpeed", "productDef", "productCount",
-                  "ThingPlaceMode.Near", "Scribe_Values.Look"):
+                  "ThingPlaceMode.Near", "Scribe_Values.Look",
+                  "autoDrill", "autoWorkPerTick", "CompTick", "PotentialWorkThingsGlobal",
+                  "MMT_ElectricChunkDrill", "CompPowerTrader"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
     print("chunkdrill: OK")
 

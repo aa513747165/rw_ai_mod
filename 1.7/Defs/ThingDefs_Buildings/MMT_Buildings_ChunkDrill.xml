@@ -57,4 +57,132 @@
     </researchPrerequisites>
     <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
   </ThingDef>
+
+  <!-- 电动采石机：电动版手动采石机，殖民者操作但钻速更快，需供电 400W（贴图为原版深钻机改蓝） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_ElectricChunkDrill</defName>
+    <label>电动采石机</label>
+    <description>电力驱动的冲击钻架，殖民者操作它从基岩中快速凿出粗矿石。无需矿脉，每次产出 25 个粗矿石。需要持续供电。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_ElectricChunkDrill</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,2)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <designationCategory>MMT_Production</designationCategory>
+    <rotatable>true</rotatable>
+    <tickerType>Never</tickerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>4000</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>60</Mass>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <MMT_Mechanism>2</MMT_Mechanism>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>400</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="MyModeTest.CompProperties_ChunkDrill">
+        <workTicksPerChunk>6000</workTicksPerChunk>
+        <productDef>MMT_CoarseOre</productDef>
+        <productCount>25</productCount>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_OreSifting</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- 自动采石机：无人值守自运转，通电后持续产出粗矿石但速度较慢，需供电 800W（贴图为原版深钻机改橙） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_AutoChunkDrill</defName>
+    <label>自动采石机</label>
+    <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_AutoChunkDrill</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,2)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <designationCategory>MMT_Production</designationCategory>
+    <rotatable>true</rotatable>
+    <tickerType>Normal</tickerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>6000</WorkToBuild>
+      <MaxHitPoints>350</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>80</Mass>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+      <MMT_Mechanism>4</MMT_Mechanism>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <MMT_ElectronicParts>2</MMT_ElectronicParts>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>800</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="MyModeTest.CompProperties_ChunkDrill">
+        <workTicksPerChunk>12000</workTicksPerChunk>
+        <autoDrill>true</autoDrill>
+        <productDef>MMT_CoarseOre</productDef>
+        <productCount>25</productCount>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_AutoOreProcessing</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
 </Defs>

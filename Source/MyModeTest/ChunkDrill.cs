@@ -18,6 +18,10 @@ namespace MyModeTest
         public ThingDef productDef;
         /// <summary>每次产出的数量。</summary>
         public int productCount = 25;
+        /// <summary>自动版：true 时无需殖民者操作，Comp 自行按固定速率累积进度（需供电）。</summary>
+        public bool autoDrill;
+        /// <summary>自动版每 tick 累积的工作量（对齐 DeepDrillingSpeed=1 的殖民者）。</summary>
+        public float autoWorkPerTick = 1f;
 
         public CompProperties_ChunkDrill()
         {
@@ -45,20 +49,37 @@ namespace MyModeTest
             get { return progress / Props.workTicksPerChunk; }
         }
 
-        /// <summary>手动开关是唯一闸门（无需电力、无需矿脉）。</summary>
+        /// <summary>手动开关 + 供电（电动/自动版）双闸门（无需矿脉）。</summary>
         public bool CanDrillNow()
         {
             CompFlickable flick = parent.GetComp<CompFlickable>();
-            return flick == null || flick.SwitchIsOn;
+            if (flick != null && !flick.SwitchIsOn)
+                return false;
+            CompPowerTrader power = parent.GetComp<CompPowerTrader>();
+            return power == null || power.PowerOn;
         }
 
         /// <summary>累积一次 tick 的采石工作量，满额产出并保留溢出进度。</summary>
         public void DrillWorkDone(Pawn driller)
         {
-            progress += driller.GetStatValue(StatDefOf.DeepDrillingSpeed);
+            AddProgress(driller.GetStatValue(StatDefOf.DeepDrillingSpeed));
+        }
+
+        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度。</summary>
+        public override void CompTick()
+        {
+            base.CompTick();
+            if (!Props.autoDrill || !CanDrillNow())
+                return;
+            AddProgress(Props.autoWorkPerTick);
+        }
+
+        /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>
+        private void AddProgress(float amount)
+        {
+            progress += amount;
             while (progress >= Props.workTicksPerChunk)
             {
-                // 保留溢出，长班不吞进度
                 progress -= Props.workTicksPerChunk;
                 TryProduceChunk();
             }
@@ -86,7 +107,7 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>采矿工作：扫描地图上的手动采石机并派发作业。仿原版 WorkGiver_DeepDrill。</summary>
+    /// <summary>采矿工作：扫描地图上的手动/电动采石机并派发作业（自动版自运转不派工）。仿原版 WorkGiver_DeepDrill。</summary>
     public class WorkGiver_ChunkDrill : WorkGiver_Scanner
     {
         public override PathEndMode PathEndMode
@@ -94,9 +115,13 @@ namespace MyModeTest
             get { return PathEndMode.InteractionCell; }
         }
 
-        public override ThingRequest PotentialWorkThingRequest
+        /// <summary>有人操作的采石机列表（手动 + 电动），自动版不在其中。</summary>
+        public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
         {
-            get { return ThingRequest.ForDef(MMT_DefOf.MMT_ChunkDrill); }
+            foreach (Building b in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(MMT_DefOf.MMT_ChunkDrill))
+                yield return b;
+            foreach (Building b in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(MMT_DefOf.MMT_ElectricChunkDrill))
+                yield return b;
         }
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
@@ -107,7 +132,7 @@ namespace MyModeTest
             if (b.IsForbidden(pawn) || b.IsBurning())
                 return false;
             CompChunkDrill comp = b.GetComp<CompChunkDrill>();
-            if (comp == null || !comp.CanDrillNow())
+            if (comp == null || comp.Props.autoDrill || !comp.CanDrillNow())
                 return false;
             if (pawn.Map.designationManager.DesignationOn(b, DesignationDefOf.Uninstall) != null)
                 return false;
@@ -166,6 +191,7 @@ namespace MyModeTest
     public static class MMT_DefOf
     {
         public static ThingDef MMT_ChunkDrill;
+        public static ThingDef MMT_ElectricChunkDrill;
         public static JobDef MMT_OperateChunkDrill;
 
         static MMT_DefOf()
