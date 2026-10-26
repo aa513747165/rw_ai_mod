@@ -65,14 +65,21 @@ namespace MyModeTest
             AddProgress(driller.GetStatValue(StatDefOf.DeepDrillingSpeed));
         }
 
-        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度；相邻超频模块每个提速 10%。</summary>
+        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度；已安装超频模块每个提速 10%。</summary>
         public override void CompTick()
         {
             base.CompTick();
             if (!Props.autoDrill || !CanDrillNow())
                 return;
-            int overclock = CompProcessorModule.CountAdjacentPowered(parent, ModuleType.Overclock);
+            int overclock = InstalledOverclock();
             AddProgress(Props.autoWorkPerTick * (1f + 0.1f * overclock));
+        }
+
+        /// <summary>设备槽位中已安装的超频模块数（无槽位 Comp 按 0 计）。</summary>
+        private int InstalledOverclock()
+        {
+            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
+            return slots != null ? slots.OverclockCount : 0;
         }
 
         /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>
@@ -105,10 +112,10 @@ namespace MyModeTest
         public override string CompInspectStringExtra()
         {
             string text = "采石进度: " + Progress.ToStringPercent();
-            // 自动版显示相邻生效的超频模块计数（手动/电动版由殖民者操作，不受模块影响）
+            // 自动版显示已安装的超频模块计数（手动/电动版由殖民者操作，不受模块影响）
             if (Props.autoDrill)
             {
-                int overclock = CompProcessorModule.CountAdjacentPowered(parent, ModuleType.Overclock);
+                int overclock = InstalledOverclock();
                 if (overclock > 0)
                     text += "\n超频模块 x" + overclock;
             }
@@ -202,6 +209,11 @@ namespace MyModeTest
         public static ThingDef MMT_ChunkDrill;
         public static ThingDef MMT_ElectricChunkDrill;
         public static JobDef MMT_OperateChunkDrill;
+        /// <summary>增效模块物品：超频 / 并行。</summary>
+        public static ThingDef MMT_OverclockModule;
+        public static ThingDef MMT_ParallelModule;
+        /// <summary>安装增效模块作业。</summary>
+        public static JobDef MMT_InstallProcessorModule;
 
         static MMT_DefOf()
         {

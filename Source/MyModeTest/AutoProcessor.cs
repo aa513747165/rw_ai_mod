@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace MyModeTest
 {
@@ -51,51 +52,235 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 增效模块参数：贴靠在自动处理机旁的 1x1 模块建筑，
-    /// 通电后被相邻 CompAutoProcessor 计数生效。
+    /// 增效模块槽参数：自动设备内置的模块插槽上限配置。
+    /// 模块是可制作物品，由殖民者搬运安装进设备长期生效，拆除/摧毁设备时掉落返还。
     /// </summary>
-    public class CompProperties_ProcessorModule : CompProperties
+    public class CompProperties_ModuleSlots : CompProperties
     {
-        /// <summary>模块类型：超频 / 并行。</summary>
-        public ModuleType moduleType;
+        /// <summary>超频模块安装上限（每个 +10% 处理速度）。</summary>
+        public int maxOverclock = 5;
+        /// <summary>并行模块安装上限（每个 +1 条生产线）。</summary>
+        public int maxParallel = 3;
 
-        public CompProperties_ProcessorModule()
+        public CompProperties_ModuleSlots()
         {
-            compClass = typeof(CompProcessorModule);
+            compClass = typeof(CompModuleSlots);
         }
     }
 
-    /// <summary>增效模块标记 Comp：无自身逻辑，仅供相邻自动处理机扫描计数。</summary>
-    public class CompProcessorModule : ThingComp
+    /// <summary>
+    /// 增效模块槽 Comp：记录设备内已安装的超频/并行模块数量（scribe），
+    /// 提供安装/卸载/掉落返还；右键菜单由殖民者搬运模块物品执行安装（见 JobDriver_InstallModule）。
+    /// </summary>
+    public class CompModuleSlots : ThingComp
     {
-        public CompProperties_ProcessorModule Props
+        // 已安装数量（槽位计数，物品实体在安装时销毁）
+        private int overclockInstalled;
+        private int parallelInstalled;
+
+        private CompProperties_ModuleSlots Props
         {
-            get { return (CompProperties_ProcessorModule)props; }
+            get { return (CompProperties_ModuleSlots)props; }
         }
 
-        /// <summary>统计建筑相邻 8 格内通电的指定类型增效模块数量（断电模块不计），供各自动机组共用。</summary>
-        public static int CountAdjacentPowered(Thing parent, ModuleType type)
+        /// <summary>已安装超频模块数（供各自动机读速度加成）。</summary>
+        public int OverclockCount
         {
-            int count = 0;
-            foreach (IntVec3 cell in GenAdj.CellsAdjacent8WayAndInside(parent))
+            get { return overclockInstalled; }
+        }
+
+        /// <summary>已安装并行模块数（供自动处理机算生产线数）。</summary>
+        public int ParallelCount
+        {
+            get { return parallelInstalled; }
+        }
+
+        /// <summary>模块物品 def → 槽位类型；非模块物品返回 null。</summary>
+        public static ModuleType? TypeOf(ThingDef def)
+        {
+            if (def == MMT_DefOf.MMT_OverclockModule)
+                return ModuleType.Overclock;
+            if (def == MMT_DefOf.MMT_ParallelModule)
+                return ModuleType.Parallel;
+            return null;
+        }
+
+        /// <summary>槽位类型 → 模块物品 def。</summary>
+        public static ThingDef ItemDef(ModuleType type)
+        {
+            return type == ModuleType.Overclock ? MMT_DefOf.MMT_OverclockModule : MMT_DefOf.MMT_ParallelModule;
+        }
+
+        public int InstalledCount(ModuleType type)
+        {
+            return type == ModuleType.Overclock ? overclockInstalled : parallelInstalled;
+        }
+
+        public int MaxCount(ModuleType type)
+        {
+            return type == ModuleType.Overclock ? Props.maxOverclock : Props.maxParallel;
+        }
+
+        public bool CanInstall(ModuleType type)
+        {
+            return InstalledCount(type) < MaxCount(type);
+        }
+
+        /// <summary>该物品是否为可装入且槽位未满的模块。</summary>
+        public bool CanInstallThing(ThingDef def)
+        {
+            ModuleType? type = TypeOf(def);
+            return type != null && CanInstall(type.Value);
+        }
+
+        /// <summary>安装一件模块物品：计入槽位并销毁物品；槽满或非模块返回 false 不消耗。</summary>
+        public bool InstallThing(Thing module)
+        {
+            if (!CanInstallThing(module.def))
+                return false;
+            if (TypeOf(module.def) == ModuleType.Overclock)
+                overclockInstalled++;
+            else
+                parallelInstalled++;
+            module.Destroy();
+            return true;
+        }
+
+        /// <summary>卸载一个模块：掉落到交互格返还物品（供页签按钮）。</summary>
+        public void Uninstall(ModuleType type)
+        {
+            if (InstalledCount(type) <= 0)
+                return;
+            if (type == ModuleType.Overclock)
+                overclockInstalled--;
+            else
+                parallelInstalled--;
+            GenPlace.TryPlaceThing(ThingMaker.MakeThing(ItemDef(type)), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
+        }
+
+        /// <summary>拆除包装/被摧毁时返还全部已安装模块（在建筑原位掉落）。</summary>
+        public override void PostDeSpawn(Map map, DestroyMode mode)
+        {
+            for (int i = 0; i < overclockInstalled; i++)
+                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_OverclockModule), parent.Position, map, ThingPlaceMode.Near);
+            for (int i = 0; i < parallelInstalled; i++)
+                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_ParallelModule), parent.Position, map, ThingPlaceMode.Near);
+            overclockInstalled = 0;
+            parallelInstalled = 0;
+            base.PostDeSpawn(map, mode);
+        }
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Values.Look(ref overclockInstalled, "overclockInstalled");
+            Scribe_Values.Look(ref parallelInstalled, "parallelInstalled");
+        }
+
+        /// <summary>右键菜单：殖民者搬运模块物品安装（槽满或无可用物品时禁用并注明原因）。</summary>
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        {
+            if (!selPawn.IsColonistPlayerControlled || selPawn.Downed
+                || !selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
+                yield break;
+            if (selPawn.Map != parent.Map || parent.IsForbidden(selPawn))
+                yield break;
+            foreach (ModuleType type in new[] { ModuleType.Overclock, ModuleType.Parallel })
             {
-                List<Thing> things = cell.GetThingList(parent.Map);
-                for (int i = 0; i < things.Count; i++)
+                ThingDef itemDef = ItemDef(type);
+                string label = "安装" + itemDef.label;
+                if (!CanInstall(type))
                 {
-                    Building b = things[i] as Building;
-                    if (b == null)
-                        continue;
-                    CompProcessorModule module = b.GetComp<CompProcessorModule>();
-                    if (module == null || module.Props.moduleType != type)
-                        continue;
-                    // 断电模块不生效
-                    CompPowerTrader power = b.GetComp<CompPowerTrader>();
-                    if (power != null && !power.PowerOn)
-                        continue;
-                    count++;
+                    // 流程节点：槽位已满，禁用
+                    yield return new FloatMenuOption(label + "（已达上限 " + MaxCount(type) + "）", null);
+                    continue;
                 }
+                Thing item = FindModuleItem(selPawn, itemDef);
+                if (item == null)
+                {
+                    yield return new FloatMenuOption(label + "（缺少可用的" + itemDef.label + "）", null);
+                    continue;
+                }
+                Thing target = item;
+                yield return new FloatMenuOption(label, delegate
+                {
+                    Job job = JobMaker.MakeJob(MMT_DefOf.MMT_InstallProcessorModule, target, parent);
+                    selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                });
             }
-            return count;
+        }
+
+        /// <summary>找一件可达、未禁用、可预定的模块物品（不可达时视为没有）。</summary>
+        private Thing FindModuleItem(Pawn selPawn, ThingDef itemDef)
+        {
+            return GenClosest.ClosestThingReachable(parent.Position, parent.Map, ThingRequest.ForDef(itemDef),
+                PathEndMode.ClosestTouch, TraverseParms.For(selPawn), 9999f,
+                t => !t.IsForbidden(selPawn) && selPawn.CanReserve(t, 1, -1, null, false));
+        }
+    }
+
+    /// <summary>
+    /// 安装增效模块作业（仿加燃料）：取一件模块物品 → 搬到设备旁 → 短暂装配 → 装入槽位。
+    /// targetA=模块物品，targetB=设备。
+    /// </summary>
+    public class JobDriver_InstallModule : JobDriver
+    {
+        /// <summary>装配耗时（tick）。</summary>
+        private const int InstallTicks = 300;
+
+        private CompModuleSlots Slots
+        {
+            get { return ((ThingWithComps)job.GetTarget(TargetIndex.B).Thing).GetComp<CompModuleSlots>(); }
+        }
+
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
+        {
+            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed)
+                && pawn.Reserve(job.targetB, job, 1, -1, null, errorOnFailed);
+        }
+
+        protected override IEnumerable<Toil> MakeNewToils()
+        {
+            this.FailOnDespawnedNullOrForbidden(TargetIndex.B);
+            this.FailOnBurningImmobile(TargetIndex.B);
+            // 取货：走到模块物品并拾取 1 件入背包
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
+                .FailOnDespawnedNullOrForbidden(TargetIndex.A)
+                .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
+            yield return Toils_Haul.TakeToInventory(TargetIndex.A, 1);
+            // 搬运到设备旁
+            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch);
+            // 装配：短暂等待 + 进度条；期间槽位被抢先装满则中止（不吞物品，留给最终 toil 前校验）
+            Toil wait = Toils_General.Wait(InstallTicks, TargetIndex.B);
+            wait.FailOnDespawnedNullOrForbidden(TargetIndex.B);
+            wait.FailOnCannotTouch(TargetIndex.B, PathEndMode.Touch);
+            wait.FailOn(() => !Slots.CanInstallThing(CarriedModuleDef()));
+            wait.WithProgressBarToilDelay(TargetIndex.B);
+            yield return wait;
+            // 流程结束：消耗背包中的模块物品并计入设备槽位
+            yield return Toils_General.DoAtomic(delegate
+            {
+                Thing module = CarriedModule();
+                if (module != null)
+                    Slots.InstallThing(module);
+            });
+        }
+
+        private ThingDef CarriedModuleDef()
+        {
+            Thing module = CarriedModule();
+            return module != null ? module.def : null;
+        }
+
+        /// <summary>背包中第一件模块物品。</summary>
+        private Thing CarriedModule()
+        {
+            foreach (Thing t in pawn.inventory.innerContainer)
+            {
+                if (CompModuleSlots.TypeOf(t.def) != null)
+                    return t;
+            }
+            return null;
         }
     }
 
@@ -127,11 +312,11 @@ namespace MyModeTest
 
     /// <summary>
     /// 自动处理 Comp：通电且开机时维护多条独立生产线（默认 1 条，
-    /// 每个相邻通电的并行模块 +1 条）。每条线空闲时预扣一轮输入并启动倒计时，
+    /// 槽位中每个已安装的并行模块 +1 条）。每条线空闲时预扣一轮输入并启动倒计时，
     /// 跑满后产出到出料格并自动开始下一轮，实现无人值守加工。
     /// 输入模式二选一：建筑带 CompRefuelable 时走燃料模式（原料即燃料，按轮从燃料仓扣）；
     /// 否则从相邻进料口（isHopper 存储建筑）取料。两种模式都需要通电。
-    /// 相邻的超频模块缩短所有线的处理间隔；并行模块被拆后，超额的运行中线跑完当前轮再退役。
+    /// 已安装的超频模块缩短所有线的处理间隔；并行模块被卸载后，超额的运行中线跑完当前轮再退役。
     /// </summary>
     public class CompAutoProcessor : ThingComp
     {
@@ -173,9 +358,9 @@ namespace MyModeTest
             // 带燃料仓的建筑走燃料模式：原料即燃料，按轮从燃料仓预扣，不再扫进料口
             CompRefuelable fuel = parent.GetComp<CompRefuelable>();
 
-            // 统计相邻通电的增效模块：超频提速、并行增加线数
+            // 统计槽位中已安装的增效模块：超频提速、并行增加线数
             int overclock, parallel;
-            CountModules(out overclock, out parallel);
+            GetModuleCounts(out overclock, out parallel);
             int targetCount = 1 + parallel;
             int interval = CurrentIntervalTicks(overclock);
 
@@ -281,32 +466,12 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>扫描相邻 8 格建筑，统计通电的超频/并行模块数量（断电模块不计）。</summary>
-        private void CountModules(out int overclock, out int parallel)
+        /// <summary>读取设备槽位中已安装的超频/并行模块数量（无槽位 Comp 按 0 计）。</summary>
+        private void GetModuleCounts(out int overclock, out int parallel)
         {
-            overclock = 0;
-            parallel = 0;
-            foreach (IntVec3 cell in GenAdj.CellsAdjacent8WayAndInside(parent))
-            {
-                List<Thing> things = cell.GetThingList(parent.Map);
-                for (int i = 0; i < things.Count; i++)
-                {
-                    Building b = things[i] as Building;
-                    if (b == null)
-                        continue;
-                    CompProcessorModule module = b.GetComp<CompProcessorModule>();
-                    if (module == null)
-                        continue;
-                    // 断电模块不生效
-                    CompPowerTrader power = b.GetComp<CompPowerTrader>();
-                    if (power != null && !power.PowerOn)
-                        continue;
-                    if (module.Props.moduleType == ModuleType.Overclock)
-                        overclock++;
-                    else
-                        parallel++;
-                }
-            }
+            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
+            overclock = slots != null ? slots.OverclockCount : 0;
+            parallel = slots != null ? slots.ParallelCount : 0;
         }
 
         /// <summary>按超频数计算当前一轮的处理间隔（下限 60 tick）。</summary>
@@ -316,11 +481,11 @@ namespace MyModeTest
             return System.Math.Max(60, (int)(Props.intervalTicks / speedFactor));
         }
 
-        /// <summary>汇总目标线数与当前一轮处理间隔（一次模块扫描，供 ITab 展示）。</summary>
+        /// <summary>汇总目标线数与当前一轮处理间隔（一次槽位读取，供 ITab 展示）。</summary>
         internal void GetDisplayInfo(out int intervalTicks, out int targetLanes)
         {
             int overclock, parallel;
-            CountModules(out overclock, out parallel);
+            GetModuleCounts(out overclock, out parallel);
             intervalTicks = CurrentIntervalTicks(overclock);
             targetLanes = 1 + parallel;
         }
@@ -379,13 +544,13 @@ namespace MyModeTest
         public override string CompInspectStringExtra()
         {
             int overclock, parallel;
-            CountModules(out overclock, out parallel);
+            GetModuleCounts(out overclock, out parallel);
             int running = 0;
             for (int i = 0; i < lanes.Count; i++)
                 if (lanes[i].running)
                     running++;
             string text = "生产线: 运行中 " + running + "/" + lanes.Count;
-            // 有模块时追加显示模块计数
+            // 有已安装模块时追加显示计数
             if (overclock > 0)
                 text += "\n超频模块 x" + overclock;
             if (parallel > 0)
@@ -395,7 +560,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 自动处理机"处理进度"页签：顶部显示处理周期与模块计数，
+    /// 自动处理机"处理进度"页签：顶部显示处理周期，
     /// 下方每条生产线一条进度条（运行中剩余时间 / 等待原料 / 退役待完成）。
     /// </summary>
     public class ITab_AutoProcessor : ITab
@@ -424,7 +589,7 @@ namespace MyModeTest
             listing.Label("处理周期: " + intervalNow.ToStringTicksToPeriod());
             listing.Gap(6f);
 
-            // 逐线进度条：超额线（并行模块已拆）标注退役待完成
+            // 逐线进度条：超额线（并行模块已卸载）标注退役待完成
             for (int i = 0; i < comp.Lanes.Count; i++)
             {
                 ProcessorLane lane = comp.Lanes[i];
@@ -432,7 +597,7 @@ namespace MyModeTest
                 Widgets.FillableBar(barRect, lane.Progress);
                 string status;
                 if (i >= target && lane.running)
-                    // 退役线：并行模块已拆，跑完本轮即移除
+                    // 退役线：并行模块已卸载，跑完本轮即移除
                     status = "第 " + (i + 1) + " 线：退役（跑完本轮移除），剩余 " + lane.ticksRemaining.ToStringTicksToPeriod();
                 else if (lane.running)
                     status = "第 " + (i + 1) + " 线：运行中，剩余 " + lane.ticksRemaining.ToStringTicksToPeriod();
@@ -442,6 +607,55 @@ namespace MyModeTest
                 listing.Gap(4f);
             }
             listing.End();
+        }
+    }
+
+    /// <summary>
+    /// 增效模块页签：显示超频/并行模块已装数量、上限与当前加成，
+    /// 每类一个"卸载"按钮（掉落到交互格返还物品）；安装走右键菜单由殖民者搬运。
+    /// </summary>
+    public class ITab_ModuleSlots : ITab
+    {
+        public ITab_ModuleSlots()
+        {
+            size = new Vector2(420f, 240f);
+            // 页签标题走 Keyed 翻译（1.7/Languages/ChineseSimplified/Keyed/MMT_InspectorTabs.xml）
+            labelKey = "MMT_TabModuleSlots";
+        }
+
+        protected override void FillTab()
+        {
+            ThingWithComps building = SelThing as ThingWithComps;
+            CompModuleSlots slots = building != null ? building.GetComp<CompModuleSlots>() : null;
+            if (slots == null)
+                return;
+
+            Rect rect = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
+            Listing_Standard listing = new Listing_Standard();
+            listing.Begin(rect);
+
+            // 安装引导：右键设备由殖民者搬运模块物品装入
+            listing.Label("安装方式：选中殖民者右键本设备，选择安装对应模块。");
+            listing.Gap(6f);
+
+            DrawSlotRow(listing, slots, ModuleType.Overclock,
+                "处理速度 +" + slots.OverclockCount * 10 + "%");
+            DrawSlotRow(listing, slots, ModuleType.Parallel,
+                "生产线 " + (1 + slots.ParallelCount) + " 条");
+            listing.End();
+        }
+
+        /// <summary>一行槽位：标签（已装/上限 + 加成效果）+ 卸载按钮（空槽禁用）。</summary>
+        private void DrawSlotRow(Listing_Standard listing, CompModuleSlots slots, ModuleType type, string effect)
+        {
+            ThingDef itemDef = CompModuleSlots.ItemDef(type);
+            listing.Label(itemDef.label + "：已安装 " + slots.InstalledCount(type) + "/" + slots.MaxCount(type)
+                + "（" + effect + "）");
+            Rect btnRect = listing.GetRect(30f);
+            // 卸载：返还一个模块物品到交互格
+            if (Widgets.ButtonText(btnRect, "卸载一个", true, true, slots.InstalledCount(type) > 0))
+                slots.Uninstall(type);
+            listing.Gap(8f);
         }
     }
 }
