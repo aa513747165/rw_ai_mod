@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），30秒后燃尽自毁；
+  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），3小时（7500 tick）后燃尽自毁；
+       护盾光圈常显（minIdleAlpha 提到 0.25，空闲时仍在 0.11~0.25 间脉动，便于看清覆盖范围）；
        结构对齐 Royalty BroadshieldProjector，但拦截半径改为 2.5（5×5 圆形范围，单兵掩体尺度），贴图/音效/特效直接引用 Royalty -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ShieldProjector</defName>
     <label>临时护盾投影器</label>
-    <description>部署式护盾发生器展开的低角度能量护盾，拦截外部射入的投射物，内部人员仍可向外射击。内置电源即将耗尽，倒计时结束后焚毁。</description>
+    <description>部署式护盾发生器展开的低角度能量护盾，拦截外部射入的投射物，内部人员仍可向外射击，护盾光圈全程可见。内置电源约可维持3小时，倒计时结束后焚毁。</description>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <drawerType>MapMeshAndRealTime</drawerType>
     <pathCost>0</pathCost>
@@ -51,12 +52,14 @@
         <interceptOutgoingProjectiles>false</interceptOutgoingProjectiles>
         <color>(0.6, 0.6, 0.8)</color>
         <idlePulseSpeed>3</idlePulseSpeed>
-        <minIdleAlpha>0.05</minIdleAlpha>
+        <!-- 光圈常显：空闲脉动下限 0.25（原版 0.05 几乎不可见），护盾范围不选中也能看清 -->
+        <minIdleAlpha>0.25</minIdleAlpha>
         <disarmedByEmpForTicks>600</disarmedByEmpForTicks>
         <activeSound>Broadshield_Ambience</activeSound>
       </li>
       <li Class="CompProperties_DestroyAfterDelay">
-        <delayTicks>1800</delayTicks>
+        <!-- 3 小时游戏时长（3 × 2500 tick） -->
+        <delayTicks>7500</delayTicks>
         <destroyMode>KillFinalize</destroyMode>
         <countdownLabel>燃尽剩余</countdownLabel>
       </li>

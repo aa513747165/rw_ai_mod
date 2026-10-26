@@ -2,7 +2,7 @@
 <Defs>
   <!-- 部署式护盾发生器：小人背包携带且处于征召状态时，指令栏出现"部署护盾"按钮（护盾图标），
        点击立即在脚下展开临时护盾投影器；非征召状态走物品使用流程（有读条）。
-       投影器拦外部投射物（5×5 圆），30秒后燃尽；机制参考 Royalty 低级护盾背包，贴图暂引用 Royalty -->
+       投影器拦外部投射物（5×5 圆），3小时（7500 tick）后燃尽，护盾光圈常显；机制参考 Royalty 低级护盾背包，贴图暂引用 Royalty -->
   <ThingDef>
     <thingClass>ThingWithComps</thingClass>
     <defName>MMT_DeployableShield</defName>

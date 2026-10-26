@@ -119,7 +119,7 @@ namespace MyModeTest
         {
             Command_Action cmd = new Command_Action();
             cmd.defaultLabel = "部署护盾";
-            cmd.defaultDesc = "立即在脚下展开临时能量护盾（5×5 圆形范围），拦截外部射入的投射物，护盾内人员仍可向外射击。消耗一件背包中的部署式护盾发生器，护盾燃尽后自动焚毁。";
+            cmd.defaultDesc = "立即在脚下展开临时能量护盾（5×5 圆形范围），拦截外部射入的投射物，护盾内人员仍可向外射击，护盾光圈全程可见。消耗一件背包中的部署式护盾发生器，护盾维持3小时后燃尽焚毁。";
             cmd.icon = MMT_ShieldDefOf.MMT_DeployableShield.uiIcon;
             cmd.action = delegate { DeployFromPawn(pawn); };
             return cmd;
