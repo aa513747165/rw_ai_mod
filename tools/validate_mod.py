@@ -6008,6 +6008,22 @@ def validate_medicine() -> None:
                           if li.attrib.get("Class") == "CompProperties_Power")
         assert_equal(child_text(power_comp, "basePowerConsumption"), power, f"{name} 耗电")
 
+    # 内联 recipes：读 ThingDef.recipes 的 MOD 才能识别这些工作台（此前只有 recipeUsers 导致识别不到）
+    expected_inline = {
+        "MMT_MedicalTable": ["MMT_MakeHerbalTea", "MMT_MakeActivatedCarbon", "MMT_MakeBandagekitcrude",
+                             "MMT_MakeBandagekitcrudeBulk", "MMT_MakeBandagekit", "MMT_MakeBandagekitBulk",
+                             "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit", "MMT_MakeBasicMedicineKitMix"],
+        "MMT_ElectricMedicalTable": ["MMT_MakeHerbalTea", "MMT_MakeActivatedCarbon", "MMT_MakeBandagekit",
+                                     "MMT_MakeBandagekitBulk", "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit",
+                                     "MMT_MakeBasicMedicineKitMix", "MMT_BrewMedicalDrink",
+                                     "MMT_MakeMedicineIndustrial", "MMT_MakeMedicineUltratech"],
+        "MMT_DryingRack": ["MMT_DrySmokeleaf", "MMT_DrySmokeleafBulk"],
+        "MMT_ElectricDryingRack": ["MMT_DrySmokeleaf", "MMT_DrySmokeleafBulk"],
+        "MMT_NeutroamineRefiner": ["MMT_RefineNeutroamine"],
+    }
+    for name, recipes in expected_inline.items():
+        assert_equal(li_values(building_defs[name], "recipes"), recipes, f"{name} 内联配方")
+
     # 医疗配方：成品药产出与关键输入
     med_recipes = def_map(parse_xml(MEDICINE_RECIPE_XML))
     assert_equal(

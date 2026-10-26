@@ -45,6 +45,17 @@
     </statBases>
     <size>(3,1)</size>
     <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeHerbalTea</li>
+      <li>MMT_MakeActivatedCarbon</li>
+      <li>MMT_MakeBandagekitcrude</li>
+      <li>MMT_MakeBandagekitcrudeBulk</li>
+      <li>MMT_MakeBandagekit</li>
+      <li>MMT_MakeBandagekitBulk</li>
+      <li>MMT_MakeHerbMedicine</li>
+      <li>MMT_MakeBasicMedicineKit</li>
+      <li>MMT_MakeBasicMedicineKitMix</li>
+    </recipes>
     <building>
       <workTableRoomRole>Laboratory</workTableRoomRole>
     </building>
@@ -103,6 +114,18 @@
     </statBases>
     <size>(3,1)</size>
     <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_MakeHerbalTea</li>
+      <li>MMT_MakeActivatedCarbon</li>
+      <li>MMT_MakeBandagekit</li>
+      <li>MMT_MakeBandagekitBulk</li>
+      <li>MMT_MakeHerbMedicine</li>
+      <li>MMT_MakeBasicMedicineKit</li>
+      <li>MMT_MakeBasicMedicineKitMix</li>
+      <li>MMT_BrewMedicalDrink</li>
+      <li>MMT_MakeMedicineIndustrial</li>
+      <li>MMT_MakeMedicineUltratech</li>
+    </recipes>
     <building>
       <workTableRoomRole>Laboratory</workTableRoomRole>
     </building>
@@ -163,6 +186,10 @@
     </statBases>
     <size>(2,1)</size>
     <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_DrySmokeleaf</li>
+      <li>MMT_DrySmokeleafBulk</li>
+    </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
     </inspectorTabs>
@@ -214,6 +241,10 @@
     </statBases>
     <size>(2,2)</size>
     <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_DrySmokeleaf</li>
+      <li>MMT_DrySmokeleafBulk</li>
+    </recipes>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
@@ -276,6 +307,9 @@
     </statBases>
     <size>(2,2)</size>
     <designationCategory>MMT_Production</designationCategory>
+    <recipes>
+      <li>MMT_RefineNeutroamine</li>
+    </recipes>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
