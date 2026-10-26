@@ -1767,8 +1767,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 69  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项
-INFRA_WORKTABLE_TOTAL = 48  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 3（手动/电动/自动）、电力 2、研究设施 3
+INFRA_RESEARCH_TOTAL = 70  # 含药品链 13 项与无中生有链 3 项（MMT_Research_OrePowder.xml）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项
+INFRA_WORKTABLE_TOTAL = 49  # 含药品链 5 台、手压油泵与无中生有链 9 台（研磨机/筛子各 2 + 自动化 3 + 增效模块 2）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6425,6 +6425,62 @@ def validate_persona_core() -> None:
     print("persona-core: OK")
 
 
+def validate_teleport() -> None:
+    """折跃传送链：传送台建筑 Def（复用原版 CompTransporter 装载）+ 召回 Designator + Ultra 研究 + 贴图。"""
+    require_files([
+        "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Teleport.xml",
+        "1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml",
+        "1.7/Defs/ThingDefs_Buildings/MMT_DesignationCategory.xml",
+        "1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png",
+        "1.7/Textures/UI/Designators/MMT_RecallTeleport.png",
+        "Source/MyModeTest/TeleportPad.cs",
+    ])
+    assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png")
+    assert_png("1.7/Textures/UI/Designators/MMT_RecallTeleport.png")
+    buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Teleport.xml"))
+    assert_equal(set(buildings), {"MMT_TeleportPad"}, "传送建筑 defName 集合")
+    pad = buildings["MMT_TeleportPad"]
+    assert_equal(li_values(pad, "researchPrerequisites"), ["MMT_Teleportation"], "传送台研究前置")
+    assert_equal(child_text(pad, "designationCategory"), "MMT_Production", "传送台建筑分类")
+    assert_equal(child_text(pad, "tickerType"), "Normal", "传送台需 Normal tick（CompTransporter 依赖）")
+    assert_equal(child_text(pad, "passability"), "PassThroughOnly", "传送台需可走入（装载人员）")
+    assert_equal(child_text(pad, "hasInteractionCell"), "true", "传送台需交互格（召回落点）")
+    assert_equal(li_values(pad, "inspectorTabs"), ["ITab_ContentsTransporter"], "传送台舱内货物面板")
+
+    power = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+    assert_equal(child_text(power, "compClass"), "CompPowerTrader", "传送台电力 comp 类型")
+    assert_equal(child_text(power, "basePowerConsumption"), "3000", "传送台待机功耗")
+    transporter = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Transporter")
+    assert_equal(child_text(transporter, "massCapacity"), "1000", "传送台舱内容量")
+    tp_comp = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "MyModeTest.CompProperties_TeleportPad")
+    assert_equal(child_text(tp_comp, "energyCostWd"), "15000", "单次传送抽电量")
+    assert_equal(child_text(tp_comp, "cooldownTicks"), "30000", "传送冷却（12 小时）")
+
+    research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml"))
+    tp_research = research["MMT_Teleportation"]
+    assert_equal(child_text(tp_research, "techLevel"), "Ultra", "折跃传送研究等级")
+    assert_equal(child_text(tp_research, "tab"), "MMT_ResearchTab", "折跃传送研究标签页")
+    assert_equal(li_values(tp_research, "prerequisites"), ["MMT_MatterConversion3"], "折跃传送研究前置")
+
+    cats = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_DesignationCategory.xml"))
+    assert "MMT_Teleport" in cats, "缺少 MMT_Teleport 设计分类"
+    tp_cat = cats["MMT_Teleport"]
+    assert_equal(li_values(tp_cat, "specialDesignatorClasses"),
+                 ["MyModeTest.Designator_RecallTeleport"], "召回 Designator 挂载")
+
+    cs_src = read_text("Source/MyModeTest/TeleportPad.cs")
+    for token in ("CompProperties_TeleportPad", "CompTeleportPad", "Designator_RecallTeleport",
+                  "WorldTargeter.BeginTargeting", "MapParentAt", "HasMap",
+                  "DropCellFinder.RandomDropSpot", "TryFindDropSpotNear",
+                  "innerContainer", "GenSpawn.Spawn", "Notify_Teleported",
+                  "CurrentStoredEnergy", "batteryComps", "DrawPower",
+                  "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
+                  "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
+                  "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry"):
+        assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
+    print("teleport: OK")
+
+
 def validate_all() -> None:
     validate_base()
     validate_infrastructure()
@@ -6459,6 +6515,7 @@ def validate_all() -> None:
     validate_power()
     validate_science()
     validate_persona_core()
+    validate_teleport()
     validate_all_xml()
 
 
@@ -6521,6 +6578,7 @@ SUITES = {
     "power": validate_power,
     "science": validate_science,
     "persona-core": validate_persona_core,
+    "teleport": validate_teleport,
     "all": validate_all,
 }
 
