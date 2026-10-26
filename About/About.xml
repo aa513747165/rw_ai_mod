@@ -6,16 +6,21 @@
   <supportedVersions>
     <li>1.7</li>
   </supportedVersions>
-  <!-- 运行时依赖 Harmony Mod（C# 补丁需要），加载顺序置于其后 -->
+  <!-- 运行时依赖 Harmony Mod（C# 补丁需要）与 Royalty DLC（部署式护盾复用其弹道拦截/限时销毁组件），加载顺序置于其后 -->
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
       <displayName>Harmony</displayName>
       <steamWorkshopId>2009463077</steamWorkshopId>
     </li>
+    <li>
+      <packageId>Ludeon.RimWorld.Royalty</packageId>
+      <displayName>RimWorld - Royalty</displayName>
+    </li>
   </modDependencies>
   <loadAfter>
     <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Royalty</li>
     <li>brrainz.harmony</li>
   </loadAfter>
   <description>参考 HSK 资源生产流程实现的独立资源生产 Mod。</description>
