@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），3小时（7500 tick）后燃尽自毁；
-       护盾光圈常显（minIdleAlpha 提到 0.25，空闲时仍在 0.11~0.25 间脉动，便于看清覆盖范围）；
+  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），游戏内3小时（7500 tick）后燃尽自毁；
+       护盾光圈常显靠 drawWithNoSelection=true：空闲脉动 alpha 对玩家阵营的护盾恒为 0（原版设定），
+       调 minIdleAlpha 无效，必须用该字段让"选中态"高亮脉动（0.2~0.62）在不选中时也绘制；
        结构对齐 Royalty BroadshieldProjector，但拦截半径改为 2.5（5×5 圆形范围，单兵掩体尺度），贴图/音效/特效直接引用 Royalty -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ShieldProjector</defName>
@@ -52,13 +53,15 @@
         <interceptOutgoingProjectiles>false</interceptOutgoingProjectiles>
         <color>(0.6, 0.6, 0.8)</color>
         <idlePulseSpeed>3</idlePulseSpeed>
-        <!-- 光圈常显：空闲脉动下限 0.25（原版 0.05 几乎不可见），护盾范围不选中也能看清 -->
-        <minIdleAlpha>0.25</minIdleAlpha>
+        <!-- 光圈常显：玩家阵营护盾的空闲脉动 alpha 恒为 0（minIdleAlpha 无效），
+             必须开 drawWithNoSelection，让选中态高亮脉动不选中时也绘制 -->
+        <drawWithNoSelection>true</drawWithNoSelection>
+        <minIdleAlpha>0.05</minIdleAlpha>
         <disarmedByEmpForTicks>600</disarmedByEmpForTicks>
         <activeSound>Broadshield_Ambience</activeSound>
       </li>
       <li Class="CompProperties_DestroyAfterDelay">
-        <!-- 3 小时游戏时长（3 × 2500 tick） -->
+        <!-- 游戏内 3 小时：3 × 2500 tick -->
         <delayTicks>7500</delayTicks>
         <destroyMode>KillFinalize</destroyMode>
         <countdownLabel>燃尽剩余</countdownLabel>
