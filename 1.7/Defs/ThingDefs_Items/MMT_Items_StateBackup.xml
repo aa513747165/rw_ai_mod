@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生命备份链物品:生命备份核心(植入物本体,升级台制造,贴图复用 AI 芯片) -->
+  <ThingDef ParentName="MMT_BodyPartBase">
+    <defName>MMT_StateBackupCore</defName>
+    <label>生命备份核心</label>
+    <description>一枚纳米量子核心，植入大脑后持续记录宿主的生命体征快照。宿主遭受致命伤害时，核心烧毁自身并将身体回溯到备份时点的状态——相当于多出一条命。</description>
+    <techLevel>Archotech</techLevel>
+    <thingCategories>
+      <li>BodyPartsBionic</li>
+    </thingCategories>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/EPOEMAAIChip/EPOEMAAIChip</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+    </graphicData>
+    <tradeTags><li>CONN_BodyPartsArtificial</li></tradeTags>
+    <techHediffsTags><li>Futuristic</li></techHediffsTags>
+    <thingSetMakerTags><li>RewardStandardHighFreq</li></thingSetMakerTags>
+    <statBases>
+      <MarketValue>8000</MarketValue>
+      <Mass>0.5</Mass>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>0.2</DeteriorationRate>
+    </statBases>
+    <costList>
+      <MMT_UltraComponent>4</MMT_UltraComponent>
+      <MMT_BioMicrochips>2</MMT_BioMicrochips>
+      <MMT_BiosyntheticMaterial>10</MMT_BiosyntheticMaterial>
+      <MMT_SyntheticFibers>10</MMT_SyntheticFibers>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <workAmount>15000</workAmount>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+      <skillRequirements>
+        <Crafting>16</Crafting>
+      </skillRequirements>
+      <researchPrerequisite>MMT_Prosthesis_E5</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_UpgradingStation</li>
+      </recipeUsers>
+    </recipeMaker>
+  </ThingDef>
+</Defs>

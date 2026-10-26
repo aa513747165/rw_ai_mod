@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生命备份链手术:脑部植入生命备份核心 -->
+  <RecipeDef ParentName="SurgeryInstallBodyPartArtificialBase">
+    <defName>MMT_InstallStateBackupCore</defName>
+    <label>植入生命备份核心</label>
+    <description>将生命备份核心植入大脑。</description>
+    <jobString>正在植入生命备份核心。</jobString>
+    <recipeUsers><li>Human</li></recipeUsers>
+    <workAmount>5000</workAmount>
+    <deathOnFailedSurgeryChance>0.2</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>14</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>MMT_ProsthesisInstall_D4</researchPrerequisite>
+    <ingredients>
+      <li><filter><categories><li>Medicine</li></categories></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_StateBackupCore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><categories><li>Medicine</li></categories><thingDefs><li>MMT_StateBackupCore</li></thingDefs></fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>MMT_StateBackupImplant</addsHediff>
+  </RecipeDef>
+</Defs>

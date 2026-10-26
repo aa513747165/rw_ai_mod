@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生命备份链 Hediff:安装时自动备份(自定义 comp),授予"状态备份"技能(原版 GiveAbility comp) -->
+  <HediffDef>
+    <defName>MMT_StateBackupImplant</defName>
+    <label>生命备份植入物</label>
+    <description>植入大脑的纳米量子核心，持续监测并记录宿主的生命体征。植入完成时自动备份当前健康状态，也可通过"状态备份"技能随时刷新备份点。\n\n当宿主遭受致命伤害时，核心将烧毁自身并释放全部储备的纳米机器人，把宿主的身体强行回溯到备份时点的状态。\n\n注意：回溯是完整回档——备份点之后安装的仿生植入物会一并消失，治疗质量、感染进度等细节也无法保留。核心触发后即损毁，无论取出还是触发都无法回收。</description>
+    <labelNoun>一个生命备份植入物</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.4, 0.85, 0.9)</defaultLabelColor>
+    <isBad>false</isBad>
+    <priceImpact>true</priceImpact>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_StateBackup" />
+      <li Class="HediffCompProperties_GiveAbility">
+        <abilityDefs>
+          <li>MMT_Ability_StateBackup</li>
+        </abilityDefs>
+      </li>
+    </comps>
+    <!-- 触发即烧毁、取出也损毁:不设置 spawnThingOnRemoved -->
+  </HediffDef>
+</Defs>

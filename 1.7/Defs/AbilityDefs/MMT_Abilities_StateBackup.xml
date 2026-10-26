@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生命备份链技能:刷新宿主的健康状态快照(targetRequired=false + 仅可自我目标 = 点击立即对自身施放) -->
+  <AbilityDef>
+    <defName>MMT_Ability_StateBackup</defName>
+    <label>状态备份</label>
+    <description>立即备份当前的健康状态，覆盖旧的备份点。遭受致命伤害触发回溯时，身体将恢复到此次备份记录的状态。</description>
+    <iconPath>Things/Item/MMT/MMT_Bionics/EPOEMAAIChip/EPOEMAAIChip</iconPath>
+    <targetRequired>false</targetRequired>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <cooldownTicksRange>2500</cooldownTicksRange>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <warmupTime>0</warmupTime>
+      <range>0</range>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityEffect">
+        <compClass>MyModeTest.CompAbilityEffect_SaveBackup</compClass>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>
