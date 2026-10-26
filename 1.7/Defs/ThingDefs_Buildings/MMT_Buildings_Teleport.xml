@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃传送台：后期传送建筑。装载体系复用原版 CompTransporter（搬运/走入 Job、
+       质量上限、ITab_ContentsTransporter 全免费，装载/取消 gizmo 由原版自带）；
+       自定义 CompTeleportPad 提供"启动传送"（世界地图选已有地图目标瞬间空降）
+       与召回执行端（配合 Architect 菜单的召回框选 Designator）。
+       待机 3000W，每次传送抽取电网 15000Wd 蓄电并冷却 12 小时。
+       贴图为 HSK 蓝色传送门（Core_SK Genstep/Blueportal，已授权）。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_TeleportPad</defName>
+    <label>折跃传送台</label>
+    <description>量子折跃装置，可将舱内的人员和物资瞬间传送到世界地图上已有地图的据点（敌对据点/任务地点/己方基地），也可从目标地图框选召回。每次传送消耗 15000Wd 电网蓄电并需要 12 小时冷却。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/MMT_TeleportPad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(4,4)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <size>(3,3)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>true</rotatable>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <tickerType>Normal</tickerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>12000</WorkToBuild>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>100</Mass>
+    </statBases>
+    <costList>
+      <Plasteel>120</Plasteel>
+      <Uranium>40</Uranium>
+      <ComponentSpacer>6</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>3000</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Transporter">
+        <massCapacity>1000</massCapacity>
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
+      </li>
+      <li Class="MyModeTest.CompProperties_TeleportPad">
+        <energyCostWd>15000</energyCostWd>
+        <cooldownTicks>30000</cooldownTicks>
+      </li>
+    </comps>
+    <inspectorTabs>
+      <li>ITab_ContentsTransporter</li>
+    </inspectorTabs>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_Teleportation</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+</Defs>

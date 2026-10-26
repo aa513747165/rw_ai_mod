@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃传送：后期 Ultra 研究，解锁折跃传送台（跨地图瞬时投送与框选召回） -->
+  <ResearchProjectDef>
+    <defName>MMT_Teleportation</defName>
+    <label>折跃传送</label>
+    <description>掌握跨地图瞬时传送技术，解锁折跃传送台：将舱内人员与物资直接投送到已有地图的据点，并可从目标地图框选召回。每次传送需要大量电网蓄电并进入冷却。</description>
+    <baseCost>6000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_MatterConversion3</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
