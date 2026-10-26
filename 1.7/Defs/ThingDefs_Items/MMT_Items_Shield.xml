@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 部署式护盾发生器：使用后在脚下生成临时护盾投影器（拦外部投射物，30秒后燃尽），机制对齐 Royalty 低级护盾背包；贴图暂引用 Royalty -->
+  <!-- 部署式护盾发生器：小人背包携带且处于征召状态时，指令栏出现"部署护盾"按钮（护盾图标），
+       点击立即在脚下展开临时护盾投影器；非征召状态走物品使用流程（有读条）。
+       投影器拦外部投射物（5×5 圆），30秒后燃尽；机制参考 Royalty 低级护盾背包，贴图暂引用 Royalty -->
   <ThingDef>
     <thingClass>ThingWithComps</thingClass>
     <defName>MMT_DeployableShield</defName>
     <label>部署式护盾发生器</label>
-    <description>一次性便携护盾装置。部署后在原地展开一个临时能量护盾，拦截外部射入的投射物，护盾内的友军仍可向外射击；内置电源能量有限，燃尽后装置自动焚毁。</description>
+    <description>一次性便携护盾装置。携带者被征召时，指令栏会出现"部署护盾"按钮，点击立即在脚下展开一个临时能量护盾（5×5 圆形范围），拦截外部射入的投射物，护盾内的友军仍可向外射击；内置电源能量有限，燃尽后装置自动焚毁。非征召状态下也可选中物品手动使用（有部署读条）。</description>
     <category>Item</category>
     <thingCategories>
       <li>ItemsMisc</li>

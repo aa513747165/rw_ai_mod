@@ -506,10 +506,15 @@ def emit_item(dn):
     return "\n".join(out), tex
 
 def recipe_maker_xml(item, dn, ind):
-    """由继承链合成 recipeMaker 片段;无可制作信息返回 None。"""
+    """由继承链合成 recipeMaker 片段;无可制作信息或源 def 显式 IsNull 时返回 None。"""
+    # HSK 源 def 显式 <recipeMaker IsNull="True" Inherit="False"/> 表示该件不可制作（如 EyePatch），
+    # 此时继承链上虽有基类的 recipeMaker 信息也不能合成，否则产出"有 recipeMaker 但无 costList"的配置错误
+    own_rm = item.find("recipeMaker")
+    if own_rm is not None and own_rm.attrib.get("IsNull") == "True":
+        return None
     benches = get_benches(item)
     cost = ext.get_pairs(item, "costList")
-    if not benches and not cost:
+    if not benches or not cost:
         return None
     lines = [ind + '<recipeMaker>']
     ws = ext.get_scalar(item, "recipeMaker", "workSpeedStat")

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），30秒后燃尽自毁；参数对齐 Royalty BroadshieldProjector，贴图/音效/特效直接引用 Royalty -->
+  <!-- 临时护盾投影器：由部署式护盾发生器生成，拦截外部投射物（子弹进不来、出得去），30秒后燃尽自毁；
+       结构对齐 Royalty BroadshieldProjector，但拦截半径改为 2.5（5×5 圆形范围，单兵掩体尺度），贴图/音效/特效直接引用 Royalty -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ShieldProjector</defName>
     <label>临时护盾投影器</label>
@@ -43,7 +44,8 @@
     </building>
     <comps>
       <li Class="CompProperties_ProjectileInterceptor">
-        <radius>4.9</radius>
+        <!-- 拦截半径 2.5：覆盖以投影器为中心的 5×5 圆形范围 -->
+        <radius>2.5</radius>
         <interceptGroundProjectiles>true</interceptGroundProjectiles>
         <interceptNonHostileProjectiles>true</interceptNonHostileProjectiles>
         <interceptOutgoingProjectiles>false</interceptOutgoingProjectiles>

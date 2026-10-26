@@ -130,7 +130,7 @@ namespace MyModeTest
             foreach (Gizmo g in base.CompGetGizmosExtra())
                 yield return g;
 
-            // 启动传送：舱内为空、装载进行中、电力/冷却不满足时禁用并提示原因
+            // 启动传送：舱内为空、装载未完成、电力/冷却不满足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
             launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上指定的已有地图目标（敌对据点/任务地点/己方基地）。消耗内部蓄电并进入冷却。";
@@ -140,9 +140,26 @@ namespace MyModeTest
                 launch.Disable(reason);
             else if (Transporter == null || Transporter.innerContainer.Count == 0)
                 launch.Disable("舱内为空，请先装载人员和物品");
-            else if (Transporter.LoadingInProgressOrReadyToLaunch)
-                launch.Disable("装载进行中，请先完成或取消装载");
+            else if (Transporter.LoadingInProgressOrReadyToLaunch && Transporter.AnyInGroupHasAnythingLeftToLoad)
+                // 1.7 的 LoadingInProgressOrReadyToLaunch 在装载组存在期间恒为 true（含"已装满待发"），
+                // 用它拦截会导致装载完成后永远无法发射；只在仍有物资待搬入时禁用
+                launch.Disable("装载未完成，还有物资在搬运途中");
             yield return launch;
+
+            // 开发者模式：一键充满蓄电并清除冷却（测试传送链路用）
+            if (Prefs.DevMode)
+            {
+                Command_Action devCharge = new Command_Action();
+                devCharge.defaultLabel = "DEV: 立即充满蓄电";
+                devCharge.defaultDesc = "开发者模式：立即充满内部蓄电并清除传送冷却。";
+                devCharge.icon = ContentFinder<Texture2D>.Get("Things/Building/Power/Battery", false);
+                devCharge.action = delegate
+                {
+                    storedChargeWd = Props.energyCostWd;
+                    cooldownUntilTick = 0;
+                };
+                yield return devCharge;
+            }
         }
 
         // ---- 去程：世界地图选目标 ----
@@ -249,6 +266,9 @@ namespace MyModeTest
                 }
             }
             TeleportFx.Play(landing, targetMap);
+            // 传送完毕后解散装载组（groupID 复位、残余装载lord移除），
+            // 否则传送台一直停留在"待发"状态，无法再开始新一轮装载
+            Transporter.CancelLoad(parent.Map);
             Messages.Message("传送完成：" + pawns + " 名人员、" + things + " 件物品已抵达目标地图",
                 new LookTargets(new GlobalTargetInfo(landing, targetMap)), MessageTypeDefOf.PositiveEvent, false);
             CameraJumper.TryJump(landing, targetMap);

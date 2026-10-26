@@ -30,7 +30,7 @@
     </comps>
   </ThingDef>
 
-  <!-- 眼罩 -->
+  <!-- 眼罩（HSK 源 def 显式 recipeMaker IsNull：不可制作，只能靠商人/遗迹获得） -->
   <ThingDef ParentName="MMT_BodyPartBase">
     <defName>MMT_EyePatch</defName>
     <label>眼罩</label>
@@ -50,20 +50,6 @@
       <Mass>0.3</Mass>
       <MaxHitPoints>25</MaxHitPoints>
     </statBases>
-    <recipeMaker>
-      <workSkill>Crafting</workSkill>
-      <workAmount>2500</workAmount>
-      <effectWorking>Smith</effectWorking>
-      <soundWorking>Recipe_Smith</soundWorking>
-      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
-      <skillRequirements>
-        <Crafting>3</Crafting>
-      </skillRequirements>
-      <recipeUsers>
-        <li>MMT_PrimitiveProstheticsTable</li>
-        <li>MMT_BasicProstheticsTable</li>
-      </recipeUsers>
-    </recipeMaker>
   </ThingDef>
 
   <!-- 钩手 -->

@@ -176,7 +176,10 @@
         <basePowerConsumption>800</basePowerConsumption>
         <shortCircuitInRain>true</shortCircuitInRain>
       </li>
-      <li Class="MyModeTest.CompProperties_ModuleSlots" />
+      <!-- 采石机为单钻头机组，只支持超频提速；并行模块上限 0（并行模块描述亦注明仅限研磨/筛分设备） -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <maxParallel>0</maxParallel>
+      </li>
       <li Class="MyModeTest.CompProperties_ChunkDrill">
         <workTicksPerChunk>12000</workTicksPerChunk>
         <autoDrill>true</autoDrill>

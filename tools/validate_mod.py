@@ -6415,10 +6415,12 @@ def validate_chunkdrill() -> None:
                   "MMT_ElectricChunkDrill", "CompPowerTrader",
                   "CompModuleSlots", "InstalledOverclock"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
-    # 自动采石机：槽位 Comp + 增效模块页签
+    # 自动采石机：槽位 Comp + 增效模块页签；单钻头机组并行模块上限必须为 0（只支持超频）
     auto_drill = buildings["MMT_AutoChunkDrill"]
-    assert any(li.attrib.get("Class") == "MyModeTest.CompProperties_ModuleSlots"
-               for li in auto_drill.findall("comps/li")), "自动采石机缺模块槽位 Comp"
+    drill_slots = next((li for li in auto_drill.findall("comps/li")
+                        if li.attrib.get("Class") == "MyModeTest.CompProperties_ModuleSlots"), None)
+    assert drill_slots is not None, "自动采石机缺模块槽位 Comp"
+    assert_equal(child_text(drill_slots, "maxParallel"), "0", "自动采石机并行模块上限必须为 0")
     assert "MyModeTest.ITab_ModuleSlots" in li_values(auto_drill, "inspectorTabs"), "自动采石机缺增效模块页签"
     print("chunkdrill: OK")
 
@@ -6571,13 +6573,15 @@ def validate_teleport() -> None:
                   "storedChargeWd", "chargeRateWdPerDay", "IsCharging", "CompTick",
                   "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
-                  "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry"):
+                  "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
+                  "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
     print("teleport: OK")
 
 
 def validate_shield() -> None:
-    """部署式护盾：使用型物品（CompUsable + 自定义生成建筑效果）+ 临时护盾建筑（复用 Royalty 弹道拦截/限时销毁 comp）+ 配方/研究 + Royalty 依赖。"""
+    """部署式护盾：物品（CompUsable 使用流程 + 征召时 Pawn.GetGizmos 补丁给"部署护盾"即时按钮）+
+    临时护盾建筑（5×5 圆拦截半径，复用 Royalty 弹道拦截/限时销毁 comp）+ 配方/研究 + Royalty 依赖。"""
     require_files([SHIELD_ITEM_XML, SHIELD_BUILDING_XML, SHIELD_RECIPE_XML, SHIELD_RESEARCH_XML, SHIELD_CS])
 
     # 物品：使用型（UseItem），使用后生成护盾建筑并自毁
@@ -6599,7 +6603,7 @@ def validate_shield() -> None:
     assert_equal(child_text(projector, "tickerType"), "Normal", "护盾建筑需 Normal tick 驱动倒计时")
     interceptor = next(li for li in projector.findall("comps/li")
                        if li.attrib.get("Class") == "CompProperties_ProjectileInterceptor")
-    assert_equal(child_text(interceptor, "radius"), "4.9", "护盾半径")
+    assert_equal(child_text(interceptor, "radius"), "2.5", "护盾半径（5×5 圆形范围）")
     assert_equal(child_text(interceptor, "interceptOutgoingProjectiles"), "false", "护盾不拦向外弹道")
     delay = next(li for li in projector.findall("comps/li")
                  if li.attrib.get("Class") == "CompProperties_DestroyAfterDelay")
@@ -6628,7 +6632,11 @@ def validate_shield() -> None:
     assert "Ludeon.RimWorld.Royalty" in about, "About.xml 缺少 Royalty 依赖声明"
     cs_src = read_text(SHIELD_CS)
     for token in ("CompProperties_UseEffectSpawnBuilding", "CompUseEffect_SpawnBuilding",
-                  "buildingDef", "GenSpawn.Spawn", "SetFaction"):
+                  "buildingDef", "GenSpawn.Spawn", "SetFaction",
+                  "ShieldDeployGizmoPatch", "HarmonyPatch", "GetGizmos",
+                  "ShieldDeployUtility", "DeployFromPawn", "PlayDeployFx",
+                  "FleckDefOf.BroadshieldActivation", "SoundDefOf.Broadshield_Startup",
+                  "MMT_ShieldDefOf"):
         assert token in cs_src, f"ShieldDeployer.cs 缺少关键实现: {token}"
     print("shield: OK")
 

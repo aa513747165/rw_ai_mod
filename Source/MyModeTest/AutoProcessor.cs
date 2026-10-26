@@ -183,10 +183,20 @@ namespace MyModeTest
             if (!selPawn.IsColonistPlayerControlled || selPawn.Downed
                 || !selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
                 yield break;
-            if (selPawn.Map != parent.Map || parent.IsForbidden(selPawn))
+            if (selPawn.Map != parent.Map)
                 yield break;
+            if (parent.IsForbidden(selPawn))
+            {
+                // IsForbidden 含"建筑格在小人活动区域外"：此时原版语义是该建筑对小人不可交互。
+                // 不能静默不给选项，否则玩家完全看不出为何装不了（研磨机/筛子被活动区挡住时曾表现为"无法安装"）
+                yield return new FloatMenuOption("安装增效模块（设备被禁止或在小人活动区域外）", null);
+                yield break;
+            }
             foreach (ModuleType type in new[] { ModuleType.Overclock, ModuleType.Parallel })
             {
+                // 流程节点：本设备不支持该类模块（槽位上限 0 且未装过），不显示对应安装项
+                if (MaxCount(type) <= 0 && InstalledCount(type) <= 0)
+                    continue;
                 ThingDef itemDef = ItemDef(type);
                 string label = "安装" + itemDef.label;
                 if (!CanInstall(type))
@@ -198,13 +208,20 @@ namespace MyModeTest
                 Thing item = FindModuleItem(selPawn, itemDef);
                 if (item == null)
                 {
-                    yield return new FloatMenuOption(label + "（缺少可用的" + itemDef.label + "）", null);
+                    // 区分"地图上根本没有"与"有但不可达/被禁止/已被预定"，方便玩家排查
+                    string why = parent.Map.listerThings.ThingsOfDef(itemDef).Count == 0
+                        ? "（没有" + itemDef.label + "，需先在电动装配台制作）"
+                        : "（" + itemDef.label + "不可达、被禁止或已被其他工作预定）";
+                    yield return new FloatMenuOption(label + why, null);
                     continue;
                 }
                 Thing target = item;
                 yield return new FloatMenuOption(label, delegate
                 {
                     Job job = JobMaker.MakeJob(MMT_DefOf.MMT_InstallProcessorModule, target, parent);
+                    // 1.7 的 Toils_Haul.TakeToInventory 会校验 curJob.count > 0，
+                    // MakeJob 默认 count = -1 会在拾取瞬间报 "Invalid count: -1" 红字
+                    job.count = 1;
                     selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
                 });
             }
@@ -235,8 +252,10 @@ namespace MyModeTest
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed)
-                && pawn.Reserve(job.targetB, job, 1, -1, null, errorOnFailed);
+            // 只预定模块物品，不预定设备本身：带燃料仓的设备（研磨机/筛子）常被
+            // 加油作业长期预定，若这里也预定设备会导致安装作业根本无法开始。
+            // 并发安装的槽位冲突由装配 toil 的 CanInstallThing 复检兜底（槽满不吞物品）。
+            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -638,10 +657,14 @@ namespace MyModeTest
             listing.Label("安装方式：选中殖民者右键本设备，选择安装对应模块。");
             listing.Gap(6f);
 
-            DrawSlotRow(listing, slots, ModuleType.Overclock,
-                "处理速度 +" + slots.OverclockCount * 10 + "%");
-            DrawSlotRow(listing, slots, ModuleType.Parallel,
-                "生产线 " + (1 + slots.ParallelCount) + " 条");
+            // 上限为 0 的模块类型本设备不支持，整行隐藏；
+            // 旧存档已装过的（如采石机上的并行模块）仍显示，以便卸载返还
+            if (slots.MaxCount(ModuleType.Overclock) > 0 || slots.InstalledCount(ModuleType.Overclock) > 0)
+                DrawSlotRow(listing, slots, ModuleType.Overclock,
+                    "处理速度 +" + slots.OverclockCount * 10 + "%");
+            if (slots.MaxCount(ModuleType.Parallel) > 0 || slots.InstalledCount(ModuleType.Parallel) > 0)
+                DrawSlotRow(listing, slots, ModuleType.Parallel,
+                    "生产线 " + (1 + slots.ParallelCount) + " 条");
             listing.End();
         }
 
