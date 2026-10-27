@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 天然器官（眼/耳/鼻/胃）：器官培养舱的培养产物，结构对照原版 Hediffs_BodyParts_Natural.xml
+       中心/肺/肝/肾的写法（ThingDef + InstallNatural 手术，Recipe_InstallNaturalBodyPart
+       直接恢复缺失部件，无需 HediffDef）。
+       defName 刻意不加 MMT_ 前缀：与原版天然器官物品（Heart/Lung/Kidney/Liver，同样无前缀）
+       及 HSK 同名件保持一致，器官培养舱产物清单与校验套件均按此名解析。
+       贴图为 HSK Core_SK BodyPart/HSK 同名贴图（已授权）。 -->
+
+  <!-- 眼 -->
+  <ThingDef ParentName="BodyPartNaturalBase">
+    <defName>Eye</defName>
+    <label>眼球</label>
+    <description>一颗生物眼球，从活体摘取或用生物质培养而来，可移植给失明者。</description>
+    <descriptionHyperlinks><RecipeDef>MMT_InstallNaturalEye</RecipeDef></descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/Eye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+      <color>(255,255,255)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>420</MarketValue>
+      <Mass>0.3</Mass>
+    </statBases>
+  </ThingDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartNaturalBase">
+    <defName>MMT_InstallNaturalEye</defName>
+    <label>安装眼球</label>
+    <description>移植一颗生物眼球。</description>
+    <descriptionHyperlinks><ThingDef>Eye</ThingDef></descriptionHyperlinks>
+    <jobString>正在安装眼球。</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Eye</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Eye</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Eye</li>
+    </appliedOnFixedBodyParts>
+  </RecipeDef>
+
+  <!-- 耳 -->
+  <ThingDef ParentName="BodyPartNaturalBase">
+    <defName>Ear</defName>
+    <label>耳朵</label>
+    <description>一只生物耳朵，从活体摘取或用生物质培养而来，可移植给失聪者。</description>
+    <descriptionHyperlinks><RecipeDef>MMT_InstallNaturalEar</RecipeDef></descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/Ear</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+      <color>(255,255,255)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>410</MarketValue>
+      <Mass>0.3</Mass>
+    </statBases>
+  </ThingDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartNaturalBase">
+    <defName>MMT_InstallNaturalEar</defName>
+    <label>安装耳朵</label>
+    <description>移植一只生物耳朵。</description>
+    <descriptionHyperlinks><ThingDef>Ear</ThingDef></descriptionHyperlinks>
+    <jobString>正在安装耳朵。</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Ear</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Ear</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Ear</li>
+    </appliedOnFixedBodyParts>
+  </RecipeDef>
+
+  <!-- 鼻 -->
+  <ThingDef ParentName="BodyPartNaturalBase">
+    <defName>Nose</defName>
+    <label>鼻子</label>
+    <description>一只生物鼻子，从活体摘取或用生物质培养而来，可移植给缺鼻者。</description>
+    <descriptionHyperlinks><RecipeDef>MMT_InstallNaturalNose</RecipeDef></descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/Nose</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+      <color>(255,255,255)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>504</MarketValue>
+      <Mass>0.3</Mass>
+    </statBases>
+  </ThingDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartNaturalBase">
+    <defName>MMT_InstallNaturalNose</defName>
+    <label>安装鼻子</label>
+    <description>移植一只生物鼻子。</description>
+    <descriptionHyperlinks><ThingDef>Nose</ThingDef></descriptionHyperlinks>
+    <jobString>正在安装鼻子。</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Nose</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Nose</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Nose</li>
+    </appliedOnFixedBodyParts>
+  </RecipeDef>
+
+  <!-- 胃 -->
+  <ThingDef ParentName="BodyPartNaturalBase">
+    <defName>Stomach</defName>
+    <label>胃</label>
+    <description>一个生物胃，从活体摘取或用生物质培养而来。消化食物，将其转化为能量与营养。</description>
+    <descriptionHyperlinks><RecipeDef>MMT_InstallNaturalStomach</RecipeDef></descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Bionics/Stomach</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+      <color>(255,255,255)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>500</MarketValue>
+      <Mass>1</Mass>
+    </statBases>
+  </ThingDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartNaturalBase">
+    <defName>MMT_InstallNaturalStomach</defName>
+    <label>安装胃</label>
+    <description>移植一个生物胃。</description>
+    <descriptionHyperlinks><ThingDef>Stomach</ThingDef></descriptionHyperlinks>
+    <jobString>正在安装胃。</jobString>
+    <deathOnFailedSurgeryChance>0.15</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>8</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Stomach</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Stomach</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Stomach</li>
+    </appliedOnFixedBodyParts>
+  </RecipeDef>
+</Defs>
