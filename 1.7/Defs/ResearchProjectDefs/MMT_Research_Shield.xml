@@ -12,7 +12,7 @@
       <li>ShieldBelt</li>
       <li>MMT_IntegratedCircuitTech</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>11.00</researchViewY>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

@@ -12,8 +12,8 @@
       <li>MMT_BasicElectronics</li>
       <li>MMT_ComponentCrafting</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>9.00</researchViewY>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 对照 HSK Super_matter_E1（前置 Components_D3） -->
@@ -28,8 +28,8 @@
       <li>MMT_UltraComponents</li>
       <li>MMT_MatterConversion1</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>8.00</researchViewY>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 对照 HSK Super_matter_E2 -->
@@ -43,7 +43,7 @@
     <prerequisites>
       <li>MMT_MatterConversion2</li>
     </prerequisites>
-    <researchViewX>4.00</researchViewX>
-    <researchViewY>8.00</researchViewY>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

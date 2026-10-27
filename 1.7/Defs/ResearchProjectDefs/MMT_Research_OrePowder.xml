@@ -12,8 +12,8 @@
       <li>Stonecutting</li>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>0.00</researchViewX>
-    <researchViewY>7.00</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 自动化矿料处理：解锁自动研磨机/自动筛子/矿料进料口，实现无中生有闭环 -->
@@ -28,8 +28,8 @@
       <li>MMT_OreSifting</li>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <researchViewX>1.00</researchViewX>
-    <researchViewY>7.00</researchViewY>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 自动机增效：解锁超频模块与并行模块的制作，安装进自动机叠加提速/增产 -->
@@ -43,8 +43,8 @@
     <prerequisites>
       <li>MMT_AutoOreProcessing</li>
     </prerequisites>
-    <researchViewX>2.00</researchViewX>
-    <researchViewY>7.00</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 精密筛分：解锁精密滤网，定向筛出稀有重矿（镍/钛铁/黑钨/铀/翡翠）。
@@ -60,7 +60,7 @@
       <li>MMT_AdvancedComponents</li>
       <li>MMT_AdvancedAlloys</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>7.00</researchViewY>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

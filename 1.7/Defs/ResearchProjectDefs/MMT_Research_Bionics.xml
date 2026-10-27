@@ -16,8 +16,8 @@
     <prerequisites>
       <li>MMT_Medicine_B1</li>
     </prerequisites>
-    <researchViewX>0.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 II -->
@@ -31,8 +31,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_B1</li>
     </prerequisites>
-    <researchViewX>1.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 III -->
@@ -46,8 +46,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_C1</li>
     </prerequisites>
-    <researchViewX>2.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 IV -->
@@ -61,8 +61,8 @@
     <prerequisites>
       <li>VitalsMonitor</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 V -->
@@ -77,8 +77,8 @@
       <li>MMT_Prosthesis_D1</li>
       <li>MMT_ProsthesisInstall_C3</li>
     </prerequisites>
-    <researchViewX>4.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 VI -->
@@ -92,8 +92,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_C2</li>
     </prerequisites>
-    <researchViewX>5.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 VII -->
@@ -107,8 +107,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_D3</li>
     </prerequisites>
-    <researchViewX>6.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 IX -->
@@ -122,8 +122,8 @@
     <prerequisites>
       <li>Bionics</li>
     </prerequisites>
-    <researchViewX>7.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 X -->
@@ -137,8 +137,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_E1</li>
     </prerequisites>
-    <researchViewX>8.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 XI -->
@@ -152,8 +152,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_E2</li>
     </prerequisites>
-    <researchViewX>9.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 XII -->
@@ -167,8 +167,8 @@
     <prerequisites>
       <li>Bionics</li>
     </prerequisites>
-    <researchViewX>10.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 XIII -->
@@ -182,8 +182,8 @@
     <prerequisites>
       <li>Bionics</li>
     </prerequisites>
-    <researchViewX>11.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>1.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢制造 XIV -->
@@ -197,8 +197,8 @@
     <prerequisites>
       <li>MMT_Prosthesis_E5</li>
     </prerequisites>
-    <researchViewX>12.00</researchViewX>
-    <researchViewY>6.50</researchViewY>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 II -->
@@ -212,8 +212,8 @@
     <prerequisites>
       <li>Prosthetics</li>
     </prerequisites>
-    <researchViewX>0.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 III -->
@@ -228,8 +228,8 @@
       <li>MMT_Medicine_B2</li>
       <li>MMT_ProsthesisInstall_C1</li>
     </prerequisites>
-    <researchViewX>1.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 IV -->
@@ -244,8 +244,8 @@
       <li>MMT_ProsthesisInstall_C2</li>
       <li>VitalsMonitor</li>
     </prerequisites>
-    <researchViewX>2.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 V -->
@@ -259,8 +259,8 @@
     <prerequisites>
       <li>MMT_ProsthesisInstall_C3</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>7.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 VI -->
@@ -274,8 +274,8 @@
     <prerequisites>
       <li>MMT_ProsthesisInstall_D1</li>
     </prerequisites>
-    <researchViewX>4.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>8.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 VII -->
@@ -290,8 +290,8 @@
       <li>MMT_ProsthesisInstall_D2</li>
       <li>MMT_Medicine_D1</li>
     </prerequisites>
-    <researchViewX>5.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 VIII -->
@@ -306,8 +306,8 @@
       <li>MMT_ProsthesisInstall_D3</li>
       <li>MMT_Medicine_D1</li>
     </prerequisites>
-    <researchViewX>6.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 IX -->
@@ -321,8 +321,8 @@
     <prerequisites>
       <li>MMT_ProsthesisInstall_D4</li>
     </prerequisites>
-    <researchViewX>7.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 义肢安装 X -->
@@ -337,8 +337,8 @@
       <li>MMT_ProsthesisInstall_E1</li>
       <li>MedicineProduction</li>
     </prerequisites>
-    <researchViewX>8.00</researchViewX>
-    <researchViewY>7.50</researchViewY>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
 </Defs>

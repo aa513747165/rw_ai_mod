@@ -11,7 +11,7 @@
       <li>MicroelectronicsBasics</li>
     </prerequisites>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -25,7 +25,7 @@
       <li>MMT_BasicElectronics</li>
     </prerequisites>
     <researchViewX>1.00</researchViewX>
-    <researchViewY>10.00</researchViewY>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
   <!-- 对照 HSK Droids_D1（机器人工程 I：2000/Spacer/前置 Electronics_D1） -->
@@ -39,7 +39,7 @@
     <prerequisites>
       <li>MMT_BasicElectronics</li>
     </prerequisites>
-    <researchViewX>0.00</researchViewX>
-    <researchViewY>11.00</researchViewY>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 </Defs>
