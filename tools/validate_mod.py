@@ -6363,12 +6363,13 @@ def validate_orepowder() -> None:
     mesh_defs = def_map(parse_xml(MESH_ITEM_XML))
     assert_equal(set(mesh_defs), {"MMT_MeshWood", "MMT_MeshIron", "MMT_MeshFine"}, "滤网物品 defName 集合")
     mesh_expect = {
-        "MMT_MeshWood": ("0", "0.3", ["MMT_IronOre", "MMT_CopperOre", "MMT_TinOre",
-                                      "MMT_Coal", "MMT_Salt", "MMT_SoftClay"]),
-        "MMT_MeshIron": ("1", "0.2", ["MMT_Anglesite", "MMT_AluminiumOre", "MMT_SilverOre",
-                                      "MMT_GoldOre", "MMT_Sulfur", "MMT_Nitre", "MMT_CrudeOil"]),
-        "MMT_MeshFine": ("2", "0.1", ["MMT_NickelOre", "MMT_IlmeniteOre", "MMT_WolframiteOre",
-                                      "Uranium", "Jade"]),
+        "MMT_MeshWood": ("0", "0.15", ["MMT_IronOre", "MMT_CopperOre", "MMT_TinOre",
+                                       "MMT_Coal", "MMT_Salt", "MMT_SoftClay"]),
+        "MMT_MeshIron": ("1", "0.05", ["MMT_Anglesite", "MMT_AluminiumOre", "MMT_SilverOre",
+                                       "MMT_GoldOre", "MMT_Sulfur", "MMT_Nitre", "MMT_CrudeOil"]),
+        # 精密滤网不掺沙（无 sandChance 节点）
+        "MMT_MeshFine": ("2", None, ["MMT_NickelOre", "MMT_IlmeniteOre", "MMT_WolframiteOre",
+                                     "Uranium", "Jade"]),
     }
     for name, (tier, sand, ores) in mesh_expect.items():
         d = mesh_defs[name]
@@ -6378,7 +6379,8 @@ def validate_orepowder() -> None:
         ext = d.find("modExtensions/li")
         assert ext is not None and ext.attrib.get("Class") == "MyModeTest.MeshFilterExtension", f"{name} 缺过滤配置"
         assert_equal(child_text(ext, "tier"), tier, f"{name} 档位")
-        assert_equal(child_text(ext, "sandChance"), sand, f"{name} 掺沙概率")
+        actual_sand = ext.findtext("sandChance")
+        assert_equal(actual_sand.strip() if actual_sand else None, sand, f"{name} 掺沙概率")
         assert_equal(li_values(ext, "ores"), ores, f"{name} 白名单矿石")
     # 滤网配方：木网无研究挂手工加工点；铁网需基础金属冶炼；精密网需精密筛分挂装配台
     mesh_recipes = def_map(parse_xml(MESH_RECIPE_XML))

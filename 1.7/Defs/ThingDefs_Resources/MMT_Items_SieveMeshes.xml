@@ -5,7 +5,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_MeshWood</defName>
     <label>木滤网</label>
-    <description>木框绷麻绳的粗孔筛网，网眼大，只能拦住大颗粒的常见矿石碎屑，细小矿粒与沙砾一并漏走。安装进筛子后：只能筛出铁矿石、铜矿、锡矿、煤、盐、软粘土，每轮有 30% 概率只筛出沙子。</description>
+    <description>木框绷麻绳的粗孔筛网，网眼大，只能拦住大颗粒的常见矿石碎屑，细小矿粒与沙砾一并漏走。安装进筛子后：只能筛出铁矿石、铜矿、锡矿、煤、盐、软粘土，每轮有 15% 概率只筛出沙子。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_MeshWood</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -27,7 +27,7 @@
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
         <tier>0</tier>
-        <sandChance>0.3</sandChance>
+        <sandChance>0.15</sandChance>
         <ores>
           <li>MMT_IronOre</li>
           <li>MMT_CopperOre</li>
@@ -43,7 +43,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_MeshIron</defName>
     <label>铁滤网</label>
-    <description>钢丝编织的中孔筛网，网眼均匀，能拦住中等颗粒的金属矿粒。安装进筛子后：只能筛出铅矾矿、铝土矿、银矿、金矿、硫磺、硝石、原油，每轮有 20% 概率只筛出沙子。</description>
+    <description>钢丝编织的中孔筛网，网眼均匀，能拦住中等颗粒的金属矿粒。安装进筛子后：只能筛出铅矾矿、铝土矿、银矿、金矿、硫磺、硝石、原油，每轮有 5% 概率只筛出沙子。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_MeshIron</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -65,7 +65,7 @@
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
         <tier>1</tier>
-        <sandChance>0.2</sandChance>
+        <sandChance>0.05</sandChance>
         <ores>
           <li>MMT_Anglesite</li>
           <li>MMT_AluminiumOre</li>
@@ -82,7 +82,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_MeshFine</defName>
     <label>精密滤网</label>
-    <description>强化玻璃框配金丝编织的致密筛网，网眼极细，能留住最细小的稀有重矿粒。安装进筛子后：只能筛出镍矿、钛铁矿、黑钨矿、铀、翡翠，每轮有 10% 概率只筛出沙子。</description>
+    <description>强化玻璃框配金丝编织的致密筛网，网眼极细，能留住最细小的稀有重矿粒。安装进筛子后：只能筛出镍矿、钛铁矿、黑钨矿、铀、翡翠，不掺沙子。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_MeshFine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -104,7 +104,6 @@
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
         <tier>2</tier>
-        <sandChance>0.1</sandChance>
         <ores>
           <li>MMT_NickelOre</li>
           <li>MMT_IlmeniteOre</li>
