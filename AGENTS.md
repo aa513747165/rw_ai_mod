@@ -43,8 +43,10 @@ dotnet build Source/MyModeTest/MyModeTest.csproj -p:RimWorldPath="D:\Games\RimWo
 # 也可用环境变量 RIMWORLD_PATH 提供游戏目录
 
 # 静态验证（本项目的主要"测试"手段）
-PYTHONIOENCODING=utf-8 python tools/validate_mod.py all   # 全量；Windows 中文控制台建议加 PYTHONIOENCODING=utf-8
-python tools/validate_mod.py parts                        # 单套件（套件名见 tools/validate_mod.py 顶部 SUITES）
+PYTHONIOENCODING=utf-8 python tools/validate_mod.py all   # 旧链全量；Windows 中文控制台建议加 PYTHONIOENCODING=utf-8
+python tools/validate_mod.py parts                        # 旧链单套件（套件名见 tools/validate_mod.py 底部 SUITES）
+python tools/validate_new.py all                          # 新链全量（tools/validate/ 包，自动发现）
+python tools/validate_new.py <链名>                       # 新链单套件
 
 # 重新生成对比/链路文档（改 Def 后需重跑；这些 md 是生成物）
 node tools/build_mmt_chains_compare.js      # → docs/mmt-vs-hsk-resource-chains.md
@@ -61,7 +63,9 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
 
 ## 测试策略
 
-没有单元测试框架；`tools/validate_mod.py`（约 6500 行）就是测试套件，逐字段校验 XML、贴图存在性、数值是否满足设计约束。套件按链组织（如 `glass` 链对应 `resources`/`building`/`recipes` 三个套件，另有 `concrete`、`wood`、`metal`、`weapons-*`、`orepowder`、`power`、`science` 等数十个，完整名单见文件底部 `SUITES` 字典）。**新增一条资源链时必须同步添加对应的 `validate_*` 函数和 `SUITES` 注册，并更新文件顶部的路径常量与贴图清单常量。**
+没有单元测试框架；`tools/validate_mod.py`（约 7100 行，**旧链专用，已冻结不再新增**）就是测试套件，逐字段校验 XML、贴图存在性、数值是否满足设计约束。套件按链组织（如 `glass` 链对应 `resources`/`building`/`recipes` 三个套件，另有 `concrete`、`wood`、`metal`、`weapons-*`、`orepowder`、`power`、`science` 等数十个，完整名单见文件底部 `SUITES` 字典）。
+
+**新增资源链的校验一律写入 `tools/validate/<链名>.py`（每链一个小文件），不要改 `validate_mod.py`。** 链模块内通过 `from validate_mod import fail, require_files, parse_xml, ...` 复用旧文件的 helper，末尾注册 `SUITES = {"<链名>": validate_<链名>}`，由 `tools/validate_new.py` 自动发现聚合。若新链确实涉及旧链数据的交叉校验，才允许在旧文件中追加。
 
 ## C# 工程
 
