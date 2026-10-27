@@ -8,7 +8,7 @@ using Verse.Sound;
 namespace MyModeTest
 {
     /// <summary>
-    /// 充能护盾背包参数：持续耗电与伤害吸收耗电系数（XML 可配置）。
+    /// 充能护盾腰带参数：持续耗电与伤害吸收耗电系数（XML 可配置）。
     /// 电量由同物品上的 CompRechargeable 提供。
     /// </summary>
     public class CompProperties_ShieldPack : CompProperties
@@ -26,7 +26,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 充能护盾背包核心 Comp（挂在腰带层服装上）：
+    /// 充能护盾腰带核心 Comp（挂在腰带层服装上）：
     /// 征召时指令栏出现开关按钮；开启后全额吸收所有伤害（含近战），按伤害量耗电，
     /// 同时持续缓慢耗电；电能耗尽或解除征召自动关闭。EMP 直接清空电量并击穿护盾。
     /// </summary>
@@ -173,7 +173,7 @@ namespace MyModeTest
         {
             active = false;
             if (reason != null && wearer != null)
-                Messages.Message(wearer.LabelShort + " 的护盾背包已自动关闭：" + reason,
+                Messages.Message(wearer.LabelShort + " 的护盾腰带已自动关闭：" + reason,
                     new LookTargets(wearer), MessageTypeDefOf.NegativeEvent, false);
         }
 
@@ -189,7 +189,7 @@ namespace MyModeTest
         {
             Command_Action cmd = new Command_Action();
             float ratio = Battery?.ChargeRatio ?? 0f;
-            cmd.defaultLabel = (active ? "关闭护盾背包" : "开启护盾背包") + "（电量 " + ratio.ToStringPercent("F0") + "）";
+            cmd.defaultLabel = (active ? "关闭护盾腰带" : "开启护盾腰带") + "（电量 " + ratio.ToStringPercent("F0") + "）";
             cmd.defaultDesc = "开启后展开贴身能量护盾，全额吸收所有伤害（含近战）：每吸收 1 点伤害耗电 "
                 + Props.wdPerDamage.ToString("F0") + " Wd，开启期间持续耗电 "
                 + Props.passiveDrainWdPerDay.ToString("F0") + " Wd/天；电能耗尽或解除征召自动关闭。电量可在充能台回充。";
@@ -202,8 +202,8 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 护盾背包开关补丁（与 ShieldDeployGizmoPatch 同模式）：
-    /// 征召 + 玩家殖民者 + 穿戴充能护盾背包时，指令栏追加开关按钮。
+    /// 护盾腰带开关补丁（与 ShieldDeployGizmoPatch 同模式）：
+    /// 征召 + 玩家殖民者 + 穿戴充能护盾腰带时，指令栏追加开关按钮。
     /// </summary>
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
     public static class ShieldPackGizmoPatch
@@ -251,7 +251,7 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>解除征召时自动关闭身上所有开启的护盾背包。</summary>
+    /// <summary>解除征召时自动关闭身上所有开启的护盾腰带。</summary>
     [HarmonyPatch(typeof(Pawn_DraftController), "set_Drafted")]
     public static class ShieldPackUndraftPatch
     {
@@ -272,9 +272,10 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 充能护盾背包服装类：1.7 渲染重构后服装额外绘制走 Apparel.DrawWornExtras，
-    /// 护盾开启期间围绕穿戴者绘制常驻半透明能量泡（复用 Core ShieldBubble 贴图，
-    /// 1.7 打包在 Assets.zip 内，运行时可直接引用），尺寸随游戏 tick 缓慢脉动。
+    /// 充能护盾腰带服装类：1.7 渲染重构后服装额外绘制走 Apparel.DrawWornExtras，
+    /// 护盾开启期间围绕穿戴者绘制常驻半透明能量泡（MMT 专属贴图
+    /// Things/Item/MMT/Shield/MMT_ShieldBubbleTech，贴图自带蓝色，着色用白色保持原色），
+    /// 尺寸随游戏 tick 缓慢脉动。
     /// </summary>
     public class Apparel_ChargeShieldPack : Apparel
     {
@@ -288,8 +289,8 @@ namespace MyModeTest
             if (comp == null || !comp.ShieldActive || Wearer == null || !Wearer.Spawned)
                 return;
             if (bubbleMat == null)
-                bubbleMat = MaterialPool.MatFrom("Other/ShieldBubble", ShaderDatabase.Transparent,
-                    new Color(0.8f, 0.95f, 1f));
+                bubbleMat = MaterialPool.MatFrom("Things/Item/MMT/Shield/MMT_ShieldBubbleTech",
+                    ShaderDatabase.Transparent, Color.white);
             float scale = 1.35f + 0.05f * Mathf.Sin(Find.TickManager.TicksGame * 0.06f);
             Vector3 drawPos = Wearer.DrawPos;
             drawPos.y = AltitudeLayer.MoteOverhead.AltitudeFor();

@@ -139,7 +139,7 @@
     <parent>Manufactured</parent>
     <iconPath>Things/Item/MMT/MMT_MeshWood</iconPath>
   </ThingCategoryDef>
-  <!-- 可充能设备聚合：充能台可回充的设备（如充能护盾背包）归入此类 -->
+  <!-- 可充能设备聚合：充能台可回充的设备（如充能护盾腰带）归入此类 -->
   <ThingCategoryDef>
     <defName>MMT_RechargeableDevices</defName>
     <label>可充能设备</label>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 充能台：为可充能设备（如充能护盾背包）回充电量的 1×1 台座。
+  <!-- 充能台：为可充能设备（如充能护盾腰带）回充电量的 1×1 台座。
        右键建筑由小人手动装卸：空台"装载可充能设备"（从该小人穿戴/背包中选择），
        有设备"取出设备"（确认后取回）。充能时设备飘浮在台座正上方并亮起微弱光柱，
        充能功耗 1500W、待机 25W（动态功耗见 ChargingStation.cs）。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ChargingStation</defName>
     <label>充能台</label>
-    <description>为内置电池的便携式设备回充电量的台座。右键建筑选择"装载可充能设备"，小人会把身上穿戴或携带的设备（如充能护盾背包）装入台座回充，充满后右键取出。充能时设备会飘浮在台座上方并亮起充能光柱。</description>
+    <description>为内置电池的便携式设备回充电量的台座。右键建筑选择"装载可充能设备"，小人会把身上穿戴或携带的设备（如充能护盾腰带）装入台座回充，充满后右键取出。充能时设备会飘浮在台座上方并亮起充能光柱。</description>
     <thingClass>MyModeTest.Building_ChargingStation</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_ChargingStation</texPath>

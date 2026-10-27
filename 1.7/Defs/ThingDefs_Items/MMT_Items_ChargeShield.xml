@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 充能护盾背包：腰带层服装（与原版护盾腰带同槽位）。征召时指令栏出现开关按钮；
+  <!-- 充能护盾腰带：腰带层服装（与原版护盾腰带同槽位）。征召时指令栏出现开关按钮；
        开启后全额吸收所有伤害（含近战），每点伤害耗电 40 Wd，开启期间持续耗电 300 Wd/天；
-       电能耗尽或解除征召自动关闭，可在充能台回充。机制见 ShieldPack.cs，贴图引用 Core 护盾腰带 -->
+       电能耗尽或解除征召自动关闭，可在充能台回充。机制见 ShieldPack.cs；
+       物品图标用 MMT 专属贴图，穿戴外观复用原版护盾腰带（wornGraphicPath） -->
   <ThingDef ParentName="ApparelBase">
     <defName>MMT_ChargeShieldPack</defName>
-    <label>充能护盾背包</label>
+    <label>充能护盾腰带</label>
     <thingClass>MyModeTest.Apparel_ChargeShieldPack</thingClass>
     <description>新一代个人能量护盾装置，佩戴于腰部。征召时可在指令栏开启护盾：开启后展开贴身能量场，全额吸收所有伤害（包括近战），每吸收 1 点伤害耗电 40 Wd，开启期间持续耗电 300 Wd/天；电能耗尽护盾自动关闭，EMP 武器可直接击穿并清空电量。电量耗尽后可在充能台回充重复使用。</description>
     <tickerType>Normal</tickerType>
     <techLevel>Spacer</techLevel>
     <graphicData>
-      <texPath>Things/Pawn/Humanlike/Apparel/ShieldBelt/ShieldBelt</texPath>
+      <texPath>Things/Item/MMT/Shield/MMT_ShieldBeltTech</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
@@ -42,6 +43,7 @@
         <li>BeltDefense</li>
       </tags>
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/ShieldBelt/ShieldBelt</wornGraphicPath>
     </apparel>
     <comps>
       <li Class="MyModeTest.CompProperties_Rechargeable">

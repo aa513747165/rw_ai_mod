@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""充能链静态验证：充能台 + 充能护盾背包（新链，由 tools/validate_new.py 自动发现）。"""
+"""充能链静态验证：充能台 + 充能护盾腰带（新链，由 tools/validate_new.py 自动发现）。"""
 from __future__ import annotations
 
 from validate_mod import (
@@ -32,6 +32,8 @@ CS_FILES = [
 
 TEX_STATION = "1.7/Textures/Things/Building/Misc/MMT_ChargingStation.png"
 TEX_BEAM = "1.7/Textures/Things/Building/Misc/MMT_ChargeBeam.png"
+TEX_BELT = "1.7/Textures/Things/Item/MMT/Shield/MMT_ShieldBeltTech.png"
+TEX_BUBBLE = "1.7/Textures/Things/Item/MMT/Shield/MMT_ShieldBubbleTech.png"
 
 
 def _comp_classes(node) -> list[str]:
@@ -50,29 +52,32 @@ def validate_charging() -> None:
     assert_png(TEX_STATION)
     assert_png(TEX_BEAM)
 
-    # ---- 物品：充能护盾背包 ----
+    # ---- 物品：充能护盾腰带 ----
     items = def_map(parse_xml(ITEM_XML))
     if "MMT_ChargeShieldPack" not in items:
         fail("物品缺少 MMT_ChargeShieldPack")
     pack = items["MMT_ChargeShieldPack"]
-    assert_equal(child_text(pack, "label"), "充能护盾背包", "护盾背包 label")
+    assert_equal(child_text(pack, "label"), "充能护盾腰带", "护盾腰带 label")
     assert_equal(
         child_text(pack, "graphicData/texPath"),
-        "Things/Pawn/Humanlike/Apparel/ShieldBelt/ShieldBelt",
-        "护盾背包贴图",
+        "Things/Item/MMT/Shield/MMT_ShieldBeltTech",
+        "护盾腰带贴图",
     )
-    assert_equal(child_text(pack, "tickerType"), "Normal", "护盾背包 tickerType")
-    assert_equal(child_text(pack, "thingClass"), "MyModeTest.Apparel_ChargeShieldPack", "护盾背包 thingClass")
+    require_files([TEX_BELT, TEX_BUBBLE])
+    assert_png(TEX_BELT)
+    assert_png(TEX_BUBBLE)
+    assert_equal(child_text(pack, "tickerType"), "Normal", "护盾腰带 tickerType")
+    assert_equal(child_text(pack, "thingClass"), "MyModeTest.Apparel_ChargeShieldPack", "护盾腰带 thingClass")
     pack_cats = li_values(pack, "thingCategories")
     if "MMT_RechargeableDevices" not in pack_cats:
-        fail("护盾背包需归入 MMT_RechargeableDevices 分类")
+        fail("护盾腰带需归入 MMT_RechargeableDevices 分类")
     pack_comps = _comp_classes(pack)
     for comp in ("MyModeTest.CompProperties_Rechargeable", "MyModeTest.CompProperties_ShieldPack"):
         if comp not in pack_comps:
-            fail(f"护盾背包缺少 comp: {comp}")
+            fail(f"护盾腰带缺少 comp: {comp}")
     layers = li_values(pack, "apparel/layers")
     if "Belt" not in layers:
-        fail("护盾背包必须是腰带层（Belt）")
+        fail("护盾腰带必须是腰带层（Belt）")
 
     # ---- 分类 ----
     cats = def_map(parse_xml(CATEGORY_XML))

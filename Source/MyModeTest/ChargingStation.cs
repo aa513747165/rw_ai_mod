@@ -247,7 +247,7 @@ namespace MyModeTest
             List<Thing> devices = FindRechargeableDevices(selPawn);
             if (devices.Count == 0)
             {
-                Messages.Message(selPawn.LabelShort + " 身上没有可充能设备（需要穿戴或携带带电池的设备，如充能护盾背包）",
+                Messages.Message(selPawn.LabelShort + " 身上没有可充能设备（需要穿戴或携带带电池的设备，如充能护盾腰带）",
                     selPawn, MessageTypeDefOf.RejectInput, false);
                 return;
             }

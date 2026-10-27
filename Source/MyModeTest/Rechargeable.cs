@@ -5,7 +5,7 @@ namespace MyModeTest
 {
     /// <summary>
     /// 可充能设备参数：电池容量（XML 可配置）。
-    /// 挂在任何需要内置电量的物品上（护盾背包等），配合充能台回充。
+    /// 挂在任何需要内置电量的物品上（护盾腰带等），配合充能台回充。
     /// </summary>
     public class CompProperties_Rechargeable : CompProperties
     {
