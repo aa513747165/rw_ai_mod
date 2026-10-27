@@ -3,13 +3,16 @@
   <!-- 灵能护盾腰带：腰带层服装（与原版护盾腰带同槽位）。以穿戴者灵能驱动，全额吸收所有伤害
        （含近战），穿戴者可向外射击；每吸收 1 点伤害增加等量精神熵，并按概率扣精神集中，
        集中归零或熵超载即破盾，熵/集中恢复后自动重启。机制见 ShieldBeltPsychic.cs；
-       贴图为 MMT 专属改色（Jade 腰带 + Psychic 黄气泡），穿戴外观复用原版护盾腰带 -->
+       贴图为 MMT 专属改色（Jade 腰带 + Psychic 黄气泡）；与原版护盾腰带一样不设
+       wornGraphicPath，小人穿戴时不绘制任何图层 -->
   <ThingDef ParentName="ApparelBase">
     <defName>MMT_PsychicShieldBelt</defName>
     <label>灵能护盾腰带</label>
     <description>以心灵增幅装置为核心制作的灵能护盾腰带，只有启灵者能够集中精神以灵能驱动它，防御任何形式的攻击（含近战）。高级启灵者（启灵 5 级以上）还能以灵能护盾抵御环境威胁。吸收伤害会累积精神熵并消耗精神集中，过度承压会导致护盾击破。</description>
     <tickerType>Normal</tickerType>
     <techLevel>Spacer</techLevel>
+    <!-- ApparelNoQualityBase 自带 smeltable=true，本品由配方直接产出无 costList，熔炼无产出会报配置错误 -->
+    <smeltable>false</smeltable>
     <graphicData>
       <texPath>Things/Item/MMT/Shield/MMT_ShieldBeltJade</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -47,7 +50,6 @@
         <li>BeltDefense</li>
       </tags>
       <developmentalStageFilter>Child, Adult</developmentalStageFilter>
-      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/ShieldBelt/ShieldBelt</wornGraphicPath>
     </apparel>
     <comps>
       <li Class="MyModeTest.CompProperties_ShieldPsychic">

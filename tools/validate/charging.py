@@ -67,6 +67,8 @@ def validate_charging() -> None:
     assert_png(TEX_BELT)
     assert_png(TEX_BUBBLE)
     assert_equal(child_text(pack, "tickerType"), "Normal", "护盾腰带 tickerType")
+    # 无 costList 的配方直产物品必须显式关闭熔炼（ApparelNoQualityBase 自带 smeltable=true）
+    assert_equal(child_text(pack, "smeltable"), "false", "护盾腰带 smeltable")
     assert_equal(child_text(pack, "thingClass"), "MyModeTest.Apparel_ChargeShieldPack", "护盾腰带 thingClass")
     pack_cats = li_values(pack, "thingCategories")
     if "MMT_RechargeableDevices" not in pack_cats:

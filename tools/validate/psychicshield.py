@@ -52,6 +52,8 @@ def validate_psychicshield() -> None:
         "灵能护盾腰带贴图",
     )
     assert_equal(child_text(belt, "tickerType"), "Normal", "灵能护盾腰带 tickerType")
+    # 无 costList 的配方直产物品必须显式关闭熔炼（ApparelNoQualityBase 自带 smeltable=true）
+    assert_equal(child_text(belt, "smeltable"), "false", "灵能护盾腰带 smeltable")
     if "MyModeTest.CompProperties_ShieldPsychic" not in _comp_classes(belt):
         fail("灵能护盾腰带缺少 comp: MyModeTest.CompProperties_ShieldPsychic")
     # 能量上限=1 是伤害转熵 1:1 的换算基准，改动需同步评估机制

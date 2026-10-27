@@ -38,7 +38,8 @@ namespace MyModeTest
         // 电池 comp 惰性缓存（服装在背包/充能台内不 spawn，不能靠 PostSpawnSetup 缓存）
         private CompRechargeable battery;
 
-        private CompProperties_ShieldPack Props
+        /// <summary>护盾参数（internal 供同程序集的状态 gizmo 读取）。</summary>
+        internal CompProperties_ShieldPack Props
         {
             get { return (CompProperties_ShieldPack)props; }
         }
@@ -199,6 +200,73 @@ namespace MyModeTest
                 cmd.Disable("电量耗尽，请在充能台充电");
             return cmd;
         }
+
+        /// <summary>
+        /// 穿戴者被选中时的电量状态 gizmo（仿原版 CompShield.GetGizmos：
+        /// 仅玩家阵营且单独选中穿戴者时显示）。
+        /// </summary>
+        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
+                yield return gizmo;
+            Pawn wearer = Wearer;
+            if (wearer != null && wearer.Faction == Faction.OfPlayer
+                && Find.Selector.SingleSelectedThing == wearer)
+            {
+                yield return new Gizmo_ChargeShieldStatus { shield = this };
+            }
+        }
+    }
+
+    /// <summary>
+    /// 充能护盾腰带电量状态 gizmo（仿原版 Gizmo_EnergyShieldStatus）：
+    /// 标题为腰带名称，进度条与数值显示 当前电量/上限（Wd），tooltip 说明伤害换算。
+    /// </summary>
+    [StaticConstructorOnStartup]
+    public class Gizmo_ChargeShieldStatus : Gizmo
+    {
+        /// <summary>数据来源的护盾腰带 comp。</summary>
+        public CompShieldPack shield;
+
+        private static readonly Texture2D FullBarTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.2f, 0.2f, 0.24f));
+
+        private static readonly Texture2D EmptyBarTex = SolidColorMaterials.NewSolidColorTexture(Color.clear);
+
+        public Gizmo_ChargeShieldStatus()
+        {
+            Order = -100f;
+        }
+
+        public override float GetWidth(float maxWidth)
+        {
+            return 140f;
+        }
+
+        public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
+        {
+            Rect rect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), 75f);
+            Rect inner = rect.ContractedBy(6f);
+            Widgets.DrawWindowBackground(rect);
+            Rect labelRect = inner;
+            labelRect.height = rect.height / 2f;
+            Text.Font = GameFont.Tiny;
+            Widgets.Label(labelRect, shield.parent.LabelCap);
+            Rect barRect = inner;
+            barRect.yMin = inner.y + inner.height / 2f;
+            CompRechargeable battery = shield.Battery;
+            float max = battery?.MaxChargeWd ?? 0f;
+            float cur = battery?.ChargeWd ?? 0f;
+            Widgets.FillableBar(barRect, max <= 0f ? 0f : cur / max, FullBarTex, EmptyBarTex, false);
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(barRect, cur.ToString("F0") + " / " + max.ToString("F0"));
+            Text.Anchor = TextAnchor.UpperLeft;
+            TooltipHandler.TipRegion(inner,
+                "个人能量护盾（单位 Wd）。开启后全额吸收所有伤害（含近战），每吸收 1 点伤害耗电 "
+                + shield.Props.wdPerDamage.ToString("F0") + " Wd，满电约可吸收 "
+                + (max / shield.Props.wdPerDamage).ToString("F0") + " 点伤害；电量可在充能台回充。");
+            return new GizmoResult(GizmoState.Clear);
+        }
     }
 
     /// <summary>
@@ -291,7 +359,8 @@ namespace MyModeTest
             if (bubbleMat == null)
                 bubbleMat = MaterialPool.MatFrom("Things/Item/MMT/Shield/MMT_ShieldBubbleTech",
                     ShaderDatabase.Transparent, Color.white);
-            float scale = 1.35f + 0.05f * Mathf.Sin(Find.TickManager.TicksGame * 0.06f);
+            // 真实时间驱动：倍速下 TicksGame 加速会让脉动鬼畜（0.06/tick × 60 ≈ 3.6 rad/s）
+            float scale = 1.35f + 0.05f * Mathf.Sin(Time.realtimeSinceStartup * 3.6f);
             Vector3 drawPos = Wearer.DrawPos;
             drawPos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
             Graphics.DrawMesh(MeshPool.plane10,
