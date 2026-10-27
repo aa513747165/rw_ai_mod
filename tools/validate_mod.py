@@ -6829,6 +6829,43 @@ def validate_bionics() -> None:
     assert_equal(li_values(benches["MMT_SyntheticsTable"], "recipes"),
                  ["MMT_MakeArtificialBone", "MMT_MakeArtificialBoneBulk"], "人造器官组装台配方")
 
+    # ---- 器官培养舱（对照 HSK TableOrganvat，自研简化培养 Comp）----
+    require_files([
+        "Source/MyModeTest/OrganVat.cs",
+        "1.7/Textures/Things/Building/Production/MMT_OrganVat/MMT_OrganVat_south.png",
+        "1.7/Textures/Things/Building/Production/MMT_OrganVat/MMT_OrganVat_north.png",
+        "1.7/Textures/Things/Building/Production/MMT_OrganVat/MMT_OrganVat_east.png",
+    ])
+    vat = benches["MMT_OrganVat"]
+    assert_equal(li_values(vat, "researchPrerequisites"), ["MMT_Prosthesis_D1"], "器官培养舱研究前置")
+    assert_equal(child_text(vat, "thingClass"), "Building", "器官培养舱 thingClass")
+    assert_equal(child_text(vat, "size"), "(2,2)", "器官培养舱尺寸")
+    pw = next(li for li in vat.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
+    assert_equal(child_text(pw, "basePowerConsumption"), "700", "器官培养舱功耗")
+    vat_comp = next((li for li in vat.findall("comps/li")
+                     if li.attrib.get("Class") == "MyModeTest.CompProperties_OrganVat"), None)
+    assert vat_comp is not None, "器官培养舱缺培养 Comp"
+    assert_equal(child_text(vat_comp, "formingTicks"), "90000", "培养时长 1.5 天")
+    products = vat_comp.findall("products/li")
+    assert_equal(len(products), 9, "培养产物条目数（提取生物质 + 8 种器官）")
+    extract = products[0]
+    assert_equal(child_text(extract, "productDef"), "MMT_Biomatter", "提取产物=生物质")
+    assert_equal(child_text(extract, "productCount"), "20", "提取产量")
+    assert_equal(child_text(extract, "useCorpse"), "true", "提取原料=尸体")
+    organs = {child_text(p, "productDef") for p in products[1:]}
+    assert_equal(organs, {"Eye", "Ear", "Nose", "Heart", "Lung", "Liver", "Kidney", "Stomach"}, "培养器官集合")
+    for p in products[1:]:
+        assert_equal(child_text(p, "ingredientDef"), "MMT_Biomatter", "器官培养原料=生物质")
+        assert_equal(child_text(p, "ingredientCount"), "35", "器官培养耗料")
+        assert_equal(child_text(p, "needsOrganResearch"), "true", "器官培养需义肢制造 V")
+    vat_src = read_text("Source/MyModeTest/OrganVat.cs")
+    for token in ("CompProperties_OrganVat", "CompOrganVat", "JobDriver_OrganVatInitiate",
+                  "StartForming", "formingTicks", "CompFloatMenuOptions", "Scribe_Defs.Look",
+                  "MMT_Prosthesis_D2", "useCorpse"):
+        assert token in vat_src, f"OrganVat.cs 缺少关键实现: {token}"
+    vat_job = def_map(parse_xml("1.7/Defs/JobDefs/MMT_Jobs.xml"))["MMT_InitiateOrganCulture"]
+    assert_equal(child_text(vat_job, "driverClass"), "MyModeTest.JobDriver_OrganVatInitiate", "启动作业 driverClass")
+
     # ---- 材料 ----
     res = def_map(parse_xml(BIONICS_RESOURCE_XML))
     chip = res["MMT_MedicalAssistantChip"]

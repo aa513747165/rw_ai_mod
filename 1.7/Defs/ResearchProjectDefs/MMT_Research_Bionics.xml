@@ -54,7 +54,7 @@
   <ResearchProjectDef>
     <defName>MMT_Prosthesis_D1</defName>
     <label>义肢制造 IV</label>
-    <description>结合生命监测技术，为人造器官制造打下基础。</description>
+    <description>结合生命监测技术，解锁器官培养舱：将人类尸体转化为生物质的基础设施。</description>
     <baseCost>2000</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
@@ -69,7 +69,7 @@
   <ResearchProjectDef>
     <defName>MMT_Prosthesis_D2</defName>
     <label>义肢制造 V</label>
-    <description>掌握人造器官与神经刺激的制造。解锁肌肉刺激器等植入物。</description>
+    <description>掌握天然器官培养技术。解锁器官培养舱的眼、耳、鼻、心脏、肺、肝、肾、胃培养配方（每种消耗生物质 35）。</description>
     <baseCost>2500</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>

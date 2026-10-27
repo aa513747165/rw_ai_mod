@@ -14,4 +14,18 @@
     <driverClass>MyModeTest.JobDriver_InstallModule</driverClass>
     <reportString>正在安装增效模块（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 安装滤网作业：取滤网物品搬到筛子装入滤网槽（JobDriver_InstallSieveMesh） -->
+  <JobDef>
+    <defName>MMT_InstallSieveMesh</defName>
+    <driverClass>MyModeTest.JobDriver_InstallSieveMesh</driverClass>
+    <reportString>正在安装滤网（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 启动器官培养作业：搬原料到培养舱短工时启动，之后设备无人值守培养（JobDriver_OrganVatInitiate） -->
+  <JobDef>
+    <defName>MMT_InitiateOrganCulture</defName>
+    <driverClass>MyModeTest.JobDriver_OrganVatInitiate</driverClass>
+    <reportString>正在启动培养（TargetA）。</reportString>
+  </JobDef>
 </Defs>

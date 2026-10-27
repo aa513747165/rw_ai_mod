@@ -226,6 +226,10 @@ namespace MyModeTest
         public static ThingDef MMT_YieldModule;
         /// <summary>安装增效模块作业。</summary>
         public static JobDef MMT_InstallProcessorModule;
+        /// <summary>启动器官培养作业。</summary>
+        public static JobDef MMT_InitiateOrganCulture;
+        /// <summary>义肢制造 V（器官培养配方研究门槛）。</summary>
+        public static ResearchProjectDef MMT_Prosthesis_D2;
         /// <summary>沙子：滤网掺沙产物（玻璃链原料）。</summary>
         public static ThingDef MMT_Sand;
         /// <summary>安装滤网作业。</summary>
