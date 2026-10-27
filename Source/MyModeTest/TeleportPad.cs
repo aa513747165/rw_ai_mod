@@ -10,6 +10,7 @@ namespace MyModeTest
 {
     /// <summary>
     /// 折跃传送台参数：单次传送耗电量与冷却时长（XML 可配置）。
+    /// 蓄电由同建筑的 CompBuildingBattery 承担（maxChargeWd 需与 energyCostWd 一致）。
     /// </summary>
     public class CompProperties_TeleportPad : CompProperties
     {
@@ -18,9 +19,6 @@ namespace MyModeTest
 
         /// <summary>传送后冷却 tick（30000 = 12 游戏小时）。</summary>
         public int cooldownTicks = 30000;
-
-        /// <summary>开启并通电时的蓄电速度（Wd/天；默认 3000 ≈ 待机功耗，5 天充满）。</summary>
-        public float chargeRateWdPerDay = 3000f;
 
         public CompProperties_TeleportPad()
         {
@@ -38,13 +36,11 @@ namespace MyModeTest
         /// <summary>冷却结束的游戏 tick（存档持久化，默认 0 兼容旧存档）。</summary>
         private int cooldownUntilTick;
 
-        /// <summary>内部蓄电（Wd）：开启并通电时自动累积，传送时消耗（存档持久化）。</summary>
-        private float storedChargeWd;
-
         // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
         private CompTransporter transporterComp;
-        private CompPowerTrader powerComp;
         private CompFlickable flickComp;
+        // 蓄电由建筑蓄电 comp 承担（scribe 字段名沿用旧实现的 storedChargeWd，旧存档无缝接管）
+        private CompBuildingBattery batteryComp;
 
         private CompProperties_TeleportPad Props
         {
@@ -56,45 +52,23 @@ namespace MyModeTest
             get { return transporterComp; }
         }
 
-        private CompPowerTrader Power
+        private CompBuildingBattery Battery
         {
-            get { return powerComp; }
+            get { return batteryComp; }
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
             transporterComp = parent.GetComp<CompTransporter>();
-            powerComp = parent.GetComp<CompPowerTrader>();
             flickComp = parent.GetComp<CompFlickable>();
+            batteryComp = parent.GetComp<CompBuildingBattery>();
         }
 
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref cooldownUntilTick, "cooldownUntilTick");
-            Scribe_Values.Look(ref storedChargeWd, "storedChargeWd");
-        }
-
-        /// <summary>开启并通电时按 chargeRateWdPerDay 自动蓄电，充满 energyCostWd 即止。</summary>
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (storedChargeWd >= Props.energyCostWd)
-                return;
-            if (!IsCharging())
-                return;
-            storedChargeWd = Mathf.Min(Props.energyCostWd, storedChargeWd + Props.chargeRateWdPerDay / 60000f);
-        }
-
-        /// <summary>当前是否正在蓄电：开关打开且电网能供应待机功耗。</summary>
-        public bool IsCharging()
-        {
-            CompFlickable flick = flickComp;
-            if (flick != null && !flick.SwitchIsOn)
-                return false;
-            CompPowerTrader power = Power;
-            return power != null && power.PowerOn;
         }
 
         public bool OnCooldown
@@ -105,7 +79,7 @@ namespace MyModeTest
         /// <summary>传送台当前内部蓄电（Wd）。</summary>
         public float StoredCharge()
         {
-            return storedChargeWd;
+            return Battery != null ? Battery.StoredChargeWd : 0f;
         }
 
         /// <summary>能否执行一次传送；不可用时给出中文原因（供 gizmo 禁用提示与召回校验）。
@@ -128,9 +102,10 @@ namespace MyModeTest
                 reason = "传送冷却中（剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod() + "）";
                 return false;
             }
-            if (storedChargeWd < Props.energyCostWd)
+            float charge = StoredCharge();
+            if (charge < Props.energyCostWd)
             {
-                reason = "蓄电不足（" + storedChargeWd.ToString("F0") + "/" + Props.energyCostWd.ToString("F0")
+                reason = "蓄电不足（" + charge.ToString("F0") + "/" + Props.energyCostWd.ToString("F0")
                     + " Wd；保持开启并通电即可自动蓄电）";
                 return false;
             }
@@ -168,7 +143,7 @@ namespace MyModeTest
                 devCharge.icon = ContentFinder<Texture2D>.Get("Things/Building/Power/Battery", false);
                 devCharge.action = delegate
                 {
-                    storedChargeWd = Props.energyCostWd;
+                    Battery?.FillFull();
                     cooldownUntilTick = 0;
                 };
                 yield return devCharge;
@@ -412,10 +387,7 @@ namespace MyModeTest
         /// <summary>消耗内部蓄电；蓄电不足时不扣任何电并返回 false。</summary>
         private bool TryDrainCharge(float amount)
         {
-            if (storedChargeWd < amount)
-                return false;
-            storedChargeWd -= amount;
-            return true;
+            return Battery != null && Battery.TryDrain(amount);
         }
 
         // ---- 工具 ----
@@ -435,17 +407,12 @@ namespace MyModeTest
 
         public override string CompInspectStringExtra()
         {
-            string text = "蓄电: " + storedChargeWd.ToString("F0") + "/" + Props.energyCostWd.ToString("F0") + " Wd";
-            if (storedChargeWd >= Props.energyCostWd)
-                text += "（已满）";
-            else if (IsCharging())
-                text += "（充电中，" + Props.chargeRateWdPerDay.ToString("F0") + " Wd/天）";
-            else
-                text += "（未充电：需要开启开关并通电）";
+            // 蓄电行由 CompBuildingBattery 自报，这里只列冷却与舱内质量
+            string text = null;
             if (OnCooldown)
-                text += "\n传送冷却: 剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
+                text = "传送冷却: 剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
             if (Transporter != null)
-                text += "\n舱内质量: " + Transporter.MassUsage.ToString("F0") + "/" + Transporter.MassCapacity.ToString("F0") + " kg";
+                text = (text == null ? "" : text + "\n") + "舱内质量: " + Transporter.MassUsage.ToString("F0") + "/" + Transporter.MassCapacity.ToString("F0") + " kg";
             return text;
         }
     }

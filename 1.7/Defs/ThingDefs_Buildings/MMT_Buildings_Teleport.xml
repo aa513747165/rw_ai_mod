@@ -65,6 +65,11 @@
       <li Class="MyModeTest.CompProperties_TeleportPad">
         <energyCostWd>15000</energyCostWd>
         <cooldownTicks>30000</cooldownTicks>
+      </li>
+      <!-- 建筑蓄电：maxChargeWd 需与上方 energyCostWd 一致（蓄满=一次传送）；
+           3000 Wd/天 ≈ 待机功耗，5 天充满 -->
+      <li Class="MyModeTest.CompProperties_BuildingBattery">
+        <maxChargeWd>15000</maxChargeWd>
         <chargeRateWdPerDay>3000</chargeRateWdPerDay>
       </li>
     </comps>

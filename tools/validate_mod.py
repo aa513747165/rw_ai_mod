@@ -6651,7 +6651,13 @@ def validate_teleport() -> None:
     tp_comp = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "MyModeTest.CompProperties_TeleportPad")
     assert_equal(child_text(tp_comp, "energyCostWd"), "15000", "单次传送耗电量")
     assert_equal(child_text(tp_comp, "cooldownTicks"), "30000", "传送冷却（12 小时）")
-    assert_equal(child_text(tp_comp, "chargeRateWdPerDay"), "3000", "传送台蓄电速度（Wd/天）")
+    # 建筑蓄电 comp：容量=单次传送耗电，速率 3000 Wd/天
+    battery = next((li for li in pad.findall("comps/li")
+                    if li.attrib.get("Class") == "MyModeTest.CompProperties_BuildingBattery"), None)
+    assert battery is not None, "传送台缺建筑蓄电 Comp"
+    assert_equal(child_text(battery, "maxChargeWd"), child_text(tp_comp, "energyCostWd"),
+                 "蓄电容量须等于单次传送耗电")
+    assert_equal(child_text(battery, "chargeRateWdPerDay"), "3000", "传送台蓄电速度（Wd/天）")
 
     research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml"))
     tp_research = research["MMT_Teleportation"]
@@ -6670,7 +6676,7 @@ def validate_teleport() -> None:
                   "WorldTargeter.BeginTargeting", "MapParentAt", "HasMap",
                   "DropCellFinder.RandomDropSpot", "TryFindDropSpotNear",
                   "innerContainer", "GenSpawn.Spawn", "Notify_Teleported",
-                  "storedChargeWd", "chargeRateWdPerDay", "IsCharging", "CompTick",
+                  "CompBuildingBattery", "StoredChargeWd", "TryDrain",
                   "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
                   "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
@@ -6682,6 +6688,11 @@ def validate_teleport() -> None:
                   "target.Tile.Valid",
                   "MMT_Graphic_Rotating", "realtimeSinceStartup"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
+    # 通用建筑蓄电 comp（蓄电逻辑自 TeleportPad 抽出，scribe 字段名沿用 storedChargeWd 接管旧存档）
+    battery_src = read_text("Source/MyModeTest/BuildingBattery.cs")
+    for token in ("CompProperties_BuildingBattery", "CompBuildingBattery", '"storedChargeWd"',
+                  "CompTickInterval", "TryDrain", "IsCharging", "FillFull"):
+        assert token in battery_src, f"BuildingBattery.cs 缺少关键实现: {token}"
     # 荒野临时落脚点：世界对象 def + 自动销毁 MapParent
     wos = def_map(parse_xml("1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml"))
     assert "MMT_TeleportTempSite" in wos, "缺折跃临时落脚点世界对象"
