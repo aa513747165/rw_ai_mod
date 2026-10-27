@@ -19,6 +19,9 @@ namespace MyModeTest
         private CompChargingStation chargeComp;
         // 光柱材质惰性缓存（仅本贴图使用，每帧改 color 做脉动是安全的）
         private Material beamMat;
+        // 台内物品与其电池 comp 的缓存（持有物变动极少，按引用比对即可）
+        private Thing cachedHeld;
+        private CompRechargeable cachedBat;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -32,8 +35,17 @@ namespace MyModeTest
             Thing held = chargeComp?.HeldItem;
             if (held == null)
                 return;
-            // 飘浮物品：台座中心正上方，按游戏 tick 缓慢上下浮动
-            float bob = Mathf.Sin(Find.TickManager.TicksGame * 0.05f) * 0.06f;
+            // 飘浮物品：台座中心正上方，按游戏 tick 缓慢上下浮动；
+            // 充满后停止浮动保持静止，一眼即可判断"已充满可取走"
+            if (held != cachedHeld)
+            {
+                cachedHeld = held;
+                cachedBat = held is ThingWithComps twc ? twc.TryGetComp<CompRechargeable>() : null;
+            }
+            bool full = cachedBat != null && cachedBat.IsFull;
+            // 用真实时间而非游戏 tick：游戏倍速下 TicksGame 加速会导致浮动鬼畜
+            // （0.05/tick × 60 tick/s ≈ 3 rad/s，与 1 倍速观感一致）
+            float bob = full ? 0f : Mathf.Sin(Time.realtimeSinceStartup * 3f) * 0.06f;
             Vector3 pos = drawLoc;
             pos.y = AltitudeLayer.Item.AltitudeFor() + 0.05f;
             pos.z += 0.55f + bob;
@@ -42,19 +54,30 @@ namespace MyModeTest
                 DrawBeam(drawLoc);
         }
 
-        /// <summary>微弱光柱：竖直 quad（plane10 旋转 90° 立起），alpha 缓慢脉动。</summary>
+        /// <summary>
+        /// 充能光柱。注意：Waylith 下竖直 quad（plane10 绕 X 轴 ±90° 立起）经对照实验
+        /// （同帧并排竖直/水平 4 片）证实完全不渲染，水平 quad 则一切正常——所以这里用
+        /// 6 片水平发光碟从台面堆叠到空中，俯视相机下高度差投成纵向，观感即光柱。
+        /// 单一共享材质无法逐片改 alpha（渲染在帧末统一取值），故动画做在每片缩放上：
+        /// 相位错开的正弦缩放，看起来像能量向上涌动。
+        /// </summary>
         private void DrawBeam(Vector3 drawLoc)
         {
             if (beamMat == null)
-                beamMat = MaterialPool.MatFrom(BeamTexPath, ShaderDatabase.TransparentPostLight, Color.white);
-            float pulse = 0.30f + 0.12f * Mathf.Sin(Find.TickManager.TicksGame * 0.08f);
+                beamMat = MaterialPool.MatFrom(BeamTexPath, ShaderDatabase.Transparent, Color.white);
+            // 真实时间驱动（理由同上）：0.08/tick→4.8 rad/s，0.07/tick→4.2 rad/s
+            float pulse = 0.42f + 0.18f * Mathf.Sin(Time.realtimeSinceStartup * 4.8f);
             beamMat.color = new Color(0.6f, 0.95f, 1f, pulse);
-            Vector3 center = drawLoc;
-            center.y = AltitudeLayer.Item.AltitudeFor() + 0.5f;
-            // plane10 为 10×10 水平网格：绕 X 轴立起后按 宽0.45m / 高1.1m 缩放
-            Matrix4x4 matrix = Matrix4x4.TRS(center, Quaternion.AngleAxis(90f, Vector3.right),
-                new Vector3(0.045f, 1f, 0.11f));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, beamMat, 0);
+            float baseY = AltitudeLayer.Item.AltitudeFor() + 0.08f;
+            float time = Time.realtimeSinceStartup * 4.2f;
+            for (int i = 0; i < 6; i++)
+            {
+                float t = i / 5f; // 0=贴台面，1=顶端
+                float s = (0.68f - t * 0.28f) * (1f + 0.15f * Mathf.Sin(time + i * 1.1f));
+                Vector3 p = new Vector3(drawLoc.x, baseY + i * 0.20f, drawLoc.z);
+                Graphics.DrawMesh(MeshPool.plane10,
+                    Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), beamMat, 0);
+            }
         }
     }
 
@@ -167,14 +190,16 @@ namespace MyModeTest
             powerComp.PowerOutput = bat != null && bat.NeedsCharge ? -Props.chargePowerW : -Props.idlePowerW;
         }
 
-        /// <summary>充能推进（250 tick 一拍）；仅在从未满变满的一拍播报"充能完成"。</summary>
-        public override void CompTickRare()
+        /// <summary>充能推进（delta = 距上次间隔回调经过的 tick 数，1~15）；仅在从未满变满的一拍播报"充能完成"。
+        /// 注意：1.7 的 DoTick 只对 tickerType==Rare 的物体调 TickRare，Normal 建筑永远收不到
+        /// CompTickRare（已反汇编 1.7 Thing.DoTick 核实），周期逻辑必须放 CompTickInterval。</summary>
+        public override void CompTickInterval(int delta)
         {
-            base.CompTickRare();
+            base.CompTickInterval(delta);
             CompRechargeable bat = BatteryOf(HeldItem);
             if (bat == null || !bat.NeedsCharge || !SwitchOn || !PowerOn)
                 return;
-            bat.AddCharge(Props.chargeRateWdPerDay / 60000f * 250f);
+            bat.AddCharge(Props.chargeRateWdPerDay / 60000f * delta);
             if (bat.IsFull)
                 Messages.Message("充能完成：" + HeldItem.LabelCap + " 已充满，可从充能台取回",
                     new LookTargets(parent), MessageTypeDefOf.PositiveEvent, false);
@@ -232,12 +257,8 @@ namespace MyModeTest
             else
             {
                 string name = held.LabelCap;
-                yield return new FloatMenuOption("取出设备：" + name, delegate
-                {
-                    Dialog_MessageBox.CreateConfirmation(
-                        "是否让 " + selPawn.LabelShort + " 取回 " + name + "？",
-                        delegate { OrderUnload(selPawn); });
-                });
+                // 直接派活不弹确认框：右键选项即时生效是 RimWorld 惯例，也排除对话框回调失效的可能
+                yield return new FloatMenuOption("取出设备：" + name, delegate { OrderUnload(selPawn); });
             }
         }
 
@@ -295,14 +316,37 @@ namespace MyModeTest
         private void OrderLoad(Pawn pawn, Thing device)
         {
             Job job = JobMaker.MakeJob(MMT_ChargingDefOf.MMT_LoadChargingStation, parent, device);
+            job.count = 1; // 1.7 自定义作业必须显式 count，默认 -1 在搬运链会报 Invalid count
             pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
-        /// <summary>派取回作业：targetA=充能台。</summary>
+        /// <summary>派取回作业：targetA=充能台。失败时在消息栏与日志给出原因，避免"点了没反应"。</summary>
         private void OrderUnload(Pawn pawn)
         {
+            if (HeldItem == null)
+            {
+                Messages.Message("充能台内没有设备可取", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            if (!pawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                Messages.Message(pawn.LabelShort + " 无法到达充能台（路径不通）", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
             Job job = JobMaker.MakeJob(MMT_ChargingDefOf.MMT_UnloadChargingStation, parent);
-            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+            job.count = 1; // 1.7 自定义作业必须显式 count
+            if (pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc))
+            {
+                Messages.Message(pawn.LabelShort + " 前往取出 " + HeldItem.LabelCap, parent,
+                    MessageTypeDefOf.TaskCompletion, false);
+                Log.Message("[MMT] 取出充能设备作业已派发: " + pawn.LabelShort + " -> " + parent);
+            }
+            else
+            {
+                Messages.Message(pawn.LabelShort + " 当前无法接受取出作业（征召/倒地/其他强制作业中）",
+                    parent, MessageTypeDefOf.RejectInput, false);
+                Log.Warning("[MMT] TryTakeOrderedJob 被拒绝: " + pawn.LabelShort + " -> " + parent);
+            }
         }
 
         private static CompRechargeable BatteryOf(Thing thing)

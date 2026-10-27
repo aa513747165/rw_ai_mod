@@ -33,6 +33,8 @@
       <WorkToBuild>3000</WorkToBuild>
       <MaxHitPoints>180</MaxHitPoints>
       <Flammability>0.6</Flammability>
+      <!-- 可打包(minifiedDef)即可搬运，必须显式给质量，否则报 "is haulable, but does not have an authored mass value" -->
+      <Mass>25</Mass>
     </statBases>
     <costList>
       <Steel>60</Steel>

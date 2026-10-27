@@ -97,6 +97,8 @@ def validate_charging() -> None:
     )
     assert_equal(child_text(station, "drawerType"), "MapMeshAndRealTime", "充能台 drawerType")
     assert_equal(child_text(station, "size"), "(1,1)", "充能台尺寸")
+    # 可打包(minifiedDef)即可搬运，必须有显式 Mass，否则游戏报 "is haulable, but does not have an authored mass value"
+    assert_equal(child_text(station, "statBases/Mass"), "25", "充能台质量")
     assert_equal(
         child_text(station, "designationCategory"), "MMT_Production", "充能台建造分类"
     )
