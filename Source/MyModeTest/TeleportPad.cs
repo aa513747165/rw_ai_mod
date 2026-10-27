@@ -133,7 +133,7 @@ namespace MyModeTest
             // 启动传送：舱内为空、装载未完成、电力/冷却不满足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上指定的已有地图目标（敌对据点/任务地点/己方基地）。消耗内部蓄电并进入冷却。";
+            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上任意地块：敌对据点=进攻空降；非敌对立据点=远程交易或进攻；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却（远程交易不消耗）。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
@@ -164,7 +164,7 @@ namespace MyModeTest
 
         // ---- 去程：世界地图选目标 ----
 
-        /// <summary>流程开始：跳世界地图并进入选目标模式（仅限已有地图的格子）。</summary>
+        /// <summary>流程开始：跳世界地图并进入选目标模式（任意非水域地块可选）。</summary>
         private void StartChoosingDestination()
         {
             CameraJumper.TryShowWorld();
@@ -177,66 +177,137 @@ namespace MyModeTest
                 canSelectTarget: IsValidWorldTarget);
         }
 
-        /// <summary>目标格校验：必须存在已生成地图的 MapParent（据点/任务地点/己方基地），且不是本图。</summary>
+        /// <summary>目标格校验：拒绝水域与当前地图所在格；其余（据点/任务地点/空白地块）均可。</summary>
         private bool IsValidWorldTarget(GlobalTargetInfo target)
         {
+            if (Find.WorldGrid[target.Tile].WaterCovered)
+                return false;
             MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
-            return mp != null && mp.HasMap && mp.Map != parent.Map;
+            return mp == null || !mp.HasMap || mp.Map != parent.Map;
         }
 
+        /// <summary>目标器悬停文案：按分支提示（己方/交易或进攻/进攻/荒野/拒绝原因）。</summary>
         private TaggedString WorldTargetLabel(GlobalTargetInfo target)
         {
+            if (Find.WorldGrid[target.Tile].WaterCovered)
+                return "无法传送：目标为水域";
             MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
-            if (mp == null || !mp.HasMap)
-                return "无法传送：该位置没有已存在的地图";
-            if (mp.Map == parent.Map)
+            if (mp == null)
+                return "荒野空降：" + Find.WorldGrid[target.Tile].PrimaryBiome.LabelCap + "（生成临时地图）";
+            if (mp.HasMap && mp.Map == parent.Map)
                 return "无法传送：目标就是当前地图";
-            return "传送至：" + mp.LabelCap;
+            if (mp.HasMap && mp.Map.IsPlayerHome)
+                return "传送至：" + mp.LabelCap;
+            if (mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer) && mp is Settlement)
+                return "交易或进攻：" + mp.LabelCap;
+            return "进攻：" + mp.LabelCap;
         }
 
+        /// <summary>节点流转：按目标类型分派——己方精确选点 / 非敌对交易或进攻 / 敌对进攻 / 荒野临时地图。</summary>
         private bool OnWorldTargetChosen(GlobalTargetInfo target)
         {
             if (!IsValidWorldTarget(target))
             {
-                Messages.Message("无法传送：该位置没有已存在的地图", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("无法传送：目标为水域或当前地图", MessageTypeDefOf.RejectInput, false);
                 return false;
             }
-            Map map = Find.WorldObjects.MapParentAt(target.Tile).Map;
-            if (map.IsPlayerHome)
+            MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
+            if (mp != null && mp.HasMap && mp.Map.IsPlayerHome)
             {
                 // 己方地图：跳图后精确选落点
-                CameraJumper.TryJump(map.Center, map);
+                Map homeMap = mp.Map;
+                CameraJumper.TryJump(homeMap.Center, homeMap);
                 Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                    delegate(LocalTargetInfo cell) { ExecuteTeleport(map, cell.Cell); });
+                    delegate(LocalTargetInfo cell) { ExecuteTeleport(homeMap, cell.Cell); });
                 return true;
             }
-            // 节点流转：敌对/Site 地图 -> 选择空降方式（边缘 / 中心附近）
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
-            options.Add(new FloatMenuOption("在地图边缘空降", delegate
+            if (mp is Settlement settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
             {
-                ExecuteTeleport(map, DropCellFinder.RandomDropSpot(map));
-            }));
-            options.Add(new FloatMenuOption("在地图中心附近空降", delegate
+                // 非敌对立据点：远程交易（不传送不生成地图）或进攻（生成地图空降）
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                options.Add(new FloatMenuOption("交易（远程开启交易窗口，不传送）",
+                    delegate { OpenTradeWith(settlement); }));
+                options.Add(new FloatMenuOption("进攻：在地图边缘空降",
+                    delegate { AttackMapParent(mp, target.Tile, false); }));
+                options.Add(new FloatMenuOption("进攻：在地图中心附近空降",
+                    delegate { AttackMapParent(mp, target.Tile, true); }));
+                Find.WindowStack.Add(new FloatMenu(options));
+                return true;
+            }
+            if (mp != null)
             {
-                IntVec3 spot = DropCellFinder.TryFindDropSpotNear(map.Center, map, out IntVec3 found, false, true) ? found : map.Center;
-                ExecuteTeleport(map, spot);
-            }));
-            Find.WindowStack.Add(new FloatMenu(options));
+                // 敌对据点 / 无派系任务地点：进攻（地图按需生成）
+                ShowAttackOptions(mp, target.Tile);
+                return true;
+            }
+            // 空白地块：确认后生成荒野临时地图
+            List<FloatMenuOption> wild = new List<FloatMenuOption>();
+            wild.Add(new FloatMenuOption("空降荒野（生成临时地图，人员撤离后自动销毁）",
+                delegate { TeleportToWilderness(target.Tile); }));
+            Find.WindowStack.Add(new FloatMenu(wild));
             return true;
         }
 
-        /// <summary>去程执行：抽电、进冷却，把舱内所有人和物瞬间移到目标地图落点。</summary>
-        private void ExecuteTeleport(Map targetMap, IntVec3 nearCell)
+        /// <summary>敌对/无派系目标：弹空降方式菜单（边缘 / 中心附近），与旧行为一致。</summary>
+        private void ShowAttackOptions(MapParent mp, PlanetTile tile)
         {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            options.Add(new FloatMenuOption("在地图边缘空降", delegate { AttackMapParent(mp, tile, false); }));
+            options.Add(new FloatMenuOption("在地图中心附近空降", delegate { AttackMapParent(mp, tile, true); }));
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        /// <summary>进攻执行：按需生成目标地图（同步卡顿 1-3 秒，与原版空投一致），再选点空降。</summary>
+        private void AttackMapParent(MapParent mp, PlanetTile tile, bool nearCenter)
+        {
+            Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, mp.def);
+            IntVec3 spot;
+            if (nearCenter)
+                spot = DropCellFinder.TryFindDropSpotNear(map.Center, map, out IntVec3 found, false, true) ? found : map.Center;
+            else
+                spot = DropCellFinder.RandomDropSpot(map);
+            ExecuteTeleport(map, spot);
+        }
+
+        /// <summary>远程交易：等同原版通讯台与定居点交易，谈判者取本图社交最高的健康殖民者；不耗蓄电不进冷却。</summary>
+        private void OpenTradeWith(Settlement settlement)
+        {
+            Pawn negotiator = parent.Map.mapPawns.FreeColonistsSpawned
+                .Where(p => !p.Downed && !p.InMentalState
+                    && p.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
+                .OrderByDescending(p => p.GetStatValue(StatDefOf.NegotiationAbility))
+                .FirstOrDefault();
+            if (negotiator == null)
+            {
+                Messages.Message("交易失败：没有可通话的健康殖民者作为谈判人员", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            Find.WindowStack.Add(new Dialog_Trade(negotiator, settlement));
+        }
+
+        /// <summary>荒野空降：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 → 边缘空降。</summary>
+        private void TeleportToWilderness(PlanetTile tile)
+        {
+            MMT_TeleportTempSite site = (MMT_TeleportTempSite)WorldObjectMaker.MakeWorldObject(MMT_TeleportDefOf.MMT_TeleportTempSite);
+            site.Tile = tile;
+            Find.WorldObjects.Add(site);
+            Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, MMT_TeleportDefOf.MMT_TeleportTempSite);
+            ExecuteTeleport(map, DropCellFinder.RandomDropSpot(map));
+        }
+
+        /// <summary>去程执行：抽电、进冷却，把舱内所有人和物瞬间移到目标地图落点；返回成功落图的己方人员。</summary>
+        private List<Pawn> ExecuteTeleport(Map targetMap, IntVec3 nearCell)
+        {
+            List<Pawn> arrived = new List<Pawn>();
             if (!CanTeleportNow(out string reason))
             {
                 Messages.Message("传送失败：" + reason, parent, MessageTypeDefOf.RejectInput, false);
-                return;
+                return arrived;
             }
             if (!TryDrainCharge(Props.energyCostWd))
             {
                 Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
-                return;
+                return arrived;
             }
             cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
 
@@ -258,6 +329,8 @@ namespace MyModeTest
                         FloodFillerFog.FloodUnfog(cell, targetMap);
                     pawn.Notify_Teleported();
                     pawns++;
+                    if (pawn.Faction == Faction.OfPlayer)
+                        arrived.Add(pawn);
                 }
                 else
                 {
@@ -273,6 +346,7 @@ namespace MyModeTest
                 new LookTargets(new GlobalTargetInfo(landing, targetMap)), MessageTypeDefOf.PositiveEvent, false);
             CameraJumper.TryJump(landing, targetMap);
             // 流程结束
+            return arrived;
         }
 
         // ---- 回程：由 Designator_RecallTeleport 调用 ----
@@ -331,6 +405,9 @@ namespace MyModeTest
             TeleportFx.Play(homeCell, parent.Map);
             Messages.Message("召回完成：" + pawns + " 名人员、" + things + " 件物品已传回" + parent.Map.Parent.LabelCap,
                 new LookTargets(new GlobalTargetInfo(homeCell, parent.Map)), MessageTypeDefOf.PositiveEvent, false);
+            // 若从荒野临时落脚点召回，立即触发一次清理（人走图销）
+            if (fromMap.Parent is MMT_TeleportTempSite tempSite)
+                tempSite.CheckRemoveMapNow();
             // 流程结束
         }
 
@@ -495,6 +572,8 @@ namespace MyModeTest
     public static class MMT_TeleportDefOf
     {
         public static ThingDef MMT_TeleportPad;
+        /// <summary>荒野临时落脚点世界对象。</summary>
+        public static WorldObjectDef MMT_TeleportTempSite;
 
         static MMT_TeleportDefOf()
         {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃荒野临时落脚点：传送到空白地块时生成的临时地图载体（无派系）。
+       地图上无存活己方人员时自动销毁（MMT_TeleportTempSite.ShouldRemoveMapNow），
+       销毁时连同世界对象一起移除，不占常驻世界对象。 -->
+  <WorldObjectDef>
+    <defName>MMT_TeleportTempSite</defName>
+    <label>折跃临时落脚点</label>
+    <description>折跃传送在荒野生成的临时落脚点，人员全部撤离后自动消失。</description>
+    <worldObjectClass>MyModeTest.MMT_TeleportTempSite</worldObjectClass>
+    <texture>World/WorldObjects/Sites/GenericSite</texture>
+    <expandingIcon>false</expandingIcon>
+  </WorldObjectDef>
+</Defs>

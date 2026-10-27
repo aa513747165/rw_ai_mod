@@ -140,10 +140,8 @@ OREPOWDER_TEXTURES = [
     "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder_m.png",
     "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder.png",
     "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder_m.png",
-    *[f"1.7/Textures/Things/Building/Production/MMT_{kind}Sieve/MMT_{kind}Sieve_{side}{mask}.png"
-      for kind in ("Hand", "Electric", "Auto")
-      for side in ("south", "east", "north")
-      for mask in ("", "m")],
+    *[f"1.7/Textures/Things/Building/Production/MMT_{kind}Sieve/MMT_{kind}Sieve.png"
+      for kind in ("Hand", "Electric", "Auto")],
 ]
 
 AUTOPROC_TEXTURES = [
@@ -1816,7 +1814,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 94  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项
-INFRA_WORKTABLE_TOTAL = 52  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 5；临时护盾投影器非建造建筑不计入
+INFRA_WORKTABLE_TOTAL = 53  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6248,7 +6246,7 @@ def validate_orepowder() -> None:
     assert_equal(set(grinders), {"MMT_HandGrinder", "MMT_ElectricGrinder"}, "研磨机 defName 集合")
     assert_equal(set(sieves), {"MMT_HandSieve", "MMT_ElectricSieve"}, "筛子 defName 集合")
     for name, rotation in (("MMT_HandSieve", "North"), ("MMT_ElectricSieve", "North")):
-        assert_equal(child_text(sieves[name], "rotatable"), "false", f"{name} 禁止旋转")
+        assert_equal(child_text(sieves[name], "rotatable"), "true", f"{name} 可旋转")
         assert_equal(child_text(sieves[name], "defaultPlacingRot"), rotation, f"{name} 默认朝向")
     for name, defs, power in (("MMT_ElectricGrinder", grinders, "300"),
                               ("MMT_ElectricSieve", sieves, "250")):
@@ -6296,7 +6294,7 @@ def validate_orepowder() -> None:
     sieve_fuel = next(li for li in auto_defs["MMT_AutoSieve"].findall("comps/li")
                       if li.attrib.get("Class") == "CompProperties_Refuelable")
     assert_equal(li_values(sieve_fuel.find("fuelFilter"), "thingDefs"), ["MMT_OrePowder"], "筛子燃料=矿粉")
-    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "false", "自动筛子禁止旋转")
+    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "true", "自动筛子可旋转")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "South", "自动筛子默认朝向")
 
     # 增效模块：超频/并行/矿产增值为可制作物品（安装进自动设备槽位生效，拆除返还）
@@ -6613,9 +6611,11 @@ def validate_teleport() -> None:
         "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Teleport.xml",
         "1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml",
         "1.7/Defs/ThingDefs_Buildings/MMT_DesignationCategory.xml",
+        "1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml",
         "1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png",
         "1.7/Textures/UI/Designators/MMT_RecallTeleport.png",
         "Source/MyModeTest/TeleportPad.cs",
+        "Source/MyModeTest/TeleportTempSite.cs",
     ])
     assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png")
     assert_png("1.7/Textures/UI/Designators/MMT_RecallTeleport.png")
@@ -6660,8 +6660,19 @@ def validate_teleport() -> None:
                   "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
                   "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
-                  "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode"):
+                  "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode",
+                  # 三分支：敌对进攻 / 非敌对远程交易 / 荒野临时地图
+                  "GetOrGenerateMapUtility.GetOrGenerateMap", "OpenTradeWith", "Dialog_Trade",
+                  "TeleportToWilderness", "WaterCovered", "CheckRemoveMapNow"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
+    # 荒野临时落脚点：世界对象 def + 自动销毁 MapParent
+    wos = def_map(parse_xml("1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml"))
+    assert "MMT_TeleportTempSite" in wos, "缺折跃临时落脚点世界对象"
+    assert_equal(child_text(wos["MMT_TeleportTempSite"], "worldObjectClass"),
+                 "MyModeTest.MMT_TeleportTempSite", "临时落脚点 worldObjectClass")
+    site_src = read_text("Source/MyModeTest/TeleportTempSite.cs")
+    for token in ("MapParent", "ShouldRemoveMapNow", "alsoRemoveWorldObject", "CheckRemoveMapNow"):
+        assert token in site_src, f"TeleportTempSite.cs 缺少关键实现: {token}"
     print("teleport: OK")
 
 
