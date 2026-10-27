@@ -107,4 +107,67 @@
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_AutoBoost</researchPrerequisite>
   </RecipeDef>
+
+  <!-- 矿产增值模块：材料略高于并行模块，挂电动装配台；需研究"自动机增效" -->
+  <RecipeDef>
+    <defName>MMT_MakeYieldModule</defName>
+    <label>组装矿产增值模块</label>
+    <description>组装自动采石机的矿石富集控制模块，安装后使设备单次产量提高 10 个。产出 1。</description>
+    <jobString>正在组装矿产增值模块。</jobString>
+    <workAmount>2000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Mechanism</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_ElectronicParts</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+        <li>MMT_Mechanism</li>
+        <li>ComponentIndustrial</li>
+        <li>MMT_ElectronicParts</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_YieldModule>1</MMT_YieldModule>
+    </products>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_AutoBoost</researchPrerequisite>
+  </RecipeDef>
 </Defs>

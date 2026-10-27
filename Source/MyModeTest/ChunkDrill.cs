@@ -82,6 +82,13 @@ namespace MyModeTest
             return slots != null ? slots.OverclockCount : 0;
         }
 
+        /// <summary>设备槽位中已安装的矿产增值模块数（无槽位 Comp 按 0 计）。</summary>
+        private int InstalledYield()
+        {
+            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
+            return slots != null ? slots.YieldCount : 0;
+        }
+
         /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>
         private void AddProgress(float amount)
         {
@@ -99,7 +106,8 @@ namespace MyModeTest
             if (def == null)
                 return;
             Thing thing = ThingMaker.MakeThing(def);
-            thing.stackCount = Props.productCount;
+            // 矿产增值模块：每个使单次产量 +10（仅装了槽位 Comp 的自动采石机生效）
+            thing.stackCount = Props.productCount + 10 * InstalledYield();
             GenPlace.TryPlaceThing(thing, parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
 
@@ -112,12 +120,15 @@ namespace MyModeTest
         public override string CompInspectStringExtra()
         {
             string text = "采石进度: " + Progress.ToStringPercent();
-            // 自动版显示已安装的超频模块计数（手动/电动版由殖民者操作，不受模块影响）
+            // 自动版显示已安装的模块计数（手动/电动版由殖民者操作，不受模块影响）
             if (Props.autoDrill)
             {
                 int overclock = InstalledOverclock();
                 if (overclock > 0)
                     text += "\n超频模块 x" + overclock;
+                int yield = InstalledYield();
+                if (yield > 0)
+                    text += "\n矿产增值模块 x" + yield + "（产量 +" + yield * 10 + "）";
             }
             return text;
         }
@@ -209,11 +220,16 @@ namespace MyModeTest
         public static ThingDef MMT_ChunkDrill;
         public static ThingDef MMT_ElectricChunkDrill;
         public static JobDef MMT_OperateChunkDrill;
-        /// <summary>增效模块物品：超频 / 并行。</summary>
+        /// <summary>增效模块物品：超频 / 并行 / 矿产增值。</summary>
         public static ThingDef MMT_OverclockModule;
         public static ThingDef MMT_ParallelModule;
+        public static ThingDef MMT_YieldModule;
         /// <summary>安装增效模块作业。</summary>
         public static JobDef MMT_InstallProcessorModule;
+        /// <summary>沙子：滤网掺沙产物（玻璃链原料）。</summary>
+        public static ThingDef MMT_Sand;
+        /// <summary>安装滤网作业。</summary>
+        public static JobDef MMT_InstallSieveMesh;
 
         static MMT_DefOf()
         {

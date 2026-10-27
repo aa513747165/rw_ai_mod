@@ -48,7 +48,8 @@ namespace MyModeTest
     public enum ModuleType
     {
         Overclock,
-        Parallel
+        Parallel,
+        Yield
     }
 
     /// <summary>
@@ -61,6 +62,8 @@ namespace MyModeTest
         public int maxOverclock = 5;
         /// <summary>并行模块安装上限（每个 +1 条生产线）。</summary>
         public int maxParallel = 3;
+        /// <summary>矿产增值模块安装上限（每个产量 +10；默认 0，仅自动采石机显式开启）。</summary>
+        public int maxYield = 0;
 
         public CompProperties_ModuleSlots()
         {
@@ -77,6 +80,7 @@ namespace MyModeTest
         // 已安装数量（槽位计数，物品实体在安装时销毁）
         private int overclockInstalled;
         private int parallelInstalled;
+        private int yieldInstalled;
 
         private CompProperties_ModuleSlots Props
         {
@@ -95,6 +99,12 @@ namespace MyModeTest
             get { return parallelInstalled; }
         }
 
+        /// <summary>已安装矿产增值模块数（供自动采石机算产量加成）。</summary>
+        public int YieldCount
+        {
+            get { return yieldInstalled; }
+        }
+
         /// <summary>模块物品 def → 槽位类型；非模块物品返回 null。</summary>
         public static ModuleType? TypeOf(ThingDef def)
         {
@@ -102,23 +112,40 @@ namespace MyModeTest
                 return ModuleType.Overclock;
             if (def == MMT_DefOf.MMT_ParallelModule)
                 return ModuleType.Parallel;
+            if (def == MMT_DefOf.MMT_YieldModule)
+                return ModuleType.Yield;
             return null;
         }
 
         /// <summary>槽位类型 → 模块物品 def。</summary>
         public static ThingDef ItemDef(ModuleType type)
         {
-            return type == ModuleType.Overclock ? MMT_DefOf.MMT_OverclockModule : MMT_DefOf.MMT_ParallelModule;
+            switch (type)
+            {
+                case ModuleType.Parallel: return MMT_DefOf.MMT_ParallelModule;
+                case ModuleType.Yield: return MMT_DefOf.MMT_YieldModule;
+                default: return MMT_DefOf.MMT_OverclockModule;
+            }
         }
 
         public int InstalledCount(ModuleType type)
         {
-            return type == ModuleType.Overclock ? overclockInstalled : parallelInstalled;
+            switch (type)
+            {
+                case ModuleType.Parallel: return parallelInstalled;
+                case ModuleType.Yield: return yieldInstalled;
+                default: return overclockInstalled;
+            }
         }
 
         public int MaxCount(ModuleType type)
         {
-            return type == ModuleType.Overclock ? Props.maxOverclock : Props.maxParallel;
+            switch (type)
+            {
+                case ModuleType.Parallel: return Props.maxParallel;
+                case ModuleType.Yield: return Props.maxYield;
+                default: return Props.maxOverclock;
+            }
         }
 
         public bool CanInstall(ModuleType type)
@@ -138,10 +165,13 @@ namespace MyModeTest
         {
             if (!CanInstallThing(module.def))
                 return false;
-            if (TypeOf(module.def) == ModuleType.Overclock)
+            ModuleType? type = TypeOf(module.def);
+            if (type == ModuleType.Overclock)
                 overclockInstalled++;
-            else
+            else if (type == ModuleType.Parallel)
                 parallelInstalled++;
+            else
+                yieldInstalled++;
             module.Destroy();
             return true;
         }
@@ -153,8 +183,10 @@ namespace MyModeTest
                 return;
             if (type == ModuleType.Overclock)
                 overclockInstalled--;
-            else
+            else if (type == ModuleType.Parallel)
                 parallelInstalled--;
+            else
+                yieldInstalled--;
             GenPlace.TryPlaceThing(ThingMaker.MakeThing(ItemDef(type)), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
 
@@ -165,8 +197,11 @@ namespace MyModeTest
                 GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_OverclockModule), parent.Position, map, ThingPlaceMode.Near);
             for (int i = 0; i < parallelInstalled; i++)
                 GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_ParallelModule), parent.Position, map, ThingPlaceMode.Near);
+            for (int i = 0; i < yieldInstalled; i++)
+                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_YieldModule), parent.Position, map, ThingPlaceMode.Near);
             overclockInstalled = 0;
             parallelInstalled = 0;
+            yieldInstalled = 0;
             base.PostDeSpawn(map, mode);
         }
 
@@ -175,6 +210,7 @@ namespace MyModeTest
             base.PostExposeData();
             Scribe_Values.Look(ref overclockInstalled, "overclockInstalled");
             Scribe_Values.Look(ref parallelInstalled, "parallelInstalled");
+            Scribe_Values.Look(ref yieldInstalled, "yieldInstalled");
         }
 
         /// <summary>右键菜单：殖民者搬运模块物品安装（槽满或无可用物品时禁用并注明原因）。</summary>
@@ -192,7 +228,7 @@ namespace MyModeTest
                 yield return new FloatMenuOption("安装增效模块（设备被禁止或在小人活动区域外）", null);
                 yield break;
             }
-            foreach (ModuleType type in new[] { ModuleType.Overclock, ModuleType.Parallel })
+            foreach (ModuleType type in new[] { ModuleType.Overclock, ModuleType.Parallel, ModuleType.Yield })
             {
                 // 流程节点：本设备不支持该类模块（槽位上限 0 且未装过），不显示对应安装项
                 if (MaxCount(type) <= 0 && InstalledCount(type) <= 0)
@@ -551,10 +587,15 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>产出一份产物：固定产物或矿石池随机（筛选），放到出料格。</summary>
+        /// <summary>产出一份产物：固定产物或矿石池随机（筛选；装滤网时走滤网白名单窗口，可能掺沙），放到出料格。</summary>
         private void ProduceOnce()
         {
-            ThingDef outDef = Props.outputDef != null ? Props.outputDef : OreSiftPool.RollOre();
+            ThingDef outDef = Props.outputDef;
+            if (outDef == null)
+            {
+                CompSieveMesh meshSlot = parent.GetComp<CompSieveMesh>();
+                outDef = meshSlot != null && meshSlot.HasMesh ? OreSiftPool.RollOre(meshSlot.MeshDef) : OreSiftPool.RollOre();
+            }
             if (outDef == null)
                 return;
             Thing product = ThingMaker.MakeThing(outDef);
@@ -632,14 +673,14 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 增效模块页签：显示超频/并行模块已装数量、上限与当前加成，
+    /// 增效模块页签：显示超频/并行/矿产增值模块已装数量、上限与当前加成，
     /// 每类一个"卸载"按钮（掉落到交互格返还物品）；安装走右键菜单由殖民者搬运。
     /// </summary>
     public class ITab_ModuleSlots : ITab
     {
         public ITab_ModuleSlots()
         {
-            size = new Vector2(420f, 240f);
+            size = new Vector2(420f, 300f);
             // 页签标题走 Keyed 翻译（1.7/Languages/ChineseSimplified/Keyed/MMT_InspectorTabs.xml）
             labelKey = "MMT_TabModuleSlots";
         }
@@ -667,6 +708,9 @@ namespace MyModeTest
             if (slots.MaxCount(ModuleType.Parallel) > 0 || slots.InstalledCount(ModuleType.Parallel) > 0)
                 DrawSlotRow(listing, slots, ModuleType.Parallel,
                     "生产线 " + (1 + slots.ParallelCount) + " 条");
+            if (slots.MaxCount(ModuleType.Yield) > 0 || slots.InstalledCount(ModuleType.Yield) > 0)
+                DrawSlotRow(listing, slots, ModuleType.Yield,
+                    "产量 +" + slots.YieldCount * 10);
             listing.End();
         }
 

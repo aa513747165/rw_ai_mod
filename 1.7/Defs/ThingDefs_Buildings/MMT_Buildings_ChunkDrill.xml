@@ -129,7 +129,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoChunkDrill</defName>
     <label>自动采石机</label>
-    <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。可安装超频模块提升钻速。</description>
+    <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。可安装超频模块提升钻速、矿产增值模块提高单次产量。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoChunkDrill</texPath>
@@ -176,9 +176,10 @@
         <basePowerConsumption>800</basePowerConsumption>
         <shortCircuitInRain>true</shortCircuitInRain>
       </li>
-      <!-- 采石机为单钻头机组，只支持超频提速；并行模块上限 0（并行模块描述亦注明仅限研磨/筛分设备） -->
+      <!-- 采石机为单钻头机组：超频提速 + 矿产增值提产量；并行模块上限 0（并行模块描述亦注明仅限研磨/筛分设备） -->
       <li Class="MyModeTest.CompProperties_ModuleSlots">
         <maxParallel>0</maxParallel>
+        <maxYield>5</maxYield>
       </li>
       <li Class="MyModeTest.CompProperties_ChunkDrill">
         <workTicksPerChunk>12000</workTicksPerChunk>

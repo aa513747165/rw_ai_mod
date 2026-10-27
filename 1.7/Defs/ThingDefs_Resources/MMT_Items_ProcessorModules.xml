@@ -51,4 +51,30 @@
     </thingCategories>
     <stackLimit>10</stackLimit>
   </ThingDef>
+
+  <!-- 矿产增值模块：安装在自动采石机内，每个使单次产量 +10，单台最多 5 个；拆除设备时返还。
+       需研究"自动机增效"。贴图为 HSK Synchronite（已授权） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_YieldModule</defName>
+    <label>矿产增值模块</label>
+    <description>自动采石机的矿石富集控制模块，由殖民者安装进自动采石机内生效。每个使设备单次产量提高 10 个，单台最多安装 5 个。拆除设备时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_YieldModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>260</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>2.5</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+  </ThingDef>
 </Defs>
