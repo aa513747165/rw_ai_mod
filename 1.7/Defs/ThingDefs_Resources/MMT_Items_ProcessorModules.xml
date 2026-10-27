@@ -24,6 +24,15 @@
       <li>MMT_ElectronicsCat</li>
     </thingCategories>
     <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>Overclock</slotKey>
+        <effectReport>处理速度 +10%/个</effectReport>
+        <effects>
+          <li><key>SpeedFactor</key><valuePerItem>0.1</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <!-- 并行模块：安装在自动研磨机/自动筛子内，每个使生产线 +1 条（每轮多耗一份料多产一份产物），
@@ -50,6 +59,15 @@
       <li>MMT_ElectronicsCat</li>
     </thingCategories>
     <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>Parallel</slotKey>
+        <effectReport>生产线 +1 条/个</effectReport>
+        <effects>
+          <li><key>ExtraLanes</key><valuePerItem>1</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <!-- 矿产增值模块：安装在自动采石机内，每个使单次产量 +10，单台最多 5 个；拆除设备时返还。
@@ -76,5 +94,14 @@
       <li>MMT_ElectronicsCat</li>
     </thingCategories>
     <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>Yield</slotKey>
+        <effectReport>产量 +10/个</effectReport>
+        <effects>
+          <li><key>YieldBonus</key><valuePerItem>10</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

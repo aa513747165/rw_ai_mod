@@ -6427,11 +6427,11 @@ def validate_orepowder() -> None:
     auto_src = (ROOT / AUTOPROC_CS).read_text(encoding="utf-8")
     for token in ("CompProperties_AutoProcessor", "CompAutoProcessor", "isHopper",
                   "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent",
-                  "CompProperties_ModuleSlots", "CompModuleSlots", "ModuleType",
-                  "GetModuleCounts", "InstallThing", "Uninstall", "PostDeSpawn",
+                  "CompProperties_ModuleSlots", "CompModuleSlots", "ModuleExtension",
+                  "GetEffectSum", "InstallThing", "Uninstall", "PostDeSpawn",
                   "CompFloatMenuOptions", "JobDriver_InstallModule",
                   "ProcessorLane", "ITab_AutoProcessor", "ITab_ModuleSlots",
-                  "CompSieveMesh", "YieldCount"):
+                  "CompSieveMesh", "AllModuleDefs"):
         assert token in auto_src, f"AutoProcessor.cs 缺少关键实现: {token}"
     # 页签标题 Keyed 翻译（labelKey = MMT_TabAutoProcessor / MMT_TabModuleSlots / MMT_TabSieveMesh）
     itab_keys = (ROOT / ITAB_KEYS_XML).read_text(encoding="utf-8")
@@ -6501,15 +6501,17 @@ def validate_chunkdrill() -> None:
                   "ThingPlaceMode.Near", "Scribe_Values.Look",
                   "autoDrill", "autoWorkPerTick", "CompTick", "PotentialWorkThingsGlobal",
                   "MMT_ElectricChunkDrill", "CompPowerTrader",
-                  "CompModuleSlots", "InstalledOverclock", "InstalledYield"):
+                  "CompModuleSlots", "GetEffectSum", "ModuleEffectKeys"):
         assert token in cs_src, f"ChunkDrill.cs 缺少关键实现: {token}"
-    # 自动采石机：槽位 Comp + 增效模块页签；单钻头机组并行模块上限必须为 0（只支持超频+增值），增值模块上限 5
+    # 自动采石机：槽位 Comp + 增效模块页签；单钻头机组无 Parallel 槽位（只支持超频+增值），
+    # 槽位上限走 slotLimits（Overclock 5 / Yield 5）
     auto_drill = buildings["MMT_AutoChunkDrill"]
     drill_slots = next((li for li in auto_drill.findall("comps/li")
                         if li.attrib.get("Class") == "MyModeTest.CompProperties_ModuleSlots"), None)
     assert drill_slots is not None, "自动采石机缺模块槽位 Comp"
-    assert_equal(child_text(drill_slots, "maxParallel"), "0", "自动采石机并行模块上限必须为 0")
-    assert_equal(child_text(drill_slots, "maxYield"), "5", "自动采石机矿产增值模块上限必须为 5")
+    slot_limits = {child_text(li, "key"): child_text(li, "max")
+                   for li in drill_slots.findall("slotLimits/li")}
+    assert_equal(slot_limits, {"Overclock": "5", "Yield": "5"}, "自动采石机槽位上限")
     assert "MyModeTest.ITab_ModuleSlots" in li_values(auto_drill, "inspectorTabs"), "自动采石机缺增效模块页签"
     print("chunkdrill: OK")
 

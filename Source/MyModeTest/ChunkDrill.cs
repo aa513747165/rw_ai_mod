@@ -78,26 +78,14 @@ namespace MyModeTest
             AddProgress(driller.GetStatValue(StatDefOf.DeepDrillingSpeed));
         }
 
-        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度；已安装超频模块每个提速 10%。</summary>
+        /// <summary>自动版自运转：无需殖民者，通电且开启时按固定速率累积进度；超频模块按效果合计提速。</summary>
         public override void CompTick()
         {
             base.CompTick();
             if (!Props.autoDrill || !CanDrillNow())
                 return;
-            int overclock = InstalledOverclock();
-            AddProgress(Props.autoWorkPerTick * (1f + 0.1f * overclock));
-        }
-
-        /// <summary>设备槽位中已安装的超频模块数（无槽位 Comp 按 0 计）。</summary>
-        private int InstalledOverclock()
-        {
-            return slotsComp != null ? slotsComp.OverclockCount : 0;
-        }
-
-        /// <summary>设备槽位中已安装的矿产增值模块数（无槽位 Comp 按 0 计）。</summary>
-        private int InstalledYield()
-        {
-            return slotsComp != null ? slotsComp.YieldCount : 0;
+            float speedBonus = slotsComp != null ? slotsComp.GetEffectSum(ModuleEffectKeys.SpeedFactor) : 0f;
+            AddProgress(Props.autoWorkPerTick * (1f + speedBonus));
         }
 
         /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>
@@ -117,8 +105,9 @@ namespace MyModeTest
             if (def == null)
                 return;
             Thing thing = ThingMaker.MakeThing(def);
-            // 矿产增值模块：每个使单次产量 +10（仅装了槽位 Comp 的自动采石机生效）
-            thing.stackCount = Props.productCount + 10 * InstalledYield();
+            // 矿产增值模块：每件 valuePerItem 即单次产量加成（仅装了槽位 Comp 的自动采石机生效）
+            int yieldBonus = slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.YieldBonus) : 0;
+            thing.stackCount = Props.productCount + yieldBonus;
             GenPlace.TryPlaceThing(thing, parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
 
@@ -132,15 +121,9 @@ namespace MyModeTest
         {
             string text = "采石进度: " + Progress.ToStringPercent();
             // 自动版显示已安装的模块计数（手动/电动版由殖民者操作，不受模块影响）
-            if (Props.autoDrill)
-            {
-                int overclock = InstalledOverclock();
-                if (overclock > 0)
-                    text += "\n超频模块 x" + overclock;
-                int yield = InstalledYield();
-                if (yield > 0)
-                    text += "\n矿产增值模块 x" + yield + "（产量 +" + yield * 10 + "）";
-            }
+            if (Props.autoDrill && slotsComp != null)
+                foreach (KeyValuePair<ThingDef, int> pair in slotsComp.InstalledCountsByDef())
+                    text += "\n" + pair.Key.label + " x" + pair.Value;
             return text;
         }
     }
@@ -231,7 +214,7 @@ namespace MyModeTest
         public static ThingDef MMT_ChunkDrill;
         public static ThingDef MMT_ElectricChunkDrill;
         public static JobDef MMT_OperateChunkDrill;
-        /// <summary>增效模块物品：超频 / 并行 / 矿产增值。</summary>
+        /// <summary>增效模块物品（仅旧存档迁移用：老格式槽位只存计数，加载时按这些 def 补建成条目）。</summary>
         public static ThingDef MMT_OverclockModule;
         public static ThingDef MMT_ParallelModule;
         public static ThingDef MMT_YieldModule;

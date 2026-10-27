@@ -127,7 +127,13 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <li Class="MyModeTest.CompProperties_ModuleSlots" />
+      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）；模块效果见物品上的 ModuleExtension -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>Overclock</key><max>5</max></li>
+          <li><key>Parallel</key><max>3</max></li>
+        </slotLimits>
+      </li>
       <!-- 原料仓：粗矿石即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
            省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->
       <li Class="CompProperties_Refuelable">
@@ -224,7 +230,13 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <li Class="MyModeTest.CompProperties_ModuleSlots" />
+      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）；模块效果见物品上的 ModuleExtension -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>Overclock</key><max>5</max></li>
+          <li><key>Parallel</key><max>3</max></li>
+        </slotLimits>
+      </li>
       <li Class="MyModeTest.CompProperties_SieveMesh" />
       <!-- 原料仓：矿粉即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
            省略 fuelConsumptionRate（默认 0）实现零被动消耗 -->

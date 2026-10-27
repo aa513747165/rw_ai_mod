@@ -12,8 +12,9 @@ namespace MyModeTest
     /// 全部走 XML 配置，改过滤名单/概率/档位无需重编译；其它 mod 可用 XPath Patch 增删矿石。
     /// tier 用于"未分类矿"（不在任何滤网白名单的矿石，含第三方 mod 矿脉）归窗：
     /// 0=粗（木滤网）、1=中（铁滤网）、2=细（精密滤网）。
+    /// 继承 InstallableSlotItemExtension（slotKey=Mesh）：与增效模块同属可装入槽位的物品体系。
     /// </summary>
-    public class MeshFilterExtension : DefModExtension
+    public class MeshFilterExtension : InstallableSlotItemExtension
     {
         /// <summary>可筛出的矿石白名单（矿石 drop 的 ThingDef）。</summary>
         public List<ThingDef> ores;

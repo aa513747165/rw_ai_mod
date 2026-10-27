@@ -26,6 +26,7 @@
     <stackLimit>10</stackLimit>
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
+        <slotKey>Mesh</slotKey>
         <tier>0</tier>
         <sandChance>0.15</sandChance>
         <ores>
@@ -64,6 +65,7 @@
     <stackLimit>10</stackLimit>
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
+        <slotKey>Mesh</slotKey>
         <tier>1</tier>
         <sandChance>0.05</sandChance>
         <ores>
@@ -103,6 +105,7 @@
     <stackLimit>10</stackLimit>
     <modExtensions>
       <li Class="MyModeTest.MeshFilterExtension">
+        <slotKey>Mesh</slotKey>
         <tier>2</tier>
         <ores>
           <li>MMT_NickelOre</li>

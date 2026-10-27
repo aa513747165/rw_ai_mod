@@ -44,26 +44,14 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>增效模块类型：超频加速 / 并行多产。</summary>
-    public enum ModuleType
-    {
-        Overclock,
-        Parallel,
-        Yield
-    }
-
     /// <summary>
-    /// 增效模块槽参数：自动设备内置的模块插槽上限配置。
+    /// 增效模块槽参数：设备支持的槽位组及安装上限（XML 配置）。
     /// 模块是可制作物品，由殖民者搬运安装进设备长期生效，拆除/摧毁设备时掉落返还。
     /// </summary>
     public class CompProperties_ModuleSlots : CompProperties
     {
-        /// <summary>超频模块安装上限（每个 +10% 处理速度）。</summary>
-        public int maxOverclock = 5;
-        /// <summary>并行模块安装上限（每个 +1 条生产线）。</summary>
-        public int maxParallel = 3;
-        /// <summary>矿产增值模块安装上限（每个产量 +10；默认 0，仅自动采石机显式开启）。</summary>
-        public int maxYield = 0;
+        /// <summary>本设备支持的槽位组及上限（key 对应模块物品扩展的 slotKey；缺省为空=不支持任何模块）。</summary>
+        public List<ModuleSlotLimit> slotLimits;
 
         public CompProperties_ModuleSlots()
         {
@@ -72,92 +60,151 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 增效模块槽 Comp：记录设备内已安装的超频/并行模块数量（scribe），
-    /// 提供安装/卸载/掉落返还；右键菜单由殖民者搬运模块物品执行安装（见 JobDriver_InstallModule）。
+    /// 增效模块槽 Comp：记录设备内已安装的模块（slotKey + itemDef 列表，scribe），
+    /// 提供安装/卸载/掉落返还与效果聚合查询（GetEffectSum）。
+    /// 模块种类与效果全部走物品上的 ModuleExtension 配置（见 ModuleSystem.cs），新增模块零 C# 改动。
     /// </summary>
     public class CompModuleSlots : ThingComp
     {
-        // 已安装数量（槽位计数，物品实体在安装时销毁）
-        private int overclockInstalled;
-        private int parallelInstalled;
-        private int yieldInstalled;
+        // 已安装模块列表（物品实体在安装时销毁，卸载/拆除时按 itemDef 再造返还）
+        private List<InstalledSlotItem> installed = new List<InstalledSlotItem>();
+
+        // 旧存档迁移用（老格式只存三个计数，字段名沿用；PostLoadInit 并入 installed 后清零，
+        // 保存时不再写出→单向迁移，回退旧版 mod 会丢失已装模块）
+        private int legacyOverclock;
+        private int legacyParallel;
+        private int legacyYield;
+
+        // 全部增效模块物品 def（带 ModuleExtension 者），右键菜单/页签用；延迟扫描一次
+        private static List<ThingDef> moduleDefs;
 
         private CompProperties_ModuleSlots Props
         {
             get { return (CompProperties_ModuleSlots)props; }
         }
 
-        /// <summary>已安装超频模块数（供各自动机读速度加成）。</summary>
-        public int OverclockCount
+        /// <summary>该物品是否为增效模块（以是否挂 ModuleExtension 为准，新增模块物品自动识别）。</summary>
+        public static bool IsModule(ThingDef def)
         {
-            get { return overclockInstalled; }
+            return def != null && def.HasModExtension<ModuleExtension>();
         }
 
-        /// <summary>已安装并行模块数（供自动处理机算生产线数）。</summary>
-        public int ParallelCount
+        /// <summary>全部增效模块物品 def（带 ModuleExtension 者）。</summary>
+        public static List<ThingDef> AllModuleDefs()
         {
-            get { return parallelInstalled; }
-        }
-
-        /// <summary>已安装矿产增值模块数（供自动采石机算产量加成）。</summary>
-        public int YieldCount
-        {
-            get { return yieldInstalled; }
-        }
-
-        /// <summary>模块物品 def → 槽位类型；非模块物品返回 null。</summary>
-        public static ModuleType? TypeOf(ThingDef def)
-        {
-            if (def == MMT_DefOf.MMT_OverclockModule)
-                return ModuleType.Overclock;
-            if (def == MMT_DefOf.MMT_ParallelModule)
-                return ModuleType.Parallel;
-            if (def == MMT_DefOf.MMT_YieldModule)
-                return ModuleType.Yield;
-            return null;
-        }
-
-        /// <summary>槽位类型 → 模块物品 def。</summary>
-        public static ThingDef ItemDef(ModuleType type)
-        {
-            switch (type)
+            if (moduleDefs == null)
             {
-                case ModuleType.Parallel: return MMT_DefOf.MMT_ParallelModule;
-                case ModuleType.Yield: return MMT_DefOf.MMT_YieldModule;
-                default: return MMT_DefOf.MMT_OverclockModule;
+                moduleDefs = new List<ThingDef>();
+                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+                    if (IsModule(def))
+                        moduleDefs.Add(def);
+            }
+            return moduleDefs;
+        }
+
+        /// <summary>某槽位组的安装上限（props 未配置该组为 0）。</summary>
+        public int MaxCount(string slotKey)
+        {
+            if (Props.slotLimits != null)
+                foreach (ModuleSlotLimit limit in Props.slotLimits)
+                    if (limit.key == slotKey)
+                        return limit.max;
+            return 0;
+        }
+
+        /// <summary>某槽位组已安装数量。</summary>
+        public int InstalledCount(string slotKey)
+        {
+            int count = 0;
+            for (int i = 0; i < installed.Count; i++)
+                if (installed[i].slotKey == slotKey)
+                    count++;
+            return count;
+        }
+
+        /// <summary>统一效果查询：Σ 已安装模块物品 ModuleExtension 中 key 的 valuePerItem。</summary>
+        public float GetEffectSum(string effectKey)
+        {
+            float sum = 0f;
+            for (int i = 0; i < installed.Count; i++)
+            {
+                ModuleExtension ext = installed[i].itemDef?.GetModExtension<ModuleExtension>();
+                if (ext?.effects == null)
+                    continue;
+                for (int j = 0; j < ext.effects.Count; j++)
+                    if (ext.effects[j].key == effectKey)
+                        sum += ext.effects[j].valuePerItem;
+            }
+            return sum;
+        }
+
+        /// <summary>按物品 def 分组的已装计数（供检查面板/页签通用展示，按安装顺序）。</summary>
+        public IEnumerable<KeyValuePair<ThingDef, int>> InstalledCountsByDef()
+        {
+            Dictionary<ThingDef, int> counts = new Dictionary<ThingDef, int>();
+            List<ThingDef> order = new List<ThingDef>();
+            foreach (InstalledSlotItem item in installed)
+            {
+                if (item.itemDef == null)
+                    continue;
+                if (counts.TryGetValue(item.itemDef, out int c))
+                    counts[item.itemDef] = c + 1;
+                else
+                {
+                    counts[item.itemDef] = 1;
+                    order.Add(item.itemDef);
+                }
+            }
+            foreach (ThingDef def in order)
+                yield return new KeyValuePair<ThingDef, int>(def, counts[def]);
+        }
+
+        /// <summary>页签展示行：slotLimits 与已装组取并集（旧存档装过但上限为 0 的组仍显示以便卸载）。</summary>
+        public IEnumerable<ModuleSlotRow> GetRows()
+        {
+            List<string> keys = new List<string>();
+            if (Props.slotLimits != null)
+                foreach (ModuleSlotLimit limit in Props.slotLimits)
+                    if (!keys.Contains(limit.key))
+                        keys.Add(limit.key);
+            foreach (InstalledSlotItem item in installed)
+                if (!keys.Contains(item.slotKey))
+                    keys.Add(item.slotKey);
+            foreach (string key in keys)
+            {
+                // 代表物品 def：优先已装物品，否则取该组第一个可用模块 def
+                ThingDef rep = null;
+                foreach (InstalledSlotItem item in installed)
+                    if (item.slotKey == key && item.itemDef != null)
+                        rep = item.itemDef;
+                if (rep == null)
+                    foreach (ThingDef def in AllModuleDefs())
+                    {
+                        ModuleExtension ext = def.GetModExtension<ModuleExtension>();
+                        if (ext != null && ext.slotKey == key)
+                        {
+                            rep = def;
+                            break;
+                        }
+                    }
+                if (rep == null)
+                    continue;
+                yield return new ModuleSlotRow
+                {
+                    slotKey = key,
+                    itemDef = rep,
+                    installed = InstalledCount(key),
+                    max = MaxCount(key),
+                    effectText = rep.GetModExtension<ModuleExtension>()?.effectReport,
+                };
             }
         }
 
-        public int InstalledCount(ModuleType type)
-        {
-            switch (type)
-            {
-                case ModuleType.Parallel: return parallelInstalled;
-                case ModuleType.Yield: return yieldInstalled;
-                default: return overclockInstalled;
-            }
-        }
-
-        public int MaxCount(ModuleType type)
-        {
-            switch (type)
-            {
-                case ModuleType.Parallel: return Props.maxParallel;
-                case ModuleType.Yield: return Props.maxYield;
-                default: return Props.maxOverclock;
-            }
-        }
-
-        public bool CanInstall(ModuleType type)
-        {
-            return InstalledCount(type) < MaxCount(type);
-        }
-
-        /// <summary>该物品是否为可装入且槽位未满的模块。</summary>
+        /// <summary>该物品是否可装入（是模块 + 本设备支持该组 + 组内未满）。</summary>
         public bool CanInstallThing(ThingDef def)
         {
-            ModuleType? type = TypeOf(def);
-            return type != null && CanInstall(type.Value);
+            ModuleExtension ext = def?.GetModExtension<ModuleExtension>();
+            return ext != null && InstalledCount(ext.slotKey) < MaxCount(ext.slotKey);
         }
 
         /// <summary>安装一件模块物品：计入槽位并销毁物品；槽满或非模块返回 false 不消耗。</summary>
@@ -165,52 +212,70 @@ namespace MyModeTest
         {
             if (!CanInstallThing(module.def))
                 return false;
-            ModuleType? type = TypeOf(module.def);
-            if (type == ModuleType.Overclock)
-                overclockInstalled++;
-            else if (type == ModuleType.Parallel)
-                parallelInstalled++;
-            else
-                yieldInstalled++;
+            ModuleExtension ext = module.def.GetModExtension<ModuleExtension>();
+            installed.Add(new InstalledSlotItem { slotKey = ext.slotKey, itemDef = module.def });
             module.Destroy();
             return true;
         }
 
-        /// <summary>卸载一个模块：掉落到交互格返还物品（供页签按钮）。</summary>
-        public void Uninstall(ModuleType type)
+        /// <summary>卸载某组一个模块：掉落到交互格返还物品（供页签按钮）。</summary>
+        public void Uninstall(string slotKey)
         {
-            if (InstalledCount(type) <= 0)
+            for (int i = installed.Count - 1; i >= 0; i--)
+            {
+                if (installed[i].slotKey != slotKey)
+                    continue;
+                ThingDef itemDef = installed[i].itemDef;
+                installed.RemoveAt(i);
+                if (itemDef != null)
+                    GenPlace.TryPlaceThing(ThingMaker.MakeThing(itemDef), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
                 return;
-            if (type == ModuleType.Overclock)
-                overclockInstalled--;
-            else if (type == ModuleType.Parallel)
-                parallelInstalled--;
-            else
-                yieldInstalled--;
-            GenPlace.TryPlaceThing(ThingMaker.MakeThing(ItemDef(type)), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
+            }
         }
 
         /// <summary>拆除包装/被摧毁时返还全部已安装模块（在建筑原位掉落）。</summary>
         public override void PostDeSpawn(Map map, DestroyMode mode)
         {
-            for (int i = 0; i < overclockInstalled; i++)
-                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_OverclockModule), parent.Position, map, ThingPlaceMode.Near);
-            for (int i = 0; i < parallelInstalled; i++)
-                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_ParallelModule), parent.Position, map, ThingPlaceMode.Near);
-            for (int i = 0; i < yieldInstalled; i++)
-                GenPlace.TryPlaceThing(ThingMaker.MakeThing(MMT_DefOf.MMT_YieldModule), parent.Position, map, ThingPlaceMode.Near);
-            overclockInstalled = 0;
-            parallelInstalled = 0;
-            yieldInstalled = 0;
+            foreach (InstalledSlotItem item in installed)
+                if (item.itemDef != null)
+                    GenPlace.TryPlaceThing(ThingMaker.MakeThing(item.itemDef), parent.Position, map, ThingPlaceMode.Near);
+            installed.Clear();
             base.PostDeSpawn(map, mode);
         }
 
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref overclockInstalled, "overclockInstalled");
-            Scribe_Values.Look(ref parallelInstalled, "parallelInstalled");
-            Scribe_Values.Look(ref yieldInstalled, "yieldInstalled");
+            Scribe_Collections.Look(ref installed, "installed", LookMode.Deep);
+            // 旧存档兼容：老格式只存三个计数（字段名沿用，仅加载时读；保存不写出→单向迁移）
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                Scribe_Values.Look(ref legacyOverclock, "overclockInstalled", 0);
+                Scribe_Values.Look(ref legacyParallel, "parallelInstalled", 0);
+                Scribe_Values.Look(ref legacyYield, "yieldInstalled", 0);
+            }
+            else if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                MigrateLegacyCounts();
+            }
+        }
+
+        /// <summary>旧存档迁移：把三个旧计数按对应模块 def 的扩展补建成 installed 条目。</summary>
+        private void MigrateLegacyCounts()
+        {
+            TryMigrateLegacy(legacyOverclock, MMT_DefOf.MMT_OverclockModule);
+            TryMigrateLegacy(legacyParallel, MMT_DefOf.MMT_ParallelModule);
+            TryMigrateLegacy(legacyYield, MMT_DefOf.MMT_YieldModule);
+            legacyOverclock = legacyParallel = legacyYield = 0;
+        }
+
+        private void TryMigrateLegacy(int count, ThingDef def)
+        {
+            ModuleExtension ext = def?.GetModExtension<ModuleExtension>();
+            if (count <= 0 || ext == null)
+                return;
+            for (int i = 0; i < count; i++)
+                installed.Add(new InstalledSlotItem { slotKey = ext.slotKey, itemDef = def });
         }
 
         /// <summary>右键菜单：殖民者搬运模块物品安装（槽满或无可用物品时禁用并注明原因）。</summary>
@@ -228,17 +293,17 @@ namespace MyModeTest
                 yield return new FloatMenuOption("安装增效模块（设备被禁止或在小人活动区域外）", null);
                 yield break;
             }
-            foreach (ModuleType type in new[] { ModuleType.Overclock, ModuleType.Parallel, ModuleType.Yield })
+            foreach (ThingDef itemDef in AllModuleDefs())
             {
-                // 流程节点：本设备不支持该类模块（槽位上限 0 且未装过），不显示对应安装项
-                if (MaxCount(type) <= 0 && InstalledCount(type) <= 0)
+                ModuleExtension ext = itemDef.GetModExtension<ModuleExtension>();
+                // 流程节点：本设备不支持该组（槽位上限 0 且未装过），不显示对应安装项
+                if (MaxCount(ext.slotKey) <= 0 && InstalledCount(ext.slotKey) <= 0)
                     continue;
-                ThingDef itemDef = ItemDef(type);
                 string label = "安装" + itemDef.label;
-                if (!CanInstall(type))
+                if (!CanInstallThing(itemDef))
                 {
                     // 流程节点：槽位已满，禁用
-                    yield return new FloatMenuOption(label + "（已达上限 " + MaxCount(type) + "）", null);
+                    yield return new FloatMenuOption(label + "（已达上限 " + MaxCount(ext.slotKey) + "）", null);
                     continue;
                 }
                 Thing item = FindModuleItem(selPawn, itemDef);
@@ -334,7 +399,7 @@ namespace MyModeTest
         {
             foreach (Thing t in pawn.inventory.innerContainer)
             {
-                if (CompModuleSlots.TypeOf(t.def) != null)
+                if (CompModuleSlots.IsModule(t.def))
                     return t;
             }
             return null;
@@ -430,11 +495,10 @@ namespace MyModeTest
             // 带燃料仓的建筑走燃料模式：原料即燃料，按轮从燃料仓预扣，不再扫进料口
             CompRefuelable fuel = fuelComp;
 
-            // 统计槽位中已安装的增效模块：超频提速、并行增加线数
-            int overclock, parallel;
-            GetModuleCounts(out overclock, out parallel);
-            int targetCount = 1 + parallel;
-            int interval = CurrentIntervalTicks(overclock);
+            // 统计槽位中已安装的增效模块效果：超频提速、并行增加线数
+            float speedBonus = slotsComp != null ? slotsComp.GetEffectSum(ModuleEffectKeys.SpeedFactor) : 0f;
+            int targetCount = 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraLanes) : 0);
+            int interval = CurrentIntervalTicks(speedBonus);
 
             // 线数调整：不足补空闲线；超额的空闲线立即移除，运行中的超额线保留跑完（已预扣料不吞）
             while (lanes.Count < targetCount)
@@ -538,27 +602,19 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>读取设备槽位中已安装的超频/并行模块数量（无槽位 Comp 按 0 计；数量为活值，安装/卸载即时生效）。</summary>
-        private void GetModuleCounts(out int overclock, out int parallel)
+        /// <summary>按超频加成合计计算当前一轮的处理间隔（下限 60 tick）。</summary>
+        private int CurrentIntervalTicks(float speedBonus)
         {
-            overclock = slotsComp != null ? slotsComp.OverclockCount : 0;
-            parallel = slotsComp != null ? slotsComp.ParallelCount : 0;
-        }
-
-        /// <summary>按超频数计算当前一轮的处理间隔（下限 60 tick）。</summary>
-        private int CurrentIntervalTicks(int overclock)
-        {
-            float speedFactor = 1f + 0.1f * overclock;
+            float speedFactor = 1f + speedBonus;
             return System.Math.Max(60, (int)(Props.intervalTicks / speedFactor));
         }
 
         /// <summary>汇总目标线数与当前一轮处理间隔（一次槽位读取，供 ITab 展示）。</summary>
         internal void GetDisplayInfo(out int intervalTicks, out int targetLanes)
         {
-            int overclock, parallel;
-            GetModuleCounts(out overclock, out parallel);
-            intervalTicks = CurrentIntervalTicks(overclock);
-            targetLanes = 1 + parallel;
+            float speedBonus = slotsComp != null ? slotsComp.GetEffectSum(ModuleEffectKeys.SpeedFactor) : 0f;
+            intervalTicks = CurrentIntervalTicks(speedBonus);
+            targetLanes = 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraLanes) : 0);
         }
 
         /// <summary>扫描相邻进料口，汇总可接受的输入物品与总数量（每 tick 至多调用一次）。</summary>
@@ -619,18 +675,15 @@ namespace MyModeTest
 
         public override string CompInspectStringExtra()
         {
-            int overclock, parallel;
-            GetModuleCounts(out overclock, out parallel);
             int running = 0;
             for (int i = 0; i < lanes.Count; i++)
                 if (lanes[i].running)
                     running++;
             string text = "生产线: 运行中 " + running + "/" + lanes.Count;
-            // 有已安装模块时追加显示计数
-            if (overclock > 0)
-                text += "\n超频模块 x" + overclock;
-            if (parallel > 0)
-                text += "\n并行模块 x" + parallel;
+            // 有已安装模块时追加显示计数（按物品 def 分组，通用展示）
+            if (slotsComp != null)
+                foreach (KeyValuePair<ThingDef, int> pair in slotsComp.InstalledCountsByDef())
+                    text += "\n" + pair.Key.label + " x" + pair.Value;
             return text;
         }
     }
@@ -714,30 +767,21 @@ namespace MyModeTest
             listing.Label("安装方式：选中殖民者右键本设备，选择安装对应模块。");
             listing.Gap(6f);
 
-            // 上限为 0 的模块类型本设备不支持，整行隐藏；
-            // 旧存档已装过的（如采石机上的并行模块）仍显示，以便卸载返还
-            if (slots.MaxCount(ModuleType.Overclock) > 0 || slots.InstalledCount(ModuleType.Overclock) > 0)
-                DrawSlotRow(listing, slots, ModuleType.Overclock,
-                    "处理速度 +" + slots.OverclockCount * 10 + "%");
-            if (slots.MaxCount(ModuleType.Parallel) > 0 || slots.InstalledCount(ModuleType.Parallel) > 0)
-                DrawSlotRow(listing, slots, ModuleType.Parallel,
-                    "生产线 " + (1 + slots.ParallelCount) + " 条");
-            if (slots.MaxCount(ModuleType.Yield) > 0 || slots.InstalledCount(ModuleType.Yield) > 0)
-                DrawSlotRow(listing, slots, ModuleType.Yield,
-                    "产量 +" + slots.YieldCount * 10);
+            // 按槽位组动态出行（slotLimits ∪ 已装组；上限 0 但旧存档装过的组仍显示，以便卸载返还）
+            foreach (ModuleSlotRow row in slots.GetRows())
+                DrawSlotRow(listing, slots, row);
             listing.End();
         }
 
-        /// <summary>一行槽位：标签（已装/上限 + 加成效果）+ 卸载按钮（空槽禁用）。</summary>
-        private void DrawSlotRow(Listing_Standard listing, CompModuleSlots slots, ModuleType type, string effect)
+        /// <summary>一行槽位：标签（已装/上限 + 效果说明）+ 卸载按钮（空槽禁用）。</summary>
+        private void DrawSlotRow(Listing_Standard listing, CompModuleSlots slots, ModuleSlotRow row)
         {
-            ThingDef itemDef = CompModuleSlots.ItemDef(type);
-            listing.Label(itemDef.label + "：已安装 " + slots.InstalledCount(type) + "/" + slots.MaxCount(type)
-                + "（" + effect + "）");
+            string effect = string.IsNullOrEmpty(row.effectText) ? "" : "（" + row.effectText + "）";
+            listing.Label(row.itemDef.label + "：已安装 " + row.installed + "/" + row.max + effect);
             Rect btnRect = listing.GetRect(30f);
             // 卸载：返还一个模块物品到交互格
-            if (Widgets.ButtonText(btnRect, "卸载一个", true, true, slots.InstalledCount(type) > 0))
-                slots.Uninstall(type);
+            if (Widgets.ButtonText(btnRect, "卸载一个", true, true, row.installed > 0))
+                slots.Uninstall(row.slotKey);
             listing.Gap(8f);
         }
     }
