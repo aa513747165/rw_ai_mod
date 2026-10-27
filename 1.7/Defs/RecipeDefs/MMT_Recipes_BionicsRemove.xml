@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 仿生/植入体移除手术(手写维护,对照 HSK Core_SK BodyParts_* 与 CyberneticOrganism_SK 的
+       30 个 Remove 配方;生成器 tools/build_mmt_bionics_from_hsk.py 未产出此类配方)。
+       全部继承原版 SurgeryRemoveImplantBase(Recipe_RemoveImplant,药品 x1,医疗 5,工时 2500)。
+       移除时掉落物品由各 HediffDef 的 spawnThingOnRemoved 决定;外骨骼装甲/镀层皮肤无
+       spawnThingOnRemoved,移除即销毁(与 HSK 一致)。 -->
+
+  <!-- ===== Core_SK 系:脑部植入体 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveBrainStimulator</defName>
+    <label>移除脑激励器</label>
+    <description>移除脑激励器。</description>
+    <descriptionHyperlinks><ThingDef>MMT_BrainStimulator</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除脑激励器。</jobString>
+    <workAmount>3700</workAmount>
+    <skillRequirements>
+      <Medicine>6</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>MMT_ProsthesisInstall_D3</researchPrerequisite>
+    <removesHediff>MMT_BrainStimulator</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveAIChip</defName>
+    <label>移除AI芯片</label>
+    <description>移除AI芯片。</description>
+    <descriptionHyperlinks><ThingDef>MMT_AIChip</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除AI芯片。</jobString>
+    <workAmount>3700</workAmount>
+    <skillRequirements>
+      <Medicine>6</Medicine>
+    </skillRequirements>
+    <researchPrerequisite>MMT_ProsthesisInstall_D3</researchPrerequisite>
+    <removesHediff>MMT_AIChip</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== Core_SK 系:肋骨替换件 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveMedicalRib</defName>
+    <label>移除医疗肋骨</label>
+    <description>移除医疗肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_MedicalRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除医疗肋骨。</jobString>
+    <removesHediff>MMT_MedicalRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveDruggedRib</defName>
+    <label>移除迷幻肋骨</label>
+    <description>移除迷幻肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_DruggedRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除迷幻肋骨。</jobString>
+    <removesHediff>MMT_DruggedRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveAdrenalineRib</defName>
+    <label>移除肾上腺素肋骨</label>
+    <description>移除肾上腺素肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_AdrenalineRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除肾上腺素肋骨。</jobString>
+    <removesHediff>MMT_AdrenalineRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemovePainkillerRib</defName>
+    <label>移除止痛肋骨</label>
+    <description>移除止痛肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_PainkillerRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除止痛肋骨。</jobString>
+    <removesHediff>MMT_PainkillerRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveHeaterRib</defName>
+    <label>移除加热肋骨</label>
+    <description>移除加热肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_HeaterRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除加热肋骨。</jobString>
+    <removesHediff>MMT_HeaterRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCoolerRib</defName>
+    <label>移除冷却肋骨</label>
+    <description>移除冷却肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CoolerRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除冷却肋骨。</jobString>
+    <removesHediff>MMT_CoolerRib</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCoagulatorRib</defName>
+    <label>移除止血肋骨</label>
+    <description>移除止血肋骨。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CoagulatorRib</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除止血肋骨。</jobString>
+    <removesHediff>MMT_CoagulatorRib</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== Core_SK 系:外骨骼 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveExoskeletonSuit</defName>
+    <label>移除外骨骼</label>
+    <description>移除外骨骼。</description>
+    <descriptionHyperlinks><ThingDef>MMT_ExoskeletonSuit</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除外骨骼。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_ExoskeletonSuit</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveProtectiveExoskeleton</defName>
+    <label>移除防护性外骨骼</label>
+    <description>移除防护性外骨骼。</description>
+    <descriptionHyperlinks><ThingDef>MMT_ProtectiveExoskeleton</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除防护性外骨骼。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_D4</researchPrerequisite>
+    <removesHediff>MMT_ProtectiveExoskeleton</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== Core_SK 系:战术角膜植入体 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveTacticalCorneaImplant</defName>
+    <label>移除战术角膜植入体</label>
+    <description>移除战术角膜植入体。</description>
+    <descriptionHyperlinks><ThingDef>MMT_TacticalCorneaImplant</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除战术角膜植入体。</jobString>
+    <removesHediff>MMT_TacticalCorneaImplant</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== Core_SK 系:辅助AI核心 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveConstructorCore</defName>
+    <label>移除辅助AI（建造）</label>
+    <description>移除辅助AI（建造）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_ConstructorCore</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（建造）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_ConstructorCore</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveFarmerCore</defName>
+    <label>移除辅助AI（农业）</label>
+    <description>移除辅助AI（农业）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_FarmerCore</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（农业）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_FarmerCore</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveMinerCore</defName>
+    <label>移除辅助AI（采矿）</label>
+    <description>移除辅助AI（采矿）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_MinerCore</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（采矿）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_MinerCore</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveDoctorCore</defName>
+    <label>移除辅助AI（医疗）</label>
+    <description>移除辅助AI（医疗）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_DoctorCore</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（医疗）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_DoctorCore</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveDiplomatCore</defName>
+    <label>移除辅助AI（外交）</label>
+    <description>移除辅助AI（外交）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_DiplomatCore</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（外交）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_DiplomatCore</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== Core_SK 系:战斗辅助AI ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveAuxiliaryAISharpshooter</defName>
+    <label>移除辅助AI（射击）</label>
+    <description>移除辅助AI（射击）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_AuxiliaryAI_Sharpshooter</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（射击）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_AuxiliaryAI_Sharpshooter</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveAuxiliaryAICommando</defName>
+    <label>移除辅助AI（作战）</label>
+    <description>移除辅助AI（作战）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_AuxiliaryAI_Commando</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（作战）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_AuxiliaryAI_Commando</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveAuxiliaryAIBrawler</defName>
+    <label>移除辅助AI（格斗）</label>
+    <description>移除辅助AI（格斗）。</description>
+    <descriptionHyperlinks><ThingDef>MMT_AuxiliaryAI_Brawler</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除辅助AI（格斗）。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_AuxiliaryAI_Brawler</removesHediff>
+  </RecipeDef>
+
+  <!-- ===== CONN 系 ===== -->
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_ExoskeletonArmor</defName>
+    <label>移除外骨骼装甲</label>
+    <description>移除外骨骼装甲。装甲与身体融为一体,移除后无法回收。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_Exoskeleton</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除外骨骼装甲。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_ExoskeletonArmor</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_Dermalplating</defName>
+    <label>移除镀层皮肤</label>
+    <description>移除镀层皮肤。镀层与皮肤融为一体,移除后无法回收。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_Dermalplating</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除镀层皮肤。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_Dermalplating</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_LaserDetection</defName>
+    <label>移除激光探测装置</label>
+    <description>移除激光探测装置。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_LaserDetection</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除激光探测装置。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_LaserDetection</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_BerserkerChip</defName>
+    <label>移除狂战士芯片</label>
+    <description>移除狂战士芯片。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_BerserkerChip</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除狂战士芯片。</jobString>
+    <removesHediff>MMT_CONN_hediff_BerserkerChip</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_Mindtwist</defName>
+    <label>移除心灵钝化装置</label>
+    <description>移除心灵钝化装置。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_BodyPartsArtificialtwist</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除心灵钝化装置。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_Mindtwist</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_MuseChip</defName>
+    <label>移除灵感激发芯片</label>
+    <description>移除灵感激发芯片。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_MuseChip</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除灵感激发芯片。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_MuseChip</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_NeuroEnhancer</defName>
+    <label>移除神经增强器</label>
+    <description>移除神经增强器。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_NeuroEnhancer</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除神经增强器。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_NeuroEnhancer</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_CombatAI</defName>
+    <label>移除战斗AI</label>
+    <description>移除战斗AI。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_CombatAI</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除战斗AI。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_CombatAI</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_FlashLight</defName>
+    <label>移除手电装置</label>
+    <description>移除手电装置。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_FlashLight</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除手电装置。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_FlashLight</removesHediff>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryRemoveImplantBase">
+    <defName>MMT_RemoveCONN_Musclewire</defName>
+    <label>移除机械肌肉</label>
+    <description>移除机械肌肉。</description>
+    <descriptionHyperlinks><ThingDef>MMT_CONN_Musclewire</ThingDef></descriptionHyperlinks>
+    <jobString>正在移除机械肌肉。</jobString>
+    <researchPrerequisite>MMT_ProsthesisInstall_E1</researchPrerequisite>
+    <removesHediff>MMT_CONN_hediff_Musclewire</removesHediff>
+  </RecipeDef>
+
+</Defs>
