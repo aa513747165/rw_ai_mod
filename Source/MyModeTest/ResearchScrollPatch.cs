@@ -31,12 +31,22 @@ namespace MyModeTest
             AccessTools.MethodDelegate<Func<MainTabWindow_Research, ResearchTabDef>>(
                 AccessTools.PropertyGetter(typeof(MainTabWindow_Research), "CurTab"));
 
-        /// <summary>注入 helper：viewRect 高度取原版高度与内容实际高度的较大值。</summary>
+        // 内容高度按页签缓存：研究项目坐标是 Def 静态数据，整个会话不变，每个页签只算一次
+        private static readonly Dictionary<ResearchTabDef, Vector2> viewSizeCache =
+            new Dictionary<ResearchTabDef, Vector2>();
+
+        /// <summary>注入 helper：viewRect 高度取原版高度与内容实际高度的较大值（内容高度按页签缓存）。</summary>
         public static float EnsureContentHeight(float height, MainTabWindow_Research window)
         {
             try
             {
-                return Mathf.Max(height, ViewSizeFunc(window, CurTabGetter(window)).y + 20f);
+                ResearchTabDef tab = CurTabGetter(window);
+                if (!viewSizeCache.TryGetValue(tab, out Vector2 size))
+                {
+                    size = ViewSizeFunc(window, tab);
+                    viewSizeCache[tab] = size;
+                }
+                return Mathf.Max(height, size.y + 20f);
             }
             catch (Exception e)
             {

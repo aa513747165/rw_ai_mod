@@ -41,6 +41,11 @@ namespace MyModeTest
         /// <summary>内部蓄电（Wd）：开启并通电时自动累积，传送时消耗（存档持久化）。</summary>
         private float storedChargeWd;
 
+        // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
+        private CompTransporter transporterComp;
+        private CompPowerTrader powerComp;
+        private CompFlickable flickComp;
+
         private CompProperties_TeleportPad Props
         {
             get { return (CompProperties_TeleportPad)props; }
@@ -48,12 +53,20 @@ namespace MyModeTest
 
         private CompTransporter Transporter
         {
-            get { return parent.GetComp<CompTransporter>(); }
+            get { return transporterComp; }
         }
 
         private CompPowerTrader Power
         {
-            get { return parent.GetComp<CompPowerTrader>(); }
+            get { return powerComp; }
+        }
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            transporterComp = parent.GetComp<CompTransporter>();
+            powerComp = parent.GetComp<CompPowerTrader>();
+            flickComp = parent.GetComp<CompFlickable>();
         }
 
         public override void PostExposeData()
@@ -77,7 +90,7 @@ namespace MyModeTest
         /// <summary>当前是否正在蓄电：开关打开且电网能供应待机功耗。</summary>
         public bool IsCharging()
         {
-            CompFlickable flick = parent.GetComp<CompFlickable>();
+            CompFlickable flick = flickComp;
             if (flick != null && !flick.SwitchIsOn)
                 return false;
             CompPowerTrader power = Power;
@@ -104,7 +117,7 @@ namespace MyModeTest
                 reason = "传送台不存在";
                 return false;
             }
-            CompFlickable flick = parent.GetComp<CompFlickable>();
+            CompFlickable flick = flickComp;
             if (flick != null && !flick.SwitchIsOn)
             {
                 reason = "传送台未开启";

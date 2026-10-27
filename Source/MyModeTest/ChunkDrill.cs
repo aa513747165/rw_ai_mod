@@ -38,6 +38,19 @@ namespace MyModeTest
         /// <summary>已累积工作量（scribe）。</summary>
         private float progress;
 
+        // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
+        private CompFlickable flickComp;
+        private CompPowerTrader powerComp;
+        private CompModuleSlots slotsComp;
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            flickComp = parent.GetComp<CompFlickable>();
+            powerComp = parent.GetComp<CompPowerTrader>();
+            slotsComp = parent.GetComp<CompModuleSlots>();
+        }
+
         public CompProperties_ChunkDrill Props
         {
             get { return (CompProperties_ChunkDrill)props; }
@@ -52,10 +65,10 @@ namespace MyModeTest
         /// <summary>手动开关 + 供电（电动/自动版）双闸门（无需矿脉）。</summary>
         public bool CanDrillNow()
         {
-            CompFlickable flick = parent.GetComp<CompFlickable>();
+            CompFlickable flick = flickComp;
             if (flick != null && !flick.SwitchIsOn)
                 return false;
-            CompPowerTrader power = parent.GetComp<CompPowerTrader>();
+            CompPowerTrader power = powerComp;
             return power == null || power.PowerOn;
         }
 
@@ -78,15 +91,13 @@ namespace MyModeTest
         /// <summary>设备槽位中已安装的超频模块数（无槽位 Comp 按 0 计）。</summary>
         private int InstalledOverclock()
         {
-            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
-            return slots != null ? slots.OverclockCount : 0;
+            return slotsComp != null ? slotsComp.OverclockCount : 0;
         }
 
         /// <summary>设备槽位中已安装的矿产增值模块数（无槽位 Comp 按 0 计）。</summary>
         private int InstalledYield()
         {
-            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
-            return slots != null ? slots.YieldCount : 0;
+            return slotsComp != null ? slotsComp.YieldCount : 0;
         }
 
         /// <summary>进度累积与满额产出（保留溢出，长班不吞进度）。</summary>

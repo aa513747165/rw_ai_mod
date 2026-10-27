@@ -382,6 +382,21 @@ namespace MyModeTest
         // 缺料冷却：料不够时间隔 250 tick 再扫料口，避免空闲线每 tick 空扫
         private int inputRetryCooldown;
 
+        // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
+        private CompPowerTrader powerComp;
+        private CompFlickable flickComp;
+        private CompRefuelable fuelComp;
+        private CompModuleSlots slotsComp;
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            powerComp = parent.GetComp<CompPowerTrader>();
+            flickComp = parent.GetComp<CompFlickable>();
+            fuelComp = parent.GetComp<CompRefuelable>();
+            slotsComp = parent.GetComp<CompModuleSlots>();
+        }
+
         private CompProperties_AutoProcessor Props
         {
             get { return (CompProperties_AutoProcessor)props; }
@@ -406,14 +421,14 @@ namespace MyModeTest
         public override void CompTick()
         {
             // 断电或手动关闭时所有线冻结（燃料模式同样需要电力驱动机组）
-            CompPowerTrader power = parent.GetComp<CompPowerTrader>();
+            CompPowerTrader power = powerComp;
             if (power == null || !power.PowerOn)
                 return;
-            CompFlickable flick = parent.GetComp<CompFlickable>();
+            CompFlickable flick = flickComp;
             if (flick != null && !flick.SwitchIsOn)
                 return;
             // 带燃料仓的建筑走燃料模式：原料即燃料，按轮从燃料仓预扣，不再扫进料口
-            CompRefuelable fuel = parent.GetComp<CompRefuelable>();
+            CompRefuelable fuel = fuelComp;
 
             // 统计槽位中已安装的增效模块：超频提速、并行增加线数
             int overclock, parallel;
@@ -523,12 +538,11 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>读取设备槽位中已安装的超频/并行模块数量（无槽位 Comp 按 0 计）。</summary>
+        /// <summary>读取设备槽位中已安装的超频/并行模块数量（无槽位 Comp 按 0 计；数量为活值，安装/卸载即时生效）。</summary>
         private void GetModuleCounts(out int overclock, out int parallel)
         {
-            CompModuleSlots slots = parent.GetComp<CompModuleSlots>();
-            overclock = slots != null ? slots.OverclockCount : 0;
-            parallel = slots != null ? slots.ParallelCount : 0;
+            overclock = slotsComp != null ? slotsComp.OverclockCount : 0;
+            parallel = slotsComp != null ? slotsComp.ParallelCount : 0;
         }
 
         /// <summary>按超频数计算当前一轮的处理间隔（下限 60 tick）。</summary>

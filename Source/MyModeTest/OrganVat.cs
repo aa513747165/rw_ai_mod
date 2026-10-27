@@ -62,6 +62,17 @@ namespace MyModeTest
         /// <summary>菜单点击后待启动的培养项（不存档：小人走一半读档回来只需重新下单）。</summary>
         private OrganVatProduct pending;
 
+        // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
+        private CompFlickable flickComp;
+        private CompPowerTrader powerComp;
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            flickComp = parent.GetComp<CompFlickable>();
+            powerComp = parent.GetComp<CompPowerTrader>();
+        }
+
         public CompProperties_OrganVat Props
         {
             get { return (CompProperties_OrganVat)props; }
@@ -89,10 +100,10 @@ namespace MyModeTest
         /// <summary>设备是否可用：开启开关且通电（断电时培养暂停）。</summary>
         public bool CanRun()
         {
-            CompFlickable flick = parent.GetComp<CompFlickable>();
+            CompFlickable flick = flickComp;
             if (flick != null && !flick.SwitchIsOn)
                 return false;
-            CompPowerTrader power = parent.GetComp<CompPowerTrader>();
+            CompPowerTrader power = powerComp;
             return power == null || power.PowerOn;
         }
 
