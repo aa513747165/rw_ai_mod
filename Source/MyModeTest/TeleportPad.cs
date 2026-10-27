@@ -146,7 +146,7 @@ namespace MyModeTest
             // 启动传送：舱内为空、装载未完成、电力/冷却不满足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上任意地块：敌对据点=进攻空降；非敌对立据点=远程交易或进攻；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却（远程交易不消耗）。";
+            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上任意地块：据点/任务地点=空降进攻；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
@@ -193,6 +193,9 @@ namespace MyModeTest
         /// <summary>目标格校验：拒绝水域与当前地图所在格；其余（据点/任务地点/空白地块）均可。</summary>
         private bool IsValidWorldTarget(GlobalTargetInfo target)
         {
+            // 鼠标悬停在行星边缘/无地块处时 Tile 无效，直接索 WorldGrid 会越界抛异常
+            if (!target.Tile.Valid)
+                return false;
             if (Find.WorldGrid[target.Tile].WaterCovered)
                 return false;
             MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
@@ -202,6 +205,9 @@ namespace MyModeTest
         /// <summary>目标器悬停文案：按分支提示（己方/交易或进攻/进攻/荒野/拒绝原因）。</summary>
         private TaggedString WorldTargetLabel(GlobalTargetInfo target)
         {
+            // 悬停无效地块（行星边缘/无地块处）时给静态提示，避免 WorldGrid 越界刷红字
+            if (!target.Tile.Valid)
+                return "选择目标地块";
             if (Find.WorldGrid[target.Tile].WaterCovered)
                 return "无法传送：目标为水域";
             MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
@@ -211,8 +217,6 @@ namespace MyModeTest
                 return "无法传送：目标就是当前地图";
             if (mp.HasMap && mp.Map.IsPlayerHome)
                 return "传送至：" + mp.LabelCap;
-            if (mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer) && mp is Settlement)
-                return "交易或进攻：" + mp.LabelCap;
             return "进攻：" + mp.LabelCap;
         }
 
@@ -234,17 +238,12 @@ namespace MyModeTest
                     delegate(LocalTargetInfo cell) { ExecuteTeleport(homeMap, cell.Cell); });
                 return true;
             }
-            if (mp is Settlement settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
+            if (mp is Settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
             {
-                // 非敌对立据点：远程交易（不传送不生成地图）或进攻（生成地图空降）
-                List<FloatMenuOption> options = new List<FloatMenuOption>();
-                options.Add(new FloatMenuOption("交易（远程开启交易窗口，不传送）",
-                    delegate { OpenTradeWith(settlement); }));
-                options.Add(new FloatMenuOption("进攻：在地图边缘空降",
-                    delegate { AttackMapParent(mp, target.Tile, false); }));
-                options.Add(new FloatMenuOption("进攻：在地图中心附近空降",
-                    delegate { AttackMapParent(mp, target.Tile, true); }));
-                Find.WindowStack.Add(new FloatMenu(options));
+                // 非敌对立据点：只保留进攻空降。1.7 的定居点交易仅支持商队到访
+                // （Settlement_TraderTracker.ColonyThingsWillingToBuy/GiveSoldThingToTrader
+                // 强制走 negotiator.GetCaravan()，地图小人远程交易会 NRE），无法远程交易
+                ShowAttackOptions(mp, target.Tile);
                 return true;
             }
             if (mp != null)
@@ -280,22 +279,6 @@ namespace MyModeTest
             else
                 spot = DropCellFinder.RandomDropSpot(map);
             ExecuteTeleport(map, spot);
-        }
-
-        /// <summary>远程交易：等同原版通讯台与定居点交易，谈判者取本图社交最高的健康殖民者；不耗蓄电不进冷却。</summary>
-        private void OpenTradeWith(Settlement settlement)
-        {
-            Pawn negotiator = parent.Map.mapPawns.FreeColonistsSpawned
-                .Where(p => !p.Downed && !p.InMentalState
-                    && p.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
-                .OrderByDescending(p => p.GetStatValue(StatDefOf.NegotiationAbility))
-                .FirstOrDefault();
-            if (negotiator == null)
-            {
-                Messages.Message("交易失败：没有可通话的健康殖民者作为谈判人员", parent, MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-            Find.WindowStack.Add(new Dialog_Trade(negotiator, settlement));
         }
 
         /// <summary>荒野空降：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 → 边缘空降。</summary>

@@ -25,6 +25,11 @@
     <pathCost>50</pathCost>
     <fillPercent>0.3</fillPercent>
     <rotatable>true</rotatable>
+    <!-- 必须 RealtimeOnly：BuildingBase 默认 MapMeshOnly（贴图烘焙进静态区块网格，
+         DrawWorker 只在区块重建时走一次），传送台的 MMT_Graphic_Rotating 自转需要
+         每帧 Graphic.Draw；MapMeshAndRealTime 下 DrawAt 仍不画基础贴图，只有
+         RealtimeOnly 会让 DrawAt 每帧调用 Graphic.Draw -->
+    <drawerType>RealtimeOnly</drawerType>
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(0,0,-2)</interactionCellOffset>
     <tickerType>Normal</tickerType>

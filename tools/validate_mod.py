@@ -6666,9 +6666,11 @@ def validate_teleport() -> None:
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
                   "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
                   "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode",
-                  # 三分支：敌对进攻 / 非敌对远程交易 / 荒野临时地图
-                  "GetOrGenerateMapUtility.GetOrGenerateMap", "OpenTradeWith", "Dialog_Trade",
+                  # 分支：据点进攻 / 荒野临时地图（1.7 定居点交易仅支持商队到访，无远程交易）
+                  "GetOrGenerateMapUtility.GetOrGenerateMap",
                   "TeleportToWilderness", "WaterCovered", "CheckRemoveMapNow",
+                  # 目标器悬停无效地块（行星边缘）防越界
+                  "target.Tile.Valid",
                   "MMT_Graphic_Rotating", "realtimeSinceStartup"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
     # 荒野临时落脚点：世界对象 def + 自动销毁 MapParent
