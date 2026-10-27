@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 灵能护盾腰带：心灵增幅装置+超凡零件+玻璃钢+黄金组装；挂电动装配台；需研究"灵能护盾技术" -->
+  <RecipeDef>
+    <defName>MMT_MakePsychicShieldBelt</defName>
+    <label>组装灵能护盾腰带</label>
+    <description>组装以心灵增幅装置为核心的灵能护盾腰带：启灵者穿戴后以灵能驱动，全额吸收所有伤害并转化为精神熵。产出 1。</description>
+    <jobString>正在组装灵能护盾腰带。</jobString>
+    <workAmount>8000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>PsychicAmplifier</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>PsychicAmplifier</li>
+        <li>ComponentSpacer</li>
+        <li>Plasteel</li>
+        <li>Gold</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_PsychicShieldBelt>1</MMT_PsychicShieldBelt>
+    </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_PsychicShieldTech</researchPrerequisite>
+  </RecipeDef>
+</Defs>

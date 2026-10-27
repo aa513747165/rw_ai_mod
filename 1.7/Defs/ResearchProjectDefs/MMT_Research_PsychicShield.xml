@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 灵能护盾技术：解锁灵能护盾腰带（启灵者以灵能驱动的个人护盾）；前置 充能技术 -->
+  <ResearchProjectDef>
+    <defName>MMT_PsychicShieldTech</defName>
+    <label>灵能护盾技术</label>
+    <description>研究将心灵增幅装置与护盾投射器耦合的技术，解锁灵能护盾腰带：启灵者穿戴后可以灵能驱动护盾，全额吸收所有伤害（含近战）；启灵 5 级以上还附加环境保护。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_RechargeableTech</li>
+    </prerequisites>
+    <researchViewX>5.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

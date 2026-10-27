@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 灵能环境保护：灵能护盾激活期间（启灵 5 级以上）由 ShieldBeltPsychic.cs 挂/摘；
+       护罩内维生系统抵御极端温度、毒素、真空并免疫引燃 -->
+  <HediffDef>
+    <defName>MMT_ShieldEnvironmentProtect</defName>
+    <label>灵能环境保护</label>
+    <description>灵能护盾的定向屏蔽与维生系统保护穿戴者免受大部分环境威胁。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <defaultLabelColor>(0, 1, 0)</defaultLabelColor>
+    <stages>
+      <li>
+        <becomeVisible>false</becomeVisible>
+        <statFactors>
+          <Flammability>0</Flammability>
+        </statFactors>
+        <statOffsets>
+          <ComfyTemperatureMin>-40</ComfyTemperatureMin>
+          <ComfyTemperatureMax>40</ComfyTemperatureMax>
+          <ToxicEnvironmentResistance>1</ToxicEnvironmentResistance>
+          <VacuumResistance MayRequire="Ludeon.RimWorld.Odyssey">1</VacuumResistance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

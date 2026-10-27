@@ -1768,6 +1768,7 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeYieldModule",
     "MMT_MakeDeployableShield",
     "MMT_MakeChargeShieldPack",
+    "MMT_MakePsychicShieldBelt",
 ]
 
 PARTS_BUILDING_EXPECTATIONS = {
