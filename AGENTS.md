@@ -71,7 +71,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
 
 - 单一工程 `Source/MyModeTest/MyModeTest.csproj`（`net10.0`，LangVersion latest，Nullable/ImplicitUsings 均 disable），解决方案文件为根目录 `MyModeTest.sln`。
 - 编译输出直接落到 `1.7/Assemblies/`（csproj 的 `OutputPath`）。
-- 通过 `RimWorldPath` 引用游戏目录下的 `Assembly-CSharp.dll` 与 `UnityStubs.dll`（`<Private>false</Private>` 不复制）；`ValidateRimWorldPath` Target 会在引用缺失时给出中文报错。
+- 通过 `RimWorldPath` 引用游戏目录下的 `Assembly-CSharp.dll`、`UnityStubs.dll` 与 `Waylith.dll`（1.7 的 Unity 抽象层，Material 等类型在此；均 `<Private>false</Private>` 不复制）；`ValidateRimWorldPath` Target 会在引用缺失时给出中文报错。
 - Harmony 为 NuGet 包 `Lib.Harmony 2.3.6`，`ExcludeAssets="runtime"` 仅编译期引用；运行时依赖 Harmony Mod（已在 About.xml 声明）。
 - 源文件：
   - `MyModeTestMod.cs`：Mod 入口，构造时打日志并 `Harmony.PatchAll()`。
@@ -79,6 +79,9 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
   - `AutoProcessor.cs`：自动处理机 Comp（营养膏机模式，定时从相邻进料口消耗输入并产出；outputDef 为空时走矿石池随机）。
   - `ChunkDrill.cs`：手动采石机 Comp（产粗矿石，含工作量与采矿经验参数）。
   - `BionicsComps.cs`：仿生链 CONN 特殊效果重实现（狂战士芯片狂暴 gizmo、精神扭曲思想清除、缪斯娱乐供给、手电照明 mote、六种神经调制使用品效果），对照 CONN.dll 行为简化实现。
+  - `Rechargeable.cs`：通用可充能 Comp（电量存档 + 充/放电接口），充能台与充能设备共用的电量载体。
+  - `ChargingStation.cs`：充能台（内置容器持一件设备，通电回充；右键小人手动装卸：空台从穿戴/背包选设备装入，有设备确认后取回；DrawAt 画飘浮设备与充能光柱；装卸各一个 JobDriver）。
+  - `ShieldPack.cs`：充能护盾背包（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。
 - C# 注释与日志均用中文。
 
 ## 代码与命名约定

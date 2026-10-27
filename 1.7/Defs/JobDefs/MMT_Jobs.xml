@@ -28,4 +28,18 @@
     <driverClass>MyModeTest.JobDriver_OrganVatInitiate</driverClass>
     <reportString>正在启动培养（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 装载充能设备作业：把小人身上（穿戴/背包）的可充能设备装入充能台（JobDriver_LoadChargingStation） -->
+  <JobDef>
+    <defName>MMT_LoadChargingStation</defName>
+    <driverClass>MyModeTest.JobDriver_LoadChargingStation</driverClass>
+    <reportString>正在装载充能设备（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 取出充能设备作业：从充能台取回设备放入背包（JobDriver_UnloadChargingStation） -->
+  <JobDef>
+    <defName>MMT_UnloadChargingStation</defName>
+    <driverClass>MyModeTest.JobDriver_UnloadChargingStation</driverClass>
+    <reportString>正在取出充能设备（TargetA）。</reportString>
+  </JobDef>
 </Defs>

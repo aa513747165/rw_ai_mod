@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 充能护盾背包：集成电路+超凡零件+玻璃钢+导线组装；挂电动装配台；需研究"充能技术" -->
+  <RecipeDef>
+    <defName>MMT_MakeChargeShieldPack</defName>
+    <label>组装充能护盾背包</label>
+    <description>组装可重复充能的护盾背包：开启后全额吸收所有伤害并按伤害量耗电，电量耗尽后可在充能台回充。产出 1。</description>
+    <jobString>正在组装充能护盾背包。</jobString>
+    <workAmount>8000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_IntegratedCircuit</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Wire</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_IntegratedCircuit</li>
+        <li>ComponentSpacer</li>
+        <li>Plasteel</li>
+        <li>MMT_Wire</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_ChargeShieldPack>1</MMT_ChargeShieldPack>
+    </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_RechargeableTech</researchPrerequisite>
+  </RecipeDef>
+</Defs>

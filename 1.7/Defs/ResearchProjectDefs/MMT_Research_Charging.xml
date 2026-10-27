@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 充能技术：解锁充能台（为可充能设备回充电量）与充能护盾背包；前置 集成电路技术 -->
+  <ResearchProjectDef>
+    <defName>MMT_RechargeableTech</defName>
+    <label>充能技术</label>
+    <description>研究高功率无线输电与紧凑型能量电池技术，解锁充能台（为可充能设备回充电量）与可重复充能的护盾背包。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_IntegratedCircuitTech</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>11.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

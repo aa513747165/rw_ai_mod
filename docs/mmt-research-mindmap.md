@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（94 项）
+- MMT 研究总览（95 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -128,6 +128,9 @@
           - 解锁配方: 合成伪人格核心
       - **部署式护盾技术** `MMT_DeployableShieldTech` ｜ 坐标 (3.00, 11.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): ShieldBelt
         - 解锁配方: 组装部署式护盾发生器
+      - **充能技术** `MMT_RechargeableTech` ｜ 坐标 (4.00, 11.00) ｜ 1500点 ｜ Spacer
+        - 解锁建筑: 充能台
+        - 解锁配方: 组装充能护盾背包
     - **物质转换 I** `MMT_MatterConversion1` ｜ 坐标 (3.00, 9.00) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 零件加工
       - 解锁建筑: 无机物转化器
       - 解锁配方: 转化为无机物、从尸体提取生物质、从生肉提取生物质

@@ -122,6 +122,7 @@
       <li>MMT_MakeParallelModule</li>
       <li>MMT_MakeYieldModule</li>
       <li>MMT_MakeDeployableShield</li>
+      <li>MMT_MakeChargeShieldPack</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

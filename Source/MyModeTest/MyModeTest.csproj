@@ -24,6 +24,11 @@
       <HintPath>$(RimWorldPath)\UnityStubs.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <!-- 1.7 的 Unity 抽象层（Material 等类型定义在此），仅编译期引用 -->
+    <Reference Include="Waylith">
+      <HintPath>$(RimWorldPath)\Waylith.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <Target Name="ValidateRimWorldPath" BeforeTargets="ResolveReferences">
@@ -31,5 +36,7 @@
            Text="未找到 Assembly-CSharp.dll。请通过 -p:RimWorldPath=游戏目录 或 RIMWORLD_PATH 指定 RimWorld 1.7 根目录。" />
     <Error Condition="!Exists('$(RimWorldPath)\UnityStubs.dll')"
            Text="未找到 UnityStubs.dll。请通过 -p:RimWorldPath=游戏目录 或 RIMWORLD_PATH 指定 RimWorld 1.7 根目录。" />
+    <Error Condition="!Exists('$(RimWorldPath)\Waylith.dll')"
+           Text="未找到 Waylith.dll。请通过 -p:RimWorldPath=游戏目录 或 RIMWORLD_PATH 指定 RimWorld 1.7 根目录。" />
   </Target>
 </Project>
