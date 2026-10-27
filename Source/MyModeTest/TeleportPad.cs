@@ -568,6 +568,22 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>
+    /// 持续缓慢自转的建筑贴图（星云式效果）：墙钟时间驱动约 45 秒一圈，暂停/断电也转；
+    /// drawRotated=false 下与建筑摆放朝向无关。性能开销可忽略（每帧一次四元数叠加，无额外 DrawCall）。
+    /// </summary>
+    public class MMT_Graphic_Rotating : Graphic_Single
+    {
+        /// <summary>旋转速度（度/秒）。</summary>
+        private const float DegreesPerSecond = 8f;
+
+        public override void DrawWorker(Vector3 loc, Rot4 rot, ThingDef thingDef, Thing thing, float extraRotation)
+        {
+            float angle = Time.realtimeSinceStartup * DegreesPerSecond % 360f;
+            base.DrawWorker(loc, rot, thingDef, thing, extraRotation + angle);
+        }
+    }
+
     [DefOf]
     public static class MMT_TeleportDefOf
     {

@@ -14,7 +14,7 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_TeleportPad</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>MyModeTest.MMT_Graphic_Rotating</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(4,4)</drawSize>
       <drawRotated>false</drawRotated>

@@ -6628,6 +6628,8 @@ def validate_teleport() -> None:
     assert_equal(child_text(pad, "passability"), "PassThroughOnly", "传送台需可走入（装载人员）")
     assert_equal(child_text(pad, "hasInteractionCell"), "true", "传送台需交互格（召回落点）")
     assert_equal(li_values(pad, "inspectorTabs"), ["ITab_ContentsTransporter"], "传送台舱内货物面板")
+    assert_equal(child_text(pad, "./graphicData/graphicClass"), "MyModeTest.MMT_Graphic_Rotating",
+                 "传送台贴图为持续自转 Graphic")
 
     power = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
     assert_equal(child_text(power, "compClass"), "CompPowerTrader", "传送台电力 comp 类型")
@@ -6663,7 +6665,8 @@ def validate_teleport() -> None:
                   "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode",
                   # 三分支：敌对进攻 / 非敌对远程交易 / 荒野临时地图
                   "GetOrGenerateMapUtility.GetOrGenerateMap", "OpenTradeWith", "Dialog_Trade",
-                  "TeleportToWilderness", "WaterCovered", "CheckRemoveMapNow"):
+                  "TeleportToWilderness", "WaterCovered", "CheckRemoveMapNow",
+                  "MMT_Graphic_Rotating", "realtimeSinceStartup"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
     # 荒野临时落脚点：世界对象 def + 自动销毁 MapParent
     wos = def_map(parse_xml("1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml"))
