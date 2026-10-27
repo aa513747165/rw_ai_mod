@@ -132,4 +132,11 @@
     <parent>Manufactured</parent>
     <iconPath>Things/Item/Resource/WeaponCrate</iconPath>
   </ThingCategoryDef>
+  <!-- 滤网聚合：筛子滤网模块归入此类，否则无 thingCategories 的物品不会出现在储存筛选里 -->
+  <ThingCategoryDef>
+    <defName>MMT_SieveMeshCat</defName>
+    <label>筛子滤网</label>
+    <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_MeshWood</iconPath>
+  </ThingCategoryDef>
 </Defs>

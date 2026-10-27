@@ -1,6 +1,6 @@
 # MMT 无中生有链（研磨 + 筛选）链路图
 
-- 数据源：`1.7/Defs`（`MMT_Recipes_OrePowder.xml`、`MMT_Buildings_Grinder.xml`、`MMT_Buildings_Sieve.xml`、`MMT_Buildings_AutoProcessor.xml`）与 `Source/MyModeTest/OreSiftPool.cs`、`AutoProcessor.cs`。
+- 数据源：`1.7/Defs`（`MMT_Recipes_OrePowder.xml`、`MMT_Recipes_SieveMeshes.xml`、`MMT_Buildings_Grinder.xml`、`MMT_Buildings_Sieve.xml`、`MMT_Buildings_AutoProcessor.xml`、`MMT_Items_SieveMeshes.xml`）与 `Source/MyModeTest/OreSiftPool.cs`、`AutoProcessor.cs`、`SieveMesh.cs`。
 - 链路格式：`输入(数量) -> 产出(数量) @ 建筑 ｜ 处理时间 ｜ 备注`。
 
 ## 1. 总览
@@ -33,6 +33,16 @@
 | 电动 | 矿粉(20) -> 随机矿石(6~10) @ 电动筛子 | 900 tick | 250W | 矿粉筛选 |
 | 自动 | 矿粉(25) -> 随机矿石(6~10) @ 自动筛子 | 2500 tick/轮 | 400W | 自动化矿料处理 |
 
+**滤网模块**（可选，殖民者右键安装进筛子，"滤网"页签可查看白名单与卸载）：装滤网后筛分只在该滤网的白名单矿石内按权重抽取，且每轮有概率只筛出沙子；**不装滤网维持全池随机、不出沙子**。白名单与掺沙概率写在滤网 ThingDef 的 `MeshFilterExtension`（XML）里，可不改 C# 直接调。
+
+| 滤网 | 材料 | 制作台 | 研究 | 掺沙概率 | 可筛出矿石 |
+| --- | --- | --- | --- | --- | --- |
+| 木滤网 | 木材 40 + 布 10 | 手工加工点 | 无 | 30% | 铁矿石、铜矿、锡矿、煤、盐、软粘土 |
+| 铁滤网 | 钢铁 25 | 手工加工点 | 基础金属冶炼 | 20% | 铅矾矿、铝土矿、银矿、金矿、硫磺、硝石、原油 |
+| 精密滤网 | 强化玻璃 10 + 黄金 8 + 高级零部件 1 | 装配台 | 精密筛分（高级零件+高级合金） | 10% | 镍矿、钛铁矿、黑钨矿、铀、翡翠 |
+
+不在任何白名单的矿石（含其它 mod 矿脉）按矿脉权重归窗：>= 0.6 归木滤网、0.25~0.6 归铁滤网、< 0.25 归精密滤网。
+
 转化效率参考：
 
 - 手动：岩块(3) -> 矿粉(30) -> 筛 2 轮（耗 30）≈ 矿石(8~14)
@@ -41,7 +51,7 @@
 
 ## 4. 随机矿石池（按矿脉权重）
 
-- 机制：`OreSiftPool` 启动时扫描全部 `isResourceRock` 矿脉，权重 = `mineableScatterCommonality`，原版/MMT/其它 mod 矿脉自动入池；黑名单排除压缩机械（零部件）。
+- 机制：`OreSiftPool` 启动时扫描全部 `isResourceRock` 矿脉，权重 = `mineableScatterCommonality`，原版/MMT/其它 mod 矿脉自动入池；黑名单排除压缩机械（零部件）。筛子装有滤网时按滤网白名单窗口抽取（见第 3 节滤网表）。
 - 扫描的是 patch 生效后的最终 def：原版钢/银/金/玻璃钢矿脉已被 `MMT_Patch_VanillaVeins.xml` 改造为 MMT 铁矿/银矿/金矿/钛铁矿，故**钢铁、玻璃钢、原版银/金不会进池**；钛铁矿有两条矿脉入口（自身 0.25 + 原玻璃钢位 0.05）。其它 mod 的矿脉按其实际权重自动入池。
 
 | 矿石 | 权重 | 来源矿脉 |

@@ -44,8 +44,12 @@
       <li>MMT_SiftOrePowder_Hand</li>
     </recipes>
     <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="MyModeTest.CompProperties_SieveMesh" />
+    </comps>
     <inspectorTabs>
       <li>ITab_Bills</li>
+      <li>MyModeTest.ITab_SieveMesh</li>
     </inspectorTabs>
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>
@@ -110,9 +114,11 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
+      <li Class="MyModeTest.CompProperties_SieveMesh" />
     </comps>
     <inspectorTabs>
       <li>ITab_Bills</li>
+      <li>MyModeTest.ITab_SieveMesh</li>
     </inspectorTabs>
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>

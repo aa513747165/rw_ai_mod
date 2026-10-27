@@ -46,4 +46,21 @@
     <researchViewX>2.00</researchViewX>
     <researchViewY>7.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 精密筛分：解锁精密滤网，定向筛出稀有重矿（镍/钛铁/黑钨/铀/翡翠）。
+       前置高级零件（保证滤网材料可造）与高级合金（保证稀有矿产出即有用途） -->
+  <ResearchProjectDef>
+    <defName>MMT_PrecisionSifting</defName>
+    <label>精密筛分</label>
+    <description>研究致密金丝筛网的编织工艺，在装配台制作精密滤网，安装进筛子后可定向筛出镍矿、钛铁矿、黑钨矿、铀与翡翠等稀有重矿粒。</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_AdvancedComponents</li>
+      <li>MMT_AdvancedAlloys</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

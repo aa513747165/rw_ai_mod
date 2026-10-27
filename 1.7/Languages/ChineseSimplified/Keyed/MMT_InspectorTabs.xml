@@ -4,4 +4,6 @@
   <MMT_TabAutoProcessor>处理进度</MMT_TabAutoProcessor>
   <!-- 自动设备"增效模块"页签标题（ITab_ModuleSlots.labelKey） -->
   <MMT_TabModuleSlots>增效模块</MMT_TabModuleSlots>
+  <!-- 筛子"滤网"页签标题（ITab_SieveMesh.labelKey） -->
+  <MMT_TabSieveMesh>滤网</MMT_TabSieveMesh>
 </LanguageData>
