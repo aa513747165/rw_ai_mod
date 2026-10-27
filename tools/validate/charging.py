@@ -28,6 +28,7 @@ CS_FILES = [
     "Source/MyModeTest/Rechargeable.cs",
     "Source/MyModeTest/ChargingStation.cs",
     "Source/MyModeTest/ShieldPack.cs",
+    "Source/MyModeTest/EquipmentInterfaces.cs",
 ]
 
 TEX_STATION = "1.7/Textures/Things/Building/Misc/MMT_ChargingStation.png"
@@ -176,12 +177,24 @@ def validate_charging() -> None:
         "CompShieldPack",
         "Apparel_ChargeShieldPack",
         "DrawWornExtras",
-        '"GetGizmos"',
-        '"PreApplyDamage"',
-        '"set_Drafted"',
+        "IDraftedGizmoProvider",
+        "IWornDamageAbsorber",
+        "IUndraftCallback",
     ):
         if token not in shield_cs:
             fail(f"ShieldPack.cs 缺少: {token}")
+    # 三个统一补丁（原 ShieldPack.cs 尾部补丁已收敛到 EquipmentInterfaces.cs）
+    iface_cs = read_text(CS_FILES[3])
+    for token in (
+        '"GetGizmos"',
+        '"PreApplyDamage"',
+        '"set_Drafted"',
+        "IDraftedGizmoProvider",
+        "IWornDamageAbsorber",
+        "IUndraftCallback",
+    ):
+        if token not in iface_cs:
+            fail(f"EquipmentInterfaces.cs 缺少: {token}")
 
 
 SUITES = {"charging": validate_charging}

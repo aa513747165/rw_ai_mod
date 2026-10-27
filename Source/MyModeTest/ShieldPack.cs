@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -29,8 +28,10 @@ namespace MyModeTest
     /// 充能护盾腰带核心 Comp（挂在腰带层服装上）：
     /// 征召时指令栏出现开关按钮；开启后全额吸收所有伤害（含近战），按伤害量耗电，
     /// 同时持续缓慢耗电；电能耗尽或解除征召自动关闭。EMP 直接清空电量并击穿护盾。
+    /// 三个集成交互（指令栏按钮/伤害拦截/解除征召回调）经 EquipmentInterfaces.cs 的
+    /// 统一补丁接入，本 comp 只需实现接口。
     /// </summary>
-    public class CompShieldPack : ThingComp
+    public class CompShieldPack : ThingComp, IDraftedGizmoProvider, IWornDamageAbsorber, IUndraftCallback
     {
         /// <summary>护盾是否开启（存档持久化）。</summary>
         private bool active;
@@ -162,7 +163,19 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>解除征召时自动关闭（由 set_Drafted 补丁调用，CompTick 兜底）。</summary>
+        /// <summary>统一伤害吸收补丁入口：护盾生效中拦截伤害（语义同原 TryAbsorb）。</summary>
+        public bool TryAbsorbDamage(Pawn pawn, ref DamageInfo dinfo)
+        {
+            return TryAbsorb(pawn, ref dinfo);
+        }
+
+        /// <summary>统一指令栏补丁入口：征召时提供开关按钮。</summary>
+        public IEnumerable<Gizmo> GetDraftedGizmos(Pawn pawn)
+        {
+            yield return MakeGizmo(pawn);
+        }
+
+        /// <summary>解除征召时自动关闭（由统一 set_Drafted 补丁调用，CompTick 兜底）。</summary>
         public void OnUndrafted(Pawn wearer)
         {
             if (active)
@@ -266,76 +279,6 @@ namespace MyModeTest
                 + shield.Props.wdPerDamage.ToString("F0") + " Wd，满电约可吸收 "
                 + (max / shield.Props.wdPerDamage).ToString("F0") + " 点伤害；电量可在充能台回充。");
             return new GizmoResult(GizmoState.Clear);
-        }
-    }
-
-    /// <summary>
-    /// 护盾腰带开关补丁（与 ShieldDeployGizmoPatch 同模式）：
-    /// 征召 + 玩家殖民者 + 穿戴充能护盾腰带时，指令栏追加开关按钮。
-    /// </summary>
-    [HarmonyPatch(typeof(Pawn), "GetGizmos")]
-    public static class ShieldPackGizmoPatch
-    {
-        public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> values, Pawn __instance)
-        {
-            foreach (Gizmo gizmo in values)
-                yield return gizmo;
-            if (!__instance.Drafted || !__instance.IsColonistPlayerControlled)
-                yield break;
-            if (__instance.apparel == null)
-                yield break;
-            foreach (Apparel ap in __instance.apparel.WornApparel)
-            {
-                CompShieldPack comp = ap.TryGetComp<CompShieldPack>();
-                if (comp != null)
-                    yield return comp.MakeGizmo(__instance);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 伤害吸收补丁：护盾生效中拦截 Pawn.PreApplyDamage，
-    /// 全额吸收时置 absorbed=true 并跳过原方法；部分吸收时削减伤害量后放行。
-    /// </summary>
-    [HarmonyPatch(typeof(Pawn), "PreApplyDamage")]
-    public static class ShieldPackAbsorbPatch
-    {
-        public static bool Prefix(Pawn __instance, ref DamageInfo dinfo, out bool absorbed)
-        {
-            absorbed = false;
-            if (__instance.apparel == null)
-                return true;
-            List<Apparel> worn = __instance.apparel.WornApparel;
-            for (int i = 0; i < worn.Count; i++)
-            {
-                CompShieldPack comp = worn[i].TryGetComp<CompShieldPack>();
-                if (comp != null && comp.ShieldActive && comp.TryAbsorb(__instance, ref dinfo))
-                {
-                    absorbed = true;
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
-    /// <summary>解除征召时自动关闭身上所有开启的护盾腰带。</summary>
-    [HarmonyPatch(typeof(Pawn_DraftController), "set_Drafted")]
-    public static class ShieldPackUndraftPatch
-    {
-        public static void Postfix(Pawn_DraftController __instance, bool value)
-        {
-            if (value)
-                return;
-            Pawn pawn = __instance.pawn;
-            if (pawn?.apparel == null)
-                return;
-            foreach (Apparel ap in pawn.apparel.WornApparel)
-            {
-                CompShieldPack comp = ap.TryGetComp<CompShieldPack>();
-                if (comp != null)
-                    comp.OnUndrafted(pawn);
-            }
         }
     }
 

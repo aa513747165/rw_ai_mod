@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using HarmonyLib;
 using RimWorld;
 using Verse;
 using Verse.Sound;
@@ -23,7 +22,7 @@ namespace MyModeTest
     /// <summary>
     /// 使用效果 Comp：在使用者脚下生成指定建筑（临时护盾投影器）并归属使用者阵营。
     /// 物品销毁由原版 CompUseEffect_DestroySelf 负责，本 Comp 只管生成。
-    /// 非征召状态的部署走这条物品使用流程；征召状态的即时部署见 ShieldDeployGizmoPatch。
+    /// 非征召状态的部署走这条物品使用流程；征召状态的即时部署见 CompDeployShieldGizmo。
     /// </summary>
     public class CompUseEffect_SpawnBuilding : CompUseEffect
     {
@@ -127,22 +126,24 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 部署式护盾 gizmo 补丁：小人背包携带护盾发生器且处于征召状态时，
-    /// 在指令栏追加"部署护盾"按钮（护盾图标），点击立即释放。
-    /// 非征召状态不显示（走物品自带的 CompUsable 使用流程，有部署读条）。
+    /// 部署式护盾指令 Comp（挂在发生器物品 def 上）：
+    /// 由统一 GetGizmos 补丁（EquipmentInterfaces.cs）在"征召 + 背包携带"时发现，
+    /// 追加"部署护盾"按钮，点击立即释放。非征召状态不显示（走物品自带的 CompUsable 使用流程）。
     /// </summary>
-    [HarmonyPatch(typeof(Pawn), "GetGizmos")]
-    public static class ShieldDeployGizmoPatch
+    public class CompDeployShieldGizmo : ThingComp, IDraftedGizmoProvider
     {
-        public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> values, Pawn __instance)
+        public IEnumerable<Gizmo> GetDraftedGizmos(Pawn pawn)
         {
-            foreach (Gizmo gizmo in values)
-                yield return gizmo;
-            if (!__instance.Drafted || !__instance.IsColonistPlayerControlled)
-                yield break;
-            if (ShieldDeployUtility.FindCarriedShield(__instance) == null)
-                yield break;
-            yield return ShieldDeployUtility.MakeDeployCommand(__instance);
+            yield return ShieldDeployUtility.MakeDeployCommand(pawn);
+        }
+    }
+
+    /// <summary>部署式护盾指令 Comp 参数（XML 挂载点）。</summary>
+    public class CompProperties_DeployShieldGizmo : CompProperties
+    {
+        public CompProperties_DeployShieldGizmo()
+        {
+            compClass = typeof(CompDeployShieldGizmo);
         }
     }
 

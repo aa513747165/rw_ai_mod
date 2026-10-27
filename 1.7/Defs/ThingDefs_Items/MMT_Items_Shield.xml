@@ -48,6 +48,8 @@
       </li>
       <li Class="CompProperties_UseEffectDestroySelf" />
       <li Class="CompProperties_Forbiddable" />
+      <!-- 征召时由统一 GetGizmos 补丁发现，向指令栏追加"部署护盾"按钮 -->
+      <li Class="MyModeTest.CompProperties_DeployShieldGizmo" />
     </comps>
   </ThingDef>
 </Defs>
