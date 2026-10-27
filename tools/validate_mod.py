@@ -6761,7 +6761,7 @@ def validate_shield() -> None:
     cs_src = read_text(SHIELD_CS)
     for token in ("CompProperties_UseEffectSpawnBuilding", "CompUseEffect_SpawnBuilding",
                   "buildingDef", "GenSpawn.Spawn", "SetFaction",
-                  "ShieldDeployGizmoPatch", "HarmonyPatch", "GetGizmos",
+                  "CompDeployShieldGizmo", "IDraftedGizmoProvider",
                   "ShieldDeployUtility", "DeployFromPawn", "PlayDeployFx",
                   "FleckDefOf.BroadshieldActivation", "SoundDefOf.Broadshield_Startup",
                   "MMT_ShieldDefOf"):
@@ -6918,7 +6918,8 @@ def validate_bionics() -> None:
     for t in making:
         d = research["MMT_Prosthesis_" + t]
         assert_equal(child_text(d, "tab"), "MMT_ResearchTab", f"义肢制造 {t} 页签")
-        assert_equal(child_text(d, "researchViewY"), "6.50", f"义肢制造 {t} 行")
+        assert_equal(child_text(d, "researchViewY"), research_coord("MMT_Prosthesis_" + t, "y"),
+                     f"义肢制造 {t} 行")
     for t in install:
         assert "MMT_ProsthesisInstall_" + t in research, f"缺义肢安装 {t}"
     assert_equal(li_values(research["MMT_Prosthesis_B1"], "prerequisites"), ["MMT_Medicine_B1"], "制造 B1 前置")
