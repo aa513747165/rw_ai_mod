@@ -81,7 +81,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
   - `BionicsComps.cs`：仿生链 CONN 特殊效果重实现（狂战士芯片狂暴 gizmo、精神扭曲思想清除、缪斯娱乐供给、手电照明 mote、六种神经调制使用品效果），对照 CONN.dll 行为简化实现。
   - `Rechargeable.cs`：通用可充能 Comp（电量存档 + 充/放电接口），充能台与充能设备共用的电量载体。
   - `ChargingStation.cs`：充能台（内置容器持一件设备，通电回充；右键小人手动装卸：空台从穿戴/背包选设备装入，有设备确认后取回；DrawAt 画飘浮设备与充能光柱；装卸各一个 JobDriver）。
-  - `ShieldPack.cs`：充能护盾背包（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。
+  - `ShieldPack.cs`：充能护盾腰带（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡，用 MMT 专属贴图 `Things/Item/MMT/Shield/MMT_ShieldBubbleTech`；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。
 - C# 注释与日志均用中文。
 
 ## 代码与命名约定
@@ -89,7 +89,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
 - 所有 defName 加 `MMT_` 前缀（如 `MMT_Sand`、`MMT_GlassworksTable`）。
 - Def 文件按 `MMT_<类别>_<链名>.xml` 命名（如 `MMT_Recipes_Parts.xml`、`MMT_Buildings_ElectricWood.xml`、`MMT_Research_Science.xml`）。
 - label/description 用中文，直接写死在 Def 中。
-- 贴图约定：多状态物品贴图按 `名称_a/_b/_c.png` 放在同名子目录（如 `MMT_Ore/MMT_CopperOre/MMT_CopperOre_a.png`），texPath 指向子目录路径；建筑贴图带朝向与遮罩（`_east/_north/_south` + `m` 后缀，如 `MMT_EConcreteMixer/MMT_EConcreteMixer_east_m.png`）。
+- 贴图约定：多状态物品贴图按 `名称_a/_b/_c.png` 放在同名子目录（如 `MMT_Ore/MMT_CopperOre/MMT_CopperOre_a.png`），texPath 指向子目录路径；建筑贴图带朝向与遮罩（`_east/_north/_south`，遮罩为方向字母后直接接 `m`，如 `MMT_EConcreteMixer/MMT_EConcreteMixer_eastm.png`；单图建筑为 `<名>.png` + `<名>_m.png`）。贴图设计细则见 `.claude/skills/rw-texture-design/SKILL.md`。
 - MMT 与 HSK 的 defName 映射维护在 `tools/build_mmt_chains_compare.js` 的 `MMT_ALIAS` 表中——新增与 HSK 对应的资源时同步更新该表。
 - 提交信息使用中文 conventional commits（如 `feat: 添加零件链研究与配方`）。
 - 整体代码审查只在用户主动要求时才执行。
