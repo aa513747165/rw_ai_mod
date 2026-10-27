@@ -6,6 +6,8 @@
 *.user
 *.suo
 docs/temp/
+tools/temp/
+汉化/
 1.7/Assemblies/*.dll
 1.7/Assemblies/*.pdb
 1.7/Assemblies/*.deps.json
