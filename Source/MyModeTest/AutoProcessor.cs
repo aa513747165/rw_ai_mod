@@ -64,7 +64,7 @@ namespace MyModeTest
     /// 提供安装/卸载/掉落返还与效果聚合查询（GetEffectSum）。
     /// 模块种类与效果全部走物品上的 ModuleExtension 配置（见 ModuleSystem.cs），新增模块零 C# 改动。
     /// </summary>
-    public class CompModuleSlots : ThingComp
+    public class CompModuleSlots : CompItemSlotBase
     {
         // 已安装模块列表（物品实体在安装时销毁，卸载/拆除时按 itemDef 再造返还）
         private List<InstalledSlotItem> installed = new List<InstalledSlotItem>();
@@ -81,6 +81,16 @@ namespace MyModeTest
         private CompProperties_ModuleSlots Props
         {
             get { return (CompProperties_ModuleSlots)props; }
+        }
+
+        public override JobDef InstallJobDef
+        {
+            get { return MMT_DefOf.MMT_InstallProcessorModule; }
+        }
+
+        protected override string ForbiddenLabel
+        {
+            get { return "安装增效模块"; }
         }
 
         /// <summary>该物品是否为增效模块（以是否挂 ModuleExtension 为准，新增模块物品自动识别）。</summary>
@@ -201,14 +211,14 @@ namespace MyModeTest
         }
 
         /// <summary>该物品是否可装入（是模块 + 本设备支持该组 + 组内未满）。</summary>
-        public bool CanInstallThing(ThingDef def)
+        public override bool CanInstallThing(ThingDef def)
         {
             ModuleExtension ext = def?.GetModExtension<ModuleExtension>();
             return ext != null && InstalledCount(ext.slotKey) < MaxCount(ext.slotKey);
         }
 
         /// <summary>安装一件模块物品：计入槽位并销毁物品；槽满或非模块返回 false 不消耗。</summary>
-        public bool InstallThing(Thing module)
+        public override bool InstallThing(Thing module)
         {
             if (!CanInstallThing(module.def))
                 return false;
@@ -278,21 +288,9 @@ namespace MyModeTest
                 installed.Add(new InstalledSlotItem { slotKey = ext.slotKey, itemDef = def });
         }
 
-        /// <summary>右键菜单：殖民者搬运模块物品安装（槽满或无可用物品时禁用并注明原因）。</summary>
-        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        /// <summary>安装候选：遍历全部模块物品 def（本设备不支持的组不显示；槽满禁用并注明上限）。</summary>
+        protected override IEnumerable<SlotOffer> GetOffers(Pawn selPawn)
         {
-            if (!selPawn.IsColonistPlayerControlled || selPawn.Downed
-                || !selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
-                yield break;
-            if (selPawn.Map != parent.Map)
-                yield break;
-            if (parent.IsForbidden(selPawn))
-            {
-                // IsForbidden 含"建筑格在小人活动区域外"：此时原版语义是该建筑对小人不可交互。
-                // 不能静默不给选项，否则玩家完全看不出为何装不了（研磨机/筛子被活动区挡住时曾表现为"无法安装"）
-                yield return new FloatMenuOption("安装增效模块（设备被禁止或在小人活动区域外）", null);
-                yield break;
-            }
             foreach (ThingDef itemDef in AllModuleDefs())
             {
                 ModuleExtension ext = itemDef.GetModExtension<ModuleExtension>();
@@ -303,106 +301,20 @@ namespace MyModeTest
                 if (!CanInstallThing(itemDef))
                 {
                     // 流程节点：槽位已满，禁用
-                    yield return new FloatMenuOption(label + "（已达上限 " + MaxCount(ext.slotKey) + "）", null);
+                    yield return new SlotOffer
+                    {
+                        label = label + "（已达上限 " + MaxCount(ext.slotKey) + "）",
+                        disabled = true,
+                    };
                     continue;
                 }
-                Thing item = FindModuleItem(selPawn, itemDef);
-                if (item == null)
+                yield return new SlotOffer
                 {
-                    // 区分"地图上根本没有"与"有但不可达/被禁止/已被预定"，方便玩家排查
-                    string why = parent.Map.listerThings.ThingsOfDef(itemDef).Count == 0
-                        ? "（没有" + itemDef.label + "，需先在电动装配台制作）"
-                        : "（" + itemDef.label + "不可达、被禁止或已被其他工作预定）";
-                    yield return new FloatMenuOption(label + why, null);
-                    continue;
-                }
-                Thing target = item;
-                yield return new FloatMenuOption(label, delegate
-                {
-                    Job job = JobMaker.MakeJob(MMT_DefOf.MMT_InstallProcessorModule, target, parent);
-                    // 1.7 的 Toils_Haul.TakeToInventory 会校验 curJob.count > 0，
-                    // MakeJob 默认 count = -1 会在拾取瞬间报 "Invalid count: -1" 红字
-                    job.count = 1;
-                    selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                });
+                    label = label,
+                    itemDef = itemDef,
+                    missingHint = "，需先在电动装配台制作",
+                };
             }
-        }
-
-        /// <summary>找一件可达、未禁用、可预定的模块物品（不可达时视为没有）。
-        /// 搜索根必须用小人位置而非建筑位置：研磨机/筛子本体 Impassable，中心格不属于任何通行区域，
-        /// 以建筑位置为根的 ClosestThingReachable 会把所有模块判为"不可达"（采石机 PassThroughOnly 才有区域，故之前只有它能装）。</summary>
-        private Thing FindModuleItem(Pawn selPawn, ThingDef itemDef)
-        {
-            return GenClosest.ClosestThingReachable(selPawn.Position, parent.Map, ThingRequest.ForDef(itemDef),
-                PathEndMode.ClosestTouch, TraverseParms.For(selPawn), 9999f,
-                t => !t.IsForbidden(selPawn) && selPawn.CanReserve(t, 1, -1, null, false));
-        }
-    }
-
-    /// <summary>
-    /// 安装增效模块作业（仿加燃料）：取一件模块物品 → 搬到设备旁 → 短暂装配 → 装入槽位。
-    /// targetA=模块物品，targetB=设备。
-    /// </summary>
-    public class JobDriver_InstallModule : JobDriver
-    {
-        /// <summary>装配耗时（tick）。</summary>
-        private const int InstallTicks = 300;
-
-        private CompModuleSlots Slots
-        {
-            get { return ((ThingWithComps)job.GetTarget(TargetIndex.B).Thing).GetComp<CompModuleSlots>(); }
-        }
-
-        public override bool TryMakePreToilReservations(bool errorOnFailed)
-        {
-            // 只预定模块物品，不预定设备本身：带燃料仓的设备（研磨机/筛子）常被
-            // 加油作业长期预定，若这里也预定设备会导致安装作业根本无法开始。
-            // 并发安装的槽位冲突由装配 toil 的 CanInstallThing 复检兜底（槽满不吞物品）。
-            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
-        }
-
-        protected override IEnumerable<Toil> MakeNewToils()
-        {
-            this.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            this.FailOnBurningImmobile(TargetIndex.B);
-            // 取货：走到模块物品并拾取 1 件入背包
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
-                .FailOnDespawnedNullOrForbidden(TargetIndex.A)
-                .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
-            yield return Toils_Haul.TakeToInventory(TargetIndex.A, 1);
-            // 搬运到设备旁
-            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch);
-            // 装配：短暂等待 + 进度条；期间槽位被抢先装满则中止（不吞物品，留给最终 toil 前校验）
-            Toil wait = Toils_General.Wait(InstallTicks, TargetIndex.B);
-            wait.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            wait.FailOnCannotTouch(TargetIndex.B, PathEndMode.Touch);
-            wait.FailOn(() => !Slots.CanInstallThing(CarriedModuleDef()));
-            wait.WithProgressBarToilDelay(TargetIndex.B);
-            yield return wait;
-            // 流程结束：消耗背包中的模块物品并计入设备槽位
-            yield return Toils_General.DoAtomic(delegate
-            {
-                Thing module = CarriedModule();
-                if (module != null)
-                    Slots.InstallThing(module);
-            });
-        }
-
-        private ThingDef CarriedModuleDef()
-        {
-            Thing module = CarriedModule();
-            return module != null ? module.def : null;
-        }
-
-        /// <summary>背包中第一件模块物品。</summary>
-        private Thing CarriedModule()
-        {
-            foreach (Thing t in pawn.inventory.innerContainer)
-            {
-                if (CompModuleSlots.IsModule(t.def))
-                    return t;
-            }
-            return null;
         }
     }
 

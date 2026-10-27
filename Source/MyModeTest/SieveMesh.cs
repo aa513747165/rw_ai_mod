@@ -36,13 +36,23 @@ namespace MyModeTest
     /// 筛子滤网槽 Comp：记录已安装滤网 def（安装即销毁物品，卸载/拆除再造返还，无耐久）。
     /// 装上后筛分只在滤网白名单内抽取并按概率掺沙子；无滤网维持全池随机（现状）。
     /// </summary>
-    public class CompSieveMesh : ThingComp
+    public class CompSieveMesh : CompItemSlotBase
     {
         // 已安装滤网 def（物品实体在安装时销毁，卸载/拆除时再造返还）
         private ThingDef installedMesh;
 
         // 全部滤网物品 def（带 MeshFilterExtension 者），右键菜单用；延迟扫描一次
         private static List<ThingDef> meshDefs;
+
+        public override JobDef InstallJobDef
+        {
+            get { return MMT_DefOf.MMT_InstallSieveMesh; }
+        }
+
+        protected override string ForbiddenLabel
+        {
+            get { return "安装滤网"; }
+        }
 
         public bool HasMesh
         {
@@ -74,13 +84,13 @@ namespace MyModeTest
         }
 
         /// <summary>该物品是否为可装入的滤网（槽位空且是滤网）。</summary>
-        public bool CanInstallThing(ThingDef def)
+        public override bool CanInstallThing(ThingDef def)
         {
             return installedMesh == null && IsMesh(def);
         }
 
         /// <summary>安装一件滤网物品：记录 def 并销毁物品；已有滤网或非滤网返回 false 不消耗。</summary>
-        public bool InstallThing(Thing mesh)
+        public override bool InstallThing(Thing mesh)
         {
             if (!CanInstallThing(mesh.def))
                 return false;
@@ -124,117 +134,27 @@ namespace MyModeTest
             return text;
         }
 
-        /// <summary>右键菜单：殖民者搬运滤网物品安装（已装滤网或无可用物品时禁用并注明原因）。</summary>
-        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        /// <summary>安装候选：槽位被占用时给一个禁用项引导卸载；否则逐个滤网 def 给安装项。</summary>
+        protected override IEnumerable<SlotOffer> GetOffers(Pawn selPawn)
         {
-            if (!selPawn.IsColonistPlayerControlled || selPawn.Downed
-                || !selPawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
-                yield break;
-            if (selPawn.Map != parent.Map)
-                yield break;
-            if (parent.IsForbidden(selPawn))
-            {
-                // 与增效模块一致：被禁止/活动区外不能静默无选项，否则玩家看不出为何装不了
-                yield return new FloatMenuOption("安装滤网（设备被禁止或在小人活动区域外）", null);
-                yield break;
-            }
             if (installedMesh != null)
             {
                 // 流程节点：槽位已占用，引导到页签卸载
-                yield return new FloatMenuOption("已安装" + installedMesh.label + "（更换请先在滤网页签卸载）", null);
+                yield return new SlotOffer
+                {
+                    label = "已安装" + installedMesh.label + "（更换请先在滤网页签卸载）",
+                    disabled = true,
+                };
                 yield break;
             }
             foreach (ThingDef meshDef in AllMeshDefs())
             {
-                Thing item = FindMeshItem(selPawn, meshDef);
-                if (item == null)
+                yield return new SlotOffer
                 {
-                    // 区分"地图上根本没有"与"有但不可达/被禁止/已被预定"，方便玩家排查
-                    string why = parent.Map.listerThings.ThingsOfDef(meshDef).Count == 0
-                        ? "（没有" + meshDef.label + "）"
-                        : "（" + meshDef.label + "不可达、被禁止或已被其他工作预定）";
-                    yield return new FloatMenuOption("安装" + meshDef.label + why, null);
-                    continue;
-                }
-                Thing target = item;
-                yield return new FloatMenuOption("安装" + meshDef.label, delegate
-                {
-                    Job job = JobMaker.MakeJob(MMT_DefOf.MMT_InstallSieveMesh, target, parent);
-                    // 1.7 的 Toils_Haul.TakeToInventory 会校验 curJob.count > 0，MakeJob 默认 -1 会爆红字
-                    job.count = 1;
-                    selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                });
+                    label = "安装" + meshDef.label,
+                    itemDef = meshDef,
+                };
             }
-        }
-
-        /// <summary>找一件可达、未禁用、可预定的滤网物品（搜索根必须用小人位置，理由见 CompModuleSlots）。</summary>
-        private Thing FindMeshItem(Pawn selPawn, ThingDef itemDef)
-        {
-            return GenClosest.ClosestThingReachable(selPawn.Position, parent.Map, ThingRequest.ForDef(itemDef),
-                PathEndMode.ClosestTouch, TraverseParms.For(selPawn), 9999f,
-                t => !t.IsForbidden(selPawn) && selPawn.CanReserve(t, 1, -1, null, false));
-        }
-    }
-
-    /// <summary>
-    /// 安装滤网作业（仿加燃料/增效模块）：取一件滤网物品 → 搬到筛子旁 → 短暂装配 → 装入槽位。
-    /// targetA=滤网物品，targetB=筛子。
-    /// </summary>
-    public class JobDriver_InstallSieveMesh : JobDriver
-    {
-        /// <summary>装配耗时（tick）。</summary>
-        private const int InstallTicks = 300;
-
-        private CompSieveMesh MeshSlot
-        {
-            get { return ((ThingWithComps)job.GetTarget(TargetIndex.B).Thing).GetComp<CompSieveMesh>(); }
-        }
-
-        public override bool TryMakePreToilReservations(bool errorOnFailed)
-        {
-            // 只预定滤网物品，不预定设备本身（与增效模块一致：带燃料仓的筛子常被加油作业长期预定）
-            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
-        }
-
-        protected override IEnumerable<Toil> MakeNewToils()
-        {
-            this.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            this.FailOnBurningImmobile(TargetIndex.B);
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
-                .FailOnDespawnedNullOrForbidden(TargetIndex.A)
-                .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
-            yield return Toils_Haul.TakeToInventory(TargetIndex.A, 1);
-            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch);
-            Toil wait = Toils_General.Wait(InstallTicks, TargetIndex.B);
-            wait.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            wait.FailOnCannotTouch(TargetIndex.B, PathEndMode.Touch);
-            wait.FailOn(() => !MeshSlot.CanInstallThing(CarriedMeshDef()));
-            wait.WithProgressBarToilDelay(TargetIndex.B);
-            yield return wait;
-            // 流程结束：消耗背包中的滤网物品并装入设备槽位
-            yield return Toils_General.DoAtomic(delegate
-            {
-                Thing mesh = CarriedMesh();
-                if (mesh != null)
-                    MeshSlot.InstallThing(mesh);
-            });
-        }
-
-        private ThingDef CarriedMeshDef()
-        {
-            Thing mesh = CarriedMesh();
-            return mesh != null ? mesh.def : null;
-        }
-
-        /// <summary>背包中第一件滤网物品。</summary>
-        private Thing CarriedMesh()
-        {
-            foreach (Thing t in pawn.inventory.innerContainer)
-            {
-                if (CompSieveMesh.IsMesh(t.def))
-                    return t;
-            }
-            return null;
         }
     }
 

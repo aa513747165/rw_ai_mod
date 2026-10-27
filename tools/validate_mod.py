@@ -6419,8 +6419,8 @@ def validate_orepowder() -> None:
         assert token in cs_src, f"OreSiftPool.cs 缺少关键实现: {token}"
     mesh_src = (ROOT / SIEVE_MESH_CS).read_text(encoding="utf-8")
     for token in ("MeshFilterExtension", "CompProperties_SieveMesh", "CompSieveMesh",
-                  "InstallThing", "Uninstall", "PostDeSpawn", "CompFloatMenuOptions",
-                  "JobDriver_InstallSieveMesh", "ITab_SieveMesh", "Scribe_Defs"):
+                  "InstallThing", "Uninstall", "PostDeSpawn", "CompItemSlotBase",
+                  "GetOffers", "ITab_SieveMesh", "Scribe_Defs"):
         assert token in mesh_src, f"SieveMesh.cs 缺少关键实现: {token}"
     about = (ROOT / "About/About.xml").read_text(encoding="utf-8")
     assert "brrainz.harmony" in about, "About.xml 缺少 Harmony modDependencies"
@@ -6429,10 +6429,15 @@ def validate_orepowder() -> None:
                   "OreSiftPool.RollOre", "intervalTicks", "ISlotGroupParent",
                   "CompProperties_ModuleSlots", "CompModuleSlots", "ModuleExtension",
                   "GetEffectSum", "InstallThing", "Uninstall", "PostDeSpawn",
-                  "CompFloatMenuOptions", "JobDriver_InstallModule",
+                  "CompItemSlotBase", "GetOffers",
                   "ProcessorLane", "ITab_AutoProcessor", "ITab_ModuleSlots",
                   "CompSieveMesh", "AllModuleDefs"):
         assert token in auto_src, f"AutoProcessor.cs 缺少关键实现: {token}"
+    # 统一安装链路（槽位基类 + 通用安装作业）
+    slot_src = (ROOT / "Source/MyModeTest/SlotInstall.cs").read_text(encoding="utf-8")
+    for token in ("IInstallSlotReceiver", "CompItemSlotBase", "JobDriver_InstallIntoSlot",
+                  "JobDriver_InstallModule", "JobDriver_InstallSieveMesh", "ClosestThingReachable"):
+        assert token in slot_src, f"SlotInstall.cs 缺少关键实现: {token}"
     # 页签标题 Keyed 翻译（labelKey = MMT_TabAutoProcessor / MMT_TabModuleSlots / MMT_TabSieveMesh）
     itab_keys = (ROOT / ITAB_KEYS_XML).read_text(encoding="utf-8")
     assert "MMT_TabAutoProcessor" in itab_keys, "Keyed 翻译缺少 MMT_TabAutoProcessor"
