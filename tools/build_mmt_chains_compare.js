@@ -9,39 +9,9 @@ const ROOT = path.resolve(__dirname, '..');
 const HSK_DOC = path.join(ROOT, 'docs', 'hsk-resource-production-paths.md');
 const DST = path.join(ROOT, 'docs', 'mmt-vs-hsk-resource-chains.md');
 
-// ---------- MMT -> HSK defName 别名（去 MMT_ 前缀后不一致的） ----------
-const MMT_ALIAS = {
-  Concrete: 'ConcreteResource', Sand: 'SandResource', ElectronicParts: 'ElectronicComponents',
-  IntegratedCircuit: 'Electronics', Microchip: 'Microchips', SpacerComponent: 'ComponentSpacer',
-  UltraComponent: 'ComponentUltra', HandFurnace: 'TableFurnace', ElectricArcFurnace: 'EAF',
-  GlassworksTable: 'GlassworkTable', HandChemTable: 'TableChemlab', RoboticAssembler: 'RobAssem',
-  HandSawmill: 'TableSawmillHand', ElectricSawmill: 'TableSawmillElectric',
-  HandElectronicsTable: 'TableElectronics', ElectricElectronicsTable: 'TableElectronics',
-  ParticleCollider: 'HadronCollider',
-  // B8 武器部件与加工台
-  WeaponParts: 'Weapon_Parts', PistolComponent: 'Pistol_Component', SMGComponent: 'SMG_Component',
-  ShotgunComponent: 'Shotgun_Component', RifleComponent: 'Rifle_Component', AdvRifleComponent: 'AdvRifle_Component',
-  SniperComponent: 'Sniper_Component', AdvSniperComponent: 'AdvSniper_Component', HeavyComponent: 'Heavy_Component',
-  CannonComponent: 'Cannon_Component', LauncherComponent: 'Launcher_Component', ChargedComponent: 'Charged_Component',
-  LaserComponent: 'Laser_Component', PlasmaComponent: 'Plasma_Component',
-  WeaponCraftingTable: 'WeaponCraftingWorkTable', AdvWeaponCraftingTable: 'AdvWeaponCraftingWorkTable',
-  MechWeaponTable: 'MechWeaponCraftingWorkTable',
-  // B8 作物植物（竹/棕榈为原版 def，patch 收获物，不在此表）
-  PlantFlax: 'Plant_Flax', PlantWildRose: 'Plant_WildRose', PlantHypericum: 'Plant_Hypericum',
-  PlantMint: 'Plant_Mint', PlantHevea: 'Plant_TreeHevea', PlantRedwood: 'PlantTreeRedwood',
-  // 药品链（与 HSK 同名的 NeutroPetals/DriedLeavesSmokeleaf/Bandagekit/HerbMedicine/MedicalDrink/
-  // HerbalTea/ActivatedCarbon/Methadone/DryingRack/ElectricDryingRack/NeutroamineRefiner 无需别名）
-  Aloe: 'aloe', BasicMedicineKit: 'Herbmedicine', BerserkHerb: 'Berserk_herb',
-  Ibuprofen: 'VG_Ibuprofen', PlantAloe: 'Plant_Aloe', PlantNeutroFlower: 'Plant_NeutroFlower',
-  MedicalTable: 'meditable', ElectricMedicalTable: 'meditable',
-  // 后继更新一新增
-  TurretKPV: 'Turret_KPV', Gun_KPV: 'Gun_KPV', Ammo_145x114mm_FMJ: 'Ammo_145x114mm_FMJ',
-  FuelRod: 'FuelRods', NuclearReactor: 'ReactorCoreA', CoalGenerator: 'ChemfuelPoweredGenerator',
-  MultiAnalyzer: 'MultiAnalyzer', LabStation: 'LabStation', LabTerminal: 'LabTerminal',
-  NuclearPower: 'RimatomicsActivate',
-  // 仿生链材料（其余仿生部件/工作台/研究为 MMT_ 前缀同名或结构性移植，不在此表）
-  ArtificialBone: 'ArtificialBone', MedicalAssistantChip: 'MAAI_Chip',
-};
+// ---------- MMT -> HSK defName 别名（去 MMT_ 前缀后不一致的），与 tools/build_mmt_*_doc.py 共用 ----------
+const MMT_ALIAS = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'data', 'mmt_hsk_alias.json'), 'utf8'));
+delete MMT_ALIAS._comment;
 
 // ---------- 读取 MMT Defs ----------
 function walk(dir) {
@@ -64,6 +34,12 @@ function grabBlock(block, tag) {
 function liList(block) {
   if (!block) return [];
   return [...block.matchAll(/<li>([^<]+)<\/li>/g)].map(m => m[1].trim());
+}
+function kvMap(block) {
+  const out = {};
+  if (!block) return out;
+  for (const m of block.matchAll(/<([A-Za-z0-9_.]+)>([^<]+)<\/[A-Za-z0-9_.]+>/g)) out[m[1]] = m[2].trim();
+  return out;
 }
 
 const defsDir = path.join(ROOT, '1.7', 'Defs');
@@ -115,8 +91,16 @@ for (const f of walk(defsDir)) {
     } else if (kind === 'ThingDef') {
       const bld = grabBlock(b, 'building');
       const mineThing = bld ? grab(bld, 'mineableThing') : null;
+      const statBases = kvMap(grabBlock(b, 'statBases'));
       buildings[def] = {
-        label,
+        label, file: path.basename(f), dir: path.basename(path.dirname(f)),
+        size: grab(b, 'size'),
+        costStuffCount: grab(b, 'costStuffCount'),
+        stuffCats: liList(grabBlock(b, 'stuffCategories')),
+        costList: kvMap(grabBlock(b, 'costList')),
+        workToBuild: statBases['WorkToBuild'] || null,
+        power: grab(b, 'basePowerConsumption'),
+        turret: !!(bld && grab(bld, 'turretGunDef')),
         recipes: liList(grabBlock(b, 'recipes')),
         research: liList(grabBlock(b, 'researchPrerequisites')),
         mineable: mineThing ? {
@@ -314,6 +298,7 @@ out.push('- MMT 数据源：`1.7/Defs`（本 MOD）；HSK 数据源：[hsk-resou
 out.push('- 由 `tools/build_mmt_chains_compare.js` 自动生成；MMT 侧使用 MOD 实际中文 label，HSK 侧沿用 MMT 对应物的中文名并附 defName。');
 out.push('- 匹配规则：产出物的 HSK 对应 def 相同，且首选投入/建筑别名一致者优先；`MMT 新增` 表示 HSK 无该资源或对应配方。');
 out.push('- 矿脉说明：原版钢/银/金/玻璃钢矿脉已由 `1.7/Patches/MMT_Patch_VanillaVeins.xml` 改造为 MMT 铁矿/银矿/金矿/钛铁矿（HSK 做法），不再作为 MMT def 出现在下表；零件矿脉照 HSK 保留原版。');
+out.push('- 第 5 节建筑造价的 HSK 侧直接解析 `Hardcore-SK/Mods/Core_SK/Defs/ThingDefs_Buildings`（沿 ParentName 链合并字段），不经 paths 文档。');
 out.push('');
 
 // 统计
@@ -326,6 +311,13 @@ const FAMILY_ZH = {
   Wood: '木材', ElectricWood: '电动木材', Concrete: '混凝土', Glass: '玻璃',
   Electronics: '电子', ElectricElectronics: '电动电子', Petrochem: '石化',
   ElectricPetrochem: '电动石化', Parts: '零件',
+  Agriculture: '农业', Bionics: '仿生', Ceramics: '陶瓷', Drugs: '药品', Matter: '物质',
+  Medicine: '医药', Nuclear: '核能', OrePowder: '矿粉', PetrochemExt: '石化扩展',
+  ProcessorModules: '处理机模块', Robotics: '机器人', Shield: '护盾', Textiles: '纺织',
+  TopMaterials: '顶级材料', TurretAmmo: '炮塔弹药', TurretCrates: '炮塔箱',
+  WeaponParts: '武器部件', Weapons_Archaic: '古代武器', Weapons_Conventional: '常规武器',
+  Weapons_Futuristic: '未来武器', ChargeShield: '充能护盾', PsychicShield: '灵能护盾',
+  SieveMeshes: '筛网', StateBackup: '状态备份', BionicsRemove: '仿生移除',
 };
 const famOrder = [];
 const byFam = new Map();
@@ -359,6 +351,21 @@ out.push(`| 与 HSK 数值一致 | ${nSame} |`);
 out.push(`| 与 HSK 有数值差异 | ${nDiff} |`);
 out.push(`| HSK 有对应资源但无对应配方 | ${nNoMatch} |`);
 out.push(`| MMT 新增（HSK 无对应资源） | ${nNew} |`);
+out.push('');
+
+// 按家族统计
+out.push('### 1.1 按家族统计');
+out.push('');
+out.push('| 家族 | 配方数 | 一致 | 差异 | 无对应配方 | MMT 新增 |');
+out.push('| --- | --- | --- | --- | --- | --- |');
+for (const fam of famOrder) {
+  const fr = recipeResults.filter(x => x.r.family === fam);
+  if (!fr.length) continue;
+  const c = k => fr.filter(x => x.kind === k).length;
+  const nSameFam = fr.filter(x => x.kind === 'matched' && !x.diffs.length).length;
+  const nDiffFam = fr.filter(x => x.kind === 'matched' && x.diffs.length).length;
+  out.push(`| ${FAMILY_ZH[fam] || fam}（${fam}） | ${fr.length} | ${nSameFam} | ${nDiffFam} | ${c('nomatch')} | ${c('new')} |`);
+}
 out.push('');
 
 // 矿脉章节
@@ -463,7 +470,107 @@ if (!uncovered.length) {
 }
 out.push('');
 
+// ---------- 5. 建筑造价对比 ----------
+// HSK 建筑直接解析 Core_SK XML（带 ParentName 父类回填）
+const HSK_BLD_DIR = path.join(ROOT, 'Hardcore-SK', 'Mods', 'Core_SK', 'Defs', 'ThingDefs_Buildings');
+const hskRaw = {}; // defName 或 Name(抽象基类) -> 原始字段
+for (const f of walk(HSK_BLD_DIR)) {
+  const t = fs.readFileSync(f, 'utf8');
+  for (const m of t.matchAll(/<ThingDef\b([^>]*)>([\s\S]*?)<\/ThingDef>/g)) {
+    const attrs = m[1], b = m[2];
+    const def = grab(b, 'defName');
+    const key = def || (attrs.match(/Name="([^"]+)"/) || [])[1];
+    if (!key) continue;
+    hskRaw[key] = {
+      def, file: path.basename(f),
+      parent: (attrs.match(/ParentName="([^"]+)"/) || [])[1] || null,
+      label: grab(b, 'label'),
+      size: grab(b, 'size'),
+      costStuffCount: grab(b, 'costStuffCount'),
+      stuffCats: liList(grabBlock(b, 'stuffCategories')),
+      costList: kvMap(grabBlock(b, 'costList')),
+      workToBuild: kvMap(grabBlock(b, 'statBases'))['WorkToBuild'] || null,
+      power: grab(b, 'basePowerConsumption'),
+      recipes: liList(grabBlock(b, 'recipes')),
+    };
+  }
+}
+function hskMerged(key) {
+  const chain = [];
+  let cur = key, guard = 0;
+  while (cur && hskRaw[cur] && guard++ < 20) { chain.push(hskRaw[cur]); cur = hskRaw[cur].parent; }
+  if (!chain.length) return null;
+  const merged = { def: chain[0].def, file: chain[0].file, costList: {} };
+  for (const f of ['label', 'size', 'costStuffCount', 'workToBuild', 'power']) {
+    for (const r of chain) if (r[f] != null) { merged[f] = r[f]; break; }
+    if (merged[f] === undefined) merged[f] = null;
+  }
+  merged.stuffCats = [];
+  for (const r of chain) if (r.stuffCats && r.stuffCats.length) { merged.stuffCats = r.stuffCats; break; }
+  for (const r of [...chain].reverse()) Object.assign(merged.costList, r.costList);
+  return merged;
+}
+function hskBuildingOf(mmtDef) {
+  const x = mmtDef.startsWith('MMT_') ? mmtDef.slice(4) : mmtDef;
+  for (const c of [MMT_ALIAS[x], x].filter(Boolean)) {
+    if (hskRaw[c] && hskRaw[c].def) return c;
+  }
+  return null;
+}
+const STUFF_CAT_ZH = { Metallic: '金属', Woody: '木质', Stony: '石质', Leathery: '皮革', Fabric: '织物' };
+function costTxt(costList, costStuffCount, stuffCats, nameFn) {
+  const parts = Object.entries(costList).map(([d, n]) => `${nameFn(d)}×${n}`);
+  if (costStuffCount) parts.push(`[${(stuffCats || []).map(c => STUFF_CAT_ZH[c] || c).join('/') || '材料'}]×${costStuffCount}`);
+  return parts.join(' + ') || '—';
+}
+
+const bldRows = Object.entries(buildings)
+  .filter(([, b]) => b.dir === 'ThingDefs_Buildings' && !b.mineable && !b.turret)
+  .sort((a, b2) => (a[1].file + '/' + a[0]).localeCompare(b2[1].file + '/' + b2[0]));
+let nBldSame = 0, nBldDiff = 0, nBldNew = 0;
+out.push('## 5. 建筑造价对比');
+out.push('');
+out.push('- 跳过矿脉（见第 2 节）与炮塔（属武器范畴，见 [mmt-weapons.md](mmt-weapons.md)）；`[类别]×n` 为 stuff 材料（costStuffCount）；功耗/工作量列格式 `功率W / WorkToBuild`。');
+out.push('- MMT 建筑普遍继承原版 `BuildingBase`（造价/尺寸都在子类上，无需父类回填）；HSK 侧已沿 ParentName 链合并。');
+out.push('');
+out.push('| MMT 建筑 | 尺寸 | MMT 造价 | MMT 功耗/工作量 | HSK 对应 | HSK 造价 | HSK 功耗/工作量 | 对比 |');
+out.push('| --- | --- | --- | --- | --- | --- | --- | --- |');
+for (const [bDef, b] of bldRows) {
+  const hKey = hskBuildingOf(bDef);
+  const h = hKey ? hskMerged(hKey) : null;
+  const mCost = costTxt(b.costList, b.costStuffCount, b.stuffCats, d => zh(d));
+  const mPw = [b.power ? `${b.power}W` : null, b.workToBuild].filter(Boolean).join(' / ') || '—';
+  let hName = '—', hCost = '—', hPw = '—', verdict = 'MMT 新增';
+  if (h) {
+    hName = `${h.label || hKey}(\`${hKey}\`)`;
+    hCost = costTxt(h.costList, h.costStuffCount, h.stuffCats, d => hskItemTxt(d, null));
+    hPw = [h.power ? `${h.power}W` : null, h.workToBuild].filter(Boolean).join(' / ') || '—';
+    const diffs = [];
+    if (String(b.costStuffCount || '') !== String(h.costStuffCount || '')) diffs.push(`材料量 ${b.costStuffCount || '—'} vs ${h.costStuffCount || '—'}`);
+    const usedHsk = new Set();
+    for (const [d, n] of Object.entries(b.costList)) {
+      const hk = mmtToHsk(d) || d;
+      if (h.costList[hk] != null) {
+        usedHsk.add(hk);
+        if (String(h.costList[hk]) !== String(n)) diffs.push(`${zh(d)} ${n} vs ${h.costList[hk]}`);
+      } else diffs.push(`MMT 多 ${zh(d)}×${n}`);
+    }
+    for (const [d, n] of Object.entries(h.costList)) {
+      if (!usedHsk.has(d)) diffs.push(`HSK 多 ${hskItemTxt(d, null)}×${n}`);
+    }
+    if (String(b.power || '') !== String(h.power || '')) diffs.push(`功耗 ${b.power || '—'} vs ${h.power || '—'}`);
+    if (String(b.workToBuild || '') !== String(h.workToBuild || '')) diffs.push(`工作量 ${b.workToBuild || '—'} vs ${h.workToBuild || '—'}`);
+    verdict = diffs.length ? diffs.join('；') : '一致';
+    if (diffs.length) nBldDiff++; else nBldSame++;
+  } else nBldNew++;
+  out.push(`| ${zh(bDef)}(\`${bDef}\`) | ${b.size || '—'} | ${mCost} | ${mPw} | ${hName} | ${hCost} | ${hPw} | ${verdict} |`);
+}
+out.push('');
+out.push(`建筑对比小结：一致 ${nBldSame} / 差异 ${nBldDiff} / MMT 新增 ${nBldNew}（共 ${bldRows.length}）。`);
+out.push('');
+
 fs.writeFileSync(DST, out.join('\n') + '\n', 'utf8');
 console.log(DST);
 console.log(`MMT 矿脉 ${veins.length}，配方 ${recipes.length}：一致 ${nSame} / 差异 ${nDiff} / 无对应配方 ${nNoMatch} / 新增 ${nNew}`);
 console.log(`HSK 侧未覆盖配方 ${uncovered.length} 条`);
+console.log(`建筑对比：一致 ${nBldSame} / 差异 ${nBldDiff} / MMT 新增 ${nBldNew}`);

@@ -53,7 +53,12 @@ node tools/build_mmt_chains_compare.js      # → docs/mmt-vs-hsk-resource-chain
 node tools/build_resource_chains.js         # → docs/hsk-resource-production-chains.md
 python tools/build_research_mindmap.py      # → docs/mmt-research-mindmap.md（研究思维导图，含坐标/前置/研究点/解锁内容）
 python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
+python tools/build_mmt_buildings_doc.py     # → docs/mmt-buildings.md（建筑手册：造价/功耗/配方 + HSK 未实现生产建筑）
+python tools/build_mmt_weapons_doc.py       # → docs/mmt-weapons.md（武器手册：伤害/射速/冷却/DPS + HSK 未实现武器）
+python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器物品手册 + HSK 未实现资源/材料）
 ```
+
+后三个手册脚本共用 `tools/docgen_common.py`（Def 索引、ParentName 继承链合并、HSK 中文名读取、造价/配方格式化）。
 
 其他工具脚本：
 
@@ -90,7 +95,7 @@ python tools/build_mmt_weapon_chains.py     # → docs/mmt-weapon-chains.md
 - Def 文件按 `MMT_<类别>_<链名>.xml` 命名（如 `MMT_Recipes_Parts.xml`、`MMT_Buildings_ElectricWood.xml`、`MMT_Research_Science.xml`）。
 - label/description 用中文，直接写死在 Def 中。
 - 贴图约定：多状态物品贴图按 `名称_a/_b/_c.png` 放在同名子目录（如 `MMT_Ore/MMT_CopperOre/MMT_CopperOre_a.png`），texPath 指向子目录路径；建筑贴图带朝向与遮罩（`_east/_north/_south`，遮罩为方向字母后直接接 `m`，如 `MMT_EConcreteMixer/MMT_EConcreteMixer_eastm.png`；单图建筑为 `<名>.png` + `<名>_m.png`）。贴图设计细则见 `.claude/skills/rw-texture-design/SKILL.md`。
-- MMT 与 HSK 的 defName 映射维护在 `tools/build_mmt_chains_compare.js` 的 `MMT_ALIAS` 表中——新增与 HSK 对应的资源时同步更新该表。
+- MMT 与 HSK 的 defName 映射维护在 `tools/data/mmt_hsk_alias.json`——新增与 HSK 对应的资源/建筑/武器时同步更新该表（`build_mmt_chains_compare.js` 与三个手册脚本共用）。
 - 提交信息使用中文 conventional commits（如 `feat: 添加零件链研究与配方`）。
 - 整体代码审查只在用户主动要求时才执行。
 
