@@ -440,6 +440,9 @@
         <Crafting>11</Crafting>
       </skillRequirements>
       <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_SyntheticsTable</li>
+      </recipeUsers>
     </recipeMaker>
     </value>
   </Operation>
@@ -469,6 +472,9 @@
         <Crafting>11</Crafting>
       </skillRequirements>
       <researchPrerequisite>MMT_Prosthesis_D4</researchPrerequisite>
+      <recipeUsers>
+        <li>MMT_SyntheticsTable</li>
+      </recipeUsers>
     </recipeMaker>
     </value>
   </Operation>
