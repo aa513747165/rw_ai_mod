@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 手动筛子：程序化生成贴图（木框+筛网+矿粉堆，2x2 方形画布） -->
+  <!-- 手动筛子：单张贴图（木框+筛网+矿粉堆，2x2，Graphic_Single，可旋转） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandSieve</defName>
     <label>手动筛子</label>
@@ -8,8 +8,8 @@
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_HandSieve/MMT_HandSieve</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
@@ -38,7 +38,7 @@
     </statBases>
     <size>(2,2)</size>
     <defaultPlacingRot>North</defaultPlacingRot>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_SiftOrePowder_Hand</li>
@@ -54,7 +54,7 @@
     <building/>
   </ThingDef>
 
-  <!-- 电动筛子：程序化生成贴图（金属框+电机盒，2x2），恒定 250W -->
+  <!-- 电动筛子：单张贴图（金属筛箱，2x2，Graphic_Single，可旋转），恒定 250W -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricSieve</defName>
     <label>电动筛子</label>
@@ -62,8 +62,8 @@
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_ElectricSieve/MMT_ElectricSieve</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
@@ -96,7 +96,7 @@
     </statBases>
     <size>(2,2)</size>
     <defaultPlacingRot>North</defaultPlacingRot>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_SiftOrePowder_Electric</li>

@@ -6295,7 +6295,7 @@ def validate_orepowder() -> None:
                       if li.attrib.get("Class") == "CompProperties_Refuelable")
     assert_equal(li_values(sieve_fuel.find("fuelFilter"), "thingDefs"), ["MMT_OrePowder"], "筛子燃料=矿粉")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "true", "自动筛子可旋转")
-    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "South", "自动筛子默认朝向")
+    assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "North", "自动筛子默认朝向")
 
     # 增效模块：超频/并行/矿产增值为可制作物品（安装进自动设备槽位生效，拆除返还）
     module_defs = def_map(parse_xml(MODULE_ITEM_XML))

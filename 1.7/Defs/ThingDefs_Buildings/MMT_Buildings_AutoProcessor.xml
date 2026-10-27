@@ -174,8 +174,8 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoSieve/MMT_AutoSieve</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
     <passability>Impassable</passability>
@@ -207,8 +207,8 @@
       <Mass>60</Mass>
     </statBases>
     <size>(2,2)</size>
-    <defaultPlacingRot>South</defaultPlacingRot>
-    <rotatable>false</rotatable>
+    <defaultPlacingRot>North</defaultPlacingRot>
+    <rotatable>true</rotatable>
     <designationCategory>MMT_Production</designationCategory>
     <tickerType>Normal</tickerType>
     <inspectorTabs>
