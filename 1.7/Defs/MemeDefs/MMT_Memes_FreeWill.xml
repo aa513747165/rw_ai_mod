@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    自由意志（普通模因，归 vanilla Misc 组，不占结构槽，可与任意结构模因组合）：
+    选择本模因的文化不强制任命领袖/传道者——职位空缺（IdeoRoleEmpty，-5）与
+    职位服装要求未满足（IdeoRoleApparelRequirementNotMet，-4）两种心情惩罚
+    由 C# 补丁 FreeWillMemePatch.cs 按 HasMeme(MMT_FreeWill) 屏蔽。
+  -->
+  <MemeDef>
+    <defName>MMT_FreeWill</defName>
+    <label>自由意志</label>
+    <description>每个人都是自由的个体，不需要领袖与导师来指引人生。本文化不强制任命任何职位，职位空缺与职位服装要求都不会影响信徒的心情。</description>
+    <iconPath>UI/Memes/Individualist</iconPath>
+    <groupDef>Misc</groupDef>
+    <impact>1</impact>
+    <allowDuringTutorial>true</allowDuringTutorial>
+    <generalRules>
+      <rulesStrings>
+        <li>memeAdjective->free</li>
+        <li>memeAdjective->liberal</li>
+        <li>memeConcept->freedom</li>
+        <li>memeConcept->free will</li>
+        <li>memeConcept->self</li>
+      </rulesStrings>
+    </generalRules>
+    <symbolPacks>
+      <li>
+        <theme>free will</theme>
+        <adjective>free-willed</adjective>
+        <member>free soul</member>
+      </li>
+      <li>
+        <ideoName>Libertism</ideoName>
+        <theme>liberty</theme>
+        <adjective>libertine</adjective>
+        <member>libertor</member>
+      </li>
+    </symbolPacks>
+  </MemeDef>
+
+</Defs>
