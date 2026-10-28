@@ -2,7 +2,7 @@
 <Defs>
   <!-- B8 织物配方：对照 HSK Recipes_Materials_Cloth.xml（HSK 的 TailoringSpeed 为 SK 自定义，映射原版 GeneralLaborSpeed）；挂 MMT_Loom recipes 列表 -->
 
-  <!-- 布：对照 HSK MakeCloth -->
+  <!-- 布：对照 HSK MakeCloth（除 MMT_Loom 外，同时挂原版手工/电力裁缝台） -->
   <RecipeDef>
     <defName>MMT_MakeCloth</defName>
     <label>纺织布</label>
@@ -12,6 +12,10 @@
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Tailor</effectWorking>
     <soundWorking>Recipe_Tailor</soundWorking>
+    <recipeUsers>
+      <li>HandTailoringBench</li>
+      <li>ElectricTailoringBench</li>
+    </recipeUsers>
     <ingredients>
       <li>
         <filter>
