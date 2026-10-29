@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 能量结晶：封存高纯度能量的水晶，能量聚能发电站的燃料（MMT 独有，魔幻水晶风） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_EnergyCrystal</defName>
+    <label>能量结晶</label>
+    <description>在电子器件工作台上将微芯片与高纯硅、黄金凝聚而成的能量水晶，内部封存着炽烈如太阳的能量。可装入能量聚能发电站释放电力。</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/MMT_EnergyCrystal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>60</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>1.0</Mass>
+      <Beauty>4</Beauty>
+    </statBases>
+    <stackLimit>25</stackLimit>
+    <thingCategories>
+      <li>MMT_FuelCat</li>
+    </thingCategories>
+  </ThingDef>
+</Defs>

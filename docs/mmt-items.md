@@ -6,7 +6,7 @@
 
 ## 1. MMT 物品总表
 
-共 285 件（不含抽象基类）。
+共 286 件（不含抽象基类）。
 
 ### 1.1 资源与材料
 
@@ -92,10 +92,16 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 硅（`MMT_Silicon`） | 4.0 | 300 | — | MMT_ExtractSilicon_Electric、MMT_MakeSilicon_Bulk、MMT_ExtractSilicon_Hand | 5 |
+| 硅（`MMT_Silicon`） | 4.0 | 300 | — | MMT_ExtractSilicon_Electric、MMT_MakeSilicon_Bulk、MMT_ExtractSilicon_Hand | 6 |
 | 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 20 |
 | 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 12 |
-| 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 10 |
+| 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 11 |
+
+#### EnergyCrystal（EnergyCrystal）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 能量结晶（`MMT_EnergyCrystal`） | 60 | 25 | — | MMT_MakeEnergyCrystal | 0 |
 
 #### 玻璃（Glass）
 
@@ -168,7 +174,7 @@
 | 原始零部件（`MMT_ComponentMedieval`） | 6 | 300 | — | MMT_MakeComponentMedieval_Wood、MMT_MakeComponentMedieval_Metal | 2 |
 | 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 9 |
 | 机械组件（`MMT_Mechanism`） | 200 | 75 | — | MMT_MakeMechanism_Hand、MMT_MakeMechanism_Electric | 25 |
-| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 13 |
+| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 14 |
 | 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 18 |
 | 超级零部件（`MMT_UltraComponent`） | 200 | 150 | — | MMT_MakeUltraComponent | 7 |
 
@@ -195,7 +201,7 @@
 | 凝固汽油（`MMT_Napalm`） | 5.0 | 300 | — | MMT_MakeNapalm | 2 |
 | 硝石（`MMT_Nitre`） | 3.0 | 300 | — | — | 2 |
 | 氧化化合燃料（`MMT_OxidizedChemfuel`） | 9.0 | 375 | — | MMT_MakeOxidizedChemfuel | 0 |
-| 碳纤维锭（`MMT_CarbonAlloy`） | 40.0 | 75 | 金属 | MMT_MakeCarbonAlloy、MMT_DisassembleAIPersonaCore | 5 |
+| 碳纤维锭（`MMT_CarbonAlloy`） | 40.0 | 75 | 金属 | MMT_MakeCarbonAlloy、MMT_DisassembleAIPersonaCore | 6 |
 
 #### 贵金属（Precious）
 

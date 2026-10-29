@@ -6,7 +6,7 @@
 
 ## 1. MMT 建筑总表
 
-共 84 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
+共 86 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
 
 ### 深钻井（AdvancedRocks）
 
@@ -134,7 +134,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 7 |  |
+| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 8 |  |
 
 **电子器件工作台（`MMT_ElectricElectronicsTable`） 的配方：**
 
@@ -144,6 +144,7 @@
 - `MMT_MakeHexcell`：磁性材料(2) + [MMT_HCMBar](4) + 微芯片集成电路(1) -> 动力电池×10 ｜ 工作量=6000 ｜ 研究:机器人工程 I ｜ 技能:制作≥14
 - `MMT_MakeRobotParts`：[MMT_USLDBar](60) + 先进机械组件(15) -> 机器人部件×25 ｜ 工作量=8000 ｜ 研究:机器人工程 I ｜ 技能:制作≥15
 - `MMT_MakeMineralSonarModule`：[MMT_MetallicBar](25) + 太空零件(5) + 电子元件(10) + 机械组件(1) -> 矿物声纳模块×1 ｜ 工作量=4800 ｜ 研究:高级零件 ｜ 技能:制作≥10
+- `MMT_MakeEnergyCrystal`：微芯片集成电路(1) + 硅(10) + 黄金(10) -> 能量结晶×2 ｜ 工作量=6000 ｜ 研究:能量聚能 ｜ 技能:制作≥10
 - `MMT_MakeFuelRod`：铀(100) + [MMT_SLDBar](20) -> 核燃料棒×1 ｜ 工作量=8000 ｜ 研究:核能发电 ｜ 技能:制作≥12
 
 ### 电动石化（ElectricPetrochem）
@@ -195,6 +196,13 @@
 - `MMT_AssembleElectronicParts_Hand`：铜(15) + 玻璃块(10) + 硅(10) -> 电子元件×5 ｜ 工作量=2500 ｜ 研究:基础电子工艺 ｜ 技能:制作≥8
 - `MMT_AssembleIC_Hand`：硅(25) + 塑料(20) + 电子元件(3) + 黄金(2) -> 集成电路×5 ｜ 工作量=3500 ｜ 研究:集成电路技术 ｜ 技能:制作≥10
 - `MMT_AssembleMicrochip_Hand`：集成电路(2) + 碳聚物(5) + 黄金(5) -> 微芯片集成电路×1 ｜ 工作量=3500 ｜ 研究:集成电路技术 ｜ 技能:制作≥12
+
+### EnergyConvergence（EnergyConvergence）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -10000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
+| 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
 
 ### Glassworks（Glassworks）
 

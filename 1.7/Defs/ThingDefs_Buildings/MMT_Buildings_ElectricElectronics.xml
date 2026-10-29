@@ -47,6 +47,7 @@
       <li>MMT_MakeHexcell</li>
       <li>MMT_MakeRobotParts</li>
       <li>MMT_MakeMineralSonarModule</li>
+      <li>MMT_MakeEnergyCrystal</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

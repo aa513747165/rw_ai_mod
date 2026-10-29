@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 能量聚能：解锁能量结晶配方、能量聚能发电站与点火充能装置（MMT 独有多方块发电线，核能同级后期） -->
+  <ResearchProjectDef>
+    <defName>MMT_EnergyConvergence</defName>
+    <label>能量聚能</label>
+    <description>研究将能量封存于水晶中的技术，解锁能量结晶配方（电子器件工作台）、能量聚能发电站（10000W，需四角点火充能装置进行点火仪式）与点火充能装置。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_NuclearPower</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>8.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

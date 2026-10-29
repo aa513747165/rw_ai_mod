@@ -1381,7 +1381,7 @@ TEXTILES_ITEM_TEXTURES = [
   + [f"1.7/Textures/Things/Item/MMT/MMT_RedWoodPlank/MMT_RedWoodPlank_{s}.png" for s in "abc"]
 
 TEXTILES_RECIPE_EXPECTATIONS = {
-    "MMT_MakeCloth": {"work": "600", "inputs": [("thingDefs", "MMT_RawCotton", "20")], "output": "Cloth", "output_count": "20", "skill": "2", "speed": "GeneralLaborSpeed", "research": "ComplexClothing", "bench": "loom"},
+    "MMT_MakeCloth": {"work": "600", "inputs": [("thingDefs", "MMT_RawCotton", "20")], "output": "Cloth", "output_count": "20", "skill": "2", "speed": "GeneralLaborSpeed", "research": "ComplexClothing", "bench": "loom", "users": ["HandTailoringBench", "ElectricTailoringBench"]},
     "MMT_MakeFlaxcloth": {"work": "600", "inputs": [("thingDefs", "MMT_RawFlax", "20")], "output": "MMT_Flaxcloth", "output_count": "10", "skill": "4", "speed": "GeneralLaborSpeed", "research": None, "bench": "loom"},
     "MMT_MakeHempCloth": {"work": "1200", "inputs": [("thingDefs", "SmokeleafLeaves", "30")], "output": "MMT_HempCloth", "output_count": "15", "skill": "6", "speed": "GeneralLaborSpeed", "research": "ComplexClothing", "bench": "loom"},
     "MMT_MakeDevilstrand": {"work": "600", "inputs": [("thingDefs", "MMT_RawDevilstrand", "15"), ("thingDefs", "MMT_SyntheticFibers", "2")], "output": "DevilstrandCloth", "output_count": "15", "skill": "13", "speed": "GeneralLaborSpeed", "research": "AdvancedFabrication", "bench": "loom"},
@@ -1570,6 +1570,7 @@ ELECTRIC_ELECTRONICS_TABLE_RECIPES = [
     "MMT_MakeHexcell",
     "MMT_MakeRobotParts",
     "MMT_MakeMineralSonarModule",
+    "MMT_MakeEnergyCrystal",
 ]
 
 ROBOTICS_RESOURCE_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Robotics.xml"
@@ -1817,8 +1818,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 98  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项
-INFRA_WORKTABLE_TOTAL = 54  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1；临时护盾投影器非建造建筑不计入
+INFRA_RESEARCH_TOTAL = 99  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项
+INFRA_WORKTABLE_TOTAL = 56  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -5060,7 +5061,10 @@ def validate_textiles_weapons() -> None:
         if expected.get("bench") == "loom":
             if name not in loom_recipes:
                 fail(f"{name} 未挂载到纺织机")
-            if li_values(recipe, "recipeUsers"):
+            # 允许同时以 recipeUsers 挂原版工作台（原版 Def 不能改，只能配方侧声明）
+            if "users" in expected:
+                assert_equal(li_values(recipe, "recipeUsers"), expected["users"], f"{name} recipeUsers")
+            elif li_values(recipe, "recipeUsers"):
                 fail(f"{name} 不应写 recipeUsers")
         else:
             assert_equal(li_values(recipe, "recipeUsers"), expected["users"], f"{name} recipeUsers")

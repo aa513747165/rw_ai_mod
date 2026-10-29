@@ -127,6 +127,8 @@ LAYOUT = {
     "MMT_HeavyMachineGunTurret": (10, 8),
     "MMT_HeavyTurrets2": (11, 8),
     "MMT_HeavyTurrets3": (12, 8),
+    # y=8 空位 x9：能量聚能（前置核能 x5y7，x 必须大于前置）
+    "MMT_EnergyConvergence": (9, 8),
 }
 
 # 经 Patches 注入 MMT 标签页的原版研究坐标（唯一事实来源；补丁文件里的 researchViewX/Y 必须与这里一致，

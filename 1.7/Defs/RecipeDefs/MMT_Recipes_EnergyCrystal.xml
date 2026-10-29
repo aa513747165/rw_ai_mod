@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 凝聚能量结晶：微芯片 + 硅 + 黄金 → 能量结晶 ×2（电子器件工作台，能量聚能研究解锁） -->
+  <RecipeDef>
+    <defName>MMT_MakeEnergyCrystal</defName>
+    <label>凝聚能量结晶</label>
+    <description>以微芯片为核心，将高纯硅与黄金凝聚成封存能量的结晶。产出 2。</description>
+    <jobString>正在凝聚能量结晶。</jobString>
+    <workAmount>6000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Microchip</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Silicon</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_Microchip</li>
+        <li>MMT_Silicon</li>
+        <li>Gold</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_EnergyCrystal>2</MMT_EnergyCrystal>
+    </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_EnergyConvergence</researchPrerequisite>
+  </RecipeDef>
+</Defs>

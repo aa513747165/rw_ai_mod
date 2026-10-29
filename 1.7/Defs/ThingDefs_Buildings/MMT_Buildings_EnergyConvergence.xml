@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 能量聚能发电站：消耗能量结晶发电（10000W）。建成后需四角固定位置放置 4 座点火充能装置，
+       进行点火仪式（射线汇聚能量球→光柱点火）才能发电；燃料耗尽/断电/关闭后熄火，需重新点火。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_EnergyConvergencePlant</defName>
+    <label>能量聚能发电站</label>
+    <description>以能量结晶为燃料的聚能发电站，输出 10000W 电力。建成后默认未点火：需在其四角（对角外一格）各放置一座点火充能装置并通电，通过点火仪式激活。燃料耗尽、断电或关闭后会熄火，需重新点火。</description>
+    <thingClass>MyModeTest.Building_EnergyConvergencePlant</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/MMT_EnergyConvergencePlant</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,3)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <uiIconPath>Things/Building/Power/MMT_EnergyConvergencePlant</uiIconPath>
+    <size>(3,3)</size>
+    <passability>Impassable</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>1</fillPercent>
+    <blockWind>true</blockWind>
+    <canOverlapZones>false</canOverlapZones>
+    <altitudeLayer>Building</altitudeLayer>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>10000</WorkToBuild>
+      <MaxHitPoints>600</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <Beauty>-10</Beauty>
+      <Mass>150</Mass>
+    </statBases>
+    <costList>
+      <Steel>200</Steel>
+      <MMT_CarbonAlloy>40</MMT_CarbonAlloy>
+      <Gold>30</Gold>
+      <MMT_AdvMechanism>4</MMT_AdvMechanism>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>MyModeTest.CompPowerPlantIgnitable</compClass>
+        <basePowerConsumption>-10000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Refuelable">
+        <compClass>MyModeTest.CompRefuelableIgnitable</compClass>
+        <fuelConsumptionRate>0.1</fuelConsumptionRate>
+        <fuelCapacity>5</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_EnergyCrystal</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <autoRefuelPercent>0.2</autoRefuelPercent>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <fuelLabel>能量结晶储量</fuelLabel>
+        <fuelGizmoLabel>能量结晶</fuelGizmoLabel>
+        <outOfFuelMessage>熄火：需要能量结晶</outOfFuelMessage>
+        <fuelIconPath>Things/Item/Resource/MMT_EnergyCrystal</fuelIconPath>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+      <li Class="MyModeTest.CompProperties_EnergyIgnition">
+        <ignitionTicks>600</ignitionTicks>
+        <beamTicks>60</beamTicks>
+        <chargerDefName>MMT_IgnitionCharger</chargerDefName>
+        <chargerOffsets>
+          <li>(-2, 0, -2)</li>
+          <li>(-2, 0, 2)</li>
+          <li>(2, 0, -2)</li>
+          <li>(2, 0, 2)</li>
+        </chargerOffsets>
+        <energyBallMaxSize>2.2</energyBallMaxSize>
+      </li>
+    </comps>
+    <tickerType>Normal</tickerType>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_EnergyConvergence</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
+  </ThingDef>
+
+  <!-- 点火充能装置：聚能发电站点火仪式的四角装置，点火时向电站发射能量射线 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_IgnitionCharger</defName>
+    <label>点火充能装置</label>
+    <description>能量聚能发电站的点火装置。将 4 座分别放置在发电站四角（对角外一格）并通电，即可在发电站上启动点火仪式。点火时消耗大量电力（5000W），平时待机仅 50W。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/MMT_IgnitionCharger</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1,1)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <uiIconPath>Things/Building/Power/MMT_IgnitionCharger</uiIconPath>
+    <size>(1,1)</size>
+    <passability>Impassable</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <canOverlapZones>false</canOverlapZones>
+    <altitudeLayer>Building</altitudeLayer>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>2000</WorkToBuild>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <Mass>20</Mass>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <Gold>10</Gold>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="MyModeTest.CompProperties_IgnitionCharger">
+        <idlePowerW>50</idlePowerW>
+        <ignitingPowerW>5000</ignitingPowerW>
+        <linkRadius>3.5</linkRadius>
+      </li>
+    </comps>
+    <tickerType>Normal</tickerType>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_EnergyConvergence</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+    <building/>
+  </ThingDef>
+</Defs>
