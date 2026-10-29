@@ -12,6 +12,10 @@
     <defName>MMT_TeleportShuttle</defName>
     <label>折跃载体</label>
     <description>折跃传送的隐形载体，落地吐出全部载荷后随即消散。</description>
+    <!-- category/thingClass 对齐原版 Shuttle（其经 BuildingBase 继承得到）：
+         缺了会报 null thingClass、comps 非 ThingWithComps、非建筑给全掩体/占格 -->
+    <category>Building</category>
+    <thingClass>Building</thingClass>
     <altitudeLayer>Building</altitudeLayer>
     <preventDroppingThingsOn>true</preventDroppingThingsOn>
     <pathCost>50</pathCost>
@@ -53,12 +57,17 @@
     </comps>
   </ThingDef>
 
-  <!-- 降临光柱：参数对齐米莉拉 Milira_DropPodIncoming（垂直加速下落、无阴影、无碎片、
-       淡入 60tick），下落时长缩短至 240~300 让传送更利落；音效用坠落呼啸 + 折跃闪现 -->
+  <!-- 降临光柱：speed=0 钉死水平位置（原版 DrawPos_Accelerate 偏移 = ticks^0.95*1.7*speed，
+       speed 2.5 时起点偏离落点约 960 格，光柱会横扫整张地图——传送要求"选定位置即起光柱"）；
+       无 zPositionCurve 不做降落动画，光柱直接在地面立起，fadeIn 60tick 淡入；
+       落地（人员/物资出现）时光柱销毁。thingClass 叠加呼吸脉动（透明度 0.75~1.0，
+       详见 MMT_ShuttleIncomingBreathing）。音效：生成瞬间放激光（原版逻辑：
+       ticksToImpact <= anticipationSoundTicks 时播一次，999>全程即生成即播），
+       落地音为折跃闪现。BeamRepeater 为 Odyssey 音效，缺 DLC 时静默 -->
   <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>MMT_TeleportShuttleIncoming</defName>
     <label>折跃光柱（降临）</label>
-    <thingClass>ShuttleIncoming</thingClass>
+    <thingClass>MyModeTest.MMT_ShuttleIncomingBreathing</thingClass>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Skyfaller/MMT_TeleportBeam</texPath>
@@ -75,19 +84,21 @@
           <li>(1,0)</li>
         </points>
       </angleCurve>
-      <speed>2.5</speed>
+      <speed>0</speed>
       <ticksToImpactRange>240~300</ticksToImpactRange>
       <fadeInTicks>60</fadeInTicks>
       <cameraShake>0.5</cameraShake>
       <shadowSize>(0,0)</shadowSize>
-      <anticipationSound>DropPod_Fall</anticipationSound>
-      <anticipationSoundTicks>100</anticipationSoundTicks>
+      <anticipationSound MayRequire="Ludeon.RimWorld.Odyssey">Shot_BeamRepeater</anticipationSound>
+      <anticipationSoundTicks>999</anticipationSoundTicks>
       <impactSound>Psycast_Skip_Exit</impactSound>
       <motesPerCell>0</motesPerCell>
     </skyfaller>
   </ThingDef>
 
-  <!-- 离去光柱：reversed 反向播放，光柱垂直升空后消散；thingClass 必须 FlyShipLeaving
+  <!-- 离去天坠物：设计上"人员落地即光柱原地消失"，不要升空动画——但 ShipJob_FlyAway
+       管线必须保留（穿梭机本体与 ActiveTransporter 内容物的销毁都靠它），所以把离去
+       天坠物做成全透明、无震屏、短寿命的隐形清理壳。thingClass 必须 FlyShipLeaving
        （ShipJob_FlyAway 强制转换该类型），无目的地时原版会自动销毁穿梭机本体 -->
   <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>MMT_TeleportShuttleLeaving</defName>
@@ -95,36 +106,16 @@
     <thingClass>FlyShipLeaving</thingClass>
     <size>(1,1)</size>
     <graphicData>
-      <texPath>Things/Skyfaller/MMT_TeleportBeam</texPath>
+      <texPath>Things/Misc/MMT_Null</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>TransparentPostLight</shaderType>
-      <drawSize>18</drawSize>
-      <drawOffset>(0,0,4)</drawOffset>
+      <shaderType>Cutout</shaderType>
+      <drawSize>1</drawSize>
     </graphicData>
     <skyfaller>
       <reversed>true</reversed>
       <movementType>Decelerate</movementType>
-      <angleCurve>
-        <points>
-          <li>(0,90)</li>
-          <li>(1,90)</li>
-        </points>
-      </angleCurve>
-      <speedCurve>
-        <points>
-          <li>(0,0.2)</li>
-          <li>(0.1,0.7)</li>
-        </points>
-      </speedCurve>
-      <zPositionCurve>
-        <points>
-          <li>(0,0)</li>
-          <li>(0.08,6)</li>
-        </points>
-      </zPositionCurve>
-      <ticksToImpactRange>-40~-15</ticksToImpactRange>
-      <fadeOutTicks>45</fadeOutTicks>
-      <cameraShake>0.3</cameraShake>
+      <ticksToImpactRange>-15~-10</ticksToImpactRange>
+      <cameraShake>0</cameraShake>
       <shadowSize>(0,0)</shadowSize>
       <motesPerCell>0</motesPerCell>
     </skyfaller>

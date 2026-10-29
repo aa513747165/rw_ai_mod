@@ -258,29 +258,45 @@ namespace MyModeTest
             return true;
         }
 
-        /// <summary>进攻执行：按需生成目标地图（同步卡顿 1-3 秒，与原版空投一致）并跳图，
+        /// <summary>进攻执行：地图未生成时走原版"正在生成地图"进度界面
+        /// （LongEventHandler.QueueLongEvent，与商队进攻定居点一致，替代同步卡顿），
+        /// 生成完成后跳图进入选点；地图已存在则直接选点。
         /// 鼠标指定落点后才消耗传送；右键取消选点则不消耗（与己方基地选点同一交互）。</summary>
         private void AttackMapParentPickCell(MapParent mp, PlanetTile tile)
         {
-            bool freshlyGenerated = !mp.HasMap;
-            Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, mp.def);
-            CameraJumper.TryJump(map.Center, map);
+            if (!mp.HasMap)
+            {
+                LongEventHandler.QueueLongEvent(delegate
+                {
+                    Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, mp.def);
+                    CameraJumper.TryJump(map.Center, map);
+                    Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
+                        delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
+                }, "GeneratingMapForNewEncounter", false, null);
+                return;
+            }
+            Map existing = mp.Map;
+            CameraJumper.TryJump(existing.Center, existing);
             Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, freshlyGenerated); });
+                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(existing, cell.Cell, false); });
         }
 
         /// <summary>荒野折跃：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 →
-        /// 跳图后鼠标自选落点（取消选点不消耗传送，空站点会被自动清理）。</summary>
+        /// 跳图后鼠标自选落点。全部放进"正在生成地图"进度界面内执行（生成耗时 1-3 秒，不再卡顿）；
+        /// 取消选点时临时站点无人员，MMT_TeleportTempSite 自检会销图回收。</summary>
         private void TeleportToWilderness(PlanetTile tile)
         {
-            MMT_TeleportTempSite site = (MMT_TeleportTempSite)WorldObjectMaker.MakeWorldObject(MMT_TeleportDefOf.MMT_TeleportTempSite);
-            site.Tile = tile;
-            Find.WorldObjects.Add(site);
-            Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, MMT_TeleportDefOf.MMT_TeleportTempSite);
-            // 取消选点时临时站点无人员，MMT_TeleportTempSite 自检会销图回收
-            CameraJumper.TryJump(map.Center, map);
-            Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
+            LongEventHandler.QueueLongEvent(delegate
+            {
+                MMT_TeleportTempSite site = (MMT_TeleportTempSite)WorldObjectMaker.MakeWorldObject(MMT_TeleportDefOf.MMT_TeleportTempSite);
+                site.Tile = tile;
+                Find.WorldObjects.Add(site);
+                Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, MMT_TeleportDefOf.MMT_TeleportTempSite);
+                // 取消选点时临时站点无人员，MMT_TeleportTempSite 自检会销图回收
+                CameraJumper.TryJump(map.Center, map);
+                Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
+                    delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
+            }, "GeneratingMapForNewEncounter", false, null);
         }
 
         /// <summary>去程执行（进入地图）：扣一次传送次数，舱内人和物转入隐形穿梭机，
@@ -618,18 +634,27 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>传送特效：复用 Royalty 折跃灵能的闪现贴图与音效（无 Royalty 时静默跳过）。</summary>
+    /// <summary>传送特效：对齐原版 Skip_ExitNoDelay 效果器的构成（大闪光 + 巨型白闪 + 内圈次元洞 +
+    /// 外圈扭曲环），但去掉原版的 11~16 tick 延迟全部立即触发——降临光柱本身已充当"预告"。
+    /// 内圈/外环用 MMT 拉长版（原版全程仅 0.4 秒，3 倍速下约 0.13 秒肉眼不可见，曾被反馈
+    /// "折跃效果没有显示"）；大闪光用原版 PsycastSkipFlashExit（淡出 1.3 秒本来就够长）。
+    /// withSound=false 时只放视觉闪现（用于降临光柱落地——落地音已由 skyfaller impactSound 播放）。</summary>
     internal static class TeleportFx
     {
-        public static void Play(IntVec3 cell, Map map)
+        public static void Play(IntVec3 cell, Map map, bool withSound = true)
         {
             if (map == null || !cell.IsValid || !cell.InBounds(map))
                 return;
-            if (FleckDefOf.PsycastSkipFlashEntry != null)
-                FleckMaker.Static(cell.ToVector3Shifted(), map, FleckDefOf.PsycastSkipFlashEntry, 2f);
-            if (FleckDefOf.PsycastSkipInnerExit != null)
-                FleckMaker.Static(cell.ToVector3Shifted(), map, FleckDefOf.PsycastSkipInnerExit, 2f);
-            if (SoundDefOf.Psycast_Skip_Exit != null)
+            Vector3 center = cell.ToVector3Shifted();
+            if (MMT_TeleportDefOf.PsycastSkipFlashExit != null)
+                FleckMaker.Static(center, map, MMT_TeleportDefOf.PsycastSkipFlashExit, 2f);
+            if (MMT_TeleportDefOf.PlainFlash != null)
+                FleckMaker.Static(center, map, MMT_TeleportDefOf.PlainFlash, 7f);
+            if (MMT_TeleportDefOf.MMT_TeleportSkipInnerLong != null)
+                FleckMaker.Static(center, map, MMT_TeleportDefOf.MMT_TeleportSkipInnerLong, 2f);
+            if (MMT_TeleportDefOf.MMT_TeleportSkipOuterRingLong != null)
+                FleckMaker.Static(center, map, MMT_TeleportDefOf.MMT_TeleportSkipOuterRingLong, 2f);
+            if (withSound && SoundDefOf.Psycast_Skip_Exit != null)
                 SoundDefOf.Psycast_Skip_Exit.PlayOneShot(new TargetInfo(cell, map));
         }
     }
@@ -662,6 +687,14 @@ namespace MyModeTest
         public static TransportShipDef MMT_Ship_TeleportShuttle;
         /// <summary>落地一次性全吐的卸货作业。</summary>
         public static ShipJobDef MMT_ShipJob_TeleportUnload;
+        /// <summary>折跃闪光内圈次元洞（拉长版 ~1.3 秒，见 Defs/Effects/MMT_Flecks_Teleport.xml）。</summary>
+        public static FleckDef MMT_TeleportSkipInnerLong;
+        /// <summary>折跃闪光外圈扭曲环（拉长版 ~1.3 秒）。</summary>
+        public static FleckDef MMT_TeleportSkipOuterRingLong;
+        /// <summary>原版折跃落地大闪光（Core，淡出 1.3 秒；FleckDefOf 无此字段故在此声明）。</summary>
+        public static FleckDef PsycastSkipFlashExit;
+        /// <summary>原版巨型白闪（Core；FleckDefOf 无此字段故在此声明）。</summary>
+        public static FleckDef PlainFlash;
 
         static MMT_TeleportDefOf()
         {

@@ -1,8 +1,44 @@
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace MyModeTest
 {
+    /// <summary>
+    /// 折跃降临光柱：在 ShuttleIncoming 基础上给 DrawColor 叠加呼吸脉动（透明度 0.75~1.0）。
+    /// 必须用 ageTicks 整数驱动而非常见的 realtimeSinceStartup：淡入淡出会让 get_Graphic 走
+    /// GraphicData.GraphicColoredFor → Graphic.GetColoredVersion，后者按颜色精确值缓存子 Graphic，
+    /// float 时间每帧一个新颜色会撑爆缓存；整数 tick 驱动的颜色取值有界（≤ 一个周期）。
+    /// 顺带的好处：脉动跟随游戏速度、暂停即停。
+    /// </summary>
+    public class MMT_ShuttleIncomingBreathing : ShuttleIncoming
+    {
+        // 呼吸周期 ~90 tick（1.5 秒）
+        private const float PulsePeriodTicks = 90f;
+
+        public override Color DrawColor
+        {
+            get
+            {
+                Color c = base.DrawColor;
+                c.a *= 0.75f + 0.25f * Mathf.Sin(ageTicks * (Mathf.PI * 2f / PulsePeriodTicks));
+                return c;
+            }
+        }
+
+        /// <summary>落地瞬间补折跃闪现视觉（PsycastSkip 四件套）；落地音已由
+        /// skyfaller 的 impactSound（Psycast_Skip_Exit）播放，这里静音避免叠双份。
+        /// 注意必须先捕获 Position/Map 再调 base.Impact()——后者内部 Destroy(this)，
+        /// 之后 Map 返回 null、Position 失效，闪光会被 Play 的有效性检查静默跳过。</summary>
+        protected override void Impact()
+        {
+            IntVec3 cell = Position;
+            Map map = Map;
+            base.Impact();
+            TeleportFx.Play(cell, map, withSound: false);
+        }
+    }
+
     /// <summary>
     /// 折跃传送专用卸货作业：原版 ShipJob_Unload 每 60 tick 才吐一件（空投节奏），
     /// 传送要求"落地即全部吐出"，这里在首个 Tick 内循环原版公开的 UnloadThingFromShuttle

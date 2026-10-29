@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃落地闪光用的拉长版 fleck。原版 PsycastSkipInner/OuterRing 全程仅 0.4 秒，
+       3 倍速下约 0.13 秒肉眼几乎不可见（"折跃效果没有显示"的根因）；
+       这里把寿命拉到 ~1.3 秒（3 倍速下仍约 0.4 秒），shader 的进/持/出时间等比放大。
+       大闪光直接用原版 PsycastSkipFlashExit（淡出 1.3 秒本来就够长）与 PlainFlash，无需克隆。 -->
+
+  <!-- 内圈次元洞（PsycastSkipInnerExit 拉长版）。shaderParameters 全量列出：
+       防止 Def 继承按整体替换列表时丢掉抽象的 _innerRingSize -->
+  <FleckDef ParentName="PsycastSkipInner">
+    <defName>MMT_TeleportSkipInnerLong</defName>
+    <solidTime>1.3</solidTime>
+    <graphicData>
+      <shaderParameters>
+        <_innerRingSize>0.65</_innerRingSize>
+        <_inTime>0.3</_inTime>
+        <_solidTime>0.5</_solidTime>
+        <_outTime>0.5</_outTime>
+        <_AgeOffset>0.07</_AgeOffset>
+      </shaderParameters>
+    </graphicData>
+  </FleckDef>
+
+  <!-- 外圈扭曲环（PsycastSkipOuterRingExit 拉长版），同理全量列出 shader 参数 -->
+  <FleckDef ParentName="PsycastSkipOuterRing">
+    <defName>MMT_TeleportSkipOuterRingLong</defName>
+    <solidTime>1.3</solidTime>
+    <graphicData>
+      <shaderParameters>
+        <_innerRingSize>0.55</_innerRingSize>
+        <_outerRingSize>1.0</_outerRingSize>
+        <_distortionIntensity>0.01</_distortionIntensity>
+        <_brightnessMultiplier>1.1</_brightnessMultiplier>
+        <_inTime>0.3</_inTime>
+        <_solidTime>0.5</_solidTime>
+        <_outTime>0.5</_outTime>
+        <_AgeOffset>0.07</_AgeOffset>
+      </shaderParameters>
+    </graphicData>
+  </FleckDef>
+</Defs>
