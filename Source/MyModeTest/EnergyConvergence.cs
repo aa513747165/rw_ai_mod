@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -65,6 +66,8 @@ namespace MyModeTest
         private CompFlickable flickComp;
         private CompRefuelable fuelComp;
         private ThingDef chargerDef;
+        /// <summary>上一次飘余烬的真实时间（发电中特效按真实时间走，与倍速无关）。</summary>
+        private float lastEmberTime;
 
         private CompProperties_EnergyIgnition Props
         {
@@ -249,8 +252,13 @@ namespace MyModeTest
             }
             else if (state == EnergyIgnitionState.Ignited)
             {
-                if (parent.IsHashIntervalTick(45) && Rand.Value < 0.5f)
+                // 余烬按真实时间间隔飘：hash tick 会随游戏倍速加速，倍速下火星密度暴涨
+                float now = Time.realtimeSinceStartup;
+                if (now - lastEmberTime >= 0.9f)
+                {
+                    lastEmberTime = now;
                     FleckMaker.Static(parent.TrueCenter(), map, FleckDefOf.FireGlow, Rand.Range(1.5f, 2.2f));
+                }
             }
         }
 
@@ -407,6 +415,87 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>
+    /// 点火充能装置放置限制：只允许放在聚能发电站的四个角（对角外一格），
+    /// 其余位置拒绝放置/安装；拖动幽灵时高亮目标发电站的四角与连线。
+    /// 发电站本体、蓝图、框架都算作有效目标，方便先摆蓝图规划。
+    /// </summary>
+    public class PlaceWorker_IgnitionCharger : PlaceWorker
+    {
+        /// <summary>充能装置 defName → 使用它的(发电站 def, 点火参数)，懒加载缓存。</summary>
+        private static List<KeyValuePair<ThingDef, CompProperties_EnergyIgnition>> plantTable;
+
+        private static void EnsureTable()
+        {
+            if (plantTable != null)
+                return;
+            plantTable = new List<KeyValuePair<ThingDef, CompProperties_EnergyIgnition>>();
+            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefs)
+            {
+                CompProperties_EnergyIgnition props = def.GetCompProperties<CompProperties_EnergyIgnition>();
+                if (props != null && props.chargerOffsets != null && props.chargerOffsets.Count > 0)
+                    plantTable.Add(new KeyValuePair<ThingDef, CompProperties_EnergyIgnition>(def, props));
+            }
+        }
+
+        /// <summary>loc 若是某聚能发电站（含蓝图/框架）的四角之一，返回该发电站实例，否则 null。</summary>
+        public static Thing FindPlantForCell(ThingDef chargerDef, IntVec3 loc, Map map, out CompProperties_EnergyIgnition props)
+        {
+            props = null;
+            if (map == null)
+                return null;
+            EnsureTable();
+            for (int i = 0; i < plantTable.Count; i++)
+            {
+                ThingDef plantDef = plantTable[i].Key;
+                CompProperties_EnergyIgnition p = plantTable[i].Value;
+                if (p.chargerDefName != chargerDef.defName)
+                    continue;
+                for (int j = 0; j < p.chargerOffsets.Count; j++)
+                {
+                    IntVec3 center = loc - p.chargerOffsets[j];
+                    if (!center.InBounds(map))
+                        continue;
+                    List<Thing> things = center.GetThingList(map);
+                    for (int k = 0; k < things.Count; k++)
+                    {
+                        Thing t = things[k];
+                        // 建成本体 / 建造框架 / 蓝图都算
+                        if (t.def == plantDef || t.def.entityDefToBuild == plantDef)
+                        {
+                            props = p;
+                            return t;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
+        {
+            if (FindPlantForCell((ThingDef)checkingDef, loc, map, out _) == null)
+                return "点火充能装置只能安装在能量聚能发电站的四个角（对角外一格）";
+            return true;
+        }
+
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing ghostThing = null)
+        {
+            Map map = Find.CurrentMap;
+            Thing plant = FindPlantForCell(def, center, map, out CompProperties_EnergyIgnition props);
+            if (plant == null || props == null)
+                return;
+            // 高亮发电站四角，并画出各角到发电站中心的能量连线预览
+            GenDraw.DrawFieldEdges(props.chargerOffsets.Select(o => plant.Position + o).ToList(), Color.cyan);
+            Vector3 plantCenter = plant.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
+            foreach (IntVec3 off in props.chargerOffsets)
+            {
+                Vector3 corner = (plant.Position + off).ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays);
+                GenDraw.DrawLineBetween(corner, plantCenter, SimpleColor.Cyan);
+            }
+        }
+    }
+
     /// <summary>点火充能装置参数（XML 可配置）。</summary>
     public class CompProperties_IgnitionCharger : CompProperties
     {
@@ -540,36 +629,67 @@ namespace MyModeTest
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
-            if (ignition == null || ignition.State != EnergyIgnitionState.Igniting)
+            if (ignition == null)
                 return;
+            if (ignition.State == EnergyIgnitionState.Ignited)
+            {
+                DrawBurningGlow(drawLoc);
+                return;
+            }
+            if (ignition.State != EnergyIgnitionState.Igniting)
+                return;
+            // 全程画四角射线（顶点→发电站上方）；汇聚阶段加能量球，释放阶段加光柱
+            DrawCornerBeams(drawLoc);
             if (ignition.InBeamPhase)
                 DrawIgnitionBeam(drawLoc);
             else
                 DrawConvergence(drawLoc);
         }
 
-        /// <summary>能量汇聚：四角射线 + 中央逐渐增大的太阳状能量球。</summary>
+        /// <summary>
+        /// 发电中：核心上方一层暖色脉动光晕。真实时间驱动，游戏倍速不影响呼吸节奏。
+        /// </summary>
+        private void DrawBurningGlow(Vector3 drawLoc)
+        {
+            if (ballMat == null)
+                ballMat = MaterialPool.MatFrom(BallTexPath, ShaderDatabase.Transparent, Color.white);
+            float time = Time.realtimeSinceStartup;
+            float s = 1.8f + 0.2f * Mathf.Sin(time * 2.3f);
+            ballMat.color = new Color(1f, 0.72f, 0.38f, 0.10f + 0.07f * Mathf.Sin(time * 3.7f));
+            Vector3 p = new Vector3(drawLoc.x, AltitudeLayer.MoteOverhead.AltitudeFor(), drawLoc.z);
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), ballMat, 0);
+        }
+
+        /// <summary>四角充能装置顶点到发电站上方的能量射线（点火全程持续）。</summary>
+        private void DrawCornerBeams(Vector3 drawLoc)
+        {
+            List<Building> chargers = ignition.GetChargers();
+            if (chargers == null)
+                return;
+            if (beamMat == null)
+                beamMat = MaterialPool.MatFrom(BeamTexPath, ShaderDatabase.Transparent, Color.white);
+            float progress = ignition.ConvergeProgress;
+            // 真实时间驱动脉动：游戏倍速下 TicksGame 加速会导致动画鬼畜
+            float time = Time.realtimeSinceStartup;
+            float pulse = 0.55f + 0.35f * Mathf.Sin(time * 6f);
+            beamMat.color = new Color(0.65f, 0.9f, 1f, pulse);
+            float y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            foreach (Building charger in chargers)
+            {
+                Vector3 from = charger.DrawPos;
+                from.y = y;
+                Vector3 to = new Vector3(drawLoc.x, y, drawLoc.z);
+                DrawBeamQuad(from, to, 0.22f + 0.1f * progress);
+            }
+        }
+
+        /// <summary>能量汇聚：中央逐渐增大的太阳状能量球。</summary>
         private void DrawConvergence(Vector3 drawLoc)
         {
             float progress = ignition.ConvergeProgress;
-            List<Building> chargers = ignition.GetChargers();
             float y = AltitudeLayer.MoteOverhead.AltitudeFor();
-            // 真实时间驱动脉动：游戏倍速下 TicksGame 加速会导致动画鬼畜
             float time = Time.realtimeSinceStartup;
-            if (chargers != null)
-            {
-                if (beamMat == null)
-                    beamMat = MaterialPool.MatFrom(BeamTexPath, ShaderDatabase.Transparent, Color.white);
-                float pulse = 0.55f + 0.35f * Mathf.Sin(time * 6f);
-                beamMat.color = new Color(0.65f, 0.9f, 1f, pulse);
-                foreach (Building charger in chargers)
-                {
-                    Vector3 from = charger.DrawPos;
-                    from.y = y;
-                    Vector3 to = new Vector3(drawLoc.x, y, drawLoc.z);
-                    DrawBeamQuad(from, to, 0.22f + 0.1f * progress);
-                }
-            }
             // 能量球：3 片错相位缩放的圆碟，俯视下呈球体感
             if (ballMat == null)
                 ballMat = MaterialPool.MatFrom(BallTexPath, ShaderDatabase.Transparent, Color.white);
@@ -587,7 +707,11 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>从 from 到 to 画一条水平面内的射线（拉伸 quad）。</summary>
+        /// <summary>
+        /// 从 from 到 to 画一条水平面内的射线（拉伸 quad）。
+        /// 注意 MeshPool.plane10 是 1×1 平面（名字是历史遗留，见 MeshPool.cctor 的 NewPlaneMesh(1f)），
+        /// 所以长度方向缩放就是格数本身，不要再 /10（否则射线缩成一截几乎不可见的短线）。
+        /// </summary>
         private void DrawBeamQuad(Vector3 from, Vector3 to, float width)
         {
             Vector3 mid = (from + to) * 0.5f;
@@ -597,7 +721,7 @@ namespace MyModeTest
                 return;
             float angle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(mid, Quaternion.Euler(0f, angle, 0f), new Vector3(width, 1f, len / 10f)), beamMat, 0);
+                Matrix4x4.TRS(mid, Quaternion.Euler(0f, angle, 0f), new Vector3(width, 1f, len)), beamMat, 0);
         }
 
         /// <summary>光柱点火：6 片水平发光碟从站体堆叠到空中（俯视投影为光柱），相位错开的正弦缩放模拟能量涌动。</summary>

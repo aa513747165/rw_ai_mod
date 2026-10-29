@@ -14,6 +14,9 @@
       <drawSize>(3,3)</drawSize>
       <drawRotated>false</drawRotated>
     </graphicData>
+    <!-- 点火射线/能量球/光柱全靠 DrawAt 每帧绘制；BuildingBase 默认 MapMeshOnly
+         会把贴图烘焙进静态网格、DrawAt 几乎不被调用，特效会不可见，必须 RealtimeOnly -->
+    <drawerType>RealtimeOnly</drawerType>
     <uiIconPath>Things/Building/Power/MMT_EnergyConvergencePlant</uiIconPath>
     <size>(3,3)</size>
     <passability>Impassable</passability>
@@ -106,7 +109,13 @@
     </graphicData>
     <uiIconPath>Things/Building/Power/MMT_IgnitionCharger</uiIconPath>
     <size>(1,1)</size>
-    <passability>Impassable</passability>
+    <!-- 仅允许放在聚能发电站四角（对角外一格），否则拒绝放置/安装 -->
+    <placeWorkers>
+      <li>MyModeTest.PlaceWorker_IgnitionCharger</li>
+    </placeWorkers>
+    <!-- 对齐原版工作台惯例：PassThroughOnly + 半掩体；
+         Impassable 且 Fillage 非 Full 会报"可被射穿/看穿"配置错误 -->
+    <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.5</fillPercent>
     <canOverlapZones>false</canOverlapZones>
