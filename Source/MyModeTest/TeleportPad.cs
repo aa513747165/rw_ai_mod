@@ -233,8 +233,7 @@ namespace MyModeTest
                 // 己方地图：跳图后精确选落点
                 Map homeMap = mp.Map;
                 CameraJumper.TryJump(homeMap.Center, homeMap);
-                Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                    delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(homeMap, cell.Cell, false); });
+                BeginTeleportCellTargeting(homeMap, false);
                 return true;
             }
             if (mp is Settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
@@ -258,6 +257,16 @@ namespace MyModeTest
             return true;
         }
 
+        /// <summary>落点选择：仅允许点可立足格（Standable），保证光柱精确落在鼠标点中的格子——
+        /// 不再因落点被挡而由 FindFreeCellNear 偏移到附近空格；非法格鼠标红标无法点击。</summary>
+        private void BeginTeleportCellTargeting(Map map, bool freshlyGenerated)
+        {
+            TargetingParameters parms = TargetingParameters.ForCell();
+            parms.validator = (TargetInfo targ) => targ.Cell.InBounds(map) && targ.Cell.Standable(map);
+            Find.Targeter.BeginTargeting(parms,
+                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, freshlyGenerated); });
+        }
+
         /// <summary>进攻执行：地图未生成时走原版"正在生成地图"进度界面
         /// （LongEventHandler.QueueLongEvent，与商队进攻定居点一致，替代同步卡顿），
         /// 生成完成后跳图进入选点；地图已存在则直接选点。
@@ -270,15 +279,13 @@ namespace MyModeTest
                 {
                     Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, mp.def);
                     CameraJumper.TryJump(map.Center, map);
-                    Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                        delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
+                    BeginTeleportCellTargeting(map, true);
                 }, "GeneratingMapForNewEncounter", false, null);
                 return;
             }
             Map existing = mp.Map;
             CameraJumper.TryJump(existing.Center, existing);
-            Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(existing, cell.Cell, false); });
+            BeginTeleportCellTargeting(existing, false);
         }
 
         /// <summary>荒野折跃：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 →
@@ -294,8 +301,7 @@ namespace MyModeTest
                 Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, MMT_TeleportDefOf.MMT_TeleportTempSite);
                 // 取消选点时临时站点无人员，MMT_TeleportTempSite 自检会销图回收
                 CameraJumper.TryJump(map.Center, map);
-                Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                    delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
+                BeginTeleportCellTargeting(map, true);
             }, "GeneratingMapForNewEncounter", false, null);
         }
 
@@ -318,6 +324,8 @@ namespace MyModeTest
             // 本端特效
             TeleportFx.Play(parent.Position, parent.Map);
 
+            // 落点选择器已限制只能点可立足格，此处基本原样返回点击格；
+            // FindFreeCellNear 仅作兜底（极端情况：选点后落点瞬间被占）
             IntVec3 landing = FindFreeCellNear(targetMap, nearCell, 12);
             int pawns = 0, things = 0;
             bool hasPlayerPawn = false;

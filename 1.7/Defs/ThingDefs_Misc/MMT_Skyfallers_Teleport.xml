@@ -22,12 +22,14 @@
     <blockWind>true</blockWind>
     <passability>Impassable</passability>
     <fillPercent>1.0</fillPercent>
-    <size>(3,3)</size>
+    <!-- 1×1：光柱要求精确落在鼠标点中的格子（选点器已限制只能点可立足格），
+         3×3 脚印在点中建筑/树旁时容易生成失败或被迫偏移 -->
+    <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Misc/MMT_Null</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>Cutout</shaderType>
-      <drawSize>(3,3)</drawSize>
+      <drawSize>(1,1)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>1000</MaxHitPoints>
@@ -38,7 +40,8 @@
     <canOverlapZones>true</canOverlapZones>
     <rotatable>false</rotatable>
     <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <!-- 卸货吐货点：紧邻光柱南侧 1 格（1×1 机身，原 -2 会离光柱两格远） -->
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <selectable>false</selectable>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <drawerType>RealtimeOnly</drawerType>
