@@ -6624,13 +6624,21 @@ def validate_teleport() -> None:
         "1.7/Defs/ResearchProjectDefs/MMT_Research_Teleport.xml",
         "1.7/Defs/ThingDefs_Buildings/MMT_DesignationCategory.xml",
         "1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml",
+        "1.7/Defs/ThingDefs_Misc/MMT_Skyfallers_Teleport.xml",
+        "1.7/Defs/ShipObjectDefs/MMT_TransportShipDefs_Teleport.xml",
         "1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png",
         "1.7/Textures/UI/Designators/MMT_RecallTeleport.png",
+        "1.7/Textures/Things/Skyfaller/MMT_TeleportBeam.png",
+        "1.7/Textures/Things/Misc/MMT_Null.png",
         "Source/MyModeTest/TeleportPad.cs",
         "Source/MyModeTest/TeleportTempSite.cs",
+        "Source/MyModeTest/TeleportShuttle.cs",
+        "Source/MyModeTest/TeleportCaravanReturn.cs",
     ])
     assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png")
     assert_png("1.7/Textures/UI/Designators/MMT_RecallTeleport.png")
+    assert_png("1.7/Textures/Things/Skyfaller/MMT_TeleportBeam.png")
+    assert_png("1.7/Textures/Things/Misc/MMT_Null.png")
     buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Teleport.xml"))
     assert_equal(set(buildings), {"MMT_TeleportPad"}, "传送建筑 defName 集合")
     pad = buildings["MMT_TeleportPad"]
@@ -6674,20 +6682,43 @@ def validate_teleport() -> None:
     cs_src = read_text("Source/MyModeTest/TeleportPad.cs")
     for token in ("CompProperties_TeleportPad", "CompTeleportPad", "Designator_RecallTeleport",
                   "WorldTargeter.BeginTargeting", "MapParentAt", "HasMap",
-                  "DropCellFinder.RandomDropSpot", "TryFindDropSpotNear",
                   "innerContainer", "GenSpawn.Spawn", "Notify_Teleported",
                   "CompBuildingBattery", "StoredChargeWd", "TryDrain",
                   "cooldownUntilTick", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
                   "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
                   "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode",
-                  # 分支：据点进攻 / 荒野临时地图（1.7 定居点交易仅支持商队到访，无远程交易）
+                  # 分支：据点进攻（进图自选落点，无边缘/中心菜单） / 非敌对组成商队 / 荒野临时地图
                   "GetOrGenerateMapUtility.GetOrGenerateMap",
-                  "TeleportToWilderness", "WaterCovered", "CheckRemoveMapNow",
+                  "TeleportToWilderness", "AttackMapParentPickCell", "WaterCovered", "CheckRemoveMapNow",
+                  # 去程穿梭机管线：建船 → 光柱落地全吐 → 离去销毁；敌对定居点关系惩罚
+                  "ExecuteTeleportShuttle", "TransportShipMaker.MakeTransportShip",
+                  "ArriveAt", "ShipJobMaker.MakeShipJob", "ShipJobDefOf.FlyAway",
+                  "MMT_Ship_TeleportShuttle", "MMT_ShipJob_TeleportUnload",
+                  "SettlementUtility.AffectRelationsOnAttacked",
+                  # 非敌对立据点：世界地图组成商队（货物装进隐身穿梭机舱内不占负重，可交易/进攻/折跃返回）
+                  "TeleportAsCaravan", "CaravanMaker.MakeCaravan", "CaravanInventoryUtility.GiveThing",
+                  "ThingMaker.MakeThing", "TryConsumeTeleport", "DumpShuttleCargoAndDestroy",
+                  "CompTeleportCargoLedger", "Snapshot",
                   # 目标器悬停无效地块（行星边缘）防越界
                   "target.Tile.Valid",
                   "MMT_Graphic_Rotating", "realtimeSinceStartup"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
+    # 商队折跃返回：Harmony patch Caravan.GetGizmos 给携带载体的商队加"发射：折跃返回"
+    return_src = read_text("Source/MyModeTest/TeleportCaravanReturn.cs")
+    for token in ("HarmonyPatch", "Caravan", "GetGizmos", "FindTeleportShuttle",
+                  "ExecuteReturn", "CaravanInventoryUtility.GetOwnerOf", "RemoveAllPawns",
+                  "TryConsumeTeleport", "TeleportPadUtility", "FindAvailablePads",
+                  "DumpShuttleCargoAndDestroy", "TryDrop", "CompTransporter",
+                  "CompProperties_TeleportCargoLedger", "CompTeleportCargoLedger",
+                  "Snapshot", "DumpNonOriginal", "SplitOff", "Scribe_Collections.Look",
+                  "Notify_Teleported", "TeleportFx.Play"):
+        assert token in return_src, f"TeleportCaravanReturn.cs 缺少关键实现: {token}"
+    # 落地一次性全吐的卸货作业（复用原版 ShipJob_Unload.UnloadThingFromShuttle）
+    shuttle_src = read_text("Source/MyModeTest/TeleportShuttle.cs")
+    for token in ("MMT_ShipJob_UnloadInstant", "ShipJob", "UnloadThingFromShuttle",
+                  "TryRemoveLord", "ShouldEnd", "ShipExistsAndIsSpawned"):
+        assert token in shuttle_src, f"TeleportShuttle.cs 缺少关键实现: {token}"
     # 通用建筑蓄电 comp（蓄电逻辑自 TeleportPad 抽出，scribe 字段名沿用 storedChargeWd 接管旧存档）
     battery_src = read_text("Source/MyModeTest/BuildingBattery.cs")
     for token in ("CompProperties_BuildingBattery", "CompBuildingBattery", '"storedChargeWd"',
@@ -6701,6 +6732,35 @@ def validate_teleport() -> None:
     site_src = read_text("Source/MyModeTest/TeleportTempSite.cs")
     for token in ("MapParent", "ShouldRemoveMapNow", "alsoRemoveWorldObject", "CheckRemoveMapNow"):
         assert token in site_src, f"TeleportTempSite.cs 缺少关键实现: {token}"
+
+    # 穿梭机管线 Def：隐形载体 + 降临/离去光柱天坠物 + TransportShipDef + 全吐 ShipJobDef
+    skyfallers = def_map(parse_xml("1.7/Defs/ThingDefs_Misc/MMT_Skyfallers_Teleport.xml"))
+    assert_equal(set(skyfallers), {"MMT_TeleportShuttle", "MMT_TeleportShuttleIncoming", "MMT_TeleportShuttleLeaving"},
+                 "传送天坠物 defName 集合")
+    shuttle = skyfallers["MMT_TeleportShuttle"]
+    comp_classes = {li.attrib.get("Class") for li in shuttle.findall("comps/li")}
+    assert "CompProperties_Shuttle" in comp_classes, "隐形穿梭机缺 CompShuttle（ShipJob_FlyAway 硬依赖）"
+    assert "CompProperties_Transporter" in comp_classes, "隐形穿梭机缺 CompTransporter（载货硬依赖）"
+    assert "MyModeTest.CompProperties_TeleportCargoLedger" in comp_classes, "折跃载体缺携带物品台账 Comp（返回吐出非原携带物品）"
+    assert_equal(child_text(shuttle, "hasInteractionCell"), "true", "隐形穿梭机需交互格（吐出落点）")
+    assert_equal(child_text(shuttle, "./statBases/Mass"), "0", "折跃载体 Mass=0（商队随行不占负重）")
+    incoming = skyfallers["MMT_TeleportShuttleIncoming"]
+    assert_equal(child_text(incoming, "thingClass"), "ShuttleIncoming", "降临天坠物类型")
+    assert_equal(child_text(incoming, "./graphicData/texPath"), "Things/Skyfaller/MMT_TeleportBeam", "降临光柱贴图")
+    leaving = skyfallers["MMT_TeleportShuttleLeaving"]
+    assert_equal(child_text(leaving, "thingClass"), "FlyShipLeaving",
+                 "离去天坠物类型（ShipJob_FlyAway 强制转换 FlyShipLeaving）")
+
+    ships = parse_xml("1.7/Defs/ShipObjectDefs/MMT_TransportShipDefs_Teleport.xml")
+    ship_jobs = {d.findtext("defName"): d for d in ships.findall("ShipJobDef")}
+    assert_equal(child_text(ship_jobs["MMT_ShipJob_TeleportUnload"], "jobClass"),
+                 "MyModeTest.MMT_ShipJob_UnloadInstant", "全吐作业 jobClass")
+    ship_defs = {d.findtext("defName"): d for d in ships.findall("TransportShipDef")}
+    tsd = ship_defs["MMT_Ship_TeleportShuttle"]
+    assert_equal(child_text(tsd, "shipThing"), "MMT_TeleportShuttle", "传送船载体")
+    assert_equal(child_text(tsd, "arrivingSkyfaller"), "MMT_TeleportShuttleIncoming", "降临天坠物")
+    assert_equal(child_text(tsd, "leavingSkyfaller"), "MMT_TeleportShuttleLeaving", "离去天坠物")
+    assert tsd.findtext("playerShuttle") is None, "传送船不设 playerShuttle（Dispose 自动销毁载体）"
     print("teleport: OK")
 
 

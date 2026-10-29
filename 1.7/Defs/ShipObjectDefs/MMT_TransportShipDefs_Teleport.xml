@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃传送船定义：把原版穿梭机（TransportShip）管线复用为传送底层。
+       playerShuttle 不设（默认 false）：作业跑完后 TransportShip 自动 Dispose 并销毁
+       shipThing，地图与世界均不留残余；worldObject 不需要（FlyAway 永远无目的地）。 -->
+  <ShipJobDef>
+    <defName>MMT_ShipJob_TeleportUnload</defName>
+    <jobClass>MyModeTest.MMT_ShipJob_UnloadInstant</jobClass>
+    <!-- true：穿梭机尚未落地生成时不允许 Dispose 船只，防止舱内货物随船销毁丢失 -->
+    <blocksDisposalIfQueuedUnspawned>true</blocksDisposalIfQueuedUnspawned>
+  </ShipJobDef>
+
+  <TransportShipDef>
+    <defName>MMT_Ship_TeleportShuttle</defName>
+    <label>折跃传送</label>
+    <shipThing>MMT_TeleportShuttle</shipThing>
+    <arrivingSkyfaller>MMT_TeleportShuttleIncoming</arrivingSkyfaller>
+    <leavingSkyfaller>MMT_TeleportShuttleLeaving</leavingSkyfaller>
+  </TransportShipDef>
+</Defs>

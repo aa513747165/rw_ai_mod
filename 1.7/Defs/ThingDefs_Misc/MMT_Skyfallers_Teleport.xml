@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 折跃传送天坠物：底层仍是原版穿梭机管线（ShuttleIncoming 落地生成穿梭机、
+       FlyShipLeaving 离去销毁），表现层模仿米莉拉"折跃"——垂直光柱天降/升空。
+       光柱贴图为自绘（米莉拉素材未获授权，仅借鉴形式）；穿梭机本体全透明隐身，
+       视觉全部由光柱承担。之后要换传送特效只需改本文件与贴图，底层不动。 -->
+
+  <!-- 隐形穿梭机载体：克隆原版 Shuttle 的必要字段（CompShuttle/CompTransporter 是
+       ShipJob_Unload / ShipJob_FlyAway 的硬依赖），贴图全透明不可见不可选。
+       Mass=0：商队分支会把它作为随行物品挂进成员背包（隐身穿梭机待机），不占负重 -->
+  <ThingDef>
+    <defName>MMT_TeleportShuttle</defName>
+    <label>折跃载体</label>
+    <description>折跃传送的隐形载体，落地吐出全部载荷后随即消散。</description>
+    <altitudeLayer>Building</altitudeLayer>
+    <preventDroppingThingsOn>true</preventDroppingThingsOn>
+    <pathCost>50</pathCost>
+    <blockWind>true</blockWind>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <size>(3,3)</size>
+    <graphicData>
+      <texPath>Things/Misc/MMT_Null</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1000</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>0</Mass>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <canOverlapZones>true</canOverlapZones>
+    <rotatable>false</rotatable>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <selectable>false</selectable>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <drawerType>RealtimeOnly</drawerType>
+    <building>
+      <claimable>false</claimable>
+    </building>
+    <comps>
+      <li Class="CompProperties_Shuttle" />
+      <li Class="CompProperties_Transporter">
+        <massCapacity>1000</massCapacity>
+        <max1PerGroup>true</max1PerGroup>
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
+      </li>
+      <!-- 商队分支：出发时快照全队背包物品台账，折跃返回时台账之外的物品全部吐出 -->
+      <li Class="MyModeTest.CompProperties_TeleportCargoLedger" />
+    </comps>
+  </ThingDef>
+
+  <!-- 降临光柱：参数对齐米莉拉 Milira_DropPodIncoming（垂直加速下落、无阴影、无碎片、
+       淡入 60tick），下落时长缩短至 240~300 让传送更利落；音效用坠落呼啸 + 折跃闪现 -->
+  <ThingDef ParentName="ShuttleSkyfallerBase">
+    <defName>MMT_TeleportShuttleIncoming</defName>
+    <label>折跃光柱（降临）</label>
+    <thingClass>ShuttleIncoming</thingClass>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Skyfaller/MMT_TeleportBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>18</drawSize>
+      <drawOffset>(0,0,4)</drawOffset>
+    </graphicData>
+    <skyfaller>
+      <movementType>Accelerate</movementType>
+      <angleCurve>
+        <points>
+          <li>(0,0)</li>
+          <li>(1,0)</li>
+        </points>
+      </angleCurve>
+      <speed>2.5</speed>
+      <ticksToImpactRange>240~300</ticksToImpactRange>
+      <fadeInTicks>60</fadeInTicks>
+      <cameraShake>0.5</cameraShake>
+      <shadowSize>(0,0)</shadowSize>
+      <anticipationSound>DropPod_Fall</anticipationSound>
+      <anticipationSoundTicks>100</anticipationSoundTicks>
+      <impactSound>Psycast_Skip_Exit</impactSound>
+      <motesPerCell>0</motesPerCell>
+    </skyfaller>
+  </ThingDef>
+
+  <!-- 离去光柱：reversed 反向播放，光柱垂直升空后消散；thingClass 必须 FlyShipLeaving
+       （ShipJob_FlyAway 强制转换该类型），无目的地时原版会自动销毁穿梭机本体 -->
+  <ThingDef ParentName="ShuttleSkyfallerBase">
+    <defName>MMT_TeleportShuttleLeaving</defName>
+    <label>折跃光柱（离去）</label>
+    <thingClass>FlyShipLeaving</thingClass>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Skyfaller/MMT_TeleportBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>18</drawSize>
+      <drawOffset>(0,0,4)</drawOffset>
+    </graphicData>
+    <skyfaller>
+      <reversed>true</reversed>
+      <movementType>Decelerate</movementType>
+      <angleCurve>
+        <points>
+          <li>(0,90)</li>
+          <li>(1,90)</li>
+        </points>
+      </angleCurve>
+      <speedCurve>
+        <points>
+          <li>(0,0.2)</li>
+          <li>(0.1,0.7)</li>
+        </points>
+      </speedCurve>
+      <zPositionCurve>
+        <points>
+          <li>(0,0)</li>
+          <li>(0.08,6)</li>
+        </points>
+      </zPositionCurve>
+      <ticksToImpactRange>-40~-15</ticksToImpactRange>
+      <fadeOutTicks>45</fadeOutTicks>
+      <cameraShake>0.3</cameraShake>
+      <shadowSize>(0,0)</shadowSize>
+      <motesPerCell>0</motesPerCell>
+    </skyfaller>
+  </ThingDef>
+</Defs>

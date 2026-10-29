@@ -27,7 +27,8 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 折跃传送台核心 Comp：去程（装载复用原版 CompTransporter，世界地图选目标后瞬间空降目标地图）
+    /// 折跃传送台核心 Comp：去程（装载复用原版 CompTransporter；进入地图走原版 TransportShip
+    /// 穿梭机管线——光柱落地全部吐出后穿梭机消散，非敌对立据点则组成商队到世界地图该格）
     /// 与回程（供召回 Designator 调用，把框选的己方人员和物品传回本建筑）。
     /// 装载/取消装载 gizmo 由原版 CompTransporter 自带（1.7 已确认），本 Comp 只提供"启动传送"。
     /// </summary>
@@ -121,7 +122,7 @@ namespace MyModeTest
             // 启动传送：舱内为空、装载未完成、电力/冷却不满足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品瞬间传送到世界地图上任意地块：据点/任务地点=空降进攻；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却。";
+            launch.defaultDesc = "将舱内的人员和物品传送到世界地图上任意地块：敌对据点/任务地点=折跃进攻（跳图后自选落点，光柱落地后全部吐出）；非敌对定居点=组成商队到该格（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，再耗一次传送）；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
@@ -177,7 +178,7 @@ namespace MyModeTest
             return mp == null || !mp.HasMap || mp.Map != parent.Map;
         }
 
-        /// <summary>目标器悬停文案：按分支提示（己方/交易或进攻/进攻/荒野/拒绝原因）。</summary>
+        /// <summary>目标器悬停文案：按分支提示（己方/商队交易或进攻/进攻/荒野/拒绝原因）。</summary>
         private TaggedString WorldTargetLabel(GlobalTargetInfo target)
         {
             // 悬停无效地块（行星边缘/无地块处）时给静态提示，避免 WorldGrid 越界刷红字
@@ -187,15 +188,17 @@ namespace MyModeTest
                 return "无法传送：目标为水域";
             MapParent mp = Find.WorldObjects.MapParentAt(target.Tile);
             if (mp == null)
-                return "荒野空降：" + Find.WorldGrid[target.Tile].PrimaryBiome.LabelCap + "（生成临时地图）";
+                return "荒野折跃：" + Find.WorldGrid[target.Tile].PrimaryBiome.LabelCap + "（生成临时地图）";
             if (mp.HasMap && mp.Map == parent.Map)
                 return "无法传送：目标就是当前地图";
             if (mp.HasMap && mp.Map.IsPlayerHome)
                 return "传送至：" + mp.LabelCap;
+            if (mp is Settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
+                return "传送至：" + mp.LabelCap + "（组成商队，可交易/进攻/折跃返回）";
             return "进攻：" + mp.LabelCap;
         }
 
-        /// <summary>节点流转：按目标类型分派——己方精确选点 / 非敌对交易或进攻 / 敌对进攻 / 荒野临时地图。</summary>
+        /// <summary>节点流转：按目标类型分派——己方精确选点 / 非敌对组成商队 / 敌对进攻 / 荒野临时地图。</summary>
         private bool OnWorldTargetChosen(GlobalTargetInfo target)
         {
             if (!IsValidWorldTarget(target))
@@ -210,75 +213,69 @@ namespace MyModeTest
                 Map homeMap = mp.Map;
                 CameraJumper.TryJump(homeMap.Center, homeMap);
                 Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
-                    delegate(LocalTargetInfo cell) { ExecuteTeleport(homeMap, cell.Cell); });
+                    delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(homeMap, cell.Cell, false); });
                 return true;
             }
             if (mp is Settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
             {
-                // 非敌对立据点：只保留进攻空降。1.7 的定居点交易仅支持商队到访
-                // （Settlement_TraderTracker.ColonyThingsWillingToBuy/GiveSoldThingToTrader
-                // 强制走 negotiator.GetCaravan()，地图小人远程交易会 NRE），无法远程交易
-                ShowAttackOptions(mp, target.Tile);
+                // 非敌对立据点：不进图，传送到世界地图该格组成商队（与原版穿梭机一致），
+                // 之后由商队在世界上交易或进攻；确认菜单顺便充当防误触（消耗整次蓄电）
+                List<FloatMenuOption> visit = new List<FloatMenuOption>();
+                visit.Add(new FloatMenuOption("传送至 " + mp.LabelCap + " 并组成商队（可交易/进攻；发射折跃返回时非原携带物品全部吐出，消耗一次传送）",
+                    delegate { TeleportAsCaravan(mp, target.Tile); }));
+                Find.WindowStack.Add(new FloatMenu(visit));
                 return true;
             }
             if (mp != null)
             {
-                // 敌对据点 / 无派系任务地点：进攻（地图按需生成）
-                ShowAttackOptions(mp, target.Tile);
+                // 敌对据点 / 无派系任务地点：进攻（地图按需生成），直接进入选点
+                AttackMapParentPickCell(mp, target.Tile);
                 return true;
             }
-            // 空白地块：确认后生成荒野临时地图
-            List<FloatMenuOption> wild = new List<FloatMenuOption>();
-            wild.Add(new FloatMenuOption("空降荒野（生成临时地图，人员撤离后自动销毁）",
-                delegate { TeleportToWilderness(target.Tile); }));
-            Find.WindowStack.Add(new FloatMenu(wild));
+            // 空白地块：生成荒野临时地图，直接进入选点
+            TeleportToWilderness(target.Tile);
             return true;
         }
 
-        /// <summary>敌对/无派系目标：弹空降方式菜单（边缘 / 中心附近），与旧行为一致。</summary>
-        private void ShowAttackOptions(MapParent mp, PlanetTile tile)
+        /// <summary>进攻执行：按需生成目标地图（同步卡顿 1-3 秒，与原版空投一致）并跳图，
+        /// 鼠标指定落点后才消耗传送；右键取消选点则不消耗（与己方基地选点同一交互）。</summary>
+        private void AttackMapParentPickCell(MapParent mp, PlanetTile tile)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
-            options.Add(new FloatMenuOption("在地图边缘空降", delegate { AttackMapParent(mp, tile, false); }));
-            options.Add(new FloatMenuOption("在地图中心附近空降", delegate { AttackMapParent(mp, tile, true); }));
-            Find.WindowStack.Add(new FloatMenu(options));
-        }
-
-        /// <summary>进攻执行：按需生成目标地图（同步卡顿 1-3 秒，与原版空投一致），再选点空降。</summary>
-        private void AttackMapParent(MapParent mp, PlanetTile tile, bool nearCenter)
-        {
+            bool freshlyGenerated = !mp.HasMap;
             Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, mp.def);
-            IntVec3 spot;
-            if (nearCenter)
-                spot = DropCellFinder.TryFindDropSpotNear(map.Center, map, out IntVec3 found, false, true) ? found : map.Center;
-            else
-                spot = DropCellFinder.RandomDropSpot(map);
-            ExecuteTeleport(map, spot);
+            CameraJumper.TryJump(map.Center, map);
+            Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
+                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, freshlyGenerated); });
         }
 
-        /// <summary>荒野空降：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 → 边缘空降。</summary>
+        /// <summary>荒野折跃：创建临时落脚点世界对象 → 按该地块 biome 生成荒野地图 →
+        /// 跳图后鼠标自选落点（取消选点不消耗传送，空站点会被自动清理）。</summary>
         private void TeleportToWilderness(PlanetTile tile)
         {
             MMT_TeleportTempSite site = (MMT_TeleportTempSite)WorldObjectMaker.MakeWorldObject(MMT_TeleportDefOf.MMT_TeleportTempSite);
             site.Tile = tile;
             Find.WorldObjects.Add(site);
             Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, Find.World.info.initialMapSize, MMT_TeleportDefOf.MMT_TeleportTempSite);
-            ExecuteTeleport(map, DropCellFinder.RandomDropSpot(map));
+            // 取消选点时临时站点无人员，MMT_TeleportTempSite 自检会销图回收
+            CameraJumper.TryJump(map.Center, map);
+            Find.Targeter.BeginTargeting(TargetingParameters.ForCell(),
+                delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
         }
 
-        /// <summary>去程执行：抽电、进冷却，把舱内所有人和物瞬间移到目标地图落点；返回成功落图的己方人员。</summary>
-        private List<Pawn> ExecuteTeleport(Map targetMap, IntVec3 nearCell)
+        /// <summary>去程执行（进入地图）：抽电、进冷却，舱内人和物转入隐形穿梭机，
+        /// 走原版 TransportShip 管线——光柱落地 → 全部吐出 → 光柱离去穿梭机销毁。
+        /// freshlyGenerated 标记目标地图是否本次新生成（敌对定居点信件/通告用）。</summary>
+        private void ExecuteTeleportShuttle(Map targetMap, IntVec3 nearCell, bool freshlyGenerated)
         {
-            List<Pawn> arrived = new List<Pawn>();
             if (!CanTeleportNow(out string reason))
             {
                 Messages.Message("传送失败：" + reason, parent, MessageTypeDefOf.RejectInput, false);
-                return arrived;
+                return;
             }
             if (!TryDrainCharge(Props.energyCostWd))
             {
                 Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
-                return arrived;
+                return;
             }
             cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
 
@@ -287,37 +284,111 @@ namespace MyModeTest
 
             IntVec3 landing = FindFreeCellNear(targetMap, nearCell, 12);
             int pawns = 0, things = 0;
+            bool hasPlayerPawn = false;
             List<Thing> cargo = new List<Thing>(Transporter.innerContainer);
             foreach (Thing t in cargo)
             {
                 Transporter.innerContainer.Remove(t);
                 if (t is Pawn pawn)
                 {
-                    // 人员落点散开避免叠格；落图后驱散迷雾并重置状态
-                    IntVec3 cell = FindFreeCellNear(targetMap, landing, 8);
-                    GenSpawn.Spawn(pawn, cell, targetMap, Rot4.Random);
-                    if (pawn.Faction == Faction.OfPlayer && cell.Fogged(targetMap))
-                        FloodFillerFog.FloodUnfog(cell, targetMap);
-                    pawn.Notify_Teleported();
                     pawns++;
                     if (pawn.Faction == Faction.OfPlayer)
-                        arrived.Add(pawn);
+                        hasPlayerPawn = true;
                 }
                 else
                 {
-                    GenPlace.TryPlaceThing(t, landing, targetMap, ThingPlaceMode.Near);
                     things++;
                 }
             }
-            TeleportFx.Play(landing, targetMap);
             // 传送完毕后解散装载组（groupID 复位、残余装载lord移除），
             // 否则传送台一直停留在"待发"状态，无法再开始新一轮装载
             Transporter.CancelLoad(parent.Map);
-            Messages.Message("传送完成：" + pawns + " 名人员、" + things + " 件物品已抵达目标地图",
-                new LookTargets(new GlobalTargetInfo(landing, targetMap)), MessageTypeDefOf.PositiveEvent, false);
+
+            // 底层穿梭机：建船并装入全部载荷（船注册进 TransportShipManager，后续作业自动推进）
+            TransportShip ship = TransportShipMaker.MakeTransportShip(MMT_TeleportDefOf.MMT_Ship_TeleportShuttle, cargo);
+
+            // 敌对定居点：复制原版 TransportersArrivalAction_TransportShip.Arrived 的关系惩罚与信件
+            MapParent mp = targetMap.Parent;
+            LookTargets lookTargets = new LookTargets(landing, targetMap);
+            if (mp is Settlement settlement && settlement.Faction != Faction.OfPlayer)
+            {
+                TaggedString letterLabel = "LetterLabelCaravanEnteredEnemyBase".Translate();
+                TaggedString letterText = "LetterShuttleLandedInEnemyBase".Translate(settlement.Label).CapitalizeFirst();
+                SettlementUtility.AffectRelationsOnAttacked(settlement, ref letterText);
+                if (freshlyGenerated)
+                {
+                    Find.TickManager.Notify_GeneratedPotentiallyHostileMap();
+                    PawnRelationUtility.Notify_PawnsSeenByPlayer_Letter(targetMap.mapPawns.AllPawns, ref letterLabel, ref letterText,
+                        "LetterRelatedPawnsInMapWherePlayerLanded".Translate(Faction.OfPlayer.def.pawnsPlural), true);
+                }
+                Find.LetterStack.ReceiveLetter(letterLabel, letterText, LetterDefOf.NeutralEvent, lookTargets, settlement.Faction);
+            }
+
+            // 抵达（生成降临光柱天坠物）→ 落地一次性全吐 → 离去光柱升空并销毁穿梭机（无目的地）
+            ship.ArriveAt(landing, mp);
+            ship.AddJob(ShipJobMaker.MakeShipJob(MMT_TeleportDefOf.MMT_ShipJob_TeleportUnload));
+            ship.AddJob(ShipJobMaker.MakeShipJob(ShipJobDefOf.FlyAway));
+
+            if (hasPlayerPawn && landing.Fogged(targetMap))
+                FloodFillerFog.FloodUnfog(landing, targetMap);
+            Messages.Message("传送完成：" + pawns + " 名人员、" + things + " 件物品正随折跃光柱抵达目标地图",
+                lookTargets, MessageTypeDefOf.PositiveEvent, false);
             CameraJumper.TryJump(landing, targetMap);
             // 流程结束
-            return arrived;
+        }
+
+        /// <summary>去程执行（非敌对立据点）：不进图，舱内人员在世界地图该格组成商队、
+        /// 物品入商队背包（参照原版 TransportersArrivalAction_FormCaravan），之后可交易或进攻。</summary>
+        private void TeleportAsCaravan(MapParent mp, PlanetTile tile)
+        {
+            if (!CanTeleportNow(out string reason))
+            {
+                Messages.Message("传送失败：" + reason, parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            List<Thing> cargo = new List<Thing>(Transporter.innerContainer);
+            List<Pawn> pawns = new List<Pawn>();
+            List<Thing> items = new List<Thing>();
+            foreach (Thing t in cargo)
+            {
+                if (t is Pawn pawn)
+                    pawns.Add(pawn);
+                else
+                    items.Add(t);
+            }
+            if (pawns.Count == 0)
+            {
+                Messages.Message("无法传送：组成商队至少需要一名人员", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            if (!TryDrainCharge(Props.energyCostWd))
+            {
+                Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
+            TeleportFx.Play(parent.Position, parent.Map);
+            foreach (Thing t in cargo)
+                Transporter.innerContainer.Remove(t);
+            Transporter.CancelLoad(parent.Map);
+
+            if (!GenWorldClosest.TryFindClosestPassableTile(tile, out PlanetTile foundTile))
+                foundTile = tile;
+            Caravan caravan = CaravanMaker.MakeCaravan(pawns, Faction.OfPlayer, foundTile, true);
+            // 货物挂在成员背包（原版分配逻辑），保证世界地图交易可用
+            foreach (Thing item in items)
+                CaravanInventoryUtility.GiveThing(caravan, item);
+            // 隐身穿梭机载体：挂在成员背包里随行（大地图不绘制=隐身、Mass=0），
+            // 并快照出发时携带物品台账——携带载体的商队获得"发射：折跃返回"按钮
+            // （TeleportCaravanReturn），返回时台账之外的物品（交易购得等）全部吐出
+            Thing shuttle = ThingMaker.MakeThing(MMT_TeleportDefOf.MMT_TeleportShuttle);
+            ((ThingWithComps)shuttle).GetComp<CompTeleportCargoLedger>()?.Snapshot(caravan);
+            CaravanInventoryUtility.GiveThing(caravan, shuttle);
+            Messages.Message("传送完成：" + pawns.Count + " 名人员、" + items.Count + " 件物品已抵达" + mp.LabelCap
+                + "（隐身穿梭机随行：可交易/进攻，或随时发射折跃返回——返回时途中获得的物品全部吐出）",
+                new LookTargets(caravan), MessageTypeDefOf.PositiveEvent, false);
+            CameraJumper.TryJump(new GlobalTargetInfo(caravan));
+            // 流程结束
         }
 
         // ---- 回程：由 Designator_RecallTeleport 调用 ----
@@ -364,6 +435,13 @@ namespace MyModeTest
                     GenSpawn.Spawn(pawn, cell, parent.Map, Rot4.Random);
                     pawn.teleporting = false;
                     pawn.Notify_Teleported();
+                    // 召回顺带回收背包里的折跃载体：舱内货物就地吐出后再销毁，防止货物随载体消失
+                    Thing carrier = pawn.inventory?.innerContainer?.FirstOrDefault(t => t.def == MMT_TeleportDefOf.MMT_TeleportShuttle);
+                    if (carrier != null)
+                    {
+                        pawn.inventory.innerContainer.Remove(carrier);
+                        TeleportPadUtility.DumpShuttleCargoAndDestroy(carrier, cell, parent.Map);
+                    }
                     pawns++;
                 }
                 else
@@ -390,10 +468,25 @@ namespace MyModeTest
             return Battery != null && Battery.TryDrain(amount);
         }
 
+        /// <summary>消耗一次传送：校验可用性 → 抽电 → 进冷却，任一失败不扣电。
+        /// 供商队折跃返回（TeleportCaravanReturn）等外部流程调用。</summary>
+        internal bool TryConsumeTeleport(out string reason)
+        {
+            if (!CanTeleportNow(out reason))
+                return false;
+            if (!TryDrainCharge(Props.energyCostWd))
+            {
+                reason = "蓄电不足";
+                return false;
+            }
+            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
+            return true;
+        }
+
         // ---- 工具 ----
 
         /// <summary>在中心附近找可站立格，递增半径兜底；找不到退到地图中心。</summary>
-        private static IntVec3 FindFreeCellNear(Map map, IntVec3 center, int maxRadius)
+        internal static IntVec3 FindFreeCellNear(Map map, IntVec3 center, int maxRadius)
         {
             if (!center.IsValid || !center.InBounds(map))
                 center = map.Center;
@@ -449,18 +542,7 @@ namespace MyModeTest
         public override void DesignateMultiCell(IEnumerable<IntVec3> cells)
         {
             // 1. 扫描所有己方基地中可用的传送台
-            List<CompTeleportPad> pads = new List<CompTeleportPad>();
-            foreach (Map m in Find.Maps)
-            {
-                if (!m.IsPlayerHome)
-                    continue;
-                foreach (Thing t in m.listerThings.ThingsOfDef(MMT_TeleportDefOf.MMT_TeleportPad))
-                {
-                    CompTeleportPad comp = ((ThingWithComps)t).GetComp<CompTeleportPad>();
-                    if (comp != null && comp.parent.Spawned && comp.CanTeleportNow(out _))
-                        pads.Add(comp);
-                }
-            }
+            List<CompTeleportPad> pads = TeleportPadUtility.FindAvailablePads();
             if (pads.Count == 0)
             {
                 Messages.Message("没有可用的折跃传送台（需已开启、蓄电充足且不在冷却中）", MessageTypeDefOf.RejectInput, false);
@@ -553,6 +635,12 @@ namespace MyModeTest
         public static ThingDef MMT_TeleportPad;
         /// <summary>荒野临时落脚点世界对象。</summary>
         public static WorldObjectDef MMT_TeleportTempSite;
+        /// <summary>隐形折跃载体（ThingDef）：去程穿梭机本体，商队分支也作为随行物品挂进背包。</summary>
+        public static ThingDef MMT_TeleportShuttle;
+        /// <summary>折跃传送船（穿梭机逻辑载体）。</summary>
+        public static TransportShipDef MMT_Ship_TeleportShuttle;
+        /// <summary>落地一次性全吐的卸货作业。</summary>
+        public static ShipJobDef MMT_ShipJob_TeleportUnload;
 
         static MMT_TeleportDefOf()
         {
