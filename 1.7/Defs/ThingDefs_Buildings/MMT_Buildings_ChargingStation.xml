@@ -7,7 +7,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ChargingStation</defName>
     <label>充能台</label>
-    <description>为内置电池的便携式设备回充电量的台座。右键建筑选择"装载可充能设备"，小人会把身上穿戴或携带的设备（如充能护盾腰带）装入台座回充，充满后右键取出。充能时设备会飘浮在台座上方并亮起充能光柱。</description>
+    <description>为内置电池的便携式设备回充电量的台座。右键建筑选择"装载可充能设备"，小人会把身上穿戴或携带的设备（如充能护盾腰带）装入台座回充，充满后右键取出。充能时设备会飘浮在台座上方并亮起充能光柱。安装充能效率模块可提升充能速度（每个 +10%，最多 5 个）。</description>
     <thingClass>MyModeTest.Building_ChargingStation</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_ChargingStation</texPath>
@@ -53,7 +53,16 @@
         <chargePowerW>1500</chargePowerW>
         <idlePowerW>25</idlePowerW>
       </li>
+      <!-- 增效模块槽：充能效率模块（充能提速 +10%/个，最多 5） -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>ChargeEfficiency</key><max>5</max></li>
+        </slotLimits>
+      </li>
     </comps>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_ModuleSlots</li>
+    </inspectorTabs>
     <constructEffect>ConstructMetal</constructEffect>
     <researchPrerequisites>
       <li>MMT_RechargeableTech</li>

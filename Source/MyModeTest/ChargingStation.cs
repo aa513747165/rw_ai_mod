@@ -114,6 +114,8 @@ namespace MyModeTest
         // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
         private CompFlickable flickComp;
         private CompPowerTrader powerComp;
+        // 增效模块槽（可空）：充能效率模块提升充能速度
+        private CompModuleSlots slotsComp;
 
         public CompChargingStation()
         {
@@ -167,6 +169,7 @@ namespace MyModeTest
             base.PostSpawnSetup(respawningAfterLoad);
             flickComp = parent.GetComp<CompFlickable>();
             powerComp = parent.GetComp<CompPowerTrader>();
+            slotsComp = parent.GetComp<CompModuleSlots>();
         }
 
         public override void PostExposeData()
@@ -190,6 +193,16 @@ namespace MyModeTest
             powerComp.PowerOutput = bat != null && bat.NeedsCharge ? -Props.chargePowerW : -Props.idlePowerW;
         }
 
+        /// <summary>实际充能速度（Wd/天）：基础速率 × (1 + 充能效率模块加成合计)。</summary>
+        public float EffectiveChargeRateWdPerDay
+        {
+            get
+            {
+                float bonus = slotsComp != null ? slotsComp.GetEffectSum(ModuleEffectKeys.ChargeRateFactor) : 0f;
+                return Props.chargeRateWdPerDay * (1f + bonus);
+            }
+        }
+
         /// <summary>充能推进（delta = 距上次间隔回调经过的 tick 数，1~15）；仅在从未满变满的一拍播报"充能完成"。
         /// 注意：1.7 的 DoTick 只对 tickerType==Rare 的物体调 TickRare，Normal 建筑永远收不到
         /// CompTickRare（已反汇编 1.7 Thing.DoTick 核实），周期逻辑必须放 CompTickInterval。</summary>
@@ -199,7 +212,7 @@ namespace MyModeTest
             CompRechargeable bat = BatteryOf(HeldItem);
             if (bat == null || !bat.NeedsCharge || !SwitchOn || !PowerOn)
                 return;
-            bat.AddCharge(Props.chargeRateWdPerDay / 60000f * delta);
+            bat.AddCharge(EffectiveChargeRateWdPerDay / 60000f * delta);
             if (bat.IsFull)
                 Messages.Message("充能完成：" + HeldItem.LabelCap + " 已充满，可从充能台取回",
                     new LookTargets(parent), MessageTypeDefOf.PositiveEvent, false);
@@ -366,7 +379,7 @@ namespace MyModeTest
             if (bat.IsFull)
                 text += " 已充满，等待取走";
             else if (IsCharging)
-                text += " 充能中（" + Props.chargeRateWdPerDay.ToString("F0") + " Wd/天）";
+                text += " 充能中（" + EffectiveChargeRateWdPerDay.ToString("F0") + " Wd/天）";
             else
                 text += " 暂停充能：需要开启开关并通电";
             return text;

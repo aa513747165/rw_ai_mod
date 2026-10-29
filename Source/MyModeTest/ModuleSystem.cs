@@ -42,6 +42,10 @@ namespace MyModeTest
         public const string ExtraLanes = "ExtraLanes";
         /// <summary>产量加成：每件直接加单次产量（如 10）。</summary>
         public const string YieldBonus = "YieldBonus";
+        /// <summary>充能速度加成：每件 +0.1 → 充能速率 × (1 + 合计)。</summary>
+        public const string ChargeRateFactor = "ChargeRateFactor";
+        /// <summary>传送次数上限加成：每件 +1 次。</summary>
+        public const string ExtraTeleportCharges = "ExtraTeleportCharges";
     }
 
     /// <summary>设备侧槽位上限条目：key 对应物品扩展的 slotKey。</summary>

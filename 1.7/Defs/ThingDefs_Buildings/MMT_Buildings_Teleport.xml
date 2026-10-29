@@ -4,13 +4,14 @@
        质量上限、ITab_ContentsTransporter 全免费，装载/取消 gizmo 由原版自带）；
        自定义 CompTeleportPad 提供"启动传送"（世界地图选已有地图目标瞬间空降）
        与召回执行端（配合 Architect 菜单的召回框选 Designator）。
-       待机 3000W；开启并通电时以 3000Wd/天自动蓄电（内置储能上限 15000Wd，约 5 天充满），
-       每次传送消耗全部 15000Wd 内部蓄电并冷却 12 小时；蓄满后即使电网断电也可发射。
+       次数制：待机 3000W；开启并通电时以 3000Wd/天自动蓄电（内置储能 15000Wd，约 5 天充满），
+       蓄电每充满一次转化为 1 次传送并重新蓄电；次数上限 = 1 + 次元传送模块数（最多 10 个），
+       次数为 0 时进入等待蓄电的 CD。充能效率模块（最多 5 个）每个提升 10% 蓄电速度。
        贴图为 HSK 蓝色传送门（Core_SK Genstep/Blueportal，已授权）。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_TeleportPad</defName>
     <label>折跃传送台</label>
-    <description>量子折跃装置，可将舱内的人员和物资传送到世界地图上任意地块：敌对据点为折跃进攻（跳图后自选落点，光柱落地后载荷全部吐出、载体消散），非敌对定居点直接在世界地图该格组成商队（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，返回再消耗一次传送），空白地块会生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失），己方基地可精确选落点；也可从目标地图框选召回。接入电网并保持开启即可自动蓄电（3000Wd/天），每次传送消耗全部 15000Wd 蓄电并需要 12 小时冷却。</description>
+    <description>量子折跃装置，可将舱内的人员和物资传送到世界地图上任意地块：敌对据点为折跃进攻（跳图后自选落点，光柱落地后载荷全部吐出、载体消散），非敌对定居点直接在世界地图该格组成商队（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，返回再消耗一次传送），空白地块会生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失），己方基地可精确选落点；也可从目标地图框选召回。接入电网并保持开启即可自动蓄电（3000Wd/天），蓄电每充满一次转化为 1 次传送次数并重新蓄电，次数上限 1 次；安装次元传送模块可提高次数上限（每个 +1，最多 10 个），安装充能效率模块可提升蓄电速度（每个 +10%，最多 5 个）。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_TeleportPad</texPath>
@@ -62,12 +63,15 @@
         <massCapacity>1000</massCapacity>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
       </li>
-      <li Class="MyModeTest.CompProperties_TeleportPad">
-        <energyCostWd>15000</energyCostWd>
-        <cooldownTicks>30000</cooldownTicks>
+      <li Class="MyModeTest.CompProperties_TeleportPad" />
+      <!-- 增效模块槽：充能效率模块（蓄电提速 +10%/个，最多 5）+ 次元传送模块（次数上限 +1/个，最多 10） -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>ChargeEfficiency</key><max>5</max></li>
+          <li><key>TeleportCharge</key><max>10</max></li>
+        </slotLimits>
       </li>
-      <!-- 建筑蓄电：maxChargeWd 需与上方 energyCostWd 一致（蓄满=一次传送）；
-           3000 Wd/天 ≈ 待机功耗，5 天充满 -->
+      <!-- 建筑蓄电：蓄满 15000Wd 转化为 1 次传送次数并重新蓄电；3000 Wd/天 ≈ 待机功耗，5 天充满 -->
       <li Class="MyModeTest.CompProperties_BuildingBattery">
         <maxChargeWd>15000</maxChargeWd>
         <chargeRateWdPerDay>3000</chargeRateWdPerDay>
@@ -75,6 +79,7 @@
     </comps>
     <inspectorTabs>
       <li>ITab_ContentsTransporter</li>
+      <li>MyModeTest.ITab_ModuleSlots</li>
     </inspectorTabs>
     <placeWorkers>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>

@@ -101,6 +101,7 @@ LAYOUT = {
     "MMT_MatterConversion2": (10, 6),
     "MMT_MatterConversion3": (11, 6),
     "MMT_Teleportation": (12, 6),
+    "MMT_ChargeBoost": (13, 6),
     # y=7 武器与杂项高科技：远古 | 枪械 | 核能 | 研究设施 | 近战 IV | 激光 | 灵能护盾（充能右下）
     "MMT_ArchotechWeapons": (0, 7),
     "MMT_GunsAdvanced": (2, 7),
@@ -114,6 +115,7 @@ LAYOUT = {
     "MMT_DirectedEnergyWeapons1": (10, 7),
     "MMT_DirectedEnergyWeapons2": (11, 7),
     "MMT_PsychicShieldTech": (12, 7),
+    "MMT_DimensionalTeleport": (13, 7),
     # y=8 重武器：狙击 | 榴弹炮/火炮/自动炮塔 | 火箭弹 | 重机枪塔/重型炮塔
     "MMT_SnipersAdvanced": (0, 8),
     "MMT_GrenadeLaunchers": (2, 8),

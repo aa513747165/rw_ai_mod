@@ -6,7 +6,7 @@
 
 ## 1. MMT 物品总表
 
-共 280 件（不含抽象基类）。
+共 285 件（不含抽象基类）。
 
 ### 1.1 资源与材料
 
@@ -93,7 +93,7 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 硅（`MMT_Silicon`） | 4.0 | 300 | — | MMT_ExtractSilicon_Electric、MMT_MakeSilicon_Bulk、MMT_ExtractSilicon_Hand | 5 |
-| 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 18 |
+| 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 20 |
 | 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 12 |
 | 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 10 |
 
@@ -166,7 +166,7 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 原始零部件（`MMT_ComponentMedieval`） | 6 | 300 | — | MMT_MakeComponentMedieval_Wood、MMT_MakeComponentMedieval_Metal | 2 |
-| 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 8 |
+| 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 9 |
 | 机械组件（`MMT_Mechanism`） | 200 | 75 | — | MMT_MakeMechanism_Hand、MMT_MakeMechanism_Electric | 25 |
 | 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 13 |
 | 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 18 |
@@ -241,6 +241,13 @@
 | α阿尔法聚合物（`MMT_AlphaPoly`） | 45 | 75 | 金属 | MMT_DisassembleAIPersonaCore、MMT_ProduceAPoly | 2 |
 | β贝塔聚合物（`MMT_BetaPoly`） | 65 | 75 | 金属 | MMT_ProduceBPoly | 0 |
 | 生物铁合金（`MMT_BioferriteAlloy`） | 9 | 600 | Bioferrite/金属 | MMT_MakeBioferriteAlloy | 0 |
+
+#### TeleportModules（TeleportModules）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 充能效率模块（`MMT_ChargeEfficiencyModule`） | 220 | 10 | — | MMT_MakeChargeEfficiencyModule | 0 |
+| 次元传送模块（`MMT_DimensionalModule`） | 420 | 10 | — | MMT_MakeDimensionalModule | 0 |
 
 #### 纺织（Textiles）
 
@@ -494,6 +501,16 @@
 | 中性花（`MMT_PlantNeutroFlower`） | — | — | — | — | 0 |
 | 红木树（`MMT_PlantRedwood`） | — | — | — | — | 0 |
 
+### 1.4 其它
+
+#### Skyfallers_Teleport（Skyfallers_Teleport）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 折跃载体（`MMT_TeleportShuttle`） | — | — | — | — | 0 |
+| 折跃光柱（降临）（`MMT_TeleportShuttleIncoming`） | — | — | — | — | 0 |
+| 折跃光柱（离去）（`MMT_TeleportShuttleLeaving`） | — | — | — | — | 0 |
+
 ## 2. HSK 有而 MMT 未实现的资源/材料
 
 共 114 件，按 HSK 源文件分组。中文名取自 HSK 汉化（Core_SK DefInjected），无翻译时保留英文 label。与原版同名的 def（HSK 对原版的改写）不计入。
@@ -502,238 +519,238 @@
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 未完成的帐篷 | `UnfinishedTent` | Unfinished | — |
-| 帐篷 | `DeployableTent` | Tents | 300 |
-| 中型帐篷 | `DeployableTentMedium` | Tents | 550 |
-| 大型帐篷 | `DeployableTentBig` | Tents | 750 |
+| UnfinishedTent | `UnfinishedTent` | Unfinished | — |
+| DeployableTent | `DeployableTent` | Tents | 300 |
+| DeployableTentMedium | `DeployableTentMedium` | Tents | 550 |
+| DeployableTentBig | `DeployableTentBig` | Tents | 750 |
 
 ### 2.2 Items_Crate.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| M240B机枪组件箱 | `M240B_Crate` | WeaponCrate | 2400 |
-| AGS-17组件箱 | `AGSturret_Crate` | WeaponCrate | 2500 |
-| 81mm迫击炮组件箱 | `Mortar_Crate` | WeaponCrate | 2200 |
-| 90mm高射炮组件箱 | `FlakTurret_Crate` | WeaponCrate | 3800 |
-| 5.56mm轻型哨戒炮塔组件箱 | `SentryTurret_Crate` | WeaponCrate | 2000 |
-| 14.5mm重型哨戒机枪组件箱 | `HeavyTurret_Crate` | WeaponCrate | 3500 |
-| 自动哨戒炮塔组件箱 | `SentryBlasterTurret_Crate` | WeaponCrate | 3600 |
-| 光束炮塔组件箱 | `LaserTurret_Crate` | WeaponCrate | 3600 |
+| M240B_Crate | `M240B_Crate` | WeaponCrate | 2400 |
+| AGSturret_Crate | `AGSturret_Crate` | WeaponCrate | 2500 |
+| Mortar_Crate | `Mortar_Crate` | WeaponCrate | 2200 |
+| FlakTurret_Crate | `FlakTurret_Crate` | WeaponCrate | 3800 |
+| SentryTurret_Crate | `SentryTurret_Crate` | WeaponCrate | 2000 |
+| HeavyTurret_Crate | `HeavyTurret_Crate` | WeaponCrate | 3500 |
+| SentryBlasterTurret_Crate | `SentryBlasterTurret_Crate` | WeaponCrate | 3600 |
+| LaserTurret_Crate | `LaserTurret_Crate` | WeaponCrate | 3600 |
 
 ### 2.3 Items_Exotic.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 冰霜之心 | `LivingFrost` | BodyParts | 1500 |
-| 活火之心 | `LivingFire` | BodyParts | 1500 |
+| LivingFrost | `LivingFrost` | BodyParts | 1500 |
+| LivingFire | `LivingFire` | BodyParts | 1500 |
 
 ### 2.4 Items_Minified.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 自动光束炮塔 | `MinifiedTurret_Sniper` | — | — |
-| 舰载哨戒炮塔 | `MinifiedTurret_NavalGunTurretGun` | — | — |
-| M240B机枪 | `MinifiedTurret_FFautocannon` | — | — |
-| M2 .50勃朗宁机枪 | `MinifiedTurret_M2Browning` | — | — |
-| KPV重机枪 | `MinifiedTurret_ChainGun` | — | — |
-| 30mm复仇者火炮 | `MinifiedTurret_Avenger` | — | — |
-| 20mm火神炮 | `MinifiedTurret_VulcanCannon` | — | — |
-| 弩炮 | `MinifiedTurret_Balista` | — | — |
-| 投石机 | `MinifiedTurret_Catapult` | — | — |
-| 自动火箭发射器 | `MinifiedTurret_SentryRocketLauncher` | — | — |
-| 120mm坦克炮塔 | `MinifiedTurret_Cannon` | — | — |
-| 155mm榴弹炮 | `MinifiedHowitzer_Cannon` | — | — |
-| FGM-148“标枪”反坦克导弹 | `MinifiedLightMissileSystem` | — | — |
-| M134速射机枪 | `MinifiedTurret_Minigun` | — | — |
-| BGM-71“陶式”反坦克导弹 | `MinifiedTurret_TOWLauncher` | — | — |
-| 中型导弹系统 | `MinifiedMediumMissileSystem` | — | — |
-| 重型导弹系统 | `Minified_RLGun` | — | — |
-| AGL | `MinifiedTurret_AGLGrenadeLauncher` | — | — |
+| MinifiedTurret_Sniper | `MinifiedTurret_Sniper` | — | — |
+| MinifiedTurret_NavalGunTurretGun | `MinifiedTurret_NavalGunTurretGun` | — | — |
+| MinifiedTurret_FFautocannon | `MinifiedTurret_FFautocannon` | — | — |
+| MinifiedTurret_M2Browning | `MinifiedTurret_M2Browning` | — | — |
+| MinifiedTurret_ChainGun | `MinifiedTurret_ChainGun` | — | — |
+| MinifiedTurret_Avenger | `MinifiedTurret_Avenger` | — | — |
+| MinifiedTurret_VulcanCannon | `MinifiedTurret_VulcanCannon` | — | — |
+| MinifiedTurret_Balista | `MinifiedTurret_Balista` | — | — |
+| MinifiedTurret_Catapult | `MinifiedTurret_Catapult` | — | — |
+| MinifiedTurret_SentryRocketLauncher | `MinifiedTurret_SentryRocketLauncher` | — | — |
+| MinifiedTurret_Cannon | `MinifiedTurret_Cannon` | — | — |
+| MinifiedHowitzer_Cannon | `MinifiedHowitzer_Cannon` | — | — |
+| MinifiedLightMissileSystem | `MinifiedLightMissileSystem` | — | — |
+| MinifiedTurret_Minigun | `MinifiedTurret_Minigun` | — | — |
+| MinifiedTurret_TOWLauncher | `MinifiedTurret_TOWLauncher` | — | — |
+| MinifiedMediumMissileSystem | `MinifiedMediumMissileSystem` | — | — |
+| Minified_RLGun | `Minified_RLGun` | — | — |
+| MinifiedTurret_AGLGrenadeLauncher | `MinifiedTurret_AGLGrenadeLauncher` | — | — |
 
 ### 2.5 Items_Resource_Alloys_Medieval.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 纯金合金 | `GoldBar` | HCMBar/PRSBar/HeavyBar | 35 |
-| 纯银合金 | `SilverBar` | PRSBar/HeavyBar | 5 |
+| GoldBar | `GoldBar` | HCMBar/PRSBar/HeavyBar | 35 |
+| SilverBar | `SilverBar` | PRSBar/HeavyBar | 5 |
 
 ### 2.6 Items_Resource_Chemical.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 合成氨 | `SyntheticAmmonia` | Chemical | 15 |
+| SyntheticAmmonia | `SyntheticAmmonia` | Chemical | 15 |
 
 ### 2.7 Items_Resource_Cloth.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 骆驼毛 | `WoolDromedary` | BTextiles | 3.5 |
+| WoolDromedary | `WoolDromedary` | BTextiles | 3.5 |
 
 ### 2.8 Items_Resource_Crops.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 青贮饲料 | `Silage` | Animalfood | 5 |
+| Silage | `Silage` | Animalfood | 5 |
 
 ### 2.9 Items_Resource_Crops_CookingSupplies.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 小麦 | `Rawwheat` | CookingSupplies | 2.0 |
-| 可可豆 | `Rawcocoa` | CookingSupplies | 2.0 |
-| 甘蔗 | `Rawsugarcane` | CookingSupplies | 2.0 |
-| 烟叶 | `RawTobacco` | CookingSupplies | 1.8 |
-| 咖啡果 | `RawCoffee` | CookingSupplies | 1.2 |
-| 茶叶 | `RawTea` | CookingSupplies | 2.0 |
+| Rawwheat | `Rawwheat` | CookingSupplies | 2.0 |
+| Rawcocoa | `Rawcocoa` | CookingSupplies | 2.0 |
+| Rawsugarcane | `Rawsugarcane` | CookingSupplies | 2.0 |
+| RawTobacco | `RawTobacco` | CookingSupplies | 1.8 |
+| RawCoffee | `RawCoffee` | CookingSupplies | 1.2 |
+| RawTea | `RawTea` | CookingSupplies | 2.0 |
 
 ### 2.10 Items_Resource_Crops_Eggs.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 翼猛龙蛋（未受精） | `EggFRaptorUnfertilized` | EggsUnfertilized | 300.0 |
-| 翼猛龙蛋（已受精） | `EggFRaptorFertilized` | EggsFertilized | 600.0 |
-| 芬尼克斯蛋（未受精） | `EggFenixUnfertilized` | EggsUnfertilized | 1000.0 |
-| 芬尼克斯蛋（已受精） | `EggFenixFertilized` | EggsFertilized | 4000.0 |
-| 绿飞龙蛋（未受精） | `EggGreenWyvernUnfertilized` | EggsUnfertilized | 700.0 |
-| 绿飞龙蛋（已受精） | `EggGreenWyvernFertilized` | EggsFertilized | 3000.0 |
-| 犬魔蛋（未受精） | `EggBehirUnfertilized` | EggsUnfertilized | 1500.0 |
-| 犬魔蛋（已受精） | `EggBehirFertilized` | EggsFertilized | 4500.0 |
-| 拉科斯帝鳄蜥（未受精） | `EggLacosdileUnfertilized` | EggsUnfertilized | 12.0 |
-| 拉科斯帝鳄蜥（已受精） | `EggLacosdileFertilized` | EggsFertilized | 15.0 |
-| 夜灵蛋（未受精） | `EggNightlingUnfertilized` | EggsUnfertilized | 60.0 |
-| 夜灵蛋（已受精） | `EggNightlingFertilized` | EggsFertilized | 100.0 |
-| 松鸡蛋（未受精） | `EggPtarmiganUnfertilized` | EggsUnfertilized | 7.0 |
-| 松鸡蛋（已受精） | `EggPtarmiganFertilized` | EggsFertilized | 12.0 |
+| EggFRaptorUnfertilized | `EggFRaptorUnfertilized` | EggsUnfertilized | 300.0 |
+| EggFRaptorFertilized | `EggFRaptorFertilized` | EggsFertilized | 600.0 |
+| EggFenixUnfertilized | `EggFenixUnfertilized` | EggsUnfertilized | 1000.0 |
+| EggFenixFertilized | `EggFenixFertilized` | EggsFertilized | 4000.0 |
+| EggGreenWyvernUnfertilized | `EggGreenWyvernUnfertilized` | EggsUnfertilized | 700.0 |
+| EggGreenWyvernFertilized | `EggGreenWyvernFertilized` | EggsFertilized | 3000.0 |
+| EggBehirUnfertilized | `EggBehirUnfertilized` | EggsUnfertilized | 1500.0 |
+| EggBehirFertilized | `EggBehirFertilized` | EggsFertilized | 4500.0 |
+| EggLacosdileUnfertilized | `EggLacosdileUnfertilized` | EggsUnfertilized | 12.0 |
+| EggLacosdileFertilized | `EggLacosdileFertilized` | EggsFertilized | 15.0 |
+| EggNightlingUnfertilized | `EggNightlingUnfertilized` | EggsUnfertilized | 60.0 |
+| EggNightlingFertilized | `EggNightlingFertilized` | EggsFertilized | 100.0 |
+| EggPtarmiganUnfertilized | `EggPtarmiganUnfertilized` | EggsUnfertilized | 7.0 |
+| EggPtarmiganFertilized | `EggPtarmiganFertilized` | EggsFertilized | 12.0 |
 
 ### 2.11 Items_Resource_Crops_Fruits.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 西瓜 | `RawWatermelon` | FruitFoodRaw | 6 |
-| 苹果 | `Rawapple` | FruitFoodRaw | 5 |
-| 香蕉 | `Rawbanana` | FruitFoodRaw | 6 |
-| 葡萄 | `Rawgrape` | FruitFoodRaw | 7 |
-| 橙 | `Raworange` | FruitFoodRaw | 7 |
-| 桃子 | `Rawpeach` | FruitFoodRaw | 6 |
+| RawWatermelon | `RawWatermelon` | FruitFoodRaw | 6 |
+| Rawapple | `Rawapple` | FruitFoodRaw | 5 |
+| Rawbanana | `Rawbanana` | FruitFoodRaw | 6 |
+| Rawgrape | `Rawgrape` | FruitFoodRaw | 7 |
+| Raworange | `Raworange` | FruitFoodRaw | 7 |
+| Rawpeach | `Rawpeach` | FruitFoodRaw | 6 |
 
 ### 2.12 Items_Resource_Crops_Fungi.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 微光菇 | `RawShimmershroom` | FungusPlantRaw | 3.0 |
-| 炽光菇 | `RawGlowbulb` | FungusPlantRaw | 2.0 |
-| 闪帽菇 | `GleamcapStem` | Medicine | 5.5 |
-| 蘑菇 | `Rawmushroom` | FungusPlantRaw | 5 |
+| RawShimmershroom | `RawShimmershroom` | FungusPlantRaw | 3.0 |
+| RawGlowbulb | `RawGlowbulb` | FungusPlantRaw | 2.0 |
+| GleamcapStem | `GleamcapStem` | Medicine | 5.5 |
+| Rawmushroom | `Rawmushroom` | FungusPlantRaw | 5 |
 
 ### 2.13 Items_Resource_Crops_Ingridients.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 糖 | `Sugar` | CookingSupplies | 3 |
-| 面粉 | `Flour` | CookingSupplies | 3 |
-| 豆浆 | `SoyMilk` | CookingSupplies | 2.1 |
-| 椰浆 | `coconutmilk` | CookingSupplies | 2.3 |
-| 豆腐 | `Tofu` | MeatSubRaw | 14 |
-| 咖啡豆（烘焙） | `RoastedCoffeeBeans` | CookingSupplies | 3.3 |
-| 咖啡粉 | `GroundCoffee` | CookingSupplies | 3.8 |
+| Sugar | `Sugar` | CookingSupplies | 3 |
+| Flour | `Flour` | CookingSupplies | 3 |
+| SoyMilk | `SoyMilk` | CookingSupplies | 2.1 |
+| coconutmilk | `coconutmilk` | CookingSupplies | 2.3 |
+| Tofu | `Tofu` | MeatSubRaw | 14 |
+| RoastedCoffeeBeans | `RoastedCoffeeBeans` | CookingSupplies | 3.3 |
+| GroundCoffee | `GroundCoffee` | CookingSupplies | 3.8 |
 
 ### 2.14 Items_Resource_Crops_Luxury.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 洋葱 | `Rawonion` | LuxuryStuffs | 2 |
+| Rawonion | `Rawonion` | LuxuryStuffs | 2 |
 
 ### 2.15 Items_Resource_Crops_Vegetables.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 豆荚 | `Rawbean` | BasicPlantFoodRaw | 1.5 |
-| 西红柿 | `RawTomatoes` | ExtraPlantFoodRaw | 1.9 |
-| 胡萝卜 | `RawCarrots` | ExtraPlantFoodRaw | 2.1 |
-| 巨叶 | `RawGiantLeaf` | BasicPlantFoodRaw | 2.0 |
-| 水藻 | `RawAlgae` | BasicPlantFoodRaw | 4.5 |
+| Rawbean | `Rawbean` | BasicPlantFoodRaw | 1.5 |
+| RawTomatoes | `RawTomatoes` | ExtraPlantFoodRaw | 1.9 |
+| RawCarrots | `RawCarrots` | ExtraPlantFoodRaw | 2.1 |
+| RawGiantLeaf | `RawGiantLeaf` | BasicPlantFoodRaw | 2.0 |
+| RawAlgae | `RawAlgae` | BasicPlantFoodRaw | 4.5 |
 
 ### 2.16 Items_Resource_Extracted.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 萤石 | `Glowstone` | Extracted | 25 |
-| 冰石 | `Coldstone` | Extracted | 40 |
-| 泥炭 | `Peat` | Extracted | 1.5 |
+| Glowstone | `Glowstone` | Extracted | 25 |
+| Coldstone | `Coldstone` | Extracted | 40 |
+| Peat | `Peat` | Extracted | 1.5 |
 
 ### 2.17 Items_Resource_Honey.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 蜜糖 | `Honey` | AnimalProductRaw | 13 |
+| Honey | `Honey` | AnimalProductRaw | 13 |
 
 ### 2.18 Items_Resource_Materials.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 修理包 | `MendingKit` | MiscManufactured | 30 |
+| MendingKit | `MendingKit` | MiscManufactured | 30 |
 
 ### 2.19 Items_Resource_Medicine.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 未提纯的共感粉 | `Synchronite` | MedicalMaterials | 3 |
+| Synchronite | `Synchronite` | MedicalMaterials | 3 |
 
 ### 2.20 Items_Resource_Parts.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 先进零部件 | `ComponentAdvanced` | Parts | 100 |
-| 钻杆 | `Pipe` | Parts | 25 |
+| 高级零部件 | `ComponentAdvanced` | Parts | 100 |
+| Pipe | `Pipe` | Parts | 25 |
 
 ### 2.21 Items_Resource_Stuff_Leather.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 夜灵皮 | `Leather_Nightling` | — | 2.5 |
-| 爆炸兽皮 | `Leather_Boomanimal` | — | 3.5 |
-| 芬尼克斯龙皮 | `Leather_FireDragonskin` | — | 10.5 |
-| 冰麟皮 | `Leather_KirinHide` | — | 10 |
-| 翼猛龙皮 | `Leather_FeatheredRaptorLeather` | — | 5 |
-| 犬魔皮 | `Leather_BarghestFur` | — | 14 |
+| Leather_Nightling | `Leather_Nightling` | — | 2.5 |
+| Leather_Boomanimal | `Leather_Boomanimal` | — | 3.5 |
+| Leather_FireDragonskin | `Leather_FireDragonskin` | — | 10.5 |
+| Leather_KirinHide | `Leather_KirinHide` | — | 10 |
+| Leather_FeatheredRaptorLeather | `Leather_FeatheredRaptorLeather` | — | 5 |
+| Leather_BarghestFur | `Leather_BarghestFur` | — | 14 |
 
 ### 2.22 Items_Resource_Terraforming.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 腐肉 | `RottedMeat` | Spoilage | — |
-| 腐烂物 | `RottedMush` | Spoilage | — |
+| RottedMeat | `RottedMeat` | Spoilage | — |
+| RottedMush | `RottedMush` | Spoilage | — |
 
 ### 2.23 Items_SatteliteControllers.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 离子卫星控制核心 | `IonCannonControllerCore` | HighTechItems | 10000 |
-| 天气控制器核心 | `WeatherControllerCore` | HighTechItems | 5000 |
-| 仅用于瞄准时显示影响区域。 | `Bullet_FakeSkywrathControllerBullet` | — | — |
-| “天怒”控制器后门接口 | `Artillery_SkywrathController` | — | — |
+| IonCannonControllerCore | `IonCannonControllerCore` | HighTechItems | 10000 |
+| WeatherControllerCore | `WeatherControllerCore` | HighTechItems | 5000 |
+| Bullet_FakeSkywrathControllerBullet | `Bullet_FakeSkywrathControllerBullet` | — | — |
+| Artillery_SkywrathController | `Artillery_SkywrathController` | — | — |
 
 ### 2.24 Items_Tools.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 手斧 | `TFJ_Tool_Woodcutting_Handaxe` | SurvivalToolsNeolithic | — |
-| 鹤嘴锄 | `TFJ_Tool_Mining_Pickaxe` | SurvivalToolsNeolithic | — |
-| 手锤 | `TFJ_Tool_Building_Hammer` | SurvivalToolsNeolithic | — |
-| 镰刀 | `TFJ_Tool_Sickle` | SurvivalToolsNeolithic | — |
-| 扫帚 | `TFJ_Tool_Broom` | SurvivalToolsNeolithic | — |
-| 锄头 | `TFJ_Tool_Hoe` | SurvivalToolsNeolithic | — |
-| 多功能工具 | `TFJ_Tool_Multitool` | SurvivalToolsSpacer | 3000 |
-| 镐斧 | `TFJ_Tool_Paxe` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Woodcutting_Handaxe | `TFJ_Tool_Woodcutting_Handaxe` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Mining_Pickaxe | `TFJ_Tool_Mining_Pickaxe` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Building_Hammer | `TFJ_Tool_Building_Hammer` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Sickle | `TFJ_Tool_Sickle` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Broom | `TFJ_Tool_Broom` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Hoe | `TFJ_Tool_Hoe` | SurvivalToolsNeolithic | — |
+| TFJ_Tool_Multitool | `TFJ_Tool_Multitool` | SurvivalToolsSpacer | 3000 |
+| TFJ_Tool_Paxe | `TFJ_Tool_Paxe` | SurvivalToolsNeolithic | — |
 
 ### 2.25 Items_Unfinished.xml
 
 | 物品 | defName | 类别 | 价值 |
 | --- | --- | --- | --- |
-| 未完成的中世纪炮台 | `UnfinishedTurretMedieval` | — | — |
-| 未完成的高科技炮塔 | `UnfinishedTurretHiTech` | — | — |
-| 未完成的石球 | `UnfinishedBalls` | — | — |
-| 未完成的研究 | `UnfinishedResearch` | — | — |
-| 未完成的金属护甲 | `UnfinishedMetallicApparel` | — | — |
-| 未完成的神经机械体 | `UnfinishedHealthItemCybernetic` | — | — |
+| UnfinishedTurretMedieval | `UnfinishedTurretMedieval` | — | — |
+| UnfinishedTurretHiTech | `UnfinishedTurretHiTech` | — | — |
+| UnfinishedBalls | `UnfinishedBalls` | — | — |
+| UnfinishedResearch | `UnfinishedResearch` | — | — |
+| UnfinishedMetallicApparel | `UnfinishedMetallicApparel` | — | — |
+| UnfinishedHealthItemCybernetic | `UnfinishedHealthItemCybernetic` | — | — |
 

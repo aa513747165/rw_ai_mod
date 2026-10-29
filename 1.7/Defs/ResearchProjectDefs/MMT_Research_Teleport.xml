@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>MMT_Teleportation</defName>
     <label>折跃传送</label>
-    <description>掌握跨地图瞬时传送技术，解锁折跃传送台：将舱内人员与物资直接投送到已有地图的据点，并可从目标地图框选召回。传送台接入电网后自动蓄电，每次传送消耗全部蓄电并进入冷却。</description>
+    <description>掌握跨地图瞬时传送技术，解锁折跃传送台：将舱内人员与物资直接投送到已有地图的据点，并可从目标地图框选召回。传送台接入电网后自动蓄电，蓄电每充满一次转化为 1 次传送次数，次数耗尽后需等待蓄电恢复。</description>
     <baseCost>6000</baseCost>
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>
@@ -13,5 +13,20 @@
     </prerequisites>
     <researchViewX>12.00</researchViewX>
     <researchViewY>6.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 次元传送：解锁次元传送模块（折跃传送台传送次数上限 +1/个，最多 10 个）；前置 折跃传送 -->
+  <ResearchProjectDef>
+    <defName>MMT_DimensionalTeleport</defName>
+    <label>次元传送</label>
+    <description>在折跃通道中锚定多重次元坐标，解锁次元传送模块：安装进折跃传送台后每个使传送次数上限提高 1 次，单台最多安装 10 个。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Teleportation</li>
+    </prerequisites>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
   </ResearchProjectDef>
 </Defs>

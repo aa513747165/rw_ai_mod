@@ -121,6 +121,8 @@
       <li>MMT_MakeOverclockModule</li>
       <li>MMT_MakeParallelModule</li>
       <li>MMT_MakeYieldModule</li>
+      <li>MMT_MakeChargeEfficiencyModule</li>
+      <li>MMT_MakeDimensionalModule</li>
       <li>MMT_MakeDeployableShield</li>
       <li>MMT_MakeChargeShieldPack</li>
       <li>MMT_MakePsychicShieldBelt</li>

@@ -36,6 +36,8 @@ namespace MyModeTest
         // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
         private CompFlickable flickComp;
         private CompPowerTrader powerComp;
+        // 增效模块槽（可空）：充能效率模块提升蓄电速度
+        private CompModuleSlots slotsComp;
 
         public CompProperties_BuildingBattery Props
         {
@@ -76,12 +78,23 @@ namespace MyModeTest
             base.PostSpawnSetup(respawningAfterLoad);
             flickComp = parent.GetComp<CompFlickable>();
             powerComp = parent.GetComp<CompPowerTrader>();
+            slotsComp = parent.GetComp<CompModuleSlots>();
         }
 
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref storedChargeWd, "storedChargeWd");
+        }
+
+        /// <summary>实际蓄电速度（Wd/天）：基础速率 × (1 + 充能效率模块加成合计)。</summary>
+        public float EffectiveChargeRateWdPerDay
+        {
+            get
+            {
+                float bonus = slotsComp != null ? slotsComp.GetEffectSum(ModuleEffectKeys.ChargeRateFactor) : 0f;
+                return Props.chargeRateWdPerDay * (1f + bonus);
+            }
         }
 
         /// <summary>开启并通电时按 chargeRateWdPerDay 自动蓄电，充满即止。
@@ -92,7 +105,7 @@ namespace MyModeTest
                 return;
             if (!IsCharging)
                 return;
-            storedChargeWd = Mathf.Min(Props.maxChargeWd, storedChargeWd + Props.chargeRateWdPerDay / 60000f * delta);
+            storedChargeWd = Mathf.Min(Props.maxChargeWd, storedChargeWd + EffectiveChargeRateWdPerDay / 60000f * delta);
         }
 
         /// <summary>消耗蓄电；不足时不扣任何电并返回 false。</summary>
@@ -116,7 +129,7 @@ namespace MyModeTest
             if (IsFull)
                 text += "（已满）";
             else if (IsCharging)
-                text += "（充电中，" + Props.chargeRateWdPerDay.ToString("F0") + " Wd/天）";
+                text += "（充电中，" + EffectiveChargeRateWdPerDay.ToString("F0") + " Wd/天）";
             else
                 text += "（未充电：需要开启开关并通电）";
             return text;

@@ -9,17 +9,12 @@ using Verse.Sound;
 namespace MyModeTest
 {
     /// <summary>
-    /// 折跃传送台参数：单次传送耗电量与冷却时长（XML 可配置）。
-    /// 蓄电由同建筑的 CompBuildingBattery 承担（maxChargeWd 需与 energyCostWd 一致）。
+    /// 折跃传送台参数（当前无 XML 可配置项，占位以便后续扩展）。
+    /// 次数制：内部蓄电（CompBuildingBattery）每充满一次转化为 1 次传送次数并重新蓄电；
+    /// 次数上限 = 1 + 次元传送模块数（最多 10 个），次数为 0 时进入等待蓄电的 CD。
     /// </summary>
     public class CompProperties_TeleportPad : CompProperties
     {
-        /// <summary>单次传送（去程/回程各算一次）消耗的内部蓄电（Wd）。</summary>
-        public float energyCostWd = 15000f;
-
-        /// <summary>传送后冷却 tick（30000 = 12 游戏小时）。</summary>
-        public int cooldownTicks = 30000;
-
         public CompProperties_TeleportPad()
         {
             compClass = typeof(CompTeleportPad);
@@ -31,17 +26,21 @@ namespace MyModeTest
     /// 穿梭机管线——光柱落地全部吐出后穿梭机消散，非敌对立据点则组成商队到世界地图该格）
     /// 与回程（供召回 Designator 调用，把框选的己方人员和物品传回本建筑）。
     /// 装载/取消装载 gizmo 由原版 CompTransporter 自带（1.7 已确认），本 Comp 只提供"启动传送"。
+    /// 传送消耗"次数"而非直接耗电：蓄电充满一次转化为 1 次（上限 1 + 次元传送模块数）；
+    /// 充能效率模块提升蓄电速度。
     /// </summary>
     public class CompTeleportPad : ThingComp
     {
-        /// <summary>冷却结束的游戏 tick（存档持久化，默认 0 兼容旧存档）。</summary>
-        private int cooldownUntilTick;
+        /// <summary>当前可用传送次数（存档持久化；旧存档无此字段默认 0，蓄电满后自动转化补回）。</summary>
+        private int teleportCharges;
 
         // comps 列表生成后终身不变，spawn 时缓存引用，避免每 tick 线性扫描
         private CompTransporter transporterComp;
         private CompFlickable flickComp;
         // 蓄电由建筑蓄电 comp 承担（scribe 字段名沿用旧实现的 storedChargeWd，旧存档无缝接管）
         private CompBuildingBattery batteryComp;
+        // 增效模块槽（可空）：次元传送模块提升次数上限，充能效率模块提升蓄电速度
+        private CompModuleSlots slotsComp;
 
         private CompProperties_TeleportPad Props
         {
@@ -58,33 +57,58 @@ namespace MyModeTest
             get { return batteryComp; }
         }
 
+        /// <summary>当前可用传送次数。</summary>
+        public int TeleportCharges
+        {
+            get { return teleportCharges; }
+        }
+
+        /// <summary>传送次数上限：1 + 次元传送模块数（模块槽上限在 XML 配置，最多 10）。</summary>
+        public int MaxTeleportCharges
+        {
+            get { return 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraTeleportCharges) : 0); }
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
             transporterComp = parent.GetComp<CompTransporter>();
             flickComp = parent.GetComp<CompFlickable>();
             batteryComp = parent.GetComp<CompBuildingBattery>();
+            slotsComp = parent.GetComp<CompModuleSlots>();
         }
 
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref cooldownUntilTick, "cooldownUntilTick");
+            Scribe_Values.Look(ref teleportCharges, "teleportCharges");
+            // 旧存档迁移：老格式只存蓄电，次数字段缺省为 0；若蓄电已满直接补 1 次，免等一轮
+            // （PostLoadInit 时缓存字段尚未赋值，直接取 comp）
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && teleportCharges <= 0
+                && parent.GetComp<CompBuildingBattery>() != null && parent.GetComp<CompBuildingBattery>().IsFull)
+                teleportCharges = 1;
         }
 
-        public bool OnCooldown
+        /// <summary>蓄电转化：充满且次数未达上限时，清空蓄电转化为 1 次传送并重新蓄电。</summary>
+        public override void CompTickInterval(int delta)
         {
-            get { return Find.TickManager.TicksGame < cooldownUntilTick; }
-        }
-
-        /// <summary>传送台当前内部蓄电（Wd）。</summary>
-        public float StoredCharge()
-        {
-            return Battery != null ? Battery.StoredChargeWd : 0f;
+            base.CompTickInterval(delta);
+            CompBuildingBattery battery = batteryComp;
+            if (battery == null || !battery.IsFull)
+                return;
+            int max = MaxTeleportCharges;
+            if (teleportCharges >= max)
+                return; // 次数已满：蓄电保持满格待命
+            if (battery.TryDrain(battery.MaxChargeWd))
+            {
+                teleportCharges++;
+                Messages.Message(parent.LabelCap + " 充能完成：传送次数 " + teleportCharges + "/" + max,
+                    new LookTargets(parent), MessageTypeDefOf.PositiveEvent, false);
+            }
         }
 
         /// <summary>能否执行一次传送；不可用时给出中文原因（供 gizmo 禁用提示与召回校验）。
-        /// 只要求内部蓄电充足：蓄满后即使电网暂时断电也可发射。</summary>
+        /// 只要求有剩余传送次数：次数由蓄电转化而来，转化后即使电网断电也可发射。</summary>
         public bool CanTeleportNow(out string reason)
         {
             if (!parent.Spawned)
@@ -98,16 +122,13 @@ namespace MyModeTest
                 reason = "传送台未开启";
                 return false;
             }
-            if (OnCooldown)
+            if (teleportCharges <= 0)
             {
-                reason = "传送冷却中（剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod() + "）";
-                return false;
-            }
-            float charge = StoredCharge();
-            if (charge < Props.energyCostWd)
-            {
-                reason = "蓄电不足（" + charge.ToString("F0") + "/" + Props.energyCostWd.ToString("F0")
-                    + " Wd；保持开启并通电即可自动蓄电）";
+                CompBuildingBattery battery = batteryComp;
+                string progress = battery != null
+                    ? "（当前蓄电 " + battery.StoredChargeWd.ToString("F0") + "/" + battery.MaxChargeWd.ToString("F0") + " Wd）"
+                    : "";
+                reason = "传送次数耗尽" + progress + "：保持开启并通电，蓄电充满后恢复 1 次";
                 return false;
             }
             reason = null;
@@ -119,10 +140,10 @@ namespace MyModeTest
             foreach (Gizmo g in base.CompGetGizmosExtra())
                 yield return g;
 
-            // 启动传送：舱内为空、装载未完成、电力/冷却不满足时禁用并提示原因
+            // 启动传送：舱内为空、装载未完成、次数不足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品传送到世界地图上任意地块：敌对据点/任务地点=折跃进攻（跳图后自选落点，光柱落地后全部吐出）；非敌对定居点=组成商队到该格（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，再耗一次传送）；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。消耗内部蓄电并进入冷却。";
+            launch.defaultDesc = "将舱内的人员和物品传送到世界地图上任意地块：敌对据点/任务地点=折跃进攻（跳图后自选落点，光柱落地后全部吐出）；非敌对定居点=组成商队到该格（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，再耗一次传送）；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。每次传送消耗 1 次传送次数；蓄电充满一次转化为 1 次（上限 1+次元传送模块数）。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
@@ -135,17 +156,17 @@ namespace MyModeTest
                 launch.Disable("装载未完成，还有物资在搬运途中");
             yield return launch;
 
-            // 开发者模式：一键充满蓄电并清除冷却（测试传送链路用）
+            // 开发者模式：一键补满传送次数并充满蓄电（测试传送链路用）
             if (Prefs.DevMode)
             {
                 Command_Action devCharge = new Command_Action();
-                devCharge.defaultLabel = "DEV: 立即充满蓄电";
-                devCharge.defaultDesc = "开发者模式：立即充满内部蓄电并清除传送冷却。";
+                devCharge.defaultLabel = "DEV: 补满传送次数";
+                devCharge.defaultDesc = "开发者模式：传送次数直接补到上限并充满内部蓄电。";
                 devCharge.icon = ContentFinder<Texture2D>.Get("Things/Building/Power/Battery", false);
                 devCharge.action = delegate
                 {
+                    teleportCharges = MaxTeleportCharges;
                     Battery?.FillFull();
-                    cooldownUntilTick = 0;
                 };
                 yield return devCharge;
             }
@@ -219,7 +240,7 @@ namespace MyModeTest
             if (mp is Settlement && mp.Faction != null && !mp.Faction.HostileTo(Faction.OfPlayer))
             {
                 // 非敌对立据点：不进图，传送到世界地图该格组成商队（与原版穿梭机一致），
-                // 之后由商队在世界上交易或进攻；确认菜单顺便充当防误触（消耗整次蓄电）
+                // 之后由商队在世界上交易或进攻；确认菜单顺便充当防误触（消耗 1 次传送次数）
                 List<FloatMenuOption> visit = new List<FloatMenuOption>();
                 visit.Add(new FloatMenuOption("传送至 " + mp.LabelCap + " 并组成商队（可交易/进攻；发射折跃返回时非原携带物品全部吐出，消耗一次传送）",
                     delegate { TeleportAsCaravan(mp, target.Tile); }));
@@ -262,7 +283,7 @@ namespace MyModeTest
                 delegate(LocalTargetInfo cell) { ExecuteTeleportShuttle(map, cell.Cell, true); });
         }
 
-        /// <summary>去程执行（进入地图）：抽电、进冷却，舱内人和物转入隐形穿梭机，
+        /// <summary>去程执行（进入地图）：扣一次传送次数，舱内人和物转入隐形穿梭机，
         /// 走原版 TransportShip 管线——光柱落地 → 全部吐出 → 光柱离去穿梭机销毁。
         /// freshlyGenerated 标记目标地图是否本次新生成（敌对定居点信件/通告用）。</summary>
         private void ExecuteTeleportShuttle(Map targetMap, IntVec3 nearCell, bool freshlyGenerated)
@@ -272,12 +293,11 @@ namespace MyModeTest
                 Messages.Message("传送失败：" + reason, parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            if (!TryDrainCharge(Props.energyCostWd))
+            if (!TryConsumeCharge())
             {
-                Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("传送失败：传送次数不足", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
 
             // 本端特效
             TeleportFx.Play(parent.Position, parent.Map);
@@ -361,12 +381,11 @@ namespace MyModeTest
                 Messages.Message("无法传送：组成商队至少需要一名人员", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            if (!TryDrainCharge(Props.energyCostWd))
+            if (!TryConsumeCharge())
             {
-                Messages.Message("传送失败：蓄电不足", parent, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("传送失败：传送次数不足", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
             TeleportFx.Play(parent.Position, parent.Map);
             foreach (Thing t in cargo)
                 Transporter.innerContainer.Remove(t);
@@ -411,12 +430,11 @@ namespace MyModeTest
                 Messages.Message("召回失败：没有可召回的目标", MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            if (!TryDrainCharge(Props.energyCostWd))
+            if (!TryConsumeCharge())
             {
-                Messages.Message("召回失败：蓄电不足", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("召回失败：传送次数不足", MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
 
             IntVec3 homeCell = FindFreeCellNear(parent.Map, parent.InteractionCell, 12);
             TeleportFx.Play(targets[0].Position, fromMap);
@@ -460,26 +478,28 @@ namespace MyModeTest
             // 流程结束
         }
 
-        // ---- 电力 ----
+        // ---- 传送次数 ----
 
-        /// <summary>消耗内部蓄电；蓄电不足时不扣任何电并返回 false。</summary>
-        private bool TryDrainCharge(float amount)
+        /// <summary>消耗一次传送次数；次数不足时不扣并返回 false。</summary>
+        private bool TryConsumeCharge()
         {
-            return Battery != null && Battery.TryDrain(amount);
+            if (teleportCharges <= 0)
+                return false;
+            teleportCharges--;
+            return true;
         }
 
-        /// <summary>消耗一次传送：校验可用性 → 抽电 → 进冷却，任一失败不扣电。
+        /// <summary>消耗一次传送：校验可用性 → 扣次数，任一失败不扣。
         /// 供商队折跃返回（TeleportCaravanReturn）等外部流程调用。</summary>
         internal bool TryConsumeTeleport(out string reason)
         {
             if (!CanTeleportNow(out reason))
                 return false;
-            if (!TryDrainCharge(Props.energyCostWd))
+            if (!TryConsumeCharge())
             {
-                reason = "蓄电不足";
+                reason = "传送次数不足";
                 return false;
             }
-            cooldownUntilTick = Find.TickManager.TicksGame + Props.cooldownTicks;
             return true;
         }
 
@@ -500,12 +520,13 @@ namespace MyModeTest
 
         public override string CompInspectStringExtra()
         {
-            // 蓄电行由 CompBuildingBattery 自报，这里只列冷却与舱内质量
-            string text = null;
-            if (OnCooldown)
-                text = "传送冷却: 剩余 " + (cooldownUntilTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
+            // 蓄电行由 CompBuildingBattery 自报，这里只列传送次数与舱内质量
+            int max = MaxTeleportCharges;
+            string text = "传送次数: " + teleportCharges + "/" + max;
+            if (teleportCharges < max)
+                text += "（蓄电充满可再恢复 1 次）";
             if (Transporter != null)
-                text = (text == null ? "" : text + "\n") + "舱内质量: " + Transporter.MassUsage.ToString("F0") + "/" + Transporter.MassCapacity.ToString("F0") + " kg";
+                text += "\n舱内质量: " + Transporter.MassUsage.ToString("F0") + "/" + Transporter.MassCapacity.ToString("F0") + " kg";
             return text;
         }
     }
@@ -519,7 +540,7 @@ namespace MyModeTest
         public Designator_RecallTeleport()
         {
             defaultLabel = "召回传送";
-            defaultDesc = "框选一个范围，将范围内所有己方人员和物品传送回母基地的折跃传送台（消耗一次传送电量与冷却）。";
+            defaultDesc = "框选一个范围，将范围内所有己方人员和物品传送回母基地的折跃传送台（消耗一次传送次数）。";
             icon = ContentFinder<Texture2D>.Get("UI/Designators/MMT_RecallTeleport", false);
             useMouseIcon = true;
             soundDragSustain = SoundDefOf.Designate_DragStandard;
@@ -545,7 +566,7 @@ namespace MyModeTest
             List<CompTeleportPad> pads = TeleportPadUtility.FindAvailablePads();
             if (pads.Count == 0)
             {
-                Messages.Message("没有可用的折跃传送台（需已开启、蓄电充足且不在冷却中）", MessageTypeDefOf.RejectInput, false);
+                Messages.Message("没有可用的折跃传送台（需已开启且有剩余传送次数）", MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
@@ -588,7 +609,7 @@ namespace MyModeTest
                 {
                     CompTeleportPad local = pad;
                     options.Add(new FloatMenuOption(
-                        pad.parent.Map.Parent.LabelCap + "（蓄电 " + pad.StoredCharge().ToString("F0") + " Wd）",
+                        pad.parent.Map.Parent.LabelCap + "（传送次数 " + pad.TeleportCharges + "/" + pad.MaxTeleportCharges + "）",
                         delegate { local.ExecuteRecall(Map, targets.ToList()); }));
                 }
                 Find.WindowStack.Add(new FloatMenu(options));

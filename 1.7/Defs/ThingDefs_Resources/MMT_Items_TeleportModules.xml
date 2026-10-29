@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 充能效率模块：安装在折跃传送台/充能台内，每个使充能速度 +10%（速率 × (1+0.1n)），
+       单台最多 5 个；拆除设备时返还。需研究"充能增效" -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ChargeEfficiencyModule</defName>
+    <label>充能效率模块</label>
+    <description>高功率电能回路的增效控制模块，由殖民者安装进折跃传送台或充能台内生效。每个使设备充能速度提高 10%，单台最多安装 5 个。拆除设备时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ChargeEfficiencyModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>220</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>2</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ChargeEfficiency</slotKey>
+        <effectReport>充能速度 +10%/个</effectReport>
+        <effects>
+          <li><key>ChargeRateFactor</key><valuePerItem>0.1</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 次元传送模块：安装在折跃传送台内，每个使传送次数上限 +1（蓄电充满一次转化 1 次），
+       单台最多 10 个；拆除设备时返还。需研究"次元传送" -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_DimensionalModule</defName>
+    <label>次元传送模块</label>
+    <description>折跃装置的次元坐标锚定模块，由殖民者安装进折跃传送台内生效。每个使传送台的传送次数上限提高 1 次（基础上限 1 次，蓄电每充满一次转化为 1 次），单台最多安装 10 个。拆除设备时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_DimensionalModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Ultra</techLevel>
+    <statBases>
+      <MarketValue>420</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>3</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>TeleportCharge</slotKey>
+        <effectReport>传送次数上限 +1/个</effectReport>
+        <effects>
+          <li><key>ExtraTeleportCharges</key><valuePerItem>1</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+</Defs>

@@ -128,12 +128,12 @@ namespace MyModeTest
 
             Command_Action cmd = new Command_Action();
             cmd.defaultLabel = "发射：折跃返回";
-            cmd.defaultDesc = "激活随行的隐形折跃载体，触发折跃传送台的传送：全队传送回传送台落点（消耗一次蓄电并进入冷却），载体随传送消散。出发时携带的物品留在身上，途中获得的物品（交易购得等）在落点全部吐出。";
+            cmd.defaultDesc = "激活随行的隐形折跃载体，触发折跃传送台的传送：全队传送回传送台落点（消耗 1 次传送次数），载体随传送消散。出发时携带的物品留在身上，途中获得的物品（交易购得等）在落点全部吐出。";
             cmd.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             List<CompTeleportPad> pads = TeleportPadUtility.FindAvailablePads();
             if (pads.Count == 0)
             {
-                cmd.Disable("没有可用的折跃传送台（需已开启、蓄电充足且不在冷却中）");
+                cmd.Disable("没有可用的折跃传送台（需已开启且有剩余传送次数）");
             }
             else if (pads.Count == 1)
             {
@@ -142,7 +142,7 @@ namespace MyModeTest
             }
             else
             {
-                // 多台可用：弹菜单选目标传送台（列出所在基地与蓄电）
+                // 多台可用：弹菜单选目标传送台（列出所在基地与剩余传送次数）
                 cmd.action = delegate
                 {
                     List<FloatMenuOption> options = new List<FloatMenuOption>();
@@ -150,7 +150,7 @@ namespace MyModeTest
                     {
                         CompTeleportPad local = p;
                         options.Add(new FloatMenuOption(
-                            p.parent.Map.Parent.LabelCap + "（蓄电 " + p.StoredCharge().ToString("F0") + " Wd）",
+                            p.parent.Map.Parent.LabelCap + "（传送次数 " + p.TeleportCharges + "/" + p.MaxTeleportCharges + "）",
                             delegate { ExecuteReturn(caravan, local); }));
                     }
                     Find.WindowStack.Add(new FloatMenu(options));
@@ -159,7 +159,7 @@ namespace MyModeTest
             yield return cmd;
         }
 
-        /// <summary>返回执行：消耗一次传送（蓄电+冷却），全队连同背包货物传回传送台落点，
+        /// <summary>返回执行：消耗 1 次传送次数，全队连同背包货物传回传送台落点，
         /// 载体销毁、商队解散（背包货物本就分布在成员身上，随人传送）。</summary>
         private static void ExecuteReturn(Caravan caravan, CompTeleportPad pad)
         {
@@ -225,7 +225,7 @@ namespace MyModeTest
             shuttle.Destroy(DestroyMode.Vanish);
         }
 
-        /// <summary>扫描所有己方基地中可用的传送台（已开启、蓄电充足、不在冷却）。</summary>
+        /// <summary>扫描所有己方基地中可用的传送台（已开启、有剩余传送次数）。</summary>
         public static List<CompTeleportPad> FindAvailablePads()
         {
             List<CompTeleportPad> pads = new List<CompTeleportPad>();

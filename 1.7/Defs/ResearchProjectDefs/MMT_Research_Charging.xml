@@ -14,4 +14,19 @@
     <researchViewX>9.00</researchViewX>
     <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 充能增效：解锁充能效率模块（折跃传送台/充能台充能速度 +10%/个，最多 5 个）；前置 充能技术 -->
+  <ResearchProjectDef>
+    <defName>MMT_ChargeBoost</defName>
+    <label>充能增效</label>
+    <description>优化高功率电能回路的输电效率，解锁充能效率模块：安装进折跃传送台或充能台后每个使充能速度提高 10%，单台最多安装 5 个。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_RechargeableTech</li>
+    </prerequisites>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

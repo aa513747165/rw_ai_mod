@@ -61,7 +61,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 充能台（`MMT_ChargingStation`） | (1,1) | 钢×60 + 工业零件×4 + 电线×10 | 1500W | 3000 | 充能技术 | 0 | CompProperties_ChargingStation |
+| 充能台（`MMT_ChargingStation`） | (1,1) | 钢×60 + 工业零件×4 + 电线×10 | 1500W | 3000 | 充能技术 | 0 | CompProperties_ChargingStation、CompProperties_ModuleSlots |
 
 ### 采石（ChunkDrill）
 
@@ -332,7 +332,7 @@
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 手工装配台（`MMT_HandAssemblyBench`） | (3,1) | 原木×40 + 钢×25 + [金属]×125 | — | 1200 | 零件加工 | 7 |  |
-| 电动装配台（`MMT_ElectricAssemblyBench`） | (3,1) | 人造纤维×45 + 集成电路×10 + 工业零件×15 + 机械组件×10 + [金属]×220 | 750W | 5500 | 零件加工, 高级零件 | 16 |  |
+| 电动装配台（`MMT_ElectricAssemblyBench`） | (3,1) | 人造纤维×45 + 集成电路×10 + 工业零件×15 + 机械组件×10 + [金属]×220 | 750W | 5500 | 零件加工, 高级零件 | 18 |  |
 | 自动化装配器（`MMT_RoboticAssembler`） | (1,1) | 人造纤维×45 + 高级零部件×10 + 先进机械组件×10 + 微芯片集成电路×5 + [金属]×120 | 5000W | 9000 | 超级零件 | 7 |  |
 
 **手工装配台（`MMT_HandAssemblyBench`） 的配方：**
@@ -360,6 +360,8 @@
 - `MMT_MakeOverclockModule`：钢(25) + 机械组件(2) + 工业零件(2) -> 超频模块×1 ｜ 工作量=1500 ｜ 研究:自动机增效 ｜ 技能:制作≥6
 - `MMT_MakeParallelModule`：钢(30) + 机械组件(3) + 工业零件(3) -> 并行模块×1 ｜ 工作量=1800 ｜ 研究:自动机增效 ｜ 技能:制作≥6
 - `MMT_MakeYieldModule`：钢(35) + 机械组件(3) + 工业零件(3) + 电子元件(1) -> 矿产增值模块×1 ｜ 工作量=2000 ｜ 研究:自动机增效 ｜ 技能:制作≥6
+- `MMT_MakeChargeEfficiencyModule`：钢(25) + 电线(15) + 电子元件(2) + 工业零件(2) -> 充能效率模块×1 ｜ 工作量=2000 ｜ 研究:充能增效 ｜ 技能:制作≥6
+- `MMT_MakeDimensionalModule`：玻璃钢(20) + 太空零件(2) + 电子元件(3) + 黄金(10) -> 次元传送模块×1 ｜ 工作量=3000 ｜ 研究:次元传送 ｜ 技能:制作≥8
 - `MMT_MakeDeployableShield`：钢(25) + 机械组件(2) + 工业零件(2) + 电线(5) -> 部署式护盾发生器×1 ｜ 工作量=4000 ｜ 研究:部署式护盾技术 ｜ 技能:制作≥6
 - `MMT_MakeChargeShieldPack`：集成电路(2) + 太空零件(4) + 玻璃钢(30) + 电线(10) -> 充能护盾腰带×1 ｜ 工作量=8000 ｜ 研究:充能技术 ｜ 技能:制作≥10
 - `MMT_MakePsychicShieldBelt`：PsychicAmplifier(1) + 太空零件(4) + 玻璃钢(15) + 黄金(10) -> 灵能护盾腰带×1 ｜ 工作量=8000 ｜ 研究:灵能护盾技术 ｜ 技能:制作≥10
@@ -489,7 +491,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 折跃传送台（`MMT_TeleportPad`） | (3,3) | 玻璃钢×120 + 铀×40 + 太空零件×6 | 3000W | 12000 | 折跃传送 | 0 | CompProperties_TeleportPad |
+| 折跃传送台（`MMT_TeleportPad`） | (3,3) | 玻璃钢×120 + 铀×40 + 太空零件×6 | 3000W | 12000 | 折跃传送 | 0 | CompProperties_TeleportPad、CompProperties_ModuleSlots、CompProperties_BuildingBattery |
 
 ### 炮塔（Turrets）
 
@@ -679,23 +681,23 @@
 
 | 建筑 | defName | 尺寸 | 造价 | 功耗 | 配方数 | 源文件 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 皮革工作台 | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
-| 回收站 | `TableRecycling` | (3,1) | 普通零部件×12 + 电子元件×3 + 机械组件×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
-| 洗涤盆 | `HolyBasin` | — | 原始零部件×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
-| 厨房案桌 | `TableKitchen` | (3,1) | 原始零部件×8 + 机械组件×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
-| 开放式炉灶 | `OpenHearth` | (1,1) | 原始零部件×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
-| 专业化烹饪炉 | `ElectricStove_Pro` | (4,1) | 普通零部件×20 + 合成橡胶×30 + 集成电路×5 + 先进机械组件×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
-| 电压力锅 | `Canningstove` | (1,1) | 普通零部件×12 + 电子元件×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
-| 石磨 | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
-| 电磨 | `MillElectric` | (1,1) | 合成橡胶×45 + 玻璃块×25 + 普通零部件×8 + 机械组件×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
-| 烤箱 | `TableOven` | (2,2) | 原始零部件×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
-| 电烤箱 | `ElectricOven` | (1,1) | 普通零部件×10 + 电子元件×3 + 机械组件×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
-| 营养物质机 | `soylenttable` | (2,1) | 合成橡胶×50 + 塑料×40 + 普通零部件×10 + 集成电路×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
-| 酒类发酵桶 | `UniversalFermenter` | (1,1) | 原始零部件×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
-| 干肉架 | `JerkyRack` | (2,1) | 原始零部件×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
-| 干酪槽 | `CheeseBasin` | (1,1) | 原始零部件×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
-| 窑炉 | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
-| 强子对撞机料斗 | `HadronColliderFeeder` | (1,1) | 高级零部件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
-| 堆肥桶 | `CompostBarrel` | — | 原始零部件×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
-| 重型弹药工作台 | `TableHeavyAmmunition` | (3,1) | 普通零部件×10 + 电子元件×5 + 机械组件×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
+| LeatherworkerTable | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
+| TableRecycling | `TableRecycling` | (3,1) | 工业零件×12 + ElectronicComponents×3 + Mechanism×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
+| HolyBasin | `HolyBasin` | — | ComponentMedieval×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
+| TableKitchen | `TableKitchen` | (3,1) | ComponentMedieval×8 + Mechanism×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
+| OpenHearth | `OpenHearth` | (1,1) | ComponentMedieval×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
+| ElectricStove_Pro | `ElectricStove_Pro` | (4,1) | 工业零件×20 + Rubber×30 + Electronics×5 + AdvMechanism×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
+| Canningstove | `Canningstove` | (1,1) | 工业零件×12 + ElectronicComponents×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
+| GrindStone | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
+| MillElectric | `MillElectric` | (1,1) | Rubber×45 + Glass×25 + 工业零件×8 + Mechanism×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
+| TableOven | `TableOven` | (2,2) | ComponentMedieval×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
+| ElectricOven | `ElectricOven` | (1,1) | 工业零件×10 + ElectronicComponents×3 + Mechanism×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
+| soylenttable | `soylenttable` | (2,1) | Rubber×50 + Plastic×40 + 工业零件×10 + Electronics×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
+| UniversalFermenter | `UniversalFermenter` | (1,1) | ComponentMedieval×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
+| JerkyRack | `JerkyRack` | (2,1) | ComponentMedieval×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
+| CheeseBasin | `CheeseBasin` | (1,1) | ComponentMedieval×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
+| Kiln | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
+| HadronColliderFeeder | `HadronColliderFeeder` | (1,1) | 太空零件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
+| CompostBarrel | `CompostBarrel` | — | ComponentMedieval×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
+| TableHeavyAmmunition | `TableHeavyAmmunition` | (3,1) | 工业零件×10 + ElectronicComponents×5 + Mechanism×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
 

@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（96 项）
+- MMT 研究总览（98 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -94,6 +94,8 @@
         - 解锁配方: 组装充能护盾腰带
         - **灵能护盾技术** `MMT_PsychicShieldTech` ｜ 坐标 (12.00, 7.00) ｜ 2500点 ｜ Spacer
           - 解锁配方: 组装灵能护盾腰带
+        - **充能增效** `MMT_ChargeBoost` ｜ 坐标 (13.00, 6.00) ｜ 2000点 ｜ Spacer
+          - 解锁配方: 组装充能效率模块
       - **近战武器 IV** `MMT_MeleeAdvanced` ｜ 坐标 (9.00, 7.00) ｜ 1400点 ｜ Spacer ｜ 前置(原版): LongBlades ｜ 交叉前置: 高级零件
     - **机器人工程 I** `MMT_Robotics1` ｜ 坐标 (5.00, 6.00) ｜ 2000点 ｜ Spacer
       - 解锁配方: 制造动力电池、制造机器人部件
@@ -175,6 +177,8 @@
             - 解锁建筑: 量子加工台
             - **折跃传送** `MMT_Teleportation` ｜ 坐标 (12.00, 6.00) ｜ 6000点 ｜ Ultra
               - 解锁建筑: 折跃传送台
+              - **次元传送** `MMT_DimensionalTeleport` ｜ 坐标 (13.00, 7.00) ｜ 4000点 ｜ Ultra
+                - 解锁配方: 组装次元传送模块
       - **精密筛分** `MMT_PrecisionSifting` ｜ 坐标 (10.00, 5.00) ｜ 1800点 ｜ Spacer ｜ 交叉前置: 高级合金
         - 解锁配方: 编织精密滤网
   - **农业 I** `MMT_AgricultureBasic` ｜ 坐标 (8.00, 0.00) ｜ 150点 ｜ Neolithic
