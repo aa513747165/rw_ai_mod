@@ -66,7 +66,7 @@
     <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 医疗物资 V：解锁医疗注射炮台（医疗线 Y=2 的 X=4 空位，前置 B2） -->
+  <!-- 医疗物资 V：解锁医疗注射炮台（前置 B2；Y=2 的 X=4 被仿生链占用，置于 Y=2.5 上方避让） -->
   <ResearchProjectDef>
     <defName>MMT_Medicine_C1</defName>
     <label>医疗物资 V</label>
@@ -78,7 +78,7 @@
       <li>MMT_Medicine_B2</li>
     </prerequisites>
     <researchViewX>4.00</researchViewX>
-    <researchViewY>2.00</researchViewY>
+    <researchViewY>2.50</researchViewY>
   </ResearchProjectDef>
 
   <!-- 医疗物资 VI：解锁闪耀世界医药（前置为原版 MedicineProduction，由 patch 挂到 B2 之后） -->
@@ -206,5 +206,86 @@
     </prerequisites>
     <researchViewX>1.00</researchViewX>
     <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒株种植 III：解锁种植烟草与咖啡树（生活毒品线） -->
+  <ResearchProjectDef>
+    <defName>MMT_DrugPlants_A3</defName>
+    <label>毒株种植 III</label>
+    <description>学习种植烟草与咖啡树，发展卷烟、雪茄与咖啡等生活消费品。</description>
+    <baseCost>200</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_DrugPlants_A2</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>1.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- ============ 毒品现代层（Y=1 右延）与未来层（Y=2 支线） ============ -->
+
+  <!-- 毒品 VII（灵能合成）：解锁灵能结晶/灵能粉/灵能茶/战斗鸡尾酒 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_D1</defName>
+    <label>毒品 VII</label>
+    <description>掌握灵能结晶的化工合成工艺，制备灵能粉、灵能茶与战斗鸡尾酒等灵能系与战斗系制品。</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Drugs_C3</li>
+      <li>PsychiteRefining</li>
+    </prerequisites>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 VIII（合成平台）：解锁高级药物合成台 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_D2</defName>
+    <label>毒品 VIII</label>
+    <description>建造集成微芯片控制与纳米装配能力的高级药物合成台，是制备未来层药物的基础平台。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Drugs_D1</li>
+      <li>MMT_AdvancedComponents</li>
+    </prerequisites>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>1.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 IX（纳米机械液）：解锁纳米修复针 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_E1</defName>
+    <label>毒品 IX</label>
+    <description>掌握纳米机械群的封装技术，制备可持续修复组织与旧伤的纳米修复针。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Drugs_D2</li>
+      <li>MMT_Medicine_D1</li>
+    </prerequisites>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>1.50</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 毒品 X（未来制药巅峰）：解锁基因强化剂/纳米净化血清/灵能增幅器/机械复活剂 -->
+  <ResearchProjectDef>
+    <defName>MMT_Drugs_E2</defName>
+    <label>毒品 X</label>
+    <description>触及闪耀世界制药技术的巅峰：基因强化、成瘾净化、灵能增幅乃至起死回生。</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Drugs_E1</li>
+      <li>MMT_UltraComponents</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>1.50</researchViewY>
   </ResearchProjectDef>
 </Defs>

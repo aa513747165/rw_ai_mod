@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 毒品扩展链原料/中间体：贴图来自 HSK 授权资源（Synchronite/RawTobacco/DriedLeavesTobacco/CoffeeBeans），
+       类别沿用原版 Medicine/PlantMatter，不新增 MMT 类别 -->
+
+  <!-- 灵能结晶：对标 HSK Synchronite（灵能粉原矿）；MMT 无 desiri 动物来源，改为化工全合成的中间体 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_SynchroCrystal</defName>
+    <label>灵能结晶</label>
+    <description>以硫酸盐与表面活性剂催化精神叶提取物结晶而成的淡紫色晶体，散发出微弱的灵能波动。是制备灵能粉与灵能茶的核心原料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_SynchroCrystal</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <rotatable>false</rotatable>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>14</MarketValue>
+      <Mass>0.03</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Medicine</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 烟叶（鲜）：对照 HSK RawTobacco（Plant_Tobacco 收获物，10 天腐烂） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_TobaccoLeaves</defName>
+    <label>烟叶</label>
+    <description>新鲜采摘的烟草叶片，需要晾晒脱水后才能用于卷制烟制品。</description>
+    <tickerType>Rare</tickerType>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_TobaccoLeaves</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>300</stackLimit>
+    <statBases>
+      <MarketValue>1.0</MarketValue>
+      <Mass>0.1</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>10</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 干烟草叶：对照 HSK DriedLeavesTobacco（晾晒 100 天腐烂，对齐 MMT_DriedLeavesSmokeleaf） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_DriedLeavesTobacco</defName>
+    <label>干烟草叶</label>
+    <description>经过晾晒脱水的烟叶，可用于卷制卷烟与雪茄。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_DriedLeavesTobacco</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <rotatable>false</rotatable>
+    <stackLimit>25</stackLimit>
+    <statBases>
+      <Mass>0.2</Mass>
+      <MarketValue>2.5</MarketValue>
+      <Flammability>1.5</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>100</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 咖啡豆（生）：对照 HSK CoffeeBeans（Plant_Coffee 收获物，20 天腐烂） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CoffeeBeans</defName>
+    <label>咖啡豆</label>
+    <description>咖啡树果实中取出的生豆，带有青草气息，需要烘焙后才能冲泡咖啡。</description>
+    <tickerType>Rare</tickerType>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_CoffeeBeans</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>1.5</MarketValue>
+      <Mass>0.03</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>20</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 烘焙咖啡豆：对照 HSK RoastedCoffeeBeans（60 天腐烂） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_RoastedCoffeeBeans</defName>
+    <label>烘焙咖啡豆</label>
+    <description>经过烘焙的咖啡豆，散发着浓郁的焦香，可直接用于冲泡咖啡。</description>
+    <tickerType>Rare</tickerType>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_RoastedCoffeeBeans</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Standard_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>2.5</MarketValue>
+      <Mass>0.03</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>PlantMatter</li>
+    </thingCategories>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>60</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 毒品扩展链成品：现代层（灵能粉/灵能茶/卷烟/雪茄/咖啡/战斗鸡尾酒）+ 未来层（纳米修复针/基因强化剂/纳米净化血清）。
+       灵能粉数值全面对标 HSK Synchronisity；纳米修复针/基因强化剂/净化血清为 MMT 原创未来层制品。
+       贴图：HSK 授权复制（目录贴图走 Graphic_StackCount，单图走 Graphic_Single）或直引原版路径 -->
+
+  <!-- 灵能粉：对标 HSK Synchronisity（硬毒品：灵能敏感+意识+、休息效率大降；自成瘾体系见 MMT_Hediffs_DrugsExt.xml） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Synchronisity</defName>
+    <label>灵能粉</label>
+    <description>从灵能结晶中精炼出的淡紫色粉末，能显著放大服用者的灵能感知与意识，同时大幅降低疲劳累积速度。长期使用会产生依赖，戒断时出现灵能反噬，高耐受下有诱发灵能昏迷的风险。</description>
+    <descriptionHyperlinks>
+      <HediffDef>MMT_SynchronisityHigh</HediffDef>
+      <HediffDef>MMT_SynchronisityTolerance</HediffDef>
+      <HediffDef>MMT_SynchronisityAddiction</HediffDef>
+      <HediffDef>PsychicComa</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Synchronisity</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>0.75</drawSize>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>350</WorkToMake>
+      <MarketValue>28</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <techLevel>Spacer</techLevel>
+    <ingestible>
+      <foodType>Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <joyKind>Chemical</joyKind>
+      <joy>0.80</joy>
+      <drugCategory>Hard</drugCategory>
+      <baseIngestTicks>150</baseIngestTicks>
+      <ingestSound>Ingest_Snort</ingestSound>
+      <ingestCommandString>吸食 {0}</ingestCommandString>
+      <ingestReportString>正在吸食 {0}。</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_SynchronisityHigh</hediffDef>
+          <severity>0.75</severity>
+          <toleranceChemical>MMT_Synchronisity</toleranceChemical>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>0.4</offset>
+          <toleranceChemical>MMT_Synchronisity</toleranceChemical>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_SynchronisityTolerance</hediffDef>
+          <severity>0.040</severity>
+          <divideByBodySize>true</divideByBodySize>
+        </li>
+        <!-- 恢复灵能焦点（原版类，1.7 GoJuice 同款） -->
+        <li Class="IngestionOutcomeDoer_OffsetPsyfocus">
+          <offset>0.15</offset>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>MMT_Synchronisity</chemical>
+        <addictiveness>0.03</addictiveness>
+        <existingAddictionSeverityOffset>0.20</existingAddictionSeverityOffset>
+        <needLevelOffset>0.9</needLevelOffset>
+        <isCombatEnhancingDrug>true</isCombatEnhancingDrug>
+        <listOrder>100</listOrder>
+        <overdoseSeverityOffset>0.18~0.35</overdoseSeverityOffset>
+        <largeOverdoseChance>0.01</largeOverdoseChance>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 灵能茶：恢复灵能焦点的温和制剂（原版 OffsetPsyfocus 类，无 C# 需求），无成瘾 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_PsyfocusTea</defName>
+    <label>灵能茶</label>
+    <description>以灵能结晶与金丝桃泡制的清茶，入口微苦回甘，能帮助灵能者凝聚涣散的精神焦点。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_PsyfocusTea</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>200</WorkToMake>
+      <MarketValue>18</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Spacer</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>3</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_OffsetPsyfocus">
+          <offset>0.25</offset>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>0.05</offset>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 卷烟：生活类轻毒品，挂原版 Smokeleaf 化学体系（低成瘾） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Cigarette</defName>
+    <label>卷烟</label>
+    <description>用干烟草叶卷成的纸烟，点燃后能短暂放松心情。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Cigarette</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>120</WorkToMake>
+      <MarketValue>4</MarketValue>
+      <Mass>0.01</Mass>
+    </statBases>
+    <techLevel>Neolithic</techLevel>
+    <ingestible>
+      <foodType>Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <joyKind>Chemical</joyKind>
+      <joy>0.15</joy>
+      <drugCategory>Social</drugCategory>
+      <baseIngestTicks>600</baseIngestTicks>
+      <ingestEffect>Smoke_Joint</ingestEffect>
+      <ingestSound>Ingest_Smoke</ingestSound>
+      <ingestCommandString>抽 {0}</ingestCommandString>
+      <ingestReportString>正在抽 {0}。</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_CigaretteHigh</hediffDef>
+          <severity>0.5</severity>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>SmokeleafTolerance</hediffDef>
+          <severity>0.016</severity>
+          <divideByBodySize>true</divideByBodySize>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>Smokeleaf</chemical>
+        <addictiveness>0.02</addictiveness>
+        <existingAddictionSeverityOffset>0.20</existingAddictionSeverityOffset>
+        <needLevelOffset>0.9</needLevelOffset>
+        <listOrder>900</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 雪茄：卷烟的高级版，心情增益更高更持久 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Cigar</defName>
+    <label>雪茄</label>
+    <description>用上等干烟草叶层层卷制的雪茄，烟气醇厚，是身份与品位的象征。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Cigar</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>300</WorkToMake>
+      <MarketValue>12</MarketValue>
+      <Mass>0.03</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <foodType>Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <joyKind>Chemical</joyKind>
+      <joy>0.25</joy>
+      <drugCategory>Social</drugCategory>
+      <baseIngestTicks>1200</baseIngestTicks>
+      <ingestEffect>Smoke_Joint</ingestEffect>
+      <ingestSound>Ingest_Smoke</ingestSound>
+      <ingestCommandString>抽 {0}</ingestCommandString>
+      <ingestReportString>正在抽 {0}。</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_CigarHigh</hediffDef>
+          <severity>0.8</severity>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>SmokeleafTolerance</hediffDef>
+          <severity>0.024</severity>
+          <divideByBodySize>true</divideByBodySize>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>Smokeleaf</chemical>
+        <addictiveness>0.03</addictiveness>
+        <existingAddictionSeverityOffset>0.20</existingAddictionSeverityOffset>
+        <needLevelOffset>0.9</needLevelOffset>
+        <listOrder>900</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 咖啡：提神饮料（降低疲劳速度、轻心情），无成瘾 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Coffee</defName>
+    <label>咖啡</label>
+    <description>一杯现煮的热咖啡，香气浓郁，能驱散困意、振奋精神。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_Coffee</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>150</WorkToMake>
+      <MarketValue>6</MarketValue>
+      <Mass>0.01</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <joyKind>Chemical</joyKind>
+      <joy>0.10</joy>
+      <drugCategory>Social</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_CoffeeHigh</hediffDef>
+          <severity>0.5</severity>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>0.2</offset>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 战斗鸡尾酒：定位狂暴草与果汁剂之间的战斗兴奋剂（强效期后进入虚脱期） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_BattleCocktail</defName>
+    <label>战斗鸡尾酒</label>
+    <description>狂暴草提取物与中性胺调制的速效战斗兴奋剂，注射后反应与痛觉抑制大幅提升，但药效消退时会陷入短暂虚脱。</description>
+    <descriptionHyperlinks>
+      <HediffDef>MMT_BattleCocktailHigh</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_BattleCocktail</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>400</WorkToMake>
+      <MarketValue>32</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <techLevel>Industrial</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <joyKind>Chemical</joyKind>
+      <joy>0.40</joy>
+      <drugCategory>Hard</drugCategory>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_BattleCocktailHigh</hediffDef>
+          <severity>1.0</severity>
+          <toleranceChemical>Psychite</toleranceChemical>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>Psychite</chemical>
+        <addictiveness>0.03</addictiveness>
+        <existingAddictionSeverityOffset>0.20</existingAddictionSeverityOffset>
+        <needLevelOffset>0.5</needLevelOffset>
+        <isCombatEnhancingDrug>true</isCombatEnhancingDrug>
+        <listOrder>500</listOrder>
+        <overdoseSeverityOffset>0.18~0.35</overdoseSeverityOffset>
+        <largeOverdoseChance>0.01</largeOverdoseChance>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ 未来层（机械液/基因系，需高级药物合成台） ============ -->
+
+  <!-- 纳米修复针：纳米机械群持续修复组织与旧伤（原版 HealPermanentWounds 机制），贴图直引原版治愈血清 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_NanoRepairSerum</defName>
+    <label>纳米修复针</label>
+    <description>一管满载纳米机械群的注射剂。机械群进入血液后持续修复组织损伤、促进免疫反应，甚至能缓慢愈合旧伤疤痕。</description>
+    <descriptionHyperlinks>
+      <HediffDef>MMT_NanoRepairHigh</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/Special/MechSerumHealer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>2000</WorkToMake>
+      <MarketValue>800</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <techLevel>Spacer</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_NanoRepairHigh</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>2000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 基因强化剂：全面提升机能约 3 天，衰退期基因疲劳（限制连用） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_GeneBooster</defName>
+    <label>基因强化剂</label>
+    <description>基于生物合成材料的定向基因表达激活剂，能在数日内全面提升工作速度、移动能力与免疫力。药效衰退期会出现基因疲劳，不宜连续注射。</description>
+    <descriptionHyperlinks>
+      <HediffDef>MMT_GeneBoosterHigh</HediffDef>
+    </descriptionHyperlinks>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_GeneBooster</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>2400</WorkToMake>
+      <MarketValue>650</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <techLevel>Spacer</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_GeneBoosterHigh</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>2000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 纳米净化血清：解除全部化学成瘾（含魔鬼素依赖），效果由 C# IngestionOutcomeDoer_RemoveAddictions 实现 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_NanoPurgeSerum</defName>
+    <label>纳米净化血清</label>
+    <description>装载靶向纳米机械群的血清，能逐细胞清除成瘾物质造成的神经适应性改变，彻底解除一切化学成瘾——包括常规手段无解的魔鬼素依赖。耐受记录仍会保留。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_NanoPurgeSerum</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>2400</WorkToMake>
+      <MarketValue>1200</MarketValue>
+      <Mass>0.05</Mass>
+    </statBases>
+    <techLevel>Ultra</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <outcomeDoers>
+        <li Class="MyModeTest.IngestionOutcomeDoer_RemoveAddictions" />
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>2000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- 纳米净化血清服用提示（IngestionOutcomeDoer_RemoveAddictions） -->
+  <MMT_NanoPurgeSerumCured>{0} 的 {1} 种化学成瘾已被纳米机械群彻底清除。</MMT_NanoPurgeSerumCured>
+  <MMT_NanoPurgeSerumNoAddiction>{0} 没有任何化学成瘾，纳米机械群无功而返。</MMT_NanoPurgeSerumNoAddiction>
+</LanguageData>

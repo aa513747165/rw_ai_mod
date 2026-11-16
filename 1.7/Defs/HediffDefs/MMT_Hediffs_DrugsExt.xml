@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 毒品扩展链 hediff：灵能粉成瘾五件套对标 HSK Synchronisity.xml（数值一致），
+       基类从 SK 的 VG_ 系替换为原版 AddictionBase/DrugToleranceBase/DrugAddictionNeedBase；
+       PsychicComa 为原版 hediff（Core Hediffs_Global_Misc），可直接引用 -->
+
+  <!-- ============ 灵能粉 high：对标 HSK SynchronisityHigh ============ -->
+  <HediffDef>
+    <defName>MMT_SynchronisityHigh</defName>
+    <label>灵能粉兴奋</label>
+    <labelNoun>灵能粉兴奋</labelNoun>
+    <description>灵能粉在血液中起效，感官与灵能感知被显著放大。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-1.5</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <restFallFactor>0.33</restFallFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.15</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <PsychicSensitivity>0.2</PsychicSensitivity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_SynchronisityHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_SynchronisityHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>灵能粉带来的升华</label>
+        <description>我感觉与宇宙融为一体。</description>
+        <baseMoodEffect>20</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 灵能粉成瘾体系（MMT 首个完整 chemical 体系，数值对齐 HSK） ============ -->
+  <ChemicalDef>
+    <defName>MMT_Synchronisity</defName>
+    <label>灵能粉</label>
+    <addictionHediff>MMT_SynchronisityAddiction</addictionHediff>
+    <toleranceHediff>MMT_SynchronisityTolerance</toleranceHediff>
+    <onGeneratedAddictedToleranceChance>0.8</onGeneratedAddictedToleranceChance>
+    <onGeneratedAddictedEvents>
+      <li>
+        <hediff>PsychicComa</hediff>
+        <chance>0.15</chance>
+        <partsToAffect>
+          <li>Brain</li>
+        </partsToAffect>
+      </li>
+    </onGeneratedAddictedEvents>
+  </ChemicalDef>
+
+  <NeedDef ParentName="DrugAddictionNeedBase">
+    <defName>Chemical_MMT_Synchronisity</defName>
+    <needClass>Need_Chemical</needClass>
+    <label>灵能粉</label>
+    <description>由于灵能粉成瘾，此人需要定期服用灵能粉，否则会出现戒断症状。</description>
+    <listPriority>55</listPriority>
+  </NeedDef>
+
+  <HediffDef ParentName="DrugToleranceBase">
+    <defName>MMT_SynchronisityTolerance</defName>
+    <label>灵能粉耐受</label>
+    <description>对灵能粉产生的耐受性。耐受越严重，达到同样效果所需的剂量越大。</description>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.015</severityPerDay>
+      </li>
+      <li Class="HediffCompProperties_DrugEffectFactor">
+        <chemical>MMT_Synchronisity</chemical>
+      </li>
+    </comps>
+    <!-- 高耐受随机诱发灵能昏迷（原版 PsychicComa），对齐 HSK -->
+    <hediffGivers>
+      <li Class="HediffGiver_RandomDrugEffect">
+        <hediff>PsychicComa</hediff>
+        <severityToMtbDaysCurve>
+          <points>
+            <li>(0.45, 99999)</li>
+            <li>(0.5, 180)</li>
+            <li>(1, 135)</li>
+          </points>
+        </severityToMtbDaysCurve>
+        <partsToAffect>
+          <li>Brain</li>
+        </partsToAffect>
+      </li>
+    </hediffGivers>
+  </HediffDef>
+
+  <HediffDef ParentName="AddictionBase">
+    <defName>MMT_SynchronisityAddiction</defName>
+    <label>灵能粉成瘾</label>
+    <description>对灵能粉的化学依赖。长期服用已使神经系统产生适应性改变，大脑离开药物便无法正常运作。
+      若不定期服用就会出现戒断症状；长期坚持戒断可让大脑恢复正常，解除成瘾。</description>
+    <hediffClass>Hediff_Addiction</hediffClass>
+    <chemicalNeed>Chemical_MMT_Synchronisity</chemicalNeed>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.0333</severityPerDay>
+        <showDaysToRecover>true</showDaysToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li/>
+      <!-- 戒断阶段：灵能反噬，意识/移动/操作/灵能全面下降，伴随精神崩溃风险 -->
+      <li>
+        <label>戒断</label>
+        <restFallFactorOffset>0.3</restFallFactorOffset>
+        <socialFightChanceFactor>3.0</socialFightChanceFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.20</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.20</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.20</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <PsychicSensitivity>-0.2</PsychicSensitivity>
+        </statOffsets>
+        <mentalStateGivers>
+          <li>
+            <mentalState>Binging_DrugExtreme</mentalState>
+            <mtbDays>40</mtbDays>
+          </li>
+          <li>
+            <mentalState>Wander_Psychotic</mentalState>
+            <mtbDays>10</mtbDays>
+          </li>
+        </mentalStateGivers>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_SynchronisityWithdrawal</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_SynchronisityAddiction</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <visible>false</visible>
+      </li>
+      <li>
+        <label>灵能粉戒断</label>
+        <description>我感觉失去了洞察力，没有希望了……</description>
+        <baseMoodEffect>-35</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 卷烟 high（轻心情增益） ============ -->
+  <HediffDef>
+    <defName>MMT_CigaretteHigh</defName>
+    <label>烟草放松</label>
+    <labelNoun>烟草放松</labelNoun>
+    <description>尼古丁带来的短暂放松。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(1,1,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-12</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li/>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_CigaretteHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_CigaretteHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>抽了支烟</label>
+        <description>一支烟让我放松了不少。</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 雪茄 high（长时心情增益） ============ -->
+  <HediffDef>
+    <defName>MMT_CigarHigh</defName>
+    <label>雪茄享受</label>
+    <labelNoun>雪茄享受</labelNoun>
+    <description>醇厚的雪茄烟雾带来的悠长享受。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(1,1,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-5</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li/>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_CigarHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_CigarHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>享受雪茄</label>
+        <description>这支雪茄真是无上的享受。</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 咖啡 high：提神（降低疲劳速度）+ 轻心情 ============ -->
+  <HediffDef>
+    <defName>MMT_CoffeeHigh</defName>
+    <label>咖啡因提神</label>
+    <labelNoun>咖啡因提神</labelNoun>
+    <description>咖啡因让大脑保持清醒。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(0.6,0.4,0.2)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-3</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <restFallFactor>0.5</restFallFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_CoffeeHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_CoffeeHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>喝了咖啡</label>
+        <description>一杯香浓的咖啡让我精神焕发。</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 战斗鸡尾酒 high：双阶段（兴奋 -> 虚脱），severity 衰减驱动阶段切换 ============ -->
+  <HediffDef>
+    <defName>MMT_BattleCocktailHigh</defName>
+    <label>战斗鸡尾酒</label>
+    <labelNoun>战斗鸡尾酒药效</labelNoun>
+    <description>兴奋剂混合物在血液中起效。药效高峰期全面提升战斗能力，消退后会陷入短暂虚脱。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(1,0.3,0.3)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-1.5</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <!-- 阶段 0（severity<0.4）：虚脱期，作为强效期的代价 -->
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.10</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.10</offset>
+          </li>
+        </capMods>
+      </li>
+      <!-- 阶段 1（severity>=0.4）：强效期 -->
+      <li>
+        <minSeverity>0.4</minSeverity>
+        <painFactor>0.5</painFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.15</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.15</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <AimingDelayFactor>-0.15</AimingDelayFactor>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_BattleCocktailHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_BattleCocktailHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>战斗鸡尾酒虚脱</label>
+        <description>药效退了，我感觉浑身脱力。</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>战斗鸡尾酒兴奋</label>
+        <description>我感觉无所不能！</description>
+        <baseMoodEffect>10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ============ 纳米修复针 high：周期性修复旧伤（原版 HealPermanentWounds，同魔鬼素机制）+ 免疫增强 ============ -->
+  <HediffDef>
+    <defName>MMT_NanoRepairHigh</defName>
+    <label>纳米修复群</label>
+    <labelNoun>纳米修复群</labelNoun>
+    <description>纳米机械群在体内游走，持续修复组织损伤并增强免疫系统。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(0.4,0.8,1)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.5</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+      <li Class="HediffCompProperties_HealPermanentWounds" />
+    </comps>
+    <stages>
+      <li>
+        <painFactor>0.5</painFactor>
+        <statOffsets>
+          <ImmunityGainSpeed>0.5</ImmunityGainSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ============ 基因强化剂 high：双阶段（强化 -> 基因疲劳） ============ -->
+  <HediffDef>
+    <defName>MMT_GeneBoosterHigh</defName>
+    <label>基因强化</label>
+    <labelNoun>基因强化药效</labelNoun>
+    <description>定向基因表达被激活，身体机能全面提升。药效衰退期会出现基因疲劳。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(0.5,1,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.33</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <!-- 阶段 0（severity<0.5）：基因疲劳期，限制连续使用 -->
+      <li>
+        <statOffsets>
+          <GlobalWorkSpeed>-0.10</GlobalWorkSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.05</offset>
+          </li>
+        </capMods>
+      </li>
+      <!-- 阶段 1（severity>=0.5）：强化期 -->
+      <li>
+        <minSeverity>0.5</minSeverity>
+        <statOffsets>
+          <GlobalWorkSpeed>0.20</GlobalWorkSpeed>
+          <ImmunityGainSpeed>0.30</ImmunityGainSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.10</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>MMT_GeneBoosterHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>MMT_GeneBoosterHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>基因疲劳</label>
+        <description>我的身体像是被掏空了一样。</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>基因强化</label>
+        <description>我感觉身体充满了前所未有的力量。</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

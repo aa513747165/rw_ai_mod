@@ -60,5 +60,17 @@
   "NuclearPower": "RimatomicsActivate",
   "ArtificialBone": "ArtificialBone",
   "MedicalAssistantChip": "MAAI_Chip",
-  "KPVTurret_Crate": "KPV_Crate"
+  "KPVTurret_Crate": "KPV_Crate",
+  "Synchronisity": "Synchronisity",
+  "SynchroCrystal": "Synchronite",
+  "TobaccoLeaves": "RawTobacco",
+  "DriedLeavesTobacco": "DriedLeavesTobacco",
+  "Cigarette": "TobaccoCigarette",
+  "Cigar": "TobaccoCigar",
+  "PlantTobacco": "Plant_Tobacco",
+  "CoffeeBeans": "CoffeeBeans",
+  "RoastedCoffeeBeans": "RoastedCoffeeBeans",
+  "Coffee": "Coffee",
+  "PlantCoffee": "Plant_Coffee",
+  "AdvDrugLab": "TableSynthetics"
 }

@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 434 |
+| MMT 配方 | 453 |
 | 与 HSK 数值一致 | 135 |
-| 与 HSK 有数值差异 | 56 |
-| HSK 有对应资源但无对应配方 | 6 |
-| MMT 新增（HSK 无对应资源） | 237 |
+| 与 HSK 有数值差异 | 57 |
+| HSK 有对应资源但无对应配方 | 9 |
+| MMT 新增（HSK 无对应资源） | 252 |
 
 ### 1.1 按家族统计
 
@@ -29,14 +29,16 @@
 | 充能护盾（ChargeShield） | 1 | 0 | 0 | 0 | 1 |
 | 混凝土（Concrete） | 5 | 4 | 1 | 0 | 0 |
 | 药品（Drugs） | 10 | 1 | 5 | 2 | 2 |
+| DrugsExt（DrugsExt） | 15 | 0 | 1 | 3 | 11 |
 | 电动金属（Electric） | 12 | 7 | 5 | 0 | 0 |
 | 电动电子（ElectricElectronics） | 3 | 0 | 3 | 0 | 0 |
 | 电动石化（ElectricPetrochem） | 5 | 0 | 5 | 0 | 0 |
 | 电动木材（ElectricWood） | 5 | 5 | 0 | 0 | 0 |
 | 电子（Electronics） | 4 | 0 | 4 | 0 | 0 |
+| EnergyCrystal（EnergyCrystal） | 1 | 0 | 0 | 0 | 1 |
 | 玻璃（Glass） | 11 | 5 | 6 | 0 | 0 |
 | 物质（Matter） | 14 | 14 | 0 | 0 | 0 |
-| 医药（Medicine） | 10 | 2 | 6 | 0 | 2 |
+| 医药（Medicine） | 11 | 2 | 6 | 0 | 3 |
 | 金属（Metal） | 5 | 5 | 0 | 0 | 0 |
 | 核能（Nuclear） | 1 | 0 | 0 | 0 | 1 |
 | 矿粉（OrePowder） | 5 | 0 | 0 | 0 | 5 |
@@ -50,6 +52,7 @@
 | 护盾（Shield） | 1 | 0 | 0 | 0 | 1 |
 | 筛网（SieveMeshes） | 3 | 0 | 0 | 0 | 3 |
 | 状态备份（StateBackup） | 1 | 0 | 0 | 0 | 1 |
+| TeleportModules（TeleportModules） | 2 | 0 | 0 | 0 | 2 |
 | 纺织（Textiles） | 13 | 12 | 0 | 0 | 1 |
 | 顶级材料（TopMaterials） | 11 | 7 | 0 | 4 | 0 |
 | 炮塔弹药（TurretAmmo） | 12 | 0 | 0 | 0 | 12 |
@@ -899,7 +902,85 @@
 - **HSK** `VG_BulkIbuprofen`：Neutroamine×4 -> 止痛药(VG_Ibuprofen)×4 @ DrugLab ｜ 工作量=720 ｜ 研究:PenoxycylineProduction，技能:Medicine≥10
 - **对比**：数值一致
 
-### 3.9 电动金属（Electric）
+### 3.9 DrugsExt（DrugsExt）
+
+#### 合成灵能结晶（`MMT_MakeSynchroCrystal`）
+
+- **MMT**：硫酸盐×2 + 表面活性剂×1 + PsychoidLeaves×4 -> 灵能结晶×2 @ 高级药物合成台 ｜ 工作量=1200 ｜ 研究:毒品 VII(MMT_Drugs_D1)，技能:Medicine≥8,Crafting≥4
+- **HSK**：有资源 Synchronite，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 精炼灵能粉（`MMT_MakeSynchronisity`）
+
+- **MMT**：灵能结晶×4 + Neutroamine×2 -> 灵能粉×2 @ 高级药物合成台 ｜ 工作量=700 ｜ 研究:毒品 VII(MMT_Drugs_D1)，技能:Medicine≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 泡制灵能茶（`MMT_BrewPsyfocusTea`）
+
+- **MMT**：灵能结晶×1 + 金丝桃×2 -> 灵能茶×2 @ 高级药物合成台 ｜ 工作量=400 ｜ 研究:毒品 VII(MMT_Drugs_D1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 晾晒烟叶（`MMT_DryTobacco`）
+
+- **MMT**：烟叶×5 -> 干烟草叶×5 @ — ｜ 工作量=2400 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **HSK**：有资源 DriedLeavesTobacco，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 晾晒烟叶（×5）（`MMT_DryTobaccoBulk`）
+
+- **MMT**：烟叶×25 -> 干烟草叶×25 @ — ｜ 工作量=9600 ｜ 研究:毒品 I(MMT_Drugs_A1)
+- **HSK**：有资源 DriedLeavesTobacco，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
+
+#### 卷制卷烟（`MMT_MakeCigarette`）
+
+- **MMT**：干烟草叶×2 -> 卷烟×2 @ — ｜ 工作量=240 ｜ 研究:毒株种植 III(MMT_DrugPlants_A3)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 卷制雪茄（`MMT_MakeCigar`）
+
+- **MMT**：干烟草叶×4 -> 雪茄×1 @ — ｜ 工作量=300 ｜ 研究:毒株种植 III(MMT_DrugPlants_A3)，技能:Crafting≥4
+- **HSK**：无对应资源（MMT 新增）
+
+#### 烘焙咖啡豆（`MMT_RoastCoffeeBeans`）
+
+- **MMT**：咖啡豆×5 -> 烘焙咖啡豆×5 @ — ｜ 工作量=600 ｜ 研究:毒株种植 III(MMT_DrugPlants_A3)
+- **HSK** `RoastingCoffeeBeans`：咖啡豆(CoffeeBeans)×5 -> 烘焙咖啡豆(RoastedCoffeeBeans)×5 @ Campfire, ElectricOven, TableOven ｜ 工作量=300 ｜ 研究:Pemmican，技能:Cooking≥6
+- **对比**：工作量 600 vs HSK 300
+
+#### 冲泡咖啡（`MMT_BrewCoffee`）
+
+- **MMT**：烘焙咖啡豆×2 -> 咖啡×2 @ — ｜ 工作量=300 ｜ 研究:毒株种植 III(MMT_DrugPlants_A3)
+- **HSK**：无对应资源（MMT 新增）
+
+#### 调制战斗鸡尾酒（`MMT_MakeBattleCocktail`）
+
+- **MMT**：狂暴草×2 + Neutroamine×1 + Chemfuel×2 -> 战斗鸡尾酒×1 @ 高级药物合成台 ｜ 工作量=800 ｜ 研究:毒品 VII(MMT_Drugs_D1)，技能:Medicine≥7
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制备纳米修复针（`MMT_MakeNanoRepairSerum`）
+
+- **MMT**：MedicineUltratech×1 + 微芯片集成电路×1 + Neutroamine×2 + 生物合成材料×1 -> 纳米修复针×1 @ 高级药物合成台 ｜ 工作量=2000 ｜ 研究:毒品 IX(MMT_Drugs_E1)，技能:Medicine≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制备基因强化剂（`MMT_MakeGeneBooster`）
+
+- **MMT**：生物合成材料×2 + Neutroamine×2 + 超级零部件×1 -> 基因强化剂×1 @ 高级药物合成台 ｜ 工作量=2400 ｜ 研究:毒品 X(MMT_Drugs_E2)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制备纳米净化血清（`MMT_MakeNanoPurgeSerum`）
+
+- **MMT**：MedicineUltratech×1 + 微芯片集成电路×1 + 超级零部件×1 + Neutroamine×3 -> 纳米净化血清×1 @ 高级药物合成台 ｜ 工作量=2400 ｜ 研究:毒品 X(MMT_Drugs_E2)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制造灵能增幅器（`MMT_MakePsychicAmplifier`）
+
+- **MMT**：灵能结晶×4 + 微芯片集成电路×1 + 超级零部件×1 + Neutroamine×2 -> PsychicAmplifier×1 @ 高级药物合成台 ｜ 工作量=4000 ｜ 研究:毒品 X(MMT_Drugs_E2)，技能:Medicine≥12
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制备机械复活剂（`MMT_MakeMechSerumResurrector`）
+
+- **MMT**：MedicineUltratech×2 + 微芯片集成电路×2 + 超级零部件×2 + Neutroamine×4 -> MechSerumResurrector×1 @ 高级药物合成台 ｜ 工作量=6000 ｜ 研究:毒品 X(MMT_Drugs_E2)，技能:Medicine≥15
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.10 电动金属（Electric）
 
 #### 提炼铜（20个）（`MMT_SmeltCopperBar_Electric`）
 
@@ -973,7 +1054,7 @@
 - **HSK** `MakeMetalCan`：[Metallic]×8 -> 金属罐(MetalCan)×15 @ ElectricSmelter ｜ 工作量=800 ｜ 研究:Metals_C1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.10 电动电子（ElectricElectronics）
+### 3.11 电动电子（ElectricElectronics）
 
 #### 组装电子元件（`MMT_AssembleElectronicParts_Electric`）
 
@@ -993,7 +1074,7 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：工作量 2400 vs HSK 3500；技能 Crafting≥14 vs HSK Crafting≥16
 
-### 3.11 电动石化（ElectricPetrochem）
+### 3.12 电动石化（ElectricPetrochem）
 
 #### 电蒸馏聚合物（`MMT_DistillPolymers_Electric`）
 
@@ -1025,7 +1106,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：工作量 2800 vs HSK 4000；技能 Crafting≥12 vs HSK Crafting≥15
 
-### 3.12 电动木材（ElectricWood）
+### 3.13 电动木材（ElectricWood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Electric`）
 
@@ -1057,7 +1138,7 @@
 - **HSK** `MakeRedWoodPlanks_Electric`：红木(RedWoodLog)×20 -> 红木木板(RedWoodPlank)×30 @ 电动锯木台(TableSawmillElectric) ｜ 工作量=1200 ｜ 研究:Metals_C1，技能:Crafting≥6
 - **对比**：数值一致
 
-### 3.13 电子（Electronics）
+### 3.14 电子（Electronics）
 
 #### 提炼硅（`MMT_ExtractSilicon_Hand`）
 
@@ -1083,7 +1164,14 @@
 - **HSK** `MakeMicrochipIntegratedCircuits`：集成电路(Electronics)×2 + 碳纤维锭(CarbonAlloy)×5 + GoldBar×5 -> 微芯片集成电路(Microchips)×1 @ 电子器件工作台(TableElectronics) ｜ 工作量=3500 ｜ 研究:Electronics_D1，技能:Crafting≥16
 - **对比**：技能 Crafting≥12 vs HSK Crafting≥16
 
-### 3.14 玻璃（Glass）
+### 3.15 EnergyCrystal（EnergyCrystal）
+
+#### 凝聚能量结晶（`MMT_MakeEnergyCrystal`）
+
+- **MMT**：微芯片集成电路×1 + 硅×10 + 金(Gold)×10 -> 能量结晶×2 @ 电子器件工作台 ｜ 工作量=6000 ｜ 研究:能量聚能(MMT_EnergyConvergence)，技能:Crafting≥10
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.16 玻璃（Glass）
 
 #### 将石砖碾磨成碎石（`MMT_MakeCrushedStone_Hand`）
 
@@ -1151,7 +1239,7 @@
 - **HSK** `MakeReinforcedGlass`：玻璃生料(GlassBatch)×40 + 碳聚物(Carbon)×5 + 人造纤维(SyntheticFibers)×5 -> 强化玻璃块(ReinforcedGlass)×5 @ 玻璃制作台(GlassworkTable) ｜ 工作量=1400 ｜ 研究:Glass_C1，技能:Crafting≥8
 - **对比**：数值一致
 
-### 3.15 物质（Matter）
+### 3.17 物质（Matter）
 
 #### 转化为无机物（`MMT_ConvertResourcesRaw`）
 
@@ -1237,7 +1325,7 @@
 - **HSK** `ConvertToSulphates`：无机物(Matter)×50 -> 硫酸盐(Sulphates)×100 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.16 医药（Medicine）
+### 3.18 医药（Medicine）
 
 #### 制作粗制绷带（`MMT_MakeBandagekitcrude`）
 
@@ -1292,12 +1380,17 @@
 - **MMT**：Neutroamine×2 + MedicineHerbal×6 + 石蜡×10 + 人造纤维×2 + 塑料×10 -> MedicineIndustrial×1 @ 电动制药台 ｜ 工作量=800 ｜ 研究:MedicineProduction(MedicineProduction)，技能:Medicine≥10
 - **HSK**：无对应资源（MMT 新增）
 
+#### 合成肾上腺素（`MMT_MakeAdrenaline`）
+
+- **MMT**：基础医药包×1 + 中性花瓣×3 -> 肾上腺素×1 @ 手工制药台, 电动制药台 ｜ 工作量=300 ｜ 研究:医疗物资 IV(MMT_Medicine_B2)，技能:Medicine≥4,Crafting≥2
+- **HSK**：无对应资源（MMT 新增）
+
 #### 制作闪耀世界医药（`MMT_MakeMedicineUltratech`）
 
 - **MMT**：微芯片集成电路×1 + 抗生素×2 + 生物合成材料×2 + 石蜡×3 + Neutroamine×2 + Synthread×5 + 塑料×20 -> MedicineUltratech×1 @ 电动制药台 ｜ 工作量=1400 ｜ 研究:医疗物资 VI(MMT_Medicine_D1)，技能:Medicine≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.17 金属（Metal）
+### 3.19 金属（Metal）
 
 #### 提炼铜（10个）（`MMT_SmeltCopperBar_Hand`）
 
@@ -1329,14 +1422,14 @@
 - **HSK** `MakeLeadBars_Hand`：铅矾矿(Anglesite)×10 -> 铅合金(LeadBar)×10 @ 熔炉(TableFurnace) ｜ 工作量=1100 ｜ 研究:Craft_B1，技能:Crafting≥2
 - **对比**：数值一致
 
-### 3.18 核能（Nuclear）
+### 3.20 核能（Nuclear）
 
 #### 组装核燃料棒（`MMT_MakeFuelRod`）
 
 - **MMT**：Uranium×100 + [MMT_SLDBar]×20 -> 核燃料棒×1 @ — ｜ 工作量=8000 ｜ 研究:核能发电(MMT_NuclearPower)，技能:Crafting≥12
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.19 矿粉（OrePowder）
+### 3.21 矿粉（OrePowder）
 
 #### 破碎粗矿石（`MMT_CrushCoarseOre`）
 
@@ -1363,7 +1456,7 @@
 - **MMT**：矿粉×20 -> — @ 电动筛子 ｜ 工作量=900
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.20 零件（Parts）
+### 3.22 零件（Parts）
 
 #### 使用木板组装原始零部件（`MMT_MakeComponentMedieval_Wood`）
 
@@ -1449,7 +1542,7 @@
 - **HSK** `Make_ComponentUltra`：[RARBar]×15 + [USLDHBar]×10 + [PRSBar]×5 -> 超级零部件(ComponentUltra)×10 @ 自动化装配器(RobAssem) ｜ 工作量=4500 ｜ 研究:Components_E1，技能:Crafting≥13
 - **对比**：数值一致
 
-### 3.21 石化（Petrochem）
+### 3.23 石化（Petrochem）
 
 #### 压取原油（`MMT_PumpCrudeOil`）
 
@@ -1486,7 +1579,7 @@
 - **HSK** `MakeCarbon`：聚合物(Polymers)×25 + [Coal]×25 + 合成橡胶(Rubber)×15 -> 碳聚物(Carbon)×12 @ 石化产品实验室(TableChemlab) ｜ 工作量=4000 ｜ 研究:Oil_Industry_C6，技能:Crafting≥15
 - **对比**：技能 Crafting≥10 vs HSK Crafting≥15
 
-### 3.22 石化扩展（PetrochemExt）
+### 3.24 石化扩展（PetrochemExt）
 
 #### 精炼石蜡（10个）（`MMT_MakeParaffins`）
 
@@ -1554,7 +1647,7 @@
 - **HSK** `MakeSurfactant`：盐(Salt)×10 + 硫磺(Sulfur)×15 + [Alcohol_Bottles]×15 -> 表面活性剂(Surfactant)×50 @ Brewery, DrugLab, ElectricBrewery ｜ 工作量=4000 ｜ 研究:Firefoam，技能:Crafting≥8
 - **对比**：技能 Crafting≥12,Intellectual≥4 vs HSK Crafting≥8
 
-### 3.23 贵金属（Precious）
+### 3.25 贵金属（Precious）
 
 #### 提炼纯银合金（10个）（`MMT_SmeltSilver_Hand`）
 
@@ -1568,7 +1661,7 @@
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：首投入 12 vs HSK 60；产出 15 vs HSK 20；工作量 750 vs HSK 12000；技能 Crafting≥3 vs HSK Crafting≥15
 
-### 3.24 处理机模块（ProcessorModules）
+### 3.26 处理机模块（ProcessorModules）
 
 #### 组装超频模块（`MMT_MakeOverclockModule`）
 
@@ -1585,14 +1678,14 @@
 - **MMT**：钢(Steel)×35 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 + 电子元件×1 -> 矿产增值模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.25 灵能护盾（PsychicShield）
+### 3.27 灵能护盾（PsychicShield）
 
 #### 组装灵能护盾腰带（`MMT_MakePsychicShieldBelt`）
 
 - **MMT**：PsychicAmplifier×1 + 太空零件(ComponentSpacer)×4 + 铁钛合金(Plasteel)×15 + 金(Gold)×10 -> 灵能护盾腰带×1 @ 电动装配台 ｜ 工作量=8000 ｜ 研究:灵能护盾技术(MMT_PsychicShieldTech)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.26 机器人（Robotics）
+### 3.28 机器人（Robotics）
 
 #### 制造动力电池（`MMT_MakeHexcell`）
 
@@ -1618,14 +1711,14 @@
 - **HSK** `Make_ComponentSpacer`：[USLDBar]×25 + [PRSBar]×5 -> 高级零部件(ComponentSpacer)×10 @ AdvToolBench ｜ 工作量=3500 ｜ 研究:Components_D1，技能:Crafting≥9
 - **对比**：首投入 1 vs HSK 25；产出 8 vs HSK 10；工作量 1000 vs HSK 3500；技能 Crafting≥10 vs HSK Crafting≥9
 
-### 3.27 护盾（Shield）
+### 3.29 护盾（Shield）
 
 #### 组装部署式护盾发生器（`MMT_MakeDeployableShield`）
 
 - **MMT**：钢(Steel)×25 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 + 电线×5 -> 部署式护盾发生器×1 @ 电动装配台 ｜ 工作量=4000 ｜ 研究:部署式护盾技术(MMT_DeployableShieldTech)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.28 筛网（SieveMeshes）
+### 3.30 筛网（SieveMeshes）
 
 #### 编织木滤网（`MMT_MakeMeshWood`）
 
@@ -1642,14 +1735,26 @@
 - **MMT**：强化玻璃块×10 + 金(Gold)×8 + 太空零件(ComponentSpacer)×1 -> 精密滤网×1 @ — ｜ 工作量=4000 ｜ 研究:精密筛分(MMT_PrecisionSifting)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.29 状态备份（StateBackup）
+### 3.31 状态备份（StateBackup）
 
 #### 植入生命备份核心（`MMT_InstallStateBackupCore`）
 
 - **MMT**：[Medicine]×2 + 生命备份核心×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 VIII(MMT_ProsthesisInstall_D4)，技能:Medicine≥14
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.30 纺织（Textiles）
+### 3.32 TeleportModules（TeleportModules）
+
+#### 组装充能效率模块（`MMT_MakeChargeEfficiencyModule`）
+
+- **MMT**：钢(Steel)×25 + 电线×15 + 电子元件×2 + 工业零件(ComponentIndustrial)×2 -> 充能效率模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:充能增效(MMT_ChargeBoost)，技能:Crafting≥6
+- **HSK**：无对应资源（MMT 新增）
+
+#### 组装次元传送模块（`MMT_MakeDimensionalModule`）
+
+- **MMT**：铁钛合金(Plasteel)×20 + 太空零件(ComponentSpacer)×2 + 电子元件×3 + 金(Gold)×10 -> 次元传送模块×1 @ 电动装配台 ｜ 工作量=3000 ｜ 研究:次元传送(MMT_DimensionalTeleport)，技能:Crafting≥8
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.33 纺织（Textiles）
 
 #### 纺织布（`MMT_MakeCloth`）
 
@@ -1728,7 +1833,7 @@
 - **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.31 顶级材料（TopMaterials）
+### 3.34 顶级材料（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -1792,7 +1897,7 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.32 炮塔弹药（TurretAmmo）
+### 3.35 炮塔弹药（TurretAmmo）
 
 #### 制作120mm 炮弹（破甲）x1（`MMT_MakeAmmo_120mmCannonShell_HEAT`）
 
@@ -1854,7 +1959,7 @@
 - **MMT**：钢(Steel)×40 + 火药×6 -> 14.5x114mm 机枪弹（全金属被甲弹）×100 @ — ｜ 工作量=4000 ｜ 技能:Crafting≥5
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.33 炮塔箱（TurretCrates）
+### 3.36 炮塔箱（TurretCrates）
 
 #### 制作AGS-30组件箱（`MMT_BuildAGCturret_Crate`）
 
@@ -1958,7 +2063,7 @@
 - **HSK** `BuildVulcanCannon_Crate`：武器部件(Weapon_Parts)×20 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×25 -> 20mm火神炮组件箱(VulcanCannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
-### 3.34 武器部件（WeaponParts）
+### 3.37 武器部件（WeaponParts）
 
 #### 制造武器部件（`MMT_MakeWeaponParts`）
 
@@ -2044,7 +2149,7 @@
 - **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.35 古代武器（Weapons_Archaic）
+### 3.38 古代武器（Weapons_Archaic）
 
 #### 制作EMP手榴弹（`MMT_MakeEMPGrenades`）
 
@@ -2111,7 +2216,7 @@
 - **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [MMT_HCMBar]×4 + Chemfuel×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.36 常规武器（Weapons_Conventional）
+### 3.39 常规武器（Weapons_Conventional）
 
 #### 制作伯莱塔93R冲锋手枪（`MMT_Build93RBurstPistol`）
 
@@ -2403,7 +2508,7 @@
 - **MMT**：重型武器部件×1 + 武器部件×8 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×35 + 塑料×30 -> M60E4通用机枪×1 @ — ｜ 工作量=24000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.37 未来武器（Weapons_Futuristic）
+### 3.40 未来武器（Weapons_Futuristic）
 
 #### 制造A-1BW黑寡妇（`MMT_BuildBlackWidow`）
 
@@ -2465,7 +2570,7 @@
 - **MMT**：电荷武器部件×1 + 武器部件×6 + 超级零部件×12 + 斯特合金×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.38 木材（Wood）
+### 3.41 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -2497,7 +2602,7 @@
 - **HSK** `MakeRedWoodPlanks_Hand`：红木(RedWoodLog)×10 -> 红木木板(RedWoodPlank)×15 @ 手工锯台(TableSawmillHand) ｜ 工作量=1200 ｜ 研究:Craft_0，技能:Crafting≥3
 - **对比**：数值一致
 
-### 3.39 MMT_Items_NaturalOrgans（MMT_Items_NaturalOrgans）
+### 3.42 MMT_Items_NaturalOrgans（MMT_Items_NaturalOrgans）
 
 #### 安装眼球（`MMT_InstallNaturalEye`）
 
@@ -2618,18 +2723,22 @@
 | 电动采石机(`MMT_ElectricChunkDrill`) | (2,2) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
 | 手动混凝土搅拌器(`MMT_ConcreteMixer`) | (2,1) | 工业零件(ComponentIndustrial)×5 + [金属]×135 | 1600 | hand concrete mixer(`ConcreteMixer`) | 工业零件(ComponentIndustrial)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×135 | 1600 | HSK 多 机械组件(Mechanism)×5 |
 | 电动混凝土搅拌机(`MMT_EConcreteMixer`) | (2,1) | 合成橡胶×45 + 工业零件(ComponentIndustrial)×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W / 5000 | electric concrete mixer(`EConcreteMixer`) | 合成橡胶(Rubber)×45 + 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×115 | 500W / 5000 | 一致 |
+| 高级药物合成台(`MMT_AdvDrugLab`) | (3,1) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件(ComponentSpacer)×5 + [金属]×100 | 1500W / 6000 | synthetic organ assembler(`TableSynthetics`) | 塑料(Plastic)×65 + 人造纤维(SyntheticFibers)×20 + 集成电路(Electronics)×6 + 高级零部件(ComponentSpacer)×5 + [RuggedMetallic/木质]×135 | 850W / 5500 | 材料量 100 vs 135；塑料 40 vs 65；MMT 多 玻璃块×30；MMT 多 微芯片集成电路×2；高级零部件 6 vs 5；HSK 多 人造纤维(SyntheticFibers)×20；HSK 多 集成电路(Electronics)×6；功耗 1500 vs 850；工作量 6000 vs 5500 |
 | 电弧炉(`MMT_ElectricArcFurnace`) | (3,3) | 钢筋混凝土×50 + 工业零件(ComponentIndustrial)×15 + 电子元件×6 + [金属]×180 | 2500W / 4500 | electric arc furnace(`EAF`) | 钢筋混凝土(ReinforcedConcrete)×50 + 工业零件(ComponentIndustrial)×15 + 机械组件(Mechanism)×10 + 电子元件(ElectronicComponents)×6 + [RuggedMetallic]×180 | 2500W / 4500 | HSK 多 机械组件(Mechanism)×10 |
 | 电子器件工作台(`MMT_ElectricElectronicsTable`) | (3,1) | 铜×40 + 工业零件(ComponentIndustrial)×10 + [金属]×140 | 600W / 2750 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | HSK 多 机械组件(Mechanism)×10 |
 | 石化产品实验室(`MMT_ElectricChemLab`) | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件(ComponentIndustrial)×20 + 电子元件×5 + [金属]×130 | 450W / 5500 | — | — | — | MMT 新增 |
 | 电动木炭窑(`MMT_ElectricCharcoalKiln`) | (3,3) | 工业零件(ComponentIndustrial)×5 + 电子元件×3 + [石质]×180 | 1500W / 3000 | — | — | — | MMT 新增 |
 | 电动锯木台(`MMT_ElectricSawmill`) | (3,1) | 工业零件(ComponentIndustrial)×10 + 电子元件×5 + [金属]×150 | 600W / 5000 | electric sawmill(`TableSawmillElectric`) | 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×150 | 600W / 5000 | HSK 多 机械组件(Mechanism)×5 |
 | 电子器件工作台(`MMT_HandElectronicsTable`) | (3,3) | 工业零件(ComponentIndustrial)×5 + [金属]×140 | 2200 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | 工业零件(ComponentIndustrial) 5 vs 10；HSK 多 铜(CopperBar)×40；HSK 多 机械组件(Mechanism)×10；功耗 — vs 600；工作量 2200 vs 2750 |
+| 能量聚能发电站(`MMT_EnergyConvergencePlant`) | (3,3) | 钢(Steel)×200 + 碳纤维锭×40 + 金(Gold)×30 + 先进机械组件×4 | -10000W / 10000 | — | — | — | MMT 新增 |
+| 点火充能装置(`MMT_IgnitionCharger`) | (1,1) | 钢(Steel)×50 + 金(Gold)×10 + 工业零件(ComponentIndustrial)×2 | 50W / 2000 | — | — | — | MMT 新增 |
 | 玻璃制作台(`MMT_GlassworksTable`) | (3,1) | 工业零件(ComponentIndustrial)×10 + [金属]×130 | 400W / 1600 | glassworks table(`GlassworkTable`) | 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×8 + [RuggedMetallic]×130 | 400W / 1600 | HSK 多 机械组件(Mechanism)×8 |
 | 电动研磨机(`MMT_ElectricGrinder`) | (1,1) | 机械组件×4 + 工业零件(ComponentIndustrial)×2 + [金属]×50 | 300W / 1500 | — | — | — | MMT 新增 |
 | 手动研磨机(`MMT_HandGrinder`) | (1,1) | [石质]×50 | 800 | — | — | — | MMT 新增 |
 | 无机物转化器(`MMT_MatterConverter`) | (3,3) | 人造纤维×50 + 高级零部件×12 + 先进机械组件×6 + 微芯片集成电路×4 + [金属]×280 | 2500W / 9000 | inorganic matter converter(`MatterConverter`) | 人造纤维(SyntheticFibers)×50 + 高级零部件(ComponentSpacer)×12 + 先进机械组件(AdvMechanism)×6 + 微芯片集成电路(Microchips)×4 + [RuggedMetallic]×280 | 2500W / 9000 | 一致 |
 | 量子加工台(`MMT_Matterfab`) | (3,2) | 磁性材料×25 + 高级零部件×10 + 先进机械组件×10 + 微芯片集成电路×2 + [金属]×240 | 8000W / 10000 | quantum fabricator(`Matterfab`) | 磁性材料(MagneticMaterial)×25 + 高级零部件(ComponentSpacer)×10 + 先进机械组件(AdvMechanism)×10 + 微芯片集成电路(Microchips)×2 + [SolidMetallic]×240 | 20000W / 10000 | 功耗 8000 vs 20000 |
 | 粒子对撞台(`MMT_ParticleCollider`) | (7,2) | 钢筋混凝土×150 + 磁性材料×20 + 生物合成材料×15 + 先进机械组件×12 + 微芯片集成电路×3 + [金属]×120 | 15000W / 12000 | hadron collider(`HadronCollider`) | 钢筋混凝土(ReinforcedConcrete)×150 + 磁性材料(MagneticMaterial)×20 + 生物合成材料(BiosyntheticMaterial)×15 + 先进机械组件(AdvMechanism)×12 + 微芯片集成电路(Microchips)×3 + [SolidMetallic]×120 | 1W / 12000 | 功耗 15000 vs 1 |
+| 医疗注射炮台(`MMT_MedicalTurret`) | (2,2) | 钢(Steel)×80 + 工业零件(ComponentIndustrial)×5 + 电线×8 | 150W / 2500 | — | — | — | MMT 新增 |
 | 晾晒架(`MMT_DryingRack`) | (2,1) | [木质/金属]×60 | 800 | drying rack(`DryingRack`) | 原始零部件(ComponentMedieval)×2 + [木质]×60 | 800 | HSK 多 原始零部件(ComponentMedieval)×2 |
 | 电动晾晒架(`MMT_ElectricDryingRack`) | (2,2) | 工业零件(ComponentIndustrial)×4 + 电子元件×2 + [金属]×80 | 400W / 2500 | electric drying rack(`ElectricDryingRack`) | 工业零件(ComponentIndustrial)×7 + 电子元件(ElectronicComponents)×4 + 机械组件(Mechanism)×5 + 玻璃块(Glass)×25 + [StrongMetallic]×60 | 800W / 800 | 材料量 80 vs 60；工业零件(ComponentIndustrial) 4 vs 7；电子元件 2 vs 4；HSK 多 机械组件(Mechanism)×5；HSK 多 玻璃块(Glass)×25；功耗 400 vs 800；工作量 2500 vs 800 |
 | 电动制药台(`MMT_ElectricMedicalTable`) | (3,1) | 玻璃块×60 + 合成橡胶×45 + 工业零件(ComponentIndustrial)×10 + 电子元件×5 + [金属/木质]×125 | 500W / 4000 | medical table(`meditable`) | 玻璃块(Glass)×60 + 合成橡胶(Rubber)×45 + 工业零件(ComponentIndustrial)×10 + 集成电路(Electronics)×5 + [StrongMetallic/木质/Plastic]×125 | 500W / 4000 | MMT 多 电子元件×5；HSK 多 集成电路(Electronics)×5 |
@@ -2658,5 +2767,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 15 / MMT 新增 31（共 55）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 34（共 59）。
 

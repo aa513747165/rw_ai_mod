@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 毒品扩展链作物：数值对齐 HSK Plants_Cultivated_Manufacture.xml（Plant_Tobacco/Plant_Coffee），
+       贴图为 HSK 授权复制（成熟/未成熟共用同一套 A~D 图，对齐 MMT 亚麻花惯例） -->
+
+  <!-- 烟草：对照 HSK Plant_Tobacco（生长期 6 天、产量 7、播种技能 4） -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantTobacco</defName>
+    <label>烟草</label>
+    <description>一种绿叶作物，收获的烟叶经晾晒后可卷制成卷烟或雪茄吸食。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>2</Beauty>
+      <BeautyOutdoors>2</BeautyOutdoors>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantTobacco</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>4</sowMinSkill>
+      <sowResearchPrerequisites>
+        <li>MMT_DrugPlants_A3</li>
+      </sowResearchPrerequisites>
+      <sowTags>
+        <li>Ground</li>
+        <li>Hydroponic</li>
+      </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantTobacco_Immature</immatureGraphicPath>
+      <harvestedThingDef>MMT_TobaccoLeaves</harvestedThingDef>
+      <harvestYield>7</harvestYield>
+      <topWindExposure>0.15</topWindExposure>
+      <growDays>6</growDays>
+      <drugForHarvestPurposes>True</drugForHarvestPurposes>
+      <fertilitySensitivity>1</fertilitySensitivity>
+      <fertilityMin>0.8</fertilityMin>
+      <visualSizeRange>0.2~0.9</visualSizeRange>
+      <wildOrder>2</wildOrder>
+    </plant>
+  </ThingDef>
+
+  <!-- 咖啡树：对照 HSK Plant_Coffee（生长期 6 天、产量 7；HSK 播种技能 12 过高，MMT 下调为 8 对齐精神叶） -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantCoffee</defName>
+    <label>咖啡树</label>
+    <description>一种常绿灌木，结出的红色浆果中藏着咖啡豆。咖啡豆经烘焙研磨后可冲泡成提神的咖啡。</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>2</Beauty>
+      <BeautyOutdoors>2</BeautyOutdoors>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantCoffee</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>8</sowMinSkill>
+      <sowResearchPrerequisites>
+        <li>MMT_DrugPlants_A3</li>
+      </sowResearchPrerequisites>
+      <sowTags>
+        <li>Ground</li>
+        <li>Hydroponic</li>
+      </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantCoffee_Immature</immatureGraphicPath>
+      <harvestedThingDef>MMT_CoffeeBeans</harvestedThingDef>
+      <harvestYield>7</harvestYield>
+      <topWindExposure>0.15</topWindExposure>
+      <growDays>6</growDays>
+      <drugForHarvestPurposes>True</drugForHarvestPurposes>
+      <fertilitySensitivity>1</fertilitySensitivity>
+      <fertilityMin>0.8</fertilityMin>
+      <visualSizeRange>0.2~0.9</visualSizeRange>
+      <wildOrder>2</wildOrder>
+    </plant>
+  </ThingDef>
+</Defs>

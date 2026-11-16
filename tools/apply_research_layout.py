@@ -32,12 +32,18 @@ LAYOUT = {
     "MMT_SuperFabric": (12, 0),
     # y=1 毒品链（与原版节点混排成一条直线）：毒植 | 毒品 I | [原版 精神茶酿造] | 毒品 III | [原版 毒品生产]
     # | 毒品 V/VI | [原版 精神叶精炼/清醒丸/青霉素/活力水]（原版坐标由 MMT_Patch_VanillaDrugs.xml 注入，见 VANILLA_LAYOUT）
+    "MMT_Medicine_C1": (4, 2.5),
     "MMT_DrugPlants_A1": (0, 1),
     "MMT_DrugPlants_A2": (1, 1),
+    "MMT_DrugPlants_A3": (2, 1.5),
     "MMT_Drugs_A1": (2, 1),
     "MMT_Drugs_B1": (4, 1),
     "MMT_Drugs_C2": (6, 1),
     "MMT_Drugs_C3": (7, 1),
+    "MMT_Drugs_D1": (12, 1),
+    "MMT_Drugs_D2": (13, 1),
+    "MMT_Drugs_E1": (14, 1.5),
+    "MMT_Drugs_E2": (15, 1.5),
     # y=2 主干线（13 节点直线）：医药 I-IV → 仿生安装 C1-E2（全图最长链）
     "MMT_Medicine_A1": (0, 2),
     "MMT_Medicine_A2": (1, 2),
