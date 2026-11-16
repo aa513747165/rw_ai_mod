@@ -55,6 +55,7 @@
       <li>MMT_MakeHerbMedicine</li>
       <li>MMT_MakeBasicMedicineKit</li>
       <li>MMT_MakeBasicMedicineKitMix</li>
+      <li>MMT_MakeAdrenaline</li>
     </recipes>
     <building>
       <workTableRoomRole>Laboratory</workTableRoomRole>
@@ -125,6 +126,7 @@
       <li>MMT_BrewMedicalDrink</li>
       <li>MMT_MakeMedicineIndustrial</li>
       <li>MMT_MakeMedicineUltratech</li>
+      <li>MMT_MakeAdrenaline</li>
     </recipes>
     <building>
       <workTableRoomRole>Laboratory</workTableRoomRole>

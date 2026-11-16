@@ -6045,7 +6045,8 @@ def validate_medicine() -> None:
     drug_defs = def_map(parse_xml(MEDICINE_ITEMS_XML))
     assert_equal(
         set(drug_defs),
-        {"MMT_HerbalTea", "MMT_ActivatedCarbon", "MMT_BerserkHerb", "MMT_Methadone", "MMT_Ibuprofen"},
+        {"MMT_HerbalTea", "MMT_ActivatedCarbon", "MMT_BerserkHerb", "MMT_Methadone", "MMT_Ibuprofen",
+         "MMT_Adrenaline"},
         "药物制品 defName 集合",
     )
     methadone_drug = next(li for li in drug_defs["MMT_Methadone"].findall("comps/li")
@@ -6057,7 +6058,7 @@ def validate_medicine() -> None:
     assert_equal(
         set(hediff_defs),
         {"MMT_MedicalDrinkBoost", "MMT_HerbalTeaConsumed", "MMT_ActivatedCarbonConsumed",
-         "MMT_BerserkHerbHigh", "MMT_MethadoneHigh", "MMT_IbuprofenHigh"},
+         "MMT_BerserkHerbHigh", "MMT_MethadoneHigh", "MMT_IbuprofenHigh", "MMT_AdrenalineHigh"},
         "hediff defName 集合",
     )
 
@@ -6091,11 +6092,13 @@ def validate_medicine() -> None:
     expected_inline = {
         "MMT_MedicalTable": ["MMT_MakeHerbalTea", "MMT_MakeActivatedCarbon", "MMT_MakeBandagekitcrude",
                              "MMT_MakeBandagekitcrudeBulk", "MMT_MakeBandagekit", "MMT_MakeBandagekitBulk",
-                             "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit", "MMT_MakeBasicMedicineKitMix"],
+                             "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit", "MMT_MakeBasicMedicineKitMix",
+                             "MMT_MakeAdrenaline"],
         "MMT_ElectricMedicalTable": ["MMT_MakeHerbalTea", "MMT_MakeActivatedCarbon", "MMT_MakeBandagekit",
                                      "MMT_MakeBandagekitBulk", "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit",
                                      "MMT_MakeBasicMedicineKitMix", "MMT_BrewMedicalDrink",
-                                     "MMT_MakeMedicineIndustrial", "MMT_MakeMedicineUltratech"],
+                                     "MMT_MakeMedicineIndustrial", "MMT_MakeMedicineUltratech",
+                                     "MMT_MakeAdrenaline"],
         "MMT_DryingRack": ["MMT_DrySmokeleaf", "MMT_DrySmokeleafBulk"],
         "MMT_ElectricDryingRack": ["MMT_DrySmokeleaf", "MMT_DrySmokeleafBulk"],
         "MMT_NeutroamineRefiner": ["MMT_RefineNeutroamine"],
@@ -6110,7 +6113,7 @@ def validate_medicine() -> None:
         {"MMT_MakeBandagekitcrude", "MMT_MakeBandagekitcrudeBulk", "MMT_MakeBandagekit",
          "MMT_MakeBandagekitBulk", "MMT_MakeHerbMedicine", "MMT_MakeBasicMedicineKit",
          "MMT_MakeBasicMedicineKitMix", "MMT_BrewMedicalDrink", "MMT_MakeMedicineIndustrial",
-         "MMT_MakeMedicineUltratech"},
+         "MMT_MakeMedicineUltratech", "MMT_MakeAdrenaline"},
         "医疗配方 defName 集合",
     )
     industrial = med_recipes["MMT_MakeMedicineIndustrial"]

@@ -207,4 +207,43 @@
       </li>
     </comps>
   </ThingDef>
+
+  <!-- 肾上腺素：医疗急救针（提升意识、疼痛减半、持续约 12 小时、无成瘾），贴图借用原版注射器 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_Adrenaline</defName>
+    <label>肾上腺素</label>
+    <description>一针急救用的肾上腺素注射剂，能抑制疼痛并提振意识，让重伤者恢复清醒自行就医。药效约持续半天。</description>
+    <graphicData>
+      <texPath>Things/Item/Drug/GoJuice</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>300</WorkToMake>
+      <MarketValue>25</MarketValue>
+      <Mass>0.05</Mass>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <techLevel>Medieval</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <preferability>NeverForNutrition</preferability>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>MMT_AdrenalineHigh</hediffDef>
+          <severity>0.5</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <addictiveness>0</addictiveness>
+        <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+      </li>
+    </comps>
+  </ThingDef>
 </Defs>

@@ -450,6 +450,54 @@
     <researchPrerequisite>MedicineProduction</researchPrerequisite>
   </RecipeDef>
 
+  <!-- 肾上腺素：医疗急救针，基础医药包与中性花瓣合成 -->
+  <RecipeDef>
+    <defName>MMT_MakeAdrenaline</defName>
+    <label>合成肾上腺素</label>
+    <description>从基础医药包中提取并浓缩肾上腺素，与中性花瓣调制成急救注射剂。产出 1。</description>
+    <jobString>正在合成肾上腺素。</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>DrugSynthesisSpeed</workSpeedStat>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_BasicMedicineKit</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_NeutroPetals</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_BasicMedicineKit</li>
+        <li>MMT_NeutroPetals</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_Adrenaline>1</MMT_Adrenaline>
+    </products>
+    <recipeUsers>
+      <li>MMT_MedicalTable</li>
+      <li>MMT_ElectricMedicalTable</li>
+    </recipeUsers>
+    <skillRequirements>
+      <Medicine>4</Medicine>
+      <Crafting>2</Crafting>
+    </skillRequirements>
+    <workSkill>Medicine</workSkill>
+    <researchPrerequisite>MMT_Medicine_B2</researchPrerequisite>
+  </RecipeDef>
+
   <!-- 闪耀世界医药：对照 HSK makeadvmedicine（产物为原版 MedicineUltratech，原版本不可制作） -->
   <RecipeDef>
     <defName>MMT_MakeMedicineUltratech</defName>

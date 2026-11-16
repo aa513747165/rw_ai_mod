@@ -282,4 +282,35 @@
       </li>
     </stages>
   </HediffDef>
+
+  <!-- 肾上腺素药效：医疗急救针，提升意识、疼痛减半，持续约 12 小时（severity 0.5 / 每天 -1.0），无成瘾 -->
+  <HediffDef>
+    <defName>MMT_AdrenalineHigh</defName>
+    <label>肾上腺素</label>
+    <description>肾上腺素在体内起效，抑制疼痛并维持清醒。</description>
+    <hediffClass>Hediff_High</hediffClass>
+    <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-1.0</severityPerDay>
+        <showHoursToRecover>true</showHoursToRecover>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <label>药效存续</label>
+        <painFactor>0.5</painFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.20</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
 </Defs>
