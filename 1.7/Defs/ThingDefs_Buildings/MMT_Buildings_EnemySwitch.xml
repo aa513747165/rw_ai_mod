@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 敌意感应开关：结构照抄原版电力开关，挂 CompEnemyDetector 实现事件驱动的自动通断。
+       地图上有进攻事件（敌对 Lord）时自动通电，进攻结束后自动断电；
+       可用 Gizmo 在 自动/强制通电/强制断电 三档间切换。无需研究，贴图复用原版开关。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_EnemyDetectorSwitch</defName>
+    <label>敌意感应开关</label>
+    <description>装有敌意探测器的电力开关。侦测到袭击、围攻、兽群等进攻事件时自动接通电路，进攻结束后自动断开，让防御设施只在需要时耗电。也可手动切换为强制通电或强制断电。</description>
+    <thingClass>Building_PowerSwitch</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/Building/Power/PowerSwitch</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <allowWireConnection>false</allowWireConnection>
+    </building>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>300</WorkToBuild>
+      <Flammability>0.5</Flammability>
+      <Beauty>-2</Beauty>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTransmitter</compClass>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="MyModeTest.CompProperties_EnemyDetector"/>
+    </comps>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>false</neverMultiSelect>
+    <tickerType>Normal</tickerType>
+    <designationCategory>Power</designationCategory>
+    <uiOrder>2011</uiOrder>
+    <constructEffect>ConstructMetal</constructEffect>
+  </ThingDef>
+</Defs>
