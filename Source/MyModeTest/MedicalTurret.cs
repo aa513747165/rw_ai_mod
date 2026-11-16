@@ -329,8 +329,6 @@ namespace MyModeTest
             {
                 if (RoomFor(def) <= 0)
                     continue;
-                if (parent.Map.listerThings.ThingsOfDef(def).Count == 0)
-                    continue;
                 Thing drug = FindLoadableDrug(selPawn, def);
                 if (drug == null)
                     continue;
@@ -352,13 +350,43 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>找一件可达、未禁用、可预定的药品。搜索根必须用小人位置而非建筑位置：
-        /// 以建筑为根的 ClosestThingReachable 会把物品判为"不可达"（项目已有踩坑记录）。</summary>
+        /// <summary>找一件储物区内可达、未禁用、可预定的药品。搜索根必须用小人位置而非建筑位置：
+        /// 以建筑为根的搜索会把物品判为"不可达"（项目已有踩坑记录）。</summary>
         private Thing FindLoadableDrug(Pawn selPawn, ThingDef drugDef)
         {
-            return GenClosest.ClosestThingReachable(selPawn.Position, parent.Map, ThingRequest.ForDef(drugDef),
-                PathEndMode.ClosestTouch, TraverseParms.For(selPawn), 9999f,
-                t => !t.IsForbidden(selPawn) && selPawn.CanReserve(t, 1, -1, null, false));
+            return FindNearestUsableDrug(parent.Map, selPawn.Position, selPawn, drugDef);
+        }
+
+        /// <summary>线性扫描储物区（储物点/货架）内指定药品的全部堆叠，取距 root 最近且未禁用/可预定/可达的一件。
+        /// 性能：替代 ClosestThingReachable 的全图区域 BFS，储物区内药品堆叠通常很少，
+        /// 线性扫描 + 区域可达性查询便宜得多（右键菜单与搬运扫描都是高频路径）。
+        /// 只搜储物区：散落在野外的药品不纳入装填来源，行为可控且进一步缩小扫描范围。</summary>
+        internal static Thing FindNearestUsableDrug(Map map, IntVec3 root, Pawn pawn, ThingDef drugDef)
+        {
+            List<Thing> stacks = map.listerThings.ThingsOfDef(drugDef);
+            if (stacks.Count == 0)
+                return null;
+            TraverseParms traverse = TraverseParms.For(pawn);
+            Thing best = null;
+            int bestDistSq = int.MaxValue;
+            for (int i = 0; i < stacks.Count; i++)
+            {
+                Thing d = stacks[i];
+                // 只搜储物区：不在储物点/货架上的堆叠跳过
+                if (!d.IsInValidStorage())
+                    continue;
+                if (d.IsForbidden(pawn) || !pawn.CanReserve(d, 1, -1, null, false))
+                    continue;
+                int distSq = (d.Position - root).LengthHorizontalSquared;
+                if (distSq >= bestDistSq)
+                    continue;
+                // 区域级可达性查询，比 ClosestThingReachable 的 BFS 便宜
+                if (!map.reachability.CanReach(root, d, PathEndMode.ClosestTouch, traverse))
+                    continue;
+                best = d;
+                bestDistSq = distSq;
+            }
+            return best;
         }
 
         /// <summary>派装填作业：targetA=药品，targetB=炮台；count=该药品剩余可装额度。</summary>
@@ -367,7 +395,7 @@ namespace MyModeTest
             Thing drug = FindLoadableDrug(pawn, drugDef);
             if (drug == null)
             {
-                Messages.Message("没有可取得的" + drugDef.label + "（不可达、被禁止或已被预定）",
+                Messages.Message("没有可取得的" + drugDef.label + "（不在储物区、不可达、被禁止或已被预定）",
                     parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
@@ -687,7 +715,8 @@ namespace MyModeTest
             return pawn.CanReserve(b, 1, -1, null, forced);
         }
 
-        /// <summary>为药仓未达上限的药品找最近的可用堆叠派活；找不到返回 null（与原版加油作业同一模式）。</summary>
+        /// <summary>为药仓未达上限的药品找最近的可用堆叠派活；找不到返回 null（与原版加油作业同一模式）。
+        /// 性能：不逐 def 做全图 BFS，改为逐 def 线性扫描实际堆叠，全局取距离最近的一件。</summary>
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             CompMedicalTurret comp = ((ThingWithComps)t).GetComp<CompMedicalTurret>();
@@ -697,11 +726,7 @@ namespace MyModeTest
             {
                 if (comp.RoomFor(def) <= 0)
                     continue;
-                if (t.Map.listerThings.ThingsOfDef(def).Count == 0)
-                    continue;
-                Thing drug = GenClosest.ClosestThingReachable(pawn.Position, t.Map, ThingRequest.ForDef(def),
-                    PathEndMode.ClosestTouch, TraverseParms.For(pawn), 9999f,
-                    d => !d.IsForbidden(pawn) && pawn.CanReserve(d, 1, -1, null, false));
+                Thing drug = CompMedicalTurret.FindNearestUsableDrug(t.Map, pawn.Position, pawn, def);
                 if (drug == null)
                     continue;
                 int distSq = (drug.Position - pawn.Position).LengthHorizontalSquared;
