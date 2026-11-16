@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ 小型治疗炮塔（医疗炮台，已获「超级医疗科技」授权移植） ============
+       底座/建造/机制套用原版「小型机枪塔」（Turret_MiniTurret）：
+         - 底座贴图 TurretMini_Base（3×3）、可压缩搬运（MinifiedThing）
+         - 金属材质 30 + 钢 20 + 高级零部件 1 + 零部件 2、WorkToBuild 1800、HP 100、建造等级 5
+         - Security 建造菜单、耗电 100W、可手动开关、会故障、会被 EMP 击晕
+       行为在 Source/MyModeTest/Medical.cs（Building_MMTHealTurret）：不继承 Building_TurretGun，
+       自己 tick：待机扫视（照抄原版 TurretTop 参数，全程无声）→ 索敌 → 转向 → 直接生成弹体开火。
+       命中：包扎一个流血伤口（质量 20%~50% 随机）+ 施加/刷新「纳米医疗机器人生效」（0.5 小时）。
+       与小型机枪塔的故意差异：
+         1) 不带 CompProperties_Explosive（被打爆不该炸伤旁边的病人）；
+         2) 弹药是医疗软子弹（借 CompProperties_Refuelable 的条和 gizmo 显示）：
+            容量 8、开局满、不靠搬运、通电每 3 小时自动 +1 发、每枪消耗 1 发。 -->
+
+  <!-- 弹体命中用的 DamageDef：全部伤害系数为 0。
+       C# 的 Impact 根本不调 base，它只是让 Projectile 的配置字段合法；
+       万一有别的代码路径真去 ApplyDamage，也是零伤害。 -->
+  <DamageDef>
+    <defName>MMT_HealBoltImpact</defName>
+    <label>医疗软弹命中</label>
+    <defaultDamage>0</defaultDamage>
+    <buildingDamageFactor>0</buildingDamageFactor>
+    <plantDamageFactor>0</plantDamageFactor>
+    <harmAllLayersUntilOutside>false</harmAllLayersUntilOutside>
+    <canUseDeflectMetalEffect>false</canUseDeflectMetalEffect>
+  </DamageDef>
+
+  <!-- ============ 弹体：绿色的医疗软子弹 ============ -->
+  <ThingDef ParentName="BaseBullet">
+    <defName>MMT_HealBolt</defName>
+    <label>医疗软子弹</label>
+    <description>医疗炮塔发射的软性弹丸：内部封着纳米医疗机器人，命中后只释放药剂、不造成伤害。</description>
+    <thingClass>MyModeTest.Projectile_MMTHealBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/MMT_HealBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <projectile>
+      <damageDef>MMT_HealBoltImpact</damageDef>
+      <speed>45</speed>
+      <stoppingPower>0</stoppingPower>
+    </projectile>
+  </ThingDef>
+
+  <!-- ============ 塔顶武器（只用于塔顶贴图与 verb；本身不会作为物品出现） ============ -->
+  <ThingDef ParentName="BaseWeaponTurret">
+    <defName>MMT_HealTurret_Gun</defName>
+    <label>医疗炮塔投射器</label>
+    <description>集成在小型治疗炮塔上的医疗软子弹投射器。</description>
+    <graphicData>
+      <texPath>Things/Building/Security/MMT_MedTurret_Top</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <!-- 贴图本身不动（128×128，内容约 57×23）；用 drawSize 把它放大到"炮身约 1 格"：
+           128 / 57 ≈ 2.25 → 内容宽度正好占满 1 格。想更大/更小只改这个数字。 -->
+      <drawSize>(2.25,2.25)</drawSize>
+    </graphicData>
+    <statBases>
+      <!-- 命中率：套用原版小型机枪塔的精度（0.77 / 0.70 / 0.45 / 0.24），
+           代码里再乘建筑的炮塔精度 0.96。射击距离分档同原版：0~3 / 3~12 / 12~25 / 25+。 -->
+      <AccuracyTouch>0.77</AccuracyTouch>
+      <AccuracyShort>0.70</AccuracyShort>
+      <AccuracyMedium>0.45</AccuracyMedium>
+      <AccuracyLong>0.24</AccuracyLong>
+      <RangedWeapon_Cooldown>4</RangedWeapon_Cooldown>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <defaultProjectile>MMT_HealBolt</defaultProjectile>
+        <warmupTime>0</warmupTime>
+        <range>18</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>0</ticksBetweenBurstShots>
+        <muzzleFlashScale>4</muzzleFlashScale>
+        <!-- 开火音效：Sounds/MMT_HealTurret/click_soft.wav（44.1kHz 单声道 116ms），
+             只在真的开火时播，瞄准/待机没有声音。 -->
+        <soundCast>MMT_HealTurret_ClickSoft</soundCast>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- ============ 建筑本体（小型机枪塔的克隆，只换 thingClass / 武器 / 冷却） ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_HealTurret</defName>
+    <label>小型治疗炮塔</label>
+    <description>用一台小型机枪塔改造的医疗型阵地支援单位：内置微型纳米医疗机器人自动工厂，缓慢生产并自动装填医疗软子弹。\n\n该炮塔的敌我识别程序经过反向编程，只能锁定友方。它不发射普通子弹，所以命中后不会造成任何伤害——每命中一次都可以包扎一处流血伤口，并加快身体自身的愈合。无法锁定机械族与敌人，也无法治疗任何疾病、感染与失血状态。\n\n通电时每三小时自动生产 1 发。</description>
+    <thingClass>MyModeTest.Building_MMTHealTurret</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawHighlight>true</drawHighlight>
+    <drawHighlightOnlyForHostile>true</drawHighlightOnlyForHostile>
+    <graphicData>
+      <texPath>Things/Building/Security/TurretMini_Base</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+      <shadowData>
+        <volume>(0.27,0.25,0.27)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+    </graphicData>
+    <uiIconPath>Things/Building/Security/MMT_MedTurret_Building</uiIconPath>
+    <uiIconScale>1.0</uiIconScale>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <altitudeLayer>Building</altitudeLayer>
+    <stealable>false</stealable>
+    <rotatable>false</rotatable>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <WorkToBuild>1800</WorkToBuild>
+      <Mass>8</Mass>
+      <Beauty>-20</Beauty>
+      <ShootingAccuracyTurret>0.96</ShootingAccuracyTurret>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Stunnable">
+        <affectedDamageDefs>
+          <li>Stun</li>
+          <li>EMP</li>
+        </affectedDamageDefs>
+      </li>
+      <!-- 弹药：套用原版防卫武器那套「耐久度」显示（同一个 comp、同一个条）。
+           容量 8、开局满；不靠搬运（代码里 allowAutoRefuel=false），通电时每 7500 tick（3 小时）自动 +1 发；
+           每开一枪消耗 1 发。fuelFilter 只是给 comp 一个合法配置，实际永远不会派搬运活。
+           炮塔身上的燃料覆盖层图标已由 Medical.cs 的 CompRefuelable.PostDraw 补丁关掉。 -->
+      <li Class="CompProperties_Refuelable">
+        <fuelLabel>MMT.HealTurretAmmo</fuelLabel>
+        <fuelGizmoLabel>MMT.HealTurretAmmoGizmo</fuelGizmoLabel>
+        <fuelCapacity>8</fuelCapacity>
+        <initialFuelPercent>1</initialFuelPercent>
+        <autoRefuelPercent>0</autoRefuelPercent>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
+        <drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
+        <fuelFilter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </fuelFilter>
+      </li>
+    </comps>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <hasTooltip>true</hasTooltip>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <costStuffCount>30</costStuffCount>
+    <costList>
+      <Steel>20</Steel>
+      <ComponentSpacer>1</ComponentSpacer>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Security</designationCategory>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <building>
+      <combatPower>45</combatPower>
+      <ai_combatDangerous>true</ai_combatDangerous>
+      <!-- 武器 def 只作为数据源：塔顶贴图 / 射程 18 / 精度 / 开火音效，由 C# 直接读取 -->
+    </building>
+    <placeWorkers>
+      <li>MyModeTest.PlaceWorker_MMTHealTurretRange</li>
+    </placeWorkers>
+    <designationHotKey>Misc2</designationHotKey>
+    <researchPrerequisites>
+      <li>MMT_HealTurretResearch</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

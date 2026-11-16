@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 453 |
-| 与 HSK 数值一致 | 135 |
+| MMT 配方 | 432 |
+| 与 HSK 数值一致 | 122 |
 | 与 HSK 有数值差异 | 57 |
 | HSK 有对应资源但无对应配方 | 9 |
-| MMT 新增（HSK 无对应资源） | 252 |
+| MMT 新增（HSK 无对应资源） | 244 |
 
 ### 1.1 按家族统计
 
@@ -55,8 +55,8 @@
 | TeleportModules（TeleportModules） | 2 | 0 | 0 | 0 | 2 |
 | 纺织（Textiles） | 13 | 12 | 0 | 0 | 1 |
 | 顶级材料（TopMaterials） | 11 | 7 | 0 | 4 | 0 |
-| 炮塔弹药（TurretAmmo） | 12 | 0 | 0 | 0 | 12 |
-| 炮塔箱（TurretCrates） | 17 | 17 | 0 | 0 | 0 |
+| 炮塔弹药（TurretAmmo） | 4 | 0 | 0 | 0 | 4 |
+| 炮塔箱（TurretCrates） | 4 | 4 | 0 | 0 | 0 |
 | 武器部件（WeaponParts） | 14 | 14 | 0 | 0 | 0 |
 | 古代武器（Weapons_Archaic） | 13 | 0 | 0 | 0 | 13 |
 | 常规武器（Weapons_Conventional） | 58 | 0 | 0 | 0 | 58 |
@@ -1899,34 +1899,9 @@
 
 ### 3.35 炮塔弹药（TurretAmmo）
 
-#### 制作120mm 炮弹（破甲）x1（`MMT_MakeAmmo_120mmCannonShell_HEAT`）
-
-- **MMT**：钢(Steel)×90 + 工业零件(ComponentIndustrial)×2 + Chemfuel×7 -> 120mm 炮弹（破甲）×2 @ — ｜ 工作量=13000 ｜ 技能:Crafting≥4
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作130mm 制导火箭弹x1（`MMT_MakeAmmo_130mmRocketMissile`）
-
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×42 + [MMT_HCMBar]×8 + Chemfuel×32 + 凝固汽油×5 + 集成电路×1 -> 130mm 制导火箭弹（高爆弹）×1 @ — ｜ 工作量=2000
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作155mm 炮弹（高爆）x1（`MMT_MakeAmmo_155mmHowitzerShell_HE`）
-
-- **MMT**：钢(Steel)×94 + 工业零件(ComponentIndustrial)×2 + Chemfuel×17 -> 155mm 炮弹（高爆弹）×1 @ — ｜ 工作量=17400 ｜ 技能:Crafting≥4
-- **HSK**：无对应资源（MMT 新增）
-
 #### 制作20x102mm  弹药（全金属被甲弹）x40（`MMT_MakeAmmo_20x102mm_FMJ`）
 
 - **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×50 + [MMT_HCMBar]×15 + 火药×9 -> 20x102mm 弹药（全金属被甲弹）×40 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥10
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作30x173mm 弹药（全金属被甲弹）x30（`MMT_MakeAmmo_30x173mm_FMJ`）
-
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×60 + [MMT_HCMBar]×16 + 火药×8 -> 30x173mm 弹药（全金属被甲弹）×30 @ — ｜ 工作量=3000 ｜ 技能:Crafting≥11
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作30x29mm 榴弹（高爆）x20（`MMT_MakeAmmo_30x29mmGrenade_HE`）
-
-- **MMT**：钢(Steel)×74 + Chemfuel×8 + 工业零件(ComponentIndustrial)×2 -> 30x29mm 榴弹（高爆弹）×100 @ — ｜ 工作量=11800 ｜ 技能:Crafting≥4
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作.50  机枪弹（全金属被甲弹）x60（`MMT_MakeAmmo_50BMG_FMJ`）
@@ -1939,69 +1914,12 @@
 - **MMT**：钢(Steel)×26 + 火药×13 -> 7.62x51mm 北约标准弹（全金属被甲弹）×500 @ — ｜ 工作量=2600
 - **HSK**：无对应资源（MMT 新增）
 
-#### 制作弩炮箭x10（`MMT_MakeAmmo_BalistaBolt`）
-
-- **MMT**：[MMT_Woody]×2 + [MMT_MetallicBar]×5 -> 弩炮箭×10 @ — ｜ 工作量=1500
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作石球x5（`MMT_MakeAmmo_StoneBall`）
-
-- **MMT**：[StoneChunks]×1 -> 石球×5 @ — ｜ 工作量=1500
-- **HSK**：无对应资源（MMT 新增）
-
-#### make SPG-9 (FRAG) rockets x5（`MMT_MakeAmmo_SPG9Rocket_Frag`）
-
-- **MMT**：钢(Steel)×66 + Chemfuel×6 + 工业零件(ComponentIndustrial)×4 -> SPG-9 Rocket (HE)×5 @ — ｜ 工作量=11400 ｜ 技能:Crafting≥4
-- **HSK**：无对应资源（MMT 新增）
-
 #### 制作14.5x114mm 机枪弹（全金属被甲弹）x100（`MMT_MakeAmmo_145x114mm_FMJ`）
 
 - **MMT**：钢(Steel)×40 + 火药×6 -> 14.5x114mm 机枪弹（全金属被甲弹）×100 @ — ｜ 工作量=4000 ｜ 技能:Crafting≥5
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.36 炮塔箱（TurretCrates）
-
-#### 制作AGS-30组件箱（`MMT_BuildAGCturret_Crate`）
-
-- **MMT**：武器部件×12 + 火炮武器部件×1 + [MMT_MetallicBar]×20 + 合成橡胶×10 -> AGS-30组件箱×1 @ — ｜ 工作量=15500 ｜ 研究:发射器 I(MMT_GrenadeLaunchers)，技能:Crafting≥8
-- **HSK** `BuildAGCturret_Crate`：武器部件(Weapon_Parts)×12 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×20 + 合成橡胶(Rubber)×10 -> AGS-30组件箱(AGCturret_Crate)×1 @ HeavyArmsBench ｜ 工作量=15500 ｜ 研究:Grenade_launchers_C2，技能:Crafting≥8
-- **对比**：数值一致
-
-#### 制作GAU-8复仇者火炮组件箱（`MMT_BuildAvenger_Crate`）
-
-- **MMT**：武器部件×22 + 火炮武器部件×1 + [MMT_MetallicBar]×60 + 合成橡胶×35 -> GAU-8复仇者火炮组件箱×1 @ — ｜ 工作量=18500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
-- **HSK** `BuildAvenger_Crate`：武器部件(Weapon_Parts)×22 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×35 -> GAU-8复仇者火炮组件箱(Avenger_Crate)×1 @ HeavyArmsBench ｜ 工作量=18500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
-- **对比**：数值一致
-
-#### 制作弩炮组件箱（`MMT_BuildBalista_Crate`）
-
-- **MMT**：[MMT_Woody]×90 + [MMT_MetallicBar]×30 -> 弩炮组件箱×1 @ — ｜ 工作量=4500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥3
-- **HSK** `BuildBalista_Crate`：[Wooden]×90 + [Metallic]×30 -> 弩炮组件箱(Balista_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=4500 ｜ 研究:Ballista_B1，技能:Crafting≥3
-- **对比**：数值一致
-
-#### 制作120mm坦克炮组件箱（`MMT_BuildCannonTurret_Crate`）
-
-- **MMT**：武器部件×14 + 火炮武器部件×2 + [MMT_MetallicBar]×55 + 合成橡胶×25 -> 120mm坦克炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥14
-- **HSK** `BuildCannonTurret_Crate`：武器部件(Weapon_Parts)×14 + 火炮武器部件(Cannon_Component)×2 + [Metallic]×55 + 合成橡胶(Rubber)×25 -> 120mm坦克炮组件箱(CannonTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Artillery_C2，技能:Crafting≥14
-- **对比**：数值一致
-
-#### 制作投石机组件箱（`MMT_BuildCatapult_Crate`）
-
-- **MMT**：[MMT_Woody]×160 + [MMT_MetallicBar]×60 -> 投石机组件箱×1 @ — ｜ 工作量=10500 ｜ 研究:攻城武器(MMT_SiegeWeapons)，技能:Crafting≥5
-- **HSK** `BuildCatapult_Crate`：[Wooden]×160 + [Metallic]×60 -> 投石机组件箱(Catapult_Crate)×1 @ CraftingSpot, HeavyArmsBench ｜ 工作量=10500 ｜ 研究:Ballista_B1，技能:Crafting≥5
-- **对比**：数值一致
-
-#### 制作155mm 榴弹炮组件箱（`MMT_BuildHowitzerTurret_Crate`）
-
-- **MMT**：武器部件×18 + 火炮武器部件×2 + [MMT_MetallicBar]×70 + 合成橡胶×35 -> 155mm榴弹炮组件箱×1 @ — ｜ 工作量=20500 ｜ 研究:火炮 II(MMT_Artillery2)，技能:Crafting≥15
-- **HSK** `BuildHowitzerTurret_Crate`：武器部件(Weapon_Parts)×18 + 火炮武器部件(Cannon_Component)×2 + [Metallic]×70 + 合成橡胶(Rubber)×35 -> 155mm榴弹炮组件箱(HowitzerTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=20500 ｜ 研究:Artillery_C2，技能:Crafting≥15
-- **对比**：数值一致
-
-#### 制作FGM-148“标枪”反坦克导弹组件箱（`MMT_BuildLightMissileSystem_Crate`）
-
-- **MMT**：武器部件×16 + 发射器部件×1 + [MMT_MetallicBar]×35 + 合成橡胶×15 -> FGM-148“标枪”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 II(MMT_Rocketry2)，技能:Crafting≥13
-- **HSK** `BuildLightMissileSystem_Crate`：武器部件(Weapon_Parts)×16 + 发射器部件(Launcher_Component)×1 + [Metallic]×35 + 合成橡胶(Rubber)×15 -> FGM-148“标枪”反坦克导弹组件箱(LightMissileSystem_Crate)×1 @ HeavyArmsBench ｜ 工作量=16500 ｜ 研究:Rockets_C2，技能:Crafting≥13
-- **对比**：数值一致
 
 #### 制作M2 .50勃朗宁机枪组件箱（`MMT_BuildMGTurret_Crate`）
 
@@ -2011,14 +1929,8 @@
 
 #### 制作14.5mm KPV重机枪组件箱（`MMT_BuildKPVTurret_Crate`）
 
-- **MMT**：武器部件×17 + 重型武器部件×1 + [MMT_MetallicBar]×50 -> 14.5mm KPV重机枪组件箱×1 @ — ｜ 工作量=11500 ｜ 研究:重机枪塔(MMT_HeavyMachineGunTurret)，技能:Crafting≥7
+- **MMT**：武器部件×17 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×50 -> 14.5mm KPV重机枪组件箱×1 @ — ｜ 工作量=11500 ｜ 研究:重机枪塔(MMT_HeavyMachineGunTurret)，技能:Crafting≥7
 - **HSK** `BuildKPV_Crate`：武器部件(Weapon_Parts)×17 + 重型武器部件(Heavy_Component)×1 + [Metallic]×50 -> 14.5mm KPV重机枪组件箱(KPV_Crate)×1 @ HeavyArmsBench ｜ 工作量=11500 ｜ 研究:Heavy_turrets_C2，技能:Crafting≥7
-- **对比**：数值一致
-
-#### 制作130mm中型导弹系统组件箱（`MMT_BuildMediumMissileSystem_Crate`）
-
-- **MMT**：武器部件×10 + 发射器部件×2 + [MMT_MetallicBar]×35 -> 130mm中型导弹系统组件箱×1 @ — ｜ 工作量=18500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥14
-- **HSK** `BuildMediumMissileSystem_Crate`：武器部件(Weapon_Parts)×10 + 发射器部件(Launcher_Component)×2 + [Metallic]×35 -> 130mm中型导弹系统组件箱(MediumMissileSystem_Crate)×1 @ HeavyArmsBench ｜ 工作量=18500 ｜ 研究:Rockets_D1，技能:Crafting≥14
 - **对比**：数值一致
 
 #### 制作7.62x51mm M134速射机枪组件箱（`MMT_BuildMinigunTurret_Crate`）
@@ -2027,40 +1939,10 @@
 - **HSK** `BuildMinigunTurret_Crate`：武器部件(Weapon_Parts)×15 + 重型武器部件(Heavy_Component)×1 + [Metallic]×45 -> M134速射机枪组件箱(MinigunTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=10500 ｜ 研究:Heavy_turrets_C2，技能:Crafting≥8
 - **对比**：数值一致
 
-#### 制作30mm哨戒炮塔组件箱（`MMT_BuildNavalGunTurret_Crate`）
-
-- **MMT**：武器部件×18 + 火炮武器部件×1 + [MMT_MetallicBar]×35 + 集成电路×5 -> 35mm哨戒炮塔组件箱×1 @ — ｜ 工作量=14500 ｜ 研究:自动炮塔 III(MMT_Autoturrets3)，技能:Crafting≥13
-- **HSK** `BuildNavalGunTurret_Crate`：武器部件(Weapon_Parts)×18 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×35 + 集成电路(Electronics)×5 -> 35mm哨戒炮塔组件箱(NavalGunTurret_Crate)×1 @ HeavyArmsBench ｜ 工作量=14500 ｜ 研究:Autoturrets_D3，技能:Crafting≥13
-- **对比**：数值一致
-
 #### 制作20mm厄利孔机炮组件箱（`MMT_BuildOerlikonautocannon_Crate`）
 
 - **MMT**：武器部件×15 + 火炮武器部件×1 + [MMT_MetallicBar]×45 + 合成橡胶×15 -> 20x102mm厄利孔机炮组件箱×1 @ — ｜ 工作量=13500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥12
 - **HSK** `BuildOerlikonautocannon_Crate`：武器部件(Weapon_Parts)×15 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×45 + 合成橡胶(Rubber)×15 -> 20x102mm厄利孔机炮组件箱(Oerlikonautocannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=13500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥12
-- **对比**：数值一致
-
-#### 制作130mm重型导弹系统组件箱（`MMT_BuildRocketLauncher_Crate`）
-
-- **MMT**：武器部件×10 + 发射器部件×3 + [MMT_MetallicBar]×35 -> 130mm重型导弹系统组件箱×1 @ — ｜ 工作量=19500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥15
-- **HSK** `BuildRocketLauncher_Crate`：武器部件(Weapon_Parts)×10 + 发射器部件(Launcher_Component)×3 + [Metallic]×35 -> 130mm重型导弹系统组件箱(RocketLauncher_Crate)×1 @ HeavyArmsBench ｜ 工作量=19500 ｜ 研究:Rockets_D2，技能:Crafting≥15
-- **对比**：数值一致
-
-#### 制作反坦克哨戒火箭发射系统组件箱（`MMT_BuildSentryRocketLauncher_Crate`）
-
-- **MMT**：武器部件×15 + 发射器部件×1 + [MMT_MetallicBar]×35 + 集成电路×5 -> 自动反坦克火箭发射系统组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:自动炮塔 III(MMT_Autoturrets3)，技能:Crafting≥15
-- **HSK** `BuildSentryRocketLauncher_Crate`：武器部件(Weapon_Parts)×15 + 发射器部件(Launcher_Component)×1 + [Metallic]×35 + 集成电路(Electronics)×5 -> 自动反坦克火箭发射系统组件箱(SentryRocketLauncher_Crate)×1 @ HeavyArmsBench ｜ 工作量=16500 ｜ 研究:Autoturrets_D3，技能:Crafting≥15
-- **对比**：数值一致
-
-#### 制作BGM-71“陶式”反坦克导弹组件箱（`MMT_BuildTOW_Crate`）
-
-- **MMT**：武器部件×15 + 发射器部件×1 + [MMT_MetallicBar]×30 + 合成橡胶×15 -> BGM-71“陶式”反坦克导弹组件箱×1 @ — ｜ 工作量=16500 ｜ 研究:火箭弹 III(MMT_Rocketry3)，技能:Crafting≥13
-- **HSK** `BuildTOW_Crate`：武器部件(Weapon_Parts)×15 + 发射器部件(Launcher_Component)×1 + [Metallic]×30 + 合成橡胶(Rubber)×15 -> BGM-71“陶式”反坦克导弹组件箱(TOW_Crate)×1 @ HeavyArmsBench ｜ 工作量=16500 ｜ 研究:Rockets_D1，技能:Crafting≥13
-- **对比**：数值一致
-
-#### 制作20mm火神炮组件箱（`MMT_BuildVulcanCannon_Crate`）
-
-- **MMT**：武器部件×20 + 火炮武器部件×1 + [MMT_MetallicBar]×60 + 合成橡胶×25 -> 20mm火神炮组件箱×1 @ — ｜ 工作量=17500 ｜ 研究:重型炮塔 III(MMT_HeavyTurrets3)，技能:Crafting≥16
-- **HSK** `BuildVulcanCannon_Crate`：武器部件(Weapon_Parts)×20 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×60 + 合成橡胶(Rubber)×25 -> 20mm火神炮组件箱(VulcanCannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=17500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥16
 - **对比**：数值一致
 
 ### 3.37 武器部件（WeaponParts）
@@ -2718,9 +2600,9 @@
 | 人造器官组装台(`MMT_SyntheticsTable`) | (3,1) | 塑料×65 + 人造纤维×20 + 集成电路×6 + 高级零部件×5 + [金属/木质]×135 | 850W / 5500 | — | — | — | MMT 新增 |
 | 神经机械体工作台(`MMT_UpgradingStation`) | (3,1) | 人造纤维×45 + 微芯片集成电路×5 + 高级零部件×7 + 先进机械组件×10 + [金属/木质]×250 | 1350W / 9000 | cybernetics workbench(`UpgradingStation`) | 人造纤维(SyntheticFibers)×45 + 微芯片集成电路(Microchips)×5 + 高级零部件(ComponentSpacer)×7 + 先进机械组件(AdvMechanism)×10 + [RuggedMetallic]×250 | 1350W / 9000 | 一致 |
 | 充能台(`MMT_ChargingStation`) | (1,1) | 钢(Steel)×60 + 工业零件(ComponentIndustrial)×4 + 电线×10 | 1500W / 3000 | — | — | — | MMT 新增 |
-| 自动采石机(`MMT_AutoChunkDrill`) | (2,2) | 钢(Steel)×150 + 机械组件×4 + 工业零件(ComponentIndustrial)×4 + 电子元件×2 | 800W / 6000 | — | — | — | MMT 新增 |
+| 自动采石机(`MMT_AutoChunkDrill`) | (1,1) | 钢(Steel)×150 + 机械组件×4 + 工业零件(ComponentIndustrial)×4 + 电子元件×2 | 800W / 6000 | — | — | — | MMT 新增 |
 | 手动采石机(`MMT_ChunkDrill`) | (2,2) | 原木(WoodLog)×40 + 钢(Steel)×60 | 2500 | — | — | — | MMT 新增 |
-| 电动采石机(`MMT_ElectricChunkDrill`) | (2,2) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
+| 电动采石机(`MMT_ElectricChunkDrill`) | (1,1) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
 | 手动混凝土搅拌器(`MMT_ConcreteMixer`) | (2,1) | 工业零件(ComponentIndustrial)×5 + [金属]×135 | 1600 | hand concrete mixer(`ConcreteMixer`) | 工业零件(ComponentIndustrial)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×135 | 1600 | HSK 多 机械组件(Mechanism)×5 |
 | 电动混凝土搅拌机(`MMT_EConcreteMixer`) | (2,1) | 合成橡胶×45 + 工业零件(ComponentIndustrial)×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W / 5000 | electric concrete mixer(`EConcreteMixer`) | 合成橡胶(Rubber)×45 + 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×115 | 500W / 5000 | 一致 |
 | 高级药物合成台(`MMT_AdvDrugLab`) | (3,1) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件(ComponentSpacer)×5 + [金属]×100 | 1500W / 6000 | synthetic organ assembler(`TableSynthetics`) | 塑料(Plastic)×65 + 人造纤维(SyntheticFibers)×20 + 集成电路(Electronics)×6 + 高级零部件(ComponentSpacer)×5 + [RuggedMetallic/木质]×135 | 850W / 5500 | 材料量 100 vs 135；塑料 40 vs 65；MMT 多 玻璃块×30；MMT 多 微芯片集成电路×2；高级零部件 6 vs 5；HSK 多 人造纤维(SyntheticFibers)×20；HSK 多 集成电路(Electronics)×6；功耗 1500 vs 850；工作量 6000 vs 5500 |
@@ -2730,8 +2612,12 @@
 | 电动木炭窑(`MMT_ElectricCharcoalKiln`) | (3,3) | 工业零件(ComponentIndustrial)×5 + 电子元件×3 + [石质]×180 | 1500W / 3000 | — | — | — | MMT 新增 |
 | 电动锯木台(`MMT_ElectricSawmill`) | (3,1) | 工业零件(ComponentIndustrial)×10 + 电子元件×5 + [金属]×150 | 600W / 5000 | electric sawmill(`TableSawmillElectric`) | 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×150 | 600W / 5000 | HSK 多 机械组件(Mechanism)×5 |
 | 电子器件工作台(`MMT_HandElectronicsTable`) | (3,3) | 工业零件(ComponentIndustrial)×5 + [金属]×140 | 2200 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | 工业零件(ComponentIndustrial) 5 vs 10；HSK 多 铜(CopperBar)×40；HSK 多 机械组件(Mechanism)×10；功耗 — vs 600；工作量 2200 vs 2750 |
+| 敌意感应开关(`MMT_EnemyDetectorSwitch`) | — | 钢(Steel)×25 + 工业零件(ComponentIndustrial)×1 | 300 | — | — | — | MMT 新增 |
 | 能量聚能发电站(`MMT_EnergyConvergencePlant`) | (3,3) | 钢(Steel)×200 + 碳纤维锭×40 + 金(Gold)×30 + 先进机械组件×4 | -10000W / 10000 | — | — | — | MMT 新增 |
 | 点火充能装置(`MMT_IgnitionCharger`) | (1,1) | 钢(Steel)×50 + 金(Gold)×10 + 工业零件(ComponentIndustrial)×2 | 50W / 2000 | — | — | — | MMT 新增 |
+| 医疗软子弹(`MMT_HealBolt`) | — | — | — | — | — | — | MMT 新增 |
+| 小型治疗炮塔(`MMT_HealTurret`) | — | 钢(Steel)×20 + 太空零件(ComponentSpacer)×1 + 工业零件(ComponentIndustrial)×2 + [金属]×30 | 100W / 1800 | — | — | — | MMT 新增 |
+| 医疗炮塔投射器(`MMT_HealTurret_Gun`) | — | — | — | — | — | — | MMT 新增 |
 | 玻璃制作台(`MMT_GlassworksTable`) | (3,1) | 工业零件(ComponentIndustrial)×10 + [金属]×130 | 400W / 1600 | glassworks table(`GlassworkTable`) | 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×8 + [RuggedMetallic]×130 | 400W / 1600 | HSK 多 机械组件(Mechanism)×8 |
 | 电动研磨机(`MMT_ElectricGrinder`) | (1,1) | 机械组件×4 + 工业零件(ComponentIndustrial)×2 + [金属]×50 | 300W / 1500 | — | — | — | MMT 新增 |
 | 手动研磨机(`MMT_HandGrinder`) | (1,1) | [石质]×50 | 800 | — | — | — | MMT 新增 |
@@ -2767,5 +2653,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 34（共 59）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 38（共 63）。
 

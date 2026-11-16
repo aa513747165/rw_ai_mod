@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ 纳米医疗机器人生效：1 小时，伤口愈合 ×5 ============
+       战地医疗背包与小型治疗炮塔共用（炮塔命中时只刷新为 0.5 小时，见 Medical.cs）。 -->
+  <HediffDef>
+    <defName>MMT_NaniteHealing</defName>
+    <label>纳米医疗机器人生效中</label>
+    <description>医疗气雾中的纳米医疗机器人正在体内工作，伤口愈合速度大幅提高。</description>
+    <hediffClass>MyModeTest.Hediff_MMTNaniteHealing</hediffClass>
+    <isBad>false</isBad>
+    <defaultLabelColor>(0.3, 0.7, 0.4)</defaultLabelColor>
+    <maxSeverity>1</maxSeverity>
+    <initialSeverity>1</initialSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2500</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <InjuryHealingFactor>5</InjuryHealingFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

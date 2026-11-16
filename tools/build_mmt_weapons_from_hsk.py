@@ -499,7 +499,8 @@ def build_core(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str, s
 
 TECH_LEVEL_ORDER = ["Neolithic", "Medieval", "Industrial", "Spacer", "Ultra", "Archotech"]
 
-# 压缩研究树：23 个新节点（第 24 个 MMT_Rocketry1 已存在于 MMT_Research_TextilesWeapons.xml）
+# 压缩研究树：18 个新节点（MMT_Rocketry1 已存在于 MMT_Research_TextilesWeapons.xml；
+# 防卫炮塔只保留 M2/KPV/M134/厄利孔后，攻城/火炮II/自动炮塔III/火箭II/火箭III 不再生成）
 NEW_RESEARCH_NODES = [
     "MMT_MeleeAdvanced", "MMT_MeleeUltra",
     "MMT_BowsBasic",
@@ -508,10 +509,9 @@ NEW_RESEARCH_NODES = [
     "MMT_GrenadeLaunchers", "MMT_SnipersAdvanced",
     "MMT_DirectedEnergyWeapons1", "MMT_DirectedEnergyWeapons2",
     "MMT_ArchotechWeapons",
-    "MMT_SiegeWeapons", "MMT_Turrets1",
+    "MMT_Turrets1",
     "MMT_HeavyTurrets2", "MMT_HeavyTurrets3",
-    "MMT_Artillery2", "MMT_Autoturrets2", "MMT_Autoturrets3", "MMT_Autoturrets4",
-    "MMT_Rocketry2", "MMT_Rocketry3",
+    "MMT_Autoturrets2", "MMT_Autoturrets4",
 ]
 
 # HSK 非武器前置研究 -> 现有 MMT 基础设施研究
@@ -1584,13 +1584,25 @@ def build_turrets(index: SourceIndex, mapping: dict, only: set[str]) -> dict[str
     }
 
 
+# MMT 已移除的 13 座防卫炮塔（HSK 源 defName）：只保留 M2/KPV/M134/厄利孔
+EXCLUDED_TURRET_SOURCES = {
+    "MedievalTimes_Ballista", "Medieval_Catapult", "NavalGunTurretGun",
+    "Turret_SentryRocketLauncher", "AvengerTurretGun", "Turret_VulcanCannon",
+    "Turret_AGLGrenadeLauncher", "Turret_Cannon", "HowitzerTurretGun",
+    "Turret_TOWLauncher", "LightMissileSystem", "MediumMissileSystem", "RLGun",
+}
+
+
 def _turret_building_names(index: SourceIndex, mapping: dict) -> set[str]:
-    """Buildings_Turrets.xml 中的 16 个可建造炮塔（排除 MinifiedTurret_*）。"""
+    """Buildings_Turrets.xml 中的可建造炮塔（排除 MinifiedTurret_* 与 MMT 已移除的 13 座）。
+
+    MMT 防卫炮塔只保留 M2/KPV/M134/厄利孔（KPV 为手工新增），其余 HSK 炮塔不生成。
+    """
     path = ROOT / mapping["source_root"] / "Defs/ThingDefs_Buildings/Buildings_Turrets.xml"
     names: set[str] = set()
     for node in ET.parse(path).getroot().iter("ThingDef"):
         name = node.findtext("defName")
-        if name and is_concrete(node) and not name.startswith("MinifiedTurret_"):
+        if name and is_concrete(node) and not name.startswith("MinifiedTurret_") and name not in EXCLUDED_TURRET_SOURCES:
             names.add(name)
     return names
 

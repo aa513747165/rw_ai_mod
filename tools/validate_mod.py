@@ -1818,8 +1818,8 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 105  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）
-INFRA_WORKTABLE_TOTAL = 58  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1；临时护盾投影器非建造建筑不计入
+INFRA_RESEARCH_TOTAL = 102  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）；防卫炮塔精简后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III 5 项
+INFRA_WORKTABLE_TOTAL = 60  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -4760,11 +4760,18 @@ def validate_infrastructure() -> None:
             if node.findtext("defName") == "MMT_ShieldProjector":
                 # 临时护盾投影器由发生器生成、非玩家建造，无 designationCategory
                 continue
-            worktable_count += 1
-            assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{rel} {node.findtext('defName')} designationCategory")
+            if node.findtext("defName") == "MMT_EnemyDetectorSwitch":
+                # 敌意感应开关照抄原版电力开关，沿用原版 Power 分类
+                assert_equal(child_text(node, "designationCategory"), "Power", f"{rel} MMT_EnemyDetectorSwitch designationCategory")
+                worktable_count += 1
+                continue
             has_building = node.find("building") is not None or mmt_base_has_building.get(node.get("ParentName"), False)
             if not has_building:
-                fail(f"{rel} {node.findtext('defName')} 缺 <building>(1.7 BuildingBase 不再提供)")
+                # 非建筑 Def（如链文件内联的投射物/炮台枪）由各自链套件校验，不计入工作台
+                continue
+            worktable_count += 1
+            category = child_text(node, "designationCategory")
+            assert category in ("MMT_Production", "Security"), f"{rel} {node.findtext('defName')} designationCategory 应为 MMT_Production 或 Security，实际 {category}"
     assert_equal(worktable_count, INFRA_WORKTABLE_TOTAL, "工作台建筑总数")
 
     categories = def_map(parse_xml(INFRA_CATEGORIES_XML))
@@ -5571,16 +5578,8 @@ WEAPON_BATCH_FILES = {
 
 
 TURRET_AMMO_PROJECTILES = {
-    "MMT_Ammo_BalistaBolt": "MMT_Projectile_BalistaBolt",
-    "MMT_Ammo_StoneBall": "MMT_Stone_Ball",
-    "MMT_Ammo_30x29mmGrenade_HE": "MMT_Bullet_30x29mmGrenade_HE",
-    "MMT_Ammo_120mmCannonShell_HEAT": "MMT_Bullet_120mmCannonShell_HEAT",
-    "MMT_Ammo_155mmHowitzerShell_HE": "MMT_Bullet_155mmHowitzerShell_HE",
-    "MMT_Ammo_SPG9Rocket_Frag": "MMT_Bullet_SPG9Rocket_Frag",
-    "MMT_Ammo_130mmRocketMissile": "MMT_Bullet_130mmRocketMissile",
     "MMT_Ammo_50BMG_FMJ": "MMT_Bullet_50BMG_FMJ",
     "MMT_Ammo_762x51mmNATO_FMJ": "MMT_Bullet_762x51mmNATO_FMJ",
-    "MMT_Ammo_30x173mm_FMJ": "MMT_Bullet_30x173mm_FMJ",
     "MMT_Ammo_20x102mm_FMJ": "MMT_Bullet_20x102mm_FMJ",
     "MMT_Ammo_145x114mm_FMJ": "MMT_Bullet_145x114mm_FMJ",
 }
@@ -5761,7 +5760,7 @@ def validate_weapons() -> None:
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_NPC.xml",
     ]
     total_weapons = sum(len(def_map(parse_xml(p))) for p in weapon_files)
-    assert_equal(total_weapons, 132, "武器总目标数（45+32+26+17+12，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml；NPC 批次中误植的 MMT_Surfactant 已移除；含 KPV 炮塔枪）")
+    assert_equal(total_weapons, 119, "武器总目标数（45+32+26+4+12，23 个同名替换孪生移入 patch，内联投射物在 MMT_Projectiles.xml；NPC 批次中误植的 MMT_Surfactant 已移除；炮塔枪只留 M2/KPV/M134/厄利孔 4 挺）")
     generated_text = "\n".join(read_text(p) for p in [
         "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Base.xml",
         "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml",
@@ -5798,14 +5797,14 @@ def validate_weapons_turrets() -> None:
     ammo = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretAmmo.xml"))
     crates = def_map(parse_xml("1.7/Defs/ThingDefs_Items/MMT_Items_TurretCrates.xml"))
     crate_recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_TurretCrates.xml"))
-    assert_equal(len(guns), 17, "炮塔枪数")
+    assert_equal(len(guns), 4, "炮塔枪数（只保留 M2/KPV/M134/厄利孔）")
     concrete_buildings = [b for b in buildings.values() if (b.get("Abstract") or "").lower() != "true"]
     building_total = len(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Turrets.xml").findall("ThingDef"))
-    assert_equal(building_total, 18, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
-    assert_equal(len(concrete_buildings), 17, "可建造炮塔数")
-    assert_equal(len(ammo), 12, "炮塔弹药数")
-    assert_equal(len(crates), 17, "炮塔箱数（9 个无对应建筑的孤儿箱不移植，含 KPV 箱）")
-    assert_equal(len(crate_recipes), 17, "炮塔箱配方数（含 KPV 箱配方）")
+    assert_equal(building_total, 5, "炮塔建筑文件 Def 数（含 MMT_TurretBuildingBase）")
+    assert_equal(len(concrete_buildings), 4, "可建造炮塔数")
+    assert_equal(len(ammo), 4, "炮塔弹药数（随炮塔移除，只留 4 座保留炮塔的弹药）")
+    assert_equal(len(crates), 4, "炮塔箱数")
+    assert_equal(len(crate_recipes), 4, "炮塔箱配方数")
     for ammo_name, projectile_name in TURRET_AMMO_PROJECTILES.items():
         assert_equal(child_text(ammo[ammo_name], "projectileWhenLoaded"), projectile_name, f"{ammo_name} 投射物")
     # 弹药与板条箱必须挂类别，否则不会出现在储存筛选里（无储存选项问题修复）
@@ -5889,7 +5888,7 @@ def validate_weapons_conventional() -> None:
     print("weapons-conventional: OK")
 
 
-WEAPON_RESEARCH_TOTAL = 19  # 已剔除 5 个无解锁内容的研究（弓I/心灵武器/炮塔I/自动炮塔II/自动炮塔IV），含 KPV 重机枪塔
+WEAPON_RESEARCH_TOTAL = 14  # 已剔除无解锁内容的研究；防卫炮塔仅留 M2/KPV/M134/厄利孔后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III
 
 
 def validate_weapons_research() -> None:
@@ -5897,8 +5896,6 @@ def validate_weapons_research() -> None:
     assert_equal(len(research), WEAPON_RESEARCH_TOTAL, "武器研究节点数")
     coords = [(child_text(r, "researchViewX"), child_text(r, "researchViewY")) for r in research.values()]
     assert_equal(len(coords), len(set(coords)), "武器研究坐标重复")
-    assert_equal(child_text(research["MMT_Rocketry2"], "baseCost"), "1300", "火箭 II 成本")
-    assert_equal(li_values(research["MMT_Rocketry2"], "prerequisites"), ["MMT_Rocketry1", "SniperTurret", "MMT_GrenadeLaunchers", "Mortars"], "火箭 II 前置")
     print("weapons-research: OK")
 
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    百合花文化专属议题「同性之爱」：仅一条戒律「受祝福的」，
+    由 MMT_Lily 模因 requireOne 自动带上。戒律本身是文化标记，
+    全部机制（女女恋爱去惩罚 / 亲热怀孕 / 后代必女）在 C# LilyMeme.cs 中按模因生效。
+  -->
+  <IssueDef>
+    <defName>MMT_SameSexLove</defName>
+    <label>同性之爱</label>
+  </IssueDef>
+
+  <PreceptDef>
+    <defName>MMT_SameSexLove_Blessed</defName>
+    <issue>MMT_SameSexLove</issue>
+    <label>受祝福的</label>
+    <description>女性之间的爱情是纯洁而神圣的。百合之花的信徒们相信，两位女性的结合同样蒙受祝福——她们可以自由相爱、缔结婚姻，并在亲热爱抚中孕育后代，而她们的孩子必将是可爱的女儿。</description>
+    <impact>Medium</impact>
+    <associatedMemes>
+      <li>MMT_Lily</li>
+    </associatedMemes>
+  </PreceptDef>
+
+</Defs>

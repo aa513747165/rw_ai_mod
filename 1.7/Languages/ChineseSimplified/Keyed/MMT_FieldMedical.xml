@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- 战地医疗装备链（Source/MyModeTest/Medical.cs 使用） -->
+  <MMT.HoursLeft>{0}时</MMT.HoursLeft>
+  <MMT.HealTurretHitMote>治疗</MMT.HealTurretHitMote>
+  <MMT.HealTurretAmmo>已组装的纳米医疗子弹</MMT.HealTurretAmmo>
+  <MMT.HealTurretAmmoInspect>已组装的纳米医疗子弹：{0}/{1}</MMT.HealTurretAmmoInspect>
+  <MMT.HealTurretRefilling>正在自动补充子弹（{0}）</MMT.HealTurretRefilling>
+  <MMT.HealTurretAmmoGizmo>医疗软子弹</MMT.HealTurretAmmoGizmo>
+
+</LanguageData>

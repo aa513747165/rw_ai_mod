@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ 小型治疗炮塔：开火音效 ============
+       音频：Sounds/MMT_HealTurret/click_soft.wav（44.1kHz / 16bit / 单声道 / 116ms，
+       移植自超级医疗科技）。音量 35、distRange 15~40：近处清晰、远处衰减。 -->
+  <SoundDef>
+    <defName>MMT_HealTurret_ClickSoft</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>MMT_HealTurret/click_soft</clipPath>
+          </li>
+        </grains>
+        <volumeRange>35</volumeRange>
+        <pitchRange>0.97~1.03</pitchRange>
+        <sustainLoop>False</sustainLoop>
+        <distRange>15~40</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- ============ 战地医疗装备链（已获「超级医疗科技」mod 授权移植） ============
+       来源：workshop 3832201245（Super Medical Tech），DR_MedicalBackpack / DR_MedAerosolShell / DR_MedMist。
+       机制与数值完全照搬原作，仅改 defName 前缀、中文写死、贴图路径改 MMT。
+       运行时逻辑见 Source/MyModeTest/Medical.cs。 -->
+
+  <!-- ============ 战地医疗背包 ============
+       Belt 层、穿戴出 Gizmo、充能 1 发、消耗 2 份闪耀世界医药重新装填；
+       投掷医疗气雾胶囊：包扎范围内流血伤口 + 附加纳米医疗机器人 hediff。
+       射程走原版 PackRadius 属性（自带品质系数，随品质变化）。
+       装备增益：治疗质量 +5%、手术成功率 +15%、移速 -0.25。 -->
+  <ThingDef ParentName="ApparelBase">
+    <defName>MMT_MedicalBackpack</defName>
+    <label>战地医疗背包</label>
+    <description>一种实验性战地医疗装备，投放含有纳米医疗机器人的气雾胶囊，治疗范围内伤员。同时，内置精密的医用机械臂，可以辅助治疗和手术。\n\n此装备原本是为太空海军陆战队精锐突击小组设计的，但是由于其过于高昂的生产和使用成本，最终未能广泛列装。\n\n注意：医疗气雾只能快速闭合流血伤口，无法治疗骨折、瘀伤等非开放性创伤。</description>
+    <techLevel>Spacer</techLevel>
+    <graphicData>
+      <texPath>Things/Pawn/Humanlike/Apparel/MMT_Medpack/MMT_Medpack_north</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.98</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <!-- 市场价值 = 原料成本(闪耀医药2×50 + 玻璃钢30×9 + 高级零部件4×200 = 1170) + 50 -->
+      <MarketValue>1220</MarketValue>
+      <WorkToMake>24000</WorkToMake>
+      <PackRadius>12</PackRadius>
+      <Mass>4</Mass>
+      <Flammability>0.4</Flammability>
+      <EquipDelay>2</EquipDelay>
+    </statBases>
+    <equippedStatOffsets>
+      <MedicalTendQuality>0.05</MedicalTendQuality>
+      <MedicalSurgerySuccessChance>0.15</MedicalSurgerySuccessChance>
+      <MoveSpeed>-0.25</MoveSpeed>
+    </equippedStatOffsets>
+    <costList>
+      <MedicineUltratech>2</MedicineUltratech>
+      <Plasteel>30</Plasteel>
+      <ComponentSpacer>4</ComponentSpacer>
+    </costList>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/MMT_Medpack/MMT_Medpack</wornGraphicPath>
+      <wornGraphicData>
+        <renderUtilityAsPack>true</renderUtilityAsPack>
+        <north>
+          <offset>(0,-0.15)</offset>
+        </north>
+        <east>
+          <offset>(-0.35,-0.05)</offset>
+        </east>
+        <west>
+          <offset>(0.35,-0.05)</offset>
+        </west>
+        <male>  <scale>(0.675,0.675)</scale></male>
+        <female><scale>(0.675,0.675)</scale></female>
+        <thin>  <scale>(0.63,0.63)</scale></thin>
+        <hulk>  <scale>(0.81,0.81)</scale></hulk>
+        <fat>   <scale>(0.81,0.81)</scale></fat>
+      </wornGraphicData>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <careIfWornByCorpse>false</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <defaultOutfitTags>
+        <li>Soldier</li>
+      </defaultOutfitTags>
+    </apparel>
+
+    <verbs>
+      <li>
+        <verbClass>MyModeTest.Verb_MMTMedPackLaunch</verbClass>
+        <label>发射医疗气雾</label>
+        <defaultProjectile>MMT_MedAerosolShell</defaultProjectile>
+        <warmupTime>1.0</warmupTime>
+        <range>12</range>
+        <burstShotCount>1</burstShotCount>
+        <onlyManualCast>true</onlyManualCast>
+        <hasStandardCommand>true</hasStandardCommand>
+        <targetable>true</targetable>
+        <targetParams>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+        <soundCast>ThrowGrenade</soundCast>
+        <rangedFireRulepack>Combat_RangedFire_Thrown</rangedFireRulepack>
+        <canGoWild>false</canGoWild>
+      </li>
+    </verbs>
+    <comps>
+      <li Class="CompProperties_ApparelReloadable">
+        <maxCharges>1</maxCharges>
+        <ammoDef>MedicineUltratech</ammoDef>
+        <ammoCountPerCharge>2</ammoCountPerCharge>
+        <baseReloadTicks>60</baseReloadTicks>
+        <soundReload>Standard_Reload</soundReload>
+        <hotKey>Misc4</hotKey>
+        <chargeNoun>充能</chargeNoun>
+        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+      </li>
+    </comps>
+    <recipeMaker>
+      <unfinishedThingDef>UnfinishedPack</unfinishedThingDef>
+      <researchPrerequisite>MMT_FieldMedicalPack</researchPrerequisite>
+      <recipeUsers>
+        <li>FabricationBench</li>
+      </recipeUsers>
+      <useIngredientsForColor>false</useIngredientsForColor>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+      <displayPriority>313</displayPriority>
+    </recipeMaker>
+  </ThingDef>
+
+  <!-- 医疗背包投出的气雾胶囊：explosionRadius 决定落点爆散范围 -->
+  <ThingDef ParentName="BaseGrenadeProjectile">
+    <defName>MMT_MedAerosolShell</defName>
+    <label>医疗气雾胶囊</label>
+    <thingClass>MyModeTest.Projectile_MMTMedBurst</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/MMT_MedAerosolShell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <speed>30</speed>
+      <explosionRadius>2</explosionRadius>
+    </projectile>
+  </ThingDef>
+
+  <!-- ============ 医疗气雾粒子（纯视觉，不参与气体网格） ============
+       复刻原版 Smoke 粒子结构（FleckBase_Thrown），白色柔光贴图 + 深青绿 tint，
+       寿命约 9.5 秒（淡入 0.5s + 持续 6s + 淡出 3s），缓慢膨胀。 -->
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_MedMist</defName>
+    <graphicData>
+      <texPath>Things/MMT_MistCloud</texPath>
+      <renderInstanced>true</renderInstanced>
+      <color>(0, 0.42, 0.42, 0.28)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.5</fadeInTime>
+    <solidTime>6</solidTime>
+    <fadeOutTime>3</fadeOutTime>
+    <growthRate>0.005</growthRate>
+  </FleckDef>
+
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_MedMistShort</defName>
+    <graphicData>
+      <texPath>Things/MMT_MistCloud</texPath>
+      <renderInstanced>true</renderInstanced>
+      <color>(0, 0.42, 0.42, 0.28)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.3</fadeInTime>
+    <solidTime>2.5</solidTime>
+    <fadeOutTime>1.5</fadeOutTime>
+    <growthRate>0.006</growthRate>
+  </FleckDef>
+
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_MedMistMid</defName>
+    <graphicData>
+      <texPath>Things/MMT_MistCloud</texPath>
+      <renderInstanced>true</renderInstanced>
+      <color>(0, 0.42, 0.42, 0.28)</color>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.4</fadeInTime>
+    <solidTime>4.5</solidTime>
+    <fadeOutTime>2.5</fadeOutTime>
+    <growthRate>0.005</growthRate>
+  </FleckDef>
+
+</Defs>

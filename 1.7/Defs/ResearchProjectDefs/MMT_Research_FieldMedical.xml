@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 战地医疗装备链研究（移植自超级医疗科技，坐标由 tools/apply_research_layout.py 的 LAYOUT 统一维护）：
+       战地医疗装备（前置 医疗物资 VI + 原版 烟雾弹背包）→ 治疗炮塔（再加原版 炮塔）。
+       都必须在高级研究台上做。 -->
+
+  <ResearchProjectDef>
+    <defName>MMT_FieldMedicalPack</defName>
+    <label>战地医疗装备</label>
+    <description>逆向复原一种古代的实验性战地医疗装备。\n\n解锁在精密装配台制作战地医疗背包。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>SmokepopBelt</li>
+      <li>MMT_Medicine_D1</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>MMT_HealTurretResearch</defName>
+    <label>治疗炮塔</label>
+    <description>把小型机枪炮塔的硬件改造成一套战地医疗平台：重写目标识别、让它只认友方生物，再把枪管换成发射医疗软子弹的投射器。\n\n解锁建造：小型治疗炮塔。</description>
+    <baseCost>2500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_FieldMedicalPack</li>
+      <li>GunTurrets</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

@@ -6,7 +6,7 @@
 
 ## 1. MMT 建筑总表
 
-共 86 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
+共 76 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
 
 ### 深钻井（AdvancedRocks）
 
@@ -68,8 +68,8 @@
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 手动采石机（`MMT_ChunkDrill`） | (2,2) | 原木×40 + 钢×60 | — | 2500 | Stonecutting | 0 | CompProperties_ChunkDrill |
-| 电动采石机（`MMT_ElectricChunkDrill`） | (2,2) | 钢×100 + 机械组件×2 + 工业零件×2 | 400W | 4000 | 矿粉筛选 | 0 | CompProperties_ChunkDrill |
-| 自动采石机（`MMT_AutoChunkDrill`） | (2,2) | 钢×150 + 机械组件×4 + 工业零件×4 + 电子元件×2 | 800W | 6000 | 自动化矿料处理 | 0 | CompProperties_ModuleSlots、CompProperties_ChunkDrill |
+| 电动采石机（`MMT_ElectricChunkDrill`） | (1,1) | 钢×100 + 机械组件×2 + 工业零件×2 | 400W | 4000 | 矿粉筛选 | 0 | CompProperties_ChunkDrill |
+| 自动采石机（`MMT_AutoChunkDrill`） | (1,1) | 钢×150 + 机械组件×4 + 工业零件×4 + 电子元件×2 | 800W | 6000 | 自动化矿料处理 | 0 | CompProperties_ModuleSlots、CompProperties_ChunkDrill |
 
 ### 煤（Coal）
 
@@ -203,6 +203,14 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -10000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
 | 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
+
+### FieldMedical（FieldMedical）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 医疗软子弹（`MMT_HealBolt`） | — | — | — | — | — | 0 |  |
+| 医疗炮塔投射器（`MMT_HealTurret_Gun`） | — | — | — | — | — | 0 |  |
+| 小型治疗炮塔（`MMT_HealTurret`） | — | 钢×20 + 太空零件×1 + 工业零件×2 + [金属]×30 | 100W | 1800 | 治疗炮塔 | 0 |  |
 
 ### Glassworks（Glassworks）
 
@@ -411,7 +419,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 硝石矿脉（`MMT_MineableNitre`） | — | — | — | — | — | 0 | 矿脉（自然生成，产 硝石） |
 | 纺织机（`MMT_Loom`） | (2,2) | 原始零部件×10 + 电子元件×3 + 机械组件×6 + [金属/木质]×125 | 300W | 3850 | ComplexClothing | 10 |  |
-| 弹药工作台（`MMT_AmmoBench`） | (3,1) | 工业零件×10 + 电子元件×5 + 机械组件×10 + [金属]×210 | 500W | 6500 | 机械加工 | 24 |  |
+| 弹药工作台（`MMT_AmmoBench`） | (3,1) | 工业零件×10 + 电子元件×5 + 机械组件×10 + [金属]×210 | 500W | 6500 | 机械加工 | 16 |  |
 
 **纺织机（`MMT_Loom`） 的配方：**
 
@@ -431,17 +439,9 @@
 - `MMT_MakeSulfur`：铁矿石(35) -> 硫磺×10 ｜ 工作量=1200
 - `MMT_MakePowder`：硝石(75) + [MMT_Coal](20) + 硫磺(20) -> 火药×20 ｜ 工作量=3000 ｜ 技能:制作≥3
 - `MMT_MakeNapalm`：化合燃料(30) + 聚合物(15) -> 凝固汽油×10 ｜ 工作量=1200 ｜ 技能:制作≥5
-- `MMT_MakeAmmo_120mmCannonShell_HEAT`：钢(90) + 工业零件(2) + 化合燃料(7) -> 120mm 炮弹（破甲）×2 ｜ 工作量=13000 ｜ 技能:制作≥4
-- `MMT_MakeAmmo_130mmRocketMissile`：[MMT_SLDBar]/[MMT_USLDBar](42) + [MMT_HCMBar](8) + 化合燃料(32) + 凝固汽油(5) + 集成电路(1) -> 130mm 制导火箭弹（高爆弹）×1 ｜ 工作量=2000
-- `MMT_MakeAmmo_155mmHowitzerShell_HE`：钢(94) + 工业零件(2) + 化合燃料(17) -> 155mm 炮弹（高爆弹）×1 ｜ 工作量=17400 ｜ 技能:制作≥4
 - `MMT_MakeAmmo_20x102mm_FMJ`：[MMT_SLDBar]/[MMT_USLDBar](50) + [MMT_HCMBar](15) + 火药(9) -> 20x102mm 弹药（全金属被甲弹）×40 ｜ 工作量=3000 ｜ 技能:制作≥10
-- `MMT_MakeAmmo_30x173mm_FMJ`：[MMT_SLDBar]/[MMT_USLDBar](60) + [MMT_HCMBar](16) + 火药(8) -> 30x173mm 弹药（全金属被甲弹）×30 ｜ 工作量=3000 ｜ 技能:制作≥11
-- `MMT_MakeAmmo_30x29mmGrenade_HE`：钢(74) + 化合燃料(8) + 工业零件(2) -> 30x29mm 榴弹（高爆弹）×100 ｜ 工作量=11800 ｜ 技能:制作≥4
 - `MMT_MakeAmmo_50BMG_FMJ`：钢(50) + 火药(25) -> .50 机枪弹（全金属被甲弹）×200 ｜ 工作量=5000
 - `MMT_MakeAmmo_762x51mmNATO_FMJ`：钢(26) + 火药(13) -> 7.62x51mm 北约标准弹（全金属被甲弹）×500 ｜ 工作量=2600
-- `MMT_MakeAmmo_BalistaBolt`：[MMT_Woody](2) + [MMT_MetallicBar](5) -> 弩炮箭×10 ｜ 工作量=1500
-- `MMT_MakeAmmo_StoneBall`：[StoneChunks](1) -> 石球×5 ｜ 工作量=1500
-- `MMT_MakeAmmo_SPG9Rocket_Frag`：钢(66) + 化合燃料(6) + 工业零件(4) -> SPG-9 Rocket (HE)×5 ｜ 工作量=11400 ｜ 技能:制作≥4
 - `MMT_MakeAmmo_145x114mm_FMJ`：钢(40) + 火药(6) -> 14.5x114mm 机枪弹（全金属被甲弹）×100 ｜ 工作量=4000 ｜ 技能:制作≥5
 - `MMT_MakeEMPGrenades`：[MMT_MetallicBar](36) + 工业零件(7) + 电子元件(4) -> Weapon_GrenadeEMP×5 ｜ 工作量=6000 ｜ 研究:手榴弹 II ｜ 技能:制作≥11
 - `MMT_MakeFirefoamGrenade`：[MMT_MetallicBar](30) + 表面活性剂(15) + 火药/化合燃料(3) + 工业零件(4) -> firefoam grenade×5 ｜ 工作量=4000 ｜ 研究:手榴弹 I ｜ 技能:制作≥7
@@ -505,22 +505,9 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| GAU-8复仇者火炮（`MMT_AvengerTurretGun`） | (2,2) | GAU-8复仇者火炮组件箱×1 + [金属]×100 | — | 2000 | 重型炮塔 III | 0 | 炮塔（复仇者机炮） |
-| 155mm榴弹炮（`MMT_HowitzerTurretGun`） | (2,2) | 155mm榴弹炮组件箱×1 + [金属]×210 | — | 2100 | 火炮 II | 0 | 炮塔（155mm榴弹炮） |
-| FGM-148“标枪”反坦克导弹（`MMT_LightMissileSystem`） | (1,1) | FGM-148“标枪”反坦克导弹组件箱×1 + [金属]×100 | — | 1600 | 火箭弹 II | 0 | 炮塔（FGM-148“标枪”反坦克导弹） |
-| 弩炮（`MMT_MedievalTimes_Ballista`） | (1,1) | 弩炮组件箱×1 + [木质]×90 | — | 4000 | 攻城武器 | 0 | 炮塔（弩炮） |
-| 投石机（`MMT_Medieval_Catapult`） | (2,2) | 投石机组件箱×1 + [木质]×150 | — | 5000 | 攻城武器 | 0 | 炮塔（投石机） |
-| 中型导弹系统（`MMT_MediumMissileSystem`） | (2,2) | 130mm中型导弹系统组件箱×1 + [金属]×100 | — | 2400 | 火箭弹 III | 0 | 炮塔（中型导弹系统） |
-| 舰载哨戒炮塔（`MMT_NavalGunTurretGun`） | (2,2) | 35mm哨戒炮塔组件箱×1 + [金属]×350 | 2200W | 1400 | 自动炮塔 III | 0 | 炮塔（哨戒机炮） |
-| 重型导弹系统（`MMT_RLGun`） | (2,2) | 130mm重型导弹系统组件箱×1 + [金属]×100 | — | 2800 | 火箭弹 III | 0 | 炮塔（重型导弹系统） |
-| AGS-30 榴弹发射器（`MMT_Turret_AGLGrenadeLauncher`） | (1,1) | AGS-30组件箱×1 + [金属]×90 | — | 1500 | 发射器 I | 0 | 炮塔（AGL榴弹发射器） |
-| 120mm坦克炮（`MMT_Turret_Cannon`） | (2,2) | 120mm坦克炮组件箱×1 + [金属]×180 | — | 2150 | 火炮 II | 0 | 炮塔（120mm坦克炮） |
 | M2 .50勃朗宁机枪（`MMT_Turret_M2Browning`） | (1,1) | M2 .50勃朗宁机枪组件箱×1 + [金属]×70 | — | 1200 | 狙击炮塔 | 0 | 炮塔（M2勃朗宁重机枪） |
 | M134速射机枪（`MMT_Turret_Minigun`） | (1,1) | M134速射机枪组件箱×1 + [金属]×90 | — | 1900 | 重型炮塔 II | 0 | 炮塔（M134型速射机枪） |
 | 20mm厄利孔机炮（`MMT_Turret_Oerlikonautocannon`） | (2,2) | 20x102mm厄利孔机炮组件箱×1 + [金属]×100 | — | 1700 | 重型炮塔 III | 0 | 炮塔（20x102mm厄利孔机炮） |
-| 哨戒火箭发射器（`MMT_Turret_SentryRocketLauncher`） | (2,2) | 自动反坦克火箭发射系统组件箱×1 + [金属]×160 | 1600W | 16000 | 自动炮塔 III | 0 | 炮塔（哨戒火箭发射器） |
-| BGM-71“陶式”反坦克导弹（`MMT_Turret_TOWLauncher`） | (1,1) | BGM-71“陶式”反坦克导弹组件箱×1 + [金属]×100 | — | 1500 | 火箭弹 III | 0 | 炮塔（BGM-71“陶式”反坦克导弹） |
-| 20mm火神炮（`MMT_Turret_VulcanCannon`） | (2,2) | 20mm火神炮组件箱×1 + [金属]×100 | — | 2200 | 重型炮塔 III | 0 | 炮塔（火神炮） |
 | 14.5mm KPV重机枪（`MMT_TurretKPV`） | (2,2) | 14.5mm KPV重机枪组件箱×1 + [金属]×80 | — | 1500 | 重机枪塔 | 0 | 炮塔（14.5mm KPV重机枪） |
 
 ### 武器部件（WeaponParts）
@@ -539,7 +526,7 @@
 - `MMT_MakeShotgunComponent`：[MMT_SLDBar]/[MMT_USLDBar](15) + [MMT_HCMBar](8) + 工业零件(4) + 电线(5) + 机械组件(2) -> 霰弹枪部件×1 ｜ 工作量=1800 ｜ 研究:导气式 ｜ 技能:制作≥7
 - `MMT_MakeRifleComponent`：[MMT_SLDBar]/[MMT_USLDBar](20) + [MMT_HCMBar](10) + 工业零件(6) + 电线(8) + 机械组件(3) -> 步枪部件×1 ｜ 工作量=2100 ｜ 研究:导气式 ｜ 技能:制作≥8
 - `MMT_MakeSniperComponent`：步枪部件(1) + 工业零件(6) + 玻璃块(12) -> 狙击枪部件×1 ｜ 工作量=2100 ｜ 研究:精密膛线 ｜ 技能:制作≥10
-- `MMT_BuildKPVTurret_Crate`：武器部件(17) + 重型武器部件(1) + [MMT_MetallicBar](50) -> 14.5mm KPV重机枪组件箱×1 ｜ 工作量=11500 ｜ 研究:重机枪塔 ｜ 技能:制作≥7
+- `MMT_BuildKPVTurret_Crate`：武器部件(17) + 工业零件(10) + [MMT_MetallicBar](50) -> 14.5mm KPV重机枪组件箱×1 ｜ 工作量=11500 ｜ 研究:重机枪塔 ｜ 技能:制作≥7
 - `MMT_Build93RBurstPistol`：手枪部件(1) + 武器部件(4) + 工业零件(4) + [MMT_MetallicBar](12) + 塑料(12) + [Leathers](5) -> 伯莱塔93R冲锋手枪×1 ｜ 工作量=9300 ｜ 研究:枪械制造 ｜ 技能:制作≥7
 - `MMT_BuildCXfour`：步枪部件(1) + 武器部件(4) + 工业零件(4) + [MMT_MetallicBar](15) + 塑料(10) + [Leathers](6) -> 伯莱塔Cx4卡宾枪×1 ｜ 工作量=14000 ｜ 研究:枪械 II ｜ 技能:制作≥8
 - `MMT_BuildDeringerPistol`：手枪部件(1) + 武器部件(2) + 工业零件(4) + [MMT_MetallicBar](15) + [Leathers](5) -> M1917史密斯威森左轮×1 ｜ 工作量=8500 ｜ 研究:枪械制造 ｜ 技能:制作≥3
@@ -689,23 +676,23 @@
 
 | 建筑 | defName | 尺寸 | 造价 | 功耗 | 配方数 | 源文件 |
 | --- | --- | --- | --- | --- | --- | --- |
-| LeatherworkerTable | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
-| TableRecycling | `TableRecycling` | (3,1) | 工业零件×12 + ElectronicComponents×3 + Mechanism×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
-| HolyBasin | `HolyBasin` | — | ComponentMedieval×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
-| TableKitchen | `TableKitchen` | (3,1) | ComponentMedieval×8 + Mechanism×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
-| OpenHearth | `OpenHearth` | (1,1) | ComponentMedieval×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
-| ElectricStove_Pro | `ElectricStove_Pro` | (4,1) | 工业零件×20 + Rubber×30 + Electronics×5 + AdvMechanism×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
-| Canningstove | `Canningstove` | (1,1) | 工业零件×12 + ElectronicComponents×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
-| GrindStone | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
-| MillElectric | `MillElectric` | (1,1) | Rubber×45 + Glass×25 + 工业零件×8 + Mechanism×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
-| TableOven | `TableOven` | (2,2) | ComponentMedieval×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
-| ElectricOven | `ElectricOven` | (1,1) | 工业零件×10 + ElectronicComponents×3 + Mechanism×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
-| soylenttable | `soylenttable` | (2,1) | Rubber×50 + Plastic×40 + 工业零件×10 + Electronics×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
-| UniversalFermenter | `UniversalFermenter` | (1,1) | ComponentMedieval×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
-| JerkyRack | `JerkyRack` | (2,1) | ComponentMedieval×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
-| CheeseBasin | `CheeseBasin` | (1,1) | ComponentMedieval×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
-| Kiln | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
-| HadronColliderFeeder | `HadronColliderFeeder` | (1,1) | 太空零件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
-| CompostBarrel | `CompostBarrel` | — | ComponentMedieval×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
-| TableHeavyAmmunition | `TableHeavyAmmunition` | (3,1) | 工业零件×10 + ElectronicComponents×5 + Mechanism×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
+| 皮革工作台 | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
+| 回收站 | `TableRecycling` | (3,1) | 普通零部件×12 + 电子元件×3 + 机械组件×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
+| 洗涤盆 | `HolyBasin` | — | 原始零部件×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
+| 厨房案桌 | `TableKitchen` | (3,1) | 原始零部件×8 + 机械组件×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
+| 开放式炉灶 | `OpenHearth` | (1,1) | 原始零部件×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
+| 专业化烹饪炉 | `ElectricStove_Pro` | (4,1) | 普通零部件×20 + 合成橡胶×30 + 集成电路×5 + 先进机械组件×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
+| 电压力锅 | `Canningstove` | (1,1) | 普通零部件×12 + 电子元件×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
+| 石磨 | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
+| 电磨 | `MillElectric` | (1,1) | 合成橡胶×45 + 玻璃块×25 + 普通零部件×8 + 机械组件×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
+| 烤箱 | `TableOven` | (2,2) | 原始零部件×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
+| 电烤箱 | `ElectricOven` | (1,1) | 普通零部件×10 + 电子元件×3 + 机械组件×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
+| 营养物质机 | `soylenttable` | (2,1) | 合成橡胶×50 + 塑料×40 + 普通零部件×10 + 集成电路×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
+| 酒类发酵桶 | `UniversalFermenter` | (1,1) | 原始零部件×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
+| 干肉架 | `JerkyRack` | (2,1) | 原始零部件×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
+| 干酪槽 | `CheeseBasin` | (1,1) | 原始零部件×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
+| 窑炉 | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
+| 强子对撞机料斗 | `HadronColliderFeeder` | (1,1) | 高级零部件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
+| 堆肥桶 | `CompostBarrel` | — | 原始零部件×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
+| 重型弹药工作台 | `TableHeavyAmmunition` | (3,1) | 普通零部件×10 + 电子元件×5 + 机械组件×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
 

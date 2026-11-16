@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-	<!--MMT 投射物：由 HSK/CE 弹药数值转换-->
-	<ThingDef ParentName="BaseBullet">
-		<defName>MMT_Bullet_120mmCannonShell_HEAT</defName>
-		<graphicData>
-			<texPath>Things/Projectile/Cannon/HEAT</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Bullet</damageDef>
-			<damageAmountBase>405</damageAmountBase>
-			<armorPenetrationBase>4.2</armorPenetrationBase>
-			<speed>229</speed>
-			<flyOverhead>false</flyOverhead>
-		</projectile>
-	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
 		<defName>MMT_Bullet_12Gauge_Buck</defName>
 		<graphicData>
@@ -29,23 +14,6 @@
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
-		<defName>MMT_Bullet_130mmRocketMissile</defName>
-		<graphicData>
-			<texPath>Things/Projectile/130mmRocket</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Bomb</damageDef>
-			<damageAmountBase>250</damageAmountBase>
-			<armorPenetrationBase>0</armorPenetrationBase>
-			<speed>0</speed>
-			<explosionRadius>5</explosionRadius>
-			<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
-			<flyOverhead>true</flyOverhead>
-			<ai_IsIncendiary>true</ai_IsIncendiary>
-		</projectile>
-	</ThingDef>
-	<ThingDef ParentName="BaseBullet">
 		<defName>MMT_Bullet_145x114mm_FMJ</defName>
 		<graphicData>
 			<texPath>Things/Projectile/Bullet_Big</texPath>
@@ -56,22 +24,6 @@
 			<damageAmountBase>53</damageAmountBase>
 			<armorPenetrationBase>0.18</armorPenetrationBase>
 			<speed>178</speed>
-		</projectile>
-	</ThingDef>
-	<ThingDef ParentName="BaseBullet">
-		<defName>MMT_Bullet_155mmHowitzerShell_HE</defName>
-		<graphicData>
-			<texPath>Things/Projectile/Cannon/Howitzer/HE</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Bomb</damageDef>
-			<damageAmountBase>546</damageAmountBase>
-			<armorPenetrationBase>0</armorPenetrationBase>
-			<speed>0</speed>
-			<explosionRadius>5.5</explosionRadius>
-			<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
-			<flyOverhead>true</flyOverhead>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -124,22 +76,6 @@
 			<damageAmountBase>65</damageAmountBase>
 			<armorPenetrationBase>0.32</armorPenetrationBase>
 			<speed>185</speed>
-		</projectile>
-	</ThingDef>
-	<ThingDef ParentName="BaseBullet">
-		<defName>MMT_Bullet_30x29mmGrenade_HE</defName>
-		<graphicData>
-			<texPath>Things/Projectile/LauncherShot</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Bomb</damageDef>
-			<damageAmountBase>22</damageAmountBase>
-			<armorPenetrationBase>0</armorPenetrationBase>
-			<speed>51</speed>
-			<explosionRadius>1</explosionRadius>
-			<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
-			<flyOverhead>false</flyOverhead>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
@@ -693,21 +629,6 @@
 			<damageAmountBase>6</damageAmountBase>
 			<armorPenetrationBase>0</armorPenetrationBase>
 			<speed>31</speed>
-		</projectile>
-	</ThingDef>
-	<ThingDef ParentName="BaseBullet">
-		<defName>MMT_Projectile_BalistaBolt</defName>
-		<graphicData>
-			<texPath>Things/Projectile/BallistaBolt</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<projectile>
-			<damageDef>Stab</damageDef>
-			<damageAmountBase>50</damageAmountBase>
-			<armorPenetrationBase>0.07</armorPenetrationBase>
-			<speed>45</speed>
-			<preExplosionSpawnThingDef>MMT_Ammo_BalistaBolt</preExplosionSpawnThingDef>
-			<preExplosionSpawnChance>0.33</preExplosionSpawnChance>
 		</projectile>
 	</ThingDef>
 	<ThingDef ParentName="BaseBullet">

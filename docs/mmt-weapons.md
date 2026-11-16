@@ -156,22 +156,9 @@
 
 | 武器 | 伤害 | 穿透 | 弹速 | 射程 | 连发×间隔tick | 预热s | 冷却s | 爆发DPS | 持续DPS | 备注 | 研究 | 技能 | 制造台 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 投石机（`MMT_Artillery_Medieval_Catapult_Top`） | 120 | 0.01 | 0 | 150 | 1×— | 4.40 | 3.0 | — | 16.2 | Blunt | — | — | — |
-| BGM-71“陶式”反坦克导弹（`MMT_Artillery_TOWMissile`） | 111 | 0 | 75 | 110 | 1×— | 1.10 | 3 | — | 27.1 | 爆炸半径2.0；Bomb | — | — | — |
-| AGL榴弹发射器（`MMT_Gun_AGLGrenadeLauncher`） | 22 | 0 | 51 | 90 | 5×9 | 3.70 | 1.7 | 183.3 | 18.3 | 爆炸半径1；Bomb | — | — | — |
-| FGM-148“标枪”反坦克导弹（`MMT_Gun_ATML`） | 111 | 0 | 75 | 130 | 1×— | 1.20 | 3 | — | 26.4 | 爆炸半径2.0；Bomb | — | — | — |
-| 复仇者机炮（`MMT_Gun_Avenger`） | 65 | 0.32 | 185 | 85 | 15×5 | 1.80 | 2 | 835.7 | 196.3 | — | — | — | — |
-| 120mm坦克炮（`MMT_Gun_CannonTurret`） | 405 | 4.2 | 229 | 140 | 1×— | 2.00 | 2.5 | — | 90.0 | — | — | — | — |
-| 155mm榴弹炮（`MMT_Gun_HowitzerTurret`） | 546 | 0 | 0 | 320 | 1×— | 2.40 | 3.5 | — | 92.5 | 爆炸半径5.5；Bomb | — | — | — |
 | M2勃朗宁重机枪（`MMT_Gun_M2Browning`） | 42 | 0.14 | 163 | 60 | 15×6 | 1.20 | 1.6 | 450.0 | 150.0 | — | — | — | — |
-| 中型导弹系统（`MMT_Gun_MissileSystem`） | 250 | 0 | 0 | 370 | 2×20 | 2.80 | 6 | 1500.0 | 54.7 | 爆炸半径5；Bomb | — | — | — |
-| 哨戒机炮（`MMT_Gun_NavalGun`） | 65 | 0.32 | 185 | 75 | 3×17 | 2.20 | 1 | 344.1 | 51.8 | — | — | — | — |
 | 20x102mm厄利孔机炮（`MMT_Gun_Oerlikonautocannon`） | 55 | 0.27 | 180 | 75 | 15×8 | 1.80 | 1.8 | 442.0 | 150.9 | — | — | — | — |
-| 重型导弹系统（`MMT_Gun_RL`） | 250 | 0 | 0 | 370 | 3×20 | 3.00 | 8 | 1125.0 | 64.3 | 爆炸半径5；Bomb | — | — | — |
-| 哨戒火箭发射器（`MMT_Gun_SentryRocketLauncher`） | 111 | 0 | 75 | 120 | 1×12 | 2.60 | 1 | — | 30.8 | 爆炸半径2.0；Bomb | — | — | — |
 | M134型速射机枪（`MMT_Gun_TurretMinigun`） | 20 | 0.07 | 156 | 55 | 100×2 | 1.40 | 1.8 | 606.1 | 307.7 | — | — | — | — |
-| 火神炮（`MMT_Gun_VulcanCannon`） | 55 | 0.27 | 180 | 70.0 | 30×3 | 1.80 | 2 | 1137.9 | 314.3 | — | — | — | — |
-| 弩炮（`MMT_Medieval_Ballista_Turret`） | 50 | 0.07 | 45 | 60 | 1×— | 1.60 | 2.0 | — | 13.9 | Stab | — | — | — |
 | 14.5mm KPV重机枪（`MMT_Gun_KPV`） | 53 | 0.18 | 178 | 40 | 8×6 | 1.50 | 1.8 | 605.7 | 106.0 | — | — | — | — |
 
 ## NPC/特殊武器（MMT_Weapons_NPC.xml）
@@ -196,7 +183,21 @@
 
 ## HSK 有而 MMT 未实现的武器
 
-共 0 件（逐 def 判定：vanilla_replacements / MMT_ 同名 / patch 同名替换 / 别名表）。弹匣列为 弹匣容量/换弹秒。
+共 13 件（逐 def 判定：vanilla_replacements / MMT_ 同名 / patch 同名替换 / 别名表）。弹匣列为 弹匣容量/换弹秒。
 
-- 无。Core_SK 全部武器均已移植（含经 patch 同名替换原版武器的部分）。
+| 武器 | defName | 类型 | 弹药伤害 | 射程 | 预热s | 冷却s | 连发×间隔tick | 弹匣/换弹 | 源文件 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 弩炮 | `Medieval_Ballista_Turret` | 远程 | 50 | 60 | 1.60 | 2.0 | 1×None | 1/2.50s | Weapons_Turrets_Heavy.xml |
+| 投石机 | `Artillery_Medieval_Catapult_Top` | 远程 | 120 | 150 | 4.40 | 3.0 | 1×None | 1/8.5s | Weapons_Turrets_Heavy.xml |
+| AGL榴弹发射器 | `Gun_AGLGrenadeLauncher` | 远程 | 22 | 90 | 3.70 | 1.7 | 5×9 | 25/6.5s | Weapons_Turrets_Heavy.xml |
+| 120mm坦克炮 | `Gun_CannonTurret` | 远程 | 405 | 140 | 2.00 | 2.5 | — | 1/8.5s | Weapons_Turrets_Heavy.xml |
+| 155mm榴弹炮 | `Gun_HowitzerTurret` | 远程 | 546 | 320 | 2.40 | 3.5 | — | 1/8.8s | Weapons_Turrets_Heavy.xml |
+| FGM-148“标枪”反坦克导弹 | `Gun_ATML` | 远程 | 111 | 130 | 1.20 | 3 | 1×None | 1/3.50s | Weapons_Turrets_Launchers.xml |
+| BGM-71“陶式”反坦克导弹 | `Artillery_TOWMissile` | 远程 | 111 | 110 | 1.10 | 3 | 1×None | 1/4.5s | Weapons_Turrets_Launchers.xml |
+| 中型导弹系统 | `Gun_MissileSystem` | 远程 | 250 | 370 | 2.80 | 6 | 2×20 | 2/13.0s | Weapons_Turrets_Launchers.xml |
+| 重型导弹系统 | `Gun_RL` | 远程 | 250 | 370 | 3.00 | 8 | 3×20 | 3/17.00s | Weapons_Turrets_Launchers.xml |
+| 复仇者机炮 | `Gun_Avenger` | 远程 | 65 | 85 | 1.80 | 2 | 15×5 | 56/6.00s | Weapons_Turrets_Machineguns.xml |
+| 火神炮 | `Gun_VulcanCannon` | 远程 | 55 | 70.0 | 1.80 | 2 | 30×3 | 200/7.00s | Weapons_Turrets_Machineguns.xml |
+| 哨戒机炮 | `Gun_NavalGun` | 远程 | 65 | 75 | 2.20 | 1 | 3×17 | 60/8.00s | Weapons_Turrets_Sentry.xml |
+| 哨戒火箭发射器 | `Gun_SentryRocketLauncher` | 远程 | 111 | 120 | 2.60 | 1 | 1×12 | 9/1.600s | Weapons_Turrets_Sentry.xml |
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    百合花（普通模因，归 vanilla Misc 组，不占结构槽，可与任意结构模因组合）：
+    选择本模因的文化崇尚女性之间的爱情——
+      1. 本文化女性之间相互吸引、可主动求爱（右键"求爱"可选同性），求爱不再受同性惩罚，可自由恋爱、求婚、结婚；
+      2. 双方均为本文化信徒的女女伴侣亲热后可如异性伴侣般自然怀孕（随机一方受孕）；
+      3. 百合伴侣生育的后代必为女孩。
+    三条机制均由 C# 补丁 LilyMeme.cs 按 HasMeme(MMT_Lily) 生效（第 2/3 条需 Biotech 激活）。
+  -->
+  <MemeDef>
+    <defName>MMT_Lily</defName>
+    <label>百合花</label>
+    <description>百合之花纯洁绽放。本文化崇尚女性之间神圣的爱情：女性信徒可以自由地相爱、结婚，并在亲热爱抚中孕育后代——她们的孩子必将是女孩。</description>
+    <iconPath>UI/Memes/MMT_Lily</iconPath>
+    <groupDef>Misc</groupDef>
+    <impact>2</impact>
+    <allowDuringTutorial>true</allowDuringTutorial>
+    <requireOne>
+      <li>
+        <li>MMT_SameSexLove_Blessed</li>
+      </li>
+    </requireOne>
+    <generalRules>
+      <rulesStrings>
+        <li>memeAdjective->lily</li>
+        <li>memeAdjective->pure</li>
+        <li>memeConcept->lily</li>
+        <li>memeConcept->sisterhood</li>
+        <li>memeConcept->pure love</li>
+      </rulesStrings>
+    </generalRules>
+    <symbolPacks>
+      <li>
+        <theme>lily</theme>
+        <adjective>lily-hearted</adjective>
+        <member>lily sister</member>
+      </li>
+      <li>
+        <ideoName>Lilism</ideoName>
+        <theme>purity</theme>
+        <adjective>pristine</adjective>
+        <member>petal</member>
+      </li>
+    </symbolPacks>
+  </MemeDef>
+
+</Defs>

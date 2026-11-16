@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（105 项）
+- MMT 研究总览（102 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -13,12 +13,9 @@
       - **电动木材加工** `MMT_ElectricWoodworking` ｜ 坐标 (2.00, 0.00) ｜ 1500点 ｜ Industrial ｜ 前置(原版): MicroelectronicsBasics
         - 解锁建筑: 电动锯木台、电动木炭窑
         - 解锁配方: 加工木板、加工柴火、制作木炭、加工竹板、加工红木木板
-    - **攻城武器** `MMT_SiegeWeapons` ｜ 坐标 (6.00, 0.00) ｜ 500点 ｜ Medieval ｜ 前置(原版): RecurveBow
-      - 解锁建筑: 弩炮、投石机
-      - 解锁配方: 制作弩炮组件箱、制作投石机组件箱
   - **毒株种植 I** `MMT_DrugPlants_A1` ｜ 坐标 (0.00, 1.00) ｜ 100点 ｜ Neolithic
     - **毒株种植 II** `MMT_DrugPlants_A2` ｜ 坐标 (1.00, 1.00) ｜ 150点 ｜ Neolithic
-      - **毒株种植 III** `MMT_DrugPlants_A3` ｜ 坐标 (0.00, 2.00) ｜ 200点 ｜ Neolithic
+      - **毒株种植 III** `MMT_DrugPlants_A3` ｜ 坐标 (2.00, 1.50) ｜ 200点 ｜ Neolithic
         - 解锁配方: 卷制卷烟、卷制雪茄、烘焙咖啡豆、冲泡咖啡
         - 解锁植物: 烟草（播种）、咖啡树（播种）
   - **医疗物资 I** `MMT_Medicine_A1` ｜ 坐标 (0.00, 2.00) ｜ 150点 ｜ Neolithic
@@ -30,7 +27,7 @@
         - 解锁配方: 配制草药包
         - **医疗物资 IV** `MMT_Medicine_B2` ｜ 坐标 (3.00, 2.00) ｜ 500点 ｜ Medieval
           - 解锁配方: 制作基础医药包（芦荟）、制作基础医药包（混合草药）、合成肾上腺素
-          - **医疗物资 V** `MMT_Medicine_C1` ｜ 坐标 (4.00, 2.00) ｜ 800点 ｜ Industrial
+          - **医疗物资 V** `MMT_Medicine_C1` ｜ 坐标 (4.00, 2.50) ｜ 800点 ｜ Industrial
             - 解锁建筑: 医疗注射炮台
           - **义肢安装 III** `MMT_ProsthesisInstall_C2` ｜ 坐标 (5.00, 2.00) ｜ 800点 ｜ Industrial ｜ 交叉前置: 义肢安装 II
             - 解锁配方: 安装人造鼻、安装简易的假手、安装简易的假足、安装人造骨盆
@@ -119,14 +116,7 @@
     - 解锁建筑: 晾晒架
     - 解锁配方: 晾晒烟叶、晾晒烟叶（×5）、晾晒烟叶、晾晒烟叶（×5）
   - **发射器 I** `MMT_GrenadeLaunchers` ｜ 坐标 (2.00, 8.00) ｜ 1200点 ｜ Industrial ｜ 前置(原版): HeavyTurrets
-    - 解锁建筑: AGS-30 榴弹发射器
-    - 解锁配方: 制作AGS-30组件箱、制作T9“炎阳”燃烧弹发射器、制作米尔科姆榴弹发射器
-    - **火炮 II** `MMT_Artillery2` ｜ 坐标 (3.00, 8.00) ｜ 1500点 ｜ Industrial ｜ 前置(原版): SniperTurret, Mortars
-      - 解锁建筑: 155mm榴弹炮、120mm坦克炮
-      - 解锁配方: 制作120mm坦克炮组件箱、制作155mm 榴弹炮组件箱
-      - **自动炮塔 III** `MMT_Autoturrets3` ｜ 坐标 (4.00, 8.00) ｜ 2000点 ｜ Spacer
-        - 解锁建筑: 舰载哨戒炮塔、哨戒火箭发射器
-        - 解锁配方: 制作30mm哨戒炮塔组件箱、制作反坦克哨戒火箭发射系统组件箱
+    - 解锁配方: 制作T9“炎阳”燃烧弹发射器、制作米尔科姆榴弹发射器
   - **矿粉筛选** `MMT_OreSifting` ｜ 坐标 (3.00, 5.00) ｜ 800点 ｜ Industrial ｜ 前置(原版): Stonecutting, Electricity
     - 解锁建筑: 电动采石机、电动研磨机、电动筛子
     - **自动化矿料处理** `MMT_AutoOreProcessing` ｜ 坐标 (4.00, 5.00) ｜ 2000点 ｜ Industrial ｜ 前置(原版): MicroelectronicsBasics
@@ -160,22 +150,19 @@
         - 解锁建筑: 实验站
   - **火箭弹 I** `MMT_Rocketry1` ｜ 坐标 (6.00, 8.00) ｜ 1400点 ｜ Industrial ｜ 前置(原版): HeavyTurrets
     - 解锁配方: 制造发射器部件、制作M72反坦克火箭筒、制作M5火箭筒、制作RPG-7火箭筒
-    - **火箭弹 II** `MMT_Rocketry2` ｜ 坐标 (7.00, 8.00) ｜ 1300点 ｜ Industrial ｜ 前置(原版): SniperTurret, Mortars ｜ 交叉前置: 发射器 I
-      - 解锁建筑: FGM-148“标枪”反坦克导弹
-      - 解锁配方: 制作FGM-148“标枪”反坦克导弹组件箱
-      - **火箭弹 III** `MMT_Rocketry3` ｜ 坐标 (8.00, 8.00) ｜ 2100点 ｜ Spacer
-        - 解锁建筑: 中型导弹系统、重型导弹系统、BGM-71“陶式”反坦克导弹
-        - 解锁配方: 制作130mm中型导弹系统组件箱、制作130mm重型导弹系统组件箱、制作BGM-71“陶式”反坦克导弹组件箱
   - **医疗物资 VI** `MMT_Medicine_D1` ｜ 坐标 (7.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): MedicineProduction
     - 解锁配方: 制作闪耀世界医药
+    - **战地医疗装备** `MMT_FieldMedicalPack` ｜ 坐标 (11.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): SmokepopBelt ｜ 需要研究台: HiTechResearchBench
+      - **治疗炮塔** `MMT_HealTurretResearch` ｜ 坐标 (13.00, 0.00) ｜ 2500点 ｜ Industrial ｜ 前置(原版): GunTurrets ｜ 需要研究台: HiTechResearchBench
+        - 解锁建筑: 小型治疗炮塔
   - **毒品 VI** `MMT_Drugs_C3` ｜ 坐标 (7.00, 1.00) ｜ 900点 ｜ Industrial ｜ 前置(原版): DrugProduction
     - **毒品 VII** `MMT_Drugs_D1` ｜ 坐标 (12.00, 1.00) ｜ 1500点 ｜ Spacer ｜ 前置(原版): PsychiteRefining
       - 解锁配方: 合成灵能结晶、精炼灵能粉、泡制灵能茶、调制战斗鸡尾酒
       - **毒品 VIII** `MMT_Drugs_D2` ｜ 坐标 (13.00, 1.00) ｜ 2000点 ｜ Spacer ｜ 交叉前置: 高级零件
         - 解锁建筑: 高级药物合成台
-        - **毒品 IX** `MMT_Drugs_E1` ｜ 坐标 (12.00, 2.00) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 医疗物资 VI
+        - **毒品 IX** `MMT_Drugs_E1` ｜ 坐标 (14.00, 1.50) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 医疗物资 VI
           - 解锁配方: 制备纳米修复针
-          - **毒品 X** `MMT_Drugs_E2` ｜ 坐标 (13.00, 2.00) ｜ 3000点 ｜ Ultra ｜ 交叉前置: 超级零件
+          - **毒品 X** `MMT_Drugs_E2` ｜ 坐标 (15.00, 1.50) ｜ 3000点 ｜ Ultra ｜ 交叉前置: 超级零件
             - 解锁配方: 制备基因强化剂、制备纳米净化血清、制造灵能增幅器、制备机械复活剂
   - **零件加工** `MMT_ComponentCrafting` ｜ 坐标 (7.00, 5.00) ｜ 600点 ｜ Industrial
     - 解锁建筑: 手工装配台、电动装配台
@@ -230,7 +217,7 @@
     - 解锁建筑: M134速射机枪
     - 解锁配方: 制作7.62x51mm M134速射机枪组件箱
     - **重型炮塔 III** `MMT_HeavyTurrets3` ｜ 坐标 (12.00, 8.00) ｜ 2000点 ｜ Spacer
-      - 解锁建筑: GAU-8复仇者火炮、20mm厄利孔机炮、20mm火神炮
-      - 解锁配方: 制作GAU-8复仇者火炮组件箱、制作20mm厄利孔机炮组件箱、制作20mm火神炮组件箱
+      - 解锁建筑: 20mm厄利孔机炮
+      - 解锁配方: 制作20mm厄利孔机炮组件箱
   - **超织物工艺** `MMT_SuperFabric` ｜ 坐标 (12.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): AdvancedFabrication
     - 解锁配方: 纺织超织物

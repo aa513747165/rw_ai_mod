@@ -19,12 +19,11 @@ RESEARCH_GLOB = os.path.join(ROOT, "1.7/Defs/ResearchProjectDefs/MMT_Research_*.
 
 # defName -> (x, y)，宽 13 列（x 0-12）× 9 行（y 0-8）
 LAYOUT = {
-    # y=0 基础采集：木工 | 艺术 | 攻城 | 医药 V（主干线 D3/D4 的交叉前置）| 农业 | 草药种植 | 超级织物
+    # y=0 基础采集：木工 | 艺术 | 医药 V（主干线 D3/D4 的交叉前置）| 农业 | 草药种植 | 超级织物
     "MMT_Woodworking": (0, 0),
     "MMT_CharcoalBurning": (1, 0),
     "MMT_ElectricWoodworking": (2, 0),
     "MMT_ArtSupplies": (4, 0),
-    "MMT_SiegeWeapons": (6, 0),
     "MMT_Medicine_D1": (7, 0),
     "MMT_AgricultureBasic": (8, 0),
     "MMT_MedicalPlants_A1": (9, 0),
@@ -122,19 +121,18 @@ LAYOUT = {
     "MMT_DirectedEnergyWeapons2": (11, 7),
     "MMT_PsychicShieldTech": (12, 7),
     "MMT_DimensionalTeleport": (13, 7),
-    # y=8 重武器：狙击 | 榴弹炮/火炮/自动炮塔 | 火箭弹 | 重机枪塔/重型炮塔
+    # y=8 重武器：狙击 | 发射器 | 火箭弹 | 重机枪塔/重型炮塔
     "MMT_SnipersAdvanced": (0, 8),
     "MMT_GrenadeLaunchers": (2, 8),
-    "MMT_Artillery2": (3, 8),
-    "MMT_Autoturrets3": (4, 8),
     "MMT_Rocketry1": (6, 8),
-    "MMT_Rocketry2": (7, 8),
-    "MMT_Rocketry3": (8, 8),
     "MMT_HeavyMachineGunTurret": (10, 8),
     "MMT_HeavyTurrets2": (11, 8),
     "MMT_HeavyTurrets3": (12, 8),
     # y=8 空位 x9：能量聚能（前置核能 x5y7，x 必须大于前置）
     "MMT_EnergyConvergence": (9, 8),
+    # y=0 空位 x11/x13：战地医疗（前置 医疗物资 VI x7y0，x 递增）
+    "MMT_FieldMedicalPack": (11, 0),
+    "MMT_HealTurretResearch": (13, 0),
 }
 
 # 经 Patches 注入 MMT 标签页的原版研究坐标（唯一事实来源；补丁文件里的 researchViewX/Y 必须与这里一致，

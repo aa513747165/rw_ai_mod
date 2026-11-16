@@ -150,7 +150,7 @@ namespace MyModeTest
             if (ore == null)
                 return;
             // 电动筛批量更大：6~10，手动 4~7
-            int count = electric ? Rand.RangeInclusive(6, 10) : Rand.RangeInclusive(4, 7);
+            int count = electric ? Rand.RangeInclusive(30, 50) : Rand.RangeInclusive(20, 40);
             Thing thing = ThingMaker.MakeThing(ore);
             thing.stackCount = count;
             __result = new List<Thing> { thing };

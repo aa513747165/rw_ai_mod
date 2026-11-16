@@ -154,20 +154,6 @@
 		<researchViewY>7.00</researchViewY>
 	</ResearchProjectDef>
 	<ResearchProjectDef>
-		<defName>MMT_SiegeWeapons</defName>
-		<label>攻城武器</label>
-		<description>轮到我的回合</description>
-		<baseCost>500</baseCost>
-		<techLevel>Medieval</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>RecurveBow</li>
-			<li>MMT_Woodworking</li>
-		</prerequisites>
-		<researchViewX>6.00</researchViewX>
-		<researchViewY>0.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
 		<defName>MMT_HeavyTurrets2</defName>
 		<label>重型炮塔 II</label>
 		<description>如果这还不够用...</description>
@@ -191,63 +177,6 @@
 			<li>MMT_HeavyTurrets2</li>
 		</prerequisites>
 		<researchViewX>12.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_Artillery2</defName>
-		<label>火炮 II</label>
-		<description>国王的最终手段</description>
-		<baseCost>1500</baseCost>
-		<techLevel>Industrial</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_GrenadeLaunchers</li>
-			<li>SniperTurret</li>
-			<li>Mortars</li>
-		</prerequisites>
-		<researchViewX>3.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_Autoturrets3</defName>
-		<label>自动炮塔 III</label>
-		<description>我警告你，别碰它</description>
-		<baseCost>2000</baseCost>
-		<techLevel>Spacer</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_Artillery2</li>
-		</prerequisites>
-		<researchViewX>4.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_Rocketry2</defName>
-		<label>火箭弹 II</label>
-		<description>孙子讲过这句话，我得说他比你更懂打仗，伙计，因为这是他发明的！</description>
-		<baseCost>1300</baseCost>
-		<techLevel>Industrial</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_Rocketry1</li>
-			<li>SniperTurret</li>
-			<li>MMT_GrenadeLaunchers</li>
-			<li>Mortars</li>
-		</prerequisites>
-		<researchViewX>7.00</researchViewX>
-		<researchViewY>8.00</researchViewY>
-	</ResearchProjectDef>
-	<ResearchProjectDef>
-		<defName>MMT_Rocketry3</defName>
-		<label>火箭弹 III</label>
-		<description>之后他完善了它，导致没有活人能在战场上胜过他！</description>
-		<baseCost>2100</baseCost>
-		<techLevel>Spacer</techLevel>
-		<tab>MMT_ResearchTab</tab>
-		<prerequisites>
-			<li>MMT_Rocketry2</li>
-		</prerequisites>
-		<researchViewX>8.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
 	<!-- KPV 重机枪塔研究：前中期有人操作防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁） -->
