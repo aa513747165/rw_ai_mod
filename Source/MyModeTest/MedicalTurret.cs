@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.Sound;
@@ -741,6 +742,22 @@ namespace MyModeTest
             Job job = JobMaker.MakeJob(MMT_MedicalTurretDefOf.MMT_LoadMedicalTurret, bestDrug, t);
             job.count = Math.Max(1, Math.Min(comp.RoomFor(bestDrug.def), bestDrug.stackCount));
             return job;
+        }
+    }
+
+    /// <summary>
+    /// 按 <c>specialDisplayRadius</c> 画射程圈的放置助手。
+    /// 原版 <c>PlaceWorker_ShowTurretRadius</c> 强依赖 <c>building.turretGunDef</c>，
+    /// 非枪械炮塔（如医疗注射炮台）挂载会 NRE 刷屏，故自定义本类替代。
+    /// </summary>
+    public class PlaceWorker_ShowSpecialRadius : PlaceWorker
+    {
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
+        {
+            if (def.specialDisplayRadius > 0f)
+            {
+                GenDraw.DrawRadiusRing(center, def.specialDisplayRadius);
+            }
         }
     }
 

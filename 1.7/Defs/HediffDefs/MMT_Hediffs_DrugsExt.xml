@@ -411,7 +411,7 @@
       <!-- 阶段 0（severity<0.5）：基因疲劳期，限制连续使用 -->
       <li>
         <statOffsets>
-          <GlobalWorkSpeed>-0.10</GlobalWorkSpeed>
+          <WorkSpeedGlobal>-0.10</WorkSpeedGlobal>
         </statOffsets>
         <capMods>
           <li>
@@ -424,7 +424,7 @@
       <li>
         <minSeverity>0.5</minSeverity>
         <statOffsets>
-          <GlobalWorkSpeed>0.20</GlobalWorkSpeed>
+          <WorkSpeedGlobal>0.20</WorkSpeedGlobal>
           <ImmunityGainSpeed>0.30</ImmunityGainSpeed>
         </statOffsets>
         <capMods>

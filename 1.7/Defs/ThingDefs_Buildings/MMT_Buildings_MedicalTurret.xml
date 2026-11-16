@@ -65,7 +65,7 @@
     <hasInteractionCell>True</hasInteractionCell>
     <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <placeWorkers>
-      <li>PlaceWorker_ShowTurretRadius</li>
+      <li>MyModeTest.PlaceWorker_ShowSpecialRadius</li>
     </placeWorkers>
     <specialDisplayRadius>25</specialDisplayRadius>
     <researchPrerequisites>

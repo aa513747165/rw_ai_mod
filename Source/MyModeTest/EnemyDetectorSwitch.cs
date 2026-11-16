@@ -275,9 +275,10 @@ namespace MyModeTest
     [HarmonyPatch(typeof(LordManager), nameof(LordManager.AddLord))]
     public static class Patch_LordManager_AddLord
     {
-        public static void Postfix(Lord lord)
+        // 1.7 该参数名为 newLord（Harmony 按参数名绑定，写错会在 PatchAll 时抛异常）
+        public static void Postfix(Lord newLord)
         {
-            EnemyRaidTracker.SyncLord(lord);
+            EnemyRaidTracker.SyncLord(newLord);
         }
     }
 
@@ -285,9 +286,10 @@ namespace MyModeTest
     [HarmonyPatch(typeof(LordManager), nameof(LordManager.RemoveLord))]
     public static class Patch_LordManager_RemoveLord
     {
-        public static void Prefix(Lord lord)
+        // 1.7 该参数名为 oldLord（Harmony 按参数名绑定）
+        public static void Prefix(Lord oldLord)
         {
-            EnemyRaidTracker.OnLordRemoved(lord);
+            EnemyRaidTracker.OnLordRemoved(oldLord);
         }
     }
 
