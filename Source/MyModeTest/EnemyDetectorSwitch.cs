@@ -311,9 +311,13 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>补丁：派系关系翻转（好感度跌破敌对阈值、中途议和等），全量重建计数。</summary>
-    [HarmonyPatch(typeof(Faction), nameof(Faction.SetRelation))]
-    public static class Patch_Faction_SetRelation
+    /// <summary>
+    /// 补丁：派系关系翻转（好感度跌破敌对阈值、中途议和等），全量重建计数。
+    /// 注：1.7 中好感度变化与直接改关系都不经过 Faction.SetRelation，统一收口于
+    /// Notify_RelationKindChanged（CheckKindThresholds / SetRelationDirect 均调它），故补丁挂此方法。
+    /// </summary>
+    [HarmonyPatch(typeof(Faction), nameof(Faction.Notify_RelationKindChanged))]
+    public static class Patch_Faction_NotifyRelationKindChanged
     {
         public static void Postfix()
         {
