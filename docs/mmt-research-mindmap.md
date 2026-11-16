@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（99 项）
+- MMT 研究总览（100 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -26,7 +26,9 @@
       - **医疗物资 III** `MMT_Medicine_B1` ｜ 坐标 (2.00, 2.00) ｜ 400点 ｜ Medieval
         - 解锁配方: 配制草药包
         - **医疗物资 IV** `MMT_Medicine_B2` ｜ 坐标 (3.00, 2.00) ｜ 500点 ｜ Medieval
-          - 解锁配方: 制作基础医药包（芦荟）、制作基础医药包（混合草药）
+          - 解锁配方: 制作基础医药包（芦荟）、制作基础医药包（混合草药）、合成肾上腺素
+          - **医疗物资 V** `MMT_Medicine_C1` ｜ 坐标 (4.00, 2.00) ｜ 800点 ｜ Industrial
+            - 解锁建筑: 医疗注射炮台
           - **义肢安装 III** `MMT_ProsthesisInstall_C2` ｜ 坐标 (5.00, 2.00) ｜ 800点 ｜ Industrial ｜ 交叉前置: 义肢安装 II
             - 解锁配方: 安装人造鼻、安装简易的假手、安装简易的假足、安装人造骨盆
             - **义肢安装 IV** `MMT_ProsthesisInstall_C3` ｜ 坐标 (6.00, 2.00) ｜ 1100点 ｜ Industrial ｜ 前置(原版): VitalsMonitor

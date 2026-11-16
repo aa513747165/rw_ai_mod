@@ -66,10 +66,24 @@
     <researchViewY>2.00</researchViewY>
   </ResearchProjectDef>
 
+  <!-- 医疗物资 V：解锁医疗注射炮台（医疗线 Y=2 的 X=4 空位，前置 B2） -->
+  <ResearchProjectDef>
+    <defName>MMT_Medicine_C1</defName>
+    <label>医疗物资 V</label>
+    <description>将注射装置与自动瞄准机构结合，建造医疗注射炮台：远程为殖民者注射药物或自动包扎治疗，危急时刻无需医生到场。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Medicine_B2</li>
+    </prerequisites>
+    <researchViewX>4.00</researchViewX>
+    <researchViewY>2.00</researchViewY>
+  </ResearchProjectDef>
+
   <!-- 医疗物资 VI：解锁闪耀世界医药（前置为原版 MedicineProduction，由 patch 挂到 B2 之后） -->
   <ResearchProjectDef>
-    <defName>MMT_Medicine_D1</defName>
-    <label>医疗物资 VI</label>
+    <defName>MMT_Medicine_D1</defName>    <label>医疗物资 VI</label>
     <description>融合生物科技、抗生素与高级材料，仿制闪耀世界的先进医药。</description>
     <baseCost>2000</baseCost>
     <techLevel>Spacer</techLevel>

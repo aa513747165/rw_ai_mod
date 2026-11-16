@@ -143,4 +143,19 @@
     </requiredCapacities>
     <prioritizeSustains>true</prioritizeSustains>
   </WorkGiverDef>
+
+  <!-- 医疗注射炮台装填：搬运工作（priorityInType=145，介于原版装炮 150 与加油 140 之间） -->
+  <WorkGiverDef>
+    <defName>MMT_LoadMedicalTurret</defName>
+    <label>装填医疗注射炮台</label>
+    <giverClass>MyModeTest.WorkGiver_LoadMedicalTurret</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>145</priorityInType>
+    <verb>装填</verb>
+    <gerund>装填中</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
 </Defs>

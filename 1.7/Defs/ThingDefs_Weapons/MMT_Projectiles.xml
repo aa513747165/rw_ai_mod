@@ -750,4 +750,18 @@
 			<flyOverhead>true</flyOverhead>
 		</projectile>
 	</ThingDef>
+	<!--医疗注射炮台注射弹：thingClass 覆盖为自定义必中投射物（继承 Projectile 非 Bullet 天然零伤害，命中给药由 C# 处理，无需 damageDef）-->
+	<ThingDef ParentName="BaseBullet">
+		<defName>MMT_Bullet_MedicalSyringe</defName>
+		<label>注射弹</label>
+		<thingClass>MyModeTest.Projectile_MedicalSyringe</thingClass>
+		<graphicData>
+			<texPath>Things/Projectile/MMT_Syringe</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<projectile>
+			<speed>60</speed>
+			<flyOverhead>false</flyOverhead>
+		</projectile>
+	</ThingDef>
 </Defs>

@@ -42,4 +42,18 @@
     <driverClass>MyModeTest.JobDriver_UnloadChargingStation</driverClass>
     <reportString>正在取出充能设备（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 装填药品作业：取药品搬到医疗注射炮台装入药仓（JobDriver_LoadMedicalTurret） -->
+  <JobDef>
+    <defName>MMT_LoadMedicalTurret</defName>
+    <driverClass>MyModeTest.JobDriver_LoadMedicalTurret</driverClass>
+    <reportString>正在装填药品（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 取出药品作业：从医疗注射炮台药仓弹出该种药品到交互格（JobDriver_UnloadMedicalTurret） -->
+  <JobDef>
+    <defName>MMT_UnloadMedicalTurret</defName>
+    <driverClass>MyModeTest.JobDriver_UnloadMedicalTurret</driverClass>
+    <reportString>正在取出药品（TargetA）。</reportString>
+  </JobDef>
 </Defs>
