@@ -22,6 +22,25 @@ namespace MyModeTest
         private const float CoarseTierMin = 0.6f;
         private const float MidTierMin = 0.25f;
 
+        // 稀有矿研究门槛：表内矿石在完成高级合金研究前不入池（无滤网全池与滤网窗口同效），
+        // 防止工业早期筛矿直接产出金/铀而架空探矿；钛/钨不 gate——其熔炼配方本身挂高级合金，提前筛到只是囤货
+        private static readonly Dictionary<string, string> RareOreResearchGates = new Dictionary<string, string>
+        {
+            { "MMT_GoldOre", "MMT_AdvancedAlloys" },
+            { "Gold", "MMT_AdvancedAlloys" },
+            { "Uranium", "MMT_AdvancedAlloys" },
+        };
+
+        /// <summary>该矿石是否被研究门槛锁定（门槛研究未完成时不得入池）。</summary>
+        private static bool ResearchGated(ThingDef ore)
+        {
+            string researchName;
+            if (!RareOreResearchGates.TryGetValue(ore.defName, out researchName))
+                return false;
+            ResearchProjectDef research = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(researchName);
+            return research != null && !research.IsFinished;
+        }
+
         private static readonly List<KeyValuePair<ThingDef, float>> Pool = new List<KeyValuePair<ThingDef, float>>();
 
         // 全部滤网白名单的并集：用于识别"未分类矿"（含第三方 mod 矿脉），未分类矿按档位窗口归位
@@ -63,15 +82,23 @@ namespace MyModeTest
                 return null;
             float total = 0f;
             foreach (KeyValuePair<ThingDef, float> kv in Pool)
-                total += kv.Value;
+                if (!ResearchGated(kv.Key))
+                    total += kv.Value;
+            // 门槛把全池锁空的极端情况（理论上不存在：常见矿无门槛）兜底返回空
+            if (total <= 0f)
+                return null;
             float roll = Rand.Value * total;
+            ThingDef last = null;
             foreach (KeyValuePair<ThingDef, float> kv in Pool)
             {
+                if (ResearchGated(kv.Key))
+                    continue;
+                last = kv.Key;
                 roll -= kv.Value;
                 if (roll <= 0f)
                     return kv.Key;
             }
-            return Pool[Pool.Count - 1].Key;
+            return last;
         }
 
         /// <summary>按滤网过滤抽取：先判定掺沙（命中则产沙子），否则在滤网白名单窗口内按权重抽取。</summary>
@@ -102,9 +129,11 @@ namespace MyModeTest
             return RollOre();
         }
 
-        /// <summary>该池条目是否被滤网放行：白名单内直接放行；其它滤网的白名单矿不放行；未分类矿按权重归窗对档放行。</summary>
+        /// <summary>该池条目是否被滤网放行：研究门槛锁定的稀有矿一律不放行；白名单内直接放行；其它滤网的白名单矿不放行；未分类矿按权重归窗对档放行。</summary>
         private static bool Allowed(MeshFilterExtension ext, KeyValuePair<ThingDef, float> entry)
         {
+            if (ResearchGated(entry.Key))
+                return false;
             if (ext.ores != null && ext.ores.Contains(entry.Key))
                 return true;
             if (Whitelisted.Contains(entry.Key))
