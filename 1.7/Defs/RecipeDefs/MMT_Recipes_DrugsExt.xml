@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 毒品扩展链配方：现代层（灵能结晶/灵能粉/灵能茶/晾晒烟草/卷烟/雪茄/烘焙咖啡/战斗鸡尾酒）
-       + 未来层（纳米修复针/基因强化剂/纳米净化血清/灵能增幅器/机械复活剂）。
+  <!-- 毒品扩展链配方：现代层（灵能结晶/灵能粉/灵能茶/高级灵能茶/晾晒烟草/卷烟/雪茄/烘焙咖啡/战斗鸡尾酒）
+       + 未来层（超级灵能茶/纳米修复针/基因强化剂/纳米净化血清/灵能增幅器/机械复活剂）。
        灵能增幅器与机械复活剂直接产出原版本体物品（与闪耀药复用 MedicineUltratech 同惯例） -->
 
   <!-- 灵能结晶：化工全合成（MMT 无 HSK 的 desiri 动物来源），中间体 -->
@@ -159,6 +159,123 @@
       <li>MMT_AdvDrugLab</li>
     </recipeUsers>
     <researchPrerequisite>MMT_Drugs_D1</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- 高级灵能茶：灵能茶的精制版，恢复灵能焦点与睡眠各 50% -->
+  <RecipeDef>
+    <defName>MMT_BrewAdvPsyfocusTea</defName>
+    <label>精制高级灵能茶</label>
+    <description>以灵能茶为基底，添入灵能结晶与金丝桃二次精制，大幅凝聚精神焦点并驱散疲惫。产出 2。</description>
+    <jobString>正在精制高级灵能茶。</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_PsyfocusTea</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_SynchroCrystal</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Hypericum</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_PsyfocusTea</li>
+        <li>MMT_SynchroCrystal</li>
+        <li>MMT_Hypericum</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_AdvPsyfocusTea>2</MMT_AdvPsyfocusTea>
+    </products>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <workSkill>Medicine</workSkill>
+    <recipeUsers>
+      <li>Brewery</li>
+      <li>DrugLab</li>
+      <li>MMT_ElectricMedicalTable</li>
+      <li>MMT_AdvDrugLab</li>
+    </recipeUsers>
+    <researchPrerequisite>MMT_Drugs_D2</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- 超级灵能茶：高级灵能茶的终极版，恢复灵能焦点与睡眠各 100% -->
+  <RecipeDef>
+    <defName>MMT_BrewSuperPsyfocusTea</defName>
+    <label>精炼超级灵能茶</label>
+    <description>以高级灵能茶为基底精炼至极限，一杯即可完全恢复精神焦点与精力。产出 2。</description>
+    <jobString>正在精炼超级灵能茶。</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_Drug</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_AdvPsyfocusTea</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_SynchroCrystal</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Hypericum</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_AdvPsyfocusTea</li>
+        <li>MMT_SynchroCrystal</li>
+        <li>MMT_Hypericum</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_SuperPsyfocusTea>2</MMT_SuperPsyfocusTea>
+    </products>
+    <skillRequirements>
+      <Medicine>9</Medicine>
+    </skillRequirements>
+    <workSkill>Medicine</workSkill>
+    <recipeUsers>
+      <li>DrugLab</li>
+      <li>MMT_ElectricMedicalTable</li>
+      <li>MMT_AdvDrugLab</li>
+    </recipeUsers>
+    <researchPrerequisite>MMT_Drugs_E2</researchPrerequisite>
   </RecipeDef>
 
   <!-- 晾晒烟叶：对齐 MMT_DrySmokeleaf（晾晒架/电动晾晒架，毒品 I 解锁） -->

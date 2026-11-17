@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 高级药物合成台：未来层药物生产建筑（毒品 VIII 解锁），结构模板对齐 MMT_ElectricMedicalTable，
-       贴图为 HSK 授权复制（TableSynthetics）；1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 <building/> -->
+       贴图为程序生成（HSK 风格）；drawSize 对齐 HSK TableSynthetics 的 (3.5,1.5)（占地 3x1），
+       1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 <building/> -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AdvDrugLab</defName>
     <label>高级药物合成台</label>
@@ -11,7 +12,7 @@
       <texPath>Things/Building/Production/MMT_AdvDrugLab/MMT_AdvDrugLab</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,3)</drawSize>
+      <drawSize>(3.5,1.5)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
     <pathCost>90</pathCost>
@@ -48,6 +49,8 @@
       <li>MMT_MakeSynchroCrystal</li>
       <li>MMT_MakeSynchronisity</li>
       <li>MMT_BrewPsyfocusTea</li>
+      <li>MMT_BrewAdvPsyfocusTea</li>
+      <li>MMT_BrewSuperPsyfocusTea</li>
       <li>MMT_MakeBattleCocktail</li>
       <li>MMT_MakeNanoRepairSerum</li>
       <li>MMT_MakeGeneBooster</li>

@@ -241,11 +241,11 @@
     <researchViewY>1.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 毒品 VIII（合成平台）：解锁高级药物合成台 -->
+  <!-- 毒品 VIII（合成平台）：解锁高级药物合成台/高级灵能茶 -->
   <ResearchProjectDef>
     <defName>MMT_Drugs_D2</defName>
     <label>毒品 VIII</label>
-    <description>建造集成微芯片控制与纳米装配能力的高级药物合成台，是制备未来层药物的基础平台。</description>
+    <description>建造集成微芯片控制与纳米装配能力的高级药物合成台，并掌握高级灵能茶的精制工艺，是制备未来层药物的基础平台。</description>
     <baseCost>2000</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
@@ -273,11 +273,11 @@
     <researchViewY>1.50</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 毒品 X（未来制药巅峰）：解锁基因强化剂/纳米净化血清/灵能增幅器/机械复活剂 -->
+  <!-- 毒品 X（未来制药巅峰）：解锁基因强化剂/纳米净化血清/灵能增幅器/机械复活剂/超级灵能茶 -->
   <ResearchProjectDef>
     <defName>MMT_Drugs_E2</defName>
     <label>毒品 X</label>
-    <description>触及闪耀世界制药技术的巅峰：基因强化、成瘾净化、灵能增幅乃至起死回生。</description>
+    <description>触及闪耀世界制药技术的巅峰：基因强化、成瘾净化、灵能增幅、超级灵能茶精炼乃至起死回生。</description>
     <baseCost>3000</baseCost>
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>

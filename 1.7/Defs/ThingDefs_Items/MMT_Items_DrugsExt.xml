@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 毒品扩展链成品：现代层（灵能粉/灵能茶/卷烟/雪茄/咖啡/战斗鸡尾酒）+ 未来层（纳米修复针/基因强化剂/纳米净化血清）。
+  <!-- 毒品扩展链成品：现代层（灵能粉/灵能茶/高级灵能茶/卷烟/雪茄/咖啡/战斗鸡尾酒）+ 未来层（超级灵能茶/纳米修复针/基因强化剂/纳米净化血清）。
        灵能粉数值全面对标 HSK Synchronisity；纳米修复针/基因强化剂/净化血清为 MMT 原创未来层制品。
        贴图：HSK 授权复制（目录贴图走 Graphic_StackCount，单图走 Graphic_Single）或直引原版路径 -->
 
@@ -108,6 +108,86 @@
     <comps>
       <li Class="CompProperties_Drug">
         <listOrder>1000</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 高级灵能茶：灵能茶的精制版，恢复灵能焦点与睡眠各 50%，无成瘾 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_AdvPsyfocusTea</defName>
+    <label>高级灵能茶</label>
+    <description>以灵能茶为基底，添入灵能结晶二次精制的浓茶，茶色金黄，能大幅凝聚灵能者的精神焦点，并驱散过半疲惫。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_AdvPsyfocusTea</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>400</WorkToMake>
+      <MarketValue>45</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Spacer</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>2</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_OffsetPsyfocus">
+          <offset>0.5</offset>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>0.5</offset>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1001</listOrder>
+        <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
+        <addictiveness>0</addictiveness>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 超级灵能茶：高级灵能茶的终极版，恢复灵能焦点与睡眠各 100%，无成瘾 -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_SuperPsyfocusTea</defName>
+    <label>超级灵能茶</label>
+    <description>闪耀世界制药技术的结晶，茶汤泛着微光的紫色涟漪。一杯下肚，灵能焦点与精力瞬间充盈如初。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Medicine/MMT_SuperPsyfocusTea</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>800</WorkToMake>
+      <MarketValue>100</MarketValue>
+      <Mass>0.002</Mass>
+    </statBases>
+    <techLevel>Ultra</techLevel>
+    <ingestible>
+      <foodType>Fluid, Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_OffsetPsyfocus">
+          <offset>1.0</offset>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>1.0</offset>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>1002</listOrder>
         <overdoseSeverityOffset>0.08~0.14</overdoseSeverityOffset>
         <addictiveness>0</addictiveness>
       </li>

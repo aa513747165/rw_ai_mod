@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 432 |
+| MMT 配方 | 434 |
 | 与 HSK 数值一致 | 122 |
 | 与 HSK 有数值差异 | 57 |
 | HSK 有对应资源但无对应配方 | 9 |
-| MMT 新增（HSK 无对应资源） | 244 |
+| MMT 新增（HSK 无对应资源） | 246 |
 
 ### 1.1 按家族统计
 
@@ -29,7 +29,7 @@
 | 充能护盾（ChargeShield） | 1 | 0 | 0 | 0 | 1 |
 | 混凝土（Concrete） | 5 | 4 | 1 | 0 | 0 |
 | 药品（Drugs） | 10 | 1 | 5 | 2 | 2 |
-| DrugsExt（DrugsExt） | 15 | 0 | 1 | 3 | 11 |
+| DrugsExt（DrugsExt） | 17 | 0 | 1 | 3 | 13 |
 | 电动金属（Electric） | 12 | 7 | 5 | 0 | 0 |
 | 电动电子（ElectricElectronics） | 3 | 0 | 3 | 0 | 0 |
 | 电动石化（ElectricPetrochem） | 5 | 0 | 5 | 0 | 0 |
@@ -917,6 +917,16 @@
 #### 泡制灵能茶（`MMT_BrewPsyfocusTea`）
 
 - **MMT**：灵能结晶×1 + 金丝桃×2 -> 灵能茶×2 @ 高级药物合成台 ｜ 工作量=400 ｜ 研究:毒品 VII(MMT_Drugs_D1)，技能:Medicine≥5
+- **HSK**：无对应资源（MMT 新增）
+
+#### 精制高级灵能茶（`MMT_BrewAdvPsyfocusTea`）
+
+- **MMT**：灵能茶×2 + 灵能结晶×1 + 金丝桃×2 -> 高级灵能茶×2 @ 高级药物合成台 ｜ 工作量=800 ｜ 研究:毒品 VIII(MMT_Drugs_D2)，技能:Medicine≥7
+- **HSK**：无对应资源（MMT 新增）
+
+#### 精炼超级灵能茶（`MMT_BrewSuperPsyfocusTea`）
+
+- **MMT**：高级灵能茶×2 + 灵能结晶×2 + 金丝桃×4 -> 超级灵能茶×2 @ 高级药物合成台 ｜ 工作量=1600 ｜ 研究:毒品 X(MMT_Drugs_E2)，技能:Medicine≥9
 - **HSK**：无对应资源（MMT 新增）
 
 #### 晾晒烟叶（`MMT_DryTobacco`）

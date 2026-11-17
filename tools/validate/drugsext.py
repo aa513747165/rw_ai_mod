@@ -28,6 +28,8 @@ STACK_TEXTURES = {
     "Things/Item/MMT/MMT_Medicine/MMT_SynchroCrystal": ["SynchroCrystal_a.png", "SynchroCrystal_b.png", "SynchroCrystal_c.png"],
     "Things/Item/MMT/MMT_Medicine/MMT_Synchronisity": ["Synchronisity_a.png", "Synchronisity_b.png", "Synchronisity_c.png"],
     "Things/Item/MMT/MMT_Medicine/MMT_PsyfocusTea": ["PsyfocusTea_a.png", "PsyfocusTea_b.png", "PsyfocusTea_c.png"],
+    "Things/Item/MMT/MMT_Medicine/MMT_AdvPsyfocusTea": ["AdvPsyfocusTea_a.png", "AdvPsyfocusTea_b.png", "AdvPsyfocusTea_c.png"],
+    "Things/Item/MMT/MMT_Medicine/MMT_SuperPsyfocusTea": ["SuperPsyfocusTea_a.png", "SuperPsyfocusTea_b.png", "SuperPsyfocusTea_c.png"],
     "Things/Item/MMT/MMT_Medicine/MMT_DriedLeavesTobacco": ["DriedLeavesTobacco_a.png", "DriedLeavesTobacco_b.png", "DriedLeavesTobacco_c.png"],
     "Things/Item/MMT/MMT_Medicine/MMT_Cigarette": ["Cigarette_a.png", "Cigarette_b.png"],
     "Things/Item/MMT/MMT_Medicine/MMT_Cigar": ["Cigar_a.png", "Cigar_b.png"],
@@ -62,6 +64,8 @@ RECIPE_EXPECT = {
     "MMT_MakeSynchroCrystal": ({"MMT_SynchroCrystal": "2"}, {"MMT_Sulphates": "2", "MMT_Surfactant": "1", "PsychoidLeaves": "4"}, "MMT_Drugs_D1"),
     "MMT_MakeSynchronisity": ({"MMT_Synchronisity": "2"}, {"MMT_SynchroCrystal": "4", "Neutroamine": "2"}, "MMT_Drugs_D1"),
     "MMT_BrewPsyfocusTea": ({"MMT_PsyfocusTea": "2"}, {"MMT_SynchroCrystal": "1", "MMT_Hypericum": "2"}, "MMT_Drugs_D1"),
+    "MMT_BrewAdvPsyfocusTea": ({"MMT_AdvPsyfocusTea": "2"}, {"MMT_PsyfocusTea": "2", "MMT_SynchroCrystal": "1", "MMT_Hypericum": "2"}, "MMT_Drugs_D2"),
+    "MMT_BrewSuperPsyfocusTea": ({"MMT_SuperPsyfocusTea": "2"}, {"MMT_AdvPsyfocusTea": "2", "MMT_SynchroCrystal": "2", "MMT_Hypericum": "4"}, "MMT_Drugs_E2"),
     "MMT_DryTobacco": ({"MMT_DriedLeavesTobacco": "5"}, {"MMT_TobaccoLeaves": "5"}, "MMT_Drugs_A1"),
     "MMT_DryTobaccoBulk": ({"MMT_DriedLeavesTobacco": "25"}, {"MMT_TobaccoLeaves": "25"}, "MMT_Drugs_A1"),
     "MMT_MakeCigarette": ({"MMT_Cigarette": "2"}, {"MMT_DriedLeavesTobacco": "2"}, "MMT_DrugPlants_A3"),
@@ -112,10 +116,11 @@ def validate_drugsext() -> None:
         assert_equal(child_text(resources[name], "label"), label, f"{name} label")
     assert_equal(child_text(resources["MMT_SynchroCrystal"], "thingCategories/li"), "Medicine", "灵能结晶类别")
 
-    # ---- 物品：10 种成品 ----
+    # ---- 物品：12 种成品 ----
     items = def_map(parse_xml(ITEM_XML))
     for name, label, category in [
         ("MMT_Synchronisity", "灵能粉", "Hard"), ("MMT_PsyfocusTea", "灵能茶", "Medical"),
+        ("MMT_AdvPsyfocusTea", "高级灵能茶", "Medical"), ("MMT_SuperPsyfocusTea", "超级灵能茶", "Medical"),
         ("MMT_Cigarette", "卷烟", "Social"), ("MMT_Cigar", "雪茄", "Social"),
         ("MMT_Coffee", "咖啡", "Social"), ("MMT_BattleCocktail", "战斗鸡尾酒", "Hard"),
         ("MMT_NanoRepairSerum", "纳米修复针", "Medical"), ("MMT_GeneBooster", "基因强化剂", "Medical"),
@@ -139,6 +144,14 @@ def validate_drugsext() -> None:
     purge_doers = [li.attrib.get("Class") for li in purge.findall("ingestible/outcomeDoers/li")]
     if "MyModeTest.IngestionOutcomeDoer_RemoveAddictions" not in purge_doers:
         fail("纳米净化血清缺少 C# 成瘾移除 doer")
+    # 高级/超级灵能茶：恢复灵能焦点与睡眠的档位核对（各 50% / 各 100%）
+    for name, psy, rest in [("MMT_AdvPsyfocusTea", "0.5", "0.5"), ("MMT_SuperPsyfocusTea", "1.0", "1.0")]:
+        doers = items[name].findall("ingestible/outcomeDoers/li")
+        psy_doer = next(li for li in doers if li.attrib.get("Class") == "IngestionOutcomeDoer_OffsetPsyfocus")
+        assert_equal(child_text(psy_doer, "offset"), psy, f"{name} 灵能焦点恢复")
+        rest_doer = next(li for li in doers if li.attrib.get("Class") == "IngestionOutcomeDoer_OffsetNeed")
+        assert_equal(child_text(rest_doer, "need"), "Rest", f"{name} 恢复目标 need")
+        assert_equal(child_text(rest_doer, "offset"), rest, f"{name} 睡眠恢复")
 
     # ---- hediff：灵能粉成瘾五件套 + 双阶段战斗鸡尾酒 + 纳米修复 HealPermanentWounds ----
     # 注：hediff 与同名 ThoughtDef 共存是原版惯例，def_map 会报重复，需按标签类型分别建图
