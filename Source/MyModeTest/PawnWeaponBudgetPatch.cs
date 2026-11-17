@@ -14,6 +14,9 @@ namespace MyModeTest
     [HarmonyPatch(typeof(PawnWeaponGenerator), nameof(PawnWeaponGenerator.TryGenerateWeaponFor))]
     public static class PawnWeaponBudgetPatch
     {
+        // 功能开关：false = 动态预算缩放整体禁用（补丁注册但直接放行，所有 pawn 走原版逻辑）；
+        // 恢复时改为 true 即可。禁用原因：待补充 tick 级缓存以兼容解除袭击上限的 mod
+        private const bool Enabled = false;
         // 威胁点参考值：达到该点数时预算倍率为 1.0（约中盘袭击规模）
         private const float RefPoints = 500f;
         // 预算倍率下限/上限：下限 1.0 保证只做增量（不削弱原版早期强度，避免低价池买不起最便宜的枪而空手），
@@ -25,6 +28,10 @@ namespace MyModeTest
         private static void Prefix(Pawn pawn, out FloatRange? __state)
         {
             __state = null;
+            if (!Enabled)
+            {
+                return;
+            }
             Faction faction = pawn?.Faction;
             // 仅干预原版官方派系（Core/DLC），mod 派系直接放行
             if (faction?.def?.modContentPack == null || !faction.def.modContentPack.IsOfficialMod)
