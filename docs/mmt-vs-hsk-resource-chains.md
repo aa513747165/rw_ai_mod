@@ -2085,7 +2085,7 @@
 
 #### 制作木柄炸弹（`MMT_MakeStickBomb`）
 
-- **MMT**：原始零部件×15 + Chemfuel×3 + [MMT_BTextiles]×30 -> stick bomb×5 @ — ｜ 工作量=3000 ｜ 研究:RecurveBow(RecurveBow)，技能:Crafting≥3
+- **MMT**：原始零部件×15 + Chemfuel×3 + [MMT_BTextiles]×30 -> stick bomb×5 @ — ｜ 工作量=3000 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作毒气手榴弹 x10（`MMT_MakeToxGrenade`）
