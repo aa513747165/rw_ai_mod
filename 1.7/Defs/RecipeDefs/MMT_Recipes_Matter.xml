@@ -36,7 +36,7 @@
     <researchPrerequisite>MMT_MatterConversion1</researchPrerequisite>
   </RecipeDef>
 
-  <!-- 以下 13 条无机物还原配方：对照 HSK ConvertTo*，全部挂转化 II，技能 15 -->
+  <!-- 以下 13 条无机物还原配方：对照 HSK ConvertTo*，技能 15；11 条挂转化 II，铀/金两条稀有资源挂转化 III -->
   <RecipeDef>
     <defName>MMT_ConvertToIron</defName>
     <label>转化为铁矿石</label>
@@ -314,7 +314,7 @@
     </skillRequirements>
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
-    <researchPrerequisite>MMT_MatterConversion2</researchPrerequisite>
+    <researchPrerequisite>MMT_MatterConversion3</researchPrerequisite>
   </RecipeDef>
 
   <RecipeDef>
@@ -384,7 +384,7 @@
     </skillRequirements>
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
-    <researchPrerequisite>MMT_MatterConversion2</researchPrerequisite>
+    <researchPrerequisite>MMT_MatterConversion3</researchPrerequisite>
   </RecipeDef>
 
   <RecipeDef>

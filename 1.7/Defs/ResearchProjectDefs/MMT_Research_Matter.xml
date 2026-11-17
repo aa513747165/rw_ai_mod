@@ -20,8 +20,8 @@
   <ResearchProjectDef>
     <defName>MMT_MatterConversion2</defName>
     <label>物质转换 II</label>
-    <description>掌握将无机物还原为特定资源的逆向转化技术，并解锁粒子对撞台以制备反物质。</description>
-    <baseCost>2400</baseCost>
+    <description>掌握将无机物还原为特定资源的逆向转化技术，并解锁粒子对撞台以制备反物质。（铀、金等稀有资源转化需进一步研究物质转换 III）</description>
+    <baseCost>4000</baseCost>
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
@@ -36,7 +36,7 @@
   <ResearchProjectDef>
     <defName>MMT_MatterConversion3</defName>
     <label>物质转换 III</label>
-    <description>量子层面重组物质的终极工艺，解锁量子加工台以制造α与β聚合物。</description>
+    <description>量子层面重组物质的终极工艺，解锁量子加工台以制造α与β聚合物，以及铀、金等稀有资源的逆向转化配方。</description>
     <baseCost>2500</baseCost>
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>
