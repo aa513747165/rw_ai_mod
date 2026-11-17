@@ -106,6 +106,7 @@
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MixConcrete_Electric</li>
+      <li>MMT_MakeReinforcedConcrete_Electric</li>
       <li>MMT_MakeDirt_Electric</li>
     </recipes>
     <tickerType>Normal</tickerType>
