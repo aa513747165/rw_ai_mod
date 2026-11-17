@@ -25,7 +25,7 @@
     <label>治疗炮塔</label>
     <description>把小型机枪炮塔的硬件改造成一套战地医疗平台：重写目标识别、让它只认友方生物，再把枪管换成发射医疗软子弹的投射器。\n\n解锁建造：小型治疗炮塔。</description>
     <baseCost>2500</baseCost>
-    <techLevel>Industrial</techLevel>
+    <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_FieldMedicalPack</li>

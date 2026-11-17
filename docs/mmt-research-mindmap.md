@@ -53,7 +53,9 @@
                 - 解锁建筑: 人造器官组装台
                 - 解锁配方: 制造人造骨骼、制造人造骨骼（x4）
                 - **义肢制造 VII** `MMT_Prosthesis_D4` ｜ 坐标 (7.00, 3.00) ｜ 1500点 ｜ Spacer
-  - **义肢制造 XII** `MMT_Prosthesis_E4` ｜ 坐标 (0.00, 3.00) ｜ 1800点 ｜ Ultra ｜ 前置(原版): Bionics
+              - **义肢制造 IV** `MMT_Prosthesis_D1` ｜ 坐标 (8.00, 3.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): VitalsMonitor
+                - 解锁建筑: 器官培养舱
+                - **义肢制造 V** `MMT_Prosthesis_D2` ｜ 坐标 (9.00, 3.00) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 义肢安装 IV
   - **基础石化工艺** `MMT_BasicPetrochemistry` ｜ 坐标 (0.00, 4.00) ｜ 1200点 ｜ Industrial ｜ 前置(原版): BiofuelRefining
     - 解锁建筑: 石化产品实验室、手压油泵
     - 解锁配方: 压取原油、蒸馏聚合物、制作塑料、制作合成橡胶、制作人造纤维、制作碳聚物
@@ -110,8 +112,6 @@
   - **近战 VI** `MMT_ArchotechWeapons` ｜ 坐标 (0.00, 7.00) ｜ 20000点 ｜ Archotech ｜ 前置(原版): Machining, BlowbackOperation, ChargedShot
   - **狙击步枪 III** `MMT_SnipersAdvanced` ｜ 坐标 (0.00, 8.00) ｜ 2100点 ｜ Spacer ｜ 前置(原版): PrecisionRifling
     - 解锁配方: 制造 AR-50狙击步枪、制造 PTRD反坦克步枪、制造 黑卡蒂II反器材狙击步枪、制造 M82A1反器材步枪、制造 SRS99反器材狙击步枪
-  - **义肢制造 XIII** `MMT_Prosthesis_E5` ｜ 坐标 (1.00, 3.00) ｜ 1800点 ｜ Ultra ｜ 前置(原版): Bionics
-    - **义肢制造 XIV** `MMT_Prosthesis_E6` ｜ 坐标 (2.00, 3.00) ｜ 1800点 ｜ Ultra
   - **毒品 I** `MMT_Drugs_A1` ｜ 坐标 (2.00, 1.00) ｜ 75点 ｜ Neolithic
     - 解锁建筑: 晾晒架
     - 解锁配方: 晾晒烟叶、晾晒烟叶（×5）、晾晒烟叶、晾晒烟叶（×5）
@@ -153,7 +153,7 @@
   - **医疗物资 VI** `MMT_Medicine_D1` ｜ 坐标 (7.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): MedicineProduction
     - 解锁配方: 制作闪耀世界医药
     - **战地医疗装备** `MMT_FieldMedicalPack` ｜ 坐标 (11.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): SmokepopBelt ｜ 需要研究台: HiTechResearchBench
-      - **治疗炮塔** `MMT_HealTurretResearch` ｜ 坐标 (13.00, 0.00) ｜ 2500点 ｜ Industrial ｜ 前置(原版): GunTurrets ｜ 需要研究台: HiTechResearchBench
+      - **治疗炮塔** `MMT_HealTurretResearch` ｜ 坐标 (13.00, 0.00) ｜ 2500点 ｜ Spacer ｜ 前置(原版): GunTurrets ｜ 需要研究台: HiTechResearchBench
         - 解锁建筑: 小型治疗炮塔
   - **毒品 VI** `MMT_Drugs_C3` ｜ 坐标 (7.00, 1.00) ｜ 900点 ｜ Industrial ｜ 前置(原版): DrugProduction
     - **毒品 VII** `MMT_Drugs_D1` ｜ 坐标 (12.00, 1.00) ｜ 1500点 ｜ Spacer ｜ 前置(原版): PsychiteRefining
@@ -187,9 +187,6 @@
         - 解锁配方: 编织精密滤网
   - **农业 I** `MMT_AgricultureBasic` ｜ 坐标 (8.00, 0.00) ｜ 150点 ｜ Neolithic
     - 解锁配方: 制作堆肥、制作肥料、拌制土堆
-  - **义肢制造 IV** `MMT_Prosthesis_D1` ｜ 坐标 (8.00, 3.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): VitalsMonitor
-    - 解锁建筑: 器官培养舱
-    - **义肢制造 V** `MMT_Prosthesis_D2` ｜ 坐标 (9.00, 3.00) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 义肢安装 IV
   - **药用植物 I** `MMT_MedicalPlants_A1` ｜ 坐标 (9.00, 0.00) ｜ 150点 ｜ Neolithic
     - **药用植物 II** `MMT_MedicalPlants_A2` ｜ 坐标 (10.00, 0.00) ｜ 200点 ｜ Neolithic
       - 解锁植物: 芦荟（播种）、中性花（播种）
@@ -207,6 +204,9 @@
     - 解锁建筑: 神经机械体工作台
     - **义肢制造 X** `MMT_Prosthesis_E2` ｜ 坐标 (11.00, 3.00) ｜ 1800点 ｜ Ultra
       - **义肢制造 XI** `MMT_Prosthesis_E3` ｜ 坐标 (12.00, 3.00) ｜ 1800点 ｜ Ultra
+        - **义肢制造 XII** `MMT_Prosthesis_E4` ｜ 坐标 (13.00, 3.00) ｜ 1800点 ｜ Ultra
+          - **义肢制造 XIII** `MMT_Prosthesis_E5` ｜ 坐标 (14.00, 3.00) ｜ 1800点 ｜ Ultra
+            - **义肢制造 XIV** `MMT_Prosthesis_E6` ｜ 坐标 (15.00, 3.00) ｜ 1800点 ｜ Ultra
   - **激光武器 I** `MMT_DirectedEnergyWeapons1` ｜ 坐标 (10.00, 7.00) ｜ 2200点 ｜ Spacer ｜ 前置(原版): ChargedShot
     - 解锁配方: 制作R3“溶媒”电荷步枪、制作M8“亡魂”光束枪、制作M6“螳螂”光束枪、制作C3“巫师”、制作C1“晋升”
     - **激光武器 II** `MMT_DirectedEnergyWeapons2` ｜ 坐标 (11.00, 7.00) ｜ 2400点 ｜ Ultra ｜ 交叉前置: 超级零件

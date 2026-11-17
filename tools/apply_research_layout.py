@@ -57,10 +57,10 @@ LAYOUT = {
     "MMT_ProsthesisInstall_D4": (10, 2),
     "MMT_ProsthesisInstall_E1": (11, 2),
     "MMT_ProsthesisInstall_E2": (12, 2),
-    # y=3 仿生制造：E4-E6（E1-E3 同列左侧起点）| B1 紧靠前置 医药 III 下方；D2 在 D1 右、安装 C3 右下
-    "MMT_Prosthesis_E4": (0, 3),
-    "MMT_Prosthesis_E5": (1, 3),
-    "MMT_Prosthesis_E6": (2, 3),
+    # y=3 仿生制造：E4-E6 接在 E3 右侧成链 | B1 紧靠前置 医药 III 下方；D2 在 D1 右、安装 C3 右下
+    "MMT_Prosthesis_E4": (13, 3),
+    "MMT_Prosthesis_E5": (14, 3),
+    "MMT_Prosthesis_E6": (15, 3),
     "MMT_Prosthesis_B1": (3, 3),
     "MMT_Prosthesis_C1": (4, 3),
     "MMT_Prosthesis_C2": (5, 3),

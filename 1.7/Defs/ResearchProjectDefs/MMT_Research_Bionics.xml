@@ -59,6 +59,7 @@
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
+      <li>MMT_Prosthesis_C2</li>
       <li>VitalsMonitor</li>
     </prerequisites>
     <researchViewX>8.00</researchViewX>
@@ -165,9 +166,9 @@
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
-      <li>Bionics</li>
+      <li>MMT_Prosthesis_E3</li>
     </prerequisites>
-    <researchViewX>0.00</researchViewX>
+    <researchViewX>13.00</researchViewX>
     <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
@@ -180,9 +181,9 @@
     <techLevel>Ultra</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
-      <li>Bionics</li>
+      <li>MMT_Prosthesis_E4</li>
     </prerequisites>
-    <researchViewX>1.00</researchViewX>
+    <researchViewX>14.00</researchViewX>
     <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
@@ -197,7 +198,7 @@
     <prerequisites>
       <li>MMT_Prosthesis_E5</li>
     </prerequisites>
-    <researchViewX>2.00</researchViewX>
+    <researchViewX>15.00</researchViewX>
     <researchViewY>3.00</researchViewY>
   </ResearchProjectDef>
 
