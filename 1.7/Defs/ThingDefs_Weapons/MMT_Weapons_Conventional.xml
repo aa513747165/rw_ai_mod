@@ -313,7 +313,7 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<burstShotCount>5</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<defaultProjectile>MMT_Bullet_556x45mmNATO_AP</defaultProjectile>
 				<hasStandardCommand>true</hasStandardCommand>
 				<muzzleFlashScale>9</muzzleFlashScale>
 				<range>48</range>
@@ -1388,7 +1388,7 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<burstShotCount>8</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<defaultProjectile>MMT_Bullet_556x45mmNATO_AP</defaultProjectile>
 				<hasStandardCommand>true</hasStandardCommand>
 				<muzzleFlashScale>9</muzzleFlashScale>
 				<range>45</range>
@@ -1912,7 +1912,7 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<burstShotCount>8</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<defaultProjectile>MMT_Bullet_556x45mmNATO_AP</defaultProjectile>
 				<hasStandardCommand>true</hasStandardCommand>
 				<muzzleFlashScale>9</muzzleFlashScale>
 				<range>45</range>
@@ -3279,7 +3279,7 @@
 			<li>
 				<verbClass>Verb_Shoot</verbClass>
 				<burstShotCount>6</burstShotCount>
-				<defaultProjectile>MMT_Bullet_556x45mmNATO_FMJ</defaultProjectile>
+				<defaultProjectile>MMT_Bullet_556x45mmNATO_AP</defaultProjectile>
 				<hasStandardCommand>true</hasStandardCommand>
 				<muzzleFlashScale>9</muzzleFlashScale>
 				<range>48</range>

@@ -545,7 +545,7 @@
 			<li>CraftingSpot</li>
 			<li>MMT_AmmoBench</li>
 		</recipeUsers>
-		<researchPrerequisite>RecurveBow</researchPrerequisite>
+		<researchPrerequisite>MMT_GrenadesBasic</researchPrerequisite>
 	</RecipeDef>
 	<RecipeDef>
 		<defName>MMT_MakeToxGrenade</defName>

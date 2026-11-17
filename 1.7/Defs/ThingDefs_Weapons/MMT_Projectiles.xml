@@ -150,6 +150,20 @@
 			<speed>168</speed>
 		</projectile>
 	</ThingDef>
+	<!-- 5.56 穿甲弹：步枪 III 专供（AUG/TAR-21/MA5/XM8），拉开与步枪 II（AK 17/FAMAS 14）的伤害档次 -->
+	<ThingDef ParentName="BaseBullet">
+		<defName>MMT_Bullet_556x45mmNATO_AP</defName>
+		<graphicData>
+			<texPath>Things/Projectile/Bullet_Small</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<projectile>
+			<damageDef>Bullet</damageDef>
+			<damageAmountBase>18</damageAmountBase>
+			<armorPenetrationBase>0.12</armorPenetrationBase>
+			<speed>172</speed>
+		</projectile>
+	</ThingDef>
 	<ThingDef ParentName="BaseBullet">
 		<defName>MMT_Bullet_6x24mmCharged</defName>
 		<graphicData>
