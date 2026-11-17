@@ -130,4 +130,18 @@
 		<xpath>Defs/PawnKindDef[defName="Mechanitor_Basic"]</xpath>
 		<value><weaponMoney>550~900</weaponMoney></value>
 	</Operation>
+	<!-- MMT 重机枪类（GunHeavy tag）最低价 1800（加利尔ACE），原 1200 预算买不起任何重机枪，重装佣兵只会拿单次火箭筒 -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Mercenary_Heavy"]/weaponMoney</xpath>
+		<value><weaponMoney>1800~2800</weaponMoney></value>
+	</Operation>
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="TradersGuild_Heavy"]/weaponMoney</xpath>
+		<value><weaponMoney>1800~2800</weaponMoney></value>
+	</Operation>
+	<!-- 帝国重装步兵继承 1100~2500，下限低于 GunHeavy/SpacerGun 最低枪价 1800，低掷骰时会无武器生成 -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]/weaponMoney</xpath>
+		<value><weaponMoney>1800~2500</weaponMoney></value>
+	</Operation>
 </Patch>

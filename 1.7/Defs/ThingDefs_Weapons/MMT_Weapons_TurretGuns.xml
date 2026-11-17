@@ -14,8 +14,8 @@
 			<Mass>1</Mass>
 			<RangedWeapon_Cooldown>1.6</RangedWeapon_Cooldown>
 		</statBases>
+		<!-- 仅保留 TurretGun：炮塔枪由炮塔建筑经 turretGunDef 引用，带 Gun 会落入派系刷武器池 -->
 		<weaponTags>
-			<li>Gun</li>
 			<li>TurretGun</li>
 		</weaponTags>
 		<verbs>
@@ -49,8 +49,8 @@
 			<Mass>1</Mass>
 			<RangedWeapon_Cooldown>1.8</RangedWeapon_Cooldown>
 		</statBases>
+		<!-- 仅保留 TurretGun：炮塔枪由炮塔建筑经 turretGunDef 引用，带 Gun 会落入派系刷武器池 -->
 		<weaponTags>
-			<li>Gun</li>
 			<li>TurretGun</li>
 		</weaponTags>
 		<verbs>
@@ -85,8 +85,8 @@
 			<Mass>1</Mass>
 			<RangedWeapon_Cooldown>1.8</RangedWeapon_Cooldown>
 		</statBases>
+		<!-- 仅保留 TurretGun：炮塔枪由炮塔建筑经 turretGunDef 引用，带 Gun 会落入派系刷武器池 -->
 		<weaponTags>
-			<li>Gun</li>
 			<li>TurretGun</li>
 		</weaponTags>
 		<verbs>
@@ -120,8 +120,8 @@
 			<Mass>1</Mass>
 			<RangedWeapon_Cooldown>1.8</RangedWeapon_Cooldown>
 		</statBases>
+		<!-- 仅保留 TurretGun：炮塔枪由炮塔建筑经 turretGunDef 引用，带 Gun 会落入派系刷武器池 -->
 		<weaponTags>
-			<li>Gun</li>
 			<li>TurretGun</li>
 		</weaponTags>
 		<verbs>
