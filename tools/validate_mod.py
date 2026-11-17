@@ -1440,8 +1440,8 @@ WEAPON_PARTS_RECIPE_EXPECTATIONS = {
     "MMT_MakeAdvRifleComponent": {"work": "2100", "inputs": [("thingDefs", "MMT_SyntheticFibers", "5"), ("thingDefs", "MMT_Plastic", "15"), ("thingDefs", "MMT_Rubber", "15"), ("thingDefs", "MMT_RifleComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "2")], "output": "MMT_AdvRifleComponent", "output_count": "1", "skill": "13", "research": "Fabrication", "benches": ("MMT_AdvWeaponCraftingTable",)},
     "MMT_MakeAdvSniperComponent": {"work": "2100", "inputs": [("thingDefs", "MMT_SyntheticFibers", "10"), ("thingDefs", "MMT_Plastic", "20"), ("thingDefs", "MMT_Rubber", "15"), ("thingDefs", "MMT_IntegratedCircuit", "4"), ("thingDefs", "MMT_SniperComponent", "2"), ("thingDefs", "MMT_AdvMechanism", "3")], "output": "MMT_AdvSniperComponent", "output_count": "1", "skill": "15", "research": "Fabrication", "benches": ("MMT_AdvWeaponCraftingTable",)},
     "MMT_MakeHeavyComponent": {"work": "2800", "inputs": [("categories", SLDB_USLDB, "25"), ("categories", "MMT_HCMBar", "15"), ("thingDefs", "ComponentIndustrial", "12"), ("thingDefs", "MMT_Wire", "15"), ("thingDefs", "MMT_Mechanism", "6")], "output": "MMT_HeavyComponent", "output_count": "1", "skill": "12", "research": "HeavyTurrets", "benches": ("MMT_AdvWeaponCraftingTable",)},
-    "MMT_MakeCannonComponent": {"work": "3100", "inputs": [("categories", SLDB_USLDB, "20"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "5")], "output": "MMT_CannonComponent", "output_count": "1", "skill": "14", "research": "Mortars", "benches": ("MMT_AdvWeaponCraftingTable",)},
-    "MMT_MakeLauncherComponent": {"work": "3100", "inputs": [("thingDefs", "MMT_IntegratedCircuit", "2"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_AdvMechanism", "3"), ("thingDefs", "MMT_Glass", "12")], "output": "MMT_LauncherComponent", "output_count": "1", "skill": "14", "research": "MMT_Rocketry1", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeCannonComponent": {"work": "3100", "inputs": [("categories", SLDB_USLDB, "20"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_Mechanism", "10")], "output": "MMT_CannonComponent", "output_count": "1", "skill": "14", "research": "Mortars", "benches": ("MMT_AdvWeaponCraftingTable",)},
+    "MMT_MakeLauncherComponent": {"work": "3100", "inputs": [("thingDefs", "MMT_IntegratedCircuit", "2"), ("thingDefs", "MMT_HeavyComponent", "1"), ("thingDefs", "MMT_Mechanism", "6"), ("thingDefs", "MMT_Glass", "12")], "output": "MMT_LauncherComponent", "output_count": "1", "skill": "14", "research": "MMT_Rocketry1", "benches": ("MMT_AdvWeaponCraftingTable",)},
     "MMT_MakeChargedComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "10"), ("categories", "MMT_HCMBar", "20"), ("thingDefs", "MMT_MagneticMaterial", "2"), ("thingDefs", "MMT_AdvMechanism", "2")], "output": "MMT_ChargedComponent", "output_count": "1", "skill": "14", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
     "MMT_MakeLaserComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "20"), ("categories", "MMT_HCMBar", "10"), ("thingDefs", "MMT_MagneticMaterial", "4"), ("thingDefs", "MMT_Microchip", "1")], "output": "MMT_LaserComponent", "output_count": "1", "skill": "15", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
     "MMT_MakePlasmaComponent": {"work": "2100", "inputs": [("categories", "MMT_USLDBar", "20"), ("categories", "MMT_HCMBar", "10"), ("thingDefs", "MMT_BiosyntheticMaterial", "4"), ("thingDefs", "MMT_Microchip", "1")], "output": "MMT_PlasmaComponent", "output_count": "1", "skill": "15", "research": "ChargedShot", "benches": ("MMT_MechWeaponTable",)},
@@ -1553,7 +1553,7 @@ TOP_MATERIALS_RECIPE_EXPECTATIONS = {
     "MMT_BuildBiosyntheticMaterial": {"work": "2400", "inputs": [("thingDefs", "MMT_Biomatter", "15"), ("thingDefs", "MMT_SyntheticFibers", "9"), ("thingDefs", "MMT_Plastic", "30")], "output": "MMT_BiosyntheticMaterial", "output_count": "5", "skill": "18", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
     "MMT_MakeBioelectronicDevices": {"work": "7000", "inputs": [("thingDefs", "MMT_Biomatter", "60"), ("thingDefs", "Hyperweave", "15"), ("thingDefs", "MMT_Microchip", "2")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "18", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_UltraComponents", "users": ["MMT_RoboticAssembler"]},
     "MMT_DisassembleAIPersonaCore": {"work": "4000", "inputs": [("thingDefs", "AIPersonaCore", "1")], "output": "MMT_BioMicrochips", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_AdvancedComponents", "users": ["MMT_RoboticAssembler"], "extra_products": {"MMT_AlphaPoly": "30", "MMT_CarbonAlloy": "40"}},
-    "MMT_MakeAIPersonaCore": {"work": "8000", "inputs": [("thingDefs", "MMT_BioMicrochips", "2"), ("thingDefs", "MMT_AlphaPoly", "60"), ("thingDefs", "MMT_CarbonAlloy", "80")], "output": "AIPersonaCore", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_PersonaCoreCrafting", "users": ["MMT_RoboticAssembler"]},
+    "MMT_MakeAIPersonaCore": {"work": "8000", "inputs": [("thingDefs", "MMT_Microchip", "10"), ("thingDefs", "MMT_Polymers", "60"), ("thingDefs", "MMT_CarbonAlloy", "80")], "output": "AIPersonaCore", "output_count": "1", "skill": "16", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smith", "sound": "Recipe_Machining", "research": "MMT_PersonaCoreCrafting", "users": ["MMT_ElectricElectronicsTable"]},
     "MMT_ProduceAPoly": {"work": "8000", "inputs": [("thingDefs", "MMT_DepletedUranium", "5"), ("thingDefs", "MMT_CarbonAlloy", "5"), ("thingDefs", "MMT_Antimatter", "3")], "output": "MMT_AlphaPoly", "output_count": "15", "skill": "19", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_ProduceBPoly": {"work": "12000", "inputs": [("thingDefs", "MMT_AlphaPoly", "3"), ("thingDefs", "MMT_BiosyntheticMaterial", "5")], "output": "MMT_BetaPoly", "output_count": "5", "skill": "20", "speed": "SmeltingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
     "MMT_MakeAntimatter": {"work": "10000", "inputs": [("thingDefs", "MMT_Matter", "50"), ("thingDefs", "Uranium", "20")], "output": "MMT_Antimatter", "output_count": "2", "skill": "15", "speed": "MMT_ElectronicCraftingSpeed", "effect": "Smelt", "sound": "Recipe_Smelt", "research": None},
@@ -1762,7 +1762,6 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeComponentSpacer_Electric",
     "MMT_MakeAdvMechanism_Electric",
     "MMT_MakeSpacerComponent",
-    "MMT_MakeReinforcedConcrete_Electric",
     "MMT_MakeMineralSonarModule",
     "MMT_MakeOverclockModule",
     "MMT_MakeParallelModule",
@@ -5490,7 +5489,7 @@ def validate_stone_construction() -> None:
     assert_equal(child_text(e_mixer, "constructionSkillPrerequisite"), "11", "电动搅拌机建造技能")
     e_mixer_costs = [(node.tag, (node.text or "").strip()) for node in e_mixer.findall("./costList/*")]
     assert_equal(e_mixer_costs, [("MMT_Rubber", "45"), ("ComponentIndustrial", "10"), ("MMT_ElectronicParts", "5"), ("MMT_Mechanism", "5")], "电动搅拌机造价")
-    assert_equal(sorted(li_values(e_mixer, "recipes")), ["MMT_MakeDirt_Electric", "MMT_MixConcrete_Electric"], "电动搅拌机配方列表")
+    assert_equal(sorted(li_values(e_mixer, "recipes")), ["MMT_MakeDirt_Electric", "MMT_MakeReinforcedConcrete_Electric", "MMT_MixConcrete_Electric"], "电动搅拌机配方列表")
 
     # 混凝土电动配方
     concrete_recipe_defs = def_map(parse_xml(CONCRETE_RECIPE_XML))
@@ -5513,7 +5512,7 @@ def validate_stone_construction() -> None:
     reinforced_products = [(node.tag, (node.text or "").strip()) for node in reinforced_electric.findall("./products/*")]
     assert_equal(reinforced_products, [("MMT_ReinforcedConcrete", "16")], "电动钢筋混凝土产出")
     if reinforced_electric.find("researchPrerequisite") is not None:
-        fail("电动钢筋混凝土不应设研究前置（对齐 HSK，靠装配台建筑前置）")
+        fail("电动钢筋混凝土不应设研究前置（对齐 HSK，靠搅拌机建筑前置）")
 
     dirt_electric = concrete_recipe_defs["MMT_MakeDirt_Electric"]
     assert_equal(child_text(dirt_electric, "workAmount"), "1500", "电动土堆 workAmount")
@@ -5521,11 +5520,11 @@ def validate_stone_construction() -> None:
     assert_equal(e_dirt_products, [("MMT_Dirt", "30")], "电动土堆产出")
     assert_equal(child_text(dirt_electric, "researchPrerequisite"), "MMT_ConcreteAdvanced", "电动土堆研究")
 
-    # 电动装配台挂载电动钢筋混凝土
+    # 电动钢筋混凝土已移至电动混凝土搅拌机（修复倒挂：原挂太空时代电动装配台）
     parts_building_defs = def_map(parse_xml(PARTS_BUILDING_XML))
     bench_recipes = li_values(parts_building_defs["MMT_ElectricAssemblyBench"], "recipes")
-    if "MMT_MakeReinforcedConcrete_Electric" not in bench_recipes:
-        fail("MMT_MakeReinforcedConcrete_Electric 未挂载到电动装配台")
+    if "MMT_MakeReinforcedConcrete_Electric" in bench_recipes:
+        fail("MMT_MakeReinforcedConcrete_Electric 不应再挂载到电动装配台（已移至电动混凝土搅拌机）")
 
     # 研究
     agriculture_research = def_map(parse_xml(AGRICULTURE_RESEARCH_XML))["MMT_AgricultureBasic"]
@@ -6626,13 +6625,13 @@ def validate_persona_core() -> None:
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_TopMaterials.xml"))
     make = recipes["MMT_MakeAIPersonaCore"]
     assert_equal(child_text(make, "products/AIPersonaCore"), "1", "人格核心产出")
-    assert_equal(li_values(make, "recipeUsers"), ["MMT_RoboticAssembler"], "人格核心工作台")
+    assert_equal(li_values(make, "recipeUsers"), ["MMT_ElectricElectronicsTable"], "人格核心工作台")
     assert_equal(child_text(make, "researchPrerequisite"), "MMT_PersonaCoreCrafting", "人格核心研究前置")
     ingredients_text = ET.tostring(make.find("ingredients"), encoding="unicode")
-    for token in ("MMT_BioMicrochips", "MMT_AlphaPoly", "MMT_CarbonAlloy"):
+    for token in ("MMT_Microchip", "MMT_Polymers", "MMT_CarbonAlloy"):
         assert token in ingredients_text, f"人格核心配方缺少材料 {token}"
     counts = [child_text(li, "count") for li in make.findall("ingredients/li")]
-    assert_equal(counts, ["2", "60", "80"], "人格核心材料数量（拆解 2 倍）")
+    assert_equal(counts, ["10", "60", "80"], "人格核心材料数量（工业期材料）")
 
     research = def_map(parse_xml("1.7/Defs/ResearchProjectDefs/MMT_Research_ElectricElectronics.xml"))
     crafting = research["MMT_PersonaCoreCrafting"]

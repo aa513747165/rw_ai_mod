@@ -834,7 +834,7 @@
 
 #### 制作钢筋混凝土（`MMT_MakeReinforcedConcrete_Electric`）
 
-- **MMT**：[MMT_MetallicBar]×20 + 混凝土×20 -> 钢筋混凝土×16 @ 电动装配台 ｜ 工作量=1200 ｜ 技能:Crafting≥7
+- **MMT**：[MMT_MetallicBar]×20 + 混凝土×20 -> 钢筋混凝土×16 @ 电动混凝土搅拌机 ｜ 工作量=1200 ｜ 技能:Crafting≥7
 - **HSK** `MakeReinforcedConcrete_Electric`：[Metallic]×20 + 混凝土(ConcreteResource)×20 -> 钢筋混凝土(ReinforcedConcrete)×16 @ AdvToolBench ｜ 工作量=1200 ｜ 技能:Crafting≥7
 - **对比**：数值一致
 
@@ -1871,7 +1871,7 @@
 
 #### 合成伪人格核心（`MMT_MakeAIPersonaCore`）
 
-- **MMT**：生物电子元件×2 + α阿尔法聚合物×60 + 碳纤维锭×80 -> AIPersonaCore×1 @ — ｜ 工作量=8000 ｜ 研究:人格核心合成(MMT_PersonaCoreCrafting)，技能:Crafting≥16
+- **MMT**：微芯片集成电路×10 + 聚合物×60 + 碳纤维锭×80 -> AIPersonaCore×1 @ — ｜ 工作量=8000 ｜ 研究:人格核心合成(MMT_PersonaCoreCrafting)，技能:Crafting≥16
 - **HSK**：有资源 AIPersonaCore，但无投入匹配的配方（HSK 侧共有 0 条产出配方）
 
 #### 制造α阿尔法聚合物（`MMT_ProduceAPoly`）
@@ -2013,13 +2013,13 @@
 
 #### 制造火炮武器部件（`MMT_MakeCannonComponent`）
 
-- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×20 + 重型武器部件×1 + 先进机械组件×5 -> 火炮武器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:Mortars(Mortars)，技能:Crafting≥14
+- **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×20 + 重型武器部件×1 + 机械组件×10 -> 火炮武器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:Mortars(Mortars)，技能:Crafting≥14
 - **HSK** `MakeCannon_Component`：[SLDBar] 或 [USLDBar]×20 + 重型武器部件(Heavy_Component)×1 + 先进机械组件(AdvMechanism)×5 -> 火炮武器部件(Cannon_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), HeavyArmsBench ｜ 工作量=3100 ｜ 研究:Turrets_31，技能:Crafting≥14
 - **对比**：数值一致
 
 #### 制造发射器部件（`MMT_MakeLauncherComponent`）
 
-- **MMT**：集成电路×2 + 重型武器部件×1 + 先进机械组件×3 + 玻璃块×12 -> 发射器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:火箭弹 I(MMT_Rocketry1)，技能:Crafting≥14
+- **MMT**：集成电路×2 + 重型武器部件×1 + 机械组件×6 + 玻璃块×12 -> 发射器部件×1 @ 先进武器加工台 ｜ 工作量=3100 ｜ 研究:火箭弹 I(MMT_Rocketry1)，技能:Crafting≥14
 - **HSK** `MakeLauncher_Component`：集成电路(Electronics)×2 + 重型武器部件(Heavy_Component)×1 + 先进机械组件(AdvMechanism)×3 + 玻璃块(Glass)×12 -> 发射器部件(Launcher_Component)×1 @ 先进武器加工台(AdvWeaponCraftingWorkTable), HeavyArmsBench ｜ 工作量=3100 ｜ 研究:Rockets_C1，技能:Crafting≥14
 - **对比**：数值一致
 
@@ -2232,7 +2232,7 @@
 
 #### 制作M56智能机枪（`MMT_BuildM56_USCM`）
 
-- **MMT**：重型武器部件×1 + 武器部件×7 + 高级零部件×4 + [MMT_MetallicBar]×20 + 塑料×20 + [Leathers]×12 -> M56智能机枪×1 @ — ｜ 工作量=19900 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥16
+- **MMT**：重型武器部件×1 + 武器部件×7 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×20 + 塑料×20 + [Leathers]×12 -> M56智能机枪×1 @ — ｜ 工作量=19900 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥16
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作M5火箭筒（`MMT_BuildM5_USCM`）
@@ -2267,7 +2267,7 @@
 
 #### 制作XM214速射机枪（`MMT_BuildMinigun`）
 
-- **MMT**：重型武器部件×1 + 武器部件×13 + 高级零部件×10 + [MMT_MetallicBar]×36 + 塑料×25 + [Leathers]×10 -> Gun_Minigun×1 @ — ｜ 工作量=28000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥18
+- **MMT**：重型武器部件×1 + 武器部件×13 + 工业零件(ComponentIndustrial)×20 + [MMT_MetallicBar]×36 + 塑料×25 + [Leathers]×20 -> Gun_Minigun×1 @ — ｜ 工作量=28000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥18
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制造 乌兹冲锋枪（`MMT_BuildPDW`）
