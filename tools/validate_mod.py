@@ -1504,7 +1504,7 @@ SUPER_ALLOYS_RESOURCE_EXPECTATIONS = {
 
 MATTER_RESEARCH_EXPECTATIONS = {
     "MMT_MatterConversion1": {"label": "物质转换 I", "cost": "2500", "tech": "Spacer", "prereqs": ["MMT_BasicElectronics", "MMT_ComponentCrafting"]},
-    "MMT_MatterConversion2": {"label": "物质转换 II", "cost": "2400", "tech": "Ultra", "prereqs": ["MMT_UltraComponents", "MMT_MatterConversion1"]},
+    "MMT_MatterConversion2": {"label": "物质转换 II", "cost": "4000", "tech": "Ultra", "prereqs": ["MMT_UltraComponents", "MMT_MatterConversion1"]},
     "MMT_MatterConversion3": {"label": "物质转换 III", "cost": "2500", "tech": "Ultra", "prereqs": ["MMT_MatterConversion2"]},
 }
 
@@ -1540,9 +1540,9 @@ MATTER_RECIPE_EXPECTATIONS = {
     "MMT_ConvertToAluminium": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_AluminiumOre", "output_count": "80", "skill": "15", "research": "MMT_MatterConversion2"},
     "MMT_ConvertToNickel": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "150")], "output": "MMT_NickelOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
     "MMT_ConvertToTitanium": {"work": "15000", "inputs": [("thingDefs", "MMT_Matter", "200")], "output": "MMT_IlmeniteOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
-    "MMT_ConvertToGold": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "60")], "output": "MMT_GoldOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToGold": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "60")], "output": "MMT_GoldOre", "output_count": "20", "skill": "15", "research": "MMT_MatterConversion3"},
     "MMT_ConvertToSilver": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "100")], "output": "MMT_SilverOre", "output_count": "300", "skill": "15", "research": "MMT_MatterConversion2"},
-    "MMT_ConvertToUranium": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "200")], "output": "Uranium", "output_count": "50", "skill": "15", "research": "MMT_MatterConversion2"},
+    "MMT_ConvertToUranium": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "200")], "output": "Uranium", "output_count": "50", "skill": "15", "research": "MMT_MatterConversion3"},
     "MMT_ConvertToPolymers": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Polymers", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
     "MMT_ConvertToParaffins": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Paraffins", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
     "MMT_ConvertToSulphates": {"work": "12000", "inputs": [("thingDefs", "MMT_Matter", "50")], "output": "MMT_Sulphates", "output_count": "100", "skill": "15", "research": "MMT_MatterConversion2"},
@@ -1819,7 +1819,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 102  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）；防卫炮塔精简后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III 5 项
-INFRA_WORKTABLE_TOTAL = 60  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 2、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
+INFRA_WORKTABLE_TOTAL = 61  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 3（原煤/聚合物/核能发电机）、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -6542,18 +6542,20 @@ def validate_chunkdrill() -> None:
 
 
 def validate_power() -> None:
-    """电力链：原煤发电机（2500W，烧 MMT_Coal，原版化学发电机改色贴图）+ 核能反应堆（20000W，烧核燃料棒，Rimatomics 堆芯贴图）+ 燃料棒配方/研究。"""
+    """电力链：原煤发电机（2500W，烧 MMT_Coal，原版化学发电机改色贴图）+ 聚合物发电机（5000W，烧聚合物，HSK 燃料电厂贴图，工业→太空过渡档）+ 核能反应堆（20000W，烧核燃料棒，Rimatomics 堆芯贴图）+ 燃料棒配方/研究。"""
     require_files([
         "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml",
         "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Nuclear.xml",
         "1.7/Defs/RecipeDefs/MMT_Recipes_Nuclear.xml",
         "1.7/Defs/ResearchProjectDefs/MMT_Research_Nuclear.xml",
         "1.7/Textures/Things/Building/Power/MMT_CoalGenerator.png",
+        "1.7/Textures/Things/Building/Power/MMT_PolymerGenerator.png",
         "1.7/Textures/Things/Building/Power/MMT_NuclearReactor.png",
         "1.7/Textures/Things/Item/Resource/MMT_FuelRod.png",
     ])
     buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Power.xml"))
     for name, watts, fuel, cap in (("MMT_CoalGenerator", "-2500", "MMT_Coal", "75"),
+                                   ("MMT_PolymerGenerator", "-5000", "MMT_Polymers", "80"),
                                    ("MMT_NuclearReactor", "-20000", "MMT_FuelRod", "5")):
         d = buildings[name]
         power = next(li for li in d.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
@@ -6563,9 +6565,10 @@ def validate_power() -> None:
         assert_equal(li_values(fuel_comp.find("fuelFilter"), "thingDefs"), [fuel], f"{name} 燃料")
         assert_equal(child_text(fuel_comp, "fuelCapacity"), cap, f"{name} 燃料容量")
     assert_equal(li_values(buildings["MMT_CoalGenerator"], "researchPrerequisites"), ["Electricity"], "原煤发电机研究前置")
+    assert_equal(li_values(buildings["MMT_PolymerGenerator"], "researchPrerequisites"), ["MMT_AdvancedPetrochemistry"], "聚合物发电机研究前置")
     assert_equal(li_values(buildings["MMT_NuclearReactor"], "researchPrerequisites"), ["MMT_NuclearPower"], "核反应堆研究前置")
     # 贴图修复回归：drawSize 必须与 size 一致（否则占地与贴图不符），且提供 uiIconPath（建筑菜单图标）
-    for name, size in (("MMT_CoalGenerator", "(2,2)"), ("MMT_NuclearReactor", "(3,3)")):
+    for name, size in (("MMT_CoalGenerator", "(2,2)"), ("MMT_PolymerGenerator", "(3,2)"), ("MMT_NuclearReactor", "(3,3)")):
         d = buildings[name]
         assert_equal(child_text(d, "size"), size, f"{name} 占地")
         assert_equal(child_text(d, "graphicData/drawSize"), size, f"{name} 绘制尺寸=占地")

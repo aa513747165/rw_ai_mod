@@ -1301,7 +1301,7 @@
 
 #### 转化为金矿（`MMT_ConvertToGold`）
 
-- **MMT**：无机物×60 -> 金矿×20 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **MMT**：无机物×60 -> 金矿×20 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 III(MMT_MatterConversion3)，技能:Crafting≥15
 - **HSK** `ConvertToGold`：无机物(Matter)×60 -> 金矿(Gold)×20 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：数值一致
 
@@ -1313,7 +1313,7 @@
 
 #### 转化为铀矿（`MMT_ConvertToUranium`）
 
-- **MMT**：无机物×200 -> Uranium×50 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 II(MMT_MatterConversion2)，技能:Crafting≥15
+- **MMT**：无机物×200 -> Uranium×50 @ 无机物转化器 ｜ 工作量=12000 ｜ 研究:物质转换 III(MMT_MatterConversion3)，技能:Crafting≥15
 - **HSK** `ConvertToUranium`：无机物(Matter)×200 -> Uranium×50 @ 无机物转化器(MatterConverter) ｜ 工作量=12000 ｜ 研究:Super_matter_E1，技能:Crafting≥15
 - **对比**：数值一致
 
@@ -2650,6 +2650,7 @@
 | 纺织机(`MMT_Loom`) | (2,2) | 原始零部件×10 + 电子元件×3 + 机械组件×6 + [金属/木质]×125 | 300W / 3850 | — | — | — | MMT 新增 |
 | 原煤发电机(`MMT_CoalGenerator`) | (2,2) | 钢(Steel)×100 + 工业零件(ComponentIndustrial)×3 | -2500W / 3000 | — | — | — | MMT 新增 |
 | 核能反应堆(`MMT_NuclearReactor`) | (3,3) | 钢(Steel)×300 + 碳纤维锭×60 + 工业零件(ComponentIndustrial)×10 + 先进机械组件×4 | -20000W / 12000 | — | — | — | MMT 新增 |
+| 聚合物发电机(`MMT_PolymerGenerator`) | (3,2) | 钢(Steel)×150 + 钢筋混凝土×20 + 工业零件(ComponentIndustrial)×8 + 机械组件×4 | -5000W / 6500 | — | — | — | MMT 新增 |
 | 实验站(`MMT_LabStation`) | (3,1) | 钢(Steel)×60 + 玻璃块×20 + 工业零件(ComponentIndustrial)×6 | 400W / 12000 | laboratory station(`LabStation`) | 塑料(Plastic)×5 + 玻璃块(Glass)×10 + 工业零件(ComponentIndustrial)×5 + 微芯片集成电路(Microchips)×3 + [StrongMetallic]×50 | 850W / 600 | 材料量 — vs 50；MMT 多 钢(Steel)×60；玻璃块 20 vs 10；工业零件(ComponentIndustrial) 6 vs 5；HSK 多 塑料(Plastic)×5；HSK 多 微芯片集成电路(Microchips)×3；功耗 400 vs 850；工作量 12000 vs 600 |
 | 研究终端(`MMT_LabTerminal`) | (1,1) | 钢(Steel)×25 + 工业零件(ComponentIndustrial)×3 | 250W / 3000 | research terminal(`LabTerminal`) | 玻璃块(Glass)×50 + 电子元件(ElectronicComponents)×7 + 工业零件(ComponentIndustrial)×3 + [StrongMetallic]×60 | 250W / 600 | 材料量 — vs 60；MMT 多 钢(Steel)×25；HSK 多 玻璃块(Glass)×50；HSK 多 电子元件(ElectronicComponents)×7；工作量 3000 vs 600 |
 | 多元分析仪(`MMT_MultiAnalyzer`) | (2,2) | 钢(Steel)×40 + 铁钛合金(Plasteel)×50 + 金(Gold)×20 + 工业零件(ComponentIndustrial)×8 | 200W / 10000 | — | — | — | MMT 新增 |
@@ -2663,5 +2664,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 38（共 63）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 39（共 64）。
 
