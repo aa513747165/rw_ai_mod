@@ -56,4 +56,11 @@
     <driverClass>MyModeTest.JobDriver_UnloadMedicalTurret</driverClass>
     <reportString>正在取出药品（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 投掷爆墙炸弹作业：AI 专用，走到目标建筑贴脸后用 Hediff 授予的动词投掷一发（JobDriver_ThrowBreachCharge） -->
+  <JobDef>
+    <defName>MMT_ThrowBreachCharge</defName>
+    <driverClass>MyModeTest.JobDriver_ThrowBreachCharge</driverClass>
+    <reportString>正在投掷爆墙炸弹（TargetA）。</reportString>
+  </JobDef>
 </Defs>

@@ -15,12 +15,14 @@ from validate_mod import (
 DAMAGE_XML = "1.7/Defs/DamageDefs/MMT_Damage_BreachCharge.xml"
 WEAPON_XML = "1.7/Defs/ThingDefs_Weapons/MMT_Weapons_BreachCharge.xml"
 PROJ_XML = "1.7/Defs/ThingDefs_Weapons/MMT_Projectiles.xml"
+HEDIFF_XML = "1.7/Defs/HediffDefs/MMT_Hediffs_BreachCharge.xml"
+JOB_XML = "1.7/Defs/JobDefs/MMT_Jobs.xml"
 TEX_ITEM = "1.7/Textures/Things/Weapons/Grenades/WallBreach.png"
 TEX_PROJ = "1.7/Textures/Things/Projectile/WallBreach.png"
 
 
 def validate_breachcharge() -> None:
-    require_files([DAMAGE_XML, WEAPON_XML, PROJ_XML, TEX_ITEM, TEX_PROJ])
+    require_files([DAMAGE_XML, WEAPON_XML, PROJ_XML, HEDIFF_XML, JOB_XML, TEX_ITEM, TEX_PROJ])
 
     # ---- DamageDef：对人约10、对建筑放大100倍（约1000） ----
     damages = def_map(parse_xml(DAMAGE_XML))
@@ -60,6 +62,28 @@ def validate_breachcharge() -> None:
     assert_equal(child_text(proj, "graphicData/texPath"), "Things/Projectile/WallBreach", "投射物贴图路径")
     if proj.find("projectile/explosionDelay") is not None:
         fail("爆墙炸弹投射物应为命中即爆（不设 explosionDelay）")
+
+    # ---- 携带者 Hediff：VerbGiver 授予投掷动词（额外携带、不占武器位） ----
+    hediffs = def_map(parse_xml(HEDIFF_XML))
+    if "MMT_Hediff_BreachChargeCarrier" not in hediffs:
+        fail("Hediff 缺少 MMT_Hediff_BreachChargeCarrier")
+    hediff = hediffs["MMT_Hediff_BreachChargeCarrier"]
+    vg = next(li for li in hediff.findall("comps/li")
+              if li.attrib.get("Class") == "HediffCompProperties_VerbGiver")
+    verb = vg.find("verbs/li")
+    if verb is None:
+        fail("携带者 Hediff 缺少 VerbGiver 动词")
+    assert_equal(child_text(verb, "ai_IsBuildingDestroyer"), "true", "携带者动词 AI 建筑破坏标记")
+    assert_equal(child_text(verb, "defaultProjectile"), "MMT_Proj_WallBreachCharge", "携带者动词投射物指向")
+    if verb.find("onlyManualCast") is not None:
+        fail("携带者动词不应设 onlyManualCast（否则 AI 不会自动使用）")
+
+    # ---- 投掷作业：驱动类指向自定义 JobDriver ----
+    jobs = def_map(parse_xml(JOB_XML))
+    if "MMT_ThrowBreachCharge" not in jobs:
+        fail("作业缺少 MMT_ThrowBreachCharge")
+    job = jobs["MMT_ThrowBreachCharge"]
+    assert_equal(child_text(job, "driverClass"), "MyModeTest.JobDriver_ThrowBreachCharge", "投掷作业驱动类")
 
     print("breachcharge: OK")
 

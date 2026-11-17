@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 爆墙炸弹携带者标记：由 C# 补丁按财富概率注入敌对袭击者，
+       通过 HediffComp_VerbGiver 授予"投掷爆墙炸弹"动词（不占武器位，额外携带不影响原装备逻辑） -->
+  <HediffDef>
+    <defName>MMT_Hediff_BreachChargeCarrier</defName>
+    <label>爆墙炸弹</label>
+    <description>携带了爆墙炸弹，可对建筑造成毁灭性破坏。</description>
+    <labelNoun>爆墙炸弹</labelNoun>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_VerbGiver">
+        <verbs>
+          <li>
+            <verbClass>Verb_LaunchProjectileStatic</verbClass>
+            <hasStandardCommand>true</hasStandardCommand>
+            <label>投掷爆墙炸弹</label>
+            <!-- 关键标记：破墙 AI 视其为建筑破坏手段；不设 onlyManualCast 以便 AI 自动使用 -->
+            <ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+            <ai_AvoidFriendlyFireRadius>3</ai_AvoidFriendlyFireRadius>
+            <defaultProjectile>MMT_Proj_WallBreachCharge</defaultProjectile>
+            <range>12.9</range>
+            <forcedMissRadius>1.9</forcedMissRadius>
+            <warmupTime>1.5</warmupTime>
+            <noiseRadius>4</noiseRadius>
+            <soundCast>ThrowGrenade</soundCast>
+            <targetParams>
+              <canTargetLocations>true</canTargetLocations>
+            </targetParams>
+          </li>
+        </verbs>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <label>隐性</label>
+        <becomeVisible>false</becomeVisible>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

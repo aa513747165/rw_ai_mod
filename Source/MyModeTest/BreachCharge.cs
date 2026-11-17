@@ -7,19 +7,23 @@ using Verse.AI;
 namespace MyModeTest
 {
     /// <summary>
-    /// 破墙炸弹：袭击者财富门槛配发 + 主动炸建筑。
-    /// 殖民地财富达 10 万后，敌对人类单位按财富概率把主武器换成爆墙炸弹（MMT_Weapon_WallBreachCharge），
-    /// 破墙者单位（isGoodBreacher）全概率、其他战斗单位半概率；
-    /// 持弹敌人另有独立保守概率在每次战斗决策时主动攻击最近的玩家建筑（不要求路径被堵）。
-    /// 破门本身由原版破墙 AI 完成（武器 verb 带 ai_IsBuildingDestroyer）。
+    /// 破墙炸弹：袭击者财富门槛配发（额外携带，不替换原武器）。
+    /// 殖民地财富达 10 万后，敌对人类单位按财富概率获得爆墙炸弹：
+    /// 背包放入物品本体 + 注入携带者 Hediff（MMT_Hediff_BreachChargeCarrier，经 HediffComp_VerbGiver 授予投掷动词），
+    /// 原有武器与常规战斗逻辑完全不受影响。
+    /// 破墙者单位（isGoodBreacher）全概率、其他战斗单位半概率。
+    /// 炸弹的使用由三条路径触发：
+    /// 1. 原版破墙 AI：FindVerbToUseForBreaching 补丁让携带者破墙时优先用炸弹动词；
+    /// 2. 主动炸建筑：TryGiveJob 补丁按保守概率让携带者主动攻击最近玩家建筑；
+    /// 3. 投掷动作本身由自定义 JobDriver_ThrowBreachCharge 驱动（AttackStatic 不支持非装备动词）。
     /// </summary>
     public static class BreachChargeUtil
     {
-        // 财富门槛与封顶（两个补丁共用）
+        // 财富门槛与封顶（各补丁共用）
         private const float WealthThreshold = 100000f;  // 出现门槛：10万
         private const float WealthCap = 1000000f;       // 概率封顶：100万
 
-        // 换装概率曲线：10万起步5% -> 100万封顶50%
+        // 配发概率曲线：10万起步5% -> 100万封顶50%
         private const float EquipMin = 0.05f;
         private const float EquipMax = 0.50f;
 
@@ -28,9 +32,15 @@ namespace MyModeTest
         private const float AggroMax = 0.20f;
 
         private static ThingDef bombDef;
+        private static HediffDef carrierHediff;
+        private static ThingDef projDef;
+        private static JobDef throwJobDef;
         public static ThingDef BombDef => bombDef ?? (bombDef = DefDatabase<ThingDef>.GetNamed("MMT_Weapon_WallBreachCharge"));
+        public static HediffDef CarrierHediff => carrierHediff ?? (carrierHediff = DefDatabase<HediffDef>.GetNamed("MMT_Hediff_BreachChargeCarrier"));
+        public static ThingDef ProjDef => projDef ?? (projDef = DefDatabase<ThingDef>.GetNamed("MMT_Proj_WallBreachCharge"));
+        public static JobDef ThrowJobDef => throwJobDef ?? (throwJobDef = DefDatabase<JobDef>.GetNamed("MMT_ThrowBreachCharge"));
 
-        // 换装概率：破墙者全概率由调用方决定，这里只给基础曲线
+        // 配发概率：破墙者全概率由调用方决定，这里只给基础曲线
         public static float EquipChance() => WealthCurve(EquipMin, EquipMax);
 
         // 主动炸建筑概率
@@ -43,45 +53,67 @@ namespace MyModeTest
             if (wealth < WealthThreshold) return 0f;
             return Mathf.Clamp(min + (wealth - WealthThreshold) / (WealthCap - WealthThreshold) * (max - min), min, max);
         }
+
+        // 是否为爆墙炸弹携带者
+        public static bool IsCarrier(Pawn pawn) =>
+            pawn?.health?.hediffSet != null && pawn.health.hediffSet.HasHediff(CarrierHediff, false);
+
+        // 从携带者 Hediff 的 VerbGiver comp 中取出爆墙炸弹投掷动词；未携带返回 null
+        public static Verb GetBombVerb(Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet == null) return null;
+            foreach (Hediff hediff in pawn.health.hediffSet.hediffs)
+            {
+                if (hediff.def != CarrierHediff) continue;
+                if (!(hediff is HediffWithComps withComps)) continue;
+                foreach (HediffComp comp in withComps.comps)
+                {
+                    if (!(comp is HediffComp_VerbGiver verbGiver)) continue;
+                    foreach (Verb verb in verbGiver.VerbTracker.AllVerbs)
+                        if (verb.verbProps.defaultProjectile == ProjDef) return verb;
+                }
+            }
+            return null;
+        }
     }
 
     /// <summary>
-    /// 补丁一：袭击者生成时按财富概率换装爆墙炸弹。
+    /// 补丁一：袭击者生成时按财富概率配发爆墙炸弹（额外携带）。
+    /// 不触碰原有武器：背包放物品本体 + 注入携带者 Hediff（授予投掷动词）。
     /// 破墙者单位（isGoodBreacher）全概率，其他敌对战斗人类单位半概率。
     /// </summary>
     [HarmonyPatch(typeof(PawnGenerator), "GeneratePawn", new[] { typeof(PawnGenerationRequest) })]
-    public static class Patch_BreachChargeEquip
+    public static class Patch_BreachChargeCarry
     {
         public static void Postfix(Pawn __result)
         {
             Pawn pawn = __result;
-            // 过滤：人类 + 敌对玩家 + 当前持有主武器
+            // 过滤：人类 + 敌对玩家
             if (pawn?.RaceProps == null || !pawn.RaceProps.Humanlike) return;
             if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayerSilentFail)) return;
-            if (pawn.equipment?.Primary == null) return;
             // 财富概率：破墙者全概率，其他单位半概率
             float chance = BreachChargeUtil.EquipChance();
             if (chance <= 0f) return;
             if (!pawn.kindDef.isGoodBreacher) chance *= 0.5f;
             if (!Rand.Chance(chance)) return;
-            // 换装：销毁原主武器 -> 装备爆墙炸弹
-            pawn.equipment.Primary.Destroy();
-            pawn.equipment.AddEquipment((ThingWithComps)ThingMaker.MakeThing(BreachChargeUtil.BombDef));
+            // 配发：注入携带者 Hediff（授予投掷动词）+ 背包放入炸弹物品本体
+            pawn.health.AddHediff(BreachChargeUtil.CarrierHediff);
+            pawn.inventory.innerContainer.TryAdd(ThingMaker.MakeThing(BreachChargeUtil.BombDef));
         }
     }
 
     /// <summary>
-    /// 补丁二：持爆墙炸弹的敌人按保守财富概率主动攻击最近玩家建筑（不要求路径被堵）。
-    /// 命中时返回 false 跳过原战斗逻辑，下发 AttackStatic 工作；
-    /// 工作设过期重评估，避免敌人永久锁死在炸建筑上。
+    /// 补丁二：携带者按保守财富概率主动攻击最近玩家建筑（不要求路径被堵）。
+    /// 命中时下发自定义投掷作业（MMT_ThrowBreachCharge）并跳过原战斗逻辑；
+    /// 作业设过期重评估，避免敌人永久锁死在炸建筑上。
     /// </summary>
     [HarmonyPatch(typeof(JobGiver_AIFightEnemy), "TryGiveJob")]
     public static class Patch_BreachChargeAggro
     {
         public static bool Prefix(Pawn pawn, ref Job __result)
         {
-            // 仅处理：手持爆墙炸弹 + 敌对玩家
-            if (pawn?.equipment?.Primary?.def != BreachChargeUtil.BombDef) return true;
+            // 仅处理：爆墙炸弹携带者 + 敌对玩家
+            if (!BreachChargeUtil.IsCarrier(pawn)) return true;
             if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayerSilentFail)) return true;
             if (pawn.Map == null) return true;
             // 按保守曲线掷点（每次决策掷一次）
@@ -92,12 +124,67 @@ namespace MyModeTest
                 TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), 9999f,
                 t => t is Building b && b.Faction == Faction.OfPlayerSilentFail);
             if (target == null) return true;
-            // 下发攻击建筑工作；定期过期重评估以便脱战回打 pawn
-            Job job = JobMaker.MakeJob(JobDefOf.AttackStatic, target);
+            // 下发投掷爆墙炸弹作业；定期过期重评估以便脱战回打 pawn
+            Job job = JobMaker.MakeJob(BreachChargeUtil.ThrowJobDef, target);
             job.expiryInterval = 500;
             job.checkOverrideOnExpire = true;
             __result = job;
             return false;
+        }
+    }
+
+    /// <summary>
+    /// 补丁三：原版破墙逻辑选动词时，携带者优先使用爆墙炸弹动词。
+    /// 原版 FindVerbToUseForBreaching 只看主武器（额外携带的炸弹不在其中），
+    /// 这里在返回前用携带者 Hediff 的投掷动词覆盖结果；
+    /// IsGoodBreacher 内部也走此方法，携带者自动成为合格破墙者。
+    /// </summary>
+    [HarmonyPatch(typeof(BreachingUtility), "FindVerbToUseForBreaching")]
+    public static class Patch_BreachChargeBreaching
+    {
+        public static void Postfix(Pawn pawn, ref Verb __result)
+        {
+            if (__result?.verbProps?.defaultProjectile == BreachChargeUtil.ProjDef) return;
+            Verb bombVerb = BreachChargeUtil.GetBombVerb(pawn);
+            if (bombVerb != null && bombVerb.Available()) __result = bombVerb;
+        }
+    }
+
+    /// <summary>
+    /// 投掷爆墙炸弹作业驱动：走到目标建筑贴脸后用携带者 Hediff 的投掷动词打一发。
+    /// 原版 JobDriver_AttackStatic 只用装备/近战动词（忽略 job.verbToUse），故需自定义驱动。
+    /// </summary>
+    public class JobDriver_ThrowBreachCharge : JobDriver
+    {
+        public override bool TryMakePreToilReservations(bool errorOnFailed) => true;
+
+        protected override System.Collections.Generic.IEnumerable<Toil> MakeNewToils()
+        {
+            // 流程开始：目标建筑消失即失败
+            this.FailOnDespawnedOrNull(TargetIndex.A);
+            // 走到目标贴脸（炸弹射程12.9，贴脸必在射程内且视线通畅）
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+            // 投掷一发：热身/出手由站姿系统驱动，动作结束后作业成功
+            Toil cast = ToilMaker.MakeToil("ThrowBreachCharge");
+            Verb verb = null;
+            bool castStarted = false;
+            cast.initAction = delegate
+            {
+                verb = BreachChargeUtil.GetBombVerb(pawn);
+                if (verb == null || !verb.TryStartCastOn(TargetA, false, true, true, false))
+                {
+                    EndJobWith(JobCondition.Incompletable);
+                    return;
+                }
+                castStarted = true;
+            };
+            cast.defaultCompleteMode = ToilCompleteMode.Never;
+            cast.tickIntervalAction = delegate
+            {
+                if (castStarted && !pawn.stances.FullBodyBusy) EndJobWith(JobCondition.Succeeded);
+            };
+            yield return cast;
+            // 流程结束
         }
     }
 }
