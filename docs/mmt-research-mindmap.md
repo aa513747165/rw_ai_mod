@@ -199,7 +199,7 @@
       - 解锁建筑: 电动混凝土搅拌机
       - 解锁配方: 搅拌混凝土、拌制土堆
     - **手榴弹 I** `MMT_GrenadesBasic` ｜ 坐标 (11.00, 4.00) ｜ 700点 ｜ Industrial ｜ 前置(原版): Machining
-      - 解锁配方: 制作泡沫手榴弹、制作震撼手榴弹、制作高爆手榴弹
+      - 解锁配方: 制作泡沫手榴弹、制作震撼手榴弹、制作高爆手榴弹、制作木柄炸弹
       - **手榴弹 II** `MMT_GrenadesAdvanced` ｜ 坐标 (12.00, 4.00) ｜ 700点 ｜ Industrial
         - 解锁配方: 制作EMP手榴弹、制作破片手榴弹、制作燃烧手榴弹、制作烟雾手榴弹
   - **义肢制造 IX** `MMT_Prosthesis_E1` ｜ 坐标 (10.00, 3.00) ｜ 1800点 ｜ Ultra ｜ 前置(原版): Bionics
@@ -213,7 +213,7 @@
     - 解锁配方: 制作R3“溶媒”电荷步枪、制作M8“亡魂”光束枪、制作M6“螳螂”光束枪、制作C3“巫师”、制作C1“晋升”
     - **激光武器 II** `MMT_DirectedEnergyWeapons2` ｜ 坐标 (11.00, 7.00) ｜ 2400点 ｜ Ultra ｜ 交叉前置: 超级零件
       - 解锁配方: 制造A-1BW黑寡妇、制作M12“仲裁者”光束枪、制作M10“铆钉”光束枪、制作C2“月咒”、制作C7“灾引”、制作C5“魔咒”、制作R6“撕裂者”电荷步枪
-  - **重机枪塔** `MMT_HeavyMachineGunTurret` ｜ 坐标 (10.00, 8.00) ｜ 700点 ｜ Industrial ｜ 前置(原版): GunTurrets
+  - **重机枪塔** `MMT_HeavyMachineGunTurret` ｜ 坐标 (10.00, 8.00) ｜ 1500点 ｜ Industrial ｜ 前置(原版): SniperTurret
     - 解锁建筑: 14.5mm KPV重机枪
     - 解锁配方: 制作14.5mm KPV重机枪组件箱
   - **重型炮塔 II** `MMT_HeavyTurrets2` ｜ 坐标 (11.00, 8.00) ｜ 1200点 ｜ Industrial ｜ 前置(原版): SniperTurret
