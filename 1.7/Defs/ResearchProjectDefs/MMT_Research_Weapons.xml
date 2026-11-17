@@ -179,16 +179,17 @@
 		<researchViewX>12.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
 	</ResearchProjectDef>
-	<!-- KPV 重机枪塔研究：前中期有人操作防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁） -->
+	<!-- KPV 重机枪塔研究：中期有人操作防御（对应 HSK Heavy_turrets_C2 的 KPV 解锁）。
+	     53伤/0.18穿 强度高于 M134 与 M2，提价至 1500 并前置 SniperTurret，使研究档位与强度对齐 -->
 	<ResearchProjectDef>
 		<defName>MMT_HeavyMachineGunTurret</defName>
 		<label>重机枪塔</label>
 		<description>解锁 14.5mm KPV 重机枪塔：一种需要人工操作的固定式重机枪防御设施。</description>
-		<baseCost>700</baseCost>
+		<baseCost>1500</baseCost>
 		<techLevel>Industrial</techLevel>
 		<tab>MMT_ResearchTab</tab>
 		<prerequisites>
-			<li>GunTurrets</li>
+			<li>SniperTurret</li>
 		</prerequisites>
 		<researchViewX>10.00</researchViewX>
 		<researchViewY>8.00</researchViewY>
