@@ -676,16 +676,16 @@
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_AdvMechanism</li>
+            <li>MMT_Mechanism</li>
           </thingDefs>
         </filter>
-        <count>5</count>
+        <count>10</count>
       </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>MMT_HeavyComponent</li>
-        <li>MMT_AdvMechanism</li>
+        <li>MMT_Mechanism</li>
       </thingDefs>
       <categories>
         <li>MMT_SLDBar</li>
@@ -733,10 +733,10 @@
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_AdvMechanism</li>
+            <li>MMT_Mechanism</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>6</count>
       </li>
       <li>
         <filter>
@@ -751,7 +751,7 @@
       <thingDefs>
         <li>MMT_IntegratedCircuit</li>
         <li>MMT_HeavyComponent</li>
-        <li>MMT_AdvMechanism</li>
+        <li>MMT_Mechanism</li>
         <li>MMT_Glass</li>
       </thingDefs>
     </fixedIngredientFilter>

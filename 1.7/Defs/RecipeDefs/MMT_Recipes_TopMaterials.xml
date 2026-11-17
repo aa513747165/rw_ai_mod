@@ -227,28 +227,28 @@
   <RecipeDef>
     <defName>MMT_MakeAIPersonaCore</defName>
     <label>合成伪人格核心</label>
-    <description>以高科技合金与生物微芯片合成一枚伪人格核心。材料消耗为拆解产出的两倍。</description>
+    <description>以碳聚合金与微芯片在电动电子工艺台上合成一枚伪人格核心。</description>
     <jobString>正在合成伪人格核心。</jobString>
     <workAmount>8000</workAmount>
     <workSpeedStat>MMT_ElectronicCraftingSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <recipeUsers>
-      <li>MMT_RoboticAssembler</li>
+      <li>MMT_ElectricElectronicsTable</li>
     </recipeUsers>
     <ingredients>
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_BioMicrochips</li>
+            <li>MMT_Microchip</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>10</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_AlphaPoly</li>
+            <li>MMT_Polymers</li>
           </thingDefs>
         </filter>
         <count>60</count>
@@ -264,8 +264,8 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>MMT_BioMicrochips</li>
-        <li>MMT_AlphaPoly</li>
+        <li>MMT_Microchip</li>
+        <li>MMT_Polymers</li>
         <li>MMT_CarbonAlloy</li>
       </thingDefs>
     </fixedIngredientFilter>

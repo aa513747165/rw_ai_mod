@@ -2262,10 +2262,10 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>MMT_SpacerComponent</li>
+						<li>ComponentIndustrial</li>
 					</thingDefs>
 				</filter>
-				<count>4</count>
+				<count>10</count>
 			</li>
 			<li>
 				<filter>
@@ -2296,7 +2296,7 @@
 			<thingDefs>
 				<li>MMT_HeavyComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>MMT_SpacerComponent</li>
+				<li>ComponentIndustrial</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
@@ -2854,10 +2854,10 @@
 			<li>
 				<filter>
 					<thingDefs>
-						<li>MMT_SpacerComponent</li>
+						<li>ComponentIndustrial</li>
 					</thingDefs>
 				</filter>
-				<count>10</count>
+				<count>20</count>
 			</li>
 			<li>
 				<filter>
@@ -2881,14 +2881,14 @@
 						<li>Leathers</li>
 					</categories>
 				</filter>
-				<count>10</count>
+				<count>20</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
 			<thingDefs>
 				<li>MMT_HeavyComponent</li>
 				<li>MMT_WeaponParts</li>
-				<li>MMT_SpacerComponent</li>
+				<li>ComponentIndustrial</li>
 				<li>MMT_Plastic</li>
 			</thingDefs>
 			<categories>
