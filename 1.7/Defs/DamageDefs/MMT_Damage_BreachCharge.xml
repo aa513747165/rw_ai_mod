@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<!-- 破墙爆破伤害：以原版 Thump 为模板，对建筑放大 100 倍（基础10 -> 对建筑1000），对人仅约10点 -->
+	<DamageDef>
+		<defName>MMT_BreachBlast</defName>
+		<label>破墙爆破</label>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+		<externalViolence>true</externalViolence>
+		<isExplosive>true</isExplosive>
+		<deathMessage>{0}被破墙炸弹炸死了。</deathMessage>
+		<hediff>Crush</hediff>
+		<hediffSolid>Crack</hediffSolid>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Blunt</impactSoundType>
+		<armorCategory>Sharp</armorCategory>
+		<minDamageToFragment>15</minDamageToFragment>
+		<defaultDamage>10</defaultDamage>
+		<defaultArmorPenetration>0</defaultArmorPenetration>
+		<!-- 核心：对建筑（墙/门等）伤害系数100，10点基础伤害放大为约1000点 -->
+		<buildingDamageFactorImpassable>100</buildingDamageFactorImpassable>
+		<buildingDamageFactorPassable>100</buildingDamageFactorPassable>
+		<plantDamageFactor>4</plantDamageFactor>
+		<explosionAffectOutsidePartsOnly>false</explosionAffectOutsidePartsOnly>
+		<explosionCellFleck>BlastDry</explosionCellFleck>
+		<explosionColorCenter>(0.73, 0.93, 0.96)</explosionColorCenter>
+		<explosionColorEdge>(0.71, 0.82, 0.90)</explosionColorEdge>
+		<soundExplosion>Explosion_Thump</soundExplosion>
+		<combatLogRules>Damage_Bomb</combatLogRules>
+	</DamageDef>
+</Defs>

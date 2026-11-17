@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<!-- 爆墙炸弹：敌方袭击者专用的投掷爆破武器，专门用于破门/破墙；
+	     不设 weaponTags（配发完全由 C# 补丁按殖民地财富控制），不可交易、死亡即销毁（不可缴获） -->
+	<ThingDef ParentName="MMT_BaseGun">
+		<defName>MMT_Weapon_WallBreachCharge</defName>
+		<label>爆墙炸弹</label>
+		<description>一种大装药量的定向爆破装置，对墙体和门等建筑有毁灭性破坏力，但爆炸冲击波对人员杀伤有限。袭击者会在殖民地富到一定程度后携带它强行开路。</description>
+		<graphicData>
+			<texPath>Things/Weapons/Grenades/WallBreach</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Interact_Grenade</soundInteract>
+		<techLevel>Industrial</techLevel>
+		<tradeability>None</tradeability>
+		<destroyOnDrop>true</destroyOnDrop>
+		<smeltable>false</smeltable>
+		<generateCommonality>0</generateCommonality>
+		<statBases>
+			<MarketValue>250</MarketValue>
+			<Mass>2</Mass>
+			<MaxHitPoints>100</MaxHitPoints>
+			<RangedWeapon_Cooldown>2</RangedWeapon_Cooldown>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_LaunchProjectile</verbClass>
+				<ai_AvoidFriendlyFireRadius>3</ai_AvoidFriendlyFireRadius>
+				<!-- 关键标记：AI 视其为建筑破坏武器，破墙时自动对其使用；不设 onlyManualCast 以便 AI 自动投掷 -->
+				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+				<defaultProjectile>MMT_Proj_WallBreachCharge</defaultProjectile>
+				<hasStandardCommand>true</hasStandardCommand>
+				<label>投掷爆墙炸弹</label>
+				<noiseRadius>4</noiseRadius>
+				<range>12.9</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<soundCast>ThrowGrenade</soundCast>
+				<warmupTime>1.5</warmupTime>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>Body</label>
+				<power>2</power>
+				<cooldownTime>1.75</cooldownTime>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<armorPenetration>0.01</armorPenetration>
+			</li>
+		</tools>
+	</ThingDef>
+</Defs>

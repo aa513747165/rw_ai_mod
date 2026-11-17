@@ -699,4 +699,24 @@
 			<flyOverhead>false</flyOverhead>
 		</projectile>
 	</ThingDef>
+	<!--爆墙炸弹投射物：命中即爆（无引信延迟，保证破墙可靠性），对建筑约1000伤害、对人约10伤害-->
+	<ThingDef ParentName="BaseBullet">
+		<defName>MMT_Proj_WallBreachCharge</defName>
+		<label>爆墙炸弹</label>
+		<thingClass>Projectile_Explosive</thingClass>
+		<graphicData>
+			<texPath>Things/Projectile/WallBreach</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<projectile>
+			<damageDef>MMT_BreachBlast</damageDef>
+			<damageAmountBase>10</damageAmountBase>
+			<armorPenetrationBase>0</armorPenetrationBase>
+			<speed>9</speed>
+			<explosionRadius>1.9</explosionRadius>
+			<applyDamageToExplosionCellsNeighbors>true</applyDamageToExplosionCellsNeighbors>
+			<soundExplode>Explosion_Thump</soundExplode>
+			<flyOverhead>false</flyOverhead>
+		</projectile>
+	</ThingDef>
 </Defs>
