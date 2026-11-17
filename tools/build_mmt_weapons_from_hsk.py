@@ -1309,6 +1309,12 @@ def turret_gun_ammo(index: SourceIndex, element: ET.Element) -> tuple[str | None
 def convert_turret_gun(source_name: str, index: SourceIndex, mapping: dict) -> ET.Element:
     """炮塔枪转换：MMT_BaseTurretGun 基类 + 每发消耗 1 弹药燃料。"""
     out = convert_weapon(source_name, "turrets", index, mapping, base_override="MMT_BaseTurretGun")
+    # 炮塔枪仅由炮塔建筑经 turretGunDef 引用，去掉 Gun tag 避免落入派系刷武器池（敌人会背炮塔机枪）
+    tags_node = out.find("./weaponTags")
+    if tags_node is not None:
+        for li in list(tags_node.findall("li")):
+            if li.text == "Gun":
+                tags_node.remove(li)
     for verb in out.findall("./verbs/li"):
         ET.SubElement(verb, "consumeFuelPerShot").text = "1"
     return out
