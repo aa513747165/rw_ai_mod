@@ -183,6 +183,7 @@
     <recipeUsers>
       <li>TableMachining</li>
     </recipeUsers>
+		<researchPrerequisite>Stonecutting</researchPrerequisite>
     <ingredients>
       <li>
         <filter>
@@ -252,6 +253,7 @@
     <recipeUsers>
       <li>TableMachining</li>
     </recipeUsers>
+		<researchPrerequisite>Stonecutting</researchPrerequisite>
     <ingredients>
       <li>
         <filter>

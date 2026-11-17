@@ -126,6 +126,7 @@
       <li>MMT_DryingRack</li>
       <li>MMT_ElectricDryingRack</li>
       <li>MMT_NeutroamineRefiner</li>
+      <li>MMT_AdvDrugLab</li>
       <li>MMT_HandGrinder</li>
       <li>MMT_ElectricGrinder</li>
       <li>MMT_HandSieve</li>

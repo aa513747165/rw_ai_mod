@@ -58,9 +58,9 @@
 | 炮塔弹药（TurretAmmo） | 4 | 0 | 0 | 0 | 4 |
 | 炮塔箱（TurretCrates） | 4 | 4 | 0 | 0 | 0 |
 | 武器部件（WeaponParts） | 14 | 14 | 0 | 0 | 0 |
-| 古代武器（Weapons_Archaic） | 13 | 0 | 0 | 0 | 13 |
+| 古代武器（Weapons_Archaic） | 10 | 0 | 0 | 0 | 10 |
 | 常规武器（Weapons_Conventional） | 58 | 0 | 0 | 0 | 58 |
-| 未来武器（Weapons_Futuristic） | 12 | 0 | 0 | 0 | 12 |
+| 未来武器（Weapons_Futuristic） | 15 | 0 | 0 | 0 | 15 |
 | 木材（Wood） | 5 | 4 | 1 | 0 | 0 |
 | MMT_Items_NaturalOrgans（MMT_Items_NaturalOrgans） | 4 | 0 | 0 | 0 | 4 |
 
@@ -1215,7 +1215,7 @@
 
 #### 将碎石碾磨成沙子（`MMT_MakeSand_Electric`）
 
-- **MMT**：碎石×20 -> 沙×50 @ — ｜ 工作量=600
+- **MMT**：碎石×20 -> 沙×50 @ — ｜ 工作量=600 ｜ 研究:Stonecutting(Stonecutting)
 - **HSK** `MakeSand_Electric`：碎石(CrushedStone)×20 -> 沙(SandResource)×50 @ TableMachining ｜ 工作量=600
 - **对比**：数值一致
 
@@ -1227,7 +1227,7 @@
 
 #### 将石块碾磨成沙子（`MMT_MakeSand_Electric_Chunk`）
 
-- **MMT**：[StoneChunks]×1 -> 沙×80 @ — ｜ 工作量=1500
+- **MMT**：[StoneChunks]×1 -> 沙×80 @ — ｜ 工作量=1500 ｜ 研究:Stonecutting(Stonecutting)
 - **HSK** `MakeSand_Electric`：碎石(CrushedStone)×20 -> 沙(SandResource)×50 @ TableMachining ｜ 工作量=600
 - **对比**：首投入 1 vs HSK 20；产出 80 vs HSK 50；工作量 1500 vs HSK 600
 
@@ -2063,16 +2063,6 @@
 - **MMT**：[MMT_MetallicBar]×30 + 火药 或 Chemfuel×7 + 工业零件(ComponentIndustrial)×4 -> Weapon_GrenadeFrag×5 @ — ｜ 工作量=4000 ｜ 研究:手榴弹 II(MMT_GrenadesAdvanced)，技能:Crafting≥7
 - **HSK**：无对应资源（MMT 新增）
 
-#### 制作温压手榴弹（`MMT_MakeFusionGrenades`）
-
-- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 光束武器部件×1 -> 温压手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作电荷手榴弹（`MMT_MakeGrenadeChargedFrag`）
-
-- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 电荷武器部件×1 -> 电荷手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
-- **HSK**：无对应资源（MMT 新增）
-
 #### 制作高爆手榴弹（`MMT_MakeHighExplosiveGrenades`）
 
 - **MMT**：[MMT_MetallicBar]×24 + 火药 或 Chemfuel×5 + 工业零件(ComponentIndustrial)×3 -> 高爆手榴弹×5 @ — ｜ 工作量=3600 ｜ 研究:手榴弹 I(MMT_GrenadesBasic)，技能:Crafting≥6
@@ -2086,11 +2076,6 @@
 #### 制作莫洛托夫燃烧瓶（`MMT_MakeMolotov`）
 
 - **MMT**：玻璃块×30 + Chemfuel×30 + [MMT_BTextiles]×30 -> Weapon_GrenadeMolotov×5 @ — ｜ 工作量=3500 ｜ 研究:Greatbow(Greatbow)，技能:Crafting≥5
-- **HSK**：无对应资源（MMT 新增）
-
-#### 制作等离子手榴弹（`MMT_MakePlasmaGrenades`）
-
-- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 离子武器部件×1 -> 等离子手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 #### 制作烟雾手榴弹（`MMT_MakeSmokeGrenade`）
@@ -2460,6 +2445,21 @@
 #### 制作R6“撕裂者”电荷步枪（`MMT_BuildSplitter`）
 
 - **MMT**：电荷武器部件×1 + 武器部件×6 + 超级零部件×12 + 斯特合金×7 + [MMT_USLDBar]×22 + 塑料×35 -> R6“撕裂者”电荷步枪×1 @ — ｜ 工作量=30000 ｜ 研究:激光武器 II(MMT_DirectedEnergyWeapons2)，技能:Crafting≥15
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制作温压手榴弹（`MMT_MakeFusionGrenades`）
+
+- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 光束武器部件×1 -> 温压手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制作电荷手榴弹（`MMT_MakeGrenadeChargedFrag`）
+
+- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 电荷武器部件×1 -> 电荷手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
+- **HSK**：无对应资源（MMT 新增）
+
+#### 制作等离子手榴弹（`MMT_MakePlasmaGrenades`）
+
+- **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 离子武器部件×1 -> 等离子手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.41 木材（Wood）

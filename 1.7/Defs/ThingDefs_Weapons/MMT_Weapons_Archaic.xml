@@ -1901,67 +1901,6 @@
 		<tradeability>Sellable</tradeability>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Weapon_GrenadeChargedFrag</defName>
-		<label>电荷手榴弹</label>
-		<description>一个小而圆但非常致命的高能手榴弹。电荷手榴弹能挽救很多生命，也能解决很多问题，会产生大量危险的破片。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Grenades/Charged</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Grenade</soundInteract>
-		<techLevel>Spacer</techLevel>
-		<statBases>
-			<Beauty>-3</Beauty>
-			<DeteriorationRate>2</DeteriorationRate>
-			<Flammability>1.0</Flammability>
-			<MarketValue>38</MarketValue>
-			<Mass>0.8</Mass>
-			<MaxHitPoints>100</MaxHitPoints>
-			<RangedWeapon_Cooldown>0.8</RangedWeapon_Cooldown>
-			<SellPriceFactor>0.20</SellPriceFactor>
-		</statBases>
-		<weaponTags>
-			<li>GrenadeDestructive</li>
-			<li>GrenadeTierFour</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_LaunchProjectile</verbClass>
-				<ai_AvoidFriendlyFireRadius>5</ai_AvoidFriendlyFireRadius>
-				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
-				<defaultProjectile>MMT_Proj_GrenadeChargedFrag</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<label>throw frag grenade</label>
-				<minRange>5</minRange>
-				<noiseRadius>4</noiseRadius>
-				<onlyManualCast>true</onlyManualCast>
-				<range>12</range>
-				<soundCast>ThrowGrenade</soundCast>
-				<warmupTime>1.35</warmupTime>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
-		<tools>
-			<li>
-				<label>Body</label>
-				<power>2</power>
-				<cooldownTime>1.75</cooldownTime>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<armorPenetration>0.01</armorPenetration>
-			</li>
-		</tools>
-		<smeltProducts>
-			<Plasteel>3</Plasteel>
-			<MMT_SpacerComponent>1</MMT_SpacerComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
-		<generateCommonality>0.5</generateCommonality>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Weapon_GrenadeFlame</defName>
 		<label>燃烧手榴弹</label>
 		<description>浓缩的燃剂材料混合物会在受到引信装药点燃时候会引起飞溅爆炸。</description>
@@ -2023,67 +1962,6 @@
 		<generateCommonality>0.7</generateCommonality>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Weapon_GrenadeFusion</defName>
-		<label>温压手榴弹</label>
-		<description>一种改进版的简易高爆手榴弹，它含有更强烈的爆炸物质。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Grenades/Fusion</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Grenade</soundInteract>
-		<techLevel>Spacer</techLevel>
-		<statBases>
-			<Beauty>-3</Beauty>
-			<DeteriorationRate>2</DeteriorationRate>
-			<Flammability>1.0</Flammability>
-			<MarketValue>70.0</MarketValue>
-			<Mass>0.65</Mass>
-			<MaxHitPoints>100</MaxHitPoints>
-			<RangedWeapon_Cooldown>0.6</RangedWeapon_Cooldown>
-			<SellPriceFactor>0.20</SellPriceFactor>
-		</statBases>
-		<weaponTags>
-			<li>GrenadeDestructive</li>
-			<li>GrenadeTierFour</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_LaunchProjectile</verbClass>
-				<ai_AvoidFriendlyFireRadius>5</ai_AvoidFriendlyFireRadius>
-				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
-				<defaultProjectile>MMT_Proj_GrenadeFusion</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<label>throw fusion grenade</label>
-				<minRange>4</minRange>
-				<noiseRadius>4</noiseRadius>
-				<onlyManualCast>true</onlyManualCast>
-				<range>12</range>
-				<soundCast>ThrowGrenade</soundCast>
-				<warmupTime>1.5</warmupTime>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
-		<tools>
-			<li>
-				<label>Body</label>
-				<power>2</power>
-				<cooldownTime>1.75</cooldownTime>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<armorPenetration>0.01</armorPenetration>
-			</li>
-		</tools>
-		<smeltProducts>
-			<Plasteel>3</Plasteel>
-			<MMT_SpacerComponent>1</MMT_SpacerComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
-		<generateCommonality>0.3</generateCommonality>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Weapon_GrenadeHighExplosive</defName>
 		<label>高爆手榴弹</label>
 		<description>简单的高爆手雷。</description>
@@ -2142,67 +2020,6 @@
 			<MMT_Powder>2</MMT_Powder>
 			<ComponentIndustrial>1</ComponentIndustrial>
 		</smeltProducts>
-	</ThingDef>
-	<ThingDef ParentName="MMT_BaseGun">
-		<defName>MMT_Weapon_GrenadePlasma</defName>
-		<label>等离子手榴弹</label>
-		<description>混合了部分不稳定等离子变化材料的武器，爆破面积小但是非常致命。</description>
-		<graphicData>
-			<texPath>Things/Weapons/Grenades/Plasma</texPath>
-			<graphicClass>Graphic_StackCount</graphicClass>
-		</graphicData>
-		<soundInteract>Interact_Grenade</soundInteract>
-		<techLevel>Spacer</techLevel>
-		<statBases>
-			<Beauty>-3</Beauty>
-			<DeteriorationRate>2</DeteriorationRate>
-			<Flammability>1.0</Flammability>
-			<MarketValue>60</MarketValue>
-			<Mass>0.55</Mass>
-			<MaxHitPoints>100</MaxHitPoints>
-			<RangedWeapon_Cooldown>0.75</RangedWeapon_Cooldown>
-			<SellPriceFactor>0.20</SellPriceFactor>
-		</statBases>
-		<weaponTags>
-			<li>GrenadeDestructive</li>
-			<li>GrenadeTierFour</li>
-		</weaponTags>
-		<verbs>
-			<li>
-				<verbClass>Verb_LaunchProjectile</verbClass>
-				<ai_AvoidFriendlyFireRadius>5</ai_AvoidFriendlyFireRadius>
-				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
-				<defaultProjectile>MMT_Proj_GrenadePlasma</defaultProjectile>
-				<hasStandardCommand>true</hasStandardCommand>
-				<label>throw plasma grenade</label>
-				<minRange>4</minRange>
-				<noiseRadius>4</noiseRadius>
-				<onlyManualCast>true</onlyManualCast>
-				<range>12</range>
-				<soundCast>ThrowGrenade</soundCast>
-				<warmupTime>1.4</warmupTime>
-				<targetParams>
-					<canTargetLocations>true</canTargetLocations>
-				</targetParams>
-			</li>
-		</verbs>
-		<tools>
-			<li>
-				<label>Body</label>
-				<power>2</power>
-				<cooldownTime>1.75</cooldownTime>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<armorPenetration>0.01</armorPenetration>
-			</li>
-		</tools>
-		<smeltProducts>
-			<Plasteel>3</Plasteel>
-			<MMT_SpacerComponent>1</MMT_SpacerComponent>
-			<MMT_WeaponParts>1</MMT_WeaponParts>
-		</smeltProducts>
-		<generateCommonality>0.4</generateCommonality>
 	</ThingDef>
 	<ThingDef ParentName="MMT_BaseGun">
 		<defName>MMT_Weapon_GrenadeTox</defName>

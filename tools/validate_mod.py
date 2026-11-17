@@ -417,7 +417,7 @@ RECIPE_EXPECTATIONS = {
         "output": "MMT_Sand",
         "output_count": "50",
         "users": ["TableMachining"],
-        "research": None,
+        "research": "Stonecutting",
         "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
@@ -443,7 +443,7 @@ RECIPE_EXPECTATIONS = {
         "output": "MMT_Sand",
         "output_count": "80",
         "users": ["TableMachining"],
-        "research": None,
+        "research": "Stonecutting",
         "speed": "GeneralLaborSpeed",
         "effect": "CutStone",
         "sound": "Recipe_MakeStoneBlocks",
@@ -1829,6 +1829,7 @@ WORKGIVER_EXPECTED_WORKTYPES = {
     "MMT_DoBillsMedical": "Doctor",
     "MMT_DoBillsCrafting": "Crafting",
     "MMT_OperateChunkDrill": "Mining",
+    "MMT_LoadMedicalTurret": "Hauling",
 }
 INFRA_VANILLA_PARENTS = {"Manufactured", "Textiles", "ResourcesRaw"}
 INFRA_EXPECTED_CATEGORIES = {
@@ -4822,8 +4823,12 @@ def validate_workgivers() -> None:
     assert_equal(set(givers), set(WORKGIVER_EXPECTED_WORKTYPES), "WorkGiver defName 集合")
     covered: dict[str, str] = {}
     for name, node in givers.items():
-        # 手动采石机是自定义 Scanner WorkGiver（无账单），其余均为 WorkGiver_DoBill
-        expected_giver_class = "MyModeTest.WorkGiver_ChunkDrill" if name == "MMT_OperateChunkDrill" else "WorkGiver_DoBill"
+        # 手动采石机/医疗炮台装填是自定义 WorkGiver，其余均为 WorkGiver_DoBill
+        custom_givers = {
+            "MMT_OperateChunkDrill": "MyModeTest.WorkGiver_ChunkDrill",
+            "MMT_LoadMedicalTurret": "MyModeTest.WorkGiver_LoadMedicalTurret",
+        }
+        expected_giver_class = custom_givers.get(name, "WorkGiver_DoBill")
         assert_equal(child_text(node, "giverClass"), expected_giver_class, f"{name} giverClass")
         assert_equal(child_text(node, "workType"), WORKGIVER_EXPECTED_WORKTYPES[name], f"{name} workType")
         for bench in li_values(node, "fixedBillGiverDefs"):
@@ -5841,8 +5846,8 @@ def validate_weapons_turrets() -> None:
 def validate_weapons_futuristic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Futuristic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Futuristic.xml"))
-    assert_equal(len(weapons), 26, "未来武器数（2 把同名替换孪生移入 patch）")
-    assert_equal(len(recipes), 12, "未来武器配方数（4 条 ReverseEngineer 已排除）")
+    assert_equal(len(weapons), 29, "未来武器数（2 把同名替换孪生移入 patch，3 个太空级榴弹自 Archaic 迁入）")
+    assert_equal(len(recipes), 15, "未来武器配方数（4 条 ReverseEngineer 已排除，3 个太空级榴弹自 Archaic 迁入）")
     laser = weapons["MMT_LaserRifle"]
     assert_equal(child_text(laser, "verbs/li/defaultProjectile"), "MMT_Bullet_Laserbeam", "激光步枪投射物")
     if "MMT_Gun_ChargeRifle" in weapons:
@@ -5854,8 +5859,8 @@ def validate_weapons_futuristic() -> None:
 def validate_weapons_archaic() -> None:
     weapons = def_map(parse_xml("1.7/Defs/ThingDefs_Weapons/MMT_Weapons_Archaic.xml"))
     recipes = def_map(parse_xml("1.7/Defs/RecipeDefs/MMT_Recipes_Weapons_Archaic.xml"))
-    assert_equal(len(weapons), 32, "冷兵器与手雷 Def 数（3 手雷 + 6 近战同名替换孪生移入 patch，6 个手雷投射物在 MMT_Projectiles.xml）")
-    assert_equal(len(recipes), 13, "手雷配方数")
+    assert_equal(len(weapons), 29, "冷兵器与手雷 Def 数（6 近战同名替换孪生移入 patch，3 个太空级榴弹迁往 Futuristic，6 个手雷投射物在 MMT_Projectiles.xml）")
+    assert_equal(len(recipes), 10, "手雷配方数（3 个太空级榴弹迁往 Futuristic）")
     katana = weapons["MMT_MeleeWeapon_Katana"]
     assert_equal(child_text(katana, "tools/li/power"), "7", "武士打刀首个工具威力")
     if "MMT_Weapon_GrenadeFrag" in weapons:
@@ -5924,6 +5929,9 @@ def validate_weapons_projectiles() -> None:
     assert_equal(child_text(fifty, "projectile/armorPenetrationBase"), "0.14", ".50 穿甲")
 
     for name, node in projectiles.items():
+        # 医疗注射弹是治疗投射物（MyModeTest.Projectile_MedicalSyringe），故意不带 damageDef
+        if name == "MMT_Bullet_MedicalSyringe":
+            continue
         damage_def = child_text(node, "projectile/damageDef")
         if damage_def not in VANILLA_DAMAGE_DEFS:
             fail(f"{name} 引用非原版 damageDef: {damage_def}")
@@ -6704,7 +6712,7 @@ def validate_teleport() -> None:
                   "teleportCharges", "MaxTeleportCharges", "TryConsumeCharge",
                   "ExtraTeleportCharges", "Scribe_Values.Look", "ThingPlaceMode.Near",
                   "ExecuteRecall", "DesignateMultiCell", "DrawStyleCategory",
-                  "MMT_TeleportDefOf", "FleckDefOf.PsycastSkipFlashEntry",
+                  "MMT_TeleportDefOf", "PsycastSkipFlashExit",
                   "AnyInGroupHasAnythingLeftToLoad", "CancelLoad", "Prefs.DevMode",
                   # 分支：据点进攻（进图自选落点，无边缘/中心菜单） / 非敌对组成商队 / 荒野临时地图
                   "GetOrGenerateMapUtility.GetOrGenerateMap",
@@ -6763,7 +6771,7 @@ def validate_teleport() -> None:
     assert_equal(child_text(shuttle, "hasInteractionCell"), "true", "隐形穿梭机需交互格（吐出落点）")
     assert_equal(child_text(shuttle, "./statBases/Mass"), "0", "折跃载体 Mass=0（商队随行不占负重）")
     incoming = skyfallers["MMT_TeleportShuttleIncoming"]
-    assert_equal(child_text(incoming, "thingClass"), "ShuttleIncoming", "降临天坠物类型")
+    assert_equal(child_text(incoming, "thingClass"), "MyModeTest.MMT_ShuttleIncomingBreathing", "降临天坠物类型")
     assert_equal(child_text(incoming, "./graphicData/texPath"), "Things/Skyfaller/MMT_TeleportBeam", "降临光柱贴图")
     leaving = skyfallers["MMT_TeleportShuttleLeaving"]
     assert_equal(child_text(leaving, "thingClass"), "FlyShipLeaving",
