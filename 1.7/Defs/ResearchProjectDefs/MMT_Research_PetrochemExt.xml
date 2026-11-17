@@ -3,7 +3,7 @@
   <ResearchProjectDef>
     <defName>MMT_AdvancedPetrochemistry</defName>
     <label>高级石化工艺</label>
-    <description>掌握石化下游的精深加工：精炼石蜡与硫酸盐、合成碳纤维锭与复合粘剂、制备表面活性剂。</description>
+    <description>掌握石化下游的精深加工：精炼石蜡与硫酸盐、合成碳纤维锭与复合粘剂、制备表面活性剂，并解锁以聚合物为燃料的聚合物发电机（5000W）。</description>
     <baseCost>1500</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>MMT_ResearchTab</tab>

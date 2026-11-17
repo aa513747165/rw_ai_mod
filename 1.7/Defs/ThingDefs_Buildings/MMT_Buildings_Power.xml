@@ -75,6 +75,83 @@
     <building/>
   </ThingDef>
 
+  <!-- 聚合物发电机：发电量 5000W，工业末期过渡电源（原煤 2500W → 核能 20000W 之间的中间档），贴图为 HSK 燃料电厂（已授权） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_PolymerGenerator</defName>
+    <label>聚合物发电机</label>
+    <description>以聚合物为燃料的内燃发电机组，输出 5000W 电力。聚合物由原油在石化设施中蒸馏获得。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/MMT_PolymerGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3,2)</drawSize>
+      <drawRotated>false</drawRotated>
+    </graphicData>
+    <uiIconPath>Things/Building/Power/MMT_PolymerGenerator</uiIconPath>
+    <size>(3,2)</size>
+    <passability>Impassable</passability>
+    <pathCost>90</pathCost>
+    <fillPercent>1</fillPercent>
+    <blockWind>true</blockWind>
+    <canOverlapZones>false</canOverlapZones>
+    <altitudeLayer>Building</altitudeLayer>
+    <designationCategory>MMT_Production</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>6500</WorkToBuild>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Beauty>-30</Beauty>
+      <Mass>90</Mass>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+      <MMT_ReinforcedConcrete>20</MMT_ReinforcedConcrete>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <MMT_Mechanism>4</MMT_Mechanism>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-5000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>8.0</fuelConsumptionRate>
+        <fuelCapacity>80</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Polymers</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <autoRefuelPercent>0.3</autoRefuelPercent>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <fuelLabel>聚合物储量</fuelLabel>
+        <fuelGizmoLabel>聚合物</fuelGizmoLabel>
+        <outOfFuelMessage>无法发电：需要聚合物</outOfFuelMessage>
+        <fuelIconPath>Things/Item/MMT/MMT_Petro/Polymers</fuelIconPath>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+    </comps>
+    <tickerType>Normal</tickerType>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_AdvancedPetrochemistry</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
+  </ThingDef>
+
   <!-- 核能反应堆：以核燃料棒为燃料的大功率发电机（贴图为 HSK 内置 Rimatomics 堆芯A） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_NuclearReactor</defName>
