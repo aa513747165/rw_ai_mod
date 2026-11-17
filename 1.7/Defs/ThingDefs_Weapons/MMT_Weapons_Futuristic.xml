@@ -2084,8 +2084,8 @@
 			<RangedWeapon_Cooldown>0.6</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.20</SellPriceFactor>
 		</statBases>
+		<!-- 仅保留 GrenadeTierFour：Spacer 科技手雷不进原版掷弹兵（工业派系）刷装池 -->
 		<weaponTags>
-			<li>GrenadeDestructive</li>
 			<li>GrenadeTierFour</li>
 		</weaponTags>
 		<verbs>
@@ -2145,8 +2145,8 @@
 			<RangedWeapon_Cooldown>0.8</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.20</SellPriceFactor>
 		</statBases>
+		<!-- 仅保留 GrenadeTierFour：Spacer 科技手雷不进原版掷弹兵（工业派系）刷装池 -->
 		<weaponTags>
-			<li>GrenadeDestructive</li>
 			<li>GrenadeTierFour</li>
 		</weaponTags>
 		<verbs>
@@ -2206,8 +2206,8 @@
 			<RangedWeapon_Cooldown>0.75</RangedWeapon_Cooldown>
 			<SellPriceFactor>0.20</SellPriceFactor>
 		</statBases>
+		<!-- 仅保留 GrenadeTierFour：Spacer 科技手雷不进原版掷弹兵（工业派系）刷装池 -->
 		<weaponTags>
-			<li>GrenadeDestructive</li>
 			<li>GrenadeTierFour</li>
 		</weaponTags>
 		<verbs>
