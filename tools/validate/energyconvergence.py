@@ -200,8 +200,8 @@ CHEMLAB_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricPetro
 
 TEX_LUMENBULB_PLANT = [
     f"1.7/Textures/Things/Plant/MMT/MMT_PlantLumenbulb/Lumenbulb{v}.png"
-    for v in "ABC"
-]
+    for v in "AB"
+] + ["1.7/Textures/Things/Plant/MMT/MMT_PlantLumenbulb_Immature/LumenbulbImmatureA.png"]
 TEX_LUMEN_BULB = "1.7/Textures/Things/Item/Resource/MMT_LumenBulb.png"
 TEX_ESSENCE = "1.7/Textures/Things/Item/Resource/MMT_CrystalEssence.png"
 TEX_INCUBATOR = [
@@ -236,6 +236,11 @@ def validate_crystalcultivation() -> None:
         fail("辉晶花播种研究前置必须是 MMT_EnergyCrystalCultivation")
     assert_equal(child_text(plant, "plant/harvestedThingDef"), "MMT_LumenBulb", "辉晶花收获物")
     assert_equal(child_text(plant, "plant/growDays"), "12", "辉晶花生长天数")
+    assert_equal(
+        child_text(plant, "plant/immatureGraphicPath"),
+        "Things/Plant/MMT/MMT_PlantLumenbulb_Immature",
+        "辉晶花幼株贴图",
+    )
 
     # ---- 中间产物 ----
     items = def_map(parse_xml(ITEM_XML))

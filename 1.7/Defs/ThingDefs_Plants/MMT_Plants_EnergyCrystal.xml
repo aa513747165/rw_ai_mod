@@ -30,6 +30,7 @@
       <sowTags>
         <li>Hydroponic</li>
       </sowTags>
+      <immatureGraphicPath>Things/Plant/MMT/MMT_PlantLumenbulb_Immature</immatureGraphicPath>
       <harvestedThingDef>MMT_LumenBulb</harvestedThingDef>
       <sowWork>250</sowWork>
       <harvestYield>4</harvestYield>
