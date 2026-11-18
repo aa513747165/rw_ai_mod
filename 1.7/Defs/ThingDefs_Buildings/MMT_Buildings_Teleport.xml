@@ -7,7 +7,7 @@
        次数制：待机 3000W；开启并通电时以 3000Wd/天自动蓄电（内置储能 15000Wd，约 5 天充满），
        蓄电每充满一次转化为 1 次传送并重新蓄电；次数上限 = 1 + 次元传送模块数（最多 10 个），
        次数为 0 时进入等待蓄电的 CD。充能效率模块（最多 5 个）每个提升 10% 蓄电速度。
-       贴图为 HSK 蓝色传送门（Core_SK Genstep/Blueportal，已授权）。 -->
+       贴图为三朝向静态图（_south/_east/_north，西向由东向镜像，Graphic_Multi 按朝向取图）。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_TeleportPad</defName>
     <label>折跃传送台</label>
@@ -15,10 +15,9 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_TeleportPad</texPath>
-      <graphicClass>MyModeTest.MMT_Graphic_Rotating</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(4,4)</drawSize>
-      <drawRotated>false</drawRotated>
     </graphicData>
     <size>(3,3)</size>
     <altitudeLayer>Building</altitudeLayer>
@@ -26,11 +25,6 @@
     <pathCost>50</pathCost>
     <fillPercent>0.3</fillPercent>
     <rotatable>true</rotatable>
-    <!-- 必须 RealtimeOnly：BuildingBase 默认 MapMeshOnly（贴图烘焙进静态区块网格，
-         DrawWorker 只在区块重建时走一次），传送台的 MMT_Graphic_Rotating 自转需要
-         每帧 Graphic.Draw；MapMeshAndRealTime 下 DrawAt 仍不画基础贴图，只有
-         RealtimeOnly 会让 DrawAt 每帧调用 Graphic.Draw -->
-    <drawerType>RealtimeOnly</drawerType>
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(0,0,-2)</interactionCellOffset>
     <tickerType>Normal</tickerType>

@@ -6649,7 +6649,9 @@ def validate_teleport() -> None:
         "1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Teleport.xml",
         "1.7/Defs/ThingDefs_Misc/MMT_Skyfallers_Teleport.xml",
         "1.7/Defs/ShipObjectDefs/MMT_TransportShipDefs_Teleport.xml",
-        "1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png",
+        "1.7/Textures/Things/Building/Misc/MMT_TeleportPad_south.png",
+        "1.7/Textures/Things/Building/Misc/MMT_TeleportPad_east.png",
+        "1.7/Textures/Things/Building/Misc/MMT_TeleportPad_north.png",
         "1.7/Textures/UI/Designators/MMT_RecallTeleport.png",
         "1.7/Textures/Things/Skyfaller/MMT_TeleportBeam.png",
         "1.7/Textures/Things/Misc/MMT_Null.png",
@@ -6658,7 +6660,9 @@ def validate_teleport() -> None:
         "Source/MyModeTest/TeleportShuttle.cs",
         "Source/MyModeTest/TeleportCaravanReturn.cs",
     ])
-    assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad.png")
+    assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad_south.png")
+    assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad_east.png")
+    assert_png("1.7/Textures/Things/Building/Misc/MMT_TeleportPad_north.png")
     assert_png("1.7/Textures/UI/Designators/MMT_RecallTeleport.png")
     assert_png("1.7/Textures/Things/Skyfaller/MMT_TeleportBeam.png")
     assert_png("1.7/Textures/Things/Misc/MMT_Null.png")
@@ -6672,8 +6676,8 @@ def validate_teleport() -> None:
     assert_equal(child_text(pad, "hasInteractionCell"), "true", "传送台需交互格（召回落点）")
     assert_equal(li_values(pad, "inspectorTabs"), ["ITab_ContentsTransporter", "MyModeTest.ITab_ModuleSlots"],
                  "传送台舱内货物面板 + 增效模块页签")
-    assert_equal(child_text(pad, "./graphicData/graphicClass"), "MyModeTest.MMT_Graphic_Rotating",
-                 "传送台贴图为持续自转 Graphic")
+    assert_equal(child_text(pad, "./graphicData/graphicClass"), "Graphic_Multi",
+                 "传送台贴图为三朝向 Graphic_Multi（_south/_east/_north）")
 
     power = next(li for li in pad.findall("comps/li") if li.attrib.get("Class") == "CompProperties_Power")
     assert_equal(child_text(power, "compClass"), "CompPowerTrader", "传送台电力 comp 类型")
@@ -6730,8 +6734,7 @@ def validate_teleport() -> None:
                   "ThingMaker.MakeThing", "TryConsumeTeleport", "DumpShuttleCargoAndDestroy",
                   "CompTeleportCargoLedger", "Snapshot",
                   # 目标器悬停无效地块（行星边缘）防越界
-                  "target.Tile.Valid",
-                  "MMT_Graphic_Rotating", "realtimeSinceStartup"):
+                  "target.Tile.Valid"):
         assert token in cs_src, f"TeleportPad.cs 缺少关键实现: {token}"
     # 商队折跃返回：Harmony patch Caravan.GetGizmos 给携带载体的商队加"发射：折跃返回"
     return_src = read_text("Source/MyModeTest/TeleportCaravanReturn.cs")
