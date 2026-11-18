@@ -205,8 +205,8 @@ TEX_LUMENBULB_PLANT = [
 TEX_LUMEN_BULB = "1.7/Textures/Things/Item/Resource/MMT_LumenBulb.png"
 TEX_ESSENCE = "1.7/Textures/Things/Item/Resource/MMT_CrystalEssence.png"
 TEX_INCUBATOR = [
-    "1.7/Textures/Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator.png",
-    "1.7/Textures/Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator_m.png",
+    f"1.7/Textures/Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator_{d}.png"
+    for d in ("east", "north", "south")
 ]
 
 
@@ -288,6 +288,7 @@ def validate_crystalcultivation() -> None:
         "Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator",
         "培养舱贴图",
     )
+    assert_equal(child_text(inc, "graphicData/graphicClass"), "Graphic_Multi", "培养舱 graphicClass")
     if "MMT_GrowEnergyCrystal" not in li_values(inc, "recipes"):
         fail("培养舱 recipes 缺少 MMT_GrowEnergyCrystal")
     if "MMT_EnergyCrystalCultivation" not in li_values(inc, "researchPrerequisites"):

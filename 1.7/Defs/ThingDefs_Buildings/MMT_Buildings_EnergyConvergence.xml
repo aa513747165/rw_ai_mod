@@ -164,11 +164,11 @@
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
-    <uiIconPath>Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator</uiIconPath>
+    <uiIconPath>Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator_south</uiIconPath>
     <size>(2,2)</size>
     <passability>PassThroughOnly</passability>
     <pathCost>90</pathCost>
