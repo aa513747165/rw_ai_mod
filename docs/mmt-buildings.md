@@ -232,11 +232,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -10000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
 | 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
-| 晶体培养舱（`MMT_CrystalIncubator`） | (2,2) | 钢×80 + 玻璃块×20 + 黄金×20 + 先进机械组件×2 | 600W | 4000 | 能量结晶培育 | 1 |  |
-
-**晶体培养舱（`MMT_CrystalIncubator`） 的配方：**
-
-- `MMT_GrowEnergyCrystal`：晶能精粹(2) + 黄金(2) -> 能量结晶×1 ｜ 工作量=12000 ｜ 研究:能量结晶培育 ｜ 技能:制作≥10
+| 晶体培养舱（`MMT_CrystalIncubator`） | (2,2) | 钢×80 + 玻璃块×20 + 黄金×20 + 先进机械组件×2 | 600W | 4000 | 能量结晶培育 | 0 | CompProperties_ModuleSlots、CompProperties_AutoProcessor |
 
 ### FieldMedical（FieldMedical）
 

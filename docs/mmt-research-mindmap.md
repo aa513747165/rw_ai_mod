@@ -91,7 +91,7 @@
             - 解锁配方: 凝聚能量结晶
             - **能量结晶培育** `MMT_EnergyCrystalCultivation` ｜ 坐标 (10.00, 9.00) ｜ 3000点 ｜ Spacer ｜ 前置(原版): Hydroponics
               - 解锁建筑: 晶体培养舱
-              - 解锁配方: 提纯晶能精粹、培养能量结晶
+              - 解锁配方: 提纯晶能精粹
               - 解锁植物: 辉晶花（播种）
       - **枪械 II** `MMT_GunsAdvanced` ｜ 坐标 (2.00, 7.00) ｜ 1600点 ｜ Industrial ｜ 前置(原版): BlowbackOperation, GasOperation
         - 解锁配方: 制造 AA-12自动霰弹枪、制作伯莱塔Cx4卡宾枪、制作M4A1卡宾枪、制作M79榴弹发射器、制造 “打击者”霰弹枪、制造 M90近程突击霰弹枪、制造 M45战术霰弹枪、制作USC半自动卡宾枪

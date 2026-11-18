@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 超频模块：安装在自动研磨机/自动筛子/自动采石机内，每个使处理速度 +10%（间隔 / (1+0.1n)），
+  <!-- 超频模块：安装在自动研磨机/自动筛子/自动采石机/晶体培养舱内，每个使处理速度 +10%（间隔 / (1+0.1n)），
        单台最多 5 个；拆除设备时返还。需研究"自动机增效" -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_OverclockModule</defName>
     <label>超频模块</label>
-    <description>自动加工机组的超频驱动模块，由殖民者安装进自动研磨机、自动筛子或自动采石机内生效。每个使设备处理速度提高 10%，单台最多安装 5 个。拆除设备时返还。</description>
+    <description>自动加工机组的超频驱动模块，由殖民者安装进自动研磨机、自动筛子、自动采石机或晶体培养舱内生效。每个使设备处理速度提高 10%，单台最多安装 5 个。拆除设备时返还。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_OverclockModule</texPath>
       <graphicClass>Graphic_Single</graphicClass>

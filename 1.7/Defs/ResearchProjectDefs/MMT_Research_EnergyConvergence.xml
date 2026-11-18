@@ -19,7 +19,7 @@
   <ResearchProjectDef>
     <defName>MMT_EnergyCrystalCultivation</defName>
     <label>能量结晶培育</label>
-    <description>通过定向培育让辉晶花在球茎中富集能量微粒，解锁辉晶花种植（水培）、晶能精粹提纯配方（石化产品实验室）与晶体培养舱（将晶能精粹培养为能量结晶）。相比电子器件工作台的凝聚配方，这条路线不消耗微芯片与高纯硅、黄金用量大减，但周期更长、工序更多。</description>
+    <description>通过定向培育让辉晶花在球茎中富集能量微粒，解锁辉晶花种植（水培）、晶能精粹提纯配方（石化产品实验室）与晶体培养舱（填装精粹后无人值守自动培养能量结晶，支持超频模块提速）。相比电子器件工作台的凝聚配方，这条路线不消耗微芯片与高纯硅、无需黄金，但周期更长、工序更多。</description>
     <baseCost>3000</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>

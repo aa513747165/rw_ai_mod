@@ -25,6 +25,7 @@ MODULES_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_ProcessorModules.xml"
 MESHES_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_SieveMeshes.xml"
 AUTOPROC_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_AutoProcessor.xml"
 DRILL_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml"
+ENERGY_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_EnergyConvergence.xml"
 
 MODULE_DEFS = {
     "MMT_OverclockModule": ("Overclock", [("SpeedFactor", "0.1")]),
@@ -50,7 +51,7 @@ def _slot_limits(building_def):
 
 
 def validate_modules() -> None:
-    require_files([MODULES_XML, MESHES_XML, AUTOPROC_XML, DRILL_XML,
+    require_files([MODULES_XML, MESHES_XML, AUTOPROC_XML, DRILL_XML, ENERGY_XML,
                    "Source/MyModeTest/ModuleSystem.cs",
                    "Source/MyModeTest/AutoProcessor.cs",
                    "Source/MyModeTest/ChunkDrill.cs"])
@@ -93,6 +94,13 @@ def validate_modules() -> None:
     drill_limits = _slot_limits(drill["MMT_AutoChunkDrill"])
     assert_equal(drill_limits, {"Overclock": "5", "Yield": "5"}, "自动采石机槽位上限")
     all_limits.append(drill_limits)
+    # 晶体培养舱：仅支持超频模块
+    energy = def_map(parse_xml(ENERGY_XML))
+    inc_limits = _slot_limits(energy["MMT_CrystalIncubator"])
+    if inc_limits is None:
+        fail("MMT_CrystalIncubator 缺 CompProperties_ModuleSlots")
+    assert_equal(inc_limits, {"Overclock": "5"}, "晶体培养舱槽位上限")
+    all_limits.append(inc_limits)
     for limits in all_limits:
         for key in limits:
             if key not in known_keys:

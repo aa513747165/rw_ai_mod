@@ -265,23 +265,16 @@ def validate_crystalcultivation() -> None:
     if "MMT_RefineCrystalEssence" not in li_values(chemlab["MMT_ElectricChemLab"], "recipes"):
         fail("石化产品实验室 recipes 缺少 MMT_RefineCrystalEssence")
 
-    if "MMT_GrowEnergyCrystal" not in recipes:
-        fail("配方缺少 MMT_GrowEnergyCrystal")
-    grow = recipes["MMT_GrowEnergyCrystal"]
-    assert_equal(child_text(grow, "researchPrerequisite"), "MMT_EnergyCrystalCultivation", "结晶配方研究前置")
-    if grow.find("products") is None or grow.find("products").findtext("MMT_EnergyCrystal") is None:
-        fail("结晶配方 products 必须产出 MMT_EnergyCrystal")
-    for need in ("MMT_CrystalEssence", "Gold"):
-        if need not in li_values(grow, "fixedIngredientFilter/thingDefs"):
-            fail(f"结晶配方缺少原料: {need}")
+    if "MMT_GrowEnergyCrystal" in recipes:
+        fail("手动培养配方 MMT_GrowEnergyCrystal 应已移除（培养舱为无人值守自动培养）")
 
-    # ---- 建筑：晶体培养舱 ----
+    # ---- 建筑：晶体培养舱（无人值守自动培养，支持超频模块） ----
     buildings = def_map(parse_xml(BUILDING_XML))
     if "MMT_CrystalIncubator" not in buildings:
         fail("建筑缺少 MMT_CrystalIncubator")
     inc = buildings["MMT_CrystalIncubator"]
     assert_equal(child_text(inc, "label"), "晶体培养舱", "培养舱 label")
-    assert_equal(child_text(inc, "thingClass"), "Building_WorkTable", "培养舱 thingClass")
+    assert_equal(child_text(inc, "thingClass"), "Building", "培养舱 thingClass")
     assert_equal(child_text(inc, "size"), "(2,2)", "培养舱尺寸")
     assert_equal(
         child_text(inc, "graphicData/texPath"),
@@ -289,16 +282,46 @@ def validate_crystalcultivation() -> None:
         "培养舱贴图",
     )
     assert_equal(child_text(inc, "graphicData/graphicClass"), "Graphic_Multi", "培养舱 graphicClass")
-    if "MMT_GrowEnergyCrystal" not in li_values(inc, "recipes"):
-        fail("培养舱 recipes 缺少 MMT_GrowEnergyCrystal")
     if "MMT_EnergyCrystalCultivation" not in li_values(inc, "researchPrerequisites"):
         fail("培养舱研究前置必须是 MMT_EnergyCrystalCultivation")
     if inc.find("building") is None:
         fail("培养舱缺少显式 <building/> 标签（1.7 BuildingBase 不自带 BuildingProperties）")
     inc_comps = _comp_classes_full(inc)
-    for comp in ("CompProperties_Power", "CompProperties_Flickable"):
+    for comp in (
+        "CompProperties_Power",
+        "CompProperties_Flickable",
+        "MyModeTest.CompProperties_ModuleSlots",
+        "CompProperties_Refuelable",
+        "MyModeTest.CompProperties_AutoProcessor",
+    ):
         if comp not in inc_comps:
             fail(f"培养舱缺少 comp: {comp}")
+    # 页签：处理进度 + 增效模块
+    tabs = li_values(inc, "inspectorTabs")
+    for tab in ("MyModeTest.ITab_AutoProcessor", "MyModeTest.ITab_ModuleSlots"):
+        if tab not in tabs:
+            fail(f"培养舱 inspectorTabs 缺少: {tab}")
+    # 精粹仓（燃料式）只接受晶能精粹
+    fuel_defs = li_values(inc, "comps/li/fuelFilter/thingDefs")
+    if fuel_defs != ["MMT_CrystalEssence"]:
+        fail(f"培养舱燃料仓必须只接受 MMT_CrystalEssence（当前 {fuel_defs}）")
+    # 自动处理参数：每 12000 tick 消耗 3 精粹产 1 能量结晶
+    auto_props = None
+    slot_limits = None
+    for li in inc.findall("comps/li"):
+        cls = li.attrib.get("Class")
+        if cls == "MyModeTest.CompProperties_AutoProcessor":
+            auto_props = li
+        elif cls == "MyModeTest.CompProperties_ModuleSlots":
+            slot_limits = {child_text(e, "key"): child_text(e, "max") for e in li.findall("slotLimits/li")}
+    if auto_props is None:
+        fail("培养舱缺少 CompProperties_AutoProcessor 配置")
+    else:
+        assert_equal(child_text(auto_props, "intervalTicks"), "12000", "培养周期")
+        assert_equal(child_text(auto_props, "inputCount"), "3", "每轮精粹消耗")
+        assert_equal(child_text(auto_props, "outputDef"), "MMT_EnergyCrystal", "培养舱产物")
+    if slot_limits != {"Overclock": "5"}:
+        fail(f"培养舱 slotLimits 应为 Overclock×5（当前 {slot_limits}）")
 
     # ---- 研究：能量结晶培育 ----
     research = def_map(parse_xml(RESEARCH_XML))
