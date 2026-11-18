@@ -6,7 +6,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_EnemyDetectorSwitch</defName>
     <label>敌意感应开关</label>
-    <description>装有敌意探测器的电力开关。侦测到袭击、围攻、兽群等进攻事件时自动接通电路，进攻结束后自动断开，让防御设施只在需要时耗电。也可手动切换为强制通电或强制断电。</description>
+    <description>装有敌意探测器的电力开关。侦测到袭击、围攻、兽群等进攻事件时自动接通电路，进攻结束后自动断开，让防御设施只在需要时耗电。休眠中的远古威胁与机械集群不会触发，惊醒后才会接通。也可手动切换为强制通电或强制断电。</description>
     <thingClass>Building_PowerSwitch</thingClass>
     <category>Building</category>
     <graphicData>

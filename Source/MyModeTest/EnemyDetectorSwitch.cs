@@ -120,6 +120,8 @@ namespace MyModeTest
         private static readonly Dictionary<Map, int> counts = new Dictionary<Map, int>();
         private static readonly HashSet<Lord> countedLords = new HashSet<Lord>();
         private static readonly Dictionary<Map, List<CompEnemyDetector>> switches = new Dictionary<Map, List<CompEnemyDetector>>();
+        /// <summary>已做过全图重扫的地图（惰性初始化，每图一次）。</summary>
+        private static readonly HashSet<Map> scannedMaps = new HashSet<Map>();
 
         public static bool HasHostileLord(Map map)
         {
@@ -138,6 +140,36 @@ namespace MyModeTest
                 switches[map] = list;
             }
             list.Add(comp);
+            EnsureMapScanned(map);
+        }
+
+        /// <summary>
+        /// 惰性重扫本图 Lord 计数：静态计数不入档，且地图生成瞬间休眠单位尚未进入休眠 job
+        /// 可能被误计，注册开关时以当前真实状态重扫一次最稳妥。
+        /// </summary>
+        private static void EnsureMapScanned(Map map)
+        {
+            if (!scannedMaps.Add(map))
+            {
+                return;
+            }
+            // 先清掉本图可能存在的陈旧计数，再以 IsHostile 重算
+            countedLords.RemoveWhere(l => l.Map == map);
+            counts.Remove(map);
+            int count = 0;
+            List<Lord> lords = map.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                if (IsHostile(lords[i]))
+                {
+                    countedLords.Add(lords[i]);
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                counts[map] = count;
+            }
         }
 
         public static void Unregister(Map map, CompEnemyDetector comp)
@@ -187,10 +219,12 @@ namespace MyModeTest
         {
             countedLords.Clear();
             counts.Clear();
+            scannedMaps.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
+                scannedMaps.Add(map);
                 List<Lord> lords = map.lordManager.lords;
                 for (int j = 0; j < lords.Count; j++)
                 {
@@ -210,8 +244,11 @@ namespace MyModeTest
         }
 
         /// <summary>
-        /// 判定 Lord 是否为敌对进攻事件：任一在场存活成员与玩家敌对即可。
+        /// 判定 Lord 是否为敌对进攻事件：任一在场存活的敌对成员且未处于休眠（远古遗迹/休眠
+        /// 机械集群的 CompCanBeDormant 未唤醒不算进攻，惊醒时经 Notify_DormancyWakeup 补丁重新计入）。
         /// 用成员判定而非仅看派系，可覆盖无派系的猎杀人类兽群（manhunter）等场景。
+        /// 全部成员未进场（袭击刚创建、空投途中）时才退回派系敌对判定；只要有成员在场，
+        /// 即使全部阵亡或全部休眠，都按在场状态判定，避免休眠威胁/尸体残留导致误判常开。
         /// </summary>
         private static bool IsHostile(Lord lord)
         {
@@ -220,17 +257,30 @@ namespace MyModeTest
             {
                 return false;
             }
+            bool anySpawned = false;
             List<Pawn> pawns = lord.ownedPawns;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (pawn.Spawned && !pawn.Dead && pawn.HostileTo(player))
+                if (!pawn.Spawned)
+                {
+                    continue;
+                }
+                anySpawned = true;
+                if (!pawn.Dead && pawn.HostileTo(player) && IsAwake(pawn))
                 {
                     return true;
                 }
             }
             // 成员尚未进场（如袭击 Lord 刚创建、部队正在空投途中）时按派系敌对判定
-            return lord.faction != null && lord.faction.HostileTo(player);
+            return !anySpawned && lord.faction != null && lord.faction.HostileTo(player);
+        }
+
+        /// <summary>休眠威胁（远古遗迹/休眠机械集群）唤醒前不计为进攻。</summary>
+        private static bool IsAwake(Pawn pawn)
+        {
+            CompCanBeDormant dormant = pawn.TryGetComp<CompCanBeDormant>();
+            return dormant == null || dormant.Awake;
         }
 
         private static void Increment(Map map)
@@ -268,6 +318,26 @@ namespace MyModeTest
             {
                 list[i].RefreshPower();
             }
+        }
+    }
+
+    /// <summary>补丁：休眠威胁惊醒（远古遗迹/休眠机械集群惊醒时立即重估该 Lord）。</summary>
+    [HarmonyPatch(typeof(Lord), nameof(Lord.Notify_DormancyWakeup))]
+    public static class Patch_Lord_NotifyDormancyWakeup
+    {
+        public static void Postfix(Lord __instance)
+        {
+            EnemyRaidTracker.SyncLord(__instance);
+        }
+    }
+
+    /// <summary>补丁：开局/读档完成后全量重建计数（跟踪器为静态内存数据，不入档）。</summary>
+    [HarmonyPatch(typeof(Game), nameof(Game.FinalizeInit))]
+    public static class Patch_Game_FinalizeInit
+    {
+        public static void Postfix()
+        {
+            EnemyRaidTracker.ReevaluateAll();
         }
     }
 

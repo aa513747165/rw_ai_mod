@@ -711,9 +711,21 @@ namespace MyModeTest
                 return false;
             if (b.IsForbidden(pawn) || b.IsBurning())
                 return false;
-            if (b.GetComp<CompMedicalTurret>() == null)
+            CompMedicalTurret comp = b.GetComp<CompMedicalTurret>();
+            if (comp == null)
                 return false;
-            return pawn.CanReserve(b, 1, -1, null, forced);
+            if (!pawn.CanReserve(b, 1, -1, null, forced))
+                return false;
+            // 必须与 JobOnThing 同步：至少有一种药品"有装填额度且储物区里有可取堆叠"才报有活，
+            // 否则 1.7 会刷 "provided target but yielded no actual job" 红字且小人永远装不上药
+            foreach (ThingDef def in CompMedicalTurret.ValidAmmoDefs)
+            {
+                if (comp.RoomFor(def) <= 0)
+                    continue;
+                if (CompMedicalTurret.FindNearestUsableDrug(t.Map, pawn.Position, pawn, def) != null)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>为药仓未达上限的药品找最近的可用堆叠派活；找不到返回 null（与原版加油作业同一模式）。

@@ -95,7 +95,7 @@
       </thingDefs>
     </fixedIngredientFilter>
     <products>
-      <MMT_ChargeShieldPackMk1>1</MMT_ChargeShieldPackMk1>
+      <MMT_ChargeShieldPackMkI>1</MMT_ChargeShieldPackMkI>
     </products>
     <skillRequirements>
       <Crafting>6</Crafting>

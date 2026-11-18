@@ -23,7 +23,8 @@
             <ai_AvoidFriendlyFireRadius>3</ai_AvoidFriendlyFireRadius>
             <defaultProjectile>MMT_Proj_WallBreachCharge</defaultProjectile>
             <range>12.9</range>
-            <forcedMissRadius>1.9</forcedMissRadius>
+            <!-- 不配 forcedMissRadius：1.7 引擎坑，无装备动词（Hediff 授予，EquipmentSource 为 null）
+                 带 forcedMissRadius 会在 TryCastShot 强制 miss 分支 NRE；破墙炸药瞄建筑本就不需要散射 -->
             <warmupTime>1.5</warmupTime>
             <noiseRadius>4</noiseRadius>
             <soundCast>ThrowGrenade</soundCast>

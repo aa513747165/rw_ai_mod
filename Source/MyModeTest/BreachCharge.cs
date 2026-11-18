@@ -151,6 +151,22 @@ namespace MyModeTest
     }
 
     /// <summary>
+    /// 1.7 引擎兜底：无装备动词（HediffComp_VerbGiver 等授予，EquipmentSource 为 null）若带
+    /// forcedMissRadius，TryCastShot 强制 miss 分支会对 null equipment 解引用 NRE（每 tick 刷屏）。
+    /// 这里在 GetForceMissFactorFor 入口拦截：equipment 为 null 时按原语义返回 1f（无迫击炮加成）。
+    /// </summary>
+    [HarmonyPatch(typeof(VerbProperties), "GetForceMissFactorFor")]
+    public static class Patch_ForceMissNullEquipment
+    {
+        public static bool Prefix(Thing equipment, ref float __result)
+        {
+            if (equipment != null) return true;
+            __result = 1f;
+            return false;
+        }
+    }
+
+    /// <summary>
     /// 投掷爆墙炸弹作业驱动：走到目标建筑贴脸后用携带者 Hediff 的投掷动词打一发。
     /// 原版 JobDriver_AttackStatic 只用装备/近战动词（忽略 job.verbToUse），故需自定义驱动。
     /// </summary>

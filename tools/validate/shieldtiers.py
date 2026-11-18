@@ -93,9 +93,9 @@ def validate_shieldtiers() -> None:
             fail(f"护符不应携带 {forbidden}（无电量概念）")
 
     # ---- 充能护盾腰带 Mk.I（工业，2000 Wd / 50 Wd 每伤害） ----
-    if "MMT_ChargeShieldPackMk1" not in items:
-        fail("物品缺少 MMT_ChargeShieldPackMk1")
-    mk1 = items["MMT_ChargeShieldPackMk1"]
+    if "MMT_ChargeShieldPackMkI" not in items:
+        fail("物品缺少 MMT_ChargeShieldPackMkI")
+    mk1 = items["MMT_ChargeShieldPackMkI"]
     assert_equal(child_text(mk1, "techLevel"), "Industrial", "Mk.I techLevel")
     mk1_comps = mk1.find("comps")
     found_recharge = found_pack = False
@@ -136,7 +136,7 @@ def validate_shieldtiers() -> None:
     recipes = def_map(parse_xml(RECIPES_XML))
     for def_name, product, research, bench in (
         ("MMT_MakeWardTalisman", "MMT_WardTalisman", "MMT_WardTalismanCraft", "CraftingSpot"),
-        ("MMT_MakeChargeShieldMk1", "MMT_ChargeShieldPackMk1", "MMT_BatteryShieldTech", "TableMachining"),
+        ("MMT_MakeChargeShieldMk1", "MMT_ChargeShieldPackMkI", "MMT_BatteryShieldTech", "TableMachining"),
         ("MMT_MakeArchoShieldPack", "MMT_ArchoShieldPack", "MMT_ArchoShieldTech", None),
     ):
         if def_name not in recipes:

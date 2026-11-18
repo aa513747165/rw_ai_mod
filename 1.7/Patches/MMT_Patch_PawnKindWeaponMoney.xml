@@ -139,9 +139,10 @@
 		<xpath>Defs/PawnKindDef[defName="TradersGuild_Heavy"]/weaponMoney</xpath>
 		<value><weaponMoney>1800~2800</weaponMoney></value>
 	</Operation>
-	<!-- 帝国重装步兵继承 1100~2500，下限低于 GunHeavy/SpacerGun 最低枪价 1800，低掷骰时会无武器生成 -->
-	<Operation Class="PatchOperationReplace">
-		<xpath>Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]/weaponMoney</xpath>
+	<!-- 帝国重装步兵自身无 weaponMoney 节点（继承 ImperialFighterBase 的 1100~2500），补丁阶段节点尚不存在，
+	     只能用 Add 不能用 Replace；下限低于 GunHeavy/SpacerGun 最低枪价 1800，低掷骰时会无武器生成 -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]</xpath>
 		<value><weaponMoney>1800~2500</weaponMoney></value>
 	</Operation>
 </Patch>
