@@ -24,13 +24,17 @@ ELECTRONICS_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricE
 CS_FILE = "Source/MyModeTest/EnergyConvergence.cs"
 
 TEX_CRYSTAL = "1.7/Textures/Things/Item/Resource/MMT_EnergyCrystal.png"
-TEX_PLANT = "1.7/Textures/Things/Building/Power/MMT_EnergyConvergencePlant.png"
-TEX_PLANT_M = "1.7/Textures/Things/Building/Power/MMT_EnergyConvergencePlant_m.png"
-TEX_PLANT_LIT = "1.7/Textures/Things/Building/Power/MMT_EnergyConvergencePlant_Lit.png"
-TEX_PLANT_LIT_M = "1.7/Textures/Things/Building/Power/MMT_EnergyConvergencePlant_Lit_m.png"
-TEX_CHARGER = "1.7/Textures/Things/Building/Power/MMT_IgnitionCharger.png"
-TEX_CHARGER_M = "1.7/Textures/Things/Building/Power/MMT_IgnitionCharger_m.png"
-TEX_BALL = "1.7/Textures/Things/Building/Misc/MMT_EnergyBall.png"
+# 发电站三朝向贴图：全程用 _base 本体，点火态仅靠能量球/光环特效，无静态点火图
+TEX_PLANT_BASE = [
+    f"1.7/Textures/Things/Building/Power/MMT_EnergyConvergencePlant_base_{d}.png"
+    for d in ("east", "north", "south")
+]
+TEX_CHARGER = [
+    f"1.7/Textures/Things/Building/Power/MMT_IgnitionCharger_{d}.png"
+    for d in ("east", "north", "south")
+]
+TEX_ORB = "1.7/Textures/Things/Building/Misc/MMT_EnergyOrb.png"
+TEX_HALO = "1.7/Textures/Things/Building/Misc/MMT_Halo.png"
 
 
 def _comp_classes(node) -> list[str]:
@@ -56,11 +60,9 @@ def _comp_classes_full(node) -> list[str]:
 
 
 def validate_energyconvergence() -> None:
-    require_files(
-        [ITEM_XML, RECIPE_XML, RESEARCH_XML, BUILDING_XML, CS_FILE]
-        + [TEX_CRYSTAL, TEX_PLANT, TEX_PLANT_M, TEX_PLANT_LIT, TEX_PLANT_LIT_M, TEX_CHARGER, TEX_CHARGER_M, TEX_BALL]
-    )
-    for tex in (TEX_CRYSTAL, TEX_PLANT, TEX_PLANT_M, TEX_PLANT_LIT, TEX_PLANT_LIT_M, TEX_CHARGER, TEX_CHARGER_M, TEX_BALL):
+    all_tex = [TEX_CRYSTAL, TEX_ORB, TEX_HALO] + TEX_PLANT_BASE + TEX_CHARGER
+    require_files([ITEM_XML, RECIPE_XML, RESEARCH_XML, BUILDING_XML, CS_FILE] + all_tex)
+    for tex in all_tex:
         assert_png(tex)
 
     # ---- 物品：能量结晶 ----
@@ -118,9 +120,10 @@ def validate_energyconvergence() -> None:
     assert_equal(child_text(plant, "size"), "(3,3)", "发电站尺寸")
     assert_equal(
         child_text(plant, "graphicData/texPath"),
-        "Things/Building/Power/MMT_EnergyConvergencePlant",
+        "Things/Building/Power/MMT_EnergyConvergencePlant_base",
         "发电站贴图",
     )
+    assert_equal(child_text(plant, "graphicData/graphicClass"), "Graphic_Multi", "发电站 graphicClass")
     if "MMT_EnergyConvergence" not in li_values(plant, "researchPrerequisites"):
         fail("发电站研究前置必须是 MMT_EnergyConvergence")
     if plant.find("building") is None:
@@ -154,6 +157,7 @@ def validate_energyconvergence() -> None:
         "Things/Building/Power/MMT_IgnitionCharger",
         "充能装置贴图",
     )
+    assert_equal(child_text(charger, "graphicData/graphicClass"), "Graphic_Multi", "充能装置 graphicClass")
     if "MMT_EnergyConvergence" not in li_values(charger, "researchPrerequisites"):
         fail("充能装置研究前置必须是 MMT_EnergyConvergence")
     if charger.find("building") is None:
@@ -174,10 +178,10 @@ def validate_energyconvergence() -> None:
         "CompProperties_IgnitionCharger",
         "CompIgnitionCharger",
         "Building_EnergyConvergencePlant",
-        "MMT_EnergyBall",
+        "MMT_EnergyOrb",
+        "MMT_Halo",
         "MMT_ChargeBeam",
-        "MMT_EnergyConvergencePlant_Lit",
-        "Graphic_Single",
+        "DrawIgnitedEffect",
         "FleckDefOf.FireGlow",
         "Command_Action",
         "开始点火",

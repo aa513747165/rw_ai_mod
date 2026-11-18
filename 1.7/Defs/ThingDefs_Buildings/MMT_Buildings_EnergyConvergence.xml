@@ -8,16 +8,15 @@
     <description>以能量结晶为燃料的聚能发电站，输出 10000W 电力。建成后默认未点火：需在其四角（对角外一格）各放置一座点火充能装置并通电，通过点火仪式激活。燃料耗尽、断电或关闭后会熄火，需重新点火。</description>
     <thingClass>MyModeTest.Building_EnergyConvergencePlant</thingClass>
     <graphicData>
-      <texPath>Things/Building/Power/MMT_EnergyConvergencePlant</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/Power/MMT_EnergyConvergencePlant_base</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(3,3)</drawSize>
-      <drawRotated>false</drawRotated>
     </graphicData>
     <!-- 点火射线/能量球/光柱全靠 DrawAt 每帧绘制；BuildingBase 默认 MapMeshOnly
          会把贴图烘焙进静态网格、DrawAt 几乎不被调用，特效会不可见，必须 RealtimeOnly -->
     <drawerType>RealtimeOnly</drawerType>
-    <uiIconPath>Things/Building/Power/MMT_EnergyConvergencePlant</uiIconPath>
+    <uiIconPath>Things/Building/Power/MMT_EnergyConvergencePlant_base_south</uiIconPath>
     <size>(3,3)</size>
     <passability>Impassable</passability>
     <pathCost>90</pathCost>
@@ -102,12 +101,11 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Power/MMT_IgnitionCharger</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>
-      <drawRotated>false</drawRotated>
     </graphicData>
-    <uiIconPath>Things/Building/Power/MMT_IgnitionCharger</uiIconPath>
+    <uiIconPath>Things/Building/Power/MMT_IgnitionCharger_south</uiIconPath>
     <size>(1,1)</size>
     <!-- 仅允许放在聚能发电站四角（对角外一格），否则拒绝放置/安装 -->
     <placeWorkers>

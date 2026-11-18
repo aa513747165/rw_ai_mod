@@ -329,7 +329,7 @@ namespace MyModeTest
             {
                 Command_Action cmd = new Command_Action();
                 cmd.defaultLabel = "开始点火";
-                cmd.icon = ContentFinder<Texture2D>.Get("Things/Building/Misc/MMT_EnergyBall", false);
+                cmd.icon = ContentFinder<Texture2D>.Get("Things/Building/Misc/MMT_EnergyOrb", false);
                 if (IgnitersReady)
                 {
                     cmd.defaultDesc = "启动点火仪式：四角充能装置将能量汇聚于发电站上方，点燃聚能核心。";
@@ -588,42 +588,26 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 能量聚能发电站建筑：绘制点火仪式特效。
+    /// 能量聚能发电站建筑：绘制点火仪式特效。建筑本体始终用 _base 贴图，
+    /// 点火状态全靠特效区分，避免静态图与动态特效重叠。
     /// 注意 Waylith 下竖直 quad 不渲染（ChargingStation 已验证），全部特效用水平 quad：
-    /// 射线画在水平面内俯视投影即为连线；光柱用多片水平碟堆叠；能量球为多层水平圆碟错相位缩放。
+    /// 射线画在水平面内俯视投影即为连线；光柱用多片水平碟堆叠；能量球脉动 + 光环绕竖直轴旋转。
     /// </summary>
     public class Building_EnergyConvergencePlant : Building
     {
         private const string BeamTexPath = "Things/Building/Misc/MMT_ChargeBeam";
-        private const string BallTexPath = "Things/Building/Misc/MMT_EnergyBall";
-        /// <summary>点火后（燃烧态）贴图。</summary>
-        private const string LitTexPath = "Things/Building/Power/MMT_EnergyConvergencePlant_Lit";
+        private const string OrbTexPath = "Things/Building/Misc/MMT_EnergyOrb";
+        private const string HaloTexPath = "Things/Building/Misc/MMT_Halo";
 
         private CompEnergyIgnition ignition;
         private Material beamMat;
-        private Material ballMat;
-        private Graphic litGraphic;
+        private Material orbMat;
+        private Material haloMat;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
             ignition = this.TryGetComp<CompEnergyIgnition>();
-        }
-
-        /// <summary>未点火用普通贴图；已点火切换为熔金燃烧态贴图（遮罩同名 _m 自动加载）。</summary>
-        public override Graphic Graphic
-        {
-            get
-            {
-                if (ignition != null && ignition.IsIgnited)
-                {
-                    if (litGraphic == null)
-                        litGraphic = GraphicDatabase.Get<Graphic_Single>(LitTexPath, base.Graphic.Shader,
-                            def.graphicData.drawSize, DrawColor, DrawColorTwo);
-                    return litGraphic;
-                }
-                return base.Graphic;
-            }
         }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
@@ -633,7 +617,7 @@ namespace MyModeTest
                 return;
             if (ignition.State == EnergyIgnitionState.Ignited)
             {
-                DrawBurningGlow(drawLoc);
+                DrawIgnitedEffect(drawLoc);
                 return;
             }
             if (ignition.State != EnergyIgnitionState.Igniting)
@@ -647,18 +631,36 @@ namespace MyModeTest
         }
 
         /// <summary>
-        /// 发电中：核心上方一层暖色脉动光晕。真实时间驱动，游戏倍速不影响呼吸节奏。
+        /// 发电中：核心上方能量球持续脉动（尺寸与亮度双通道呼吸），外围光环匀速旋转。
+        /// 真实时间驱动，游戏倍速不影响动画节奏。
         /// </summary>
-        private void DrawBurningGlow(Vector3 drawLoc)
+        private void DrawIgnitedEffect(Vector3 drawLoc)
         {
-            if (ballMat == null)
-                ballMat = MaterialPool.MatFrom(BallTexPath, ShaderDatabase.Transparent, Color.white);
+            EnsureOrbHaloMaterials();
             float time = Time.realtimeSinceStartup;
-            float s = 1.8f + 0.2f * Mathf.Sin(time * 2.3f);
-            ballMat.color = new Color(1f, 0.72f, 0.38f, 0.10f + 0.07f * Mathf.Sin(time * 3.7f));
-            Vector3 p = new Vector3(drawLoc.x, AltitudeLayer.MoteOverhead.AltitudeFor(), drawLoc.z);
+            float y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            // 能量球脉冲：尺寸随正弦缩放，透明度反相轻微呼吸，产生一跳一跳的活体感
+            float pulse = Mathf.Sin(time * 2.6f);
+            float orbSize = 2.0f + 0.35f * pulse;
+            orbMat.color = new Color(1f, 1f, 1f, 0.85f + 0.15f * Mathf.Sin(time * 5.2f));
+            Vector3 p = new Vector3(drawLoc.x, y, drawLoc.z);
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), ballMat, 0);
+                Matrix4x4.TRS(p, Quaternion.identity, new Vector3(orbSize, 1f, orbSize)), orbMat, 0);
+            // 光环：绕竖直轴匀速旋转，压在能量球上层
+            float haloAngle = (time * 45f) % 360f;
+            haloMat.color = new Color(1f, 1f, 1f, 0.9f);
+            float haloSize = 3.4f + 0.1f * Mathf.Sin(time * 1.3f);
+            Vector3 hp = new Vector3(drawLoc.x, y + 0.1f, drawLoc.z);
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(hp, Quaternion.Euler(0f, haloAngle, 0f), new Vector3(haloSize, 1f, haloSize)), haloMat, 0);
+        }
+
+        private void EnsureOrbHaloMaterials()
+        {
+            if (orbMat == null)
+                orbMat = MaterialPool.MatFrom(OrbTexPath, ShaderDatabase.Transparent, Color.white);
+            if (haloMat == null)
+                haloMat = MaterialPool.MatFrom(HaloTexPath, ShaderDatabase.Transparent, Color.white);
         }
 
         /// <summary>四角充能装置顶点到发电站上方的能量射线（点火全程持续）。</summary>
@@ -684,26 +686,33 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>能量汇聚：中央逐渐增大的太阳状能量球。</summary>
+        /// <summary>能量汇聚：中央能量球随进度增大并脉动；进度越高，外围光环越清晰且加速旋转。</summary>
         private void DrawConvergence(Vector3 drawLoc)
         {
             float progress = ignition.ConvergeProgress;
             float y = AltitudeLayer.MoteOverhead.AltitudeFor();
             float time = Time.realtimeSinceStartup;
-            // 能量球：3 片错相位缩放的圆碟，俯视下呈球体感
-            if (ballMat == null)
-                ballMat = MaterialPool.MatFrom(BallTexPath, ShaderDatabase.Transparent, Color.white);
-            float maxSize = ignition == null ? 2f : ((CompProperties_EnergyIgnition)ignition.props).energyBallMaxSize;
-            for (int i = 0; i < 3; i++)
+            EnsureOrbHaloMaterials();
+            float maxSize = ((CompProperties_EnergyIgnition)ignition.props).energyBallMaxSize;
+            // 能量球脉冲：基础尺寸随进度增长，叠加呼吸缩放与亮度起伏
+            float pulse = Mathf.Sin(time * 4f);
+            float s = maxSize * progress * (0.92f + 0.12f * pulse);
+            if (s > 0.01f)
             {
-                float phase = time * 2.2f + i * 2.1f;
-                float s = maxSize * progress * (0.9f + 0.1f * Mathf.Sin(phase)) * (1f - i * 0.18f);
-                if (s <= 0.01f)
-                    continue;
-                ballMat.color = new Color(1f, 1f, 1f, (0.35f + 0.5f * progress) * (1f - i * 0.25f));
-                Vector3 p = new Vector3(drawLoc.x, y + 0.05f * i, drawLoc.z);
+                orbMat.color = new Color(1f, 1f, 1f, (0.45f + 0.45f * progress) * (0.85f + 0.15f * Mathf.Sin(time * 8f)));
+                Vector3 p = new Vector3(drawLoc.x, y, drawLoc.z);
                 Graphics.DrawMesh(MeshPool.plane10,
-                    Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), ballMat, 0);
+                    Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), orbMat, 0);
+            }
+            // 光环：随进度淡入，转速随进度加快（预示能量逼近临界）
+            float haloSize = maxSize * 1.5f * progress;
+            if (haloSize > 0.01f)
+            {
+                float haloAngle = (time * (30f + 120f * progress)) % 360f;
+                haloMat.color = new Color(1f, 1f, 1f, 0.8f * progress);
+                Vector3 hp = new Vector3(drawLoc.x, y + 0.1f, drawLoc.z);
+                Graphics.DrawMesh(MeshPool.plane10,
+                    Matrix4x4.TRS(hp, Quaternion.Euler(0f, haloAngle, 0f), new Vector3(haloSize, 1f, haloSize)), haloMat, 0);
             }
         }
 
