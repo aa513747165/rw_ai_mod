@@ -18,6 +18,12 @@ namespace MyModeTest
         /// <summary>每吸收 1 点伤害的耗电（Wd）。</summary>
         public float wdPerDamage = 40f;
 
+        /// <summary>自动回复速率（Wd/天，0 = 不回电；Mk.III 级特性）。</summary>
+        public float selfRegenWdPerDay = 0f;
+
+        /// <summary>护盾气泡贴图路径（Textures/ 下，不带扩展名）；为空回退默认蓝色气泡。</summary>
+        public string bubbleTexPath;
+
         public CompProperties_ShieldPack()
         {
             compClass = typeof(CompShieldPack);
@@ -38,6 +44,8 @@ namespace MyModeTest
 
         // 电池 comp 惰性缓存（服装在背包/充能台内不 spawn，不能靠 PostSpawnSetup 缓存）
         private CompRechargeable battery;
+        // 强化 comp 惰性缓存（同上）
+        private CompShieldEnhancement enhComp;
 
         /// <summary>护盾参数（internal 供同程序集的状态 gizmo 读取）。</summary>
         internal CompProperties_ShieldPack Props
@@ -68,6 +76,27 @@ namespace MyModeTest
             get { return Battery?.ChargeWd ?? 0f; }
         }
 
+        /// <summary>强化 comp；物品上没有 CompShieldEnhancement 时为 null（无强化加成）。</summary>
+        private CompShieldEnhancement Enhancement
+        {
+            get
+            {
+                if (enhComp == null && parent is ThingWithComps twc)
+                    enhComp = twc.TryGetComp<CompShieldEnhancement>();
+                return enhComp;
+            }
+        }
+
+        /// <summary>实际伤害换电比（Wd/伤害）：基础值 × 强化削减倍率。</summary>
+        public float EffectiveWdPerDamage
+        {
+            get
+            {
+                CompShieldEnhancement enh = Enhancement;
+                return Props.wdPerDamage * (enh != null ? enh.WdCostFactor : 1f);
+            }
+        }
+
         /// <summary>护盾是否生效中：已开启 + 正被穿戴 + 电量充足。</summary>
         public bool ShieldActive
         {
@@ -90,6 +119,9 @@ namespace MyModeTest
         public override void CompTick()
         {
             base.CompTick();
+            // 自动回复（Mk.III 级特性）：无论开关状态、穿戴与否都缓慢回电
+            if (Props.selfRegenWdPerDay > 0f)
+                Battery?.AddCharge(Props.selfRegenWdPerDay / 60000f);
             if (!active)
                 return;
             Pawn wearer = Wearer;
@@ -125,7 +157,7 @@ namespace MyModeTest
                 Deactivate(pawn, "EMP 击穿护盾");
                 return false;
             }
-            float cost = dinfo.Amount * Props.wdPerDamage;
+            float cost = dinfo.Amount * EffectiveWdPerDamage;
             if (BatteryCharge >= cost)
             {
                 Battery.Drain(cost);
@@ -135,7 +167,7 @@ namespace MyModeTest
                 return true;
             }
             // 电量不足以全额吸收：按比例抵消部分伤害，剩余穿透
-            float absorbedDamage = BatteryCharge / Props.wdPerDamage;
+            float absorbedDamage = BatteryCharge / EffectiveWdPerDamage;
             Battery.ClearCharge();
             dinfo.SetAmount(dinfo.Amount - absorbedDamage);
             Deactivate(pawn, "电量耗尽");
@@ -205,8 +237,9 @@ namespace MyModeTest
             float ratio = Battery?.ChargeRatio ?? 0f;
             cmd.defaultLabel = (active ? "关闭护盾腰带" : "开启护盾腰带") + "（电量 " + ratio.ToStringPercent("F0") + "）";
             cmd.defaultDesc = "开启后展开贴身能量护盾，全额吸收所有伤害（含近战）：每吸收 1 点伤害耗电 "
-                + Props.wdPerDamage.ToString("F0") + " Wd，开启期间持续耗电 "
-                + Props.passiveDrainWdPerDay.ToString("F0") + " Wd/天；电能耗尽或解除征召自动关闭。电量可在充能台回充。";
+                + EffectiveWdPerDamage.ToString("F0") + " Wd，开启期间持续耗电 "
+                + Props.passiveDrainWdPerDay.ToString("F0") + " Wd/天；电能耗尽或解除征召自动关闭。电量可在充能台回充。"
+                + (Props.selfRegenWdPerDay > 0f ? "内置聚能核心自动回复 " + Props.selfRegenWdPerDay.ToString("F0") + " Wd/天。" : "");
             cmd.icon = parent.def.uiIcon;
             cmd.action = delegate { Toggle(wearer); };
             if (!active && BatteryCharge <= 0f)
@@ -276,20 +309,23 @@ namespace MyModeTest
             Text.Anchor = TextAnchor.UpperLeft;
             TooltipHandler.TipRegion(inner,
                 "个人能量护盾（单位 Wd）。开启后全额吸收所有伤害（含近战），每吸收 1 点伤害耗电 "
-                + shield.Props.wdPerDamage.ToString("F0") + " Wd，满电约可吸收 "
-                + (max / shield.Props.wdPerDamage).ToString("F0") + " 点伤害；电量可在充能台回充。");
+                + shield.EffectiveWdPerDamage.ToString("F0") + " Wd，满电约可吸收 "
+                + (max / shield.EffectiveWdPerDamage).ToString("F0") + " 点伤害；电量可在充能台回充。");
             return new GizmoResult(GizmoState.Clear);
         }
     }
 
     /// <summary>
     /// 充能护盾腰带服装类：1.7 渲染重构后服装额外绘制走 Apparel.DrawWornExtras，
-    /// 护盾开启期间围绕穿戴者绘制常驻半透明能量泡（MMT 专属贴图
-    /// Things/Item/MMT/Shield/MMT_ShieldBubbleTech，贴图自带蓝色，着色用白色保持原色），
+    /// 护盾开启期间围绕穿戴者绘制常驻半透明能量泡（贴图走 CompProperties_ShieldPack.bubbleTexPath，
+    /// 未配置时回退默认 MMT_ShieldBubbleTech 蓝色气泡；贴图自带颜色，着色用白色保持原色），
     /// 尺寸随游戏 tick 缓慢脉动。
     /// </summary>
     public class Apparel_ChargeShieldPack : Apparel
     {
+        /// <summary>默认气泡贴图（Mk.II 蓝色）。</summary>
+        private const string DefaultBubbleTexPath = "Things/Item/MMT/Shield/MMT_ShieldBubbleTech";
+
         // 护盾气泡材质惰性缓存（自定义着色参数独占一份缓存材质，不污染原版同款材质）
         private Material bubbleMat;
 
@@ -300,8 +336,10 @@ namespace MyModeTest
             if (comp == null || !comp.ShieldActive || Wearer == null || !Wearer.Spawned)
                 return;
             if (bubbleMat == null)
-                bubbleMat = MaterialPool.MatFrom("Things/Item/MMT/Shield/MMT_ShieldBubbleTech",
-                    ShaderDatabase.Transparent, Color.white);
+            {
+                string path = comp.Props.bubbleTexPath.NullOrEmpty() ? DefaultBubbleTexPath : comp.Props.bubbleTexPath;
+                bubbleMat = MaterialPool.MatFrom(path, ShaderDatabase.Transparent, Color.white);
+            }
             // 真实时间驱动：倍速下 TicksGame 加速会让脉动鬼畜（0.06/tick × 60 ≈ 3.6 rad/s）
             float scale = 1.35f + 0.05f * Mathf.Sin(Time.realtimeSinceStartup * 3.6f);
             Vector3 drawPos = Wearer.DrawPos;

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 玉质护符：中世纪一次性护盾（腰带层，与原版护盾腰带同槽位）。无电量，直接以自身耐久
+       吸收伤害（1 伤害 = 1 耐久，MaxHitPoints 150 即全额吸收 150 点）；耐久不足时吸收剩余
+       耐久等值伤害后碎裂消失、溢出伤害穿透；不可修复、不可回充。机制见 ShieldTalisman.cs；
+       与原版护盾腰带一样不设 wornGraphicPath，穿戴不绘制图层 -->
+  <ThingDef ParentName="ApparelBase">
+    <defName>MMT_WardTalisman</defName>
+    <label>玉质护符</label>
+    <thingClass>Apparel</thingClass>
+    <description>以玉石封存防护力场的古代工艺品，佩戴于腰部。激活后展开贴身力场，全额吸收所有伤害（包括近战），每吸收 1 点伤害磨损 1 点耐久；耐久耗尽护符即刻碎裂，溢出的伤害将穿透力场。护符不可修复、不可回充，是前工业时代可靠的保命之物。</description>
+    <tickerType>Normal</tickerType>
+    <techLevel>Medieval</techLevel>
+    <!-- ApparelNoQualityBase 自带 smeltable=true，本品由配方直接产出无 costList，熔炼无产出会报配置错误 -->
+    <smeltable>false</smeltable>
+    <graphicData>
+      <texPath>Things/Item/MMT/Shield/MMT_ShieldTalisman</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <Mass>0.5</Mass>
+      <!-- 耐久即护盾量：全额吸收 150 点伤害后碎裂 -->
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <MarketValue>400</MarketValue>
+      <SellPriceFactor>0.70</SellPriceFactor>
+      <EquipDelay>2</EquipDelay>
+      <!-- vanilla CompShield 初始化需要该 stat，护符机制不使用其数值 -->
+      <EnergyShieldEnergyMax>1</EnergyShieldEnergyMax>
+    </statBases>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <careIfWornByCorpse>false</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <tags>
+        <li>BeltDefense</li>
+      </tags>
+      <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    </apparel>
+    <comps>
+      <li Class="MyModeTest.CompProperties_ShieldTalisman">
+        <blocksRangedWeapons>false</blocksRangedWeapons>
+        <bubbleTexPath>Things/Item/MMT/Shield/MMT_ShieldBubbleJade</bubbleTexPath>
+      </li>
+    </comps>
+    <allowedArchonexusCount>1</allowedArchonexusCount>
+    <tradeTags>
+      <li>Armor</li>
+    </tradeTags>
+  </ThingDef>
+
+  <!-- 充能护盾腰带 Mk.I：工业级电力护盾（梯队入门款）。电池容量小、换电效率低
+       （50 Wd/伤害，满电约吸收 40 点），可在充能台回充与强化。机制见 ShieldPack.cs -->
+  <ThingDef ParentName="ApparelBase">
+    <defName>MMT_ChargeShieldPackMk1</defName>
+    <label>充能护盾腰带 Mk.I</label>
+    <thingClass>MyModeTest.Apparel_ChargeShieldPack</thingClass>
+    <description>第一代量产型个人能量护盾装置，佩戴于腰部。征召时可在指令栏开启护盾：开启后展开贴身能量场，全额吸收所有伤害（包括近战），受早期电池技术限制，每吸收 1 点伤害耗电 50 Wd，开启期间持续耗电 200 Wd/天；电能耗尽护盾自动关闭，可在充能台回充与强化。</description>
+    <tickerType>Normal</tickerType>
+    <techLevel>Industrial</techLevel>
+    <smeltable>false</smeltable>
+    <graphicData>
+      <texPath>Things/Item/MMT/Shield/MMT_ShieldBeltEx</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <Mass>4</Mass>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <MarketValue>900</MarketValue>
+      <SellPriceFactor>0.70</SellPriceFactor>
+      <EquipDelay>2</EquipDelay>
+    </statBases>
+    <thingCategories>
+      <li>ApparelUtility</li>
+      <li>MMT_RechargeableDevices</li>
+    </thingCategories>
+    <apparel>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <careIfWornByCorpse>false</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <tags>
+        <li>BeltDefense</li>
+      </tags>
+      <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    </apparel>
+    <comps>
+      <li Class="MyModeTest.CompProperties_Rechargeable">
+        <maxChargeWd>2000</maxChargeWd>
+      </li>
+      <li Class="MyModeTest.CompProperties_ShieldPack">
+        <passiveDrainWdPerDay>200</passiveDrainWdPerDay>
+        <wdPerDamage>50</wdPerDamage>
+        <bubbleTexPath>Things/Item/MMT/Shield/MMT_ShieldBubbleViolet</bubbleTexPath>
+      </li>
+      <li Class="MyModeTest.CompProperties_ShieldEnhancement">
+        <materialDef>MMT_EnergyCrystal</materialDef>
+        <!-- 成功率：1-6 级 100%，7-8 级 80%，9-10 级 60%，11-12 级 40%，13 级 20%，14 级 10%，15 级 1% -->
+        <successRates>
+          <li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li>
+          <li>0.8</li><li>0.8</li>
+          <li>0.6</li><li>0.6</li>
+          <li>0.4</li><li>0.4</li>
+          <li>0.2</li><li>0.1</li><li>0.01</li>
+        </successRates>
+      </li>
+    </comps>
+    <allowedArchonexusCount>1</allowedArchonexusCount>
+    <tradeTags>
+      <li>Armor</li>
+    </tradeTags>
+  </ThingDef>
+
+  <!-- 远古护盾腰带 Mk.III：梯队顶点。超大容量（8000 Wd）、高效换电（30 Wd/伤害，
+       满电约吸收 267 点），内置聚能核心自动回复 1200 Wd/天（约 6.7 天满充，刻意压低
+       避免碾压充能台体系）。机制见 ShieldPack.cs -->
+  <ThingDef ParentName="ApparelBase">
+    <defName>MMT_ArchoShieldPack</defName>
+    <label>远古护盾腰带 Mk.III</label>
+    <thingClass>MyModeTest.Apparel_ChargeShieldPack</thingClass>
+    <description>应用远古科技制造的个人能量护盾装置，佩戴于腰部。征召时可在指令栏开启护盾：开启后展开贴身能量场，全额吸收所有伤害（包括近战），每吸收 1 点伤害仅耗电 30 Wd，开启期间持续耗电 300 Wd/天；内置聚能核心无需充能台即可自动回复 1200 Wd/天，EMP 武器可直接击穿并清空电量。可在充能台回充与强化。</description>
+    <tickerType>Normal</tickerType>
+    <techLevel>Ultra</techLevel>
+    <smeltable>false</smeltable>
+    <graphicData>
+      <texPath>Things/Item/MMT/Shield/MMT_ShieldBeltArcho</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <Mass>3</Mass>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <MarketValue>4000</MarketValue>
+      <SellPriceFactor>0.70</SellPriceFactor>
+      <EquipDelay>2</EquipDelay>
+    </statBases>
+    <thingCategories>
+      <li>ApparelUtility</li>
+      <li>MMT_RechargeableDevices</li>
+    </thingCategories>
+    <apparel>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <careIfWornByCorpse>false</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <tags>
+        <li>BeltDefense</li>
+      </tags>
+      <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    </apparel>
+    <comps>
+      <li Class="MyModeTest.CompProperties_Rechargeable">
+        <maxChargeWd>8000</maxChargeWd>
+      </li>
+      <li Class="MyModeTest.CompProperties_ShieldPack">
+        <passiveDrainWdPerDay>300</passiveDrainWdPerDay>
+        <wdPerDamage>30</wdPerDamage>
+        <selfRegenWdPerDay>1200</selfRegenWdPerDay>
+        <bubbleTexPath>Things/Item/MMT/Shield/MMT_ShieldBubbleArcho</bubbleTexPath>
+      </li>
+      <li Class="MyModeTest.CompProperties_ShieldEnhancement">
+        <materialDef>MMT_EnergyCrystal</materialDef>
+        <!-- 成功率：1-6 级 100%，7-8 级 80%，9-10 级 60%，11-12 级 40%，13 级 20%，14 级 10%，15 级 1% -->
+        <successRates>
+          <li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li>
+          <li>0.8</li><li>0.8</li>
+          <li>0.6</li><li>0.6</li>
+          <li>0.4</li><li>0.4</li>
+          <li>0.2</li><li>0.1</li><li>0.01</li>
+        </successRates>
+      </li>
+    </comps>
+    <allowedArchonexusCount>1</allowedArchonexusCount>
+    <tradeTags>
+      <li>Armor</li>
+    </tradeTags>
+  </ThingDef>
+</Defs>

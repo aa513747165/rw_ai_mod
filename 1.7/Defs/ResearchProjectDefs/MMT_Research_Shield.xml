@@ -15,4 +15,51 @@
     <researchViewX>7.00</researchViewX>
     <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 护符工艺：解锁在手工制作点打造一次性玉质护符；前置 原版锻造（中世纪入门） -->
+  <ResearchProjectDef>
+    <defName>MMT_WardTalismanCraft</defName>
+    <label>护符工艺</label>
+    <description>复原以玉石封存防护力场的古代工艺，解锁在手工制作点打造一次性玉质护符：激活后全额吸收所有伤害，耐久耗尽碎裂。</description>
+    <baseCost>400</baseCost>
+    <techLevel>Medieval</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Smithing</li>
+    </prerequisites>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 电池护盾技术：解锁在机械加工台组装充能护盾腰带 Mk.I；前置 原版电力 + 机械加工（工业） -->
+  <ResearchProjectDef>
+    <defName>MMT_BatteryShieldTech</defName>
+    <label>电池护盾技术</label>
+    <description>将早期电池技术与能量力场发生器小型化结合，解锁在机械加工台组装充能护盾腰带 Mk.I：容量有限但可反复回充的工业级个人护盾。</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>Electricity</li>
+      <li>Machining</li>
+    </prerequisites>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 远古护盾技术：解锁在电动装配台组装远古护盾腰带 Mk.III（自动回复）；前置 充能技术 + 能量聚能 -->
+  <ResearchProjectDef>
+    <defName>MMT_ArchoShieldTech</defName>
+    <label>远古护盾技术</label>
+    <description>解析远古科技的能量聚能原理并将其应用于个人护盾，解锁在电动装配台组装远古护盾腰带 Mk.III：超大容量、高效换电，内置聚能核心自动回复电量。</description>
+    <baseCost>6000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_RechargeableTech</li>
+      <li>MMT_EnergyConvergence</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>6.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

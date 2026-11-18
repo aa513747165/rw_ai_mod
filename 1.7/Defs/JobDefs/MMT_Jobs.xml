@@ -43,6 +43,13 @@
     <reportString>正在取出充能设备（TargetA）。</reportString>
   </JobDef>
 
+  <!-- 强化充能设备作业：搬运足量能量结晶到充能台边，消耗材料并掷成功率强化台内护盾（JobDriver_EnhanceChargingStation） -->
+  <JobDef>
+    <defName>MMT_EnhanceChargingStation</defName>
+    <driverClass>MyModeTest.JobDriver_EnhanceChargingStation</driverClass>
+    <reportString>正在强化设备（TargetA）。</reportString>
+  </JobDef>
+
   <!-- 装填药品作业：取药品搬到医疗注射炮台装入药仓（JobDriver_LoadMedicalTurret） -->
   <JobDef>
     <defName>MMT_LoadMedicalTurret</defName>

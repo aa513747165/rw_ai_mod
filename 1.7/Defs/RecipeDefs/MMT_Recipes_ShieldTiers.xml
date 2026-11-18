@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 玉质护符：白银+玉石在手工制作点打造；需研究"护符工艺"（中世纪） -->
+  <RecipeDef>
+    <defName>MMT_MakeWardTalisman</defName>
+    <label>制作玉质护符</label>
+    <description>以白银为托、玉石为芯制作一次性玉质护符：激活后全额吸收所有伤害，每吸收 1 点伤害磨损 1 点耐久，耐久耗尽碎裂。产出 1。</description>
+    <jobString>正在制作玉质护符。</jobString>
+    <workAmount>3000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>CraftingSpot</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Silver</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Jade</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Silver</li>
+        <li>Jade</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_WardTalisman>1</MMT_WardTalisman>
+    </products>
+    <skillRequirements>
+      <Crafting>4</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_WardTalismanCraft</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- 充能护盾腰带 Mk.I：零部件+钢铁+导线在机械加工台组装；需研究"电池护盾技术"（工业） -->
+  <RecipeDef>
+    <defName>MMT_MakeChargeShieldMk1</defName>
+    <label>组装充能护盾腰带 Mk.I</label>
+    <description>组装第一代量产型充能护盾腰带：开启后全额吸收所有伤害并按伤害量耗电（50 Wd/点），电量耗尽后可在充能台回充与强化。产出 1。</description>
+    <jobString>正在组装充能护盾腰带 Mk.I。</jobString>
+    <workAmount>6000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>TableMachining</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>6</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Wire</li>
+          </thingDefs>
+        </filter>
+        <count>6</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>ComponentIndustrial</li>
+        <li>Steel</li>
+        <li>MMT_Wire</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_ChargeShieldPackMk1>1</MMT_ChargeShieldPackMk1>
+    </products>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_BatteryShieldTech</researchPrerequisite>
+  </RecipeDef>
+
+  <!-- 远古护盾腰带 Mk.III：集成电路+超凡零部件+玻璃钢+维度模块在电动装配台组装
+       （挂台方式同充能护盾腰带，登记在 MMT_ElectricAssemblyBench 的 recipes 里）；
+       需研究"远古护盾技术"（超凡） -->
+  <RecipeDef>
+    <defName>MMT_MakeArchoShieldPack</defName>
+    <label>组装远古护盾腰带 Mk.III</label>
+    <description>组装应用远古科技的护盾腰带：超大容量、高效换电（30 Wd/点），内置聚能核心自动回复 1200 Wd/天，可在充能台回充与强化。产出 1。</description>
+    <jobString>正在组装远古护盾腰带 Mk.III。</jobString>
+    <workAmount>12000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_IntegratedCircuit</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>6</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_DimensionalModule</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_IntegratedCircuit</li>
+        <li>ComponentSpacer</li>
+        <li>Plasteel</li>
+        <li>MMT_DimensionalModule</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_ArchoShieldPack>1</MMT_ArchoShieldPack>
+    </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.8</workSkillLearnFactor>
+    <researchPrerequisite>MMT_ArchoShieldTech</researchPrerequisite>
+  </RecipeDef>
+</Defs>

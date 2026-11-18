@@ -209,17 +209,21 @@ namespace MyModeTest
             Graphics.DrawMesh(MeshPool.plane10, matrix, BubbleMat, 0);
         }
 
-        /// <summary>吸收特效：音效 + 受击方向闪光与尘雾，并保持气泡短暂可见。</summary>
+        /// <summary>吸收特效：音效 + 受击方向闪光与尘雾，并保持气泡短暂可见。
+        /// 注意：玉质护符会在 ConsumeResource 内碎裂销毁（PawnOwner 变 null），这里必须判空。</summary>
         private void AbsorbedDamageFx(DamageInfo dinfo)
         {
-            SoundDefOf.EnergyShield_AbsorbDamage.PlayOneShot(new TargetInfo(PawnOwner.Position, PawnOwner.Map));
+            Pawn owner = PawnOwner;
+            if (owner == null || owner.Map == null)
+                return;
+            SoundDefOf.EnergyShield_AbsorbDamage.PlayOneShot(new TargetInfo(owner.Position, owner.Map));
             impactAngleVect = Vector3Utility.HorizontalVectorFromAngle(dinfo.Angle);
-            Vector3 loc = PawnOwner.TrueCenter() + impactAngleVect.RotatedBy(180f) * 0.5f;
+            Vector3 loc = owner.TrueCenter() + impactAngleVect.RotatedBy(180f) * 0.5f;
             float flashScale = Mathf.Min(10f, 2f + dinfo.Amount / 10f);
-            FleckMaker.Static(loc, PawnOwner.Map, FleckDefOf.ExplosionFlash, flashScale);
+            FleckMaker.Static(loc, owner.Map, FleckDefOf.ExplosionFlash, flashScale);
             int dustCount = (int)flashScale;
             for (int i = 0; i < dustCount; i++)
-                FleckMaker.ThrowDustPuff(loc, PawnOwner.Map, Rand.Range(0.8f, 1.2f));
+                FleckMaker.ThrowDustPuff(loc, owner.Map, Rand.Range(0.8f, 1.2f));
             lastAbsorbDamageTick = Find.TickManager.TicksGame;
             KeepDisplaying();
         }

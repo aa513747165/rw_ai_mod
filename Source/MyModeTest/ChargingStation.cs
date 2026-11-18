@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace MyModeTest
 {
@@ -272,6 +274,27 @@ namespace MyModeTest
                 string name = held.LabelCap;
                 // 直接派活不弹确认框：右键选项即时生效是 RimWorld 惯例，也排除对话框回调失效的可能
                 yield return new FloatMenuOption("取出设备：" + name, delegate { OrderUnload(selPawn); });
+                // 强化入口：设备带强化 comp 时可强化（材料消耗随目标等级递增，成功率随目标等级递减）
+                CompShieldEnhancement enh = EnhancementOf(held);
+                if (enh != null)
+                {
+                    if (enh.IsMaxLevel)
+                    {
+                        yield return new FloatMenuOption("强化设备：" + name + "（已达最高强化等级 +" + enh.Level + "）", null);
+                    }
+                    else
+                    {
+                        int cost = enh.NextLevelMaterialCost;
+                        int available = CountMaterialOnMap(selPawn, enh.MaterialDef);
+                        string label = "强化设备：" + name + " → +" + enh.NextLevel
+                            + "（成功率 " + enh.NextLevelSuccessRate.ToStringPercent("F0")
+                            + "，需 " + enh.MaterialDef.LabelCap + " ×" + cost + "）";
+                        if (available < cost)
+                            yield return new FloatMenuOption(label + "——材料不足（地图现有 " + available + "）", null);
+                        else
+                            yield return new FloatMenuOption(label, delegate { OrderEnhance(selPawn); });
+                    }
+                }
             }
         }
 
@@ -365,6 +388,36 @@ namespace MyModeTest
         private static CompRechargeable BatteryOf(Thing thing)
         {
             return thing is ThingWithComps twc ? twc.TryGetComp<CompRechargeable>() : null;
+        }
+
+        private static CompShieldEnhancement EnhancementOf(Thing thing)
+        {
+            return thing is ThingWithComps twc ? twc.TryGetComp<CompShieldEnhancement>() : null;
+        }
+
+        /// <summary>统计地图上未被禁止的强化材料总数（供菜单置灰判断）。</summary>
+        private static int CountMaterialOnMap(Pawn pawn, ThingDef mat)
+        {
+            int total = 0;
+            foreach (Thing t in pawn.Map.listerThings.ThingsOfDef(mat))
+            {
+                if (!t.IsForbidden(pawn))
+                    total += t.stackCount;
+            }
+            return total;
+        }
+
+        /// <summary>派强化作业：targetA=充能台（材料在作业内动态搜寻，应对多堆分散的情况）。</summary>
+        private void OrderEnhance(Pawn pawn)
+        {
+            if (!pawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                Messages.Message(pawn.LabelShort + " 无法到达充能台（路径不通）", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            Job job = JobMaker.MakeJob(MMT_ChargingDefOf.MMT_EnhanceChargingStation, parent);
+            job.count = 1; // 1.7 自定义作业必须显式 count
+            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
         public override string CompInspectStringExtra()
@@ -472,6 +525,157 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>
+    /// 强化充能设备作业（targetA=充能台）：先动态搜寻并搬运足量强化材料到身上
+    /// （材料可能分散多堆，用标签/跳转循环逐堆收集），再走到充能台执行强化：
+    /// 消耗材料并掷成功率，成败均有 Mote 文字与消息反馈，失败仅损失材料。
+    /// </summary>
+    public class JobDriver_EnhanceChargingStation : JobDriver
+    {
+        /// <summary>强化作业时长（tick，1 倍速约 10 秒）。</summary>
+        private const int EnhanceDurationTicks = 600;
+
+        private CompChargingStation Station
+        {
+            get
+            {
+                Thing t = job.GetTarget(TargetIndex.A).Thing;
+                return t is ThingWithComps twc ? twc.TryGetComp<CompChargingStation>() : null;
+            }
+        }
+
+        /// <summary>台内设备上的强化 comp；设备被取走或不支持强化时为 null。</summary>
+        private CompShieldEnhancement Enhancement
+        {
+            get
+            {
+                Thing held = Station?.HeldItem;
+                return held is ThingWithComps twc ? twc.TryGetComp<CompShieldEnhancement>() : null;
+            }
+        }
+
+        /// <summary>本次强化所需材料数（目标等级 × 系数）。</summary>
+        private int RequiredMaterial
+        {
+            get { return Enhancement?.NextLevelMaterialCost ?? 0; }
+        }
+
+        /// <summary>小人背包里已携带的强化材料数。</summary>
+        private int CarriedMaterial
+        {
+            get
+            {
+                CompShieldEnhancement enh = Enhancement;
+                return enh == null ? 0 : pawn.inventory.innerContainer.TotalStackCountOfDef(enh.MaterialDef);
+            }
+        }
+
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
+        {
+            // 只预定充能台；材料堆在收集 toil 内逐堆预定（数量与堆数动态确定）
+            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
+        }
+
+        protected override IEnumerable<Toil> MakeNewToils()
+        {
+            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            this.FailOnBurningImmobile(TargetIndex.A);
+            // 台内设备被取走/已被强满则中止
+            this.FailOn(() => Enhancement == null || Enhancement.IsMaxLevel);
+
+            // ---- 流程开始：材料收集循环（材料可能分散多堆，收齐才往下走） ----
+            Toil collectLoop = Toils_General.Label();
+            Toil collectDone = Toils_General.Label();
+            yield return collectLoop;
+            yield return Toils_Jump.JumpIf(collectDone, () => CarriedMaterial >= RequiredMaterial);
+            // 搜寻最近的可用材料堆并设为 targetB；找不到则中止（消息提示）
+            Toil findStack = new Toil();
+            findStack.initAction = delegate
+            {
+                CompShieldEnhancement enh = Enhancement;
+                if (enh == null)
+                {
+                    EndJobWith(JobCondition.Incompletable);
+                    return;
+                }
+                Thing stack = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
+                    ThingRequest.ForDef(enh.MaterialDef), PathEndMode.ClosestTouch, TraverseParms.For(pawn),
+                    9999f, t => !t.IsForbidden(pawn) && pawn.CanReserve(t, 1, -1, null, false));
+                if (stack == null)
+                {
+                    Messages.Message("强化中止：地图上找不到可用的 " + enh.MaterialDef.label,
+                        pawn, MessageTypeDefOf.RejectInput, false);
+                    EndJobWith(JobCondition.Incompletable);
+                    return;
+                }
+                job.SetTarget(TargetIndex.B, stack);
+                pawn.Reserve(stack, job, 1, -1, null, true);
+            };
+            findStack.defaultCompleteMode = ToilCompleteMode.Instant;
+            yield return findStack;
+            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch)
+                .FailOnDespawnedNullOrForbidden(TargetIndex.B);
+            // 抓取本堆中还需的数量（不超过堆余量）
+            System.Func<int> takeCount = delegate
+            {
+                Thing stack = job.GetTarget(TargetIndex.B).Thing;
+                if (stack == null)
+                    return 0;
+                return UnityEngine.Mathf.Min(RequiredMaterial - CarriedMaterial, stack.stackCount);
+            };
+            yield return Toils_Haul.TakeToInventory(TargetIndex.B, takeCount);
+            yield return Toils_Jump.Jump(collectLoop);
+            yield return collectDone;
+            // ---- 材料收齐：走到充能台执行强化 ----
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch);
+            Toil enhance = Toils_General.Wait(EnhanceDurationTicks, TargetIndex.A);
+            enhance.WithProgressBarToilDelay(TargetIndex.A);
+            yield return enhance;
+            yield return Toils_General.DoAtomic(FinishEnhance);
+            // ---- 流程结束 ----
+        }
+
+        /// <summary>强化结算：精确消耗背包中的材料后掷成功率；材料不足（作业期间被挪用）则不掷骰直接中止。</summary>
+        private void FinishEnhance()
+        {
+            CompShieldEnhancement enh = Enhancement;
+            if (enh == null || enh.IsMaxLevel)
+                return;
+            int cost = enh.NextLevelMaterialCost;
+            int targetLevel = enh.NextLevel;
+            int remaining = cost;
+            // 精确消耗：逐堆 SplitOff 销毁，避免整堆误毁
+            foreach (Thing t in pawn.inventory.innerContainer.Where(x => x.def == enh.MaterialDef).ToList())
+            {
+                if (remaining <= 0)
+                    break;
+                int num = UnityEngine.Mathf.Min(remaining, t.stackCount);
+                t.SplitOff(num).Destroy(DestroyMode.Vanish);
+                remaining -= num;
+            }
+            if (remaining > 0)
+                return;
+            Thing station = job.GetTarget(TargetIndex.A).Thing;
+            if (enh.DoEnhance())
+            {
+                // 流程结束：强化成功 -> 等级 +1（特效 + 消息）
+                MoteMaker.ThrowText(station.DrawPos, Map, "强化成功！ +" + enh.Level, UnityEngine.Color.cyan, 3f);
+                if (SoundDefOf.EnergyShield_Reset != null)
+                    SoundDefOf.EnergyShield_Reset.PlayOneShot(new TargetInfo(station.Position, Map));
+                Messages.Message("强化成功：" + enh.parent.LabelCap + " 提升到 +" + enh.Level + " 级",
+                    new LookTargets(station), MessageTypeDefOf.PositiveEvent, false);
+            }
+            else
+            {
+                // 流程结束：强化失败 -> 仅损失材料
+                MoteMaker.ThrowText(station.DrawPos, Map, "强化失败", UnityEngine.Color.red, 3f);
+                Messages.Message("强化失败：" + enh.parent.LabelCap + " 未能提升到 +" + targetLevel
+                    + " 级（" + enh.MaterialDef.label + " ×" + cost + " 已消耗）",
+                    new LookTargets(station), MessageTypeDefOf.NegativeEvent, false);
+            }
+        }
+    }
+
     [DefOf]
     public static class MMT_ChargingDefOf
     {
@@ -481,6 +685,8 @@ namespace MyModeTest
         public static JobDef MMT_LoadChargingStation;
         /// <summary>取出充能设备作业。</summary>
         public static JobDef MMT_UnloadChargingStation;
+        /// <summary>强化充能设备作业。</summary>
+        public static JobDef MMT_EnhanceChargingStation;
 
         static MMT_ChargingDefOf()
         {
