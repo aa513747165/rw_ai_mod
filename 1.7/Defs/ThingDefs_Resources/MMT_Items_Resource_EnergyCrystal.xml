@@ -23,4 +23,48 @@
       <li>MMT_FuelCat</li>
     </thingCategories>
   </ThingDef>
+
+  <!-- 辉晶球茎：辉晶花收获物，能量结晶培育路线的原料（贴图基于 HSK RawGlowbulb 改色） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_LumenBulb</defName>
+    <label>辉晶球茎</label>
+    <description>辉晶花富含能量微粒的球茎，散发着微弱的蓝紫色荧光。可在石化产品实验室中提纯为晶能精粹。</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/MMT_LumenBulb</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>8</MarketValue>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.3</Mass>
+      <Beauty>2</Beauty>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- 晶能精粹：辉晶球茎提纯后的高活性晶体碎簇，培养能量结晶的核心材料（贴图基于 HSK Minerals GlowstoneCrystal 着色） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_CrystalEssence</defName>
+    <label>晶能精粹</label>
+    <description>从辉晶球茎中提纯出的高活性晶体碎簇，内部能量脉络清晰可见。在晶体培养舱中可将其培养为完整的能量结晶。</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/MMT_CrystalEssence</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>30</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.5</Mass>
+      <Beauty>3</Beauty>
+    </statBases>
+    <stackLimit>75</stackLimit>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
 </Defs>

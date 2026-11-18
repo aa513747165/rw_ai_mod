@@ -14,4 +14,20 @@
     <researchViewX>9.00</researchViewX>
     <researchViewY>8.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 能量结晶培育：能量聚能的农业分支，解锁辉晶花种植、晶能精粹提纯与晶体培养舱（种植→提纯→结晶的可再生路线） -->
+  <ResearchProjectDef>
+    <defName>MMT_EnergyCrystalCultivation</defName>
+    <label>能量结晶培育</label>
+    <description>通过定向培育让辉晶花在球茎中富集能量微粒，解锁辉晶花种植（水培）、晶能精粹提纯配方（石化产品实验室）与晶体培养舱（将晶能精粹培养为能量结晶）。相比电子器件工作台的凝聚配方，这条路线不消耗微芯片与高纯硅、黄金用量大减，但周期更长、工序更多。</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_EnergyConvergence</li>
+      <li>Hydroponics</li>
+    </prerequisites>
+    <researchViewX>10.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

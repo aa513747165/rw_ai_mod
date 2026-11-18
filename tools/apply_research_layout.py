@@ -133,6 +133,8 @@ LAYOUT = {
     "MMT_HeavyTurrets3": (12, 8),
     # y=8 空位 x9：能量聚能（前置核能 x5y7，x 必须大于前置）
     "MMT_EnergyConvergence": (9, 8),
+    # 能量聚能的农业分支：能量结晶培育（前置能量聚能 x9y8，x 必须大于前置）
+    "MMT_EnergyCrystalCultivation": (10, 9),
     # y=0 空位 x11/x13：战地医疗（前置 医疗物资 VI x7y0，x 递增）
     "MMT_FieldMedicalPack": (11, 0),
     "MMT_HealTurretResearch": (13, 0),

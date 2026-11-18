@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 辉晶花：能量结晶培育路线的作物（贴图基于 HSK Core_SK PlantGlowbulb 改色，已授权）。
+       水培限定、生长缓慢、不可食用，定位贵重能量作物 -->
+  <ThingDef ParentName="PlantBase">
+    <defName>MMT_PlantLumenbulb</defName>
+    <label>辉晶花</label>
+    <description>一种在球茎中富集能量微粒的奇异花卉，成熟后呈现幽幽蓝紫色。收获的辉晶球茎可提纯为晶能精粹，最终培养成能量结晶。只能在水培条件下种植。</description>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Beauty>10</Beauty>
+      <BeautyOutdoors>10</BeautyOutdoors>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/MMT/MMT_PlantLumenbulb</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>10</pathCost>
+    <plant>
+      <maxMeshCount>4</maxMeshCount>
+      <sowMinSkill>12</sowMinSkill>
+      <sowResearchPrerequisites>
+        <li>MMT_EnergyCrystalCultivation</li>
+      </sowResearchPrerequisites>
+      <sowTags>
+        <li>Hydroponic</li>
+      </sowTags>
+      <harvestedThingDef>MMT_LumenBulb</harvestedThingDef>
+      <sowWork>250</sowWork>
+      <harvestYield>4</harvestYield>
+      <growDays>12</growDays>
+      <growMinGlow>0.5</growMinGlow>
+      <topWindExposure>0.1</topWindExposure>
+      <fertilityMin>1.2</fertilityMin>
+      <fertilitySensitivity>1.3</fertilitySensitivity>
+      <visualSizeRange>0.3~1.0</visualSizeRange>
+      <wildOrder>1</wildOrder>
+    </plant>
+  </ThingDef>
+</Defs>

@@ -72,5 +72,7 @@
   "RoastedCoffeeBeans": "RoastedCoffeeBeans",
   "Coffee": "Coffee",
   "PlantCoffee": "Plant_Coffee",
-  "AdvDrugLab": "TableSynthetics"
+  "AdvDrugLab": "TableSynthetics",
+  "PlantLumenbulb": "Glowstool",
+  "LumenBulb": "RawGlowbulb"
 }

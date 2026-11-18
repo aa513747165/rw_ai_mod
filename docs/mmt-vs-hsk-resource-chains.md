@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 434 |
+| MMT 配方 | 439 |
 | 与 HSK 数值一致 | 122 |
 | 与 HSK 有数值差异 | 57 |
 | HSK 有对应资源但无对应配方 | 9 |
-| MMT 新增（HSK 无对应资源） | 246 |
+| MMT 新增（HSK 无对应资源） | 251 |
 
 ### 1.1 按家族统计
 
@@ -35,7 +35,7 @@
 | 电动石化（ElectricPetrochem） | 5 | 0 | 5 | 0 | 0 |
 | 电动木材（ElectricWood） | 5 | 5 | 0 | 0 | 0 |
 | 电子（Electronics） | 4 | 0 | 4 | 0 | 0 |
-| EnergyCrystal（EnergyCrystal） | 1 | 0 | 0 | 0 | 1 |
+| EnergyCrystal（EnergyCrystal） | 3 | 0 | 0 | 0 | 3 |
 | 玻璃（Glass） | 11 | 5 | 6 | 0 | 0 |
 | 物质（Matter） | 14 | 14 | 0 | 0 | 0 |
 | 医药（Medicine） | 11 | 2 | 6 | 0 | 3 |
@@ -50,6 +50,7 @@
 | 灵能护盾（PsychicShield） | 1 | 0 | 0 | 0 | 1 |
 | 机器人（Robotics） | 4 | 3 | 1 | 0 | 0 |
 | 护盾（Shield） | 1 | 0 | 0 | 0 | 1 |
+| ShieldTiers（ShieldTiers） | 3 | 0 | 0 | 0 | 3 |
 | 筛网（SieveMeshes） | 3 | 0 | 0 | 0 | 3 |
 | 状态备份（StateBackup） | 1 | 0 | 0 | 0 | 1 |
 | TeleportModules（TeleportModules） | 2 | 0 | 0 | 0 | 2 |
@@ -809,7 +810,7 @@
 
 #### 组装充能护盾腰带（`MMT_MakeChargeShieldPack`）
 
-- **MMT**：集成电路×2 + 太空零件(ComponentSpacer)×4 + 铁钛合金(Plasteel)×30 + 电线×10 -> 充能护盾腰带×1 @ 电动装配台 ｜ 工作量=8000 ｜ 研究:充能技术(MMT_RechargeableTech)，技能:Crafting≥10
+- **MMT**：集成电路×2 + 太空零件(ComponentSpacer)×4 + 铁钛合金(Plasteel)×30 + 电线×10 -> 充能护盾腰带 Mk.II×1 @ 电动装配台 ｜ 工作量=8000 ｜ 研究:充能技术(MMT_RechargeableTech)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.7 混凝土（Concrete）
@@ -1179,6 +1180,16 @@
 #### 凝聚能量结晶（`MMT_MakeEnergyCrystal`）
 
 - **MMT**：微芯片集成电路×1 + 硅×10 + 金(Gold)×10 -> 能量结晶×2 @ 电子器件工作台 ｜ 工作量=6000 ｜ 研究:能量聚能(MMT_EnergyConvergence)，技能:Crafting≥10
+- **HSK**：无对应资源（MMT 新增）
+
+#### 提纯晶能精粹（`MMT_RefineCrystalEssence`）
+
+- **MMT**：辉晶球茎×8 + Neutroamine×1 -> 晶能精粹×2 @ 石化产品实验室 ｜ 工作量=4000 ｜ 研究:能量结晶培育(MMT_EnergyCrystalCultivation)，技能:Crafting≥8
+- **HSK**：无对应资源（MMT 新增）
+
+#### 培养能量结晶（`MMT_GrowEnergyCrystal`）
+
+- **MMT**：晶能精粹×2 + 金(Gold)×2 -> 能量结晶×1 @ 晶体培养舱 ｜ 工作量=12000 ｜ 研究:能量结晶培育(MMT_EnergyCrystalCultivation)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.16 玻璃（Glass）
@@ -1728,7 +1739,24 @@
 - **MMT**：钢(Steel)×25 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 + 电线×5 -> 部署式护盾发生器×1 @ 电动装配台 ｜ 工作量=4000 ｜ 研究:部署式护盾技术(MMT_DeployableShieldTech)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.30 筛网（SieveMeshes）
+### 3.30 ShieldTiers（ShieldTiers）
+
+#### 制作玉质护符（`MMT_MakeWardTalisman`）
+
+- **MMT**：银(Silver)×40 + Jade×15 -> 玉质护符×1 @ — ｜ 工作量=3000 ｜ 研究:护符工艺(MMT_WardTalismanCraft)，技能:Crafting≥4
+- **HSK**：无对应资源（MMT 新增）
+
+#### 组装充能护盾腰带 Mk.I（`MMT_MakeChargeShieldMk1`）
+
+- **MMT**：工业零件(ComponentIndustrial)×6 + 钢(Steel)×60 + 电线×6 -> 充能护盾腰带 Mk.I×1 @ — ｜ 工作量=6000 ｜ 研究:电池护盾技术(MMT_BatteryShieldTech)，技能:Crafting≥6
+- **HSK**：无对应资源（MMT 新增）
+
+#### 组装远古护盾腰带 Mk.III（`MMT_MakeArchoShieldPack`）
+
+- **MMT**：集成电路×4 + 太空零件(ComponentSpacer)×6 + 铁钛合金(Plasteel)×40 + 次元传送模块×2 -> 远古护盾腰带 Mk.III×1 @ 电动装配台 ｜ 工作量=12000 ｜ 研究:远古护盾技术(MMT_ArchoShieldTech)，技能:Crafting≥12
+- **HSK**：无对应资源（MMT 新增）
+
+### 3.31 筛网（SieveMeshes）
 
 #### 编织木滤网（`MMT_MakeMeshWood`）
 
@@ -1745,14 +1773,14 @@
 - **MMT**：强化玻璃块×10 + 金(Gold)×8 + 太空零件(ComponentSpacer)×1 -> 精密滤网×1 @ — ｜ 工作量=4000 ｜ 研究:精密筛分(MMT_PrecisionSifting)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.31 状态备份（StateBackup）
+### 3.32 状态备份（StateBackup）
 
 #### 植入生命备份核心（`MMT_InstallStateBackupCore`）
 
 - **MMT**：[Medicine]×2 + 生命备份核心×1 -> — @ — ｜ 工作量=5000 ｜ 研究:义肢安装 VIII(MMT_ProsthesisInstall_D4)，技能:Medicine≥14
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.32 TeleportModules（TeleportModules）
+### 3.33 TeleportModules（TeleportModules）
 
 #### 组装充能效率模块（`MMT_MakeChargeEfficiencyModule`）
 
@@ -1764,7 +1792,7 @@
 - **MMT**：铁钛合金(Plasteel)×20 + 太空零件(ComponentSpacer)×2 + 电子元件×3 + 金(Gold)×10 -> 次元传送模块×1 @ 电动装配台 ｜ 工作量=3000 ｜ 研究:次元传送(MMT_DimensionalTeleport)，技能:Crafting≥8
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.33 纺织（Textiles）
+### 3.34 纺织（Textiles）
 
 #### 纺织布（`MMT_MakeCloth`）
 
@@ -1843,7 +1871,7 @@
 - **MMT**：野玫瑰 或 金丝桃 或 薄荷叶×4 -> 染料×8 @ — ｜ 工作量=400 ｜ 研究:艺术用品(MMT_ArtSupplies)，技能:Crafting≥3
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.34 顶级材料（TopMaterials）
+### 3.35 顶级材料（TopMaterials）
 
 #### 合成磁性材料（`MMT_BuildMagneticMaterial`）
 
@@ -1907,7 +1935,7 @@
 - **HSK** `MakeBioferriteAlloy`：Bioferrite×10 + 铁矿石(Iron)×10 + [Coal]×5 -> 生物铁合金(BioferriteAlloy)×10 @ BioferriteShaper ｜ 工作量=2100 ｜ 研究:BioferriteShaping，技能:Crafting≥9
 - **对比**：数值一致
 
-### 3.35 炮塔弹药（TurretAmmo）
+### 3.36 炮塔弹药（TurretAmmo）
 
 #### 制作20x102mm  弹药（全金属被甲弹）x40（`MMT_MakeAmmo_20x102mm_FMJ`）
 
@@ -1929,7 +1957,7 @@
 - **MMT**：钢(Steel)×40 + 火药×6 -> 14.5x114mm 机枪弹（全金属被甲弹）×100 @ — ｜ 工作量=4000 ｜ 技能:Crafting≥5
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.36 炮塔箱（TurretCrates）
+### 3.37 炮塔箱（TurretCrates）
 
 #### 制作M2 .50勃朗宁机枪组件箱（`MMT_BuildMGTurret_Crate`）
 
@@ -1955,7 +1983,7 @@
 - **HSK** `BuildOerlikonautocannon_Crate`：武器部件(Weapon_Parts)×15 + 火炮武器部件(Cannon_Component)×1 + [Metallic]×45 + 合成橡胶(Rubber)×15 -> 20x102mm厄利孔机炮组件箱(Oerlikonautocannon_Crate)×1 @ HeavyArmsBench ｜ 工作量=13500 ｜ 研究:Heavy_turrets_C3，技能:Crafting≥12
 - **对比**：数值一致
 
-### 3.37 武器部件（WeaponParts）
+### 3.38 武器部件（WeaponParts）
 
 #### 制造武器部件（`MMT_MakeWeaponParts`）
 
@@ -2041,7 +2069,7 @@
 - **HSK** `MakePlasma_Component`：[USLDBar]×20 + [HCMBar]×10 + 生物合成材料(BiosyntheticMaterial)×4 + 微芯片集成电路(Microchips)×1 -> 离子武器部件(Plasma_Component)×1 @ 未来武器工作台(MechWeaponCraftingWorkTable) ｜ 工作量=2100 ｜ 研究:ChargedShot，技能:Crafting≥15
 - **对比**：数值一致
 
-### 3.38 古代武器（Weapons_Archaic）
+### 3.39 古代武器（Weapons_Archaic）
 
 #### 制作EMP手榴弹（`MMT_MakeEMPGrenades`）
 
@@ -2093,7 +2121,7 @@
 - **MMT**：[MMT_SLDBar] 或 [MMT_USLDBar]×12 + [MMT_HCMBar]×4 + Chemfuel×15 + 火药 或 Chemfuel×3 + 工业零件(ComponentIndustrial)×2 -> 毒气手雷×5 @ — ｜ 工作量=3200 ｜ 研究:ToxGas(ToxGas)
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.39 常规武器（Weapons_Conventional）
+### 3.40 常规武器（Weapons_Conventional）
 
 #### 制作伯莱塔93R冲锋手枪（`MMT_Build93RBurstPistol`）
 
@@ -2385,7 +2413,7 @@
 - **MMT**：重型武器部件×1 + 武器部件×8 + 工业零件(ComponentIndustrial)×10 + [MMT_MetallicBar]×35 + 塑料×30 -> M60E4通用机枪×1 @ — ｜ 工作量=24000 ｜ 研究:MultibarrelWeapons(MultibarrelWeapons)，技能:Crafting≥13
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.40 未来武器（Weapons_Futuristic）
+### 3.41 未来武器（Weapons_Futuristic）
 
 #### 制造A-1BW黑寡妇（`MMT_BuildBlackWidow`）
 
@@ -2462,7 +2490,7 @@
 - **MMT**：[MMT_MetallicBar]×15 + 武器部件×3 + 高级零部件×3 + 离子武器部件×1 -> 等离子手榴弹×5 @ — ｜ 工作量=7000 ｜ 研究:ChargedShot(ChargedShot)，技能:Crafting≥14
 - **HSK**：无对应资源（MMT 新增）
 
-### 3.41 木材（Wood）
+### 3.42 木材（Wood）
 
 #### 加工木板（`MMT_MakeWoodPlanks_Hand`）
 
@@ -2494,7 +2522,7 @@
 - **HSK** `MakeRedWoodPlanks_Hand`：红木(RedWoodLog)×10 -> 红木木板(RedWoodPlank)×15 @ 手工锯台(TableSawmillHand) ｜ 工作量=1200 ｜ 研究:Craft_0，技能:Crafting≥3
 - **对比**：数值一致
 
-### 3.42 MMT_Items_NaturalOrgans（MMT_Items_NaturalOrgans）
+### 3.43 MMT_Items_NaturalOrgans（MMT_Items_NaturalOrgans）
 
 #### 安装眼球（`MMT_InstallNaturalEye`）
 
@@ -2623,6 +2651,7 @@
 | 电动锯木台(`MMT_ElectricSawmill`) | (3,1) | 工业零件(ComponentIndustrial)×10 + 电子元件×5 + [金属]×150 | 600W / 5000 | electric sawmill(`TableSawmillElectric`) | 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×150 | 600W / 5000 | HSK 多 机械组件(Mechanism)×5 |
 | 电子器件工作台(`MMT_HandElectronicsTable`) | (3,3) | 工业零件(ComponentIndustrial)×5 + [金属]×140 | 2200 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | 工业零件(ComponentIndustrial) 5 vs 10；HSK 多 铜(CopperBar)×40；HSK 多 机械组件(Mechanism)×10；功耗 — vs 600；工作量 2200 vs 2750 |
 | 敌意感应开关(`MMT_EnemyDetectorSwitch`) | — | 钢(Steel)×25 + 工业零件(ComponentIndustrial)×1 | 300 | — | — | — | MMT 新增 |
+| 晶体培养舱(`MMT_CrystalIncubator`) | (2,2) | 钢(Steel)×80 + 玻璃块×20 + 金(Gold)×20 + 先进机械组件×2 | 600W / 4000 | — | — | — | MMT 新增 |
 | 能量聚能发电站(`MMT_EnergyConvergencePlant`) | (3,3) | 钢(Steel)×200 + 碳纤维锭×40 + 金(Gold)×30 + 先进机械组件×4 | -10000W / 10000 | — | — | — | MMT 新增 |
 | 点火充能装置(`MMT_IgnitionCharger`) | (1,1) | 钢(Steel)×50 + 金(Gold)×10 + 工业零件(ComponentIndustrial)×2 | 50W / 2000 | — | — | — | MMT 新增 |
 | 医疗软子弹(`MMT_HealBolt`) | — | — | — | — | — | — | MMT 新增 |
@@ -2664,5 +2693,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 39（共 64）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 40（共 65）。
 

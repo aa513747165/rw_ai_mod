@@ -191,3 +191,120 @@ def validate_energyconvergence() -> None:
 
 
 SUITES = {"energyconvergence": validate_energyconvergence}
+
+
+# ==================== 能量结晶培育路线（种植→提纯→结晶） ====================
+
+PLANT_XML = "1.7/Defs/ThingDefs_Plants/MMT_Plants_EnergyCrystal.xml"
+CHEMLAB_BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricPetrochem.xml"
+
+TEX_LUMENBULB_PLANT = [
+    f"1.7/Textures/Things/Plant/MMT/MMT_PlantLumenbulb/Lumenbulb{v}.png"
+    for v in "ABC"
+]
+TEX_LUMEN_BULB = "1.7/Textures/Things/Item/Resource/MMT_LumenBulb.png"
+TEX_ESSENCE = "1.7/Textures/Things/Item/Resource/MMT_CrystalEssence.png"
+TEX_INCUBATOR = [
+    "1.7/Textures/Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator.png",
+    "1.7/Textures/Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator_m.png",
+]
+
+
+def validate_crystalcultivation() -> None:
+    all_tex = TEX_LUMENBULB_PLANT + [TEX_LUMEN_BULB, TEX_ESSENCE] + TEX_INCUBATOR
+    require_files([PLANT_XML, ITEM_XML, RECIPE_XML, RESEARCH_XML, BUILDING_XML, CHEMLAB_BUILDING_XML] + all_tex)
+    for tex in all_tex:
+        assert_png(tex)
+
+    # ---- 植物：辉晶花 ----
+    plants = def_map(parse_xml(PLANT_XML))
+    if "MMT_PlantLumenbulb" not in plants:
+        fail("植物缺少 MMT_PlantLumenbulb")
+    plant = plants["MMT_PlantLumenbulb"]
+    assert_equal(child_text(plant, "label"), "辉晶花", "辉晶花 label")
+    assert_equal(
+        child_text(plant, "graphicData/texPath"),
+        "Things/Plant/MMT/MMT_PlantLumenbulb",
+        "辉晶花贴图",
+    )
+    if "Hydroponic" not in li_values(plant, "plant/sowTags"):
+        fail("辉晶花必须水培限定（sowTags 仅 Hydroponic）")
+    tags = li_values(plant, "plant/sowTags")
+    if tags != ["Hydroponic"]:
+        fail(f"辉晶花 sowTags 应只有 Hydroponic（当前 {tags}）")
+    if "MMT_EnergyCrystalCultivation" not in li_values(plant, "plant/sowResearchPrerequisites"):
+        fail("辉晶花播种研究前置必须是 MMT_EnergyCrystalCultivation")
+    assert_equal(child_text(plant, "plant/harvestedThingDef"), "MMT_LumenBulb", "辉晶花收获物")
+    assert_equal(child_text(plant, "plant/growDays"), "12", "辉晶花生长天数")
+
+    # ---- 中间产物 ----
+    items = def_map(parse_xml(ITEM_XML))
+    for def_name, label in (("MMT_LumenBulb", "辉晶球茎"), ("MMT_CrystalEssence", "晶能精粹")):
+        if def_name not in items:
+            fail(f"物品缺少 {def_name}")
+        assert_equal(child_text(items[def_name], "label"), label, f"{def_name} label")
+
+    # ---- 配方：提纯 + 结晶 ----
+    recipes = def_map(parse_xml(RECIPE_XML))
+    if "MMT_RefineCrystalEssence" not in recipes:
+        fail("配方缺少 MMT_RefineCrystalEssence")
+    refine = recipes["MMT_RefineCrystalEssence"]
+    assert_equal(child_text(refine, "researchPrerequisite"), "MMT_EnergyCrystalCultivation", "提纯配方研究前置")
+    if refine.find("products") is None or refine.find("products").findtext("MMT_CrystalEssence") is None:
+        fail("提纯配方 products 必须产出 MMT_CrystalEssence")
+    for need in ("MMT_LumenBulb", "Neutroamine"):
+        if need not in li_values(refine, "fixedIngredientFilter/thingDefs"):
+            fail(f"提纯配方缺少原料: {need}")
+    # 挂石化产品实验室
+    chemlab = def_map(parse_xml(CHEMLAB_BUILDING_XML))
+    if "MMT_RefineCrystalEssence" not in li_values(chemlab["MMT_ElectricChemLab"], "recipes"):
+        fail("石化产品实验室 recipes 缺少 MMT_RefineCrystalEssence")
+
+    if "MMT_GrowEnergyCrystal" not in recipes:
+        fail("配方缺少 MMT_GrowEnergyCrystal")
+    grow = recipes["MMT_GrowEnergyCrystal"]
+    assert_equal(child_text(grow, "researchPrerequisite"), "MMT_EnergyCrystalCultivation", "结晶配方研究前置")
+    if grow.find("products") is None or grow.find("products").findtext("MMT_EnergyCrystal") is None:
+        fail("结晶配方 products 必须产出 MMT_EnergyCrystal")
+    for need in ("MMT_CrystalEssence", "Gold"):
+        if need not in li_values(grow, "fixedIngredientFilter/thingDefs"):
+            fail(f"结晶配方缺少原料: {need}")
+
+    # ---- 建筑：晶体培养舱 ----
+    buildings = def_map(parse_xml(BUILDING_XML))
+    if "MMT_CrystalIncubator" not in buildings:
+        fail("建筑缺少 MMT_CrystalIncubator")
+    inc = buildings["MMT_CrystalIncubator"]
+    assert_equal(child_text(inc, "label"), "晶体培养舱", "培养舱 label")
+    assert_equal(child_text(inc, "thingClass"), "Building_WorkTable", "培养舱 thingClass")
+    assert_equal(child_text(inc, "size"), "(2,2)", "培养舱尺寸")
+    assert_equal(
+        child_text(inc, "graphicData/texPath"),
+        "Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator",
+        "培养舱贴图",
+    )
+    if "MMT_GrowEnergyCrystal" not in li_values(inc, "recipes"):
+        fail("培养舱 recipes 缺少 MMT_GrowEnergyCrystal")
+    if "MMT_EnergyCrystalCultivation" not in li_values(inc, "researchPrerequisites"):
+        fail("培养舱研究前置必须是 MMT_EnergyCrystalCultivation")
+    if inc.find("building") is None:
+        fail("培养舱缺少显式 <building/> 标签（1.7 BuildingBase 不自带 BuildingProperties）")
+    inc_comps = _comp_classes_full(inc)
+    for comp in ("CompProperties_Power", "CompProperties_Flickable"):
+        if comp not in inc_comps:
+            fail(f"培养舱缺少 comp: {comp}")
+
+    # ---- 研究：能量结晶培育 ----
+    research = def_map(parse_xml(RESEARCH_XML))
+    if "MMT_EnergyCrystalCultivation" not in research:
+        fail("研究缺少 MMT_EnergyCrystalCultivation")
+    node = research["MMT_EnergyCrystalCultivation"]
+    prereqs = li_values(node, "prerequisites")
+    for need in ("MMT_EnergyConvergence", "Hydroponics"):
+        if need not in prereqs:
+            fail(f"培育研究前置缺少: {need}")
+    assert_equal(child_text(node, "researchViewX"), "10.00", "培育研究坐标X")
+    assert_equal(child_text(node, "researchViewY"), "9.00", "培育研究坐标Y")
+
+
+SUITES["crystalcultivation"] = validate_crystalcultivation

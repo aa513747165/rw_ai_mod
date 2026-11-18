@@ -6,7 +6,7 @@
 
 ## 1. MMT 建筑总表
 
-共 76 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
+共 81 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
 
 ### 深钻井（AdvancedRocks）
 
@@ -82,7 +82,7 @@
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 手动混凝土搅拌器（`MMT_ConcreteMixer`） | (2,1) | 工业零件×5 + [金属]×135 | — | 1600 | 混凝土技术 | 2 |  |
-| 电动混凝土搅拌机（`MMT_EConcreteMixer`） | (2,1) | 合成橡胶×45 + 工业零件×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W | 5000 | 混凝土 II | 2 |  |
+| 电动混凝土搅拌机（`MMT_EConcreteMixer`） | (2,1) | 合成橡胶×45 + 工业零件×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W | 5000 | 混凝土 II | 3 |  |
 
 **手动混凝土搅拌器（`MMT_ConcreteMixer`） 的配方：**
 
@@ -92,7 +92,28 @@
 **电动混凝土搅拌机（`MMT_EConcreteMixer`） 的配方：**
 
 - `MMT_MixConcrete_Electric`：沙(45) + 碎石(30) -> 混凝土×15 ｜ 工作量=600 ｜ 研究:混凝土 II ｜ 技能:制作≥6
+- `MMT_MakeReinforcedConcrete_Electric`：[MMT_MetallicBar](20) + 混凝土(20) -> 钢筋混凝土×16 ｜ 工作量=1200 ｜ 技能:制作≥7
 - `MMT_MakeDirt_Electric`：沙(20) + 肥料(10) -> 土堆×30 ｜ 工作量=1500 ｜ 研究:混凝土 II
+
+### DrugsExt（DrugsExt）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 高级药物合成台（`MMT_AdvDrugLab`） | (3,1) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件×5 + [金属]×100 | 1500W | 6000 | 毒品 VIII | 11 |  |
+
+**高级药物合成台（`MMT_AdvDrugLab`） 的配方：**
+
+- `MMT_MakeSynchroCrystal`：硫酸盐(2) + 表面活性剂(1) + PsychoidLeaves(4) -> 灵能结晶×2 ｜ 工作量=1200 ｜ 研究:毒品 VII ｜ 技能:Medicine≥8,制作≥4
+- `MMT_MakeSynchronisity`：灵能结晶(4) + Neutroamine(2) -> 灵能粉×2 ｜ 工作量=700 ｜ 研究:毒品 VII ｜ 技能:Medicine≥8
+- `MMT_BrewPsyfocusTea`：灵能结晶(1) + 金丝桃(2) -> 灵能茶×2 ｜ 工作量=400 ｜ 研究:毒品 VII ｜ 技能:Medicine≥5
+- `MMT_BrewAdvPsyfocusTea`：灵能茶(2) + 灵能结晶(1) + 金丝桃(2) -> 高级灵能茶×2 ｜ 工作量=800 ｜ 研究:毒品 VIII ｜ 技能:Medicine≥7
+- `MMT_BrewSuperPsyfocusTea`：高级灵能茶(2) + 灵能结晶(2) + 金丝桃(4) -> 超级灵能茶×2 ｜ 工作量=1600 ｜ 研究:毒品 X ｜ 技能:Medicine≥9
+- `MMT_MakeBattleCocktail`：狂暴草(2) + Neutroamine(1) + 化合燃料(2) -> 战斗鸡尾酒×1 ｜ 工作量=800 ｜ 研究:毒品 VII ｜ 技能:Medicine≥7
+- `MMT_MakeNanoRepairSerum`：MedicineUltratech(1) + 微芯片集成电路(1) + Neutroamine(2) + 生物合成材料(1) -> 纳米修复针×1 ｜ 工作量=2000 ｜ 研究:毒品 IX ｜ 技能:Medicine≥10
+- `MMT_MakeGeneBooster`：生物合成材料(2) + Neutroamine(2) + 超级零部件(1) -> 基因强化剂×1 ｜ 工作量=2400 ｜ 研究:毒品 X ｜ 技能:Medicine≥12
+- `MMT_MakeNanoPurgeSerum`：MedicineUltratech(1) + 微芯片集成电路(1) + 超级零部件(1) + Neutroamine(3) -> 纳米净化血清×1 ｜ 工作量=2400 ｜ 研究:毒品 X ｜ 技能:Medicine≥12
+- `MMT_MakePsychicAmplifier`：灵能结晶(4) + 微芯片集成电路(1) + 超级零部件(1) + Neutroamine(2) -> PsychicAmplifier×1 ｜ 工作量=4000 ｜ 研究:毒品 X ｜ 技能:Medicine≥12
+- `MMT_MakeMechSerumResurrector`：MedicineUltratech(2) + 微芯片集成电路(2) + 超级零部件(2) + Neutroamine(4) -> MechSerumResurrector×1 ｜ 工作量=6000 ｜ 研究:毒品 X ｜ 技能:Medicine≥15
 
 ### 电动金属（Electric）
 
@@ -134,7 +155,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 8 |  |
+| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 9 |  |
 
 **电子器件工作台（`MMT_ElectricElectronicsTable`） 的配方：**
 
@@ -146,12 +167,13 @@
 - `MMT_MakeMineralSonarModule`：[MMT_MetallicBar](25) + 太空零件(5) + 电子元件(10) + 机械组件(1) -> 矿物声纳模块×1 ｜ 工作量=4800 ｜ 研究:高级零件 ｜ 技能:制作≥10
 - `MMT_MakeEnergyCrystal`：微芯片集成电路(1) + 硅(10) + 黄金(10) -> 能量结晶×2 ｜ 工作量=6000 ｜ 研究:能量聚能 ｜ 技能:制作≥10
 - `MMT_MakeFuelRod`：铀(100) + [MMT_SLDBar](20) -> 核燃料棒×1 ｜ 工作量=8000 ｜ 研究:核能发电 ｜ 技能:制作≥12
+- `MMT_MakeAIPersonaCore`：微芯片集成电路(10) + 聚合物(60) + 碳纤维锭(80) -> AIPersonaCore×1 ｜ 工作量=8000 ｜ 研究:人格核心合成 ｜ 技能:制作≥16
 
 ### 电动石化（ElectricPetrochem）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 石化产品实验室（`MMT_ElectricChemLab`） | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件×20 + 电子元件×5 + [金属]×130 | 450W | 5500 | 电动石化工艺 | 11 |  |
+| 石化产品实验室（`MMT_ElectricChemLab`） | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件×20 + 电子元件×5 + [金属]×130 | 450W | 5500 | 电动石化工艺 | 12 |  |
 
 **石化产品实验室（`MMT_ElectricChemLab`） 的配方：**
 
@@ -166,6 +188,7 @@
 - `MMT_MakeOxidizedChemfuel`：化合燃料(100) + 硝石(15) + 硫酸盐(15) + 聚合物(5) -> 氧化化合燃料×75 ｜ 工作量=10000 ｜ 研究:氧化燃料 ｜ 技能:制作≥12
 - `MMT_ExtractBiomatterCorpse`：[Corpses](1) -> 生物质×20 ｜ 工作量=6000 ｜ 研究:物质转换 I ｜ 技能:制作≥8
 - `MMT_ExtractBiomatterMeat`：[MeatRaw](40) -> 生物质×20 ｜ 工作量=4000 ｜ 研究:物质转换 I ｜ 技能:制作≥8
+- `MMT_RefineCrystalEssence`：辉晶球茎(8) + Neutroamine(1) -> 晶能精粹×2 ｜ 工作量=4000 ｜ 研究:能量结晶培育 ｜ 技能:制作≥8
 
 ### 电动木材（ElectricWood）
 
@@ -197,12 +220,23 @@
 - `MMT_AssembleIC_Hand`：硅(25) + 塑料(20) + 电子元件(3) + 黄金(2) -> 集成电路×5 ｜ 工作量=3500 ｜ 研究:集成电路技术 ｜ 技能:制作≥10
 - `MMT_AssembleMicrochip_Hand`：集成电路(2) + 碳聚物(5) + 黄金(5) -> 微芯片集成电路×1 ｜ 工作量=3500 ｜ 研究:集成电路技术 ｜ 技能:制作≥12
 
+### EnemySwitch（EnemySwitch）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 敌意感应开关（`MMT_EnemyDetectorSwitch`） | — | 钢×25 + 工业零件×1 | — | 300 | — | 0 | CompProperties_EnemyDetector |
+
 ### EnergyConvergence（EnergyConvergence）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -10000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
 | 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
+| 晶体培养舱（`MMT_CrystalIncubator`） | (2,2) | 钢×80 + 玻璃块×20 + 黄金×20 + 先进机械组件×2 | 600W | 4000 | 能量结晶培育 | 1 |  |
+
+**晶体培养舱（`MMT_CrystalIncubator`） 的配方：**
+
+- `MMT_GrowEnergyCrystal`：晶能精粹(2) + 黄金(2) -> 能量结晶×1 ｜ 工作量=12000 ｜ 研究:能量结晶培育 ｜ 技能:制作≥10
 
 ### FieldMedical（FieldMedical）
 
@@ -257,9 +291,9 @@
 - `MMT_ConvertToAluminium`：无机物(50) -> 铝土矿×80 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
 - `MMT_ConvertToNickel`：无机物(150) -> 镍矿×20 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
 - `MMT_ConvertToTitanium`：无机物(200) -> 钛铁矿×20 ｜ 工作量=15000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
-- `MMT_ConvertToGold`：无机物(60) -> 金矿×20 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
+- `MMT_ConvertToGold`：无机物(60) -> 金矿×20 ｜ 工作量=12000 ｜ 研究:物质转换 III ｜ 技能:制作≥15
 - `MMT_ConvertToSilver`：无机物(100) -> 白银×300 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
-- `MMT_ConvertToUranium`：无机物(200) -> 铀×50 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
+- `MMT_ConvertToUranium`：无机物(200) -> 铀×50 ｜ 工作量=12000 ｜ 研究:物质转换 III ｜ 技能:制作≥15
 - `MMT_ConvertToPolymers`：无机物(50) -> 聚合物×100 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
 - `MMT_ConvertToParaffins`：无机物(50) -> 石蜡×100 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
 - `MMT_ConvertToSulphates`：无机物(50) -> 硫酸盐×100 ｜ 工作量=12000 ｜ 研究:物质转换 II ｜ 技能:制作≥15
@@ -273,14 +307,20 @@
 
 - `MMT_MakeAntimatter`：无机物(50) + 铀(20) -> 反物质×2 ｜ 工作量=10000 ｜ 技能:制作≥15
 
+### MedicalTurret（MedicalTurret）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 医疗注射炮台（`MMT_MedicalTurret`） | (2,2) | 钢×80 + 工业零件×5 + 电线×8 | 150W | 2500 | 医疗物资 V | 0 | CompProperties_MedicalTurret |
+
 ### 医药（Medicine）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 手工制药台（`MMT_MedicalTable`） | (3,1) | 玻璃块×20 + [金属/木质]×75 | — | 2000 | 医疗物资 II | 9 |  |
-| 电动制药台（`MMT_ElectricMedicalTable`） | (3,1) | 玻璃块×60 + 合成橡胶×45 + 工业零件×10 + 电子元件×5 + [金属/木质]×125 | 500W | 4000 | MedicineProduction | 10 |  |
-| 晾晒架（`MMT_DryingRack`） | (2,1) | [木质/金属]×60 | — | 800 | 毒品 I | 2 |  |
-| 电动晾晒架（`MMT_ElectricDryingRack`） | (2,2) | 工业零件×4 + 电子元件×2 + [金属]×80 | 400W | 2500 | 毒品 III | 2 |  |
+| 手工制药台（`MMT_MedicalTable`） | (3,1) | 玻璃块×20 + [金属/木质]×75 | — | 2000 | 医疗物资 II | 10 |  |
+| 电动制药台（`MMT_ElectricMedicalTable`） | (3,1) | 玻璃块×60 + 合成橡胶×45 + 工业零件×10 + 电子元件×5 + [金属/木质]×125 | 500W | 4000 | MedicineProduction | 19 |  |
+| 晾晒架（`MMT_DryingRack`） | (2,1) | [木质/金属]×60 | — | 800 | 毒品 I | 4 |  |
+| 电动晾晒架（`MMT_ElectricDryingRack`） | (2,2) | 工业零件×4 + 电子元件×2 + [金属]×80 | 400W | 2500 | 毒品 III | 4 |  |
 | 中性胺精炼厂（`MMT_NeutroamineRefiner`） | (2,2) | 人造纤维×25 + 玻璃块×25 + 电子元件×15 + 太空零件×5 + [金属]×160 | 2500W | 8000 | 毒品 V | 1 |  |
 
 **手工制药台（`MMT_MedicalTable`） 的配方：**
@@ -294,6 +334,7 @@
 - `MMT_MakeHerbMedicine`：MedicineHerbal(8) + 灰烬(2) -> 草药包×1 ｜ 工作量=500 ｜ 研究:医疗物资 III ｜ 技能:Medicine≥5
 - `MMT_MakeBasicMedicineKit`：芦荟叶(5) + 绷带包(1) -> 基础医药包×1 ｜ 工作量=500 ｜ 研究:医疗物资 IV ｜ 技能:Medicine≥4,制作≥2
 - `MMT_MakeBasicMedicineKitMix`：野玫瑰(1) + 金丝桃(1) + 薄荷叶/芦荟叶(1) + 绷带包(1) -> 基础医药包×1 ｜ 工作量=500 ｜ 研究:医疗物资 IV ｜ 技能:Medicine≥4,制作≥2
+- `MMT_MakeAdrenaline`：基础医药包(1) + 中性花瓣(3) -> 肾上腺素×1 ｜ 工作量=300 ｜ 研究:医疗物资 IV ｜ 技能:Medicine≥4,制作≥2
 
 **电动制药台（`MMT_ElectricMedicalTable`） 的配方：**
 
@@ -307,16 +348,29 @@
 - `MMT_BrewMedicalDrink`：MedicineHerbal(1) + RawHops(10) -> 抗生素×1 ｜ 工作量=1000 ｜ 研究:PenoxycylineProduction ｜ 技能:Medicine≥10
 - `MMT_MakeMedicineIndustrial`：Neutroamine(2) + MedicineHerbal(6) + 石蜡(10) + 人造纤维(2) + 塑料(10) -> MedicineIndustrial×1 ｜ 工作量=800 ｜ 研究:MedicineProduction ｜ 技能:Medicine≥10
 - `MMT_MakeMedicineUltratech`：微芯片集成电路(1) + 抗生素(2) + 生物合成材料(2) + 石蜡(3) + Neutroamine(2) + Synthread(5) + 塑料(20) -> MedicineUltratech×1 ｜ 工作量=1400 ｜ 研究:医疗物资 VI ｜ 技能:Medicine≥15
+- `MMT_MakeAdrenaline`：基础医药包(1) + 中性花瓣(3) -> 肾上腺素×1 ｜ 工作量=300 ｜ 研究:医疗物资 IV ｜ 技能:Medicine≥4,制作≥2
+- `MMT_MakeSynchroCrystal`：硫酸盐(2) + 表面活性剂(1) + PsychoidLeaves(4) -> 灵能结晶×2 ｜ 工作量=1200 ｜ 研究:毒品 VII ｜ 技能:Medicine≥8,制作≥4
+- `MMT_MakeSynchronisity`：灵能结晶(4) + Neutroamine(2) -> 灵能粉×2 ｜ 工作量=700 ｜ 研究:毒品 VII ｜ 技能:Medicine≥8
+- `MMT_BrewPsyfocusTea`：灵能结晶(1) + 金丝桃(2) -> 灵能茶×2 ｜ 工作量=400 ｜ 研究:毒品 VII ｜ 技能:Medicine≥5
+- `MMT_BrewAdvPsyfocusTea`：灵能茶(2) + 灵能结晶(1) + 金丝桃(2) -> 高级灵能茶×2 ｜ 工作量=800 ｜ 研究:毒品 VIII ｜ 技能:Medicine≥7
+- `MMT_BrewSuperPsyfocusTea`：高级灵能茶(2) + 灵能结晶(2) + 金丝桃(4) -> 超级灵能茶×2 ｜ 工作量=1600 ｜ 研究:毒品 X ｜ 技能:Medicine≥9
+- `MMT_MakeCigar`：干烟草叶(4) -> 雪茄×1 ｜ 工作量=300 ｜ 研究:毒株种植 III ｜ 技能:制作≥4
+- `MMT_BrewCoffee`：烘焙咖啡豆(2) -> 咖啡×2 ｜ 工作量=300 ｜ 研究:毒株种植 III
+- `MMT_MakeBattleCocktail`：狂暴草(2) + Neutroamine(1) + 化合燃料(2) -> 战斗鸡尾酒×1 ｜ 工作量=800 ｜ 研究:毒品 VII ｜ 技能:Medicine≥7
 
 **晾晒架（`MMT_DryingRack`） 的配方：**
 
 - `MMT_DrySmokeleaf`：SmokeleafLeaves(5) -> 干烟叶×5 ｜ 工作量=2400 ｜ 研究:毒品 I
 - `MMT_DrySmokeleafBulk`：SmokeleafLeaves(25) -> 干烟叶×25 ｜ 工作量=9600 ｜ 研究:毒品 I
+- `MMT_DryTobacco`：烟叶(5) -> 干烟草叶×5 ｜ 工作量=2400 ｜ 研究:毒品 I
+- `MMT_DryTobaccoBulk`：烟叶(25) -> 干烟草叶×25 ｜ 工作量=9600 ｜ 研究:毒品 I
 
 **电动晾晒架（`MMT_ElectricDryingRack`） 的配方：**
 
 - `MMT_DrySmokeleaf`：SmokeleafLeaves(5) -> 干烟叶×5 ｜ 工作量=2400 ｜ 研究:毒品 I
 - `MMT_DrySmokeleafBulk`：SmokeleafLeaves(25) -> 干烟叶×25 ｜ 工作量=9600 ｜ 研究:毒品 I
+- `MMT_DryTobacco`：烟叶(5) -> 干烟草叶×5 ｜ 工作量=2400 ｜ 研究:毒品 I
+- `MMT_DryTobaccoBulk`：烟叶(25) -> 干烟草叶×25 ｜ 工作量=9600 ｜ 研究:毒品 I
 
 **中性胺精炼厂（`MMT_NeutroamineRefiner`） 的配方：**
 
@@ -349,7 +403,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 手工装配台（`MMT_HandAssemblyBench`） | (3,1) | 原木×40 + 钢×25 + [金属]×125 | — | 1200 | 零件加工 | 7 |  |
 | 电动装配台（`MMT_ElectricAssemblyBench`） | (3,1) | 人造纤维×45 + 集成电路×10 + 工业零件×15 + 机械组件×10 + [金属]×220 | 750W | 5500 | 零件加工, 高级零件 | 18 |  |
-| 自动化装配器（`MMT_RoboticAssembler`） | (1,1) | 人造纤维×45 + 高级零部件×10 + 先进机械组件×10 + 微芯片集成电路×5 + [金属]×120 | 5000W | 9000 | 超级零件 | 7 |  |
+| 自动化装配器（`MMT_RoboticAssembler`） | (1,1) | 人造纤维×45 + 高级零部件×10 + 先进机械组件×10 + 微芯片集成电路×5 + [金属]×120 | 5000W | 9000 | 超级零件 | 6 |  |
 
 **手工装配台（`MMT_HandAssemblyBench`） 的配方：**
 
@@ -371,7 +425,6 @@
 - `MMT_MakeComponentSpacer_Electric`：玻璃钢/斯坦合金/钛合金/镍钛合金/亚力可合金(30) -> 太空零件×10 ｜ 工作量=2500 ｜ 研究:高级零件 ｜ 技能:制作≥6
 - `MMT_MakeAdvMechanism_Electric`：玻璃钢/斯坦合金/钛合金/镍钛合金/亚力可合金(60) + 太空零件(20) + 人造纤维(10) -> 先进机械组件×10 ｜ 工作量=3200 ｜ 研究:高级零件 ｜ 技能:制作≥16
 - `MMT_MakeSpacerComponent`：玻璃钢/斯坦合金/钛合金/镍钛合金/亚力可合金(25) + 白银/黄金(5) -> 高级零部件×10 ｜ 工作量=3500 ｜ 研究:高级零件 ｜ 技能:制作≥9
-- `MMT_MakeReinforcedConcrete_Electric`：[MMT_MetallicBar](20) + 混凝土(20) -> 钢筋混凝土×16 ｜ 工作量=1200 ｜ 技能:制作≥7
 - `MMT_MakeMineralSonarModule`：[MMT_MetallicBar](25) + 太空零件(5) + 电子元件(10) + 机械组件(1) -> 矿物声纳模块×1 ｜ 工作量=4800 ｜ 研究:高级零件 ｜ 技能:制作≥10
 - `MMT_MakeOverclockModule`：钢(25) + 机械组件(2) + 工业零件(2) -> 超频模块×1 ｜ 工作量=1500 ｜ 研究:自动机增效 ｜ 技能:制作≥6
 - `MMT_MakeParallelModule`：钢(30) + 机械组件(3) + 工业零件(3) -> 并行模块×1 ｜ 工作量=1800 ｜ 研究:自动机增效 ｜ 技能:制作≥6
@@ -379,7 +432,8 @@
 - `MMT_MakeChargeEfficiencyModule`：钢(25) + 电线(15) + 电子元件(2) + 工业零件(2) -> 充能效率模块×1 ｜ 工作量=2000 ｜ 研究:充能增效 ｜ 技能:制作≥6
 - `MMT_MakeDimensionalModule`：玻璃钢(20) + 太空零件(2) + 电子元件(3) + 黄金(10) -> 次元传送模块×1 ｜ 工作量=3000 ｜ 研究:次元传送 ｜ 技能:制作≥8
 - `MMT_MakeDeployableShield`：钢(25) + 机械组件(2) + 工业零件(2) + 电线(5) -> 部署式护盾发生器×1 ｜ 工作量=4000 ｜ 研究:部署式护盾技术 ｜ 技能:制作≥6
-- `MMT_MakeChargeShieldPack`：集成电路(2) + 太空零件(4) + 玻璃钢(30) + 电线(10) -> 充能护盾腰带×1 ｜ 工作量=8000 ｜ 研究:充能技术 ｜ 技能:制作≥10
+- `MMT_MakeChargeShieldPack`：集成电路(2) + 太空零件(4) + 玻璃钢(30) + 电线(10) -> 充能护盾腰带 Mk.II×1 ｜ 工作量=8000 ｜ 研究:充能技术 ｜ 技能:制作≥10
+- `MMT_MakeArchoShieldPack`：集成电路(4) + 太空零件(6) + 玻璃钢(40) + 次元传送模块(2) -> 远古护盾腰带 Mk.III×1 ｜ 工作量=12000 ｜ 研究:远古护盾技术 ｜ 技能:制作≥12
 - `MMT_MakePsychicShieldBelt`：PsychicAmplifier(1) + 太空零件(4) + 玻璃钢(15) + 黄金(10) -> 灵能护盾腰带×1 ｜ 工作量=8000 ｜ 研究:灵能护盾技术 ｜ 技能:制作≥10
 
 **自动化装配器（`MMT_RoboticAssembler`） 的配方：**
@@ -390,7 +444,6 @@
 - `MMT_BuildBiosyntheticMaterial`：生物质(15) + 人造纤维(9) + 塑料(30) -> 生物合成材料×5 ｜ 工作量=2400 ｜ 研究:超级零件 ｜ 技能:制作≥18
 - `MMT_MakeBioelectronicDevices`：生物质(60) + Hyperweave(15) + 微芯片集成电路(2) -> 生物电子元件×1 ｜ 工作量=7000 ｜ 研究:超级零件 ｜ 技能:制作≥18
 - `MMT_DisassembleAIPersonaCore`：AIPersonaCore(1) -> 生物电子元件×1 + α阿尔法聚合物×30 + 碳纤维锭×40 ｜ 工作量=4000 ｜ 研究:高级零件 ｜ 技能:制作≥16
-- `MMT_MakeAIPersonaCore`：生物电子元件(2) + α阿尔法聚合物(60) + 碳纤维锭(80) -> AIPersonaCore×1 ｜ 工作量=8000 ｜ 研究:人格核心合成 ｜ 技能:制作≥16
 
 ### 石化（Petrochem）
 
@@ -451,13 +504,14 @@
 - `MMT_MakeIncendiaryGrenade`：工业零件(4) + 凝固汽油(5) + [MMT_MetallicBar](30) -> 燃烧手榴弹×5 ｜ 工作量=3500 ｜ 研究:手榴弹 II ｜ 技能:制作≥9
 - `MMT_MakeMolotov`：玻璃块(30) + 化合燃料(30) + [MMT_BTextiles](30) -> Weapon_GrenadeMolotov×5 ｜ 工作量=3500 ｜ 研究:巨弓 ｜ 技能:制作≥5
 - `MMT_MakeSmokeGrenade`：[MMT_MetallicBar](36) + 塑料(10) + 工业零件(5) -> smoke grenade×5 ｜ 工作量=6000 ｜ 研究:手榴弹 II ｜ 技能:制作≥9
-- `MMT_MakeStickBomb`：原始零部件(15) + 化合燃料(3) + [MMT_BTextiles](30) -> stick bomb×5 ｜ 工作量=3000 ｜ 研究:反曲弓 ｜ 技能:制作≥3
+- `MMT_MakeStickBomb`：原始零部件(15) + 化合燃料(3) + [MMT_BTextiles](30) -> stick bomb×5 ｜ 工作量=3000 ｜ 研究:手榴弹 I ｜ 技能:制作≥3
 
 ### 电力（Power）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 原煤发电机（`MMT_CoalGenerator`） | (2,2) | 钢×100 + 工业零件×3 | -2500W | 3000 | 电力 | 0 |  |
+| 聚合物发电机（`MMT_PolymerGenerator`） | (3,2) | 钢×150 + 钢筋混凝土×20 + 工业零件×8 + 机械组件×4 | -5000W | 6500 | 高级石化工艺 | 0 |  |
 | 核能反应堆（`MMT_NuclearReactor`） | (3,3) | 钢×300 + 碳纤维锭×60 + 工业零件×10 + 先进机械组件×4 | -20000W | 12000 | 核能发电 | 0 |  |
 
 ### 研究（Research）
@@ -508,7 +562,7 @@
 | M2 .50勃朗宁机枪（`MMT_Turret_M2Browning`） | (1,1) | M2 .50勃朗宁机枪组件箱×1 + [金属]×70 | — | 1200 | 狙击炮塔 | 0 | 炮塔（M2勃朗宁重机枪） |
 | M134速射机枪（`MMT_Turret_Minigun`） | (1,1) | M134速射机枪组件箱×1 + [金属]×90 | — | 1900 | 重型炮塔 II | 0 | 炮塔（M134型速射机枪） |
 | 20mm厄利孔机炮（`MMT_Turret_Oerlikonautocannon`） | (2,2) | 20x102mm厄利孔机炮组件箱×1 + [金属]×100 | — | 1700 | 重型炮塔 III | 0 | 炮塔（20x102mm厄利孔机炮） |
-| 14.5mm KPV重机枪（`MMT_TurretKPV`） | (2,2) | 14.5mm KPV重机枪组件箱×1 + [金属]×80 | — | 1500 | 重机枪塔 | 0 | 炮塔（14.5mm KPV重机枪） |
+| 14.5mm KPV重机枪（`MMT_TurretKPV`） | (1,1) | 14.5mm KPV重机枪组件箱×1 + [金属]×80 | — | 1500 | 重机枪塔 | 0 | 炮塔（14.5mm KPV重机枪） |
 
 ### 武器部件（WeaponParts）
 
@@ -566,8 +620,8 @@
 - `MMT_MakeAdvRifleComponent`：人造纤维(5) + 塑料(15) + 合成橡胶(15) + 步枪部件(1) + 先进机械组件(2) -> 先进步枪部件×1 ｜ 工作量=2100 ｜ 研究:制造 ｜ 技能:制作≥13
 - `MMT_MakeAdvSniperComponent`：人造纤维(10) + 塑料(20) + 合成橡胶(15) + 集成电路(4) + 狙击枪部件(2) + 先进机械组件(3) -> 先进狙击枪部件×1 ｜ 工作量=2100 ｜ 研究:制造 ｜ 技能:制作≥15
 - `MMT_MakeHeavyComponent`：[MMT_SLDBar]/[MMT_USLDBar](25) + [MMT_HCMBar](15) + 工业零件(12) + 电线(15) + 机械组件(6) -> 重型武器部件×1 ｜ 工作量=2800 ｜ 研究:重型炮塔 ｜ 技能:制作≥12
-- `MMT_MakeCannonComponent`：[MMT_SLDBar]/[MMT_USLDBar](20) + 重型武器部件(1) + 先进机械组件(5) -> 火炮武器部件×1 ｜ 工作量=3100 ｜ 研究:迫击炮 ｜ 技能:制作≥14
-- `MMT_MakeLauncherComponent`：集成电路(2) + 重型武器部件(1) + 先进机械组件(3) + 玻璃块(12) -> 发射器部件×1 ｜ 工作量=3100 ｜ 研究:火箭弹 I ｜ 技能:制作≥14
+- `MMT_MakeCannonComponent`：[MMT_SLDBar]/[MMT_USLDBar](20) + 重型武器部件(1) + 机械组件(10) -> 火炮武器部件×1 ｜ 工作量=3100 ｜ 研究:迫击炮 ｜ 技能:制作≥14
+- `MMT_MakeLauncherComponent`：集成电路(2) + 重型武器部件(1) + 机械组件(6) + 玻璃块(12) -> 发射器部件×1 ｜ 工作量=3100 ｜ 研究:火箭弹 I ｜ 技能:制作≥14
 - `MMT_Build93RBurstPistol`：手枪部件(1) + 武器部件(4) + 工业零件(4) + [MMT_MetallicBar](12) + 塑料(12) + [Leathers](5) -> 伯莱塔93R冲锋手枪×1 ｜ 工作量=9300 ｜ 研究:枪械制造 ｜ 技能:制作≥7
 - `MMT_BuildAA12AutoShotgun`：霰弹枪部件(1) + 武器部件(8) + 工业零件(6) + [MMT_MetallicBar](22) + 塑料(20) + [Leathers](9) -> AA-12自动霰弹枪×1 ｜ 工作量=19000 ｜ 研究:枪械 II ｜ 技能:制作≥14
 - `MMT_BuildAK47Gun`：步枪部件(1) + 武器部件(6) + 工业零件(8) + [MMT_MetallicBar](26) + 塑料(15) + [Leathers](11) -> AK-47突击步枪×1 ｜ 工作量=19000 ｜ 研究:步枪 II ｜ 技能:制作≥12
@@ -595,14 +649,14 @@
 - `MMT_BuildM3SMG`：冲锋枪部件(1) + 武器部件(4) + 工业零件(4) + [MMT_MetallicBar](16) + [Leathers](6) -> M3“注油枪”冲锋枪×1 ｜ 工作量=13600 ｜ 研究:反冲作用 ｜ 技能:制作≥5
 - `MMT_BuildM42A_USCM`：狙击枪部件(1) + 武器部件(9) + 工业零件(11) + [MMT_MetallicBar](20) + 塑料(26) + [Leathers](7) -> M42A狙击步枪×1 ｜ 工作量=16900 ｜ 研究:精密膛线 ｜ 技能:制作≥13
 - `MMT_BuildM4A1Gun`：步枪部件(1) + 武器部件(4) + 工业零件(5) + [MMT_MetallicBar](15) + 塑料(10) + [Leathers](11) -> M4A1卡宾枪×1 ｜ 工作量=15000 ｜ 研究:枪械 II ｜ 技能:制作≥7
-- `MMT_BuildM56_USCM`：重型武器部件(1) + 武器部件(7) + 高级零部件(4) + [MMT_MetallicBar](20) + 塑料(20) + [Leathers](12) -> M56智能机枪×1 ｜ 工作量=19900 ｜ 研究:多管武器 ｜ 技能:制作≥16
+- `MMT_BuildM56_USCM`：重型武器部件(1) + 武器部件(7) + 工业零件(10) + [MMT_MetallicBar](20) + 塑料(20) + [Leathers](12) -> M56智能机枪×1 ｜ 工作量=19900 ｜ 研究:多管武器 ｜ 技能:制作≥16
 - `MMT_BuildM5_USCM`：发射器部件(2) + 武器部件(6) + 工业零件(7) + [MMT_MetallicBar](26) + 塑料(25) -> M5火箭筒×1 ｜ 工作量=23000 ｜ 研究:火箭弹 I ｜ 技能:制作≥15
 - `MMT_BuildM79GL`：步枪部件(2) + 武器部件(3) + 工业零件(3) + [MMT_MetallicBar](20) + [MMT_Woody](20) + [Leathers](10) -> M79榴弹发射器×1 ｜ 工作量=15000 ｜ 研究:枪械 II ｜ 技能:制作≥9
 - `MMT_BuildM82Gun`：先进狙击枪部件(1) + 武器部件(6) + 工业零件(15) + [MMT_MetallicBar](26) + 塑料(25) + [Leathers](12) -> M82A1反器材步枪×1 ｜ 工作量=22500 ｜ 研究:狙击步枪 III ｜ 技能:制作≥17
 - `MMT_BuildMP5Gun`：冲锋枪部件(1) + 武器部件(4) + 工业零件(4) + [MMT_MetallicBar](15) + 塑料(15) + [Leathers](6) -> MP5A3冲锋枪×1 ｜ 工作量=14600 ｜ 研究:反冲作用 ｜ 技能:制作≥7
 - `MMT_BuildMarineSturmRifle`：步枪部件(1) + 武器部件(5) + 工业零件(6) + [MMT_MetallicBar](22) + 塑料(20) -> TAR-21突击步枪×1 ｜ 工作量=21000 ｜ 研究:步枪 III ｜ 技能:制作≥12
 - `MMT_BuildMilkorGrenadeLauncher`：重型武器部件(1) + 武器部件(7) + 工业零件(7) + [MMT_MetallicBar](26) + 塑料(25) + [Leathers](10) -> 米尔科姆榴弹发射器×1 ｜ 工作量=21000 ｜ 研究:发射器 I ｜ 技能:制作≥13
-- `MMT_BuildMinigun`：重型武器部件(1) + 武器部件(13) + 高级零部件(10) + [MMT_MetallicBar](36) + 塑料(25) + [Leathers](10) -> Gun_Minigun×1 ｜ 工作量=28000 ｜ 研究:多管武器 ｜ 技能:制作≥18
+- `MMT_BuildMinigun`：重型武器部件(1) + 武器部件(13) + 工业零件(20) + [MMT_MetallicBar](36) + 塑料(25) + [Leathers](20) -> Gun_Minigun×1 ｜ 工作量=28000 ｜ 研究:多管武器 ｜ 技能:制作≥18
 - `MMT_BuildPDW`：冲锋枪部件(1) + 武器部件(1) + 工业零件(6) + [MMT_MetallicBar](20) + [Leathers](10) -> Gun_MachinePistol×1 ｜ 工作量=13600 ｜ 研究:反冲作用 ｜ 技能:制作≥6
 - `MMT_BuildParaOrdnancePFourteenFortyfive`：手枪部件(1) + 武器部件(4) + 工业零件(3) + [MMT_MetallicBar](12) + 塑料(12) + [Leathers](10) -> Gun_Autopistol×1 ｜ 工作量=8800 ｜ 研究:枪械制造 ｜ 技能:制作≥7
 - `MMT_BuildPumpShotgun`：霰弹枪部件(1) + 武器部件(1) + 工业零件(6) + [MMT_MetallicBar](20) + [Leathers](7) -> Gun_PumpShotgun×1 ｜ 工作量=12000 ｜ 研究:导气式 ｜ 技能:制作≥6
@@ -633,9 +687,6 @@
 - `MMT_MakeChargedComponent`：[MMT_USLDBar](10) + [MMT_HCMBar](20) + 磁性材料(2) + 先进机械组件(2) -> 电荷武器部件×1 ｜ 工作量=2100 ｜ 研究:充能射击 ｜ 技能:制作≥14
 - `MMT_MakeLaserComponent`：[MMT_USLDBar](20) + [MMT_HCMBar](10) + 磁性材料(4) + 微芯片集成电路(1) -> 光束武器部件×1 ｜ 工作量=2100 ｜ 研究:充能射击 ｜ 技能:制作≥15
 - `MMT_MakePlasmaComponent`：[MMT_USLDBar](20) + [MMT_HCMBar](10) + 生物合成材料(4) + 微芯片集成电路(1) -> 离子武器部件×1 ｜ 工作量=2100 ｜ 研究:充能射击 ｜ 技能:制作≥15
-- `MMT_MakeFusionGrenades`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 光束武器部件(1) -> 温压手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
-- `MMT_MakeGrenadeChargedFrag`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 电荷武器部件(1) -> 电荷手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
-- `MMT_MakePlasmaGrenades`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 离子武器部件(1) -> 等离子手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
 - `MMT_BuildBlackWidow`：光束武器部件(1) + 动力电池(1) + 武器部件(7) + 超级零部件(8) + [MMT_USLDBar](20) + 塑料(35) -> A-1BW“黑寡妇”×1 ｜ 工作量=27000 ｜ 研究:激光武器 II ｜ 技能:制作≥17
 - `MMT_BuildBurstLaserRifle`：光束武器部件(1) + 武器部件(9) + 超级零部件(9) + [MMT_USLDBar](25) + 塑料(40) -> M12“仲裁者”光束枪×1 ｜ 工作量=25000 ｜ 研究:激光武器 II ｜ 技能:制作≥17
 - `MMT_BuildChargeRifle`：电荷武器部件(1) + 武器部件(5) + 高级零部件(10) + [MMT_USLDBar](20) + 塑料(27) -> Gun_ChargeRifle×1 ｜ 工作量=27000 ｜ 研究:激光武器 I ｜ 技能:制作≥14
@@ -648,6 +699,9 @@
 - `MMT_BuildPlasmaRifle`：离子武器部件(1) + 武器部件(6) + 超级零部件(10) + [MMT_USLDBar](22) + 塑料(35) -> C7“灾引”×1 ｜ 工作量=27000 ｜ 研究:激光武器 II ｜ 技能:制作≥17
 - `MMT_BuildPlasmaShotgun`：离子武器部件(1) + 武器部件(7) + 超级零部件(11) + [MMT_USLDBar](22) + 塑料(35) -> C5“魔咒”×1 ｜ 工作量=26000 ｜ 研究:激光武器 II ｜ 技能:制作≥17
 - `MMT_BuildSplitter`：电荷武器部件(1) + 武器部件(6) + 超级零部件(12) + 斯特合金(7) + [MMT_USLDBar](22) + 塑料(35) -> R6“撕裂者”电荷步枪×1 ｜ 工作量=30000 ｜ 研究:激光武器 II ｜ 技能:制作≥15
+- `MMT_MakeFusionGrenades`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 光束武器部件(1) -> 温压手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
+- `MMT_MakeGrenadeChargedFrag`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 电荷武器部件(1) -> 电荷手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
+- `MMT_MakePlasmaGrenades`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 离子武器部件(1) -> 等离子手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
 
 ### 木材（Wood）
 
@@ -676,23 +730,23 @@
 
 | 建筑 | defName | 尺寸 | 造价 | 功耗 | 配方数 | 源文件 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 皮革工作台 | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
-| 回收站 | `TableRecycling` | (3,1) | 普通零部件×12 + 电子元件×3 + 机械组件×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
-| 洗涤盆 | `HolyBasin` | — | 原始零部件×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
-| 厨房案桌 | `TableKitchen` | (3,1) | 原始零部件×8 + 机械组件×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
-| 开放式炉灶 | `OpenHearth` | (1,1) | 原始零部件×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
-| 专业化烹饪炉 | `ElectricStove_Pro` | (4,1) | 普通零部件×20 + 合成橡胶×30 + 集成电路×5 + 先进机械组件×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
-| 电压力锅 | `Canningstove` | (1,1) | 普通零部件×12 + 电子元件×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
-| 石磨 | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
-| 电磨 | `MillElectric` | (1,1) | 合成橡胶×45 + 玻璃块×25 + 普通零部件×8 + 机械组件×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
-| 烤箱 | `TableOven` | (2,2) | 原始零部件×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
-| 电烤箱 | `ElectricOven` | (1,1) | 普通零部件×10 + 电子元件×3 + 机械组件×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
-| 营养物质机 | `soylenttable` | (2,1) | 合成橡胶×50 + 塑料×40 + 普通零部件×10 + 集成电路×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
-| 酒类发酵桶 | `UniversalFermenter` | (1,1) | 原始零部件×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
-| 干肉架 | `JerkyRack` | (2,1) | 原始零部件×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
-| 干酪槽 | `CheeseBasin` | (1,1) | 原始零部件×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
-| 窑炉 | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
-| 强子对撞机料斗 | `HadronColliderFeeder` | (1,1) | 高级零部件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
-| 堆肥桶 | `CompostBarrel` | — | 原始零部件×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
-| 重型弹药工作台 | `TableHeavyAmmunition` | (3,1) | 普通零部件×10 + 电子元件×5 + 机械组件×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
+| LeatherworkerTable | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
+| TableRecycling | `TableRecycling` | (3,1) | 工业零件×12 + ElectronicComponents×3 + Mechanism×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
+| HolyBasin | `HolyBasin` | — | ComponentMedieval×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
+| TableKitchen | `TableKitchen` | (3,1) | ComponentMedieval×8 + Mechanism×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
+| OpenHearth | `OpenHearth` | (1,1) | ComponentMedieval×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
+| ElectricStove_Pro | `ElectricStove_Pro` | (4,1) | 工业零件×20 + Rubber×30 + Electronics×5 + AdvMechanism×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
+| Canningstove | `Canningstove` | (1,1) | 工业零件×12 + ElectronicComponents×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
+| GrindStone | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
+| MillElectric | `MillElectric` | (1,1) | Rubber×45 + Glass×25 + 工业零件×8 + Mechanism×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
+| TableOven | `TableOven` | (2,2) | ComponentMedieval×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
+| ElectricOven | `ElectricOven` | (1,1) | 工业零件×10 + ElectronicComponents×3 + Mechanism×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
+| soylenttable | `soylenttable` | (2,1) | Rubber×50 + Plastic×40 + 工业零件×10 + Electronics×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
+| UniversalFermenter | `UniversalFermenter` | (1,1) | ComponentMedieval×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
+| JerkyRack | `JerkyRack` | (2,1) | ComponentMedieval×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
+| CheeseBasin | `CheeseBasin` | (1,1) | ComponentMedieval×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
+| Kiln | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
+| HadronColliderFeeder | `HadronColliderFeeder` | (1,1) | 太空零件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
+| CompostBarrel | `CompostBarrel` | — | ComponentMedieval×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
+| TableHeavyAmmunition | `TableHeavyAmmunition` | (3,1) | 工业零件×10 + ElectronicComponents×5 + Mechanism×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
 
