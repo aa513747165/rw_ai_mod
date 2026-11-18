@@ -11,7 +11,7 @@
     <thingClass>MyModeTest.Building_ChargingStation</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/MMT_ChargingStation</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
     </graphicData>
@@ -21,6 +21,8 @@
     <pathCost>50</pathCost>
     <fillPercent>0.3</fillPercent>
     <rotatable>false</rotatable>
+    <!-- Graphic_Multi 的默认展示朝向（rotatable=false 时按此取贴图） -->
+    <defaultPlacingRot>South</defaultPlacingRot>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
     <designationCategory>MMT_Production</designationCategory>
