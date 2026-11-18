@@ -20,8 +20,8 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.3</fillPercent>
-    <rotatable>false</rotatable>
-    <!-- Graphic_Multi 的默认展示朝向（rotatable=false 时按此取贴图） -->
+    <!-- 可旋转（R 键切换三朝向贴图），默认朝南 -->
+    <rotatable>true</rotatable>
     <defaultPlacingRot>South</defaultPlacingRot>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
