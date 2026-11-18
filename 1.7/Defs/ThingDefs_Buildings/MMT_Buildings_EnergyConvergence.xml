@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 能量聚能发电站：消耗能量结晶发电（10000W）。建成后需四角固定位置放置 4 座点火充能装置，
+  <!-- 能量聚能发电站：消耗能量结晶发电（100000W）。建成后需四角固定位置放置 4 座点火充能装置，
        进行点火仪式（射线汇聚能量球→光柱点火）才能发电；燃料耗尽/断电/关闭后熄火，需重新点火。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_EnergyConvergencePlant</defName>
     <label>能量聚能发电站</label>
-    <description>以能量结晶为燃料的聚能发电站，输出 10000W 电力。建成后默认未点火：需在其四角（对角外一格）各放置一座点火充能装置并通电，通过点火仪式激活。燃料耗尽、断电或关闭后会熄火，需重新点火。</description>
+    <description>以能量结晶为燃料的聚能发电站，输出 100000W 电力。建成后默认未点火：需在其四角（对角外一格）各放置一座点火充能装置并通电，通过点火仪式激活。燃料耗尽、断电或关闭后会熄火，需重新点火。</description>
     <thingClass>MyModeTest.Building_EnergyConvergencePlant</thingClass>
     <graphicData>
       <texPath>Things/Building/Power/MMT_EnergyConvergencePlant_base</texPath>
@@ -45,7 +45,7 @@
     <comps>
       <li Class="CompProperties_Power">
         <compClass>MyModeTest.CompPowerPlantIgnitable</compClass>
-        <basePowerConsumption>-10000</basePowerConsumption>
+        <basePowerConsumption>-100000</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <shortCircuitInRain>true</shortCircuitInRain>
       </li>
@@ -80,7 +80,7 @@
           <li>(2, 0, -2)</li>
           <li>(2, 0, 2)</li>
         </chargerOffsets>
-        <energyBallMaxSize>2.2</energyBallMaxSize>
+        <energyBallMaxSize>1.1</energyBallMaxSize>
       </li>
     </comps>
     <tickerType>Normal</tickerType>

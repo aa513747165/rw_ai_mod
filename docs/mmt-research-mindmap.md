@@ -86,13 +86,13 @@
         - **核能发电** `MMT_NuclearPower` ｜ 坐标 (5.00, 7.00) ｜ 4000点 ｜ Spacer
           - 解锁建筑: 核能反应堆
           - 解锁配方: 组装核燃料棒
-          - **能量聚能** `MMT_EnergyConvergence` ｜ 坐标 (9.00, 8.00) ｜ 4000点 ｜ Spacer
-            - 解锁建筑: 能量聚能发电站、点火充能装置
-            - 解锁配方: 凝聚能量结晶
-            - **能量结晶培育** `MMT_EnergyCrystalCultivation` ｜ 坐标 (10.00, 9.00) ｜ 3000点 ｜ Spacer ｜ 前置(原版): Hydroponics
-              - 解锁建筑: 晶体培养舱
-              - 解锁配方: 提纯晶能精粹
-              - 解锁植物: 辉晶花（播种）
+          - **能量结晶培育** `MMT_EnergyCrystalCultivation` ｜ 坐标 (9.00, 8.00) ｜ 3000点 ｜ Spacer ｜ 前置(原版): Hydroponics
+            - 解锁建筑: 晶体培养舱
+            - 解锁配方: 提纯晶能精粹
+            - 解锁植物: 辉晶花（播种）
+            - **能量聚能** `MMT_EnergyConvergence` ｜ 坐标 (10.00, 9.00) ｜ 4000点 ｜ Spacer
+              - 解锁建筑: 能量聚能发电站、点火充能装置
+              - 解锁配方: 凝聚能量结晶
       - **枪械 II** `MMT_GunsAdvanced` ｜ 坐标 (2.00, 7.00) ｜ 1600点 ｜ Industrial ｜ 前置(原版): BlowbackOperation, GasOperation
         - 解锁配方: 制造 AA-12自动霰弹枪、制作伯莱塔Cx4卡宾枪、制作M4A1卡宾枪、制作M79榴弹发射器、制造 “打击者”霰弹枪、制造 M90近程突击霰弹枪、制造 M45战术霰弹枪、制作USC半自动卡宾枪
         - **步枪 II** `MMT_RiflesAdvanced` ｜ 坐标 (3.00, 7.00) ｜ 1100点 ｜ Industrial

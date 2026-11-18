@@ -36,7 +36,7 @@ namespace MyModeTest
         public List<IntVec3> chargerOffsets;
 
         /// <summary>能量球充满时的绘制尺寸（格）。</summary>
-        public float energyBallMaxSize = 2.2f;
+        public float energyBallMaxSize = 1.1f;
 
         public CompProperties_EnergyIgnition()
         {
@@ -641,7 +641,7 @@ namespace MyModeTest
             float y = AltitudeLayer.MoteOverhead.AltitudeFor();
             // 能量球脉冲：尺寸随正弦缩放，透明度反相轻微呼吸，产生一跳一跳的活体感
             float pulse = Mathf.Sin(time * 2.6f);
-            float orbSize = 2.0f + 0.35f * pulse;
+            float orbSize = 1.0f + 0.175f * pulse;
             orbMat.color = new Color(1f, 1f, 1f, 0.85f + 0.15f * Mathf.Sin(time * 5.2f));
             Vector3 p = new Vector3(drawLoc.x, y, drawLoc.z);
             Graphics.DrawMesh(MeshPool.plane10,
@@ -649,7 +649,7 @@ namespace MyModeTest
             // 光环：绕竖直轴匀速旋转，压在能量球上层
             float haloAngle = (time * 45f) % 360f;
             haloMat.color = new Color(1f, 1f, 1f, 0.9f);
-            float haloSize = 3.4f + 0.1f * Mathf.Sin(time * 1.3f);
+            float haloSize = 1.7f + 0.05f * Mathf.Sin(time * 1.3f);
             Vector3 hp = new Vector3(drawLoc.x, y + 0.1f, drawLoc.z);
             Graphics.DrawMesh(MeshPool.plane10,
                 Matrix4x4.TRS(hp, Quaternion.Euler(0f, haloAngle, 0f), new Vector3(haloSize, 1f, haloSize)), haloMat, 0);

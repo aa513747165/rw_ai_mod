@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 能量聚能：解锁能量结晶配方、能量聚能发电站与点火充能装置（MMT 独有多方块发电线，核能同级后期） -->
-  <ResearchProjectDef>
-    <defName>MMT_EnergyConvergence</defName>
-    <label>能量聚能</label>
-    <description>研究将能量封存于水晶中的技术，解锁能量结晶配方（电子器件工作台）、能量聚能发电站（10000W，需四角点火充能装置进行点火仪式）与点火充能装置。</description>
-    <baseCost>4000</baseCost>
-    <techLevel>Spacer</techLevel>
-    <tab>MMT_ResearchTab</tab>
-    <prerequisites>
-      <li>MMT_NuclearPower</li>
-    </prerequisites>
-    <researchViewX>9.00</researchViewX>
-    <researchViewY>8.00</researchViewY>
-  </ResearchProjectDef>
-
-  <!-- 能量结晶培育：能量聚能的农业分支，解锁辉晶花种植、晶能精粹提纯与晶体培养舱（种植→提纯→结晶的可再生路线） -->
+  <!-- 能量结晶培育：聚能发电的前置农业分支（先解决结晶来源，再建发电站），
+       解锁辉晶花种植、晶能精粹提纯与晶体培养舱（种植→提纯→结晶的可再生路线） -->
   <ResearchProjectDef>
     <defName>MMT_EnergyCrystalCultivation</defName>
     <label>能量结晶培育</label>
@@ -24,8 +10,24 @@
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
-      <li>MMT_EnergyConvergence</li>
+      <li>MMT_NuclearPower</li>
       <li>Hydroponics</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>8.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 能量聚能：解锁能量结晶配方、能量聚能发电站与点火充能装置（MMT 独有多方块发电线，核能同级后期）；
+       前置能量结晶培育——没有结晶来源就点不燃发电站 -->
+  <ResearchProjectDef>
+    <defName>MMT_EnergyConvergence</defName>
+    <label>能量聚能</label>
+    <description>研究将能量封存于水晶中的技术，解锁能量结晶配方（电子器件工作台）、能量聚能发电站（100000W，需四角点火充能装置进行点火仪式）与点火充能装置。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_EnergyCrystalCultivation</li>
     </prerequisites>
     <researchViewX>10.00</researchViewX>
     <researchViewY>9.00</researchViewY>

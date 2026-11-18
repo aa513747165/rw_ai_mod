@@ -102,10 +102,10 @@ def validate_energyconvergence() -> None:
     if "MMT_EnergyConvergence" not in research:
         fail("研究缺少 MMT_EnergyConvergence")
     node = research["MMT_EnergyConvergence"]
-    if "MMT_NuclearPower" not in li_values(node, "prerequisites"):
-        fail("能量聚能研究前置必须是 MMT_NuclearPower")
-    assert_equal(child_text(node, "researchViewX"), "9.00", "研究坐标X")
-    assert_equal(child_text(node, "researchViewY"), "8.00", "研究坐标Y")
+    if "MMT_EnergyCrystalCultivation" not in li_values(node, "prerequisites"):
+        fail("能量聚能研究前置必须是 MMT_EnergyCrystalCultivation")
+    assert_equal(child_text(node, "researchViewX"), "10.00", "研究坐标X")
+    assert_equal(child_text(node, "researchViewY"), "9.00", "研究坐标Y")
 
     # ---- 建筑：能量聚能发电站 ----
     buildings = def_map(parse_xml(BUILDING_XML))
@@ -329,11 +329,11 @@ def validate_crystalcultivation() -> None:
         fail("研究缺少 MMT_EnergyCrystalCultivation")
     node = research["MMT_EnergyCrystalCultivation"]
     prereqs = li_values(node, "prerequisites")
-    for need in ("MMT_EnergyConvergence", "Hydroponics"):
+    for need in ("MMT_NuclearPower", "Hydroponics"):
         if need not in prereqs:
             fail(f"培育研究前置缺少: {need}")
-    assert_equal(child_text(node, "researchViewX"), "10.00", "培育研究坐标X")
-    assert_equal(child_text(node, "researchViewY"), "9.00", "培育研究坐标Y")
+    assert_equal(child_text(node, "researchViewX"), "9.00", "培育研究坐标X")
+    assert_equal(child_text(node, "researchViewY"), "8.00", "培育研究坐标Y")
 
 
 SUITES["crystalcultivation"] = validate_crystalcultivation
