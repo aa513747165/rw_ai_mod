@@ -1770,6 +1770,7 @@ PARTS_ELECTRIC_BENCH_RECIPES = [
     "MMT_MakeDimensionalModule",
     "MMT_MakeDeployableShield",
     "MMT_MakeChargeShieldPack",
+    "MMT_MakeArchoShieldPack",
     "MMT_MakePsychicShieldBelt",
 ]
 
@@ -1817,7 +1818,7 @@ INFRA_CATEGORIES_XML = "1.7/Defs/ThingCategoryDefs/MMT_ThingCategories.xml"
 INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
-INFRA_RESEARCH_TOTAL = 102  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）；防卫炮塔精简后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III 5 项
+INFRA_RESEARCH_TOTAL = 105  # 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/次元传送 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）；防卫炮塔精简后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III 5 项；护盾梯队 3 项（护符工艺/电池护盾技术/远古护盾技术）
 INFRA_WORKTABLE_TOTAL = 61  # 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 3（原煤/聚合物/核能发电机）、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"

@@ -58,7 +58,7 @@ def validate_charging() -> None:
     if "MMT_ChargeShieldPack" not in items:
         fail("物品缺少 MMT_ChargeShieldPack")
     pack = items["MMT_ChargeShieldPack"]
-    assert_equal(child_text(pack, "label"), "充能护盾腰带", "护盾腰带 label")
+    assert_equal(child_text(pack, "label"), "充能护盾腰带 Mk.II", "护盾腰带 label")
     assert_equal(
         child_text(pack, "graphicData/texPath"),
         "Things/Item/MMT/Shield/MMT_ShieldBeltTech",

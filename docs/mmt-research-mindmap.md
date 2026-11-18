@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（102 项）
+- MMT 研究总览（105 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -104,6 +104,8 @@
           - 解锁配方: 组装灵能护盾腰带
         - **充能增效** `MMT_ChargeBoost` ｜ 坐标 (13.00, 6.00) ｜ 2000点 ｜ Spacer
           - 解锁配方: 组装充能效率模块
+        - **远古护盾技术** `MMT_ArchoShieldTech` ｜ 坐标 (15.00, 6.00) ｜ 6000点 ｜ Ultra ｜ 交叉前置: 能量聚能
+          - 解锁配方: 组装远古护盾腰带 Mk.III
       - **近战武器 IV** `MMT_MeleeAdvanced` ｜ 坐标 (9.00, 7.00) ｜ 1400点 ｜ Spacer ｜ 前置(原版): LongBlades ｜ 交叉前置: 高级零件
     - **机器人工程 I** `MMT_Robotics1` ｜ 坐标 (5.00, 6.00) ｜ 2000点 ｜ Spacer
       - 解锁配方: 制造动力电池、制造机器人部件
@@ -143,6 +145,8 @@
   - **毒品 V** `MMT_Drugs_C2` ｜ 坐标 (6.00, 1.00) ｜ 1000点 ｜ Industrial ｜ 前置(原版): DrugProduction
     - 解锁建筑: 中性胺精炼厂
     - 解锁配方: 合成中性胺（天然）、精炼中性胺（石化）、合成止痛药
+  - **护符工艺** `MMT_WardTalismanCraft` ｜ 坐标 (6.00, 6.00) ｜ 400点 ｜ Medieval ｜ 前置(原版): Smithing
+    - 解锁配方: 制作玉质护符
   - **研究终端** `MMT_LabTerminalTech` ｜ 坐标 (6.00, 7.00) ｜ 600点 ｜ Industrial ｜ 前置(原版): MicroelectronicsBasics
     - 解锁建筑: 研究终端
     - **多元分析仪** `MMT_MultiAnalyzerTech` ｜ 坐标 (7.00, 7.00) ｜ 1200点 ｜ Industrial ｜ 需要研究台: HiTechResearchBench
@@ -224,3 +228,5 @@
       - 解锁配方: 制作20mm厄利孔机炮组件箱
   - **超织物工艺** `MMT_SuperFabric` ｜ 坐标 (12.00, 0.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): AdvancedFabrication
     - 解锁配方: 纺织超织物
+  - **电池护盾技术** `MMT_BatteryShieldTech` ｜ 坐标 (14.00, 6.00) ｜ 1000点 ｜ Industrial ｜ 前置(原版): Electricity, Machining
+    - 解锁配方: 组装充能护盾腰带 Mk.I

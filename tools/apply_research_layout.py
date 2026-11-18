@@ -100,6 +100,7 @@ LAYOUT = {
     "MMT_ElectricElectronics": (2, 6),
     "MMT_PersonaCoreCrafting": (3, 6),
     "MMT_Robotics1": (5, 6),
+    "MMT_WardTalismanCraft": (6, 6),
     "MMT_DeployableShieldTech": (7, 6),
     "MMT_MatterConversion1": (8, 6),
     "MMT_RechargeableTech": (9, 6),
@@ -107,6 +108,8 @@ LAYOUT = {
     "MMT_MatterConversion3": (11, 6),
     "MMT_Teleportation": (12, 6),
     "MMT_ChargeBoost": (13, 6),
+    "MMT_BatteryShieldTech": (14, 6),
+    "MMT_ArchoShieldTech": (15, 6),
     # y=7 武器与杂项高科技：远古 | 枪械 | 核能 | 研究设施 | 近战 IV | 激光 | 灵能护盾（充能右下）
     "MMT_ArchotechWeapons": (0, 7),
     "MMT_GunsAdvanced": (2, 7),
