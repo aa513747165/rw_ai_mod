@@ -94,12 +94,12 @@ def validate_modules() -> None:
     drill_limits = _slot_limits(drill["MMT_AutoChunkDrill"])
     assert_equal(drill_limits, {"Overclock": "5", "Yield": "5"}, "自动采石机槽位上限")
     all_limits.append(drill_limits)
-    # 晶体培养舱：仅支持超频模块
+    # 晶体培养舱：支持超频 + 并行模块
     energy = def_map(parse_xml(ENERGY_XML))
     inc_limits = _slot_limits(energy["MMT_CrystalIncubator"])
     if inc_limits is None:
         fail("MMT_CrystalIncubator 缺 CompProperties_ModuleSlots")
-    assert_equal(inc_limits, {"Overclock": "5"}, "晶体培养舱槽位上限")
+    assert_equal(inc_limits, {"Overclock": "5", "Parallel": "5"}, "晶体培养舱槽位上限")
     all_limits.append(inc_limits)
     for limits in all_limits:
         for key in limits:

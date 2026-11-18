@@ -320,8 +320,8 @@ def validate_crystalcultivation() -> None:
         assert_equal(child_text(auto_props, "intervalTicks"), "12000", "培养周期")
         assert_equal(child_text(auto_props, "inputCount"), "3", "每轮精粹消耗")
         assert_equal(child_text(auto_props, "outputDef"), "MMT_EnergyCrystal", "培养舱产物")
-    if slot_limits != {"Overclock": "5"}:
-        fail(f"培养舱 slotLimits 应为 Overclock×5（当前 {slot_limits}）")
+    if slot_limits != {"Overclock": "5", "Parallel": "5"}:
+        fail(f"培养舱 slotLimits 应为 Overclock×5 + Parallel×5（当前 {slot_limits}）")
 
     # ---- 研究：能量结晶培育 ----
     research = def_map(parse_xml(RESEARCH_XML))

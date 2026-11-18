@@ -111,9 +111,9 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 能量结晶（`MMT_EnergyCrystal`） | 60 | 25 | — | MMT_MakeEnergyCrystal、MMT_GrowEnergyCrystal | 0 |
+| 能量结晶（`MMT_EnergyCrystal`） | 60 | 25 | — | MMT_MakeEnergyCrystal | 0 |
 | 辉晶球茎（`MMT_LumenBulb`） | 8 | 75 | — | — | 1 |
-| 晶能精粹（`MMT_CrystalEssence`） | 30 | 75 | — | MMT_RefineCrystalEssence | 1 |
+| 晶能精粹（`MMT_CrystalEssence`） | 30 | 75 | — | MMT_RefineCrystalEssence | 0 |
 
 #### 玻璃（Glass）
 

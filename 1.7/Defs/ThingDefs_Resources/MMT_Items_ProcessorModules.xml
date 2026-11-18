@@ -35,12 +35,12 @@
     </modExtensions>
   </ThingDef>
 
-  <!-- 并行模块：安装在自动研磨机/自动筛子内，每个使生产线 +1 条（每轮多耗一份料多产一份产物），
+  <!-- 并行模块：安装在自动研磨机/自动筛子/晶体培养舱内，每个使生产线 +1 条（每轮多耗一份料多产一份产物），
        单台最多 3 个；拆除设备时返还。需研究"自动机增效" -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_ParallelModule</defName>
     <label>并行模块</label>
-    <description>自动加工机组的并行加工扩展模块，由殖民者安装进自动研磨机或自动筛子内生效。每个使设备每轮多消耗一份输入并多产出一份产物，单台最多安装 3 个。拆除设备时返还。</description>
+    <description>自动加工机组的并行加工扩展模块，由殖民者安装进自动研磨机、自动筛子或晶体培养舱内生效。每个使设备每轮多消耗一份输入并多产出一份产物，研磨机/筛子最多 3 个，培养舱最多 5 个。拆除设备时返还。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_ParallelModule</texPath>
       <graphicClass>Graphic_Single</graphicClass>

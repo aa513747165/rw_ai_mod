@@ -162,7 +162,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_CrystalIncubator</defName>
     <label>晶体培养舱</label>
-    <description>以恒定电场与温控环境培养晶体的舱室。填装晶能精粹后即可无人值守运行，自动将精粹培养为完整的能量结晶。可安装超频模块缩短培养周期。需要持续供电。</description>
+    <description>以恒定电场与温控环境培养晶体的舱室。填装晶能精粹后即可无人值守运行，自动将精粹培养为完整的能量结晶。可安装超频模块缩短培养周期、并行模块增加培养线。需要持续供电。</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_CrystalIncubator/MMT_CrystalIncubator</texPath>
@@ -211,10 +211,11 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <!-- 增效模块槽：超频提速（上限5）；模块效果见物品上的 ModuleExtension -->
+      <!-- 增效模块槽：超频提速（上限5）+ 并行加培养线（上限5）；模块效果见物品上的 ModuleExtension -->
       <li Class="MyModeTest.CompProperties_ModuleSlots">
         <slotLimits>
           <li><key>Overclock</key><max>5</max></li>
+          <li><key>Parallel</key><max>5</max></li>
         </slotLimits>
       </li>
       <!-- 精粹仓：晶能精粹即"燃料"，每轮培养由 CompAutoProcessor 预扣 inputCount 件；
