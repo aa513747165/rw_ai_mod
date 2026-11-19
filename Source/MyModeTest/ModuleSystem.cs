@@ -40,7 +40,7 @@ namespace MyModeTest
         public const string SpeedFactor = "SpeedFactor";
         /// <summary>生产线加成：每件 +1 条。</summary>
         public const string ExtraLanes = "ExtraLanes";
-        /// <summary>产量加成：每件直接加单次产量（如 10）。</summary>
+        /// <summary>产量加成：每件 +1 单位，消费端按设备各自系数（yieldPerModule）换算为产量增量。</summary>
         public const string YieldBonus = "YieldBonus";
         /// <summary>充能速度加成：每件 +0.1 → 充能速率 × (1 + 合计)。</summary>
         public const string ChargeRateFactor = "ChargeRateFactor";

@@ -6321,7 +6321,7 @@ def validate_orepowder() -> None:
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "rotatable"), "true", "自动筛子可旋转")
     assert_equal(child_text(auto_defs["MMT_AutoSieve"], "defaultPlacingRot"), "North", "自动筛子默认朝向")
 
-    # 增效模块：超频/并行/矿产增值为可制作物品（安装进自动设备槽位生效，拆除返还）
+    # 增效模块：超频/并行/增值为可制作物品（安装进自动设备槽位生效，拆除返还）
     module_defs = def_map(parse_xml(MODULE_ITEM_XML))
     assert_equal(set(module_defs), {"MMT_OverclockModule", "MMT_ParallelModule", "MMT_YieldModule"}, "增效模块物品 defName 集合")
     for name, tex, value in (("MMT_OverclockModule", "Things/Item/MMT/MMT_OverclockModule", "180"),

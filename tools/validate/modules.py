@@ -5,7 +5,8 @@
 校验点：
 - 三个增效模块物品挂 ModuleExtension，slotKey/effects/effectReport 齐全且数值与设计一致；
 - 三个滤网物品挂 MeshFilterExtension 且带 slotKey=Mesh；
-- 自动研磨机/自动筛子/自动采石机的 CompProperties_ModuleSlots 用 slotLimits 声明上限；
+- 自动研磨机/自动筛子/自动采石机的 CompProperties_ModuleSlots 用 slotLimits 声明上限，
+  增值模块增幅按设备 yieldPerModule 配置（采石机 10、研磨机 5、筛子 2）；
 - 建筑 slotLimits 引用的 slotKey 均有对应模块物品（防 XML 写错 key）；
 - C# 侧关键 token（配置驱动 API 与旧枚举清理）。
 """
@@ -30,7 +31,7 @@ ENERGY_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_EnergyConvergence.xml"
 MODULE_DEFS = {
     "MMT_OverclockModule": ("Overclock", [("SpeedFactor", "0.1")]),
     "MMT_ParallelModule": ("Parallel", [("ExtraLanes", "1")]),
-    "MMT_YieldModule": ("Yield", [("YieldBonus", "10")]),
+    "MMT_YieldModule": ("Yield", [("YieldBonus", "1")]),
 }
 
 
@@ -82,17 +83,24 @@ def validate_modules() -> None:
     known_keys = {slot for slot, _ in MODULE_DEFS.values()}
     proc = def_map(parse_xml(AUTOPROC_XML))
     all_limits = []
-    for name in ("MMT_AutoGrinder", "MMT_AutoSieve"):
+    # 增值模块效果统一为"产物增加"，每个 +1 单位，增幅按设备 yieldPerModule 换算（研磨机 5、筛子 2）
+    for name, yield_per in (("MMT_AutoGrinder", "5"), ("MMT_AutoSieve", "2")):
         if name not in proc:
             fail(f"{AUTOPROC_XML} 缺建筑 {name}")
         limits = _slot_limits(proc[name])
         if limits is None:
             fail(f"{name} 缺 CompProperties_ModuleSlots")
-        assert_equal(limits, {"Overclock": "5", "Parallel": "3"}, f"{name} 槽位上限")
+        assert_equal(limits, {"Overclock": "5", "Parallel": "3", "Yield": "5"}, f"{name} 槽位上限")
+        proc_comp = next(li for li in proc[name].findall("comps/li")
+                         if li.attrib.get("Class") == "MyModeTest.CompProperties_AutoProcessor")
+        assert_equal(child_text(proc_comp, "yieldPerModule"), yield_per, f"{name} 每模块增值")
         all_limits.append(limits)
     drill = def_map(parse_xml(DRILL_XML))
     drill_limits = _slot_limits(drill["MMT_AutoChunkDrill"])
     assert_equal(drill_limits, {"Overclock": "5", "Yield": "5"}, "自动采石机槽位上限")
+    drill_comp = next(li for li in drill["MMT_AutoChunkDrill"].findall("comps/li")
+                      if li.attrib.get("Class") == "MyModeTest.CompProperties_ChunkDrill")
+    assert_equal(child_text(drill_comp, "yieldPerModule"), "10", "自动采石机每模块增值")
     all_limits.append(drill_limits)
     # 晶体培养舱：支持超频 + 并行模块
     energy = def_map(parse_xml(ENERGY_XML))
@@ -115,14 +123,16 @@ def validate_modules() -> None:
             fail(f"ModuleSystem.cs 缺少: {token}")
     auto_cs = read_text("Source/MyModeTest/AutoProcessor.cs")
     for token in ("GetEffectSum", "AllModuleDefs", "IsModule", "MigrateLegacyCounts",
-                  '"overclockInstalled"', '"parallelInstalled"', '"yieldInstalled"'):
+                  '"overclockInstalled"', '"parallelInstalled"', '"yieldInstalled"',
+                  "yieldPerModule", "ModuleEffectKeys.YieldBonus"):
         if token not in auto_cs:
             fail(f"AutoProcessor.cs 缺少: {token}")
     for token in ("enum ModuleType", "TypeOf", "OverclockCount", "ParallelCount", "YieldCount"):
         if token in auto_cs:
             fail(f"AutoProcessor.cs 仍残留旧模块体系: {token}")
     drill_cs = read_text("Source/MyModeTest/ChunkDrill.cs")
-    for token in ("GetEffectSum", "ModuleEffectKeys.SpeedFactor", "ModuleEffectKeys.YieldBonus"):
+    for token in ("GetEffectSum", "ModuleEffectKeys.SpeedFactor", "ModuleEffectKeys.YieldBonus",
+                  "yieldPerModule"):
         if token not in drill_cs:
             fail(f"ChunkDrill.cs 缺少: {token}")
 

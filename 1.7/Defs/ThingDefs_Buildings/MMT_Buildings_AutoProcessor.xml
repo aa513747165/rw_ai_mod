@@ -127,11 +127,12 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）；模块效果见物品上的 ModuleExtension -->
+      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）+ 增值提产量（上限5，每个 +5 矿粉）；模块效果见物品上的 ModuleExtension -->
       <li Class="MyModeTest.CompProperties_ModuleSlots">
         <slotLimits>
           <li><key>Overclock</key><max>5</max></li>
           <li><key>Parallel</key><max>3</max></li>
+          <li><key>Yield</key><max>5</max></li>
         </slotLimits>
       </li>
       <!-- 原料仓：粗矿石即"燃料"，每轮处理由 CompAutoProcessor 预扣 inputCount 件；
@@ -156,6 +157,7 @@
         <inputCount>25</inputCount>
         <outputDef>MMT_OrePowder</outputDef>
         <outputCountRange>25~25</outputCountRange>
+        <yieldPerModule>5</yieldPerModule>
         <inputDefs>
           <li>MMT_CoarseOre</li>
         </inputDefs>
@@ -230,11 +232,12 @@
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Breakdownable" />
-      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）；模块效果见物品上的 ModuleExtension -->
+      <!-- 增效模块槽：超频提速（上限5）+ 并行加生产线（上限3）+ 增值提产量（上限5，每个 +2 矿石）；模块效果见物品上的 ModuleExtension -->
       <li Class="MyModeTest.CompProperties_ModuleSlots">
         <slotLimits>
           <li><key>Overclock</key><max>5</max></li>
           <li><key>Parallel</key><max>3</max></li>
+          <li><key>Yield</key><max>5</max></li>
         </slotLimits>
       </li>
       <li Class="MyModeTest.CompProperties_SieveMesh" />
@@ -259,6 +262,7 @@
         <intervalTicks>2500</intervalTicks>
         <inputCount>25</inputCount>
         <outputCountRange>6~10</outputCountRange>
+        <yieldPerModule>2</yieldPerModule>
         <inputDefs>
           <li>MMT_OrePowder</li>
         </inputDefs>

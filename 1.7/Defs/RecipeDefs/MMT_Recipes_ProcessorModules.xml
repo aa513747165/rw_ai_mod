@@ -108,12 +108,12 @@
     <researchPrerequisite>MMT_AutoBoost</researchPrerequisite>
   </RecipeDef>
 
-  <!-- 矿产增值模块：材料略高于并行模块，挂电动装配台；需研究"自动机增效" -->
+  <!-- 增值模块：材料略高于并行模块，挂电动装配台；需研究"自动机增效" -->
   <RecipeDef>
     <defName>MMT_MakeYieldModule</defName>
-    <label>组装矿产增值模块</label>
-    <description>组装自动采石机的矿石富集控制模块，安装后使设备单次产量提高 10 个。产出 1。</description>
-    <jobString>正在组装矿产增值模块。</jobString>
+    <label>组装增值模块</label>
+    <description>组装自动加工设备的产出增值控制模块，安装后使设备产物增加（幅度因设备而异）。产出 1。</description>
+    <jobString>正在组装增值模块。</jobString>
     <workAmount>2000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>

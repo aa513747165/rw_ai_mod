@@ -20,6 +20,8 @@ namespace MyModeTest
         public ThingDef outputDef;
         /// <summary>产物数量范围。</summary>
         public IntRange outputCountRange = new IntRange(1, 1);
+        /// <summary>每个增值模块增加的每轮产物数量（增幅因设备而异，XML 可配）。</summary>
+        public int yieldPerModule = 1;
         /// <summary>接受的输入物品（按 def）。</summary>
         public List<ThingDef> inputDefs;
         /// <summary>接受的输入物品（按类别，如 StoneChunks）。</summary>
@@ -351,6 +353,7 @@ namespace MyModeTest
     /// 输入模式二选一：建筑带 CompRefuelable 时走燃料模式（原料即燃料，按轮从燃料仓扣）；
     /// 否则从相邻进料口（isHopper 存储建筑）取料。两种模式都需要通电。
     /// 已安装的超频模块缩短所有线的处理间隔；并行模块被卸载后，超额的运行中线跑完当前轮再退役。
+    /// 增值模块按设备 yieldPerModule 增加每轮产物数量。
     /// </summary>
     public class CompAutoProcessor : ThingComp
     {
@@ -581,7 +584,9 @@ namespace MyModeTest
             if (outDef == null)
                 return;
             Thing product = ThingMaker.MakeThing(outDef);
-            product.stackCount = Props.outputCountRange.RandomInRange;
+            // 增值模块：每件 +1 单位，按本设备 yieldPerModule 换算为每轮产量加成
+            int yieldBonus = slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.YieldBonus) * Props.yieldPerModule : 0;
+            product.stackCount = Props.outputCountRange.RandomInRange + yieldBonus;
             GenPlace.TryPlaceThing(product, parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
 
@@ -652,7 +657,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 增效模块页签：显示超频/并行/矿产增值模块已装数量、上限与当前加成，
+    /// 增效模块页签：显示超频/并行/增值模块已装数量、上限与当前加成，
     /// 每类一个"卸载"按钮（掉落到交互格返还物品）；安装走右键菜单由殖民者搬运。
     /// </summary>
     public class ITab_ModuleSlots : ITab

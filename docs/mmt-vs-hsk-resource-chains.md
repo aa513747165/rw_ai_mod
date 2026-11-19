@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 439 |
+| MMT 配方 | 438 |
 | 与 HSK 数值一致 | 122 |
 | 与 HSK 有数值差异 | 57 |
 | HSK 有对应资源但无对应配方 | 9 |
-| MMT 新增（HSK 无对应资源） | 251 |
+| MMT 新增（HSK 无对应资源） | 250 |
 
 ### 1.1 按家族统计
 
@@ -35,7 +35,7 @@
 | 电动石化（ElectricPetrochem） | 5 | 0 | 5 | 0 | 0 |
 | 电动木材（ElectricWood） | 5 | 5 | 0 | 0 | 0 |
 | 电子（Electronics） | 4 | 0 | 4 | 0 | 0 |
-| EnergyCrystal（EnergyCrystal） | 3 | 0 | 0 | 0 | 3 |
+| EnergyCrystal（EnergyCrystal） | 2 | 0 | 0 | 0 | 2 |
 | 玻璃（Glass） | 11 | 5 | 6 | 0 | 0 |
 | 物质（Matter） | 14 | 14 | 0 | 0 | 0 |
 | 医药（Medicine） | 11 | 2 | 6 | 0 | 3 |
@@ -1187,11 +1187,6 @@
 - **MMT**：辉晶球茎×8 + Neutroamine×1 -> 晶能精粹×2 @ 石化产品实验室 ｜ 工作量=4000 ｜ 研究:能量结晶培育(MMT_EnergyCrystalCultivation)，技能:Crafting≥8
 - **HSK**：无对应资源（MMT 新增）
 
-#### 培养能量结晶（`MMT_GrowEnergyCrystal`）
-
-- **MMT**：晶能精粹×2 + 金(Gold)×2 -> 能量结晶×1 @ 晶体培养舱 ｜ 工作量=12000 ｜ 研究:能量结晶培育(MMT_EnergyCrystalCultivation)，技能:Crafting≥10
-- **HSK**：无对应资源（MMT 新增）
-
 ### 3.16 玻璃（Glass）
 
 #### 将石砖碾磨成碎石（`MMT_MakeCrushedStone_Hand`）
@@ -1694,9 +1689,9 @@
 - **MMT**：钢(Steel)×30 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 -> 并行模块×1 @ 电动装配台 ｜ 工作量=1800 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
-#### 组装矿产增值模块（`MMT_MakeYieldModule`）
+#### 组装增值模块（`MMT_MakeYieldModule`）
 
-- **MMT**：钢(Steel)×35 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 + 电子元件×1 -> 矿产增值模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
+- **MMT**：钢(Steel)×35 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 + 电子元件×1 -> 增值模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.27 灵能护盾（PsychicShield）
@@ -2628,6 +2623,7 @@
 | MMT 建筑 | 尺寸 | MMT 造价 | MMT 功耗/工作量 | HSK 对应 | HSK 造价 | HSK 功耗/工作量 | 对比 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 挖盐点(`MMT_SaltMine`) | (1,1) | — | 2500 | — | — | — | MMT 新增 |
+| 自动种植机(`MMT_AutoFarm`) | (5,5) | 钢(Steel)×200 + 工业零件(ComponentIndustrial)×8 + 机械组件×4 + 电子元件×4 | 1500W / 8000 | — | — | — | MMT 新增 |
 | 自动研磨机(`MMT_AutoGrinder`) | (2,2) | 钢(Steel)×80 + 机械组件×6 + 工业零件(ComponentIndustrial)×4 | 500W / 4000 | — | — | — | MMT 新增 |
 | 自动筛子(`MMT_AutoSieve`) | (2,2) | 机械组件×4 + 工业零件(ComponentIndustrial)×4 + [金属]×80 | 400W / 3500 | — | — | — | MMT 新增 |
 | 矿料进料口(`MMT_Hopper`) | — | 钢(Steel)×15 + 机械组件×2 | 300 | — | — | — | MMT 新增 |
@@ -2652,7 +2648,7 @@
 | 电子器件工作台(`MMT_HandElectronicsTable`) | (3,3) | 工业零件(ComponentIndustrial)×5 + [金属]×140 | 2200 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | 工业零件(ComponentIndustrial) 5 vs 10；HSK 多 铜(CopperBar)×40；HSK 多 机械组件(Mechanism)×10；功耗 — vs 600；工作量 2200 vs 2750 |
 | 敌意感应开关(`MMT_EnemyDetectorSwitch`) | — | 钢(Steel)×25 + 工业零件(ComponentIndustrial)×1 | 300 | — | — | — | MMT 新增 |
 | 晶体培养舱(`MMT_CrystalIncubator`) | (2,2) | 钢(Steel)×80 + 玻璃块×20 + 金(Gold)×20 + 先进机械组件×2 | 600W / 4000 | — | — | — | MMT 新增 |
-| 能量聚能发电站(`MMT_EnergyConvergencePlant`) | (3,3) | 钢(Steel)×200 + 碳纤维锭×40 + 金(Gold)×30 + 先进机械组件×4 | -10000W / 10000 | — | — | — | MMT 新增 |
+| 能量聚能发电站(`MMT_EnergyConvergencePlant`) | (3,3) | 钢(Steel)×200 + 碳纤维锭×40 + 金(Gold)×30 + 先进机械组件×4 | -100000W / 10000 | — | — | — | MMT 新增 |
 | 点火充能装置(`MMT_IgnitionCharger`) | (1,1) | 钢(Steel)×50 + 金(Gold)×10 + 工业零件(ComponentIndustrial)×2 | 50W / 2000 | — | — | — | MMT 新增 |
 | 医疗软子弹(`MMT_HealBolt`) | — | — | — | — | — | — | MMT 新增 |
 | 小型治疗炮塔(`MMT_HealTurret`) | — | 钢(Steel)×20 + 太空零件(ComponentSpacer)×1 + 工业零件(ComponentIndustrial)×2 + [金属]×30 | 100W / 1800 | — | — | — | MMT 新增 |
@@ -2693,5 +2689,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 40（共 65）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 41（共 66）。
 

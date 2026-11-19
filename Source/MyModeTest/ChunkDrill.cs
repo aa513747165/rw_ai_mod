@@ -18,6 +18,8 @@ namespace MyModeTest
         public ThingDef productDef;
         /// <summary>每次产出的数量。</summary>
         public int productCount = 25;
+        /// <summary>每个增值模块增加的单次产量（增幅因设备而异，XML 可配）。</summary>
+        public int yieldPerModule = 10;
         /// <summary>自动版：true 时无需殖民者操作，Comp 自行按固定速率累积进度（需供电）。</summary>
         public bool autoDrill;
         /// <summary>自动版每 tick 累积的工作量（对齐 DeepDrillingSpeed=1 的殖民者）。</summary>
@@ -105,8 +107,8 @@ namespace MyModeTest
             if (def == null)
                 return;
             Thing thing = ThingMaker.MakeThing(def);
-            // 矿产增值模块：每件 valuePerItem 即单次产量加成（仅装了槽位 Comp 的自动采石机生效）
-            int yieldBonus = slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.YieldBonus) : 0;
+            // 增值模块：每件 +1 单位，按本设备 yieldPerModule 换算为单次产量加成（仅装了槽位 Comp 的自动采石机生效）
+            int yieldBonus = slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.YieldBonus) * Props.yieldPerModule : 0;
             thing.stackCount = Props.productCount + yieldBonus;
             GenPlace.TryPlaceThing(thing, parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
         }
