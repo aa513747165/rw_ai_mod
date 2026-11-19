@@ -172,7 +172,7 @@
     <building/>
   </ThingDef>
 
-  <!-- 自动筛子：程序化生成贴图（金属框+料斗+电机），内置矿粉仓（燃料式），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石。需要持续供电。 -->
+  <!-- 自动筛子：三方向贴图（金属框+料斗+电机，2x2，Graphic_Multi，可旋转），内置矿粉仓（燃料式），每 2500 tick 消耗 25 矿粉随机产 6~10 矿石。需要持续供电。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoSieve</defName>
     <label>自动筛子</label>
@@ -180,7 +180,7 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_AutoSieve/MMT_AutoSieve</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>

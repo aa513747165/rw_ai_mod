@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 手动筛子：单张贴图（木框+筛网+矿粉堆，2x2，Graphic_Single，可旋转） -->
+  <!-- 手动筛子：三方向贴图（木框+筛网，2x2，Graphic_Multi，可旋转） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_HandSieve</defName>
     <label>手动筛子</label>
@@ -8,7 +8,7 @@
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_HandSieve/MMT_HandSieve</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
@@ -58,7 +58,7 @@
     <building/>
   </ThingDef>
 
-  <!-- 电动筛子：单张贴图（金属筛箱，2x2，Graphic_Single，可旋转），恒定 250W -->
+  <!-- 电动筛子：三方向贴图（金属筛箱+振动电机，2x2，Graphic_Multi，可旋转），恒定 250W -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricSieve</defName>
     <label>电动筛子</label>
@@ -66,7 +66,7 @@
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_ElectricSieve/MMT_ElectricSieve</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>Cutout</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>

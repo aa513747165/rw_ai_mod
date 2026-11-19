@@ -140,8 +140,9 @@ OREPOWDER_TEXTURES = [
     "1.7/Textures/Things/Building/Production/MMT_HandGrinder/MMT_HandGrinder_m.png",
     "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder.png",
     "1.7/Textures/Things/Building/Production/MMT_ElectricGrinder/MMT_ElectricGrinder_m.png",
-    *[f"1.7/Textures/Things/Building/Production/MMT_{kind}Sieve/MMT_{kind}Sieve.png"
-      for kind in ("Hand", "Electric", "Auto")],
+    # 三台筛子均为东/北/南三方向贴图（Graphic_Multi）
+    *[f"1.7/Textures/Things/Building/Production/MMT_{kind}Sieve/MMT_{kind}Sieve_{side}.png"
+      for kind in ("Hand", "Electric", "Auto") for side in ("east", "north", "south")],
 ]
 
 AUTOPROC_TEXTURES = [
