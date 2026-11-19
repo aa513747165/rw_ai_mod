@@ -85,12 +85,13 @@ LAYOUT = {
     "MMT_ConcreteAdvanced": (10, 4),
     "MMT_GrenadesBasic": (11, 4),
     "MMT_GrenadesAdvanced": (12, 4),
-    # y=5 加工：玻璃（强化玻璃在前置 基础石化 右下）| 矿料 | 零件（超级零件在 高级合金 右下）| 精密筛选
+    # y=5 加工：玻璃（强化玻璃在前置 基础石化 右下）| 矿料 | 畜牧机器（接 自动机增效 右侧）| 零件（超级零件在 高级合金 右下）| 精密筛选
     "MMT_Glassworking": (0, 5),
     "MMT_ReinforcedGlassTech": (1, 5),
     "MMT_OreSifting": (3, 5),
     "MMT_AutoOreProcessing": (4, 5),
     "MMT_AutoBoost": (5, 5),
+    "MMT_LivestockTech": (6, 5),
     "MMT_ComponentCrafting": (7, 5),
     "MMT_AdvancedComponents": (8, 5),
     "MMT_UltraComponents": (9, 5),

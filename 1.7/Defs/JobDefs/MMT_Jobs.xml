@@ -70,4 +70,18 @@
     <driverClass>MyModeTest.JobDriver_ThrowBreachCharge</driverClass>
     <reportString>正在投掷爆墙炸弹（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 放入动物作业：走到本派系动物旁短暂引导后装入畜牧机器舱内（JobDriver_LoadLivestockMachine） -->
+  <JobDef>
+    <defName>MMT_LoadLivestockMachine</defName>
+    <driverClass>MyModeTest.JobDriver_LoadLivestockMachine</driverClass>
+    <reportString>正在引导动物入舱（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 放出动物作业：把畜牧机器舱内的动物放出到相邻空格（JobDriver_UnloadLivestockMachine） -->
+  <JobDef>
+    <defName>MMT_UnloadLivestockMachine</defName>
+    <driverClass>MyModeTest.JobDriver_UnloadLivestockMachine</driverClass>
+    <reportString>正在放出动物（TargetA）。</reportString>
+  </JobDef>
 </Defs>

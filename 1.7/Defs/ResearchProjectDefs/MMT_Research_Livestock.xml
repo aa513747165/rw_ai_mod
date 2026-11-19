@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 畜牧自动化：解锁畜牧机器（容器舱自动饲养动物并收获产物）；前置 自动机增效 -->
+  <ResearchProjectDef>
+    <defName>MMT_LivestockTech</defName>
+    <label>畜牧自动化</label>
+    <description>研究动物体征维持与自动饲喂采集技术，解锁畜牧机器：将本派系动物关入透明容器舱后自动喂养并按其产物周期收获奶、毛、蛋，没有产物的动物则周期性产出对应的肉。可安装超频模块与增值模块提升产出效率。</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_AutoBoost</li>
+    </prerequisites>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

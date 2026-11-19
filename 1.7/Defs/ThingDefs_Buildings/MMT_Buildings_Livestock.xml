@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 畜牧机器：2×2 透明容器舱，把本派系动物关入后自动产出其产物（奶/毛/蛋），
+       无产物的动物周期性产出对应的肉。饲料走燃料仓（干草/粗饲料/生素食），
+       每日耗料 = 动物原本的每日食量；右键建筑由小人引导动物入舱/放出。
+       三层绘制：舱内层（底）→ 动物（按 bodySize 缩放，east 头朝外）→ 外壳玻璃层（顶）。
+       支持超频模块（提速 +10%/个）与增值模块（产出 +1 份/个），各最多 5 个。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_LivestockMachine</defName>
+    <label>畜牧机器</label>
+    <description>全自动畜牧容器舱：把本派系动物引导入舱后持续喂养，按动物自身的产物周期自动收获奶、毛、蛋；没有产物的动物则周期性产出对应的肉。饲料存放在内置饲料仓中（小人会自动补充），每日消耗与该动物散养时的食量相同。体型超过舱体容量的动物会被缩小到合适大小。可安装超频模块（产出提速 10%/个）与增值模块（每次产出 +1 份/个），各最多 5 个。</description>
+    <thingClass>MyModeTest.Building_LivestockMachine</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_LivestockMachine/MMT_LivestockMachine_Inner</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <pathCost>70</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <!-- 可旋转（R 键切换三朝向贴图，西自动镜像东），默认朝南 -->
+    <rotatable>true</rotatable>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>8000</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <!-- 可打包(minifiedDef)即可搬运，必须显式给质量 -->
+      <Mass>40</Mass>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <MMT_Wire>20</MMT_Wire>
+      <MMT_Glass>15</MMT_Glass>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>800</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Breakdownable" />
+      <!-- 饲料仓：不设 fuelConsumptionRate（不自动烧），生产循环按动物食量手动消耗 -->
+      <li Class="CompProperties_Refuelable">
+        <fuelCapacity>200</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>Hay</li>
+            <li>Kibble</li>
+          </thingDefs>
+          <thingCategories>
+            <li>PlantFoodRaw</li>
+          </thingCategories>
+        </fuelFilter>
+        <fuelLabel>饲料储量</fuelLabel>
+        <fuelGizmoLabel>饲料</fuelGizmoLabel>
+        <outOfFuelMessage>需要补充饲料（干草/粗饲料/生素食）</outOfFuelMessage>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <autoRefuelPercent>0.5</autoRefuelPercent>
+        <canEjectFuel>true</canEjectFuel>
+      </li>
+      <li Class="MyModeTest.CompProperties_LivestockMachine">
+        <maxBodySizeForFullScale>2.0</maxBodySizeForFullScale>
+        <feedConsumptionFactor>1.0</feedConsumptionFactor>
+        <feedNutritionPerUnit>0.05</feedNutritionPerUnit>
+        <meatCycleDays>1</meatCycleDays>
+        <meatPerBodySize>5</meatPerBodySize>
+        <leadTicks>600</leadTicks>
+      </li>
+      <!-- 增效模块槽：超频（产出提速 +10%/个）与增值（产出 +1 份/个），各最多 5 -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>Overclock</key><max>5</max></li>
+          <li><key>Yield</key><max>5</max></li>
+        </slotLimits>
+      </li>
+    </comps>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_ModuleSlots</li>
+    </inspectorTabs>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_LivestockTech</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <!-- 1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 -->
+    <building/>
+  </ThingDef>
+</Defs>

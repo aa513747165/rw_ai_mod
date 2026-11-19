@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（107 项）
+- MMT 研究总览（108 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -129,7 +129,9 @@
     - **自动化矿料处理** `MMT_AutoOreProcessing` ｜ 坐标 (4.00, 5.00) ｜ 2000点 ｜ Industrial ｜ 前置(原版): MicroelectronicsBasics
       - 解锁建筑: 矿料进料口、自动研磨机、自动筛子、自动采石机
       - **自动机增效** `MMT_AutoBoost` ｜ 坐标 (5.00, 5.00) ｜ 2500点 ｜ Industrial
-        - 解锁配方: 组装超频模块、组装并行模块、组装矿产增值模块
+        - 解锁配方: 组装超频模块、组装并行模块、组装增值模块
+        - **畜牧自动化** `MMT_LivestockTech` ｜ 坐标 (6.00, 5.00) ｜ 2000点 ｜ Industrial
+          - 解锁建筑: 畜牧机器
   - **艺术用品** `MMT_ArtSupplies` ｜ 坐标 (4.00, 0.00) ｜ 400点 ｜ Industrial
     - 解锁配方: 调制绘画用品（花卉）、调制绘画用品（染料）、提炼染料
   - **毒品 III** `MMT_Drugs_B1` ｜ 坐标 (4.00, 1.00) ｜ 300点 ｜ Industrial ｜ 前置(原版): PsychoidBrewing
