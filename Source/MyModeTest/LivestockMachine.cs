@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -290,9 +291,22 @@ namespace MyModeTest
             base.PostDeSpawn(map, mode);
         }
 
+        // mod 自定义采集 comp 的基类属性读取（ResourceDef/ResourceAmount/GatherResourcesIntervalDays/Active
+        // 在 1.7 为 protected 抽象属性，已反射核实）；缓存 PropertyInfo，仅入舱时调用一次
+        private static readonly PropertyInfo GatherResourceDefProp =
+            typeof(CompHasGatherableBodyResource).GetProperty("ResourceDef", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        private static readonly PropertyInfo GatherResourceAmountProp =
+            typeof(CompHasGatherableBodyResource).GetProperty("ResourceAmount", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        private static readonly PropertyInfo GatherIntervalProp =
+            typeof(CompHasGatherableBodyResource).GetProperty("GatherResourcesIntervalDays", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        private static readonly PropertyInfo GatherActiveProp =
+            typeof(CompHasGatherableBodyResource).GetProperty("Active", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
         /// <summary>
         /// 扫描动物 comps 建立产物源列表：挤奶（milkFemaleOnly 校验性别）/剪毛/产蛋（eggLayFemaleOnly 校验性别，
-        /// 机器产出未受精蛋）；一个都没有则建立产肉循环源（raceProps.meatDef，可能为 null 则不产出）。
+        /// 机器产出未受精蛋）走公开 Props；mod 自定义采集 comp（继承 CompHasGatherableBodyResource 基类，
+        /// 如 VE/Alpha Animals 的自定义资源）经反射读基类属性自动识别。
+        /// 一个产物源都没有则建立产肉循环源（raceProps.meatDef，可能为 null 则不产出）。
         /// </summary>
         private List<LivestockProductSource> BuildSources(Pawn animal)
         {
@@ -325,6 +339,26 @@ namespace MyModeTest
                             intervalDays = p.shearIntervalDays,
                         });
                     }
+                }
+                else if (comp is CompHasGatherableBodyResource gatherable)
+                {
+                    // 流程节点：mod 自定义采集 comp（非奶/毛/蛋），反射读基类 protected 属性
+                    if (GatherResourceDefProp == null || GatherActiveProp == null)
+                        continue;
+                    // Active 校验生命阶段（幼崽当前不可采集）；舱内动物不成长，放入幼崽落入产肉循环
+                    if (GatherActiveProp.GetValue(gatherable) is bool active && !active)
+                        continue;
+                    ThingDef res = GatherResourceDefProp.GetValue(gatherable) as ThingDef;
+                    int amount = GatherResourceAmountProp?.GetValue(gatherable) as int? ?? 0;
+                    int interval = GatherIntervalProp?.GetValue(gatherable) as int? ?? 0;
+                    if (res == null || amount <= 0 || interval <= 0)
+                        continue;
+                    list.Add(new LivestockProductSource
+                    {
+                        productDef = res,
+                        amountRange = new IntRange(amount, amount),
+                        intervalDays = interval,
+                    });
                 }
                 else if (comp is CompEggLayer eggLayer)
                 {
