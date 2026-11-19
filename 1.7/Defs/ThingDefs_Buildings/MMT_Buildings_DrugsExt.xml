@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 高级药物合成台：未来层药物生产建筑（毒品 VIII 解锁），结构模板对齐 MMT_ElectricMedicalTable，
-       贴图为程序生成（HSK 风格）；drawSize 对齐 HSK TableSynthetics 的 (3.5,1.5)（占地 3x1），
+       贴图为 AI 生成（宽幅正视图用于南/北向，竖幅图用于东/西向）；占地 3x2，drawSize (3.6,2.27)
+       为宽幅(1.62)与竖幅(1/0.646)两种贴图宽高比的折中，旋转时绘制矩形随之交换；
+       遮罩为全黑（不做材料染色，保留贴图原色）。
        1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 <building/> -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AdvDrugLab</defName>
@@ -12,14 +14,14 @@
       <texPath>Things/Building/Production/MMT_AdvDrugLab/MMT_AdvDrugLab</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3.5,1.5)</drawSize>
+      <drawSize>(3.6,2.27)</drawSize>
     </graphicData>
     <passability>PassThroughOnly</passability>
     <pathCost>90</pathCost>
     <fillPercent>0.6</fillPercent>
     <canOverlapZones>false</canOverlapZones>
     <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(1,0,-1)</interactionCellOffset>
     <useStuffTerrainAffordance>true</useStuffTerrainAffordance>
     <stuffCategories>
       <li>Metallic</li>
@@ -43,7 +45,7 @@
       <Cleanliness>-5</Cleanliness>
       <Mass>800</Mass>
     </statBases>
-    <size>(3,1)</size>
+    <size>(3,2)</size>
     <designationCategory>MMT_Production</designationCategory>
     <recipes>
       <li>MMT_MakeSynchroCrystal</li>

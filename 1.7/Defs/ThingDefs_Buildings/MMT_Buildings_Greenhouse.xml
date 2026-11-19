@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 玻璃天窗框架：建造完成后所在格变为透明屋顶（MMT_TransparentRoof）并自毁，
+       地图上只留屋顶数据不占格，屋顶下可正常种植；放置需无屋顶且与支撑（墙体/岩层）连通，
+       拆除已建成部分用原版"移除屋顶"区域 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_SkylightFrame</defName>
+    <label>玻璃天窗框架</label>
+    <description>嵌着大块玻璃的轻型框架，架设在墙体支撑之间形成透光的屋顶。阳光可以直射室内，作物在室内也能享受自然光照，同时保留封闭空间的保温与遮蔽。建成后该格变为玻璃天窗顶。</description>
+    <thingClass>MyModeTest.Building_TransparentRoofFrame</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_SkylightFrame/MMT_SkylightFrame</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <size>(1,1)</size>
+    <passability>Impassable</passability>
+    <fillPercent>0.2</fillPercent>
+    <designationCategory>MMT_Production</designationCategory>
+    <rotatable>false</rotatable>
+    <tickerType>Never</tickerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>150</WorkToBuild>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>5</Mass>
+    </statBases>
+    <costList>
+      <MMT_Glass>5</MMT_Glass>
+    </costList>
+    <placeWorkers>
+      <li>MyModeTest.PlaceWorker_TransparentRoofFrame</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_Greenhouse</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+    <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
+  </ThingDef>
+</Defs>

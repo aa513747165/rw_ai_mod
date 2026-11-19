@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 玻璃天窗顶（透明屋顶）：纯屋顶数据，由玻璃天窗框架建成后转化而来。
+       透光由 GlowGrid.GroundGlowAt 补丁实现（该屋顶不挡天空光），
+       封闭/保温/挡雨沿用原版屋顶机制；拆除用原版"移除屋顶"区域 -->
+  <RoofDef>
+    <defName>MMT_TransparentRoof</defName>
+    <label>玻璃天窗顶</label>
+    <isThickRoof>false</isThickRoof>
+    <filthLeaving>Filth_RubbleBuilding</filthLeaving>
+    <soundPunchThrough>PunchThroughRoofMetal</soundPunchThrough>
+  </RoofDef>
+</Defs>

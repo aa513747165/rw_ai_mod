@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 玻璃温室：解锁玻璃天窗框架（建成变透明屋顶），温室玩法的入口研究 -->
+  <ResearchProjectDef>
+    <defName>MMT_Greenhouse</defName>
+    <label>玻璃温室</label>
+    <description>将玻璃制成大面积天窗框架，架设在墙体支撑之上形成透光屋顶：阳光直射室内，作物在室内也能享受自然光照，同时保留封闭空间的保温与遮蔽，严寒地带也能常年耕种。</description>
+    <baseCost>600</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Glassworking</li>
+    </prerequisites>
+    <researchViewX>2.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>
