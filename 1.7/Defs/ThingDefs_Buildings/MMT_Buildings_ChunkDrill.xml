@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 手动采石机：仿深钻机模式，殖民者以采矿工作持续操作，无需电力与矿脉，
-       进度满后在交互格产出 25 个粗矿石（贴图为 HSK 新石器切石台） -->
+       进度满后在交互格产出 25 个粗矿石（三朝向贴图，可旋转） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ChunkDrill</defName>
     <label>手动采石机</label>
@@ -9,10 +9,9 @@
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(3,3)</drawSize>
-      <drawRotated>false</drawRotated>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
     <size>(2,2)</size>
     <passability>PassThroughOnly</passability>
@@ -60,18 +59,17 @@
     <building/>
   </ThingDef>
 
-  <!-- 电动采石机：电动版手动采石机，殖民者操作但钻速更快，需供电 400W（贴图为原版深钻机改蓝） -->
+  <!-- 电动采石机：电动版手动采石机，殖民者操作但钻速更快，需供电 400W（三朝向贴图，可旋转） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ElectricChunkDrill</defName>
     <label>电动采石机</label>
     <description>电力驱动的冲击钻架，殖民者操作它从基岩中快速凿出粗矿石。无需矿脉，每次产出 25 个粗矿石。需要持续供电。</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/MMT_ElectricChunkDrill</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/Production/MMT_ElectricChunkDrill/MMT_ElectricChunkDrill</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>
-      <drawRotated>false</drawRotated>
     </graphicData>
     <size>(1,1)</size>
     <passability>PassThroughOnly</passability>
@@ -125,18 +123,17 @@
     <building/>
   </ThingDef>
 
-  <!-- 自动采石机：无人值守自运转，通电后持续产出粗矿石但速度较慢，需供电 800W（贴图为原版深钻机改橙） -->
+  <!-- 自动采石机：无人值守自运转，通电后持续产出粗矿石但速度较慢，需供电 800W（三朝向贴图，可旋转） -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_AutoChunkDrill</defName>
     <label>自动采石机</label>
     <description>全自动冲击钻机组，通电后无需殖民者值守即可从基岩中持续凿出粗矿石，速度较慢。无需矿脉，每次产出 25 个粗矿石。可安装超频模块提升钻速、矿产增值模块提高单次产量。</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/MMT_AutoChunkDrill</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/Production/MMT_AutoChunkDrill/MMT_AutoChunkDrill</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>
-      <drawRotated>false</drawRotated>
     </graphicData>
     <size>(1,1)</size>
     <passability>PassThroughOnly</passability>

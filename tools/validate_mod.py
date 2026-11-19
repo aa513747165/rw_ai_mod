@@ -6478,9 +6478,9 @@ def validate_chunkdrill() -> None:
         "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml",
         "1.7/Defs/JobDefs/MMT_Jobs.xml",
         "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml",
-        "1.7/Textures/Things/Building/Production/MMT_ChunkDrill/MMT_ChunkDrill.png",
-        "1.7/Textures/Things/Building/Production/MMT_ElectricChunkDrill.png",
-        "1.7/Textures/Things/Building/Production/MMT_AutoChunkDrill.png",
+        # 三台采石机均为东/北/南三方向贴图（Graphic_Multi，可旋转）
+        *[f"1.7/Textures/Things/Building/Production/MMT_{kind}ChunkDrill/MMT_{kind}ChunkDrill_{side}.png"
+          for kind in ("", "Electric", "Auto") for side in ("east", "north", "south")],
         "Source/MyModeTest/ChunkDrill.cs",
     ])
     buildings = def_map(parse_xml("1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ChunkDrill.xml"))
