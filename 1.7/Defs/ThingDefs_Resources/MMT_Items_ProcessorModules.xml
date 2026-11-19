@@ -48,9 +48,9 @@
     <soundInteract>Metal_Drop</soundInteract>
     <soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType>
-    <techLevel>Industrial</techLevel>
+    <techLevel>Spacer</techLevel>
     <statBases>
-      <MarketValue>220</MarketValue>
+      <MarketValue>1200</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0.2</Flammability>
       <Mass>2.5</Mass>
@@ -71,12 +71,13 @@
   </ThingDef>
 
   <!-- 增值模块：安装在自动采石机/自动研磨机/自动筛子内，每个使产物增加（幅度因设备而异：
-       采石机 +10、研磨机 +5、筛子 +2），单台最多 5 个；拆除设备时返还。
+       采石机 +10、研磨机 +5、筛子 +2），加工设备单台最多 5 个；也可安装进折跃传送台，
+       每个使传送次数上限 +1（单台最多 10 个）；拆除设备时返还。
        需研究"自动机增效"。贴图为 HSK Synchronite（已授权） -->
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_YieldModule</defName>
     <label>增值模块</label>
-    <description>自动加工机组的产出增值控制模块，由殖民者安装进自动采石机、自动研磨机或自动筛子内生效。每个使设备产物增加，幅度因设备而异：采石机单次产量 +10、研磨机每轮矿粉 +5、筛子每轮矿石 +2。单台最多安装 5 个。拆除设备时返还。</description>
+    <description>通用产出增值控制模块，由殖民者安装进设备内生效。安装进自动采石机、自动研磨机或自动筛子时每个使设备产物增加，幅度因设备而异：采石机单次产量 +10、研磨机每轮矿粉 +5、筛子每轮矿石 +2，单台最多安装 5 个；安装进折跃传送台时每个使传送次数上限提高 1 次，单台最多安装 10 个。拆除设备时返还。</description>
     <graphicData>
       <texPath>Things/Item/MMT/MMT_YieldModule</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -84,9 +85,9 @@
     <soundInteract>Metal_Drop</soundInteract>
     <soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType>
-    <techLevel>Industrial</techLevel>
+    <techLevel>Spacer</techLevel>
     <statBases>
-      <MarketValue>260</MarketValue>
+      <MarketValue>1300</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
       <Flammability>0.2</Flammability>
       <Mass>2.5</Mass>
@@ -98,9 +99,10 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>Yield</slotKey>
-        <effectReport>产物增加（幅度因设备而异）</effectReport>
+        <effectReport>产物增加/传送次数上限 +1（因设备而异）</effectReport>
         <effects>
           <li><key>YieldBonus</key><valuePerItem>1</valuePerItem></li>
+          <li><key>ExtraTeleportCharges</key><valuePerItem>1</valuePerItem></li>
         </effects>
       </li>
     </modExtensions>

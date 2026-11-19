@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（108 项）
+- MMT 研究总览（107 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -193,8 +193,6 @@
             - 解锁配方: 转化为金矿、转化为铀矿
             - **折跃传送** `MMT_Teleportation` ｜ 坐标 (12.00, 6.00) ｜ 6000点 ｜ Ultra
               - 解锁建筑: 折跃传送台
-              - **次元传送** `MMT_DimensionalTeleport` ｜ 坐标 (13.00, 7.00) ｜ 4000点 ｜ Ultra
-                - 解锁配方: 组装次元传送模块
       - **精密筛分** `MMT_PrecisionSifting` ｜ 坐标 (10.00, 5.00) ｜ 1800点 ｜ Spacer ｜ 交叉前置: 高级合金
         - 解锁配方: 编织精密滤网
   - **农业 I** `MMT_AgricultureBasic` ｜ 坐标 (8.00, 0.00) ｜ 150点 ｜ Neolithic

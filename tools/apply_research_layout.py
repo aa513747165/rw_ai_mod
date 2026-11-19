@@ -125,7 +125,6 @@ LAYOUT = {
     "MMT_DirectedEnergyWeapons1": (10, 7),
     "MMT_DirectedEnergyWeapons2": (11, 7),
     "MMT_PsychicShieldTech": (12, 7),
-    "MMT_DimensionalTeleport": (13, 7),
     # y=8 重武器：狙击 | 发射器 | 火箭弹 | 重机枪塔/重型炮塔
     "MMT_SnipersAdvanced": (0, 8),
     "MMT_GrenadeLaunchers": (2, 8),

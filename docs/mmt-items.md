@@ -6,7 +6,7 @@
 
 ## 1. MMT 物品总表
 
-共 292 件（不含抽象基类）。
+共 291 件（不含抽象基类）。
 
 ### 1.1 资源与材料
 
@@ -14,9 +14,9 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 镍合金（`MMT_NickelBar`） | 6.0 | 150 | 金属 | MMT_SmeltNickelBar | 4 |
-| 钴合金（`MMT_Cobalt`） | 10.0 | 150 | — | MMT_ExtractCobalt | 3 |
-| 铬合金（`MMT_Chromium`） | 5.0 | 150 | — | MMT_ExtractChromium | 1 |
+| 镍合金（`MMT_NickelBar`） | 6.0 | 150 | 金属 | MMT_SmeltNickelBar | 5 |
+| 钴合金（`MMT_Cobalt`） | 10.0 | 150 | — | MMT_ExtractCobalt | 4 |
+| 铬合金（`MMT_Chromium`） | 5.0 | 150 | — | MMT_ExtractChromium | 2 |
 | 钨合金（`MMT_Tungsten`） | 40.0 | 150 | — | MMT_SmeltTungsten | 3 |
 | 钛合金（`MMT_Titanium`） | 45.0 | 75 | 金属 | MMT_SmeltTitanium | 8 |
 | 司太立合金（钨铬钴合金）（`MMT_StelliteAlloy`） | 30.0 | 150 | 金属 | MMT_MakeStellite | 1 |
@@ -103,8 +103,8 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 硅（`MMT_Silicon`） | 4.0 | 300 | — | MMT_ExtractSilicon_Electric、MMT_MakeSilicon_Bulk、MMT_ExtractSilicon_Hand | 6 |
-| 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 21 |
-| 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 10 |
+| 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 18 |
+| 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 13 |
 | 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 17 |
 
 #### EnergyCrystal（EnergyCrystal）
@@ -122,7 +122,7 @@
 | 碎石（`MMT_CrushedStone`） | 0.3 | 900 | — | MMT_MakeCrushedStone_Hand、MMT_MakeCrushedStone_Electric、MMT_MakeCrushedStone_Hand_Chunk、MMT_MakeCrushedStone_Electric_Chunk | 4 |
 | 沙（`MMT_Sand`） | 0.3 | 900 | — | MMT_MakeSand_Hand、MMT_MakeSand_Electric、MMT_MakeSand_Hand_Chunk、MMT_MakeSand_Electric_Chunk | 9 |
 | 玻璃生料（`MMT_GlassBatch`） | 1.2 | 300 | — | MMT_MakeGlassBatch | 3 |
-| 玻璃块（`MMT_Glass`） | 5.0 | 150 | — | MMT_MakeGlass | 14 |
+| 玻璃块（`MMT_Glass`） | 5.0 | 150 | — | MMT_MakeGlass | 15 |
 | 强化玻璃块（`MMT_ReinforcedGlass`） | 17.0 | 150 | — | MMT_MakeReinforcedGlass | 1 |
 
 #### 物质（Matter）
@@ -184,10 +184,10 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 原始零部件（`MMT_ComponentMedieval`） | 6 | 300 | — | MMT_MakeComponentMedieval_Wood、MMT_MakeComponentMedieval_Metal | 2 |
-| 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 11 |
-| 机械组件（`MMT_Mechanism`） | 200 | 75 | — | MMT_MakeMechanism_Hand、MMT_MakeMechanism_Electric | 29 |
-| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 13 |
-| 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 17 |
+| 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 12 |
+| 机械组件（`MMT_Mechanism`） | 200 | 75 | — | MMT_MakeMechanism_Hand、MMT_MakeMechanism_Electric | 27 |
+| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 15 |
+| 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 18 |
 | 超级零部件（`MMT_UltraComponent`） | 200 | 150 | — | MMT_MakeUltraComponent | 11 |
 
 #### 石化（Petrochem）
@@ -196,8 +196,8 @@
 | --- | --- | --- | --- | --- | --- |
 | 原油（`MMT_CrudeOil`） | 1 | 300 | — | MMT_PumpCrudeOil | 3 |
 | 聚合物（`MMT_Polymers`） | 1.5 | 600 | — | MMT_DistillPolymers_Electric、MMT_ConvertToPolymers、MMT_DistillPolymers_Hand | 12 |
-| 塑料（`MMT_Plastic`） | 9.0 | 300 | — | MMT_MakePlastic_Electric、MMT_MakePlastic_Hand | 69 |
-| 合成橡胶（`MMT_Rubber`） | 11.0 | 300 | — | MMT_MakeRubber_Electric、MMT_MakeRubber_Hand | 10 |
+| 塑料（`MMT_Plastic`） | 9.0 | 300 | — | MMT_MakePlastic_Electric、MMT_MakePlastic_Hand | 70 |
+| 合成橡胶（`MMT_Rubber`） | 11.0 | 300 | — | MMT_MakeRubber_Electric、MMT_MakeRubber_Hand | 11 |
 | 人造纤维（`MMT_SyntheticFibers`） | 12.0 | 150 | — | MMT_MakeSyntheticFibers_Electric、MMT_MakeSyntheticFibers_Hand | 20 |
 | 碳聚物（`MMT_Carbon`） | 40.0 | 75 | — | MMT_MakeCarbon_Electric、MMT_MakeCarbon_Hand | 4 |
 
@@ -227,8 +227,8 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 超频模块（`MMT_OverclockModule`） | 180 | 10 | — | MMT_MakeOverclockModule | 0 |
-| 并行模块（`MMT_ParallelModule`） | 220 | 10 | — | MMT_MakeParallelModule | 0 |
-| 增值模块（`MMT_YieldModule`） | 260 | 10 | — | MMT_MakeYieldModule | 0 |
+| 并行模块（`MMT_ParallelModule`） | 1200 | 10 | — | MMT_MakeParallelModule | 0 |
+| 增值模块（`MMT_YieldModule`） | 1300 | 10 | — | MMT_MakeYieldModule | 1 |
 
 #### 机器人（Robotics）
 
@@ -264,8 +264,7 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 充能效率模块（`MMT_ChargeEfficiencyModule`） | 220 | 10 | — | MMT_MakeChargeEfficiencyModule | 0 |
-| 次元传送模块（`MMT_DimensionalModule`） | 420 | 10 | — | MMT_MakeDimensionalModule | 1 |
+| 充能效率模块（`MMT_ChargeEfficiencyModule`） | 700 | 10 | — | MMT_MakeChargeEfficiencyModule | 0 |
 
 #### 纺织（Textiles）
 

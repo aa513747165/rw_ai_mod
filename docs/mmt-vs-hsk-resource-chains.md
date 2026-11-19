@@ -11,11 +11,11 @@
 | 项 | 数量 |
 | --- | --- |
 | MMT 矿脉 | 12 |
-| MMT 配方 | 438 |
+| MMT 配方 | 437 |
 | 与 HSK 数值一致 | 122 |
 | 与 HSK 有数值差异 | 57 |
 | HSK 有对应资源但无对应配方 | 9 |
-| MMT 新增（HSK 无对应资源） | 250 |
+| MMT 新增（HSK 无对应资源） | 249 |
 
 ### 1.1 按家族统计
 
@@ -53,7 +53,7 @@
 | ShieldTiers（ShieldTiers） | 3 | 0 | 0 | 0 | 3 |
 | 筛网（SieveMeshes） | 3 | 0 | 0 | 0 | 3 |
 | 状态备份（StateBackup） | 1 | 0 | 0 | 0 | 1 |
-| TeleportModules（TeleportModules） | 2 | 0 | 0 | 0 | 2 |
+| TeleportModules（TeleportModules） | 1 | 0 | 0 | 0 | 1 |
 | 纺织（Textiles） | 13 | 12 | 0 | 0 | 1 |
 | 顶级材料（TopMaterials） | 11 | 7 | 0 | 4 | 0 |
 | 炮塔弹药（TurretAmmo） | 4 | 0 | 0 | 0 | 4 |
@@ -1686,12 +1686,12 @@
 
 #### 组装并行模块（`MMT_MakeParallelModule`）
 
-- **MMT**：钢(Steel)×30 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 -> 并行模块×1 @ 电动装配台 ｜ 工作量=1800 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
+- **MMT**：[MMT_RARBar]×10 + 先进机械组件×2 + 集成电路×2 + 塑料×10 -> 并行模块×1 @ 电动装配台 ｜ 工作量=3600 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 #### 组装增值模块（`MMT_MakeYieldModule`）
 
-- **MMT**：钢(Steel)×35 + 机械组件×3 + 工业零件(ComponentIndustrial)×3 + 电子元件×1 -> 增值模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥6
+- **MMT**：[MMT_RARBar]×8 + 先进机械组件×2 + 集成电路×2 + 合成橡胶×15 + 金(Gold)×5 -> 增值模块×1 @ 电动装配台 ｜ 工作量=4200 ｜ 研究:自动机增效(MMT_AutoBoost)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.27 灵能护盾（PsychicShield）
@@ -1748,7 +1748,7 @@
 
 #### 组装远古护盾腰带 Mk.III（`MMT_MakeArchoShieldPack`）
 
-- **MMT**：集成电路×4 + 太空零件(ComponentSpacer)×6 + 铁钛合金(Plasteel)×40 + 次元传送模块×2 -> 远古护盾腰带 Mk.III×1 @ 电动装配台 ｜ 工作量=12000 ｜ 研究:远古护盾技术(MMT_ArchoShieldTech)，技能:Crafting≥12
+- **MMT**：集成电路×4 + 太空零件(ComponentSpacer)×6 + 铁钛合金(Plasteel)×40 + 增值模块×2 -> 远古护盾腰带 Mk.III×1 @ 电动装配台 ｜ 工作量=12000 ｜ 研究:远古护盾技术(MMT_ArchoShieldTech)，技能:Crafting≥12
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.31 筛网（SieveMeshes）
@@ -1779,12 +1779,7 @@
 
 #### 组装充能效率模块（`MMT_MakeChargeEfficiencyModule`）
 
-- **MMT**：钢(Steel)×25 + 电线×15 + 电子元件×2 + 工业零件(ComponentIndustrial)×2 -> 充能效率模块×1 @ 电动装配台 ｜ 工作量=2000 ｜ 研究:充能增效(MMT_ChargeBoost)，技能:Crafting≥6
-- **HSK**：无对应资源（MMT 新增）
-
-#### 组装次元传送模块（`MMT_MakeDimensionalModule`）
-
-- **MMT**：铁钛合金(Plasteel)×20 + 太空零件(ComponentSpacer)×2 + 电子元件×3 + 金(Gold)×10 -> 次元传送模块×1 @ 电动装配台 ｜ 工作量=3000 ｜ 研究:次元传送(MMT_DimensionalTeleport)，技能:Crafting≥8
+- **MMT**：电线×20 + [MMT_RARBar]×8 + 集成电路×3 + 高级零部件×2 -> 充能效率模块×1 @ 电动装配台 ｜ 工作量=4000 ｜ 研究:充能增效(MMT_ChargeBoost)，技能:Crafting≥10
 - **HSK**：无对应资源（MMT 新增）
 
 ### 3.34 纺织（Textiles）
@@ -2639,7 +2634,7 @@
 | 电动采石机(`MMT_ElectricChunkDrill`) | (1,1) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
 | 手动混凝土搅拌器(`MMT_ConcreteMixer`) | (2,1) | 工业零件(ComponentIndustrial)×5 + [金属]×135 | 1600 | hand concrete mixer(`ConcreteMixer`) | 工业零件(ComponentIndustrial)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×135 | 1600 | HSK 多 机械组件(Mechanism)×5 |
 | 电动混凝土搅拌机(`MMT_EConcreteMixer`) | (2,1) | 合成橡胶×45 + 工业零件(ComponentIndustrial)×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W / 5000 | electric concrete mixer(`EConcreteMixer`) | 合成橡胶(Rubber)×45 + 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×115 | 500W / 5000 | 一致 |
-| 高级药物合成台(`MMT_AdvDrugLab`) | (3,1) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件(ComponentSpacer)×5 + [金属]×100 | 1500W / 6000 | synthetic organ assembler(`TableSynthetics`) | 塑料(Plastic)×65 + 人造纤维(SyntheticFibers)×20 + 集成电路(Electronics)×6 + 高级零部件(ComponentSpacer)×5 + [RuggedMetallic/木质]×135 | 850W / 5500 | 材料量 100 vs 135；塑料 40 vs 65；MMT 多 玻璃块×30；MMT 多 微芯片集成电路×2；高级零部件 6 vs 5；HSK 多 人造纤维(SyntheticFibers)×20；HSK 多 集成电路(Electronics)×6；功耗 1500 vs 850；工作量 6000 vs 5500 |
+| 高级药物合成台(`MMT_AdvDrugLab`) | (3,2) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件(ComponentSpacer)×5 + [金属]×100 | 1500W / 6000 | synthetic organ assembler(`TableSynthetics`) | 塑料(Plastic)×65 + 人造纤维(SyntheticFibers)×20 + 集成电路(Electronics)×6 + 高级零部件(ComponentSpacer)×5 + [RuggedMetallic/木质]×135 | 850W / 5500 | 材料量 100 vs 135；塑料 40 vs 65；MMT 多 玻璃块×30；MMT 多 微芯片集成电路×2；高级零部件 6 vs 5；HSK 多 人造纤维(SyntheticFibers)×20；HSK 多 集成电路(Electronics)×6；功耗 1500 vs 850；工作量 6000 vs 5500 |
 | 电弧炉(`MMT_ElectricArcFurnace`) | (3,3) | 钢筋混凝土×50 + 工业零件(ComponentIndustrial)×15 + 电子元件×6 + [金属]×180 | 2500W / 4500 | electric arc furnace(`EAF`) | 钢筋混凝土(ReinforcedConcrete)×50 + 工业零件(ComponentIndustrial)×15 + 机械组件(Mechanism)×10 + 电子元件(ElectronicComponents)×6 + [RuggedMetallic]×180 | 2500W / 4500 | HSK 多 机械组件(Mechanism)×10 |
 | 电子器件工作台(`MMT_ElectricElectronicsTable`) | (3,1) | 铜×40 + 工业零件(ComponentIndustrial)×10 + [金属]×140 | 600W / 2750 | electronics table(`TableElectronics`) | 铜(CopperBar)×40 + 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×10 + [RuggedMetallic]×140 | 600W / 2750 | HSK 多 机械组件(Mechanism)×10 |
 | 石化产品实验室(`MMT_ElectricChemLab`) | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件(ComponentIndustrial)×20 + 电子元件×5 + [金属]×130 | 450W / 5500 | — | — | — | MMT 新增 |
@@ -2656,6 +2651,7 @@
 | 玻璃制作台(`MMT_GlassworksTable`) | (3,1) | 工业零件(ComponentIndustrial)×10 + [金属]×130 | 400W / 1600 | glassworks table(`GlassworkTable`) | 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×8 + [RuggedMetallic]×130 | 400W / 1600 | HSK 多 机械组件(Mechanism)×8 |
 | 电动研磨机(`MMT_ElectricGrinder`) | (1,1) | 机械组件×4 + 工业零件(ComponentIndustrial)×2 + [金属]×50 | 300W / 1500 | — | — | — | MMT 新增 |
 | 手动研磨机(`MMT_HandGrinder`) | (1,1) | [石质]×50 | 800 | — | — | — | MMT 新增 |
+| 畜牧机器(`MMT_LivestockMachine`) | (2,2) | 钢(Steel)×120 + 工业零件(ComponentIndustrial)×8 + 电线×20 + 玻璃块×15 | 800W / 8000 | — | — | — | MMT 新增 |
 | 无机物转化器(`MMT_MatterConverter`) | (3,3) | 人造纤维×50 + 高级零部件×12 + 先进机械组件×6 + 微芯片集成电路×4 + [金属]×280 | 2500W / 9000 | inorganic matter converter(`MatterConverter`) | 人造纤维(SyntheticFibers)×50 + 高级零部件(ComponentSpacer)×12 + 先进机械组件(AdvMechanism)×6 + 微芯片集成电路(Microchips)×4 + [RuggedMetallic]×280 | 2500W / 9000 | 一致 |
 | 量子加工台(`MMT_Matterfab`) | (3,2) | 磁性材料×25 + 高级零部件×10 + 先进机械组件×10 + 微芯片集成电路×2 + [金属]×240 | 8000W / 10000 | quantum fabricator(`Matterfab`) | 磁性材料(MagneticMaterial)×25 + 高级零部件(ComponentSpacer)×10 + 先进机械组件(AdvMechanism)×10 + 微芯片集成电路(Microchips)×2 + [SolidMetallic]×240 | 20000W / 10000 | 功耗 8000 vs 20000 |
 | 粒子对撞台(`MMT_ParticleCollider`) | (7,2) | 钢筋混凝土×150 + 磁性材料×20 + 生物合成材料×15 + 先进机械组件×12 + 微芯片集成电路×3 + [金属]×120 | 15000W / 12000 | hadron collider(`HadronCollider`) | 钢筋混凝土(ReinforcedConcrete)×150 + 磁性材料(MagneticMaterial)×20 + 生物合成材料(BiosyntheticMaterial)×15 + 先进机械组件(AdvMechanism)×12 + 微芯片集成电路(Microchips)×3 + [SolidMetallic]×120 | 1W / 12000 | 功耗 15000 vs 1 |
@@ -2689,5 +2685,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 41（共 66）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 42（共 67）。
 

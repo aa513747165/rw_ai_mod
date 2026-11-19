@@ -15,18 +15,4 @@
     <researchViewY>6.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 次元传送：解锁次元传送模块（折跃传送台传送次数上限 +1/个，最多 10 个）；前置 折跃传送 -->
-  <ResearchProjectDef>
-    <defName>MMT_DimensionalTeleport</defName>
-    <label>次元传送</label>
-    <description>在折跃通道中锚定多重次元坐标，解锁次元传送模块：安装进折跃传送台后每个使传送次数上限提高 1 次，单台最多安装 10 个。</description>
-    <baseCost>4000</baseCost>
-    <techLevel>Ultra</techLevel>
-    <tab>MMT_ResearchTab</tab>
-    <prerequisites>
-      <li>MMT_Teleportation</li>
-    </prerequisites>
-    <researchViewX>13.00</researchViewX>
-    <researchViewY>7.00</researchViewY>
-  </ResearchProjectDef>
 </Defs>

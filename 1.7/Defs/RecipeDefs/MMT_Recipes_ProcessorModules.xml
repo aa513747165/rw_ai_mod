@@ -54,117 +54,139 @@
     <researchPrerequisite>MMT_AutoBoost</researchPrerequisite>
   </RecipeDef>
 
-  <!-- 并行模块：材料对齐原贴靠建筑造价，挂电动装配台；需研究"自动机增效" -->
+  <!-- 并行模块：后期昂贵模块，材料跨高级合金（稀有合金类）/零件（先进机械组件）/电子（集成电路）/石化（塑料）四条链；挂电动装配台；需研究"自动机增效" -->
   <RecipeDef>
     <defName>MMT_MakeParallelModule</defName>
     <label>组装并行模块</label>
     <description>组装自动加工机组的并行加工扩展模块，安装后使设备每轮多消耗一份输入并多产出一份产物。产出 1。</description>
     <jobString>正在组装并行模块。</jobString>
-    <workAmount>1800</workAmount>
+    <workAmount>3600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
       <li>
         <filter>
-          <thingDefs>
-            <li>Steel</li>
-          </thingDefs>
+          <categories>
+            <li>MMT_RARBar</li>
+          </categories>
         </filter>
-        <count>30</count>
+        <count>10</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_Mechanism</li>
+            <li>MMT_AdvMechanism</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>2</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>ComponentIndustrial</li>
+            <li>MMT_IntegratedCircuit</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MMT_Plastic</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
       </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Steel</li>
-        <li>MMT_Mechanism</li>
-        <li>ComponentIndustrial</li>
+        <li>MMT_AdvMechanism</li>
+        <li>MMT_IntegratedCircuit</li>
+        <li>MMT_Plastic</li>
       </thingDefs>
+      <categories>
+        <li>MMT_RARBar</li>
+      </categories>
     </fixedIngredientFilter>
     <products>
       <MMT_ParallelModule>1</MMT_ParallelModule>
     </products>
     <skillRequirements>
-      <Crafting>6</Crafting>
+      <Crafting>10</Crafting>
     </skillRequirements>
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.8</workSkillLearnFactor>
     <researchPrerequisite>MMT_AutoBoost</researchPrerequisite>
   </RecipeDef>
 
-  <!-- 增值模块：材料略高于并行模块，挂电动装配台；需研究"自动机增效" -->
+  <!-- 增值模块：后期昂贵模块，材料跨高级合金（稀有合金类）/零件（先进机械组件）/电子（集成电路）/石化（合成橡胶）/贵金属（黄金）五条链；挂电动装配台；需研究"自动机增效" -->
   <RecipeDef>
     <defName>MMT_MakeYieldModule</defName>
     <label>组装增值模块</label>
-    <description>组装自动加工设备的产出增值控制模块，安装后使设备产物增加（幅度因设备而异）。产出 1。</description>
+    <description>组装自动加工设备的产出增值控制模块，安装后使设备产物增加（幅度因设备而异）；安装进折跃传送台则使传送次数上限 +1。产出 1。</description>
     <jobString>正在组装增值模块。</jobString>
-    <workAmount>2000</workAmount>
+    <workAmount>4200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
       <li>
         <filter>
-          <thingDefs>
-            <li>Steel</li>
-          </thingDefs>
+          <categories>
+            <li>MMT_RARBar</li>
+          </categories>
         </filter>
-        <count>35</count>
+        <count>8</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_Mechanism</li>
+            <li>MMT_AdvMechanism</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>2</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>ComponentIndustrial</li>
+            <li>MMT_IntegratedCircuit</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>2</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>MMT_ElectronicParts</li>
+            <li>MMT_Rubber</li>
           </thingDefs>
         </filter>
-        <count>1</count>
+        <count>15</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
       </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Steel</li>
-        <li>MMT_Mechanism</li>
-        <li>ComponentIndustrial</li>
-        <li>MMT_ElectronicParts</li>
+        <li>MMT_AdvMechanism</li>
+        <li>MMT_IntegratedCircuit</li>
+        <li>MMT_Rubber</li>
+        <li>Gold</li>
       </thingDefs>
+      <categories>
+        <li>MMT_RARBar</li>
+      </categories>
     </fixedIngredientFilter>
     <products>
       <MMT_YieldModule>1</MMT_YieldModule>
     </products>
     <skillRequirements>
-      <Crafting>6</Crafting>
+      <Crafting>10</Crafting>
     </skillRequirements>
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.8</workSkillLearnFactor>

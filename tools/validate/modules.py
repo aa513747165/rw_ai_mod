@@ -31,7 +31,7 @@ ENERGY_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_EnergyConvergence.xml"
 MODULE_DEFS = {
     "MMT_OverclockModule": ("Overclock", [("SpeedFactor", "0.1")]),
     "MMT_ParallelModule": ("Parallel", [("ExtraLanes", "1")]),
-    "MMT_YieldModule": ("Yield", [("YieldBonus", "1")]),
+    "MMT_YieldModule": ("Yield", [("YieldBonus", "1"), ("ExtraTeleportCharges", "1")]),
 }
 
 

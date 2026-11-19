@@ -11,7 +11,7 @@ namespace MyModeTest
     /// <summary>
     /// 折跃传送台参数（当前无 XML 可配置项，占位以便后续扩展）。
     /// 次数制：内部蓄电（CompBuildingBattery）每充满一次转化为 1 次传送次数并重新蓄电；
-    /// 次数上限 = 1 + 次元传送模块数（最多 10 个），次数为 0 时进入等待蓄电的 CD。
+    /// 次数上限 = 1 + 增值模块数（最多 10 个），次数为 0 时进入等待蓄电的 CD。
     /// </summary>
     public class CompProperties_TeleportPad : CompProperties
     {
@@ -26,7 +26,7 @@ namespace MyModeTest
     /// 穿梭机管线——光柱落地全部吐出后穿梭机消散，非敌对立据点则组成商队到世界地图该格）
     /// 与回程（供召回 Designator 调用，把框选的己方人员和物品传回本建筑）。
     /// 装载/取消装载 gizmo 由原版 CompTransporter 自带（1.7 已确认），本 Comp 只提供"启动传送"。
-    /// 传送消耗"次数"而非直接耗电：蓄电充满一次转化为 1 次（上限 1 + 次元传送模块数）；
+    /// 传送消耗"次数"而非直接耗电：蓄电充满一次转化为 1 次（上限 1 + 增值模块数）；
     /// 充能效率模块提升蓄电速度。
     /// </summary>
     public class CompTeleportPad : ThingComp
@@ -39,7 +39,7 @@ namespace MyModeTest
         private CompFlickable flickComp;
         // 蓄电由建筑蓄电 comp 承担（scribe 字段名沿用旧实现的 storedChargeWd，旧存档无缝接管）
         private CompBuildingBattery batteryComp;
-        // 增效模块槽（可空）：次元传送模块提升次数上限，充能效率模块提升蓄电速度
+        // 增效模块槽（可空）：增值模块提升次数上限，充能效率模块提升蓄电速度
         private CompModuleSlots slotsComp;
 
         private CompProperties_TeleportPad Props
@@ -63,7 +63,7 @@ namespace MyModeTest
             get { return teleportCharges; }
         }
 
-        /// <summary>传送次数上限：1 + 次元传送模块数（模块槽上限在 XML 配置，最多 10）。</summary>
+        /// <summary>传送次数上限：1 + 增值模块数（模块槽上限在 XML 配置，最多 10）。</summary>
         public int MaxTeleportCharges
         {
             get { return 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraTeleportCharges) : 0); }
@@ -143,7 +143,7 @@ namespace MyModeTest
             // 启动传送：舱内为空、装载未完成、次数不足时禁用并提示原因
             Command_Action launch = new Command_Action();
             launch.defaultLabel = "启动传送";
-            launch.defaultDesc = "将舱内的人员和物品传送到世界地图上任意地块：敌对据点/任务地点=折跃进攻（跳图后自选落点，光柱落地后全部吐出）；非敌对定居点=组成商队到该格（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，再耗一次传送）；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。每次传送消耗 1 次传送次数；蓄电充满一次转化为 1 次（上限 1+次元传送模块数）。";
+            launch.defaultDesc = "将舱内的人员和物品传送到世界地图上任意地块：敌对据点/任务地点=折跃进攻（跳图后自选落点，光柱落地后全部吐出）；非敌对定居点=组成商队到该格（货物挂成员背包、可正常交易；隐身穿梭机随行，随时可发射折跃返回——返回时除出发时携带的物品外全部吐出，再耗一次传送）；空白地块=生成荒野临时地图（人员全部撤离后自动销毁，遗留物品随图消失）；己方基地=精确选落点。每次传送消耗 1 次传送次数；蓄电充满一次转化为 1 次（上限 1+增值模块数）。";
             launch.icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", false);
             launch.action = StartChoosingDestination;
             if (!CanTeleportNow(out string reason))
