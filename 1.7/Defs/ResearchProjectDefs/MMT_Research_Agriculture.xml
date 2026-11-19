@@ -11,4 +11,20 @@
     <researchViewX>8.00</researchViewX>
     <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
+
+  <!-- 农业 II·自动化种植：解锁自动种植机（5x5 无人值守水培，基础 300% 肥力，肥料增效至 400%） -->
+  <ResearchProjectDef>
+    <defName>MMT_AutoFarming</defName>
+    <label>农业 II·自动化种植</label>
+    <description>结合微电子控制与封闭式水培技术，建造无需人工值守的自动种植机，自动完成播种、培育与收获。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_AgricultureBasic</li>
+      <li>Microelectronics</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
+  </ResearchProjectDef>
 </Defs>

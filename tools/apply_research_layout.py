@@ -26,6 +26,7 @@ LAYOUT = {
     "MMT_ArtSupplies": (4, 0),
     "MMT_Medicine_D1": (7, 0),
     "MMT_AgricultureBasic": (8, 0),
+    "MMT_AutoFarming": (9, 9),
     "MMT_MedicalPlants_A1": (9, 0),
     "MMT_MedicalPlants_A2": (10, 0),
     "MMT_SuperFabric": (12, 0),

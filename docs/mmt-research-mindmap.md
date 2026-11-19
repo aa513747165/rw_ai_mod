@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（106 项）
+- MMT 研究总览（107 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -197,6 +197,8 @@
         - 解锁配方: 编织精密滤网
   - **农业 I** `MMT_AgricultureBasic` ｜ 坐标 (8.00, 0.00) ｜ 150点 ｜ Neolithic
     - 解锁配方: 制作堆肥、制作肥料、拌制土堆
+    - **农业 II·自动化种植** `MMT_AutoFarming` ｜ 坐标 (9.00, 9.00) ｜ 800点 ｜ Industrial ｜ 前置(原版): Microelectronics
+      - 解锁建筑: 自动种植机
   - **药用植物 I** `MMT_MedicalPlants_A1` ｜ 坐标 (9.00, 0.00) ｜ 150点 ｜ Neolithic
     - **药用植物 II** `MMT_MedicalPlants_A2` ｜ 坐标 (10.00, 0.00) ｜ 200点 ｜ Neolithic
       - 解锁植物: 芦荟（播种）、中性花（播种）

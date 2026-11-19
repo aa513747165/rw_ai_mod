@@ -87,6 +87,7 @@ python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器�
   - `Rechargeable.cs`：通用可充能 Comp（电量存档 + 充/放电接口），充能台与充能设备共用的电量载体。
   - `ChargingStation.cs`：充能台（内置容器持一件设备，通电回充；右键小人手动装卸：空台从穿戴/背包选设备装入，有设备确认后取回；DrawAt 画飘浮设备与充能光柱；装卸各一个 JobDriver）。
   - `ShieldPack.cs`：充能护盾腰带（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡，用 MMT 专属贴图 `Things/Item/MMT/Shield/MMT_ShieldBubbleTech`；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。
+  - `AutoFarm.cs`：自动种植机（5x5 无人值守水培，`Building_AutoFarm`：gizmo 全局选种（sowTags 含 "Ground" 的全部植物），25 格虚拟种植格逐 tick 生长（基础肥力 300%，燃料舱有肥料时 400%），成熟自动收获到交互格并重播；`DrawAt` 按 `visualSizeRange` 缩放逐格绘制植物图形）。
 - C# 注释与日志均用中文。
 
 ## 代码与命名约定

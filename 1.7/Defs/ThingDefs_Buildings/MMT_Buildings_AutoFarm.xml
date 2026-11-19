@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 自动种植机：5x5 封闭式水培机组，无人值守自动种植与收获。
+       基础肥力 300%，不受光照/季节限制；燃料舱以肥料为燃料，有肥料时肥力 +100%（即 400%）。
+       整机统一种植一种植物（选种 gizmo 切换），25 格各自生长、成熟自动收获到南侧出料口并原地重播。
+       逻辑见 Source/MyModeTest/AutoFarm.cs（三朝向贴图，可旋转） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_AutoFarm</defName>
+    <label>自动种植机</label>
+    <description>封闭式全自动水培种植机组，通电后无需殖民者值守即可自动完成播种、培育与收获，产物从出料口排出。内置 300% 肥力的培养基，不受光照与季节影响；加注肥料后可进一步提升至 400% 肥力。支持所有可种植植物。</description>
+    <thingClass>MyModeTest.Building_AutoFarm</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_AutoFarm/MMT_AutoFarm</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(5,5)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <designationCategory>MMT_Production</designationCategory>
+    <rotatable>true</rotatable>
+    <tickerType>Normal</tickerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>8000</WorkToBuild>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>120</Mass>
+    </statBases>
+    <costList>
+      <Steel>200</Steel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <MMT_Mechanism>4</MMT_Mechanism>
+      <MMT_ElectronicParts>4</MMT_ElectronicParts>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>1500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <!-- 燃料舱：肥料。有存货即提供 +100% 肥力（约 2 游戏小时耗 1 肥料） -->
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>12</fuelConsumptionRate>
+        <fuelCapacity>100</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Fertilizer</li>
+          </thingDefs>
+        </fuelFilter>
+        <fuelLabel>肥料储量</fuelLabel>
+        <fuelGizmoLabel>肥料</fuelGizmoLabel>
+        <outOfFuelMessage>需要补充肥料</outOfFuelMessage>
+        <showFuelGizmo>true</showFuelGizmo>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <autoRefuelPercent>0.5</autoRefuelPercent>
+        <initialFuelPercent>0</initialFuelPercent>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_AutoFarming</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+      <!-- 1.7 BuildingBase 不再自带 BuildingProperties,必须显式声明 -->
+    <building/>
+  </ThingDef>
+</Defs>

@@ -6,7 +6,7 @@
 
 ## 1. MMT 建筑总表
 
-共 81 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
+共 82 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
 
 ### 深钻井（AdvancedRocks）
 
@@ -26,6 +26,12 @@
 **挖盐点（`MMT_SaltMine`） 的配方：**
 
 - `MMT_MineSalt`：— -> 盐×5 ｜ 工作量=1800
+
+### AutoFarm（AutoFarm）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 自动种植机（`MMT_AutoFarm`） | (5,5) | 钢×200 + 工业零件×8 + 机械组件×4 + 电子元件×4 | 1500W | 8000 | 农业 II·自动化种植 | 0 |  |
 
 ### 自动处理（AutoProcessor）
 
@@ -230,7 +236,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -10000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
+| 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -100000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
 | 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
 | 晶体培养舱（`MMT_CrystalIncubator`） | (2,2) | 钢×80 + 玻璃块×20 + 黄金×20 + 先进机械组件×2 | 600W | 4000 | 能量结晶培育 | 0 | CompProperties_ModuleSlots、CompProperties_AutoProcessor |
 
