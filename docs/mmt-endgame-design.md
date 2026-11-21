@@ -1,7 +1,7 @@
 # MMT 终局内容包设计方案
 
 > 手工维护的设计文档（非脚本生成物）。记录"纪元奇点"终局玩法全套设计：终局奇观、世界探索、武器强化、后期威胁、Mod 设置。
-> 状态：**待实现**。实现完成后各 validate 套件与本文件互相印证。
+> 状态：**v1 已实现**（阶段 A-F 全部落盘；测试验收见 `docs/mmt-endgame-test-guide.md`）。各 validate 套件与本文件互相印证。
 
 ## 0. 背景与动机
 
@@ -40,10 +40,28 @@ MMT 目前无任何 ModSettings。新增：
 | 研究成本倍率 | researchCostFactor | 1.0 | 0.25–2.0 | postfix `ResearchProjectDef.get_CostApparent`（签名待 §7 spike 核实），仅 MMT_ 前缀 |
 | 传送次数上限加成 | teleportBonusCharges | 0 | 0–9 整数 | `CompTeleportPad.MaxTeleportCharges` 读取 |
 | 强化成功率倍率 | enhanceSuccessFactor | 1.0 | 0.5–2.0 | `CompShieldEnhancement.SuccessRateFor` 与新武器强化共用 |
+| 仅限 MMT/原版武器强化 | weaponEnhanceVanillaOnly | false | 勾选 | 勾上后 comp 挂载补丁跳过其它 mod 武器（跨 Mod 兼容总开关，见 §2） |
 | 爆墙财富门槛 | breachWealthThreshold | 100000 | 5万–50万 | `BreachChargeUtil` 常量改读设置 |
 | 爆墙概率倍率 | breachChanceFactor | 1.0 | 0–3（0=关闭） | `BreachChargeUtil` 两条概率曲线 |
 | 能量风暴开关 | energyStormEnabled | true | 勾选 | `IncidentWorker_EnergyStorm.CanFireNow` |
 | 风暴频率倍率 | energyStormChanceFactor | 1.0 | 0.5–3 | worker 内掷点修正 |
+
+**事件机制开关（硬性设计规则：任何 Incident / GameCondition / 任务 / 据点生成类机制，落地时必须同步加开关；正面/中性事件默认开，恶意事故类默认关）**：
+
+| 设置项 | 字段 | 默认 | 控制对象 |
+|---|---|---|---|
+| 爆墙炸弹总开关 | breachChargeEnabled | true | 三条爆墙补丁的入口判定（关=完全禁用，含配发） |
+| 能量风暴 | energyStormEnabled | true | §5 能量风暴事件 |
+| 电磁脉冲日 | empDayEnabled | true | §10.5 护盾/充能设备离线事件 |
+| 陨石雨 | meteorShowerEnabled | true | §10.5 陨石坠落（远古合金第二来源） |
+| 精英爆破手 | eliteBreacherEnabled | true | §10.5 财富 50 万+ 专职爆破单位 |
+| 黑市中间人 | blackMarketEnabled | true | §11.1 远古合金收购事件 |
+| 强化材料赏金任务 | materialQuestsEnabled | true | §11.1 定居点委托任务 |
+| 据点生成总开关 | explorationSitesEnabled | true | §3 扫描仪生成据点（含坠毁船等后续据点类型） |
+| 奇观超载事故 | wonderOverloadEnabled | **false** | §10.4 蓄电超载爆炸（硬核向，默认关） |
+| 奇观周年庆典 | wonderAnniversaryEnabled | true | §10.4 激活纪念日节庆 |
+
+实现约束：开关判定放在各自 `IncidentWorker.CanFireNow` / comp 入口的**第一行**（廉价 bool 短路，符合 §12 性能原则）；关闭时已生成的进行中期事件不强制移除，只阻止新触发。
 
 校验套件：`tools/validate/settings.py`。
 
@@ -60,15 +78,49 @@ MMT 目前无任何 ModSettings。新增：
 
 - `CompProperties_WeaponEnhancement` / `CompWeaponEnhancement`：等级 + 附魔词条，label 追加 "+N"。经 XPath PatchOperation 批量挂到全部 `ThingDef[weaponTags]`（已有 comps 的用 `PatchOperationSequence`）。
 - `CompProperties_WeaponEnhanceBench` / `CompWeaponEnhanceBench`：IThingHolder 容器持 1 件武器，右键"装载武器/取出/强化/附魔"。结构照搬 `ChargingStation.cs` 的 `CompChargingStation`（注意：1.7 ThingComp 不再自带 IThingHolder，需显式实现）。
-- **赌博线（+1 ~ +10）**：照 `CompShieldEnhancement` 模式——成功率表 `100/100/100/80/80/60/60/40/20/5%`，材料 `MMT_EnergyCrystal`×目标等级，作业在强化台进行（先消耗材料后掷点）。效果：每级伤害 ×1.05（满级 ×1.5），10 级额外护甲穿透 +10%。成功率乘 `enhanceSuccessFactor`。
-- **确定线（附魔词条，每件武器限 1 条，100% 成功）**：消耗 淬火油×2 + 按目标档位 `MMT_AncientAlloy`×10（+3~+5 档）/ `MMT_ArchotechShard`×5（+6~+10 档）/ `MMT_AncientDatacore`×1（特殊词条）。词条经 `ModuleEffectKeys` 新增 3 键实现：
-  - `WeaponCritChance` 暴击率 +5%
-  - `WeaponCooldownFactor` 冷却 -8%
-  - `WeaponArmorPen` 穿甲 +15%
-  对应模块物品 `MMT_WeaponModCrit` / `MMT_WeaponModCooldown` / `MMT_WeaponModPierce`（挂 `ModuleExtension`，slotKey=WeaponEnchant）。
+- **赌博线（+1 ~ +15）**：照 `CompShieldEnhancement` 模式（护盾线同为 15 级，两线共用同一套材料阶梯与成功率表）。成功率表 15 档（1-3 级 100%、4-6 级 80%、7-9 级 60%、10-12 级 40%、13-14 级 20%、15 级 5%），作业在强化台进行（先消耗材料后掷点）。效果：每级伤害 ×1.05（满级 ≈×2.0），15 级额外护甲穿透 +10%。成功率乘 `enhanceSuccessFactor`。
+- **强化材料阶梯（核心设计：与探索/任务深度挂钩）**：
+
+| 等级段 | 材料（每次强化消耗） | 来源 |
+|---|---|---|
+| +1~+3 | 能量结晶×目标等级 | 常规自产（晶体培养舱） |
+| +4~+6 | 能量结晶×目标等级 + 高级合金×2（钨/钛等可生产合金轮替） | 常规自产 |
+| +7~+9 | 能量结晶×5 + **远古合金**×3 | 探索据点（稀有资源点/轨道遗迹）+ 任务奖励 |
+| +10~+12 | 能量结晶×8 + **远古碎晶**×2 | 探索据点（轨道遗迹/机械据点）+ 任务奖励 |
+| +13~+15 | 能量结晶×10 + **远古碎晶**×3 + **远古数据核心**×1 | 机械据点/史诗档据点/任务奖励 |
+
+  即：+6 是自给自足的天花板，+7 起必须走出家门。**护盾强化线（现有 1-15）同步改挂此阶梯**（`CompShieldEnhancement` 需把单一 `materialPerLevel` 扩展为按等级段配材料的 XML 表，旧存档兼容：缺省回退旧行为）。
+- **确定线（附魔系统，四档词条 + 多槽组合，100% 成功）**：
+
+  **附魔槽位**：武器基础 1 槽；强化 +7 解锁第 2 槽、+13 解锁第 3 槽（强化与附魔互相成就——冲槽位要探索材料，见材料阶梯）。同词条不可重复，不同档可自由组合（如 低级"精准" + 高级"燃烧弹"）。
+
+  **词条总表**（词条 = `ModuleEffectKeys` 新键；标 ★ 的为特殊机制，需在伤害补丁中追加消费逻辑，不止 `GetEffectSum` 一行）：
+
+  | 档位 | 材料（每次附魔） | 词条 |
+  |---|---|---|
+  | 低级（基础属性） | 淬火油×2 + 能量结晶×3 | 锋利（伤害+8%）、精准（命中+8%）、轻巧（冷却-8%）、穿透（穿甲+15%） |
+  | 中级（复合属性，双词条） | 淬火油×3 + 高级合金×8 | 致命（暴击率+5% ★暴击×2 伤害）、疾风（冷却-12% + 瞄准-20%）、重击（伤害+12% + 击退 ★） |
+  | 高级（命中特效） | 淬火油×4 + 远古合金×10 | ★EMP 弹（对机械 ×1.5 + 短路）、★燃烧弹（命中点燃）、★吸血（近战，伤害 5% 转治疗）、★破盾（对能量护盾额外 +50%）、★冰霜（命中减速 -20% 持续 3 秒 hediff） |
+  | 极品（独特机制，数据核心） | 淬火油×5 + 远古碎晶×5 + 数据核心×1 | ★处决（目标血量 <20% 时伤害 ×2）、★连锁闪电（命中弹射 2 格内另一目标 50% 伤害）、★时空折叠（击杀后本次冷却归零）、★过载（伤害 +25% 但冷却 +15%） |
+
+  与 +13~+15 强化共用数据核心，形成"冲高强化还是做极品附魔"的取舍。低级/中级词条材料全自产，高级起必须探索/任务（与强化材料阶梯同轨）。对应模块物品按词条一件一个（`MMT_WeaponMod<词条名>`，挂 `ModuleExtension`，slotKey=WeaponEnchant），共 17 件。
+- **效果键清单**（`ModuleEffectKeys` 新增，纯数值词条 8 键 + 特殊机制 9 键）：
+  - 数值键：`WeaponDamageFactor`（锋利/重击/过载）、`WeaponHitChance`（精准）、`WeaponCooldownFactor`（轻巧/疾风/过载）、`WeaponWarmupFactor`（疾风）、`WeaponCritChance`（致命）、`WeaponArmorPen`（穿透）、`WeaponKnockback`（重击）
+  - 机制键（值>0 即启用，逻辑写在伤害补丁）：`WeaponEmp` / `WeaponIncendiary` / `WeaponLifeLeech` / `WeaponShieldBreaker` / `WeaponFrost` / `WeaponExecute` / `WeaponChainLightning` / `WeaponTimeFold`
 - 伤害挂钩 Harmony patch ×2（**实现前必须完成 §7 签名 spike**）：
-  1. 远程：`Projectile.GetDamageAmount` postfix 取发射装备 comp 乘系数（取不到则 `Verb.TryCastShot` 上下文缓存兜底）；
-  2. 近战：`Tool.AdjustedBaseMeleeDamageAmount` postfix。
+  1. 远程：`Projectile.GetDamageAmount` postfix 取发射装备 comp 乘系数（取不到则 `Verb.TryCastShot` 上下文缓存兜底）；★机制词条在命中补丁（`Projectile.Impact`）统一结算；
+  2. 近战：`Tool.AdjustedBaseMeleeDamageAmount` postfix；近战 ★机制在 `Verb_MeleeAttack` 伤害应用后结算。
+- **跨 Mod 兼容（硬性要求：强化体系对所有 mod 武器开放）**：
+  - comp 挂载补丁的 XPath 打 `Defs/ThingDef[weaponTags]` **全体武器**（不按 `MMT_` 前缀过滤），其它 mod 武器自动获得强化能力；补丁在游戏全部 mod 加载完后执行，天然覆盖后加载 mod 的 Def。
+  - 强化/附魔效果判定一律以"装备上是否存在 `CompWeaponEnhancement`"为准，不判 defName 前缀。
+  - **黑名单**：设置面板提供"排除其它 mod 武器"总开关（`weaponEnhanceVanillaOnly`，默认关=全兼容）；另在 XML 补丁中对明显不合适的类别（炮塔建筑武器、biocoded 绑定装备类）加 `PatchOperationConditional` 排除。
+  - **CE（Combat Extended）风险**：若玩家同时装 CE，其重写了弹道/伤害链路，`GetDamageAmount` postfix 可能不生效——实现时检测 `ModLister` 中 CE 存在则在设置面板标注"CE 环境下远程强化可能失效"，近战线不受影响。MMT 自身不声明 CE 依赖。
+  - 附魔槽位/强化标签显示走 `TransformLabel`，对任意 mod 武器 label 安全。
+- **护盾强化跨 Mod 兼容**：护盾强化 comp 挂载补丁打全体带 `CompProperties_ShieldBubble` 的 Apparel（含其它 mod 护盾腰带），规则：
+  - **MMT 护盾**：保持现有完整 15 级阶梯（电量上限/减耗/全部专有强化维度）；
+  - **非 MMT 护盾**：只开放两个通用维度——**护盾值**（每级能量上限 +8%）与**恢复效率**（每级充能/回充速率 +6%），满级 15 级即上限 ×2.2 / 恢复 ×1.9；不开放 MMT 专有维度（避免对未知 mod 护盾的机制做假设，CE/护盾类 mod 各自实现差异大时也只影响这两个数值，风险最小）；
+  - 判定按 def 是否 `MMT_` 前缀区分两档行为（此处前缀判定合法：决定的是"能力集"而非"是否生效"）；
+  - 设置面板共用 `weaponEnhanceVanillaOnly` 开关（勾上后非 MMT 护盾同样不挂 comp）。
 - 两个 JobDriver（Enhance / Enchant）+ JobDef `MMT_EnhanceWeapon` / `MMT_EnchantWeapon`。
 
 ### 配套资源/配方
@@ -77,8 +129,8 @@ MMT 目前无任何 ModSettings。新增：
 
 ### 贴图与校验
 
-- 强化台多朝向 6 张 + 淬火油 1 张 + 武器模块 3 张（走 rw-texture-design 流程）。
-- 校验套件：`tools/validate/weaponenhance.py`（comp 挂载补丁存在、成功率表长度=10、材料引用、贴图、JobDef driverClass 匹配）。
+- 强化台多朝向 6 张 + 淬火油 1 张 + 武器模块 17 张（走 rw-texture-design 流程，同档位模块共用底色、图标区分词条）。
+- 校验套件：`tools/validate/weaponenhance.py`（comp 挂载补丁存在、成功率表长度=15、材料阶梯表引用、17 词条模块与效果键一一对应、贴图、JobDef driverClass 匹配）。
 
 ---
 
@@ -105,6 +157,16 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | MMT_Site_RareDeposit 稀有资源点 | 富矿散点 + 远古合金 | 轻守卫（少量虫族或无） |
 
 折跃进入 / 选点 / 召回 / 临时站点回收全部走传送台现有分支，零改动。
+
+### 据点奖励档位（喂强化材料阶梯，见 §2）
+
+| 据点 | 主产出 | 强化阶梯对应 |
+|---|---|---|
+| 稀有资源点 | 远古合金×15-25 | +7~+9 材料 |
+| 轨道遗迹 | 远古碎晶×6-10 + 远古合金×5 | +10~+12 材料 |
+| 机械据点 | 远古碎晶×8-12 + 远古数据核心×1 | +13~+15 与特殊附魔材料 |
+
+除探索外，**任务线**为第二获取通道（见 §11.1"强化材料赏金任务"），保证不喜欢战斗的玩家也能冲高强化，但单位时间产出低于探索。
 
 ### 独占资源（`MMT_Items_Resource_Exploration.xml`）
 
@@ -313,7 +375,7 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | 研究加速装置 | `MMT_DatacoreBurner`：消耗数据核心×1 立即完成当前研究 25% 进度（每个核心限用一次的研究外挂） | 数据核心第二出口 | 中 |
 | 壁画系列 | 绘画用品消费端：画架配方 → 3 档 Beauty 建筑（速写/油画/巨作），后期财富与美观来源 | 绘画用品闭环 | 低 |
 | 兽脂蜡烛/肥皂 | 兽脂轻量消费：蜡烛（早期照明+美观）、肥皂（卫生向心情小加成） | 兽脂闭环（淬火油之外的轻出口） | 低 |
-| 自动化扩展 | 无人机站：自动屠宰/自动挤奶/自动收割（复用 AutoProcessor 进料口模式） | 电力+机器人部件消耗 | 中 |
+| 自动化扩展 | 见 §11.3（已按"不与现有自动设备职能重叠"规则重整：屠宰做成畜牧机器扩展、深层采矿做成自动采石机升级，不新增重复设备） | — | — |
 | 探索者传承 | 完成 N 次据点探索解锁殖民者永久 hediff"探索者"（移动+5%、射击+1） | 重复游玩激励 | 中 |
 
 ---
@@ -331,6 +393,7 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | 中期 | 贸易站台 | `MMT_TradePost`：提高商队到访频率 + 售价 +5%（美观/舒适度类被动建筑） | 消耗玻璃钢/金；低 |
 | 中期 | 期货合约台 | 锁定某资源 30 天收购价（价格高于市价 15% 但必须到期足量交付，违约扣好感） | 产量规划玩法；中 |
 | 后期 | 自动售货站 | `MMT_AutoSeller`：资源装进货舱，商队/轨道商路过时按市价自动结算扣货（挂机经济） | 电力+机器人部件；中 |
+| 后期 | 强化材料赏金任务 | QuestScriptDef：定居点发布委托（送货/剿匪/护卫），奖励 远古合金×5~8 / 远古碎晶×2~3，稀有档给数据核心×1；财富 15 万+开始刷 | +7 以上强化材料的任务通道（不打仗玩家的替代路径）；中 |
 | 后期 | 折跃贸易舱 | 传送台新分支：把售货舱折跃到友好定居点即时成交（**注意 1.7 地图小人 Dialog_Trade(settlement) 必 NRE，须走商队/世界交互路径，不可直接开交易窗口**） | 传送次数新出口；中 |
 | 后期 | 黑市中间人 | 稀有事件：中间人收购远古合金（数据核心仍不可交易，保住闭环），售价 ×2 但 -5 好感 | 独占资源有限出口；低 |
 | 终局 | 星际交易所 | 奇观激活后解锁：周期性大订单（反物质/α聚合物换 远古碎晶），探索之外的碎晶第三通道 | 与"贸易纪元"增益叠加；中 |
@@ -351,15 +414,18 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 
 ### 11.3 自动化（从单机到产线）
 
+> **自动化设计规则（避免功能重复）**：现有无人值守设备已覆盖 种植/收获（自动种植机）、奶/毛/蛋（畜牧机器）、矿石研磨/筛分（自动研磨机/自动筛子+进料口）、采石（自动采石机）、结晶培养（晶体培养舱）。**新候选不得与上述职能重叠；同类需求一律做成现有设备的模块/升级档位，不新增设备。**
+
 | 阶段 | 候选 | 机制 | 咬合与成本 |
 |---|---|---|---|
-| 前期 | 畜力/手动版补全 | 检查各链是否都有"手动→电动"过渡档，缺的手工版补齐（如手动筛粉已有？逐链核对） | 平滑曲线；低 |
-| 中期 | 自动烹饪机 | AutoProcessor 模式：输入生食材，定时出简单餐/精致餐（营养膏机模式改造） | 电力+食材；中 |
-| 中期 | 自动制药机 | 同上：草药→医药/药剂（已有电动制药台，补自动版） | 医药链；低 |
-| 中期 | 集中控制台 | `MMT_AutomationConsole`：一个 ITab 列出全图 AutoProcessor 系建筑的开关/进度/模块状态（免跑路巡检） | 机器人部件；中 |
-| 中期 | 堆垛无人机坞 | 小型飞行无人机（复用 LivestockMachine 的容器/放出模式？或简化 mote 动画）：自动把指定区域产物搬到储存区 | 机器人部件；高 |
+| 前期 | 手动档补全核对 | 逐链核对"手动→电动→自动"过渡档是否齐全，缺的手工版补齐 | 平滑曲线；低 |
+| 中期 | 自动烹饪机 | AutoProcessor 模式：输入生食材，定时出简单餐/精致餐（现有设备无烹饪职能） | 电力+食材；中 |
+| 中期 | 自动制药机 | AutoProcessor 模式：草药→医药/药剂（现有为电动制药台，无自动版，职能不重叠） | 医药链；低 |
+| 中期 | 畜牧机器·屠宰扩展 | **不新增设备**：给现有畜牧机器加"屠宰模式"开关（动物老死后自动屠宰出肉/皮），补上畜牧机器未覆盖的最后一环 | 复用 CompLivestockMachine；低 |
+| 中期 | 集中控制台 | `MMT_AutomationConsole`：一个 ITab 列出全图 AutoProcessor 系建筑的开关/进度/模块状态（免跑路巡检；管理工具非生产设备） | 机器人部件；中 |
+| 中期 | 堆垛无人机坞 | 小型飞行无人机：自动把指定区域产物搬到储存区（现有设备只管生产不管搬运，职能不重叠） | 机器人部件；高 |
 | 后期 | 炮塔自动装填机 | 相邻储存区的炮弹自动补给到 MMT 炮塔（检测弹药 comp 缺口，定时消耗储存） | 弹药链闭环；中 |
-| 后期 | 无人矿站 | 深层矿脉版全自动采掘（AutoChunkDrill 之上，直接挂矿脉，无需小人） | 电力阶梯压力测试；中 |
+| 后期 | 自动采石机·深层升级 | **不新增设备**：给现有自动采石机加升级模块/档位（消耗高级合金+机器人部件升级为"深层模式"，直采地下矿脉，产能翻倍） | 复用 MMT_AutoChunkDrill；中 |
 | 后期 | 流水线联动 | 相邻 AutoProcessor 建筑自动把产物推送进下游建筑输入仓（"传送带 lite"：不新增物流实体，只在 tick 里做容器间搬移） | 全链自动化质变；高 |
 | 终局 | 奇点供能自动化 | 奇观"能源纪元"激活后，全图自动设备功耗 -25%（与增益联动的第二条自动化福利） | 终局整合；低 |
 | 终局 | 风暴博弈 | 能量风暴中未防护自动设备停摆（§5 点名逻辑自然覆盖），阻尼器保护产线成为后期布局课题 | 威胁×自动化交叉；随风暴附带 |
