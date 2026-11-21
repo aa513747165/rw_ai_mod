@@ -79,10 +79,15 @@ namespace MyModeTest
 
         public override string GetInspectString()
         {
-            StringBuilder sb = new StringBuilder(base.GetInspectString());
+            string baseText = base.GetInspectString();
+            StringBuilder sb = new StringBuilder();
+            if (!baseText.NullOrEmpty())
+            {
+                sb.Append(baseText);
+                sb.AppendLine();
+            }
             int now = Find.TickManager.TicksGame;
             Trim(now);
-            sb.AppendLine();
             sb.Append("近10秒秒伤: " + (windowSum / (WindowTicks / 60f)).ToString("F1"));
             if (lastHit >= 0f && now - lastHitTick < 2500)
                 sb.Append("  |  最近一击: " + lastHit.ToString("F0"));
