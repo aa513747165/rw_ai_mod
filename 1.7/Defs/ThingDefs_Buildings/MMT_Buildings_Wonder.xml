@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 纪元奇点·四阶段奇观（设计方案 §4）：5×5 露天建造，逐阶段 gizmo 推进蓝图。
+       只有阶段一在建造菜单出现（研究 MMT_SingularityConstruction 解锁），后续阶段由 gizmo 落蓝图。 -->
+
+  <!-- 阶段一：奇点地基（土堆×2000、混凝土×400、Steel×300） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_WonderFoundation</defName>
+    <label>奇点地基</label>
+    <description>纪元奇点的地基工程：浇筑数千吨土方与混凝土，为承载奇点能量做准备。建成后由右键菜单（或建筑上的按钮）开始下一阶段建设。\n\n必须露天建造。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_WonderFoundation/MMT_WonderFoundation</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(6.4,6.4)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.9</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Rare</tickerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>15000</WorkToBuild>
+      <MaxHitPoints>2000</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <MMT_Dirt>2000</MMT_Dirt>
+      <MMT_Concrete>400</MMT_Concrete>
+      <Steel>300</Steel>
+    </costList>
+    <comps>
+      <li Class="MyModeTest.CompProperties_WonderStage">
+        <nextStage>MMT_WonderFrame</nextStage>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+    <constructEffect>ConstructDirt</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_SingularityConstruction</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <building/>
+  </ThingDef>
+
+  <!-- 阶段二：奇点框架（强化玻璃×300、金属罐×200、碳合金×150、金×50） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_WonderFrame</defName>
+    <label>奇点框架</label>
+    <description>纪元奇点的约束框架：强化玻璃与碳合金编织的能量约束网。建成后由建筑上的按钮开始下一阶段建设。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_WonderFrame/MMT_WonderFrame</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(6.4,6.4)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.9</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Rare</tickerType>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>20000</WorkToBuild>
+      <MaxHitPoints>2400</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <MMT_ReinforcedGlass>300</MMT_ReinforcedGlass>
+      <MMT_MetalCan>200</MMT_MetalCan>
+      <MMT_CarbonAlloy>150</MMT_CarbonAlloy>
+      <Gold>50</Gold>
+    </costList>
+    <comps>
+      <li Class="MyModeTest.CompProperties_WonderStage">
+        <nextStage>MMT_WonderCore</nextStage>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building/>
+  </ThingDef>
+
+  <!-- 阶段三：奇点核心（反物质×10、α聚合物×100、机器人部件×60、远古合金×80、太空零件×20） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_WonderCore</defName>
+    <label>奇点核心</label>
+    <description>纪元奇点的核心装置：反物质约束舱与远古合金稳定环。建成后由建筑上的按钮开始最终阶段建设。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_WonderCore/MMT_WonderCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(6.4,6.4)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.9</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Rare</tickerType>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>30000</WorkToBuild>
+      <MaxHitPoints>2800</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <MMT_Antimatter>10</MMT_Antimatter>
+      <MMT_AlphaPoly>100</MMT_AlphaPoly>
+      <MMT_RobotParts>60</MMT_RobotParts>
+      <MMT_AncientAlloy>80</MMT_AncientAlloy>
+      <MMT_SpacerComponent>20</MMT_SpacerComponent>
+    </costList>
+    <comps>
+      <li Class="MyModeTest.CompProperties_WonderStage">
+        <nextStage>MMT_Singularity</nextStage>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building/>
+  </ThingDef>
+
+  <!-- 阶段四（终态）：纪元奇点（氧化化合燃料×400、远古碎晶×30、绘画用品×50、铀×100）
+       激活条件：反物质燃料满（5）+ 蓄电 50000 Wd → 三选一永久纪元增益 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Singularity</defName>
+    <label>纪元奇点</label>
+    <description>人工奇点，MMT 工程的顶点。注满反物质燃料并蓄积 50000 Wd 电能后可点火启动，为本张地图带来永久的纪元增益（三选一：能源纪元/启迪纪元/丰饶纪元）。\n\n警告：反物质具有爆炸性，加注与存储请远离其它设施。</description>
+    <thingClass>MyModeTest.Building_Singularity</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_Singularity/MMT_Singularity</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(6.4,6.4)</drawSize>
+    </graphicData>
+    <size>(5,5)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.9</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>20000</WorkToBuild>
+      <MaxHitPoints>3200</MaxHitPoints>
+      <Flammability>0.1</Flammability>
+    </statBases>
+    <costList>
+      <MMT_OxidizedChemfuel>400</MMT_OxidizedChemfuel>
+      <MMT_ArchotechShard>30</MMT_ArchotechShard>
+      <MMT_PaintingSupplies>50</MMT_PaintingSupplies>
+      <Uranium>100</Uranium>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>5000</basePowerConsumption>
+      </li>
+      <!-- 激活用反物质燃料（容量 5，不随时间消耗；反物质易爆，搬运有风险） -->
+      <li Class="CompProperties_Refuelable">
+        <fuelCapacity>5</fuelCapacity>
+        <fuelConsumptionRate>0</fuelConsumptionRate>
+        <fuelFilter>
+          <thingDefs>
+            <li>MMT_Antimatter</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>false</showAllowAutoRefuelToggle>
+      </li>
+      <!-- 蓄电 50000 Wd（5000/天回充） -->
+      <li Class="MyModeTest.CompProperties_BuildingBattery">
+        <maxChargeWd>50000</maxChargeWd>
+        <chargeRateWdPerDay>5000</chargeRateWdPerDay>
+      </li>
+      <li Class="MyModeTest.CompProperties_WonderActivation">
+        <activationTicks>5000</activationTicks>
+        <requiredChargeWd>50000</requiredChargeWd>
+        <eras>
+          <li>
+            <condition>MMT_Condition_SingularityPower</condition>
+            <label>能源纪元</label>
+            <description>本图全部发电建筑输出 ×1.25。</description>
+          </li>
+          <li>
+            <condition>MMT_Condition_SingularityMind</condition>
+            <label>启迪纪元</label>
+            <description>本图殖民者获得启迪：研究速度 +25%、全局工作速度 +10%。</description>
+          </li>
+          <li>
+            <condition>MMT_Condition_SingularityHarvest</condition>
+            <label>丰饶纪元</label>
+            <description>本图植物生长速度 ×1.5。</description>
+          </li>
+        </eras>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+    </placeWorkers>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building/>
+  </ThingDef>
+</Defs>

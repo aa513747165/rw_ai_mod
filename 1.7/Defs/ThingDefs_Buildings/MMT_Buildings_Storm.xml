@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 风暴阻尼器（设计方案 §5）：开启并通电时，半径 12 格内建筑免疫能量风暴点名。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_StormDampener</defName>
+    <label>风暴阻尼器</label>
+    <description>释放反向谐振场中和能量风暴的过载脉冲。开启并通电时，半径 12 格内的建筑免疫能量风暴的故障点名。能量风暴期间太阳/风能仍会停摆——阻尼器只保护设备。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_StormDampener/MMT_StormDampener</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(3.0,3.0)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <tickerType>Normal</tickerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>4000</WorkToBuild>
+      <MaxHitPoints>250</MaxHitPoints>
+      <Flammability>0.3</Flammability>
+      <Mass>60</Mass>
+    </statBases>
+    <costList>
+      <MMT_ReinforcedGlass>40</MMT_ReinforcedGlass>
+      <Gold>15</Gold>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>800</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="MyModeTest.CompProperties_StormDampener">
+        <radius>12</radius>
+      </li>
+    </comps>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_StormShielding</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <!-- 1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 -->
+    <building/>
+  </ThingDef>
+</Defs>

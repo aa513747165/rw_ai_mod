@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 终局 GameCondition（设计方案 §4/§5）：奇观三纪元（永久，本地图）+ 能量风暴（1-2 天） -->
+
+  <GameConditionDef>
+    <defName>MMT_Condition_SingularityPower</defName>
+    <label>能源纪元</label>
+    <description>纪元奇点释放的稳定能源场笼罩着这片土地：全部发电建筑输出 ×1.25。</description>
+    <conditionClass>GameCondition</conditionClass>
+    <canBePermanent>true</canBePermanent>
+    <endMessage>能源纪元已终结。</endMessage>
+  </GameConditionDef>
+
+  <GameConditionDef>
+    <defName>MMT_Condition_SingularityMind</defName>
+    <label>启迪纪元</label>
+    <description>纪元奇点的低频谐振启迪着每一个殖民者：研究速度 +25%、全局工作速度 +10%。</description>
+    <conditionClass>MyModeTest.GameCondition_SingularityMind</conditionClass>
+    <canBePermanent>true</canBePermanent>
+    <endMessage>启迪纪元已终结。</endMessage>
+  </GameConditionDef>
+
+  <GameConditionDef>
+    <defName>MMT_Condition_SingularityHarvest</defName>
+    <label>丰饶纪元</label>
+    <description>纪元奇点的丰饶场滋养着土地：植物生长速度 ×1.5。</description>
+    <conditionClass>GameCondition</conditionClass>
+    <canBePermanent>true</canBePermanent>
+    <endMessage>丰饶纪元已终结。</endMessage>
+  </GameConditionDef>
+
+  <GameConditionDef>
+    <defName>MMT_EnergyStorm</defName>
+    <label>能量风暴</label>
+    <description>狂暴的能量乱流笼罩天空：太阳能与风能完全停摆，未受风暴阻尼器防护的电子设备会被周期性过载击穿。</description>
+    <conditionClass>MyModeTest.GameCondition_MMT_EnergyStorm</conditionClass>
+    <canBePermanent>false</canBePermanent>
+    <endMessage>能量风暴已经平息。</endMessage>
+  </GameConditionDef>
+
+  <!-- 能量风暴事件（财富 20 万+ 才会触发；频率受 Mod 设置倍率控制） -->
+  <IncidentDef>
+    <defName>MMT_Incident_EnergyStorm</defName>
+    <label>能量风暴</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>MyModeTest.IncidentWorker_EnergyStorm</workerClass>
+    <baseChance>2.0</baseChance>
+    <minRefireDays>20</minRefireDays>
+    <earliestDay>60</earliestDay>
+  </IncidentDef>
+
+  <!-- 启迪 Hediff（启迪纪元条件定期刷新）：研究 +25%、全局工作速度 +10%，2600 tick 自然消退 -->
+  <HediffDef>
+    <defName>MMT_Hediff_SingularityInsight</defName>
+    <label>奇点启迪</label>
+    <description>纪元奇点的谐振场让思维格外清晰：研究速度 +25%、全局工作速度 +10%。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>2600~2600</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <ResearchSpeed>1.25</ResearchSpeed>
+          <WorkSpeedGlobal>1.1</WorkSpeedGlobal>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>
