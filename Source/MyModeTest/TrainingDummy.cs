@@ -98,7 +98,7 @@ namespace MyModeTest
             Command_Action reset = new Command_Action();
             reset.defaultLabel = "清零承伤统计";
             reset.defaultDesc = "清空累计承伤与滚动窗口统计，重新开始测量。";
-            reset.icon = parent.def.uiIcon;
+            reset.icon = def.uiIcon;
             reset.action = delegate
             {
                 window.Clear();
