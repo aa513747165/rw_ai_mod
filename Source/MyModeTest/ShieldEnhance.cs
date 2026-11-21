@@ -127,16 +127,19 @@ namespace MyModeTest
             get { return NextLevel * Props.materialPerLevel; }
         }
 
-        /// <summary>强化到 targetLevel 级的成功率（XML 表缺项/越界时回退内置默认表）。</summary>
+        /// <summary>强化到 targetLevel 级的成功率（XML 表缺项/越界时回退内置默认表；结果 × 设置倍率）。</summary>
         public float SuccessRateFor(int targetLevel)
         {
             if (targetLevel < 1 || targetLevel > Props.maxLevel)
                 return 0f;
+            float baseRate;
             if (Props.successRates != null && Props.successRates.Count >= targetLevel)
-                return Props.successRates[targetLevel - 1];
-            if (targetLevel <= DefaultRates.Length)
-                return DefaultRates[targetLevel - 1];
-            return 0f;
+                baseRate = Props.successRates[targetLevel - 1];
+            else if (targetLevel <= DefaultRates.Length)
+                baseRate = DefaultRates[targetLevel - 1];
+            else
+                return 0f;
+            return MMTSettings.AdjustEnhanceRate(baseRate);
         }
 
         /// <summary>掷一次强化：按下一级成功率判定，成功则等级 +1。材料由作业侧先行消耗，本方法只负责判定。</summary>

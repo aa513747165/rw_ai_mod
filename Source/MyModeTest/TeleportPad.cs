@@ -63,10 +63,10 @@ namespace MyModeTest
             get { return teleportCharges; }
         }
 
-        /// <summary>传送次数上限：1 + 增值模块数（模块槽上限在 XML 配置，最多 10）。</summary>
+        /// <summary>传送次数上限：1 + 增值模块数（模块槽上限在 XML 配置，最多 10）+ 设置加成（0-9）。</summary>
         public int MaxTeleportCharges
         {
-            get { return 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraTeleportCharges) : 0); }
+            get { return 1 + (slotsComp != null ? (int)slotsComp.GetEffectSum(ModuleEffectKeys.ExtraTeleportCharges) : 0) + MMTSettings.TeleportBonusCharges; }
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)

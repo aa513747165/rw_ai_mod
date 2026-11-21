@@ -19,17 +19,30 @@ namespace MyModeTest
     /// </summary>
     public static class BreachChargeUtil
     {
-        // 财富门槛与封顶（各补丁共用）
-        private const float WealthThreshold = 100000f;  // 出现门槛：10万
-        private const float WealthCap = 1000000f;       // 概率封顶：100万
+        // 财富门槛/封顶读设置（门槛 5万-50万，封顶 = 门槛 × 10）；曲线端点仍为代码常量
+        private static float WealthThreshold
+        {
+            get { return MMTSettings.Instance != null ? MMTSettings.Instance.breachWealthThreshold : 100000f; }
+        }
 
-        // 配发概率曲线：10万起步5% -> 100万封顶50%
+        private static float WealthCap
+        {
+            get { return WealthThreshold * 10f; }
+        }
+
+        // 配发概率曲线：门槛起步5% -> 封顶50%
         private const float EquipMin = 0.05f;
         private const float EquipMax = 0.50f;
 
-        // 主动炸建筑概率曲线（每次决策掷点，故取保守值）：10万起步2% -> 100万封顶20%
+        // 主动炸建筑概率曲线（每次决策掷点，故取保守值）：门槛起步2% -> 封顶20%
         private const float AggroMin = 0.02f;
         private const float AggroMax = 0.20f;
+
+        // 概率倍率（0-3，0 = 不出现）
+        private static float ChanceFactor
+        {
+            get { return MMTSettings.Instance != null ? MMTSettings.Instance.breachChanceFactor : 1f; }
+        }
 
         private static ThingDef bombDef;
         private static HediffDef carrierHediff;
@@ -40,11 +53,11 @@ namespace MyModeTest
         public static ThingDef ProjDef => projDef ?? (projDef = DefDatabase<ThingDef>.GetNamed("MMT_Proj_WallBreachCharge"));
         public static JobDef ThrowJobDef => throwJobDef ?? (throwJobDef = DefDatabase<JobDef>.GetNamed("MMT_ThrowBreachCharge"));
 
-        // 配发概率：破墙者全概率由调用方决定，这里只给基础曲线
-        public static float EquipChance() => WealthCurve(EquipMin, EquipMax);
+        // 配发概率：破墙者全概率由调用方决定，这里只给基础曲线（× 设置倍率）
+        public static float EquipChance() => WealthCurve(EquipMin, EquipMax) * ChanceFactor;
 
-        // 主动炸建筑概率
-        public static float AggroChance() => WealthCurve(AggroMin, AggroMax);
+        // 主动炸建筑概率（× 设置倍率）
+        public static float AggroChance() => WealthCurve(AggroMin, AggroMax) * ChanceFactor;
 
         // 财富线性曲线：<10万为0，10万~100万线性增长，100万封顶
         private static float WealthCurve(float min, float max)
@@ -87,6 +100,8 @@ namespace MyModeTest
     {
         public static void Postfix(Pawn __result)
         {
+            // 总开关（入口第一行廉价短路）
+            if (!MMTSettings.BreachChargeEnabled) return;
             Pawn pawn = __result;
             // 过滤：人类 + 敌对玩家
             if (pawn?.RaceProps == null || !pawn.RaceProps.Humanlike) return;
@@ -112,6 +127,8 @@ namespace MyModeTest
     {
         public static bool Prefix(Pawn pawn, ref Job __result)
         {
+            // 总开关（入口第一行廉价短路）
+            if (!MMTSettings.BreachChargeEnabled) return true;
             // 仅处理：爆墙炸弹携带者 + 敌对玩家
             if (!BreachChargeUtil.IsCarrier(pawn)) return true;
             if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayerSilentFail)) return true;
@@ -144,6 +161,8 @@ namespace MyModeTest
     {
         public static void Postfix(Pawn pawn, ref Verb __result)
         {
+            // 总开关（入口第一行廉价短路）
+            if (!MMTSettings.BreachChargeEnabled) return;
             if (__result?.verbProps?.defaultProjectile == BreachChargeUtil.ProjDef) return;
             Verb bombVerb = BreachChargeUtil.GetBombVerb(pawn);
             if (bombVerb != null && bombVerb.Available()) __result = bombVerb;
