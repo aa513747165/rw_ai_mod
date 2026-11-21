@@ -176,8 +176,8 @@ def validate_shieldtiers() -> None:
         fail("JobDefs 缺少 MMT_EnhanceChargingStation")
     assert_equal(
         child_text(jobs["MMT_EnhanceChargingStation"], "driverClass"),
-        "MyModeTest.JobDriver_EnhanceChargingStation",
-        "强化作业 driverClass",
+        "MyModeTest.JobDriver_EnhanceGeneric",
+        "强化作业 driverClass（通用驱动，护盾/武器强化台共用）",
     )
 
     # ---- C# 关键实现 ----
@@ -207,7 +207,7 @@ def validate_shieldtiers() -> None:
     if "MaxChargeFactor" not in recharge_cs:
         fail("Rechargeable.cs 电量上限未接入强化倍率（MaxChargeFactor）")
     station_cs = read_text(CS_STATION)
-    for token in ("JobDriver_EnhanceChargingStation", "MMT_EnhanceChargingStation", "强化设备"):
+    for token in ("MMT_EnhanceChargingStation", "强化设备"):
         if token not in station_cs:
             fail(f"ChargingStation.cs 缺少: {token}")
 

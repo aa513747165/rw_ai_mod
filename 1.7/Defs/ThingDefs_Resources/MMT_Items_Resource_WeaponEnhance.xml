@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 淬火油（设计方案 §2）：武器附魔模块的通用底料，全部 17 个模块配方均消耗。
+       配方挂石化产品实验室：兽脂×5 + 氧化化合燃料×2 → 3 份 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_QuenchOil</defName>
+    <label>淬火油</label>
+    <description>以兽脂与氧化化合燃料调配的高性能淬火介质，是武器附魔模块封装的必需底料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_QuenchOil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Industrial</techLevel>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.2</Flammability>
+      <Mass>0.3</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_FuelCat</li>
+    </thingCategories>
+    <stackLimit>75</stackLimit>
+  </ThingDef>
+</Defs>

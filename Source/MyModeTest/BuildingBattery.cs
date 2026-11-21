@@ -108,12 +108,12 @@ namespace MyModeTest
             storedChargeWd = Mathf.Min(Props.maxChargeWd, storedChargeWd + EffectiveChargeRateWdPerDay / 60000f * delta);
         }
 
-        /// <summary>消耗蓄电；不足时不扣任何电并返回 false。</summary>
+        /// <summary>消耗蓄电；不足时不扣任何电并返回 false。负数为回充（探索扫描失败的退电路径用），自动截断到容量上限。</summary>
         public bool TryDrain(float amount)
         {
             if (storedChargeWd < amount)
                 return false;
-            storedChargeWd -= amount;
+            storedChargeWd = Mathf.Clamp(storedChargeWd - amount, 0f, Props.maxChargeWd);
             return true;
         }
 

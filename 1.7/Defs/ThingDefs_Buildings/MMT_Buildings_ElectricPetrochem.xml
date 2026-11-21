@@ -54,6 +54,7 @@
       <li>MMT_ExtractBiomatterCorpse</li>
       <li>MMT_ExtractBiomatterMeat</li>
       <li>MMT_RefineCrystalEssence</li>
+      <li>MMT_MakeQuenchOil</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

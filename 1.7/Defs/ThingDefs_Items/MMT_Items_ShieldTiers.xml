@@ -114,6 +114,26 @@
       </li>
       <li Class="MyModeTest.CompProperties_ShieldEnhancement">
         <materialDef>MMT_EnergyCrystal</materialDef>
+        <materialTiers>
+          <li><maxLevel>3</maxLevel><options><li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li></options></li>
+          <li><maxLevel>6</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li>
+            <li><defs><li>MMT_Tungsten</li><li>MMT_Titanium</li></defs><count>2</count></li>
+          </options></li>
+          <li><maxLevel>9</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>5</count></li>
+            <li><defs><li>MMT_AncientAlloy</li></defs><count>3</count></li>
+          </options></li>
+          <li><maxLevel>12</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>8</count></li>
+            <li><defs><li>MMT_ArchotechShard</li></defs><count>2</count></li>
+          </options></li>
+          <li><maxLevel>15</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>10</count></li>
+            <li><defs><li>MMT_ArchotechShard</li></defs><count>3</count></li>
+            <li><defs><li>MMT_AncientDatacore</li></defs><count>1</count></li>
+          </options></li>
+        </materialTiers>
         <!-- 成功率：1-6 级 100%，7-8 级 80%，9-10 级 60%，11-12 级 40%，13 级 20%，14 级 10%，15 级 1% -->
         <successRates>
           <li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li>
@@ -186,6 +206,26 @@
       </li>
       <li Class="MyModeTest.CompProperties_ShieldEnhancement">
         <materialDef>MMT_EnergyCrystal</materialDef>
+        <materialTiers>
+          <li><maxLevel>3</maxLevel><options><li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li></options></li>
+          <li><maxLevel>6</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li>
+            <li><defs><li>MMT_Tungsten</li><li>MMT_Titanium</li></defs><count>2</count></li>
+          </options></li>
+          <li><maxLevel>9</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>5</count></li>
+            <li><defs><li>MMT_AncientAlloy</li></defs><count>3</count></li>
+          </options></li>
+          <li><maxLevel>12</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>8</count></li>
+            <li><defs><li>MMT_ArchotechShard</li></defs><count>2</count></li>
+          </options></li>
+          <li><maxLevel>15</maxLevel><options>
+            <li><defs><li>MMT_EnergyCrystal</li></defs><count>10</count></li>
+            <li><defs><li>MMT_ArchotechShard</li></defs><count>3</count></li>
+            <li><defs><li>MMT_AncientDatacore</li></defs><count>1</count></li>
+          </options></li>
+        </materialTiers>
         <!-- 成功率：1-6 级 100%，7-8 级 80%，9-10 级 60%，11-12 级 40%，13 级 20%，14 级 10%，15 级 1% -->
         <successRates>
           <li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li>

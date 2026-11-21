@@ -50,6 +50,7 @@
       <li>MMT_AdvWeaponCraftingTable</li>
       <li>MMT_MechWeaponTable</li>
       <li>MMT_AmmoBench</li>
+      <li>MMT_WeaponEnhanceBench</li>
     </fixedBillGiverDefs>
     <verb>锻造</verb>
     <gerund>锻造中</gerund>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 冰霜减速（冰霜附魔模块命中特效）：移速 -1.0（约 -20%），持续 180 tick（3 秒），重复命中刷新 -->
+  <HediffDef>
+    <defName>MMT_Hediff_FrostSlow</defName>
+    <label>冰霜减速</label>
+    <description>被低温弹头命中，肢体僵硬，移动速度降低。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>180~180</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>-1.0</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

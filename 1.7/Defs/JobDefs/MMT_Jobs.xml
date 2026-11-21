@@ -43,11 +43,39 @@
     <reportString>正在取出充能设备（TargetA）。</reportString>
   </JobDef>
 
-  <!-- 强化充能设备作业：搬运足量能量结晶到充能台边，消耗材料并掷成功率强化台内护盾（JobDriver_EnhanceChargingStation） -->
+  <!-- 强化充能设备作业：按材料阶梯搬运足量材料到充能台边，消耗材料并掷成功率强化台内护盾（通用驱动 JobDriver_EnhanceGeneric） -->
   <JobDef>
     <defName>MMT_EnhanceChargingStation</defName>
-    <driverClass>MyModeTest.JobDriver_EnhanceChargingStation</driverClass>
+    <driverClass>MyModeTest.JobDriver_EnhanceGeneric</driverClass>
     <reportString>正在强化设备（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 装载武器作业：把小人身上（主手/背包）的武器装入武器强化台（JobDriver_LoadEnhanceBench） -->
+  <JobDef>
+    <defName>MMT_LoadEnhanceBench</defName>
+    <driverClass>MyModeTest.JobDriver_LoadEnhanceBench</driverClass>
+    <reportString>正在装载武器（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 取出武器作业：从武器强化台取回武器（JobDriver_UnloadEnhanceBench） -->
+  <JobDef>
+    <defName>MMT_UnloadEnhanceBench</defName>
+    <driverClass>MyModeTest.JobDriver_UnloadEnhanceBench</driverClass>
+    <reportString>正在取出武器（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 强化武器作业：按材料阶梯搬运足量材料到强化台边，消耗材料并掷成功率（通用驱动 JobDriver_EnhanceGeneric） -->
+  <JobDef>
+    <defName>MMT_EnhanceWeapon</defName>
+    <driverClass>MyModeTest.JobDriver_EnhanceGeneric</driverClass>
+    <reportString>正在强化武器（TargetA）。</reportString>
+  </JobDef>
+
+  <!-- 附魔武器作业：取附魔模块搬到强化台安装词条（JobDriver_EnchantWeapon） -->
+  <JobDef>
+    <defName>MMT_EnchantWeapon</defName>
+    <driverClass>MyModeTest.JobDriver_EnchantWeapon</driverClass>
+    <reportString>正在附魔武器（TargetA）。</reportString>
   </JobDef>
 
   <!-- 装填药品作业：取药品搬到医疗注射炮台装入药仓（JobDriver_LoadMedicalTurret） -->

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 探索独占资源（设计方案 §3）：仅能从深空扫描据点/任务奖励获得，喂强化材料阶梯 +7 以上段位与奇观造价 -->
+
+  <!-- 远古合金：+7~+9 强化材料 / 奇观框架造价 / 高级附魔模块材料 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AncientAlloy</defName>
+    <label>远古合金</label>
+    <description>遗迹中回收的远古文明合金锭，冶炼工艺早已失传。强度远超任何现代合金，是高级强化与奇观建造的关键材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_AncientAlloy</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Archotech</techLevel>
+    <statBases>
+      <MarketValue>35</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.8</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_MetalsCat</li>
+    </thingCategories>
+    <stackLimit>75</stackLimit>
+    <deepCommonality>0</deepCommonality>
+    <generateCommonality>0</generateCommonality>
+  </ThingDef>
+
+  <!-- 远古碎晶：+10~+15 强化材料 / 奇观核心造价 / 极品附魔模块材料 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ArchotechShard</defName>
+    <label>远古碎晶</label>
+    <description>超凡智能造物崩解后的结晶残片，内部仍有微弱的能量脉络在律动。是顶级武器强化与纪元奇点的核心材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ArchotechShard</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Archotech</techLevel>
+    <statBases>
+      <MarketValue>90</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>0.4</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_MetalsCat</li>
+    </thingCategories>
+    <stackLimit>50</stackLimit>
+    <deepCommonality>0</deepCommonality>
+    <generateCommonality>0</generateCommonality>
+  </ThingDef>
+
+  <!-- 远古数据核心：不可交易（强制闭环）；+13~+15 强化与极品附魔词条材料 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_AncientDatacore</defName>
+    <label>远古数据核心</label>
+    <description>完好保存的远古文明数据核心，封存着超越时代的知识。没有任何商人出得起它的价格——也没有商人敢收。是顶级附魔与终极强化的必需材料。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_AncientDatacore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Archotech</techLevel>
+    <statBases>
+      <MarketValue>150</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Mass>1</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_MetalsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <tradeability>None</tradeability>
+    <deepCommonality>0</deepCommonality>
+    <generateCommonality>0</generateCommonality>
+  </ThingDef>
+</Defs>
