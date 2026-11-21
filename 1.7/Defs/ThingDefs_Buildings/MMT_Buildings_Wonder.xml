@@ -86,8 +86,10 @@
         <nextStage>MMT_WonderCore</nextStage>
       </li>
     </comps>
+    <designationCategory>MMT_Production</designationCategory>
     <placeWorkers>
       <li>PlaceWorker_NotUnderRoof</li>
+      <li>MyModeTest.PlaceWorker_WonderHidden</li>
     </placeWorkers>
     <constructEffect>ConstructMetal</constructEffect>
     <building/>
@@ -130,8 +132,10 @@
         <nextStage>MMT_Singularity</nextStage>
       </li>
     </comps>
+    <designationCategory>MMT_Production</designationCategory>
     <placeWorkers>
       <li>PlaceWorker_NotUnderRoof</li>
+      <li>MyModeTest.PlaceWorker_WonderHidden</li>
     </placeWorkers>
     <constructEffect>ConstructMetal</constructEffect>
     <building/>
@@ -214,8 +218,10 @@
         </eras>
       </li>
     </comps>
+    <designationCategory>MMT_Production</designationCategory>
     <placeWorkers>
       <li>PlaceWorker_NotUnderRoof</li>
+      <li>MyModeTest.PlaceWorker_WonderHidden</li>
     </placeWorkers>
     <constructEffect>ConstructMetal</constructEffect>
     <building/>

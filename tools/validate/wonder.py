@@ -32,6 +32,13 @@ def validate_wonder() -> None:
                      next_stage, f"{stage} 下一阶段")
         pw = child_text(node, "placeWorkers/li")
         assert_equal(pw, "PlaceWorker_NotUnderRoof", f"{stage} 必须露天")
+        # 阶段二起：必须有 designationCategory（1.7 蓝图 def 只对 BuildableByPlayer 生成，否则 gizmo 推进 NRE），
+        # 并挂 PlaceWorker_WonderHidden 从建造菜单隐藏（只能由上一阶段 gizmo 推进）
+        if next_stage is not None and stage != STAGE_CHAIN[0][0]:
+            workers = [li.text for li in node.findall("placeWorkers/li")]
+            if "MyModeTest.PlaceWorker_WonderHidden" not in workers:
+                fail(f"{stage} 缺少 PlaceWorker_WonderHidden（会出现在建造菜单，可跳过阶段链）")
+            assert_equal(child_text(node, "designationCategory"), "MMT_Production", f"{stage} 建造分类（蓝图生成必需）")
         tex = f"1.7/Textures/Things/Building/Production/{stage}/{stage}.png"
         if not Path(tex).exists():
             fail(f"{stage} 缺少贴图 {tex}")
@@ -44,6 +51,10 @@ def validate_wonder() -> None:
         fail("缺少终态 MMT_Singularity")
     final = defs["MMT_Singularity"]
     assert_equal(child_text(final, "thingClass"), "MyModeTest.Building_Singularity", "终态 thingClass")
+    final_workers = [li.text for li in final.findall("placeWorkers/li")]
+    if "MyModeTest.PlaceWorker_WonderHidden" not in final_workers:
+        fail("终态缺少 PlaceWorker_WonderHidden（会出现在建造菜单，可跳过阶段链）")
+    assert_equal(child_text(final, "designationCategory"), "MMT_Production", "终态建造分类（蓝图生成必需）")
     comp_classes = [li.attrib.get("Class", "") for li in final.findall("comps/li")]
     if comp_classes.count("MyModeTest.CompProperties_BuildingBattery") != 1:
         fail("终态蓄电 comp 必须恰好一个（同建筑不得重复挂载）")

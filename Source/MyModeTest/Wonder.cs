@@ -30,6 +30,20 @@ namespace MyModeTest
     }
 
     /// <summary>
+    /// 奇观二~四阶段的 PlaceWorker：从建造菜单隐藏（IsBuildDesignatorVisible=false），
+    /// 只能通过上一阶段建筑的 gizmo 推进。注意 designationCategory 必须保留——
+    /// 1.7 蓝图/框架 def 只对 BuildableByPlayer（=designationCategory 非空）的建筑生成，
+    /// 缺了它 GenConstruct.PlaceBlueprintForBuild 会因 blueprintDef 为 null 抛 NRE。
+    /// </summary>
+    public class PlaceWorker_WonderHidden : PlaceWorker
+    {
+        public override bool IsBuildDesignatorVisible(BuildableDef def)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
     /// 奇观阶段推进 Comp（前 3 阶段通用）：gizmo"开始下一阶段建设" → 本建筑消失 +
     /// 原地放下一阶段蓝图（蓝图造价逐阶段另付，由建造系统正常收料施工）。
     /// </summary>

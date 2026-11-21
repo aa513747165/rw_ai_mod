@@ -1821,7 +1821,7 @@ INFRA_PATCH_XML = "1.7/Patches/MMT_Patch_VanillaCategories.xml"
 INFRA_RESEARCH_DIR = "1.7/Defs/ResearchProjectDefs"
 INFRA_BUILDING_DIR = "1.7/Defs/ThingDefs_Buildings"
 INFRA_RESEARCH_TOTAL = 113  # 终局内容包 +5 项（武器强化/武器附魔/风暴防护/深空扫描/奇点工程）；原 104 项注释历史见 git； 含药品链 13 项与无中生有链 4 项（MMT_Research_OrePowder.xml，新增精密筛分）；已剔除 5 个无解锁内容的武器研究；新增人格核心合成/KPV重机枪塔/核能发电/研究设施 3 项/折跃传送 1 项/部署式护盾 1 项/仿生链 22 项/充能技术 1 项/灵能护盾技术 1 项/充能增效 1 项/能量聚能 1 项；毒品扩展链 5 项（毒株种植 III、毒品 VII~X）；防卫炮塔精简后删除 攻城/火炮II/自动炮塔III/火箭II/火箭III 5 项；护盾梯队 3 项（护符工艺/电池护盾技术/远古护盾技术）；次元传送模块移除后删除次元传送研究 1 项
-INFRA_WORKTABLE_TOTAL = 69  # 该计数此前已漂移（旧 HEAD 实计 72）；终局内容包 +4（强化台/扫描仪/阻尼器/奇点地基，阶段二三四为例外）后实计 69； 终局内容包 +4（武器强化台/深空扫描仪/风暴阻尼器/奇点地基；奇点阶段二三四为例外）； 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 3（原煤/聚合物/核能发电机）、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
+INFRA_WORKTABLE_TOTAL = 72  # 该计数此前已漂移（旧 HEAD 实计 72）；终局内容包 +4（强化台/扫描仪/阻尼器/奇点地基）后实计 69；阶段二三四恢复 designationCategory（蓝图生成必需，菜单由 PlaceWorker_WonderHidden 隐藏）后 +3 实计 72； 终局内容包 +4（武器强化台/深空扫描仪/风暴阻尼器/奇点地基；奇点阶段二三四为例外）； 含药品链 5 台、手压油泵与无中生有链 7 台（研磨机/筛子各 2 + 自动化 3，增效模块已改为物品）、采石机 3（手动/电动/自动）、电力 3（原煤/聚合物/核能发电机）、研究设施 3、折跃传送台 1、仿生链工作台 6（含器官培养舱）、充能台 1、能量聚能发电站 1、点火充能装置 1、医疗注射炮台 1、高级药物合成台 1、敌意感应开关 1（Power 分类）、治疗炮塔 1（Security 分类）；临时护盾投影器非建造建筑不计入
 WORKGIVERS_XML = "1.7/Defs/WorkGiverDefs/MMT_WorkGivers.xml"
 RECIPE_DEFS_DIR = "1.7/Defs/RecipeDefs"
 WORKGIVER_EXPECTED_WORKTYPES = {
@@ -4762,9 +4762,6 @@ def validate_infrastructure() -> None:
                 continue
             if node.findtext("defName") == "MMT_ShieldProjector":
                 # 临时护盾投影器由发生器生成、非玩家建造，无 designationCategory
-                continue
-            if node.findtext("defName") in ("MMT_WonderFrame", "MMT_WonderCore", "MMT_Singularity"):
-                # 纪元奇点阶段二/三/四由上一阶段 gizmo 落蓝图、不进建造菜单，无 designationCategory
                 continue
             if node.findtext("defName") == "MMT_EnemyDetectorSwitch":
                 # 敌意感应开关照抄原版电力开关，沿用原版 Power 分类
