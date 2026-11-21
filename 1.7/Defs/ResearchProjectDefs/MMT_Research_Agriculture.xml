@@ -22,7 +22,7 @@
     <tab>MMT_ResearchTab</tab>
     <prerequisites>
       <li>MMT_AgricultureBasic</li>
-      <li>Microelectronics</li>
+      <li>MicroelectronicsBasics</li>
     </prerequisites>
     <researchViewX>9.00</researchViewX>
     <researchViewY>9.00</researchViewY>

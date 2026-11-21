@@ -17,6 +17,7 @@ description: 为本 Mod（MMT，RimWorld 1.7）设计/生成物品与建筑贴�
 - Def 侧引用：`graphicData.texPath` 指向贴图路径（无 `.png`），`shaderType` 用 `CutoutComplex` 时游戏按 `<texPath>_m` 约定自动加载遮罩；`drawSize` 与格数一致，单向建筑加 `<drawRotated>false</drawRotated>`。
 - 遮罩规则（CutoutComplex，红/绿通道）：红色区域 = 主材质色（stuffColor/thingColor），绿色区域 = 次要色，黑 = 不染、白灰 = 按明度染色。不需要染色的建筑也建议保留全黑 `_m` 以统一约定（仓库现有建筑均带 `_m`）。
 - 特殊材质（如 Shield/ 下的护盾）有成对的 `.dds.zstd`，属个别压缩格式，普通物品/建筑一律用 PNG。
+- **俯视多朝向派生**：`east = south 逆时针旋转 90°`（PIL `rotate(90, expand=True)`，与 MMT_Matterfab 贴图逐像素比对实测一致）、`north = south 转 180°`。矩形建筑的 east 画布是竖版：宽 = 进深格数×128，高 = 面宽格数×128（如 3×2 建筑：south 384×256、east 256×384）。
 - HSK 参考贴图（只读！）：`Hardcore-SK/Mods/` 下各模组的 Textures 目录；本仓库已复制的授权贴图也可作风格基准。
 
 ## 工作流程

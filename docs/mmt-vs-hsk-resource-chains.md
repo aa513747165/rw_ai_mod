@@ -2629,9 +2629,9 @@
 | 人造器官组装台(`MMT_SyntheticsTable`) | (3,1) | 塑料×65 + 人造纤维×20 + 集成电路×6 + 高级零部件×5 + [金属/木质]×135 | 850W / 5500 | — | — | — | MMT 新增 |
 | 神经机械体工作台(`MMT_UpgradingStation`) | (3,1) | 人造纤维×45 + 微芯片集成电路×5 + 高级零部件×7 + 先进机械组件×10 + [金属/木质]×250 | 1350W / 9000 | cybernetics workbench(`UpgradingStation`) | 人造纤维(SyntheticFibers)×45 + 微芯片集成电路(Microchips)×5 + 高级零部件(ComponentSpacer)×7 + 先进机械组件(AdvMechanism)×10 + [RuggedMetallic]×250 | 1350W / 9000 | 一致 |
 | 充能台(`MMT_ChargingStation`) | (1,1) | 钢(Steel)×60 + 工业零件(ComponentIndustrial)×4 + 电线×10 | 1500W / 3000 | — | — | — | MMT 新增 |
-| 自动采石机(`MMT_AutoChunkDrill`) | (1,1) | 钢(Steel)×150 + 机械组件×4 + 工业零件(ComponentIndustrial)×4 + 电子元件×2 | 800W / 6000 | — | — | — | MMT 新增 |
+| 自动采石机(`MMT_AutoChunkDrill`) | (2,2) | 钢(Steel)×150 + 机械组件×4 + 工业零件(ComponentIndustrial)×4 + 电子元件×2 | 800W / 6000 | — | — | — | MMT 新增 |
 | 手动采石机(`MMT_ChunkDrill`) | (2,2) | 原木(WoodLog)×40 + 钢(Steel)×60 | 2500 | — | — | — | MMT 新增 |
-| 电动采石机(`MMT_ElectricChunkDrill`) | (1,1) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
+| 电动采石机(`MMT_ElectricChunkDrill`) | (2,2) | 钢(Steel)×100 + 机械组件×2 + 工业零件(ComponentIndustrial)×2 | 400W / 4000 | — | — | — | MMT 新增 |
 | 手动混凝土搅拌器(`MMT_ConcreteMixer`) | (2,1) | 工业零件(ComponentIndustrial)×5 + [金属]×135 | 1600 | hand concrete mixer(`ConcreteMixer`) | 工业零件(ComponentIndustrial)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×135 | 1600 | HSK 多 机械组件(Mechanism)×5 |
 | 电动混凝土搅拌机(`MMT_EConcreteMixer`) | (2,1) | 合成橡胶×45 + 工业零件(ComponentIndustrial)×10 + 电子元件×5 + 机械组件×5 + [金属]×115 | 500W / 5000 | electric concrete mixer(`EConcreteMixer`) | 合成橡胶(Rubber)×45 + 工业零件(ComponentIndustrial)×10 + 电子元件(ElectronicComponents)×5 + 机械组件(Mechanism)×5 + [StrongMetallic]×115 | 500W / 5000 | 一致 |
 | 高级药物合成台(`MMT_AdvDrugLab`) | (3,2) | 塑料×40 + 玻璃块×30 + 微芯片集成电路×2 + 高级零部件×6 + 太空零件(ComponentSpacer)×5 + [金属]×100 | 1500W / 6000 | synthetic organ assembler(`TableSynthetics`) | 塑料(Plastic)×65 + 人造纤维(SyntheticFibers)×20 + 集成电路(Electronics)×6 + 高级零部件(ComponentSpacer)×5 + [RuggedMetallic/木质]×135 | 850W / 5500 | 材料量 100 vs 135；塑料 40 vs 65；MMT 多 玻璃块×30；MMT 多 微芯片集成电路×2；高级零部件 6 vs 5；HSK 多 人造纤维(SyntheticFibers)×20；HSK 多 集成电路(Electronics)×6；功耗 1500 vs 850；工作量 6000 vs 5500 |
@@ -2649,6 +2649,7 @@
 | 小型治疗炮塔(`MMT_HealTurret`) | — | 钢(Steel)×20 + 太空零件(ComponentSpacer)×1 + 工业零件(ComponentIndustrial)×2 + [金属]×30 | 100W / 1800 | — | — | — | MMT 新增 |
 | 医疗炮塔投射器(`MMT_HealTurret_Gun`) | — | — | — | — | — | — | MMT 新增 |
 | 玻璃制作台(`MMT_GlassworksTable`) | (3,1) | 工业零件(ComponentIndustrial)×10 + [金属]×130 | 400W / 1600 | glassworks table(`GlassworkTable`) | 工业零件(ComponentIndustrial)×10 + 机械组件(Mechanism)×8 + [RuggedMetallic]×130 | 400W / 1600 | HSK 多 机械组件(Mechanism)×8 |
+| 玻璃天窗框架(`MMT_SkylightFrame`) | (1,1) | 玻璃块×5 | 150 | — | — | — | MMT 新增 |
 | 电动研磨机(`MMT_ElectricGrinder`) | (1,1) | 机械组件×4 + 工业零件(ComponentIndustrial)×2 + [金属]×50 | 300W / 1500 | — | — | — | MMT 新增 |
 | 手动研磨机(`MMT_HandGrinder`) | (1,1) | [石质]×50 | 800 | — | — | — | MMT 新增 |
 | 畜牧机器(`MMT_LivestockMachine`) | (2,2) | 钢(Steel)×120 + 工业零件(ComponentIndustrial)×8 + 电线×20 + 玻璃块×15 | 800W / 8000 | — | — | — | MMT 新增 |
@@ -2685,5 +2686,5 @@
 | 窑炉(`MMT_CharcoalKiln`) | (3,3) | [石质/MMT_Bricks]×180 | 3000 | — | — | — | MMT 新增 |
 | 手工锯台(`MMT_HandSawmill`) | (3,1) | [木质]×120 | 700 | hand sawmill(`TableSawmillHand`) | [WoodLogs]×120 | 700 | 一致 |
 
-建筑对比小结：一致 9 / 差异 16 / MMT 新增 42（共 67）。
+建筑对比小结：一致 9 / 差异 16 / MMT 新增 43（共 68）。
 

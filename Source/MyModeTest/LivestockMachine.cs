@@ -11,7 +11,7 @@ namespace MyModeTest
     /// 畜牧机器建筑：三层绘制——舱内层（底，建筑主 graphic）→ 舱内动物 → 外壳玻璃层（顶）。
     /// 动物为静态贴图（缓存其生命阶段身体 Graphic 手动 DrawMesh），超过舱体容量的动物按 bodySize 等比缩小；
     /// 朝向跟随建筑旋转：南→南、北→北、东→东（头朝舱门/屏幕右）、西→西。
-    /// 收容与生产逻辑在 CompLivestockMachine，装卸在两个 JobDriver。
+    /// 收容与生产逻辑在 CompLivestockMachine：放入为右键直选直接传送入舱，放出为 JobDriver 作业。
     /// </summary>
     public class Building_LivestockMachine : Building
     {
@@ -65,13 +65,14 @@ namespace MyModeTest
                 return;
             Vector3 pos = drawLoc;
             pos.y = drawLoc.y + 0.02f; // 垫高到舱内层之上、玻璃层之下
-            pos.z -= 0.3f;
+            pos.z -= 0.1f; // 动物略偏下站稳，但不出底框
             Graphics.DrawMesh(MeshPool.plane10,
                 Matrix4x4.TRS(pos, Quaternion.identity, new Vector3(g.drawSize.x * s, 1f, g.drawSize.y * s)), mat, 0);
         }
 
         /// <summary>绘制外壳玻璃层（顶层）。手动 DrawMesh 而非 Graphic.Draw：手动加载的 Graphic 无 GraphicData，
-        /// DrawWorker 会按 rot.AsQuat 旋转网格，对预烘焙的三朝向贴图是错的；这里固定 identity，由 MatAt 选朝向材质。</summary>
+        /// DrawWorker 会按 rot.AsQuat 旋转网格，对预烘焙的三朝向贴图是错的；这里固定 identity，由 MatAt 选朝向材质。
+        /// 注：曾试把外壳立成竖直背景墙（后仰 8°），Waylith 相机接近俯视，竖直面片被压成一条细线，已回退平铺。</summary>
         private void DrawShell(Vector3 drawLoc)
         {
             if (shellGraphic == null)
@@ -119,9 +120,6 @@ namespace MyModeTest
 
         /// <summary>每轮产肉量 = bodySize × 本系数。</summary>
         public float meatPerBodySize = 5f;
-
-        /// <summary>小人引导动物入舱的工时 tick。</summary>
-        public int leadTicks = 600;
 
         public CompProperties_LivestockMachine()
         {
@@ -460,19 +458,20 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>放入入口：列出地图上可引导的本派系动物；没有则提示，多只则弹选择框。</summary>
+        /// <summary>放入入口：列出地图上可引导的本派系动物；没有则提示，多只则弹选择框。
+        /// 选中后直接传送入舱（无需小人跑腿）。</summary>
         private void StartLoadSelection(Pawn selPawn)
         {
-            List<Pawn> animals = FindLoadableAnimals(selPawn);
+            List<Pawn> animals = FindLoadableAnimals();
             if (animals.Count == 0)
             {
-                Messages.Message("附近没有可放入的动物（需要本派系、未倒地、可到达且未被预定的动物）",
+                Messages.Message("没有可放入的动物（需要本派系、未倒地的动物）",
                     selPawn, MessageTypeDefOf.RejectInput, false);
                 return;
             }
             if (animals.Count == 1)
             {
-                OrderLoad(selPawn, animals[0]);
+                TeleportIntoMachine(animals[0]);
                 return;
             }
             List<FloatMenuOption> options = new List<FloatMenuOption>();
@@ -480,13 +479,13 @@ namespace MyModeTest
             {
                 Pawn local = animal;
                 options.Add(new FloatMenuOption(animal.LabelCap + "（" + animal.KindLabel + "）",
-                    delegate { OrderLoad(selPawn, local); }));
+                    delegate { TeleportIntoMachine(local); }));
             }
             Find.WindowStack.Add(new FloatMenu(options));
         }
 
-        /// <summary>收集地图上可放入的动物：本派系、动物、未倒地、未禁止、可到达且可预定。</summary>
-        private List<Pawn> FindLoadableAnimals(Pawn selPawn)
+        /// <summary>收集可放入的动物：本派系、动物、存活未倒地。</summary>
+        private List<Pawn> FindLoadableAnimals()
         {
             List<Pawn> list = new List<Pawn>();
             foreach (Pawn p in parent.Map.mapPawns.AllPawnsSpawned)
@@ -496,24 +495,22 @@ namespace MyModeTest
                 // 流程节点：只能放入自己的动物
                 if (p.Faction != Faction.OfPlayer)
                     continue;
-                if (p.Downed || p.Dead || p.IsForbidden(selPawn))
-                    continue;
-                if (!selPawn.CanReach(p, PathEndMode.ClosestTouch, Danger.Deadly))
-                    continue;
-                if (!selPawn.CanReserve(p, 1, -1, null, false))
+                if (p.Downed || p.Dead)
                     continue;
                 list.Add(p);
             }
-            list.SortBy(p => p.Position.DistanceToSquared(selPawn.Position));
+            list.SortBy(p => p.Label);
             return list;
         }
 
-        /// <summary>派放入作业：targetA=动物，targetB=畜牧机器。</summary>
-        private void OrderLoad(Pawn pawn, Pawn animal)
+        /// <summary>选中的动物直接传送入舱：DeSpawn 后存入内置容器。</summary>
+        private void TeleportIntoMachine(Pawn animal)
         {
-            Job job = JobMaker.MakeJob(MMT_LivestockDefOf.MMT_LoadLivestockMachine, animal, parent);
-            job.count = 1; // 1.7 自定义作业必须显式 count
-            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+            if (animal == null || animal.Dead || animal.Downed || ContainedAnimal != null)
+                return;
+            animal.DeSpawn();
+            if (!TryAcceptAnimal(animal))
+                GenSpawn.Spawn(animal, parent.Position, parent.Map); // 入舱失败兜底放回，防动物丢失
         }
 
         /// <summary>派放出作业：targetA=畜牧机器。</summary>
@@ -562,65 +559,6 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 放入动物作业（targetA=动物，targetB=畜牧机器）：
-    /// 走到动物旁 → 短暂引导（进度条）→ 动物入舱（DeSpawn 后存入容器）。
-    /// </summary>
-    public class JobDriver_LoadLivestockMachine : JobDriver
-    {
-        private CompLivestockMachine Machine
-        {
-            get
-            {
-                Thing t = job.GetTarget(TargetIndex.B).Thing;
-                return t is ThingWithComps twc ? twc.TryGetComp<CompLivestockMachine>() : null;
-            }
-        }
-
-        private Pawn Animal
-        {
-            get { return job.GetTarget(TargetIndex.A).Thing as Pawn; }
-        }
-
-        public override bool TryMakePreToilReservations(bool errorOnFailed)
-        {
-            // 只预定动物不预定设备（带燃料仓的设备常被加油作业长期预定；舱位冲突由最终 toil 复检兜底）
-            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
-        }
-
-        protected override IEnumerable<Toil> MakeNewToils()
-        {
-            this.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            this.FailOnBurningImmobile(TargetIndex.B);
-            // 舱内已有动物（别人抢先放入）则中止
-            this.FailOn(() => Machine == null || Machine.ContainedAnimal != null);
-            // 动物死亡/倒地/被禁则中止
-            this.FailOn(() => Animal == null || Animal.Dead || Animal.Downed || Animal.IsForbidden(pawn));
-            // 走到动物旁（动物会游走，ClosestTouch 会持续重寻路）
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch);
-            // 引导：短工时 + 进度条；期间动物跑出触及范围则中止
-            int leadTicks = Machine?.Props.leadTicks ?? 600;
-            Toil lead = Toils_General.Wait(leadTicks, TargetIndex.B);
-            lead.FailOnDespawnedNullOrForbidden(TargetIndex.B);
-            lead.FailOn(() => Machine == null || Machine.ContainedAnimal != null);
-            lead.FailOn(() => Animal == null || Animal.Dead || Animal.Downed
-                || !Animal.Position.InHorDistOf(pawn.Position, 3f));
-            lead.WithProgressBarToilDelay(TargetIndex.B);
-            yield return lead;
-            // 流程结束：动物入舱
-            yield return Toils_General.DoAtomic(delegate
-            {
-                CompLivestockMachine machine = Machine;
-                Pawn animal = Animal;
-                if (machine == null || animal == null || animal.Dead || animal.Downed || machine.ContainedAnimal != null)
-                    return;
-                animal.DeSpawn();
-                if (!machine.TryAcceptAnimal(animal))
-                    GenSpawn.Spawn(animal, pawn.Position, pawn.Map); // 入舱失败兜底放回，防动物丢失
-            });
-        }
-    }
-
-    /// <summary>
     /// 放出动物作业（targetA=畜牧机器）：走到机器旁放出动物到相邻空格。
     /// </summary>
     public class JobDriver_UnloadLivestockMachine : JobDriver
@@ -659,8 +597,6 @@ namespace MyModeTest
     {
         /// <summary>畜牧机器（建筑）。</summary>
         public static ThingDef MMT_LivestockMachine;
-        /// <summary>放入动物作业。</summary>
-        public static JobDef MMT_LoadLivestockMachine;
         /// <summary>放出动物作业。</summary>
         public static JobDef MMT_UnloadLivestockMachine;
 

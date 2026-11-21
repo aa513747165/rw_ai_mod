@@ -16,11 +16,13 @@
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(2,2)</drawSize>
     </graphicData>
+    <!-- 建筑栏图标用外壳贴图（Inner 是舱内地板层，直接当图标很难看） -->
+    <uiIconPath>Things/Building/Production/MMT_LivestockMachine/MMT_LivestockMachine_Shell_south</uiIconPath>
     <size>(2,2)</size>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <pathCost>70</pathCost>
-    <fillPercent>0.5</fillPercent>
+    <fillPercent>1</fillPercent>
     <!-- 可旋转（R 键切换三朝向贴图，西自动镜像东），默认朝南 -->
     <rotatable>true</rotatable>
     <defaultPlacingRot>South</defaultPlacingRot>
@@ -60,9 +62,9 @@
             <li>Hay</li>
             <li>Kibble</li>
           </thingDefs>
-          <thingCategories>
+          <categories>
             <li>PlantFoodRaw</li>
-          </thingCategories>
+          </categories>
         </fuelFilter>
         <fuelLabel>饲料储量</fuelLabel>
         <fuelGizmoLabel>饲料</fuelGizmoLabel>
@@ -78,7 +80,6 @@
         <feedNutritionPerUnit>0.05</feedNutritionPerUnit>
         <meatCycleDays>1</meatCycleDays>
         <meatPerBodySize>5</meatPerBodySize>
-        <leadTicks>600</leadTicks>
       </li>
       <!-- 增效模块槽：超频（产出提速 +10%/个）与增值（产出 +1 份/个），各最多 5 -->
       <li Class="MyModeTest.CompProperties_ModuleSlots">

@@ -69,9 +69,9 @@
       <texPath>Things/Building/Production/MMT_ElectricChunkDrill/MMT_ElectricChunkDrill</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(1,1)</drawSize>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.5</fillPercent>
@@ -133,9 +133,9 @@
       <texPath>Things/Building/Production/MMT_AutoChunkDrill/MMT_AutoChunkDrill</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
-      <drawSize>(1,1)</drawSize>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.5</fillPercent>

@@ -58,6 +58,8 @@ def validate_autofarm() -> None:
     assert_equal(child_text(farm, "tickerType"), "Normal", "tickerType")
     assert_equal(child_text(farm, "designationCategory"), "MMT_Production", "designationCategory")
     assert_equal(child_text(farm, "hasInteractionCell"), "true", "hasInteractionCell")
+    # 出料口必须在 5x5 占地外（中心格外扩 3 格），否则产物会被 Near 散落到机身上
+    assert_equal(child_text(farm, "interactionCellOffset"), "(0,0,-3)", "interactionCellOffset")
     if "MMT_AutoFarming" not in li_values(farm, "researchPrerequisites"):
         fail("研究前置缺少 MMT_AutoFarming")
 
@@ -82,7 +84,7 @@ def validate_autofarm() -> None:
         fail("研究缺少 MMT_AutoFarming")
     proj = researches["MMT_AutoFarming"]
     prereqs = li_values(proj, "prerequisites")
-    for need in ("MMT_AgricultureBasic", "Microelectronics"):
+    for need in ("MMT_AgricultureBasic", "MicroelectronicsBasics"):
         if need not in prereqs:
             fail(f"MMT_AutoFarming 前置缺少 {need}")
     assert_equal(child_text(proj, "tab"), "MMT_ResearchTab", "研究 tab")

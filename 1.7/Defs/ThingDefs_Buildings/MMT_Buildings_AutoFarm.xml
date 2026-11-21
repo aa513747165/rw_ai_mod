@@ -20,10 +20,15 @@
     <pathCost>50</pathCost>
     <fillPercent>0.5</fillPercent>
     <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <!-- 出料口：5x5 占地中心格外扩 3 格才到机外（原 (0,0,-1) 落在占地内，产物会被 Near 散落到随机格），
+         南侧正中正对贴图底部出料格栅，随建筑朝向旋转 -->
+    <interactionCellOffset>(0,0,-3)</interactionCellOffset>
     <designationCategory>MMT_Production</designationCategory>
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
+    <!-- DrawAt 实时绘制 25 格植物：BuildingBase 默认 MapMeshOnly 只烘焙底图不调用 DrawAt，
+         必须 MapMeshAndRealTime（底图仍烘焙进静态网格，DrawAt 每帧被调，同畜牧机器） -->
+    <drawerType>MapMeshAndRealTime</drawerType>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>

@@ -19,13 +19,19 @@ namespace MyModeTest
         private const float BaseFertility = 3f;
         /// <summary>燃料舱有肥料时的额外肥力系数。</summary>
         private const float FuelFertilityBonus = 1f;
-        /// <summary>植物图形整体缩放系数：盘面内径约 0.6 格，成熟植株略收进盘内。</summary>
-        private const float PlantFitScale = 0.75f;
+        /// <summary>植物贴图最长边封顶（格）：盘体外沿约 0.66 格、盘间距约 0.6 格，
+        /// 封顶后成熟植株收在盘沿内，不会溢出到相邻培养盘或机外。</summary>
+        private const float MaxPlantDrawSize = 0.55f;
 
-        // 土盘中心相对格子几何中心的偏移（单位：格，南向贴图实测，盘阵内缩、外圈偏约半格）
-        // 使用时按建筑朝向旋转到世界方向
-        private static readonly float[] PlateOffsetX = { +0.50f, +0.01f, -0.01f, -0.02f, -0.52f }; // 列（西→东）
-        private static readonly float[] PlateOffsetZ = { +0.52f, +0.15f, 0f, 0f, -0.53f };        // 行（南→北）
+        // 各朝向贴图的盘心实测坐标（单位：格，建筑中心为原点，列为西→东、行为南→北）。
+        // 三张贴图是独立美术资源、并非严格旋转对称，故逐朝向建表（土壤区域直方图加权中心）；
+        // 西向不单独出图，复用东向表做水平镜像（Graphic_Multi 西向即东向贴图左右翻转）。
+        private static readonly float[] TrayX_South = { -1.298f, -0.650f, 0.003f, 0.653f, 1.309f };
+        private static readonly float[] TrayZ_South = { -1.079f, -0.473f, 0.115f, 0.712f, 1.307f };
+        private static readonly float[] TrayX_East  = { -1.375f, -0.750f, -0.125f, 0.502f, 1.130f };
+        private static readonly float[] TrayZ_East  = { -1.058f, -0.443f, 0.172f, 0.770f, 1.349f };
+        private static readonly float[] TrayX_North = { -1.365f, -0.705f, -0.035f, 0.636f, 1.299f };
+        private static readonly float[] TrayZ_North = { -1.141f, -0.576f, -0.007f, 0.571f, 1.137f };
 
         // 当前种植的植物 def（全局一种，gizmo 切换；null = 未选种）
         private ThingDef selectedPlant;
@@ -40,7 +46,8 @@ namespace MyModeTest
         private CompBreakdownable breakdownComp;
         private CompRefuelable fuelComp;
 
-        /// <summary>全部可播种植物（sowTags 含 "Ground"，与原版种植区选种同口径）；延迟扫描一次。</summary>
+        /// <summary>全部可播种植物（sowTags 含 "Ground" 或 "Hydroponic"，本机为封闭式水培，
+        /// 两者都支持——如辉晶花这类水培限定作物）；延迟扫描一次。</summary>
         private static List<ThingDef> sowablePlants;
 
         public static List<ThingDef> SowablePlants
@@ -52,7 +59,8 @@ namespace MyModeTest
                     sowablePlants = new List<ThingDef>();
                     foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
                     {
-                        if (def.plant != null && def.plant.sowTags != null && def.plant.sowTags.Contains("Ground"))
+                        if (def.plant != null && def.plant.sowTags != null
+                            && (def.plant.sowTags.Contains("Ground") || def.plant.sowTags.Contains("Hydroponic")))
                             sowablePlants.Add(def);
                     }
                     sowablePlants.SortBy(def => def.label);
@@ -150,7 +158,6 @@ namespace MyModeTest
             Material mat = selectedPlant.graphic.MatSingleFor(this);
             float baseAlt = AltitudeLayer.Building.AltitudeFor() + 0.05f;
             Vector2 drawSize = selectedPlant.graphic.drawSize;
-            float rotAngle = Rotation.AsAngle;
             Vector3 center = DrawPos;
             for (int i = 0; i < cells.Count; i++)
             {
@@ -158,19 +165,48 @@ namespace MyModeTest
                 if (growth <= 0.01f)
                     continue;
                 // 原版植物同款缩放曲线：随生长度从幼苗到成株
-                float scale = selectedPlant.plant.visualSizeRange.LerpThroughRange(growth) * PlantFitScale;
-                Vector3 cellCenter = cells[i].ToVector3ShiftedWithAltitude(baseAlt);
-                // 土盘在贴图内缩（外圈偏约半格）：求格子在机器本地坐标（南向为基准）的列/行，
-                // 查实测偏移表对齐盘心，再随建筑朝向旋回世界方向
-                Vector3 local = (cellCenter - center).RotatedBy(-rotAngle);
-                int col = Mathf.Clamp(Mathf.RoundToInt(local.x + 2f), 0, 4);
-                int row = Mathf.Clamp(Mathf.RoundToInt(local.z + 2f), 0, 4);
-                Vector3 plateOffset = new Vector3(PlateOffsetX[col], 0f, PlateOffsetZ[row]).RotatedBy(rotAngle);
+                float scale = selectedPlant.plant.visualSizeRange.LerpThroughRange(growth);
+                // 盘面内缩、盘沿仅约 0.66 格：封顶最长边，防止成熟植株溢出培养盘
+                float w = drawSize.x * scale;
+                float h = drawSize.y * scale;
+                float maxSide = Mathf.Max(w, h);
+                if (maxSide > MaxPlantDrawSize)
+                {
+                    float k = MaxPlantDrawSize / maxSide;
+                    w *= k;
+                    h *= k;
+                }
+                // 盘面在贴图内缩且三朝向贴图各自独立：按格子在占地内的列/行
+                // 查当前朝向的实测盘心表，直接得到世界坐标（贴图按朝向绘制，无需再旋转）
+                Vector3 local = cells[i].ToVector3Shifted() - center;
+                int col = Mathf.Clamp(Mathf.RoundToInt(local.x) + 2, 0, 4);
+                int row = Mathf.Clamp(Mathf.RoundToInt(local.z) + 2, 0, 4);
+                float tx, tz;
+                switch (Rotation.AsInt)
+                {
+                    case 0: tx = TrayX_North[col]; tz = TrayZ_North[row]; break;
+                    case 1: tx = TrayX_East[col]; tz = TrayZ_East[row]; break;
+                    case 2: tx = TrayX_South[col]; tz = TrayZ_South[row]; break;
+                    default: tx = -TrayX_East[4 - col]; tz = TrayZ_East[row]; break; // 西 = 东贴图水平镜像
+                }
                 Matrix4x4 matrix = Matrix4x4.TRS(
-                    cellCenter + plateOffset,
+                    new Vector3(center.x + tx, baseAlt, center.z + tz),
                     Quaternion.identity,
-                    new Vector3(drawSize.x * scale, 1f, drawSize.y * scale));
+                    new Vector3(w, 1f, h));
                 Graphics.DrawMesh(MeshPool.plane10, matrix, mat, 0);
+            }
+        }
+
+        // 未选种时的默认 gizmo 图标（原版种植区"选择种植植物"同款；null 图标会画成红 X）
+        private static Texture2D defaultPlantIcon;
+
+        private static Texture2D DefaultPlantIcon
+        {
+            get
+            {
+                if (defaultPlantIcon == null)
+                    defaultPlantIcon = ContentFinder<Texture2D>.Get("UI/Commands/SetPlantToGrow");
+                return defaultPlantIcon;
             }
         }
 
@@ -182,7 +218,7 @@ namespace MyModeTest
             {
                 defaultLabel = selectedPlant == null ? "选择种植植物" : "种植: " + selectedPlant.label,
                 defaultDesc = "选择本机自动种植与收获的植物。支持所有可种植植物，切换后重新播种。",
-                icon = selectedPlant != null ? selectedPlant.uiIcon : null,
+                icon = selectedPlant != null ? selectedPlant.uiIcon : DefaultPlantIcon,
                 action = OpenPlantMenu,
             };
             yield return selectPlant;

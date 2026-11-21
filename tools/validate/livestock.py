@@ -88,7 +88,7 @@ def validate_livestock() -> None:
     for need in ("Hay", "Kibble"):
         if need not in fuel_defs:
             fail(f"饲料仓过滤器缺少: {need}")
-    fuel_cats = li_values(fuel_node, "fuelFilter/thingCategories")
+    fuel_cats = li_values(fuel_node, "fuelFilter/categories")
     if "PlantFoodRaw" not in fuel_cats:
         fail("饲料仓过滤器缺少 PlantFoodRaw 类别")
     tabs = li_values(machine, "inspectorTabs")
@@ -107,13 +107,15 @@ def validate_livestock() -> None:
 
     # ---- JobDef ----
     jobs = def_map(parse_xml(JOBS_XML))
-    for job_def, driver in (
-        ("MMT_LoadLivestockMachine", "MyModeTest.JobDriver_LoadLivestockMachine"),
-        ("MMT_UnloadLivestockMachine", "MyModeTest.JobDriver_UnloadLivestockMachine"),
-    ):
-        if job_def not in jobs:
-            fail(f"JobDefs 缺少 {job_def}")
-        assert_equal(child_text(jobs[job_def], "driverClass"), driver, f"{job_def} driverClass")
+    # 放入为右键直选直接传送（无 JobDef）；放出为作业
+    if "MMT_LoadLivestockMachine" in jobs:
+        fail("放入动物已改直接传送，JobDefs 不应再有 MMT_LoadLivestockMachine")
+    unload = jobs.get("MMT_UnloadLivestockMachine")
+    if unload is None:
+        fail("JobDefs 缺少 MMT_UnloadLivestockMachine")
+    else:
+        assert_equal(child_text(unload, "driverClass"), "MyModeTest.JobDriver_UnloadLivestockMachine",
+                     "MMT_UnloadLivestockMachine driverClass")
 
     # ---- C# 关键实现 ----
     cs = read_text(CS_FILE)
@@ -122,7 +124,7 @@ def validate_livestock() -> None:
         "CompProperties_LivestockMachine",
         "CompLivestockMachine",
         "LivestockProductSource",
-        "JobDriver_LoadLivestockMachine",
+        "TeleportIntoMachine",
         "JobDriver_UnloadLivestockMachine",
         "MMT_LivestockDefOf",
         "MMT_LivestockMachine_Shell",
