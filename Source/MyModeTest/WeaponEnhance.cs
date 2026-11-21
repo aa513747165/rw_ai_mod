@@ -869,8 +869,10 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>近战命中特效结算（含吸血/击退，近战专属词条在这里消费）。</summary>
-    [HarmonyPatch(typeof(Verb_MeleeAttack), "ApplyMeleeDamageToTarget")]
+    /// <summary>近战命中特效结算（含吸血/击退，近战专属词条在这里消费）。
+    /// 1.7 基类 Verb_MeleeAttack.ApplyMeleeDamageToTarget 是抽象方法（无方法体，补丁会炸 PatchAll），
+    /// 必须打具体实现子类 Verb_MeleeAttackDamage。</summary>
+    [HarmonyPatch(typeof(Verb_MeleeAttackDamage), "ApplyMeleeDamageToTarget")]
     public static class Patch_WeaponOnHitMelee
     {
         public static void Postfix(Verb_MeleeAttack __instance, LocalTargetInfo target, DamageWorker.DamageResult __result)
