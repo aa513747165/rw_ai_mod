@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 深空扫描仪（设计方案 §3）：蓄电充满 + 消耗 1 个矿物声纳模块启动扫描，
+       1 天后在世界地图距家 6-30 格处生成探索据点（稀有资源点/轨道遗迹/机械据点，30 天过期）。
+       模块槽可装处理速度模块缩短扫描时间。折跃进入/召回走传送台现有链路。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_DeepSpaceScanner</defName>
+    <label>深空扫描仪</label>
+    <description>向深空发射探测脉冲的大型相控阵，能定位轨道残骸与失落据点的微弱信号。\n\n蓄电充满（30000 Wd）且地图上有矿物声纳模块时可启动扫描：消耗全部蓄电与 1 个声纳模块，1 天后在世界地图上标出一处探索据点（30 天有效）。安装处理速度模块可缩短扫描时间。\n\n据点守卫森严，但藏有外界无法生产的远古材料——那是武器高级强化与纪元奇点的关键。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_DeepSpaceScanner/MMT_DeepSpaceScanner</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(4.6,4.6)</drawSize>
+    </graphicData>
+    <size>(3,3)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <pathCost>70</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <rotatable>true</rotatable>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <tickerType>Normal</tickerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>8000</WorkToBuild>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <Mass>200</Mass>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+      <MMT_MineralSonarModule>10</MMT_MineralSonarModule>
+      <MMT_SpacerComponent>6</MMT_SpacerComponent>
+      <Gold>20</Gold>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>3000</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Breakdownable" />
+      <!-- 蓄电 30000 Wd（3000/天回充）；扫描一次清空 -->
+      <li Class="MyModeTest.CompProperties_BuildingBattery">
+        <maxChargeWd>30000</maxChargeWd>
+        <chargeRateWdPerDay>3000</chargeRateWdPerDay>
+      </li>
+      <!-- 超频模块：扫描提速 +10%/个，最多 5 个（与自动加工设备共用 MMT_OverclockModule） -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>Overclock</key><max>5</max></li>
+        </slotLimits>
+      </li>
+      <li Class="MyModeTest.CompProperties_DeepSpaceScanner">
+        <scanDays>1</scanDays>
+        <sonarModulesPerScan>1</sonarModulesPerScan>
+      </li>
+    </comps>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_ModuleSlots</li>
+    </inspectorTabs>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisites>
+      <li>MMT_DeepSpaceScan</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+    <!-- 1.7 BuildingBase 不再自带 BuildingProperties，必须显式声明 -->
+    <building/>
+  </ThingDef>
+</Defs>

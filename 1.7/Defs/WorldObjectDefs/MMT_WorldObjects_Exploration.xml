@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 探索据点 SitePart（设计方案 §3）：守卫部分复用原版 MechCluster（休眠机械群），
+       奖励部分为自定义 Stockpile worker（生成沙袋围起的远古材料堆）。据点 30 天过期。
+       奖励档位喂强化材料阶梯：资源点→+7~+9 材料；轨道遗迹→+10~+12；机械据点→+13~+15 与极品附魔 -->
+
+  <!-- 稀有资源点：远古合金×15-25（轻守卫） -->
+  <SitePartDef>
+    <defName>MMT_SitePart_RareDeposit</defName>
+    <label>稀有资源点</label>
+    <description>一处被遗弃的矿脉富集点，散落着外界无法冶炼的远古合金。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteRareDeposit</siteTexture>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <rewards>
+          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>15~25</countRange></li>
+          <li><thingDef>MMT_SpacerComponent</thingDef><countRange>2~4</countRange></li>
+        </rewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+
+  <!-- 轨道遗迹：远古碎晶×6-10 + 远古合金×5（原版休眠机械群守卫） -->
+  <SitePartDef>
+    <defName>MMT_SitePart_OrbitalRuinCache</defName>
+    <label>轨道遗迹物资舱</label>
+    <description>坠落轨道站的物资舱，封存着远古文明的碎晶储备。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteOrbitalRuin</siteTexture>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <rewards>
+          <li><thingDef>MMT_ArchotechShard</thingDef><countRange>6~10</countRange></li>
+          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>5~5</countRange></li>
+          <li><thingDef>MMT_SpacerComponent</thingDef><countRange>3~6</countRange></li>
+        </rewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+
+  <!-- 机械据点：远古碎晶×8-12 + 远古数据核心×1（大参数机械集群守卫） -->
+  <SitePartDef>
+    <defName>MMT_SitePart_StrongholdCache</defName>
+    <label>机械据点核心库</label>
+    <description>机械集群的中枢库房，深处藏有一枚完好的远古数据核心。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteMechStronghold</siteTexture>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <rewards>
+          <li><thingDef>MMT_ArchotechShard</thingDef><countRange>8~12</countRange></li>
+          <li><thingDef>MMT_AncientDatacore</thingDef><countRange>1~1</countRange></li>
+          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>4~8</countRange></li>
+        </rewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+</Defs>
