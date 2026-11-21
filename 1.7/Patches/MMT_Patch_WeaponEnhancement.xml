@@ -76,9 +76,13 @@
        目标：全体带原版 CompShield（RimWorld.CompProperties_Shield）的 Apparel，
        排除已挂 MMT 强化 comp 的（MMT 自家护盾走 CompShieldPack，本就不含 CompShield，天然不命中）。
        非 MMT 护盾只开放护盾值/恢复效率两个维度（CompShield 的 EnergyMax/EnergyGainPerTick 补丁）。 -->
-  <Operation Class="PatchOperationAdd">
-    <xpath>Defs/ThingDef[comps/li[@Class="RimWorld.CompProperties_Shield"] and not(comps/li[@Class="MyModeTest.CompProperties_ShieldEnhancement"])]/comps</xpath>
-    <value>
+  <!-- 原版 XML 写 Class="CompProperties_Shield"（无命名空间），其它 mod 可能带命名空间，
+       故用 contains 匹配；无匹配时 PatchOperationAdd 会整体失败，外层 Conditional 兜底 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[comps/li[contains(@Class,"CompProperties_Shield")] and not(comps/li[@Class="MyModeTest.CompProperties_ShieldEnhancement"])]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[comps/li[contains(@Class,"CompProperties_Shield")] and not(comps/li[@Class="MyModeTest.CompProperties_ShieldEnhancement"])]/comps</xpath>
+      <value>
       <li Class="MyModeTest.CompProperties_ShieldEnhancement">
         <materialTiers>
           <li>
@@ -118,6 +122,7 @@
           </li>
         </materialTiers>
       </li>
-    </value>
+      </value>
+    </match>
   </Operation>
 </Patch>

@@ -761,16 +761,16 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>远程伤害：Projectile.get_DamageAmount（1.7 为属性）× 强化伤害倍率。</summary>
+    /// <summary>远程伤害：Projectile.get_DamageAmount（1.7 为 int 属性）× 强化伤害倍率（四舍五入取整）。</summary>
     [HarmonyPatch(typeof(Projectile), "get_DamageAmount")]
     public static class Patch_WeaponDamageRanged
     {
-        public static void Postfix(Projectile __instance, ref float __result)
+        public static void Postfix(Projectile __instance, ref int __result)
         {
             CompWeaponEnhancement comp = WeaponEnhancePatches.ActiveEnhancement(
                 __instance == null ? null : WeaponEnhancePatches.ProjectileEquipment(__instance));
             if (comp != null)
-                __result *= comp.DamageFactor;
+                __result = UnityEngine.Mathf.RoundToInt(__result * comp.DamageFactor);
         }
     }
 

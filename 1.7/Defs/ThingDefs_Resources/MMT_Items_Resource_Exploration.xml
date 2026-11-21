@@ -22,7 +22,7 @@
       <Mass>0.8</Mass>
     </statBases>
     <thingCategories>
-      <li>MMT_MetalsCat</li>
+      <li>MMT_SuperMaterialCat</li>
     </thingCategories>
     <stackLimit>75</stackLimit>
     <deepCommonality>0</deepCommonality>
@@ -49,7 +49,7 @@
       <Mass>0.4</Mass>
     </statBases>
     <thingCategories>
-      <li>MMT_MetalsCat</li>
+      <li>MMT_SuperMaterialCat</li>
     </thingCategories>
     <stackLimit>50</stackLimit>
     <deepCommonality>0</deepCommonality>
@@ -76,7 +76,7 @@
       <Mass>1</Mass>
     </statBases>
     <thingCategories>
-      <li>MMT_MetalsCat</li>
+      <li>MMT_SuperMaterialCat</li>
     </thingCategories>
     <stackLimit>10</stackLimit>
     <tradeability>None</tradeability>

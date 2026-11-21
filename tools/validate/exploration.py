@@ -46,7 +46,8 @@ def validate_exploration() -> None:
             continue
         node = sites[name]
         assert_equal(child_text(node, "workerClass"), "MyModeTest.SitePartWorker_MMT_Stockpile", f"{name} workerClass")
-        rewards = [child_text(li, "thingDef") for li in node.findall("modExtensions/li/rewards/li")]
+        # ThingDefCountRangeClass 自定义加载格式：节点名=thingDef、文本=countRange
+        rewards = [li.tag for li in node.findall("modExtensions/li/rewards/*")]
         for rd in reward_defs:
             if rd not in rewards:
                 fail(f"{name} 奖励缺少 {rd}")

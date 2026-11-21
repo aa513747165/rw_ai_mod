@@ -18,15 +18,12 @@
     <size>(5,5)</size>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
-    <fillPercent>0.9</fillPercent>
+    <fillPercent>1</fillPercent>
     <rotatable>false</rotatable>
     <tickerType>Rare</tickerType>
     <designationCategory>MMT_Production</designationCategory>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <statBases>
       <WorkToBuild>15000</WorkToBuild>
       <MaxHitPoints>2000</MaxHitPoints>
@@ -68,14 +65,11 @@
     <size>(5,5)</size>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
-    <fillPercent>0.9</fillPercent>
+    <fillPercent>1</fillPercent>
     <rotatable>false</rotatable>
     <tickerType>Rare</tickerType>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <statBases>
       <WorkToBuild>20000</WorkToBuild>
       <MaxHitPoints>2400</MaxHitPoints>
@@ -114,14 +108,11 @@
     <size>(5,5)</size>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
-    <fillPercent>0.9</fillPercent>
+    <fillPercent>1</fillPercent>
     <rotatable>false</rotatable>
     <tickerType>Rare</tickerType>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <statBases>
       <WorkToBuild>30000</WorkToBuild>
       <MaxHitPoints>2800</MaxHitPoints>
@@ -162,15 +153,12 @@
     <size>(5,5)</size>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
-    <fillPercent>0.9</fillPercent>
+    <fillPercent>1</fillPercent>
     <rotatable>false</rotatable>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <statBases>
       <WorkToBuild>20000</WorkToBuild>
       <MaxHitPoints>3200</MaxHitPoints>

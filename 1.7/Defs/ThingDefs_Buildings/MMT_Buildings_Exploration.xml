@@ -18,7 +18,7 @@
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <pathCost>70</pathCost>
-    <fillPercent>0.8</fillPercent>
+    <fillPercent>1</fillPercent>
     <rotatable>true</rotatable>
     <defaultPlacingRot>South</defaultPlacingRot>
     <tickerType>Normal</tickerType>

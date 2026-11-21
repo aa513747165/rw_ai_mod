@@ -17,8 +17,8 @@
     <modExtensions>
       <li Class="MyModeTest.StockpileRewardExtension">
         <rewards>
-          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>15~25</countRange></li>
-          <li><thingDef>MMT_SpacerComponent</thingDef><countRange>2~4</countRange></li>
+          <MMT_AncientAlloy>15~25</MMT_AncientAlloy>
+          <MMT_SpacerComponent>2~4</MMT_SpacerComponent>
         </rewards>
       </li>
     </modExtensions>
@@ -37,9 +37,9 @@
     <modExtensions>
       <li Class="MyModeTest.StockpileRewardExtension">
         <rewards>
-          <li><thingDef>MMT_ArchotechShard</thingDef><countRange>6~10</countRange></li>
-          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>5~5</countRange></li>
-          <li><thingDef>MMT_SpacerComponent</thingDef><countRange>3~6</countRange></li>
+          <MMT_ArchotechShard>6~10</MMT_ArchotechShard>
+          <MMT_AncientAlloy>5~5</MMT_AncientAlloy>
+          <MMT_SpacerComponent>3~6</MMT_SpacerComponent>
         </rewards>
       </li>
     </modExtensions>
@@ -58,9 +58,9 @@
     <modExtensions>
       <li Class="MyModeTest.StockpileRewardExtension">
         <rewards>
-          <li><thingDef>MMT_ArchotechShard</thingDef><countRange>8~12</countRange></li>
-          <li><thingDef>MMT_AncientDatacore</thingDef><countRange>1~1</countRange></li>
-          <li><thingDef>MMT_AncientAlloy</thingDef><countRange>4~8</countRange></li>
+          <MMT_ArchotechShard>8~12</MMT_ArchotechShard>
+          <MMT_AncientDatacore>1~1</MMT_AncientDatacore>
+          <MMT_AncientAlloy>4~8</MMT_AncientAlloy>
         </rewards>
       </li>
     </modExtensions>
