@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 沙袋人偶：武器伤害测试假人（Building_TrainingDummy）。
+       超高耐久 + 快速自修复，征召小人"攻击"指令可打它测 DPS；
+       同时也是娱乐建筑（灵巧游戏，小人站旁边练习）。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_TrainingDummy</defName>
+    <label>沙袋人偶</label>
+    <description>塞满沙土与废布的练习人偶，挨打不坏、伤口自愈，是测试武器伤害的完美靶子。选中它可查看近 10 秒秒伤、最近一击与累计承伤，可用按钮清零统计。\n\n殖民者空闲时也会对着它比划拳脚，当作娱乐消遣。\n\n用法：征召小人后用"攻击"指令强制攻击自己的人偶。</description>
+    <thingClass>MyModeTest.Building_TrainingDummy</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_TrainingDummy/MMT_TrainingDummy</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.6,1.6)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <designationCategory>Joy</designationCategory>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsJoy</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>800</WorkToBuild>
+      <MaxHitPoints>50000</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>15</Mass>
+      <JoyGainFactor>1</JoyGainFactor>
+    </statBases>
+    <costList>
+      <MMT_Dirt>40</MMT_Dirt>
+      <Cloth>20</Cloth>
+      <WoodLog>10</WoodLog>
+    </costList>
+    <building>
+      <joyKind>Gaming_Dexterity</joyKind>
+      <watchBuildingStandDistanceRange>2~3</watchBuildingStandDistanceRange>
+      <watchBuildingStandRectWidth>3</watchBuildingStandRectWidth>
+      <watchBuildingInSameRoom>true</watchBuildingInSameRoom>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <constructEffect>ConstructWood</constructEffect>
+    <placeWorkers>
+      <li>PlaceWorker_WatchArea</li>
+    </placeWorkers>
+  </ThingDef>
+</Defs>
