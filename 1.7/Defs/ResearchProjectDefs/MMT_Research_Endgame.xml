@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 终局内容包研究（设计方案 §6；坐标唯一事实来源是 tools/apply_research_layout.py 的 LAYOUT 表） -->
+
+  <!-- 武器强化：解锁武器强化台（赌博线 +1~+15） -->
+  <ResearchProjectDef>
+    <defName>MMT_WeaponEnhancement</defName>
+    <label>武器强化</label>
+    <description>研究能量结晶在武器约束场上的应用，解锁武器强化台：消耗材料逐级强化武器（每级伤害 ×1.05，满级 15 级额外护甲穿透 +10%）。+6 级以后需要探索据点或任务获得的远古材料。兼容其它 Mod 的武器。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_AdvancedAlloys</li>
+      <li>MMT_RechargeableTech</li>
+    </prerequisites>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 武器附魔：解锁 17 个附魔模块配方（武器强化台制作，确定线安装） -->
+  <ResearchProjectDef>
+    <defName>MMT_WeaponEnchantment</defName>
+    <label>武器附魔</label>
+    <description>研究将淬火油封装的效应模块永久嫁接到武器上的工艺，解锁附魔模块制作（武器强化台）。附魔 100% 成功：武器基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽，同词条不可重复。词条分低级/中级/高级/极品四档，高档需要探索据点的远古材料。</description>
+    <baseCost>6000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_WeaponEnhancement</li>
+    </prerequisites>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 风暴防护：解锁风暴阻尼器 -->
+  <ResearchProjectDef>
+    <defName>MMT_StormShielding</defName>
+    <label>风暴防护</label>
+    <description>研究能量风暴的谐振中和原理，解锁风暴阻尼器：开启并通电时保护半径 12 格内的建筑免于能量风暴的故障点名。</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_DeployableShieldTech</li>
+    </prerequisites>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 深空扫描：解锁深空扫描仪与探索据点 -->
+  <ResearchProjectDef>
+    <defName>MMT_DeepSpaceScan</defName>
+    <label>深空扫描</label>
+    <description>将折跃传感阵列反向用作深空探测器，解锁深空扫描仪：蓄电充满后消耗 1 个矿物声纳模块扫描一天，在世界地图上标出探索据点（稀有资源点/轨道遗迹/机械据点，30 天有效）。据点藏有外界无法生产的远古合金、远古碎晶与远古数据核心——高级强化、极品附魔与纪元奇点的关键材料。</description>
+    <baseCost>8000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_Teleportation</li>
+    </prerequisites>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>7.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 奇点工程：解锁纪元奇点四阶段奇观 -->
+  <ResearchProjectDef>
+    <defName>MMT_SingularityConstruction</defName>
+    <label>奇点工程</label>
+    <description>MMT 工程的顶点：在殖民地中央点燃一颗受控奇点。解锁纪元奇点（四阶段巨型奇观，需海量物资与探索据点的远古材料）。建成后注满反物质燃料与 50000 Wd 蓄电点火，为本张地图带来永久的纪元增益（能源/启迪/丰饶三选一）。</description>
+    <baseCost>20000</baseCost>
+    <techLevel>Archotech</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_MatterConversion3</li>
+      <li>MMT_EnergyConvergence</li>
+    </prerequisites>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>9.00</researchViewY>
+  </ResearchProjectDef>
+</Defs>

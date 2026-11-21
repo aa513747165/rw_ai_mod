@@ -140,6 +140,16 @@ LAYOUT = {
     # y=0 空位 x11/x13：战地医疗（前置 医疗物资 VI x7y0，x 递增）
     "MMT_FieldMedicalPack": (11, 0),
     "MMT_HealTurretResearch": (13, 0),
+    # ---- 终局内容包（设计方案 §6）：武器强化 x11 → 附魔 x12 → 风暴防护 x13；深空扫描 x13y7；奇点工程 x12y9 ----
+    # 前置：MMT_AdvancedAlloys(8,4) + MMT_RechargeableTech(9,6) → 武器强化（依赖 X > 前置 X 成立）
+    "MMT_WeaponEnhancement": (11, 5),
+    "MMT_WeaponEnchantment": (12, 5),
+    # 前置：MMT_DeployableShieldTech(7,6)
+    "MMT_StormShielding": (13, 5),
+    # 前置：MMT_Teleportation(12,6)
+    "MMT_DeepSpaceScan": (13, 7),
+    # 前置：MMT_MatterConversion3(11,6) + MMT_EnergyConvergence(10,9)
+    "MMT_SingularityConstruction": (12, 9),
 }
 
 # 经 Patches 注入 MMT 标签页的原版研究坐标（唯一事实来源；补丁文件里的 researchViewX/Y 必须与这里一致，

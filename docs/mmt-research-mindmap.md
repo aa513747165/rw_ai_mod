@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（108 项）
+- MMT 研究总览（113 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -103,6 +103,8 @@
             - 解锁配方: 制作斯太尔AUG突击步枪、制作TAR-21突击步枪、制作FN SCAR-H突击步枪、制作西格SG553突击步枪、制作MA5 ICWS突击步枪、制作XM8军用步枪
       - **部署式护盾技术** `MMT_DeployableShieldTech` ｜ 坐标 (7.00, 6.00) ｜ 2000点 ｜ Spacer ｜ 前置(原版): ShieldBelt
         - 解锁配方: 组装部署式护盾发生器
+        - **风暴防护** `MMT_StormShielding` ｜ 坐标 (13.00, 5.00) ｜ 3000点 ｜ Spacer
+          - 解锁建筑: 风暴阻尼器
       - **充能技术** `MMT_RechargeableTech` ｜ 坐标 (9.00, 6.00) ｜ 1500点 ｜ Spacer
         - 解锁建筑: 充能台
         - 解锁配方: 组装充能护盾腰带
@@ -150,6 +152,9 @@
         - 解锁配方: 提炼镍合金（15个）、提炼钴合金（15个）、提炼铬合金（10个）、冶炼梅尔基奥合金（30个）
         - **高级合金** `MMT_AdvancedAlloys` ｜ 坐标 (8.00, 4.00) ｜ 2300点 ｜ Spacer
           - 解锁配方: 提炼钨合金（15个）、提炼钛合金（15个）、冶炼司太立合金（20个）、冶炼镍钛合金（15个）、冶炼钨钴合金（10个）、冶炼钛铁合金（15个）、冶炼贫铀合金（10个）、冶炼斯坦合金（20个）、冶炼亚力可合金（20个）
+          - **武器强化** `MMT_WeaponEnhancement` ｜ 坐标 (11.00, 5.00) ｜ 4000点 ｜ Spacer ｜ 交叉前置: 充能技术
+            - 解锁建筑: 武器强化台
+            - **武器附魔** `MMT_WeaponEnchantment` ｜ 坐标 (12.00, 5.00) ｜ 6000点 ｜ Spacer
   - **毒品 V** `MMT_Drugs_C2` ｜ 坐标 (6.00, 1.00) ｜ 1000点 ｜ Industrial ｜ 前置(原版): DrugProduction
     - 解锁建筑: 中性胺精炼厂
     - 解锁配方: 合成中性胺（天然）、精炼中性胺（石化）、合成止痛药
@@ -195,11 +200,15 @@
             - 解锁配方: 转化为金矿、转化为铀矿
             - **折跃传送** `MMT_Teleportation` ｜ 坐标 (12.00, 6.00) ｜ 6000点 ｜ Ultra
               - 解锁建筑: 折跃传送台
+              - **深空扫描** `MMT_DeepSpaceScan` ｜ 坐标 (13.00, 7.00) ｜ 8000点 ｜ Spacer
+                - 解锁建筑: 深空扫描仪
+            - **奇点工程** `MMT_SingularityConstruction` ｜ 坐标 (12.00, 9.00) ｜ 20000点 ｜ Archotech ｜ 交叉前置: 能量聚能
+              - 解锁建筑: 奇点地基
       - **精密筛分** `MMT_PrecisionSifting` ｜ 坐标 (10.00, 5.00) ｜ 1800点 ｜ Spacer ｜ 交叉前置: 高级合金
         - 解锁配方: 编织精密滤网
   - **农业 I** `MMT_AgricultureBasic` ｜ 坐标 (8.00, 0.00) ｜ 150点 ｜ Neolithic
     - 解锁配方: 制作堆肥、制作肥料、拌制土堆
-    - **农业 II·自动化种植** `MMT_AutoFarming` ｜ 坐标 (9.00, 9.00) ｜ 800点 ｜ Industrial ｜ 前置(原版): Microelectronics
+    - **农业 II·自动化种植** `MMT_AutoFarming` ｜ 坐标 (9.00, 9.00) ｜ 800点 ｜ Industrial ｜ 前置(原版): MicroelectronicsBasics
       - 解锁建筑: 自动种植机
   - **药用植物 I** `MMT_MedicalPlants_A1` ｜ 坐标 (9.00, 0.00) ｜ 150点 ｜ Neolithic
     - **药用植物 II** `MMT_MedicalPlants_A2` ｜ 坐标 (10.00, 0.00) ｜ 200点 ｜ Neolithic
