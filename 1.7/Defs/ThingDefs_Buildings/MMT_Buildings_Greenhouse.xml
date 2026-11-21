@@ -15,15 +15,15 @@
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <size>(1,1)</size>
-    <passability>Impassable</passability>
+    <passability>PassThroughOnly</passability>
     <fillPercent>0.2</fillPercent>
     <designationCategory>MMT_Production</designationCategory>
+    <!-- 1.7 拖动框选建造由 drawStyleCategory 控制（BuildingBase 不自带），
+         Default2D 提供矩形/椭圆等框选样式，与地板同类 -->
+    <drawStyleCategory>Default2D</drawStyleCategory>
     <rotatable>false</rotatable>
     <tickerType>Never</tickerType>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <statBases>
       <WorkToBuild>150</WorkToBuild>
       <MaxHitPoints>50</MaxHitPoints>
