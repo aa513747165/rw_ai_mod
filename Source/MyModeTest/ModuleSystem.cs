@@ -31,6 +31,9 @@ namespace MyModeTest
     public class ModuleExtension : InstallableSlotItemExtension
     {
         public List<ModuleEffect> effects;
+
+        /// <summary>安装后武器名前缀（如"爆裂"，TransformLabel 取首个非空词条，2~4 字中文；可空）。</summary>
+        public string labelPrefix;
     }
 
     /// <summary>内置效果键常量（消费端与 XML 约定用；新键无需登记，约定即可）。</summary>
@@ -79,6 +82,30 @@ namespace MyModeTest
         public const string WeaponChainLightning = "WeaponChainLightning";
         /// <summary>时空折叠：击杀后本次攻击冷却归零。</summary>
         public const string WeaponTimeFold = "WeaponTimeFold";
+
+        // ---- 附魔2（Infusion 2）借鉴词条（命中结算，逻辑在 WeaponOnHitMechanics.Apply） ----
+        /// <summary>爆裂：命中 25% 触发半径 1.9 小爆炸（伤害 = 本次 ×0.35；危险特效，受 gizmo/设置门控）。</summary>
+        public const string WeaponExplode = "WeaponExplode";
+        /// <summary>引雷：命中 2.5% 在命中点召唤落雷（危险特效）。</summary>
+        public const string WeaponStormCall = "WeaponStormCall";
+        /// <summary>毒气：命中 25% 落点放毒气（Biotech ToxGas，无则回退毒性积累；危险特效）。</summary>
+        public const string WeaponGas = "WeaponGas";
+        /// <summary>压制：命中概率眩晕 90 tick（值=概率）。</summary>
+        public const string WeaponSuppression = "WeaponSuppression";
+        /// <summary>缴械：命中 5% 打掉目标主手武器（值=概率）。</summary>
+        public const string WeaponDisarm = "WeaponDisarm";
+        /// <summary>剧毒：每次命中附加毒性积累（值=severity 增量，仅血肉）。</summary>
+        public const string WeaponToxic = "WeaponToxic";
+        /// <summary>虫敌：对昆虫追加伤害（值=追加倍率，镜像 EMP 对机械）。</summary>
+        public const string WeaponInsectBane = "WeaponInsectBane";
+        /// <summary>急救：命中同派系友军时按伤害 × 值 治疗其伤口（净治疗为正）。</summary>
+        public const string WeaponMending = "WeaponMending";
+        /// <summary>守护：持械者承伤减免（值=减免比例，上限 0.5；PreApplyDamage 补丁消费）。</summary>
+        public const string WeaponGuardian = "WeaponGuardian";
+        /// <summary>悟战：每次有效命中攻击者获得武器技能经验（值>0 启用）。</summary>
+        public const string WeaponSkillExp = "WeaponSkillExp";
+        /// <summary>必中：每发概率必中（值=概率；按 tick 缓存掷骰，命中补丁消费）。</summary>
+        public const string WeaponGuaranteedHit = "WeaponGuaranteedHit";
     }
 
     /// <summary>设备侧槽位上限条目：key 对应物品扩展的 slotKey。</summary>

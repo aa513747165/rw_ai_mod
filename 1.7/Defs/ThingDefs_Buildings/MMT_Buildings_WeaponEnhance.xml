@@ -61,6 +61,20 @@
       <li>MMT_MakeWeaponModChainLightning</li>
       <li>MMT_MakeWeaponModTimeFold</li>
       <li>MMT_MakeWeaponModOverload</li>
+      <li>MMT_MakeWeaponModBlitz</li>
+      <li>MMT_MakeWeaponModGambler</li>
+      <li>MMT_MakeWeaponModRiot</li>
+      <li>MMT_MakeWeaponModExplode</li>
+      <li>MMT_MakeWeaponModStormCall</li>
+      <li>MMT_MakeWeaponModGas</li>
+      <li>MMT_MakeWeaponModSuppress</li>
+      <li>MMT_MakeWeaponModDisarm</li>
+      <li>MMT_MakeWeaponModToxic</li>
+      <li>MMT_MakeWeaponModInsectBane</li>
+      <li>MMT_MakeWeaponModMending</li>
+      <li>MMT_MakeWeaponModGuardian</li>
+      <li>MMT_MakeWeaponModInsight</li>
+      <li>MMT_MakeWeaponModSureHit</li>
     </recipes>
     <comps>
       <li Class="CompProperties_Flickable" />

@@ -109,6 +109,27 @@
 | `MMT_WeaponModTimeFold` | 时空折叠模块 / 极品 | 沙漏 + 环形时间扭曲纹 |
 | `MMT_WeaponModOverload` | 过载模块 / 极品 | 过热发红的能量核心 + 警告三角（无文字） |
 
+### 10. 附魔扩展模块（14 张，路径 `WeaponMod/MMT_WeaponMod*.png`，128×128）
+
+沿用第 9 节的芯片/匣式基底与档位底色（中级钛蓝/高级金/极品紫）。
+
+| defName | 中文名 / 稀有度 | 差异化图案 |
+|---|---|---|
+| `MMT_WeaponModBlitz` | 极速模块 / 中 | 三条后掠速度线 |
+| `MMT_WeaponModGambler` | 赌徒诅咒模块 / 极 | 骰子（方块+点） |
+| `MMT_WeaponModRiot` | 镇暴模块 / 极 | 盾形加横杠 |
+| `MMT_WeaponModExplode` | 爆裂模块 / 高 | 爆炸星形 |
+| `MMT_WeaponModStormCall` | 引雷模块 / 极 | 一道闪电 |
+| `MMT_WeaponModGas` | 毒气模块 / 高 | 三团毒气云 |
+| `MMT_WeaponModSuppress` | 压制模块 / 高 | 向下压的箭头 |
+| `MMT_WeaponModDisarm` | 缴械模块 / 高 | 断成两截的剑 |
+| `MMT_WeaponModToxic` | 剧毒模块 / 高 | 一滴毒液 |
+| `MMT_WeaponModInsectBane` | 虫敌模块 / 高 | 甲虫剪影 |
+| `MMT_WeaponModMending` | 急救模块 / 高 | 医疗十字 |
+| `MMT_WeaponModGuardian` | 守护模块 / 高 | 竖线分割的盾 |
+| `MMT_WeaponModInsight` | 悟战模块 / 高 | 眼睛（瞳孔+虹膜） |
+| `MMT_WeaponModSureHit` | 必中模块 / 极 | 准星同心圆 |
+
 ## 四、世界地图据点图标（3 张）
 
 - **路径**：`1.7/Textures/World/WorldObjects/Sites/`
@@ -128,4 +149,4 @@
 4. 验证：`python tools/validate_new.py all`（含贴图存在性检查）+ 游戏内目检。
 5. 同步游戏目录：`MSYS2_ARG_CONV_EXCL='*' robocopy H:/rw "D:/SteamLibrary/steamapps/common/RimWorld/Mods/rw" /MIR /XD .git Hardcore-SK 汉化 docs tools data .superpowers Source ...`（见日常同步命令）。
 
-**贴图清单合计**：建筑 4 组（强化台 3 + 扫描仪 3 + 阻尼器 3 + 奇观 4×1 + 辉光 1 = 14 张）+ 物品 21 张（资源 3 + 淬火油 1 + 模块 17）+ 世界图标 3 张 = **39 张主图**（遮罩另计、工具生成）。
+**贴图清单合计**：建筑 15 张（强化台 3 + 扫描仪 3 + 阻尼器 3 + 奇观 4 + 辉光 1 + 沙袋人偶 1）+ 物品 35 张（资源 3 + 淬火油 1 + 模块 31）+ 世界图标 3 张 = **53 张主图**（遮罩另计、工具生成）。

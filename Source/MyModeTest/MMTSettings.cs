@@ -24,6 +24,30 @@ namespace MyModeTest
         /// <summary>仅限 MMT/原版装备强化：勾上后武器/护盾强化 comp 不挂到其它 mod 装备。</summary>
         public bool weaponEnhanceVanillaOnly = false;
 
+        // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
+        /// <summary>危险命中特效总开关（爆炸/引雷/毒气/燃烧；与武器 gizmo 两层门控）。</summary>
+        public bool weaponHazardEffects = true;
+        /// <summary>爆裂词条（命中小爆炸）。</summary>
+        public bool enableWeaponExplode = true;
+        /// <summary>引雷词条（命中召唤落雷）。</summary>
+        public bool enableWeaponStormCall = true;
+        /// <summary>毒气词条（命中放毒气/毒性积累）。</summary>
+        public bool enableWeaponGas = true;
+        /// <summary>压制词条（命中眩晕）。</summary>
+        public bool enableWeaponSuppression = true;
+        /// <summary>缴械词条（命中打掉目标武器）。</summary>
+        public bool enableWeaponDisarm = true;
+        /// <summary>剧毒词条（命中毒性积累）。</summary>
+        public bool enableWeaponToxic = true;
+        /// <summary>必中词条（每发概率必中）。</summary>
+        public bool enableWeaponGuaranteedHit = true;
+        /// <summary>虫敌词条（对昆虫追加伤害）。</summary>
+        public bool enableWeaponInsectBane = true;
+        /// <summary>急救词条（命中友军改治疗）。</summary>
+        public bool enableWeaponMending = true;
+        /// <summary>悟战词条（命中获取武器技能经验）。</summary>
+        public bool enableWeaponSkillExp = true;
+
         // —— 传送 ——
         /// <summary>传送台次数上限加成（0-9）。</summary>
         public int teleportBonusCharges = 0;
@@ -105,6 +129,61 @@ namespace MyModeTest
             get { return Instance != null && Instance.weaponEnhanceVanillaOnly; }
         }
 
+        public static bool WeaponHazardEffects
+        {
+            get { return Instance == null || Instance.weaponHazardEffects; }
+        }
+
+        public static bool EnableWeaponExplode
+        {
+            get { return Instance == null || Instance.enableWeaponExplode; }
+        }
+
+        public static bool EnableWeaponStormCall
+        {
+            get { return Instance == null || Instance.enableWeaponStormCall; }
+        }
+
+        public static bool EnableWeaponGas
+        {
+            get { return Instance == null || Instance.enableWeaponGas; }
+        }
+
+        public static bool EnableWeaponSuppression
+        {
+            get { return Instance == null || Instance.enableWeaponSuppression; }
+        }
+
+        public static bool EnableWeaponDisarm
+        {
+            get { return Instance == null || Instance.enableWeaponDisarm; }
+        }
+
+        public static bool EnableWeaponToxic
+        {
+            get { return Instance == null || Instance.enableWeaponToxic; }
+        }
+
+        public static bool EnableWeaponGuaranteedHit
+        {
+            get { return Instance == null || Instance.enableWeaponGuaranteedHit; }
+        }
+
+        public static bool EnableWeaponInsectBane
+        {
+            get { return Instance == null || Instance.enableWeaponInsectBane; }
+        }
+
+        public static bool EnableWeaponMending
+        {
+            get { return Instance == null || Instance.enableWeaponMending; }
+        }
+
+        public static bool EnableWeaponSkillExp
+        {
+            get { return Instance == null || Instance.enableWeaponSkillExp; }
+        }
+
         /// <summary>强化成功率 × 设置倍率（0-1 截断）；护盾与武器强化共用入口。</summary>
         public static float AdjustEnhanceRate(float baseRate)
         {
@@ -133,6 +212,17 @@ namespace MyModeTest
             explorationSitesEnabled = true;
             wonderOverloadEnabled = false;
             wonderAnniversaryEnabled = true;
+            weaponHazardEffects = true;
+            enableWeaponExplode = true;
+            enableWeaponStormCall = true;
+            enableWeaponGas = true;
+            enableWeaponSuppression = true;
+            enableWeaponDisarm = true;
+            enableWeaponToxic = true;
+            enableWeaponGuaranteedHit = true;
+            enableWeaponInsectBane = true;
+            enableWeaponMending = true;
+            enableWeaponSkillExp = true;
         }
 
         public override void ExposeData()
@@ -156,6 +246,17 @@ namespace MyModeTest
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", true);
             Scribe_Values.Look(ref wonderOverloadEnabled, "wonderOverloadEnabled", false);
             Scribe_Values.Look(ref wonderAnniversaryEnabled, "wonderAnniversaryEnabled", true);
+            Scribe_Values.Look(ref weaponHazardEffects, "weaponHazardEffects", true);
+            Scribe_Values.Look(ref enableWeaponExplode, "enableWeaponExplode", true);
+            Scribe_Values.Look(ref enableWeaponStormCall, "enableWeaponStormCall", true);
+            Scribe_Values.Look(ref enableWeaponGas, "enableWeaponGas", true);
+            Scribe_Values.Look(ref enableWeaponSuppression, "enableWeaponSuppression", true);
+            Scribe_Values.Look(ref enableWeaponDisarm, "enableWeaponDisarm", true);
+            Scribe_Values.Look(ref enableWeaponToxic, "enableWeaponToxic", true);
+            Scribe_Values.Look(ref enableWeaponGuaranteedHit, "enableWeaponGuaranteedHit", true);
+            Scribe_Values.Look(ref enableWeaponInsectBane, "enableWeaponInsectBane", true);
+            Scribe_Values.Look(ref enableWeaponMending, "enableWeaponMending", true);
+            Scribe_Values.Look(ref enableWeaponSkillExp, "enableWeaponSkillExp", true);
         }
     }
 }

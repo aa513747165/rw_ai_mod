@@ -34,8 +34,8 @@ namespace MyModeTest
             MMTSettings s = Settings;
             if (s == null) return;
 
-            // 单页滚动：内容高度按行数估算（约 26 行 × 34 + 分组间距）
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 980f);
+            // 单页滚动：内容高度按行数估算（附魔特效分组后约 40 行 × 34 + 分组间距）
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1380f);
             Widgets.BeginScrollView(inRect, ref settingsScrollPos, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.maxOneColumn = true;
@@ -58,6 +58,22 @@ namespace MyModeTest
                 s.enhanceSuccessFactor, 0.5f, 2f, 0.6f, "护盾/武器强化的成功率倍率（0.5-2.0）。");
             list.CheckboxLabeled("仅限 MMT/原版装备强化（其它 mod 武器/护盾不开放强化）", ref s.weaponEnhanceVanillaOnly,
                 "勾上后强化 comp 不挂到其它 mod 的武器与护盾装备。");
+            list.Gap();
+
+            // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
+            list.Label("【武器附魔特效】（关闭后对应词条不生效，模块仍可制作安装）");
+            list.CheckboxLabeled("危险命中特效总开关（爆炸/引雷/毒气/燃烧）", ref s.weaponHazardEffects,
+                "总保险丝：关闭后全部危险命中特效不触发（防误伤/引燃基地）；单件武器还可用 gizmo 单独关闭。");
+            list.CheckboxLabeled("爆裂（命中小爆炸）", ref s.enableWeaponExplode);
+            list.CheckboxLabeled("引雷（命中召唤落雷）", ref s.enableWeaponStormCall);
+            list.CheckboxLabeled("毒气（命中放毒气/毒性积累）", ref s.enableWeaponGas);
+            list.CheckboxLabeled("压制（命中眩晕）", ref s.enableWeaponSuppression);
+            list.CheckboxLabeled("缴械（命中打掉目标武器）", ref s.enableWeaponDisarm);
+            list.CheckboxLabeled("剧毒（命中毒性积累）", ref s.enableWeaponToxic);
+            list.CheckboxLabeled("必中（每发概率必中）", ref s.enableWeaponGuaranteedHit);
+            list.CheckboxLabeled("虫敌（对昆虫追加伤害）", ref s.enableWeaponInsectBane);
+            list.CheckboxLabeled("急救（命中友军改治疗）", ref s.enableWeaponMending);
+            list.CheckboxLabeled("悟战（命中获取武器技能经验）", ref s.enableWeaponSkillExp);
             list.Gap();
 
             // —— 传送 ——

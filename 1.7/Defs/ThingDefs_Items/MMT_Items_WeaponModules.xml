@@ -19,6 +19,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>锋利</labelPrefix>
         <effectReport>伤害 +8%</effectReport>
         <effects><li><key>WeaponDamageFactor</key><valuePerItem>0.08</valuePerItem></li></effects>
       </li>
@@ -38,6 +39,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>精准</labelPrefix>
         <effectReport>命中 +8%</effectReport>
         <effects><li><key>WeaponHitChance</key><valuePerItem>0.08</valuePerItem></li></effects>
       </li>
@@ -57,6 +59,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>轻巧</labelPrefix>
         <effectReport>冷却 -8%</effectReport>
         <effects><li><key>WeaponCooldownFactor</key><valuePerItem>-0.08</valuePerItem></li></effects>
       </li>
@@ -76,6 +79,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>穿透</labelPrefix>
         <effectReport>护甲穿透 +15%</effectReport>
         <effects><li><key>WeaponArmorPen</key><valuePerItem>0.15</valuePerItem></li></effects>
       </li>
@@ -96,6 +100,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>致命</labelPrefix>
         <effectReport>暴击率 +5%（暴击双倍伤害）</effectReport>
         <effects><li><key>WeaponCritChance</key><valuePerItem>0.05</valuePerItem></li></effects>
       </li>
@@ -115,6 +120,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>疾风</labelPrefix>
         <effectReport>冷却 -12%，瞄准 -20%</effectReport>
         <effects>
           <li><key>WeaponCooldownFactor</key><valuePerItem>-0.12</valuePerItem></li>
@@ -137,6 +143,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>重击</labelPrefix>
         <effectReport>伤害 +12%，近战击退</effectReport>
         <effects>
           <li><key>WeaponDamageFactor</key><valuePerItem>0.12</valuePerItem></li>
@@ -159,6 +166,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>速射</labelPrefix>
         <effectReport>冷却 -15%，命中 -4%（取舍）</effectReport>
         <effects>
           <li><key>WeaponCooldownFactor</key><valuePerItem>-0.15</valuePerItem></li>
@@ -182,6 +190,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>EMP</labelPrefix>
         <effectReport>对机械伤害 +50% 并短路眩晕</effectReport>
         <effects><li><key>WeaponEmp</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -201,6 +210,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>燃烧</labelPrefix>
         <effectReport>命中点燃目标</effectReport>
         <effects><li><key>WeaponIncendiary</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -220,6 +230,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>吸血</labelPrefix>
         <effectReport>近战：伤害 5% 转为治疗</effectReport>
         <effects><li><key>WeaponLifeLeech</key><valuePerItem>0.05</valuePerItem></li></effects>
       </li>
@@ -239,6 +250,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>破盾</labelPrefix>
         <effectReport>对能量护盾额外消耗 +50%</effectReport>
         <effects><li><key>WeaponShieldBreaker</key><valuePerItem>0.5</valuePerItem></li></effects>
       </li>
@@ -258,6 +270,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>冰霜</labelPrefix>
         <effectReport>命中减速 20%（3 秒）</effectReport>
         <effects><li><key>WeaponFrost</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -278,6 +291,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>处决</labelPrefix>
         <effectReport>目标血量 &lt;20% 时伤害 ×2</effectReport>
         <effects><li><key>WeaponExecute</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -297,6 +311,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>链电</labelPrefix>
         <effectReport>命中弹射 2 格内另一目标（50% 伤害）</effectReport>
         <effects><li><key>WeaponChainLightning</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -316,6 +331,7 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>时折</labelPrefix>
         <effectReport>击杀后本次冷却归零</effectReport>
         <effects><li><key>WeaponTimeFold</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
@@ -335,11 +351,306 @@
     <modExtensions>
       <li Class="MyModeTest.ModuleExtension">
         <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>过载</labelPrefix>
         <effectReport>伤害 +25%，冷却 +15%（取舍）</effectReport>
         <effects>
           <li><key>WeaponDamageFactor</key><valuePerItem>0.25</valuePerItem></li>
           <li><key>WeaponCooldownFactor</key><valuePerItem>0.15</valuePerItem></li>
         </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 中级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModBlitz</defName>
+    <label>极速模块</label>
+    <description>中级武器附魔模块：反应炉超频改造，以威力换射速的极端调校。安装后武器冷却 -65%、伤害 -75%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBlitz</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>极速</labelPrefix>
+        <effectReport>冷却 -65%，伤害 -75%</effectReport>
+        <effects><li><key>WeaponCooldownFactor</key><valuePerItem>-0.65</valuePerItem></li><li><key>WeaponDamageFactor</key><valuePerItem>-0.75</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 极级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModGambler</defName>
+    <label>赌徒诅咒模块</label>
+    <description>极品武器附魔模块：来源不明的诅咒芯片，把全部精度献祭给威力。安装后武器伤害 ×3，命中 -90%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGambler</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>赌徒</labelPrefix>
+        <effectReport>伤害 ×3，命中 -90%</effectReport>
+        <effects><li><key>WeaponDamageFactor</key><valuePerItem>2.0</valuePerItem></li><li><key>WeaponHitChance</key><valuePerItem>-0.90</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 极级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModRiot</defName>
+    <label>镇暴模块</label>
+    <description>极品武器附魔模块：镇暴镇压协议，低致命高压制。安装后武器伤害 -50%，命中 35% 使目标眩晕。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModRiot</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>镇暴</labelPrefix>
+        <effectReport>伤害 -50%，命中 35% 眩晕</effectReport>
+        <effects><li><key>WeaponDamageFactor</key><valuePerItem>-0.50</valuePerItem></li><li><key>WeaponSuppression</key><valuePerItem>0.35</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModExplode</defName>
+    <label>爆裂模块</label>
+    <description>高级武器附魔模块：微型装药战斗部。安装后命中 25% 触发小爆炸（半径 1.9，伤害 = 本次 35%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModExplode</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>爆裂</labelPrefix>
+        <effectReport>命中 25% 触发小爆炸</effectReport>
+        <effects><li><key>WeaponExplode</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 极级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModStormCall</defName>
+    <label>引雷模块</label>
+    <description>极品武器附魔模块：大气电荷引导器。安装后命中 2.5% 在命中点召唤落雷。小心引燃基地——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModStormCall</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>引雷</labelPrefix>
+        <effectReport>命中 2.5% 召唤落雷</effectReport>
+        <effects><li><key>WeaponStormCall</key><valuePerItem>0.025</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModGas</defName>
+    <label>毒气模块</label>
+    <description>高级武器附魔模块：毒气播撒战斗部。安装后命中 25% 在落点释放毒气（无 Biotech 时退化为对血肉目标附加毒性积累）。可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGas</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>毒气</labelPrefix>
+        <effectReport>命中 25% 释放毒气</effectReport>
+        <effects><li><key>WeaponGas</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModSuppress</defName>
+    <label>压制模块</label>
+    <description>高级武器附魔模块：冲击震荡弹头。安装后命中 10% 使目标眩晕 1.5 秒。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSuppress</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>压制</labelPrefix>
+        <effectReport>命中 10% 眩晕</effectReport>
+        <effects><li><key>WeaponSuppression</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModDisarm</defName>
+    <label>缴械模块</label>
+    <description>高级武器附魔模块：武器干扰谐振器。安装后命中 5% 打掉目标手中的武器。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDisarm</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>缴械</labelPrefix>
+        <effectReport>命中 5% 缴械</effectReport>
+        <effects><li><key>WeaponDisarm</key><valuePerItem>0.05</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModToxic</defName>
+    <label>剧毒模块</label>
+    <description>高级武器附魔模块：淬毒刃口/弹头涂层。安装后每次命中使血肉目标毒性积累 +8%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModToxic</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>剧毒</labelPrefix>
+        <effectReport>命中附加毒性积累 +8%</effectReport>
+        <effects><li><key>WeaponToxic</key><valuePerItem>0.08</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModInsectBane</defName>
+    <label>虫敌模块</label>
+    <description>高级武器附魔模块：虫族信息素标记器。安装后对昆虫类目标追加 40% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModInsectBane</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>虫敌</labelPrefix>
+        <effectReport>对昆虫伤害 +40%</effectReport>
+        <effects><li><key>WeaponInsectBane</key><valuePerItem>0.4</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModMending</defName>
+    <label>急救模块</label>
+    <description>高级武器附魔模块：纳米修复弹头。安装后命中同派系友军时，按本次伤害 ×2 治疗其伤口（注意：先承伤后双倍治疗，净治疗为正）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModMending</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>急救</labelPrefix>
+        <effectReport>命中友军按伤害 ×2 治疗</effectReport>
+        <effects><li><key>WeaponMending</key><valuePerItem>2.0</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModGuardian</defName>
+    <label>守护模块</label>
+    <description>高级武器附魔模块：偏导力场发生器。安装后持有此武器期间受到的伤害 -20%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGuardian</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>守护</labelPrefix>
+        <effectReport>持有期间承伤 -20%</effectReport>
+        <effects><li><key>WeaponGuardian</key><valuePerItem>0.2</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 高级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModInsight</defName>
+    <label>悟战模块</label>
+    <description>高级武器附魔模块：战斗数据回传芯片，把每次命中转化为肌肉记忆训练。安装后每次有效命中敌对目标，使用者获得武器技能经验。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModInsight</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>悟战</labelPrefix>
+        <effectReport>命中获取武器技能经验</effectReport>
+        <effects><li><key>WeaponSkillExp</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 极级武器附魔模块（附魔2 借鉴扩展） -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModSureHit</defName>
+    <label>必中模块</label>
+    <description>极品武器附魔模块：弹道预知协处理器，以更长的瞄准换取必然命中的一击。安装后每发 35% 概率必中，瞄准时间 +30%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSureHit</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>必中</labelPrefix>
+        <effectReport>35% 必中，瞄准 +30%</effectReport>
+        <effects><li><key>WeaponGuaranteedHit</key><valuePerItem>0.35</valuePerItem></li><li><key>WeaponWarmupFactor</key><valuePerItem>0.30</valuePerItem></li></effects>
       </li>
     </modExtensions>
   </ThingDef>

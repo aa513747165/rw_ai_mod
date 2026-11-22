@@ -61,6 +61,13 @@ namespace MyModeTest
         /// <summary>已安装附魔词条（模块物品 def，存档持久化；效果从 def 的 ModuleExtension 读取）。</summary>
         private List<ThingDef> enchants = new List<ThingDef>();
 
+        /// <summary>危险命中特效开关（爆炸/引雷/毒气/燃烧；默认开，存档持久化，旧档缺省回退 true）。</summary>
+        private bool triggerEffectsEnabled = true;
+
+        /// <summary>本 tick 的必中掷骰缓存 tick（UI 命中预览与实际射击共享同一结果，不持久化）。</summary>
+        private int lastSureHitTick = -1;
+        private bool lastSureHitResult;
+
         private CompProperties_WeaponEnhancement Props
         {
             get { return (CompProperties_WeaponEnhancement)props; }
@@ -96,17 +103,45 @@ namespace MyModeTest
             get { return 1 + (level >= 7 ? 1 : 0) + (level >= 13 ? 1 : 0); }
         }
 
-        /// <summary>能否安装某词条：槽位未满 + 同词条不重复。</summary>
-        public bool CanAddEnchant(ThingDef moduleDef)
+        /// <summary>危险命中特效是否开启（爆炸/引雷/毒气/燃烧；gizmo 开关）。</summary>
+        public bool TriggerEffectsEnabled
         {
-            return moduleDef != null && enchants.Count < EnchantSlots && !enchants.Contains(moduleDef);
+            get { return triggerEffectsEnabled; }
         }
 
-        /// <summary>安装词条（模块物品在作业侧已消耗）。</summary>
-        public void AddEnchant(ThingDef moduleDef)
+        /// <summary>本 tick 的必中掷骰（同一 tick 内 UI 预览与实际射击共享同一结果）。</summary>
+        public bool RollGuaranteedHit(float chance)
         {
-            if (CanAddEnchant(moduleDef))
-                enchants.Add(moduleDef);
+            if (Find.TickManager == null)
+                return false;
+            int tick = Find.TickManager.TicksGame;
+            if (tick != lastSureHitTick)
+            {
+                lastSureHitTick = tick;
+                lastSureHitResult = Rand.Chance(chance);
+            }
+            return lastSureHitResult;
+        }
+
+        /// <summary>能否安装某词条：仅同词条不重复（槽满也可装——直接覆盖最早装的词条）。</summary>
+        public bool CanAddEnchant(ThingDef moduleDef)
+        {
+            return moduleDef != null && !enchants.Contains(moduleDef);
+        }
+
+        /// <summary>安装词条（模块物品在作业侧已消耗）；槽满时覆盖最早装的词条并返回被覆盖 def（无覆盖返回 null）。</summary>
+        public ThingDef AddEnchant(ThingDef moduleDef)
+        {
+            if (!CanAddEnchant(moduleDef))
+                return null;
+            ThingDef overwritten = null;
+            if (enchants.Count >= EnchantSlots && enchants.Count > 0)
+            {
+                overwritten = enchants[0];
+                enchants.RemoveAt(0);
+            }
+            enchants.Add(moduleDef);
+            return overwritten;
         }
 
         /// <summary>词条效果合计（key 见 ModuleEffectKeys.Weapon*）。</summary>
@@ -211,10 +246,21 @@ namespace MyModeTest
             return false;
         }
 
-        /// <summary>物品标签追加强化等级后缀（对任意 mod 武器 label 安全）。</summary>
+        /// <summary>物品标签：首个带前缀的附魔词条加"前缀·"，再追加强化等级后缀（多词条只取第一个，防交易/堆叠界面超长）。</summary>
         public override string TransformLabel(string label)
         {
-            return level > 0 ? label + " +" + level : label;
+            string prefix = null;
+            for (int i = 0; i < enchants.Count; i++)
+            {
+                string p = enchants[i].GetModExtension<ModuleExtension>()?.labelPrefix;
+                if (!p.NullOrEmpty())
+                {
+                    prefix = p;
+                    break;
+                }
+            }
+            string text = prefix != null ? prefix + "·" + label : label;
+            return level > 0 ? text + " +" + level : text;
         }
 
         public override string CompInspectStringExtra()
@@ -243,8 +289,27 @@ namespace MyModeTest
             base.PostExposeData();
             Scribe_Values.Look(ref level, "weaponEnhanceLevel", 0);
             Scribe_Collections.Look(ref enchants, "weaponEnchants", LookMode.Def);
+            // 默认值必须写 true：旧存档缺节点时保持"危险特效开启"，与字段初值一致
+            Scribe_Values.Look(ref triggerEffectsEnabled, "weaponTriggerFx", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && enchants == null)
                 enchants = new List<ThingDef>();
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo g in base.CompGetGizmosExtra())
+                yield return g;
+            // 只有装了危险词条（爆炸/引雷/毒气/燃烧）才出开关 gizmo
+            if (GetEffectSum(ModuleEffectKeys.WeaponExplode) + GetEffectSum(ModuleEffectKeys.WeaponStormCall)
+                + GetEffectSum(ModuleEffectKeys.WeaponGas) + GetEffectSum(ModuleEffectKeys.WeaponIncendiary) <= 0f)
+                yield break;
+            Command_Toggle toggle = new Command_Toggle();
+            toggle.defaultLabel = "危险命中特效";
+            toggle.defaultDesc = "关闭后此武器的爆炸/引雷/毒气/燃烧不再触发（防误伤与引燃基地）。";
+            toggle.isActive = () => triggerEffectsEnabled;
+            toggle.toggleAction = delegate { triggerEffectsEnabled = !triggerEffectsEnabled; };
+            toggle.icon = parent.def.uiIcon;
+            yield return toggle;
         }
     }
 
@@ -407,10 +472,11 @@ namespace MyModeTest
                 else
                     yield return new FloatMenuOption(label, delegate { OrderEnhance(selPawn); });
             }
-            // 附魔入口（确定线）
-            if (enh.Enchants.Count >= enh.EnchantSlots)
+            // 附魔入口（确定线；槽满也可附魔——新词条直接覆盖最早装的词条）
+            if (enh.Enchants.Count >= enh.EnchantSlots && enh.Enchants.Count > 0)
             {
-                yield return new FloatMenuOption("附魔：" + name + "（槽位已满 " + enh.Enchants.Count + "/" + enh.EnchantSlots + "）", null);
+                yield return new FloatMenuOption("附魔武器：" + name + "（槽位已满，新词条将覆盖「" + enh.Enchants[0].label + "」）",
+                    delegate { StartEnchantSelection(selPawn); });
             }
             else
             {
@@ -724,16 +790,18 @@ namespace MyModeTest
             Thing module = Module;
             if (enh == null || module == null || !enh.CanAddEnchant(module.def))
                 return;
-            // 消耗模块物品（背包中移除销毁），词条装入武器
+            // 消耗模块物品（背包中移除销毁），词条装入武器（槽满时覆盖最早装的词条）
             if (pawn.inventory.innerContainer.Contains(module))
                 pawn.inventory.innerContainer.Remove(module);
             ThingDef moduleDef = module.def;
             module.Destroy(DestroyMode.Vanish);
-            enh.AddEnchant(moduleDef);
+            ThingDef overwritten = enh.AddEnchant(moduleDef);
             Thing station = job.GetTarget(TargetIndex.A).Thing;
             MoteMaker.ThrowText(station.DrawPos, Map, "附魔完成", Color.green, 3f);
-            Messages.Message("附魔完成：" + enh.parent.LabelCap + " 获得词条「" + moduleDef.label + "」",
-                new LookTargets(station), MessageTypeDefOf.PositiveEvent, false);
+            string msg = "附魔完成：" + enh.parent.LabelCap + " 获得词条「" + moduleDef.label + "」";
+            if (overwritten != null)
+                msg += "（覆盖了旧词条「" + overwritten.label + "」）";
+            Messages.Message(msg, new LookTargets(station), MessageTypeDefOf.PositiveEvent, false);
         }
     }
 
@@ -802,6 +870,10 @@ namespace MyModeTest
                 return;
             ref float factor = ref FactorFromEquipment(ref __result);
             factor *= comp.HitChanceFactor;
+            // ---- 必中词条：每发掷一次（按 tick 缓存，UI 预览与实射一致），命中因子拉满即必中 ----
+            float sureHit = comp.GetEffectSum(ModuleEffectKeys.WeaponGuaranteedHit);
+            if (sureHit > 0f && MMTSettings.EnableWeaponGuaranteedHit && comp.RollGuaranteedHit(sureHit))
+                factor = 999f;
         }
     }
 
@@ -850,6 +922,21 @@ namespace MyModeTest
             CompWeaponEnhancement comp = WeaponEnhancePatches.ActiveEnhancement(ownerEquipment);
             if (comp != null)
                 __result = Mathf.Max(0.2f, __result * comp.CooldownFactor);
+        }
+    }
+
+    /// <summary>守护词条：持此武器者承伤减免（ildump 核实 1.7 PreApplyDamage(Verse.Pawn) 为虚方法，prefix 改伤害量）。</summary>
+    [HarmonyPatch(typeof(Pawn), "PreApplyDamage")]
+    public static class Patch_WeaponGuardian
+    {
+        public static void Prefix(Pawn __instance, ref DamageInfo dinfo)
+        {
+            CompWeaponEnhancement comp = WeaponEnhancePatches.ActiveEnhancement(__instance?.equipment?.Primary);
+            if (comp == null)
+                return;
+            float guard = comp.GetEffectSum(ModuleEffectKeys.WeaponGuardian);
+            if (guard > 0f)
+                dinfo.SetAmount(dinfo.Amount * (1f - Mathf.Min(0.5f, guard)));
         }
     }
 
@@ -914,6 +1001,9 @@ namespace MyModeTest
         {
             Pawn victim = hitThing as Pawn;
 
+            // ---- 危险特效门控：武器 gizmo 开关 + 设置总开关（爆炸/引雷/毒气/燃烧） ----
+            bool hazardOn = comp.TriggerEffectsEnabled && MMTSettings.WeaponHazardEffects;
+
             // ---- 破盾：攻击被护盾拦截时，额外消耗护盾能量（不触发其它命中特效） ----
             float shieldBreaker = comp.GetEffectSum(ModuleEffectKeys.WeaponShieldBreaker);
             if (blockedByShield)
@@ -962,8 +1052,8 @@ namespace MyModeTest
                     victim.stances.stunner.StunFor(120, attacker, false);
             }
 
-            // ---- 燃烧弹：命中点燃 ----
-            if (comp.GetEffectSum(ModuleEffectKeys.WeaponIncendiary) > 0f)
+            // ---- 燃烧弹（危险特效）：命中点燃 ----
+            if (comp.GetEffectSum(ModuleEffectKeys.WeaponIncendiary) > 0f && hazardOn)
                 FireUtility.TryAttachFire(hitThing, 0.25f, attacker);
 
             // ---- 冰霜：命中附加减速 hediff（-20% 移速，3 秒；重复命中刷新时长） ----
@@ -1020,6 +1110,89 @@ namespace MyModeTest
                 }
             }
 
+            // ---- 爆裂（危险特效）：命中概率触发小爆炸（半径 1.9，伤害 ×0.35） ----
+            float explode = comp.GetEffectSum(ModuleEffectKeys.WeaponExplode);
+            if (explode > 0f && hazardOn && MMTSettings.EnableWeaponExplode && baseDamage > 0f
+                && map != null && Rand.Chance(explode))
+            {
+                GenExplosion.DoExplosion(hitThing.Position, map, 1.9f, DamageDefOf.Bomb, attacker,
+                    Mathf.RoundToInt(baseDamage * 0.35f), -1f);
+            }
+
+            // ---- 引雷（危险特效）：命中概率在命中点召唤落雷 ----
+            float stormCall = comp.GetEffectSum(ModuleEffectKeys.WeaponStormCall);
+            if (stormCall > 0f && hazardOn && MMTSettings.EnableWeaponStormCall && map != null && Rand.Chance(stormCall))
+            {
+                map.weatherManager.eventHandler.AddEvent(new WeatherEvent_LightningStrike(map, hitThing.Position));
+                MoteMaker.ThrowText(hitThing.DrawPos, map, "引雷", new Color(0.6f, 0.8f, 1f), 1f);
+            }
+
+            // ---- 毒气（危险特效）：命中概率落点放毒气（Biotech ToxGas；无 Biotech 回退毒性积累） ----
+            float gas = comp.GetEffectSum(ModuleEffectKeys.WeaponGas);
+            if (gas > 0f && hazardOn && MMTSettings.EnableWeaponGas && map != null && Rand.Chance(gas))
+            {
+                if (ModsConfig.BiotechActive)
+                    GasUtility.AddGas(hitThing.Position, map, GasType.ToxGas, 2.9f);
+                else if (victim != null && victim.RaceProps != null && victim.RaceProps.IsFlesh)
+                    ApplyToxic(victim, 0.10f);
+                MoteMaker.ThrowText(hitThing.DrawPos, map, "毒气", new Color(0.5f, 0.8f, 0.3f), 1f);
+            }
+
+            // ---- 压制：命中概率眩晕（通用控制，与 EMP 短路同款调用） ----
+            float suppression = comp.GetEffectSum(ModuleEffectKeys.WeaponSuppression);
+            if (suppression > 0f && MMTSettings.EnableWeaponSuppression && victim != null && !victim.Dead
+                && victim.stances?.stunner != null && Rand.Chance(suppression))
+            {
+                victim.stances.stunner.StunFor(90, attacker, false);
+                MoteMaker.ThrowText(victim.DrawPos, map, "压制", Color.gray, 1f);
+            }
+
+            // ---- 缴械：命中概率打掉目标主手武器（倒地/死亡跳过） ----
+            float disarm = comp.GetEffectSum(ModuleEffectKeys.WeaponDisarm);
+            if (disarm > 0f && MMTSettings.EnableWeaponDisarm && victim != null && !victim.Dead && !victim.Downed
+                && victim.equipment?.Primary != null && Rand.Chance(disarm))
+            {
+                ThingWithComps dropped;
+                if (victim.equipment.TryDropEquipment(victim.equipment.Primary, out dropped, victim.Position, false))
+                    MoteMaker.ThrowText(victim.DrawPos, map, "缴械!", Color.white, 1.5f);
+            }
+
+            // ---- 剧毒：每次命中叠加毒性积累（仅血肉） ----
+            float toxic = comp.GetEffectSum(ModuleEffectKeys.WeaponToxic);
+            if (toxic > 0f && MMTSettings.EnableWeaponToxic && victim != null && !victim.Dead
+                && victim.RaceProps != null && victim.RaceProps.IsFlesh)
+            {
+                ApplyToxic(victim, toxic);
+            }
+
+            // ---- 虫敌：对昆虫追加伤害（镜像 EMP 对机械） ----
+            float insectBane = comp.GetEffectSum(ModuleEffectKeys.WeaponInsectBane);
+            if (insectBane > 0f && MMTSettings.EnableWeaponInsectBane && victim != null && !victim.Dead
+                && victim.RaceProps?.FleshType == FleshTypeDefOf.Insectoid && baseDamage > 0f)
+            {
+                victim.TakeDamage(new DamageInfo(damageDef ?? DamageDefOf.Cut, baseDamage * insectBane, 0f, -1f, attacker));
+                MoteMaker.ThrowText(victim.DrawPos, map, "虫敌", new Color(0.8f, 0.5f, 0.2f), 1f);
+            }
+
+            // ---- 急救：命中同派系友军时按伤害 × 系数治疗其伤口（净治疗为正） ----
+            float mending = comp.GetEffectSum(ModuleEffectKeys.WeaponMending);
+            if (mending > 0f && MMTSettings.EnableWeaponMending && victim != null && !victim.Dead
+                && attacker is Pawn medic && victim.Faction != null && victim.Faction == medic.Faction && baseDamage > 0f)
+            {
+                float healBudget = baseDamage * mending;
+                List<Hediff> wounds = victim.health.hediffSet.hediffs;
+                for (int i = 0; i < wounds.Count && healBudget > 0f; i++)
+                {
+                    if (wounds[i] is Hediff_Injury injury && injury.Severity > 0f)
+                    {
+                        float heal = Mathf.Min(healBudget, injury.Severity);
+                        injury.Severity -= heal;
+                        healBudget -= heal;
+                    }
+                }
+                MoteMaker.ThrowText(victim.DrawPos, map, "急救", Color.green, 1f);
+            }
+
             // ---- 时空折叠：击杀后攻击者本次冷却归零（取消冷却姿态） ----
             if (comp.GetEffectSum(ModuleEffectKeys.WeaponTimeFold) > 0f && victim != null && victim.Dead
                 && attacker is Pawn shooter && shooter.stances != null
@@ -1027,6 +1200,29 @@ namespace MyModeTest
             {
                 shooter.stances.SetStance(new Stance_Mobile());
                 MoteMaker.ThrowText(shooter.DrawPos, map, "时空折叠", Color.white, 1f);
+            }
+
+            // ---- 悟战：有效命中敌对目标给攻击者武器技能经验（段尾结算） ----
+            if (comp.GetEffectSum(ModuleEffectKeys.WeaponSkillExp) > 0f && MMTSettings.EnableWeaponSkillExp
+                && attacker is Pawn learner && learner.skills != null && victim != null
+                && victim != attacker && victim.HostileTo(attacker))
+            {
+                learner.skills.Learn(isMelee ? SkillDefOf.Melee : SkillDefOf.Shooting, 15f, false);
+            }
+        }
+
+        /// <summary>给血肉 pawn 叠加毒性积累（无则新建；毒气回退与剧毒词条共用）。</summary>
+        private static void ApplyToxic(Pawn pawn, float amount)
+        {
+            Hediff toxicHediff = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
+            if (toxicHediff == null)
+            {
+                toxicHediff = pawn.health.AddHediff(HediffDefOf.ToxicBuildup);
+                toxicHediff.Severity = amount;
+            }
+            else
+            {
+                toxicHediff.Severity += amount;
             }
         }
     }

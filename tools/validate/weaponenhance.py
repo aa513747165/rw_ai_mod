@@ -25,6 +25,12 @@ MODULE_DEFS = [
     "MMT_WeaponModEmp", "MMT_WeaponModIncendiary", "MMT_WeaponModLifeLeech",
     "MMT_WeaponModShieldBreaker", "MMT_WeaponModFrost",
     "MMT_WeaponModExecute", "MMT_WeaponModChainLightning", "MMT_WeaponModTimeFold", "MMT_WeaponModOverload",
+    # 附魔2（Infusion 2）借鉴扩展（14 个）
+    "MMT_WeaponModBlitz", "MMT_WeaponModGambler", "MMT_WeaponModRiot",
+    "MMT_WeaponModExplode", "MMT_WeaponModStormCall", "MMT_WeaponModGas",
+    "MMT_WeaponModSuppress", "MMT_WeaponModDisarm", "MMT_WeaponModToxic",
+    "MMT_WeaponModInsectBane", "MMT_WeaponModMending", "MMT_WeaponModGuardian",
+    "MMT_WeaponModInsight", "MMT_WeaponModSureHit",
 ]
 
 # 词条 → 效果键（与 ModuleEffectKeys 常量一一对应）
@@ -46,6 +52,20 @@ MODULE_KEYS = {
     "MMT_WeaponModChainLightning": ["WeaponChainLightning"],
     "MMT_WeaponModTimeFold": ["WeaponTimeFold"],
     "MMT_WeaponModOverload": ["WeaponDamageFactor", "WeaponCooldownFactor"],
+    "MMT_WeaponModBlitz": ["WeaponCooldownFactor", "WeaponDamageFactor"],
+    "MMT_WeaponModGambler": ["WeaponDamageFactor", "WeaponHitChance"],
+    "MMT_WeaponModRiot": ["WeaponDamageFactor", "WeaponSuppression"],
+    "MMT_WeaponModExplode": ["WeaponExplode"],
+    "MMT_WeaponModStormCall": ["WeaponStormCall"],
+    "MMT_WeaponModGas": ["WeaponGas"],
+    "MMT_WeaponModSuppress": ["WeaponSuppression"],
+    "MMT_WeaponModDisarm": ["WeaponDisarm"],
+    "MMT_WeaponModToxic": ["WeaponToxic"],
+    "MMT_WeaponModInsectBane": ["WeaponInsectBane"],
+    "MMT_WeaponModMending": ["WeaponMending"],
+    "MMT_WeaponModGuardian": ["WeaponGuardian"],
+    "MMT_WeaponModInsight": ["WeaponSkillExp"],
+    "MMT_WeaponModSureHit": ["WeaponGuaranteedHit", "WeaponWarmupFactor"],
 }
 
 
@@ -61,8 +81,8 @@ def validate_weaponenhance() -> None:
     assert_equal(child_text(bench, "thingClass"), "MyModeTest.Building_WeaponEnhanceBench", "强化台 thingClass")
     assert_equal(child_text(bench, "size"), "(2,2)", "强化台尺寸")
     recipes = [li.text for li in bench.findall("recipes/li")]
-    if len(recipes) != 17:
-        fail(f"强化台应挂 17 个附魔模块配方，实际 {len(recipes)}")
+    if len(recipes) != 31:
+        fail(f"强化台应挂 31 个附魔模块配方，实际 {len(recipes)}")
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")
@@ -79,6 +99,9 @@ def validate_weaponenhance() -> None:
             fail(f"{name} 缺少 ModuleExtension")
             continue
         assert_equal(child_text(ext, "slotKey"), "WeaponEnchant", f"{name} slotKey")
+        # 全部模块都要有武器名前缀（TransformLabel 取首个非空词条）
+        if not (child_text(ext, "labelPrefix") or "").strip():
+            fail(f"{name} 缺少 labelPrefix（武器名前缀）")
         keys = [child_text(li, "key") for li in ext.findall("effects/li")]
         if keys != MODULE_KEYS[name]:
             fail(f"{name} 效果键应为 {MODULE_KEYS[name]}，实际 {keys}")
@@ -140,9 +163,20 @@ def validate_weaponenhance() -> None:
     for token in ("CompWeaponEnhancement", "CompWeaponEnhanceBench", "EnchantSlots",
                   "get_DamageAmount", "get_ArmorPenetration", "HitReportFor",
                   "AdjustedCooldownTicks", "get_WarmupTime", "AdjustedBaseMeleeDamageAmount",
-                  "CombatExtendedActive", "WeaponOnHitMechanics"):
+                  "CombatExtendedActive", "WeaponOnHitMechanics",
+                  # 附魔2 借鉴扩展：新机制键消费端 / 覆盖安装 / 必中缓存 / 危险 gizmo / 守护补丁
+                  "WeaponExplode", "WeaponStormCall", "WeaponGas", "WeaponSuppression",
+                  "WeaponDisarm", "WeaponToxic", "WeaponInsectBane", "WeaponMending",
+                  "WeaponSkillExp", "WeaponGuaranteedHit", "WeaponGuardian",
+                  "RollGuaranteedHit", "triggerEffectsEnabled", "CompGetGizmosExtra",
+                  "PreApplyDamage", "overwritten"):
         if token not in cs:
             fail(f"WeaponEnhance.cs 缺少: {token}")
+    settings = Path("Source/MyModeTest/MMTSettings.cs").read_text(encoding="utf-8")
+    for token in ("weaponHazardEffects", "enableWeaponExplode", "enableWeaponGuaranteedHit",
+                  "enableWeaponMending", "enableWeaponSkillExp"):
+        if token not in settings:
+            fail(f"MMTSettings.cs 缺少: {token}")
     common = Path(CS_COMMON).read_text(encoding="utf-8")
     for token in ("EnhanceMaterialOption", "EnhanceTierMaterials", "JobDriver_EnhanceGeneric", "IEnhanceStation"):
         if token not in common:
