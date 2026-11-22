@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- ========== 防具强化 comp 挂载（设计方案 §2 跨 Mod 兼容，镜像武器补丁） ==========
+       目标：全体带 apparel 节点的 ThingDef（含原版与其它 mod 防具，不按 MMT_ 前缀过滤）。
+       "仅限 MMT/原版防具" 设置开关在运行时效验（EnhanceLadder.ApparelEquipEligible），挂载始终进行。
+       排除护盾腰带（走 ShieldEnhancement 线；contains 匹配应对其它 mod 带命名空间的写法）。
+       成功率表 15 档：1-3 必成 / 4-6 80% / 7-9 60% / 10-12 40% / 13-14 20% / 15 级 5%。
+       材料阶梯：+1~+6 常规自产，+7 起需探索/任务的远古材料（与武器同表）。 -->
+
+  <!-- 第一步：没有 comps 节点的防具先补空节点 -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[apparel and not(comps)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[apparel and not(comps)]</xpath>
+      <value><comps /></value>
+    </match>
+  </Operation>
+
+  <!-- 第二步：给全体防具挂强化 comp（排除护盾类与已挂载者；成功率表 + 材料阶梯随 comp 下发） -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[apparel and comps and not(comps/li[contains(@Class,"CompProperties_Shield")]) and not(comps/li[@Class="MyModeTest.CompProperties_ShieldEnhancement"]) and not(comps/li[@Class="MyModeTest.CompProperties_ApparelEnhancement"])]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[apparel and comps and not(comps/li[contains(@Class,"CompProperties_Shield")]) and not(comps/li[@Class="MyModeTest.CompProperties_ShieldEnhancement"]) and not(comps/li[@Class="MyModeTest.CompProperties_ApparelEnhancement"])]/comps</xpath>
+      <value>
+        <li Class="MyModeTest.CompProperties_ApparelEnhancement">
+          <maxLevel>15</maxLevel>
+          <armorBonusPerLevel>0.03</armorBonusPerLevel>
+          <finalLevelArmorBonus>0.10</finalLevelArmorBonus>
+          <finalLevelInsulationBonus>0.20</finalLevelInsulationBonus>
+          <successRates>
+            <li>1</li><li>1</li><li>1</li>
+            <li>0.8</li><li>0.8</li><li>0.8</li>
+            <li>0.6</li><li>0.6</li><li>0.6</li>
+            <li>0.4</li><li>0.4</li><li>0.4</li>
+            <li>0.2</li><li>0.2</li>
+            <li>0.05</li>
+          </successRates>
+          <materialTiers>
+            <li>
+              <maxLevel>3</maxLevel>
+              <options>
+                <li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li>
+              </options>
+            </li>
+            <li>
+              <maxLevel>6</maxLevel>
+              <options>
+                <li><defs><li>MMT_EnergyCrystal</li></defs><countPerLevel>1</countPerLevel></li>
+                <li><defs><li>MMT_Tungsten</li><li>MMT_Titanium</li></defs><count>2</count></li>
+              </options>
+            </li>
+            <li>
+              <maxLevel>9</maxLevel>
+              <options>
+                <li><defs><li>MMT_EnergyCrystal</li></defs><count>5</count></li>
+                <li><defs><li>MMT_AncientAlloy</li></defs><count>3</count></li>
+              </options>
+            </li>
+            <li>
+              <maxLevel>12</maxLevel>
+              <options>
+                <li><defs><li>MMT_EnergyCrystal</li></defs><count>8</count></li>
+                <li><defs><li>MMT_ArchotechShard</li></defs><count>2</count></li>
+              </options>
+            </li>
+            <li>
+              <maxLevel>15</maxLevel>
+              <options>
+                <li><defs><li>MMT_EnergyCrystal</li></defs><count>10</count></li>
+                <li><defs><li>MMT_ArchotechShard</li></defs><count>3</count></li>
+                <li><defs><li>MMT_AncientDatacore</li></defs><count>1</count></li>
+              </options>
+            </li>
+          </materialTiers>
+        </li>
+      </value>
+    </match>
+  </Operation>
+</Patch>

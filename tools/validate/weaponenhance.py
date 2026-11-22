@@ -81,8 +81,8 @@ def validate_weaponenhance() -> None:
     assert_equal(child_text(bench, "thingClass"), "MyModeTest.Building_WeaponEnhanceBench", "强化台 thingClass")
     assert_equal(child_text(bench, "size"), "(2,2)", "强化台尺寸")
     recipes = [li.text for li in bench.findall("recipes/li")]
-    if len(recipes) != 31:
-        fail(f"强化台应挂 31 个附魔模块配方，实际 {len(recipes)}")
+    if len(recipes) != 49:
+        fail(f"强化台应挂 49 个附魔模块配方（31 武器 + 18 防具），实际 {len(recipes)}")
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")

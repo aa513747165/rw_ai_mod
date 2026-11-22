@@ -23,6 +23,8 @@ namespace MyModeTest
         public float enhanceSuccessFactor = 1f;
         /// <summary>仅限 MMT/原版装备强化：勾上后武器/护盾强化 comp 不挂到其它 mod 装备。</summary>
         public bool weaponEnhanceVanillaOnly = false;
+        /// <summary>仅限 MMT/原版防具强化：勾上后防具强化 comp 对其它 mod 防具不生效。</summary>
+        public bool apparelEnhanceVanillaOnly = false;
 
         // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
         /// <summary>危险命中特效总开关（爆炸/引雷/毒气/燃烧；与武器 gizmo 两层门控）。</summary>
@@ -47,6 +49,16 @@ namespace MyModeTest
         public bool enableWeaponMending = true;
         /// <summary>悟战词条（命中获取武器技能经验）。</summary>
         public bool enableWeaponSkillExp = true;
+
+        // —— 防具附魔特效（危险类另有单件防具 gizmo 开关） ——
+        /// <summary>危险受击特效总开关（荆棘/放电/毒雾；与防具 gizmo 两层门控）。</summary>
+        public bool apparelHazardEffects = true;
+        /// <summary>荆棘词条（受击反弹伤害）。</summary>
+        public bool enableApparelThorns = true;
+        /// <summary>放电词条（受击概率眩晕攻击者）。</summary>
+        public bool enableApparelDischarge = true;
+        /// <summary>毒雾词条（受击概率放毒气）。</summary>
+        public bool enableApparelToxicCloud = true;
 
         // —— 传送 ——
         /// <summary>传送台次数上限加成（0-9）。</summary>
@@ -184,6 +196,31 @@ namespace MyModeTest
             get { return Instance == null || Instance.enableWeaponSkillExp; }
         }
 
+        public static bool ApparelEnhanceVanillaOnly
+        {
+            get { return Instance != null && Instance.apparelEnhanceVanillaOnly; }
+        }
+
+        public static bool ApparelHazardEffects
+        {
+            get { return Instance == null || Instance.apparelHazardEffects; }
+        }
+
+        public static bool EnableApparelThorns
+        {
+            get { return Instance == null || Instance.enableApparelThorns; }
+        }
+
+        public static bool EnableApparelDischarge
+        {
+            get { return Instance == null || Instance.enableApparelDischarge; }
+        }
+
+        public static bool EnableApparelToxicCloud
+        {
+            get { return Instance == null || Instance.enableApparelToxicCloud; }
+        }
+
         /// <summary>强化成功率 × 设置倍率（0-1 截断）；护盾与武器强化共用入口。</summary>
         public static float AdjustEnhanceRate(float baseRate)
         {
@@ -223,6 +260,11 @@ namespace MyModeTest
             enableWeaponInsectBane = true;
             enableWeaponMending = true;
             enableWeaponSkillExp = true;
+            apparelEnhanceVanillaOnly = false;
+            apparelHazardEffects = true;
+            enableApparelThorns = true;
+            enableApparelDischarge = true;
+            enableApparelToxicCloud = true;
         }
 
         public override void ExposeData()
@@ -257,6 +299,11 @@ namespace MyModeTest
             Scribe_Values.Look(ref enableWeaponInsectBane, "enableWeaponInsectBane", true);
             Scribe_Values.Look(ref enableWeaponMending, "enableWeaponMending", true);
             Scribe_Values.Look(ref enableWeaponSkillExp, "enableWeaponSkillExp", true);
+            Scribe_Values.Look(ref apparelEnhanceVanillaOnly, "apparelEnhanceVanillaOnly", false);
+            Scribe_Values.Look(ref apparelHazardEffects, "apparelHazardEffects", true);
+            Scribe_Values.Look(ref enableApparelThorns, "enableApparelThorns", true);
+            Scribe_Values.Look(ref enableApparelDischarge, "enableApparelDischarge", true);
+            Scribe_Values.Look(ref enableApparelToxicCloud, "enableApparelToxicCloud", true);
         }
     }
 }

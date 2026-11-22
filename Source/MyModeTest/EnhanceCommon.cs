@@ -78,6 +78,26 @@ namespace MyModeTest
         Thing HeldItem { get; }
     }
 
+    /// <summary>
+    /// 可附魔装备接口：武器与防具强化 comp 共用（附魔槽/词条安装/效果合计），
+    /// 强化台与附魔作业经本接口对两类装备透明。
+    /// </summary>
+    public interface IEnchantable : IEnhanceable
+    {
+        /// <summary>已安装附魔词条（模块物品 def，只读）。</summary>
+        IReadOnlyList<ThingDef> Enchants { get; }
+        /// <summary>附魔槽位数。</summary>
+        int EnchantSlots { get; }
+        /// <summary>本装备接受的模块槽位类别（WeaponEnchant / ApparelEnchant）。</summary>
+        string ModuleSlotKey { get; }
+        /// <summary>能否安装某词条模块。</summary>
+        bool CanAddEnchant(ThingDef moduleDef);
+        /// <summary>安装词条；槽满覆盖最早装的并返回被覆盖 def（无覆盖返回 null）。</summary>
+        ThingDef AddEnchant(ThingDef moduleDef);
+        /// <summary>词条效果合计。</summary>
+        float GetEffectSum(string key);
+    }
+
     /// <summary>已解析的具体材料需求（轮替条目落定到一个 def + 数量）。</summary>
     public struct ResolvedMaterial
     {
@@ -202,7 +222,7 @@ namespace MyModeTest
             return true;
         }
 
-        /// <summary>从装备上取强化接口（护盾/武器强化 comp 均实现 IEnhanceable）。</summary>
+        /// <summary>从装备上取强化接口（护盾/武器/防具强化 comp 均实现 IEnhanceable）。</summary>
         public static IEnhanceable Of(Thing thing)
         {
             if (thing is ThingWithComps twc)
@@ -210,6 +230,9 @@ namespace MyModeTest
                 CompShieldEnhancement shield = twc.TryGetComp<CompShieldEnhancement>();
                 if (shield != null)
                     return shield;
+                CompApparelEnhancement apparel = twc.TryGetComp<CompApparelEnhancement>();
+                if (apparel != null)
+                    return apparel;
                 return twc.TryGetComp<CompWeaponEnhancement>();
             }
             return null;
@@ -225,6 +248,22 @@ namespace MyModeTest
                 return false;
             if (!MMTSettings.WeaponEnhanceVanillaOnly)
                 return true;
+            return IsVanillaOrMmt(def);
+        }
+
+        /// <summary>防具是否开放强化（设置"仅限 MMT/原版防具"勾选时，其它 mod 防具一律不生效）。</summary>
+        public static bool ApparelEquipEligible(ThingDef def)
+        {
+            if (def == null)
+                return false;
+            if (!MMTSettings.ApparelEnhanceVanillaOnly)
+                return true;
+            return IsVanillaOrMmt(def);
+        }
+
+        /// <summary>MMT_ 前缀或原版（Core mod）装备判定。</summary>
+        private static bool IsVanillaOrMmt(ThingDef def)
+        {
             return def.defName != null && def.defName.StartsWith("MMT_")
                 || def.modContentPack != null && def.modContentPack.IsCoreMod;
         }

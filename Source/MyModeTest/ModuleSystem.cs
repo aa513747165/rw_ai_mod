@@ -106,6 +106,40 @@ namespace MyModeTest
         public const string WeaponSkillExp = "WeaponSkillExp";
         /// <summary>必中：每发概率必中（值=概率；按 tick 缓存掷骰，命中补丁消费）。</summary>
         public const string WeaponGuaranteedHit = "WeaponGuaranteedHit";
+
+        // ---- 防具附魔词条键（防具强化线；值>0 即启用，见 ApparelEnhance.cs） ----
+        /// <summary>全护甲加成（乘法，0.10 = 三防再 ×1.10）。强固/神佑。</summary>
+        public const string ApparelArmorFactor = "ApparelArmorFactor";
+        /// <summary>利刃护甲加成（乘法）。御刃。</summary>
+        public const string ApparelArmorSharpFactor = "ApparelArmorSharpFactor";
+        /// <summary>钝器护甲加成（乘法）。壁垒。</summary>
+        public const string ApparelArmorBluntFactor = "ApparelArmorBluntFactor";
+        /// <summary>热能护甲加成（乘法）。御热。</summary>
+        public const string ApparelArmorHeatFactor = "ApparelArmorHeatFactor";
+        /// <summary>承伤减免（负值，-0.08 = 承伤 -8%，合计上限 -50%）。吸收/神佑。</summary>
+        public const string ApparelDamageTakenFactor = "ApparelDamageTakenFactor";
+        /// <summary>闪避加成（加法，0.05 = +5%）。灵巧/轻羽。</summary>
+        public const string ApparelDodgeChance = "ApparelDodgeChance";
+        /// <summary>受击回血：按承伤 × 值 治疗自身伤口（每次上限 2 点）。复苏。</summary>
+        public const string ApparelHealOnHit = "ApparelHealOnHit";
+        /// <summary>EMP 防护：全额吸收 EMP（含眩晕）。法拉第。</summary>
+        public const string ApparelEmpProtection = "ApparelEmpProtection";
+        /// <summary>保暖加成（乘法）。保暖。</summary>
+        public const string ApparelInsulationColdFactor = "ApparelInsulationColdFactor";
+        /// <summary>隔温加成（乘法）。隔温。</summary>
+        public const string ApparelInsulationHeatFactor = "ApparelInsulationHeatFactor";
+        /// <summary>移速加成（乘法，0.15 = ×1.15）。疾行/轻羽。</summary>
+        public const string ApparelMoveSpeed = "ApparelMoveSpeed";
+        /// <summary>携带重量加成（加法，15 = +15kg）。负重。</summary>
+        public const string ApparelCarryCapacity = "ApparelCarryCapacity";
+        /// <summary>全局工作速度加成（乘法，0.10 = ×1.10）。勤勉。</summary>
+        public const string ApparelWorkSpeedFactor = "ApparelWorkSpeedFactor";
+        /// <summary>反伤：受击反弹承伤 × 值 给攻击者（危险特效，受 gizmo/设置门控）。荆棘。</summary>
+        public const string ApparelReflectDamage = "ApparelReflectDamage";
+        /// <summary>放电：受击概率 EMP 眩晕近战攻击者 90tick（值=概率；危险特效）。放电。</summary>
+        public const string ApparelShockBurst = "ApparelShockBurst";
+        /// <summary>毒雾：受击概率落点放毒气（值=概率；危险特效）。毒雾。</summary>
+        public const string ApparelToxicCloud = "ApparelToxicCloud";
     }
 
     /// <summary>设备侧槽位上限条目：key 对应物品扩展的 slotKey。</summary>

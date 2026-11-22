@@ -146,6 +146,9 @@ LAYOUT = {
     "MMT_WeaponEnchantment": (12, 5),
     # 前置：MMT_DeployableShieldTech(7,6)
     "MMT_StormShielding": (13, 5),
+    # 防具强化线（y=5 同行右延）：防具强化（前置 MMT_WeaponEnhancement x11）→ 防具附魔
+    "MMT_ApparelEnhancement": (14, 5),
+    "MMT_ApparelEnchantment": (15, 5),
     # 前置：MMT_Teleportation(12,6)
     "MMT_DeepSpaceScan": (13, 7),
     # 前置：MMT_MatterConversion3(11,6) + MMT_EnergyConvergence(10,9)

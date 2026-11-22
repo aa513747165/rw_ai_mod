@@ -18,6 +18,8 @@ TELEPORT_CS = "Source/MyModeTest/TeleportPad.cs"
 REQUIRED_FIELDS = [
     "resourceYieldFactor", "researchCostFactor", "teleportBonusCharges",
     "enhanceSuccessFactor", "weaponEnhanceVanillaOnly",
+    "apparelEnhanceVanillaOnly", "apparelHazardEffects",
+    "enableApparelThorns", "enableApparelDischarge", "enableApparelToxicCloud",
     "breachWealthThreshold", "breachChanceFactor",
     "breachChargeEnabled", "energyStormEnabled", "energyStormChanceFactor",
     "empDayEnabled", "meteorShowerEnabled", "eliteBreacherEnabled",

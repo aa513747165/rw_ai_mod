@@ -66,7 +66,7 @@
 
 ## 三、物品贴图（均 128×128，单图）
 
-路径 `1.7/Textures/Things/Item/MMT/`（模块在 `WeaponMod/` 子目录）。
+路径 `1.7/Textures/Things/Item/MMT/`（模块在 `WeaponMod/`、`ApparelMod/` 子目录）。
 
 ### 7. 探索独占资源（3 张）
 
@@ -130,6 +130,36 @@
 | `MMT_WeaponModInsight` | 悟战模块 / 高 | 眼睛（瞳孔+虹膜） |
 | `MMT_WeaponModSureHit` | 必中模块 / 极 | 准星同心圆 |
 
+### 11. 防具附魔模块（18 张，路径 `ApparelMod/MMT_ApparelMod*.png`，128×128）
+
+统一外形基底：**与武器模块同款的小型芯片/匣式模块**（金属外壳+触点，表示"装在防具纤维里的效应芯片"）。按稀有度分底色：
+
+- 低级（5 张）：**军绿**底色
+- 中级（5 张）：**深蓝**底色
+- 高级（5 张）：**紫色**底色
+- 极品（3 张）：**金/橙金**底色 + 更强发光
+
+| defName | 中文名 / 稀有度 | 差异化图案（模块表面的核心图形） |
+|---|---|---|
+| `MMT_ApparelModFortify` | 强固模块 / 低 | 三层叠压的加固装甲板 |
+| `MMT_ApparelModBladeWard` | 御刃模块 / 低 | 盾牌挡住一柄斜劈的刀刃 |
+| `MMT_ApparelModBulwark` | 壁垒模块 / 低 | 城墙垛口齿形 |
+| `MMT_ApparelModWarmth` | 保暖模块 / 低 | 小太阳 + 向外扩散的热波纹 |
+| `MMT_ApparelModCooling` | 隔温模块 / 低 | 冰蓝六角雪花 |
+| `MMT_ApparelModHeatWard` | 御热模块 / 中 | 一簇火焰被一道横盾线挡住 |
+| `MMT_ApparelModAbsorb` | 吸收模块 / 中 | 向内旋进的漩涡纹 |
+| `MMT_ApparelModEvasion` | 灵巧模块 / 中 | 折线 Z 字闪避轨迹 |
+| `MMT_ApparelModSwift` | 疾行模块 / 中 | 奔跑的腿形 + 速度线 |
+| `MMT_ApparelModPorter` | 负重模块 / 中 | 一只提环砝码 |
+| `MMT_ApparelModRecovery` | 复苏模块 / 高 | 医疗十字（再生绿调） |
+| `MMT_ApparelModEmpShield` | 法拉第模块 / 高 | 六边形法拉第笼网格 |
+| `MMT_ApparelModDiligent` | 勤勉模块 / 高 | 一只齿轮 |
+| `MMT_ApparelModThorns` | 荆棘模块 / 高 | 一排向上尖刺丛 |
+| `MMT_ApparelModDischarge` | 放电模块 / 高 | 炸开的电火花星 |
+| `MMT_ApparelModAegis` | 神佑模块 / 极 | 盾牌上方悬一圈光环 |
+| `MMT_ApparelModFeather` | 轻羽模块 / 极 | 一根羽毛 |
+| `MMT_ApparelModToxicCloud` | 毒雾模块 / 极 | 一滴悬垂的毒液 |
+
 ## 四、世界地图据点图标（3 张）
 
 - **路径**：`1.7/Textures/World/WorldObjects/Sites/`
@@ -149,4 +179,4 @@
 4. 验证：`python tools/validate_new.py all`（含贴图存在性检查）+ 游戏内目检。
 5. 同步游戏目录：`MSYS2_ARG_CONV_EXCL='*' robocopy H:/rw "D:/SteamLibrary/steamapps/common/RimWorld/Mods/rw" /MIR /XD .git Hardcore-SK 汉化 docs tools data .superpowers Source ...`（见日常同步命令）。
 
-**贴图清单合计**：建筑 15 张（强化台 3 + 扫描仪 3 + 阻尼器 3 + 奇观 4 + 辉光 1 + 沙袋人偶 1）+ 物品 35 张（资源 3 + 淬火油 1 + 模块 31）+ 世界图标 3 张 = **53 张主图**（遮罩另计、工具生成）。
+**贴图清单合计**：建筑 15 张（强化台 3 + 扫描仪 3 + 阻尼器 3 + 奇观 4 + 辉光 1 + 沙袋人偶 1）+ 物品 53 张（资源 3 + 淬火油 1 + 武器模块 31 + 防具模块 18）+ 世界图标 3 张 = **71 张主图**（遮罩另计、工具生成）。

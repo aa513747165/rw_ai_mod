@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 防具附魔模块制作配方（强化台制作，材料按档位；全部前置研究 MMT_ApparelEnchantment）。
+       档位：低级=淬火油×2+能量结晶×3（2400/Crafting6）；中级=淬火油×3+钛×8（4000/8）；
+             高级=淬火油×4+远古合金×10（6000/10）；极品=淬火油×5+远古碎晶×5+数据核心×1（9000/12）。 -->
+
+  <!-- ==================== 低级模块（淬火油×2 + 能量结晶×3，手工 2400） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeApparelModFortify</defName>
+    <label>制作强固模块</label>
+    <description>低级防具附魔模块：护甲 +10%。</description>
+    <jobString>正在制作强固模块。</jobString>
+    <workAmount>2400</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_EnergyCrystal</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_EnergyCrystal</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModFortify>1</MMT_ApparelModFortify></products>
+    <skillRequirements><Crafting>6</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModBladeWard</defName>
+    <label>制作御刃模块</label>
+    <description>低级防具附魔模块：利刃护甲 +15%。</description>
+    <jobString>正在制作御刃模块。</jobString>
+    <workAmount>2400</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_EnergyCrystal</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_EnergyCrystal</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModBladeWard>1</MMT_ApparelModBladeWard></products>
+    <skillRequirements><Crafting>6</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModBulwark</defName>
+    <label>制作壁垒模块</label>
+    <description>低级防具附魔模块：钝器护甲 +15%。</description>
+    <jobString>正在制作壁垒模块。</jobString>
+    <workAmount>2400</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_EnergyCrystal</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_EnergyCrystal</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModBulwark>1</MMT_ApparelModBulwark></products>
+    <skillRequirements><Crafting>6</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModWarmth</defName>
+    <label>制作保暖模块</label>
+    <description>低级防具附魔模块：保暖 +25%。</description>
+    <jobString>正在制作保暖模块。</jobString>
+    <workAmount>2400</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_EnergyCrystal</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_EnergyCrystal</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModWarmth>1</MMT_ApparelModWarmth></products>
+    <skillRequirements><Crafting>6</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModCooling</defName>
+    <label>制作隔温模块</label>
+    <description>低级防具附魔模块：隔温 +25%。</description>
+    <jobString>正在制作隔温模块。</jobString>
+    <workAmount>2400</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>MMT_EnergyCrystal</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_EnergyCrystal</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModCooling>1</MMT_ApparelModCooling></products>
+    <skillRequirements><Crafting>6</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <!-- ==================== 中级模块（淬火油×3 + 钛×8，手工 4000） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeApparelModHeatWard</defName>
+    <label>制作御热模块</label>
+    <description>中级防具附魔模块：热能护甲 +20%。</description>
+    <jobString>正在制作御热模块。</jobString>
+    <workAmount>4000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>MMT_Titanium</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_Titanium</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModHeatWard>1</MMT_ApparelModHeatWard></products>
+    <skillRequirements><Crafting>8</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModAbsorb</defName>
+    <label>制作吸收模块</label>
+    <description>中级防具附魔模块：承伤 -8%（上限 -50%）。</description>
+    <jobString>正在制作吸收模块。</jobString>
+    <workAmount>4000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>MMT_Titanium</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_Titanium</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModAbsorb>1</MMT_ApparelModAbsorb></products>
+    <skillRequirements><Crafting>8</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModEvasion</defName>
+    <label>制作灵巧模块</label>
+    <description>中级防具附魔模块：闪避 +5%。</description>
+    <jobString>正在制作灵巧模块。</jobString>
+    <workAmount>4000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>MMT_Titanium</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_Titanium</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModEvasion>1</MMT_ApparelModEvasion></products>
+    <skillRequirements><Crafting>8</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModSwift</defName>
+    <label>制作疾行模块</label>
+    <description>中级防具附魔模块：移速 +15%。</description>
+    <jobString>正在制作疾行模块。</jobString>
+    <workAmount>4000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>MMT_Titanium</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_Titanium</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModSwift>1</MMT_ApparelModSwift></products>
+    <skillRequirements><Crafting>8</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModPorter</defName>
+    <label>制作负重模块</label>
+    <description>中级防具附魔模块：携带重量 +15。</description>
+    <jobString>正在制作负重模块。</jobString>
+    <workAmount>4000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>MMT_Titanium</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_Titanium</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModPorter>1</MMT_ApparelModPorter></products>
+    <skillRequirements><Crafting>8</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <!-- ==================== 高级模块（淬火油×4 + 远古合金×10，手工 6000） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeApparelModRecovery</defName>
+    <label>制作复苏模块</label>
+    <description>高级防具附魔模块：受击按承伤 10% 治疗伤口（上限 2 点/次）。</description>
+    <jobString>正在制作复苏模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModRecovery>1</MMT_ApparelModRecovery></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModEmpShield</defName>
+    <label>制作法拉第模块</label>
+    <description>高级防具附魔模块：免疫 EMP 伤害。</description>
+    <jobString>正在制作法拉第模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModEmpShield>1</MMT_ApparelModEmpShield></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModDiligent</defName>
+    <label>制作勤勉模块</label>
+    <description>高级防具附魔模块：全局工作速度 +10%。</description>
+    <jobString>正在制作勤勉模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModDiligent>1</MMT_ApparelModDiligent></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModThorns</defName>
+    <label>制作荆棘模块</label>
+    <description>高级防具附魔模块（危险特效）：受击反弹承伤 15%。</description>
+    <jobString>正在制作荆棘模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModThorns>1</MMT_ApparelModThorns></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModDischarge</defName>
+    <label>制作放电模块</label>
+    <description>高级防具附魔模块（危险特效）：受击 25% 眩晕攻击者。</description>
+    <jobString>正在制作放电模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModDischarge>1</MMT_ApparelModDischarge></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <!-- ==================== 极品模块（淬火油×5 + 远古碎晶×5 + 数据核心×1，手工 9000） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeApparelModAegis</defName>
+    <label>制作神佑模块</label>
+    <description>极品防具附魔模块：护甲 +8%，承伤 -5%。</description>
+    <jobString>正在制作神佑模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModAegis>1</MMT_ApparelModAegis></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModFeather</defName>
+    <label>制作轻羽模块</label>
+    <description>极品防具附魔模块：移速 +10%，闪避 +3%。</description>
+    <jobString>正在制作轻羽模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModFeather>1</MMT_ApparelModFeather></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeApparelModToxicCloud</defName>
+    <label>制作毒雾模块</label>
+    <description>极品防具附魔模块（危险特效）：受击 25% 放毒气。</description>
+    <jobString>正在制作毒雾模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_ApparelModToxicCloud>1</MMT_ApparelModToxicCloud></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_ApparelEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+</Defs>

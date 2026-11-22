@@ -30,6 +30,13 @@ namespace MyModeTest
         void OnUndrafted(Pawn pawn);
     }
 
+    /// <summary>穿戴者受击结算后回调的物品 comp（PostApplyDamage 统一补丁按穿戴顺序通知；伤害被全额吸收时不触发）。</summary>
+    public interface IWornPostDamageHandler
+    {
+        /// <summary>受击结算后调用（totalDamageDealt 为本次实际造成的总伤害）。</summary>
+        void PostWearerDamageApplied(Pawn pawn, DamageInfo dinfo, float totalDamageDealt);
+    }
+
     /// <summary>
     /// 统一指令栏注入补丁：征召 + 玩家殖民者时，遍历穿戴与背包物品的 comp，
     /// 追加所有 IDraftedGizmoProvider 提供的 gizmo（原护盾腰带/部署护盾两个补丁合并于此）。
@@ -122,6 +129,30 @@ namespace MyModeTest
                 {
                     if (comp is IUndraftCallback callback)
                         callback.OnUndrafted(pawn);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 统一受击后回调补丁（ildump 核实 1.7 Pawn.PostApplyDamage(DamageInfo, float) 有方法体）：
+    /// 按穿戴顺序通知所有 IWornPostDamageHandler（荆棘反伤/受击回血/放电/毒雾等消费端）。
+    /// </summary>
+    [HarmonyPatch(typeof(Pawn), "PostApplyDamage")]
+    public static class MMT_WornPostDamagePatch
+    {
+        public static void Postfix(Pawn __instance, DamageInfo dinfo, float totalDamageDealt)
+        {
+            if (__instance?.apparel == null || __instance.Dead)
+                return;
+            List<Apparel> worn = __instance.apparel.WornApparel;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                List<ThingComp> comps = worn[i].AllComps;
+                for (int j = 0; j < comps.Count; j++)
+                {
+                    if (comps[j] is IWornPostDamageHandler handler)
+                        handler.PostWearerDamageApplied(__instance, dinfo, totalDamageDealt);
                 }
             }
         }

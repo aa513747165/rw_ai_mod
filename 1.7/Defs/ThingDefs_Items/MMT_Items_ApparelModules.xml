@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 防具附魔模块（防具强化线，镜像武器附魔模块）：在强化台制作（材料按档位），右键强化台安装到台内防具。
+       槽位：防具基础 1 槽，强化 +7 解锁第 2 槽、+13 解锁第 3 槽；同词条不可重复。
+       全部词条 = ModuleExtension(slotKey=ApparelEnchant)，效果键语义见 ModuleEffectKeys.Apparel*。
+       档位材料：低级=淬火油×2+能量结晶×3；中级=淬火油×3+钛×8；高级=淬火油×4+远古合金×10；极品=淬火油×5+远古碎晶×5+数据核心×1 -->
+
+  <!-- ==================== 低级（防御强化/功能辅助） ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModFortify</defName>
+    <label>强固模块</label>
+    <description>低级防具附魔模块：纤维晶格固化剂。安装后防具三防护甲 +10%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModFortify</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>400</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>强固</labelPrefix>
+        <effectReport>护甲 +10%</effectReport>
+        <effects><li><key>ApparelArmorFactor</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModBladeWard</defName>
+    <label>御刃模块</label>
+    <description>低级防具附魔模块：刃面偏导镀层。安装后防具利刃护甲 +15%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModBladeWard</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>400</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>御刃</labelPrefix>
+        <effectReport>利刃护甲 +15%</effectReport>
+        <effects><li><key>ApparelArmorSharpFactor</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModBulwark</defName>
+    <label>壁垒模块</label>
+    <description>低级防具附魔模块：冲击缓冲夹层。安装后防具钝器护甲 +15%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModBulwark</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>400</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>壁垒</labelPrefix>
+        <effectReport>钝器护甲 +15%</effectReport>
+        <effects><li><key>ApparelArmorBluntFactor</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModWarmth</defName>
+    <label>保暖模块</label>
+    <description>低级防具附魔模块：恒温蓄热内衬。安装后防具保暖 +25%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModWarmth</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>400</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>保暖</labelPrefix>
+        <effectReport>保暖 +25%</effectReport>
+        <effects><li><key>ApparelInsulationColdFactor</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModCooling</defName>
+    <label>隔温模块</label>
+    <description>低级防具附魔模块：辐射散热涂层。安装后防具隔温 +25%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModCooling</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>400</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>隔温</labelPrefix>
+        <effectReport>隔温 +25%</effectReport>
+        <effects><li><key>ApparelInsulationHeatFactor</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 中级（专项防御/功能辅助） ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModHeatWard</defName>
+    <label>御热模块</label>
+    <description>中级防具附魔模块：耐热陶瓷编织层。安装后防具热能护甲 +20%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModHeatWard</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>御热</labelPrefix>
+        <effectReport>热能护甲 +20%</effectReport>
+        <effects><li><key>ApparelArmorHeatFactor</key><valuePerItem>0.20</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModAbsorb</defName>
+    <label>吸收模块</label>
+    <description>中级防具附魔模块：动能吸收凝胶层。安装后穿戴者承伤 -8%（多件叠加，上限 -50%）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModAbsorb</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>吸收</labelPrefix>
+        <effectReport>承伤 -8%（上限 -50%）</effectReport>
+        <effects><li><key>ApparelDamageTakenFactor</key><valuePerItem>-0.08</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModEvasion</defName>
+    <label>灵巧模块</label>
+    <description>中级防具附魔模块：姿态预判协处理器。安装后穿戴者近战闪避 +5%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModEvasion</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>灵巧</labelPrefix>
+        <effectReport>闪避 +5%</effectReport>
+        <effects><li><key>ApparelDodgeChance</key><valuePerItem>0.05</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModSwift</defName>
+    <label>疾行模块</label>
+    <description>中级防具附魔模块：腿部助力伺服。安装后穿戴者移速 +15%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModSwift</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>疾行</labelPrefix>
+        <effectReport>移速 +15%</effectReport>
+        <effects><li><key>ApparelMoveSpeed</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModPorter</defName>
+    <label>负重模块</label>
+    <description>中级防具附魔模块：外骨骼承力框架。安装后穿戴者携带重量 +15。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModPorter</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>负重</labelPrefix>
+        <effectReport>携带重量 +15</effectReport>
+        <effects><li><key>ApparelCarryCapacity</key><valuePerItem>15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 高级（生存机制/反击特效） ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModRecovery</defName>
+    <label>复苏模块</label>
+    <description>高级防具附魔模块：纳米修复纤维。安装后穿戴者受击时按承伤 10% 治疗自身伤口（每次上限 2 点）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModRecovery</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>复苏</labelPrefix>
+        <effectReport>受击按承伤 10% 治疗伤口（上限 2 点/次）</effectReport>
+        <effects><li><key>ApparelHealOnHit</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModEmpShield</defName>
+    <label>法拉第模块</label>
+    <description>高级防具附魔模块：法拉第笼编织层。安装后此防具全额吸收 EMP 伤害（含眩晕）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModEmpShield</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>法拉第</labelPrefix>
+        <effectReport>免疫 EMP 伤害</effectReport>
+        <effects><li><key>ApparelEmpProtection</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModDiligent</defName>
+    <label>勤勉模块</label>
+    <description>高级防具附魔模块：动作辅助外骨骼。安装后穿戴者全局工作速度 +10%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModDiligent</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>勤勉</labelPrefix>
+        <effectReport>全局工作速度 +10%</effectReport>
+        <effects><li><key>ApparelWorkSpeedFactor</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModThorns</defName>
+    <label>荆棘模块</label>
+    <description>高级防具附魔模块：动能回弹矩阵（危险特效）。安装后穿戴者受击时反弹承伤的 15% 给攻击者。可在防具 gizmo 与 Mod 设置中关闭。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModThorns</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>荆棘</labelPrefix>
+        <effectReport>受击反弹承伤 15%（危险特效）</effectReport>
+        <effects><li><key>ApparelReflectDamage</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModDischarge</defName>
+    <label>放电模块</label>
+    <description>高级防具附魔模块：电容放电反击器（危险特效）。安装后穿戴者受击时 25% 概率眩晕攻击者（90 tick）。可在防具 gizmo 与 Mod 设置中关闭。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModDischarge</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>放电</labelPrefix>
+        <effectReport>受击 25% 眩晕攻击者（危险特效）</effectReport>
+        <effects><li><key>ApparelShockBurst</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 极品（复合/危险特效） ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModAegis</defName>
+    <label>神佑模块</label>
+    <description>极品防具附魔模块：远古守护力场芯片。安装后防具护甲 +8%，穿戴者承伤 -5%（与吸收模块叠加上限 -50%）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModAegis</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>神佑</labelPrefix>
+        <effectReport>护甲 +8%，承伤 -5%</effectReport>
+        <effects>
+          <li><key>ApparelArmorFactor</key><valuePerItem>0.08</valuePerItem></li>
+          <li><key>ApparelDamageTakenFactor</key><valuePerItem>-0.05</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModFeather</defName>
+    <label>轻羽模块</label>
+    <description>极品防具附魔模块：反重力纤维编织。安装后穿戴者移速 +10%、近战闪避 +3%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModFeather</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>轻羽</labelPrefix>
+        <effectReport>移速 +10%，闪避 +3%</effectReport>
+        <effects>
+          <li><key>ApparelMoveSpeed</key><valuePerItem>0.10</valuePerItem></li>
+          <li><key>ApparelDodgeChance</key><valuePerItem>0.03</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModToxicCloud</defName>
+    <label>毒雾模块</label>
+    <description>极品防具附魔模块：毒素雾化反击器（危险特效）。安装后穿戴者受击时 25% 概率在自身位置放毒气（无 Biotech 时改为攻击者毒性积累）。可在防具 gizmo 与 Mod 设置中关闭。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModToxicCloud</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>毒雾</labelPrefix>
+        <effectReport>受击 25% 放毒气（危险特效）</effectReport>
+        <effects><li><key>ApparelToxicCloud</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+</Defs>

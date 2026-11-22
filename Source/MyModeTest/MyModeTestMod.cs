@@ -35,7 +35,7 @@ namespace MyModeTest
             if (s == null) return;
 
             // 单页滚动：内容高度按行数估算（附魔特效分组后约 40 行 × 34 + 分组间距）
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1380f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1580f);
             Widgets.BeginScrollView(inRect, ref settingsScrollPos, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.maxOneColumn = true;
@@ -58,6 +58,8 @@ namespace MyModeTest
                 s.enhanceSuccessFactor, 0.5f, 2f, 0.6f, "护盾/武器强化的成功率倍率（0.5-2.0）。");
             list.CheckboxLabeled("仅限 MMT/原版装备强化（其它 mod 武器/护盾不开放强化）", ref s.weaponEnhanceVanillaOnly,
                 "勾上后强化 comp 不挂到其它 mod 的武器与护盾装备。");
+            list.CheckboxLabeled("仅限 MMT/原版防具强化（其它 mod 防具不开放强化）", ref s.apparelEnhanceVanillaOnly,
+                "勾上后防具强化 comp 对其它 mod 的防具不生效。");
             list.Gap();
 
             // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
@@ -74,6 +76,15 @@ namespace MyModeTest
             list.CheckboxLabeled("虫敌（对昆虫追加伤害）", ref s.enableWeaponInsectBane);
             list.CheckboxLabeled("急救（命中友军改治疗）", ref s.enableWeaponMending);
             list.CheckboxLabeled("悟战（命中获取武器技能经验）", ref s.enableWeaponSkillExp);
+            list.Gap();
+
+            // —— 防具附魔特效（危险类另有单件防具 gizmo 开关） ——
+            list.Label("【防具附魔特效】（关闭后对应词条不生效，模块仍可制作安装）");
+            list.CheckboxLabeled("危险受击特效总开关（荆棘/放电/毒雾）", ref s.apparelHazardEffects,
+                "总保险丝：关闭后全部危险受击特效不触发（防误伤友军）；单件防具还可用 gizmo 单独关闭。");
+            list.CheckboxLabeled("荆棘（受击反弹伤害）", ref s.enableApparelThorns);
+            list.CheckboxLabeled("放电（受击概率眩晕攻击者）", ref s.enableApparelDischarge);
+            list.CheckboxLabeled("毒雾（受击概率放毒气）", ref s.enableApparelToxicCloud);
             list.Gap();
 
             // —— 传送 ——

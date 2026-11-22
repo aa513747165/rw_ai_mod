@@ -42,7 +42,7 @@ namespace MyModeTest
     /// 数值效果由伤害/冷却/命中补丁读取本 comp 的聚合系数；特殊机制词条（值>0 启用）
     /// 在命中结算补丁统一处理。附魔槽位：基础 1，+7 解锁第 2 槽，+13 解锁第 3 槽。
     /// </summary>
-    public class CompWeaponEnhancement : ThingComp, IEnhanceable
+    public class CompWeaponEnhancement : ThingComp, IEnchantable
     {
         /// <summary>内置默认成功率表（强化到 1~15 级）：1-3 必成，4-6 80%，7-9 60%，10-12 40%，13-14 20%，15 级 5%。</summary>
         private static readonly float[] DefaultRates =
@@ -101,6 +101,12 @@ namespace MyModeTest
         public int EnchantSlots
         {
             get { return 1 + (level >= 7 ? 1 : 0) + (level >= 13 ? 1 : 0); }
+        }
+
+        /// <summary>IEnchantable：本装备接受的模块槽位类别。</summary>
+        public string ModuleSlotKey
+        {
+            get { return "WeaponEnchant"; }
         }
 
         /// <summary>危险命中特效是否开启（爆炸/引雷/毒气/燃烧；gizmo 开关）。</summary>
@@ -380,10 +386,19 @@ namespace MyModeTest
             get { return container.Count > 0 ? container[0] : null; }
         }
 
-        /// <summary>台内武器的强化 comp。</summary>
-        public CompWeaponEnhancement Enhancement
+        /// <summary>台内装备的强化 comp（武器或防具，经 IEnchantable 对两类透明）。</summary>
+        public IEnchantable Enhancement
         {
-            get { return (HeldItem as ThingWithComps)?.TryGetComp<CompWeaponEnhancement>(); }
+            get
+            {
+                ThingWithComps held = HeldItem as ThingWithComps;
+                if (held == null)
+                    return null;
+                IEnchantable enh = held.TryGetComp<CompWeaponEnhancement>();
+                if (enh != null)
+                    return enh;
+                return held.TryGetComp<CompApparelEnhancement>();
+            }
         }
 
         public override void PostExposeData()
@@ -438,23 +453,23 @@ namespace MyModeTest
             Thing held = HeldItem;
             if (held == null)
             {
-                yield return new FloatMenuOption("装载武器", delegate { StartLoadSelection(selPawn); });
+                yield return new FloatMenuOption("装载装备", delegate { StartLoadSelection(selPawn); });
                 yield break;
             }
-            CompWeaponEnhancement enh = Enhancement;
+            IEnchantable enh = Enhancement;
             string name = held.LabelCap;
-            yield return new FloatMenuOption("取出武器：" + name, delegate { OrderUnload(selPawn); });
+            yield return new FloatMenuOption("取出：" + name, delegate { OrderUnload(selPawn); });
             if (enh == null)
                 yield break;
             // 强化入口（赌博线）
             if (enh.IsMaxLevel)
             {
-                yield return new FloatMenuOption("强化武器：" + name + "（已达最高强化等级 +" + enh.Level + "）", null);
+                yield return new FloatMenuOption("强化装备：" + name + "（已达最高强化等级 +" + enh.Level + "）", null);
             }
             else
             {
                 List<EnhanceMaterialOption> options = enh.NextLevelOptions;
-                string label = "强化武器：" + name + " → +" + enh.NextLevel
+                string label = "强化装备：" + name + " → +" + enh.NextLevel
                     + "（成功率 " + enh.NextLevelSuccessRate.ToStringPercent("F0")
                     + "，需 " + EnhanceLadder.Describe(options, enh.NextLevel) + "）";
                 List<ResolvedMaterial> resolved = EnhanceLadder.Resolve(options, selPawn.Map, selPawn, enh.NextLevel);
@@ -475,33 +490,33 @@ namespace MyModeTest
             // 附魔入口（确定线；槽满也可附魔——新词条直接覆盖最早装的词条）
             if (enh.Enchants.Count >= enh.EnchantSlots && enh.Enchants.Count > 0)
             {
-                yield return new FloatMenuOption("附魔武器：" + name + "（槽位已满，新词条将覆盖「" + enh.Enchants[0].label + "」）",
+                yield return new FloatMenuOption("附魔装备：" + name + "（槽位已满，新词条将覆盖「" + enh.Enchants[0].label + "」）",
                     delegate { StartEnchantSelection(selPawn); });
             }
             else
             {
-                yield return new FloatMenuOption("附魔武器：" + name + "（槽位 " + enh.Enchants.Count + "/" + enh.EnchantSlots + "）",
+                yield return new FloatMenuOption("附魔装备：" + name + "（槽位 " + enh.Enchants.Count + "/" + enh.EnchantSlots + "）",
                     delegate { StartEnchantSelection(selPawn); });
             }
         }
 
-        /// <summary>装载入口：列出小人身上（主手 + 背包）可强化的武器。</summary>
+        /// <summary>装载入口：列出小人身上（主手 + 穿戴 + 背包）可强化的装备。</summary>
         private void StartLoadSelection(Pawn selPawn)
         {
-            List<Thing> weapons = FindEnhanceableWeapons(selPawn);
-            if (weapons.Count == 0)
+            List<Thing> items = FindEnhanceableItems(selPawn);
+            if (items.Count == 0)
             {
-                Messages.Message(selPawn.LabelShort + " 身上没有可强化的武器（需要装备或携带武器）",
+                Messages.Message(selPawn.LabelShort + " 身上没有可强化的装备（需要装备武器/穿戴防具或随身携带）",
                     selPawn, MessageTypeDefOf.RejectInput, false);
                 return;
             }
-            if (weapons.Count == 1)
+            if (items.Count == 1)
             {
-                OrderLoad(selPawn, weapons[0]);
+                OrderLoad(selPawn, items[0]);
                 return;
             }
             List<FloatMenuOption> options = new List<FloatMenuOption>();
-            foreach (Thing w in weapons)
+            foreach (Thing w in items)
             {
                 Thing local = w;
                 options.Add(new FloatMenuOption(w.LabelCap, delegate { OrderLoad(selPawn, local); }));
@@ -509,32 +524,43 @@ namespace MyModeTest
             Find.WindowStack.Add(new FloatMenu(options));
         }
 
-        /// <summary>收集小人身上（主手装备 + 背包）所有可强化武器（有强化 comp 且未被设置排除）。</summary>
-        private static List<Thing> FindEnhanceableWeapons(Pawn pawn)
+        /// <summary>收集小人身上（主手武器 + 穿戴防具 + 背包）所有可强化装备（有强化 comp 且未被设置排除）。</summary>
+        private static List<Thing> FindEnhanceableItems(Pawn pawn)
         {
             List<Thing> list = new List<Thing>();
             Thing primary = pawn.equipment?.Primary;
             if (primary != null && primary.TryGetComp<CompWeaponEnhancement>() != null
                 && EnhanceLadder.EquipEligible(primary.def))
                 list.Add(primary);
+            // 穿戴防具（照搬充能台遍历 WornApparel 的先例）
+            if (pawn.apparel != null)
+            {
+                foreach (Apparel ap in pawn.apparel.WornApparel)
+                {
+                    if (ap.TryGetComp<CompApparelEnhancement>() != null && EnhanceLadder.ApparelEquipEligible(ap.def))
+                        list.Add(ap);
+                }
+            }
             if (pawn.inventory != null)
             {
                 foreach (Thing t in pawn.inventory.innerContainer)
                 {
                     if (t.TryGetComp<CompWeaponEnhancement>() != null && EnhanceLadder.EquipEligible(t.def))
                         list.Add(t);
+                    else if (t.TryGetComp<CompApparelEnhancement>() != null && EnhanceLadder.ApparelEquipEligible(t.def))
+                        list.Add(t);
                 }
             }
             return list;
         }
 
-        /// <summary>附魔入口：列出地图上与本小人背包中可用的附魔模块（槽位类别 WeaponEnchant）。</summary>
+        /// <summary>附魔入口：列出地图上与本小人背包中可用的附魔模块（按台内装备的槽位类别过滤）。</summary>
         private void StartEnchantSelection(Pawn selPawn)
         {
-            CompWeaponEnhancement enh = Enhancement;
+            IEnchantable enh = Enhancement;
             if (enh == null)
                 return;
-            List<Thing> modules = FindEnchantModules(selPawn);
+            List<Thing> modules = FindEnchantModules(selPawn, enh.ModuleSlotKey);
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             foreach (Thing m in modules)
             {
@@ -555,15 +581,15 @@ namespace MyModeTest
             Find.WindowStack.Add(new FloatMenu(options));
         }
 
-        /// <summary>收集地图（未禁止）与小人背包中的附魔模块物品。</summary>
-        private static List<Thing> FindEnchantModules(Pawn pawn)
+        /// <summary>收集地图（未禁止）与小人背包中指定槽位类别的附魔模块物品。</summary>
+        private static List<Thing> FindEnchantModules(Pawn pawn, string slotKey)
         {
             List<Thing> list = new List<Thing>();
             if (pawn.Map != null)
             {
                 foreach (Thing t in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver))
                 {
-                    if (t.IsForbidden(pawn) || !IsEnchantModule(t.def))
+                    if (t.IsForbidden(pawn) || !IsEnchantModule(t.def, slotKey))
                         continue;
                     list.Add(t);
                 }
@@ -572,18 +598,18 @@ namespace MyModeTest
             {
                 foreach (Thing t in pawn.inventory.innerContainer)
                 {
-                    if (IsEnchantModule(t.def))
+                    if (IsEnchantModule(t.def, slotKey))
                         list.Add(t);
                 }
             }
             return list;
         }
 
-        /// <summary>是否附魔模块（ModuleExtension 槽位类别 = WeaponEnchant）。</summary>
-        public static bool IsEnchantModule(ThingDef def)
+        /// <summary>是否指定槽位类别的附魔模块（ModuleExtension.slotKey 匹配；武器 WeaponEnchant / 防具 ApparelEnchant）。</summary>
+        public static bool IsEnchantModule(ThingDef def, string slotKey)
         {
             ModuleExtension ext = def?.GetModExtension<ModuleExtension>();
-            return ext != null && ext.slotKey == "WeaponEnchant";
+            return ext != null && ext.slotKey == slotKey;
         }
 
         private void OrderLoad(Pawn pawn, Thing weapon)
@@ -597,7 +623,7 @@ namespace MyModeTest
         {
             if (HeldItem == null)
             {
-                Messages.Message("强化台内没有武器可取", parent, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("强化台内没有装备可取", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
             if (!pawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Deadly))
@@ -638,13 +664,13 @@ namespace MyModeTest
         {
             Thing held = HeldItem;
             if (held == null)
-                return "状态: 待机（台内没有武器，右键装载武器）";
-            return "武器: " + held.LabelCap;
+                return "状态: 待机（台内没有装备，右键装载武器或防具）";
+            return "装备: " + held.LabelCap;
         }
     }
 
     /// <summary>
-    /// 装载武器作业（targetA=强化台，targetB=武器）：武器在小人身上（主手/背包），走到强化台装入。
+    /// 装载装备作业（targetA=强化台，targetB=装备）：装备在小人身上（主手/穿戴/背包），走到强化台装入。
     /// </summary>
     public class JobDriver_LoadEnhanceBench : JobDriver
     {
@@ -659,7 +685,7 @@ namespace MyModeTest
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            // 只预定强化台（武器在小人身上，装入前再校验）
+            // 只预定强化台（装备在小人身上，装入前再校验）
             return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
         }
 
@@ -672,23 +698,25 @@ namespace MyModeTest
             yield return Toils_General.DoAtomic(delegate
             {
                 CompWeaponEnhanceBench bench = Bench;
-                Thing weapon = job.GetTarget(TargetIndex.B).Thing;
-                if (bench == null || weapon == null || bench.HeldItem != null)
+                Thing item = job.GetTarget(TargetIndex.B).Thing;
+                if (bench == null || item == null || bench.HeldItem != null)
                     return;
-                // 只接受从小人身上取出：主手装备则卸下，背包中则移除
-                if (pawn.equipment != null && pawn.equipment.Primary == weapon)
-                    pawn.equipment.Remove((ThingWithComps)weapon);
-                else if (pawn.inventory != null && pawn.inventory.innerContainer.Contains(weapon))
-                    pawn.inventory.innerContainer.Remove(weapon);
+                // 只接受从小人身上取出：主手装备则卸下，穿戴中防具则脱下，背包中则移除
+                if (pawn.equipment != null && pawn.equipment.Primary == item)
+                    pawn.equipment.Remove((ThingWithComps)item);
+                else if (item is Apparel ap && pawn.apparel != null && pawn.apparel.WornApparel.Contains(ap))
+                    pawn.apparel.Remove(ap);
+                else if (pawn.inventory != null && pawn.inventory.innerContainer.Contains(item))
+                    pawn.inventory.innerContainer.Remove(item);
                 else
                     return;
-                bench.TryLoadWeapon(weapon);
+                bench.TryLoadWeapon(item);
             });
         }
     }
 
     /// <summary>
-    /// 取出武器作业（targetA=强化台）：优先主手装备，其次背包，放不下放脚边。
+    /// 取出装备作业（targetA=强化台）：武器空手优先装备到主手，防具优先穿回身上，其次背包，放不下放脚边。
     /// </summary>
     public class JobDriver_UnloadEnhanceBench : JobDriver
     {
@@ -720,7 +748,14 @@ namespace MyModeTest
                 Thing held = bench.TakeHeldItem();
                 if (held == null)
                     return;
-                // 空手优先装备到主手，否则背包/脚边
+                // 防具优先穿回身上（层位冲突穿不上则落回背包/脚边兜底）
+                if (held is Apparel apparel && pawn.apparel != null
+                    && pawn.apparel.CanWearWithoutDroppingAnything(apparel.def))
+                {
+                    pawn.apparel.Wear(apparel);
+                    return;
+                }
+                // 武器空手优先装备到主手
                 if (held is ThingWithComps heldComps && pawn.equipment != null && pawn.equipment.Primary == null
                     && held.def.IsWeapon)
                 {
@@ -786,11 +821,11 @@ namespace MyModeTest
 
         private void FinishEnchant()
         {
-            CompWeaponEnhancement enh = Bench?.Enhancement;
+            IEnchantable enh = Bench?.Enhancement;
             Thing module = Module;
             if (enh == null || module == null || !enh.CanAddEnchant(module.def))
                 return;
-            // 消耗模块物品（背包中移除销毁），词条装入武器（槽满时覆盖最早装的词条）
+            // 消耗模块物品（背包中移除销毁），词条装入装备（槽满时覆盖最早装的词条）
             if (pawn.inventory.innerContainer.Contains(module))
                 pawn.inventory.innerContainer.Remove(module);
             ThingDef moduleDef = module.def;
@@ -798,7 +833,7 @@ namespace MyModeTest
             ThingDef overwritten = enh.AddEnchant(moduleDef);
             Thing station = job.GetTarget(TargetIndex.A).Thing;
             MoteMaker.ThrowText(station.DrawPos, Map, "附魔完成", Color.green, 3f);
-            string msg = "附魔完成：" + enh.parent.LabelCap + " 获得词条「" + moduleDef.label + "」";
+            string msg = "附魔完成：" + enh.ParentThing.LabelCap + " 获得词条「" + moduleDef.label + "」";
             if (overwritten != null)
                 msg += "（覆盖了旧词条「" + overwritten.label + "」）";
             Messages.Message(msg, new LookTargets(station), MessageTypeDefOf.PositiveEvent, false);

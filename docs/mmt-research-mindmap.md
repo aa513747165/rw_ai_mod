@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（113 项）
+- MMT 研究总览（115 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -155,6 +155,8 @@
           - **武器强化** `MMT_WeaponEnhancement` ｜ 坐标 (11.00, 5.00) ｜ 4000点 ｜ Spacer ｜ 交叉前置: 充能技术
             - 解锁建筑: 武器强化台
             - **武器附魔** `MMT_WeaponEnchantment` ｜ 坐标 (12.00, 5.00) ｜ 6000点 ｜ Spacer
+            - **防具强化** `MMT_ApparelEnhancement` ｜ 坐标 (14.00, 5.00) ｜ 4000点 ｜ Spacer
+              - **防具附魔** `MMT_ApparelEnchantment` ｜ 坐标 (15.00, 5.00) ｜ 6000点 ｜ Spacer
   - **毒品 V** `MMT_Drugs_C2` ｜ 坐标 (6.00, 1.00) ｜ 1000点 ｜ Industrial ｜ 前置(原版): DrugProduction
     - 解锁建筑: 中性胺精炼厂
     - 解锁配方: 合成中性胺（天然）、精炼中性胺（石化）、合成止痛药

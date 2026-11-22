@@ -7,7 +7,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_WeaponEnhanceBench</defName>
     <label>武器强化台</label>
-    <description>对武器进行强化与附魔的精密工作台。\n\n强化（赌博线）：消耗材料逐级提升，每级伤害 ×1.05，满级 15 级额外护甲穿透 +10%；成功率随等级递减（1-3 级必成，15 级仅 5%）。+6 级以后需要探索据点或任务获得的远古材料。\n\n附魔（确定线）：先在本台制作附魔模块，再安装到台内武器，100% 成功；基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽。\n\n右键建筑装载武器后开始操作。兼容其它 Mod 的武器（可在 Mod 设置中关闭）。</description>
+    <description>对武器与防具进行强化与附魔的精密工作台。\n\n强化（赌博线）：消耗材料逐级提升，武器每级伤害 ×1.05、防具每级护甲 ×1.03，满级 15 级武器额外护甲穿透 +10%、防具额外护甲 +10%/隔温 +20%；成功率随等级递减（1-3 级必成，15 级仅 5%）。+6 级以后需要探索据点或任务获得的远古材料。\n\n附魔（确定线）：先在本台制作附魔模块，再安装到台内装备，100% 成功；基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽。武器与防具模块互不通用。\n\n右键建筑装载武器或防具后开始操作。兼容其它 Mod 的武器与防具（可在 Mod 设置中关闭）。</description>
     <thingClass>MyModeTest.Building_WeaponEnhanceBench</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_WeaponEnhanceBench/MMT_WeaponEnhanceBench</texPath>
@@ -75,6 +75,25 @@
       <li>MMT_MakeWeaponModGuardian</li>
       <li>MMT_MakeWeaponModInsight</li>
       <li>MMT_MakeWeaponModSureHit</li>
+      <!-- 防具附魔模块（防具强化线，槽位类别 ApparelEnchant） -->
+      <li>MMT_MakeApparelModFortify</li>
+      <li>MMT_MakeApparelModBladeWard</li>
+      <li>MMT_MakeApparelModBulwark</li>
+      <li>MMT_MakeApparelModWarmth</li>
+      <li>MMT_MakeApparelModCooling</li>
+      <li>MMT_MakeApparelModHeatWard</li>
+      <li>MMT_MakeApparelModAbsorb</li>
+      <li>MMT_MakeApparelModEvasion</li>
+      <li>MMT_MakeApparelModSwift</li>
+      <li>MMT_MakeApparelModPorter</li>
+      <li>MMT_MakeApparelModRecovery</li>
+      <li>MMT_MakeApparelModEmpShield</li>
+      <li>MMT_MakeApparelModDiligent</li>
+      <li>MMT_MakeApparelModThorns</li>
+      <li>MMT_MakeApparelModDischarge</li>
+      <li>MMT_MakeApparelModAegis</li>
+      <li>MMT_MakeApparelModFeather</li>
+      <li>MMT_MakeApparelModToxicCloud</li>
     </recipes>
     <comps>
       <li Class="CompProperties_Flickable" />

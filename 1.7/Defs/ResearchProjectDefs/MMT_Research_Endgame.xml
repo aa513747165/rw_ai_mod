@@ -48,6 +48,36 @@
     <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
+  <!-- 防具强化：强化台扩展防具支持（赌博线 +1~+15，每级护甲 ×1.03） -->
+  <ResearchProjectDef>
+    <defName>MMT_ApparelEnhancement</defName>
+    <label>防具强化</label>
+    <description>将武器约束场技术扩展到护甲纤维晶格，强化台开放防具强化：消耗材料逐级强化防具（每级护甲 ×1.03，满级 15 级额外护甲 +10%、保暖/隔温 +20%）。+6 级以后需要探索据点或任务获得的远古材料。兼容其它 Mod 的防具（护盾腰带除外，走护盾强化线）。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_WeaponEnhancement</li>
+    </prerequisites>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+
+  <!-- 防具附魔：解锁 18 个防具附魔模块配方（强化台制作，确定线安装） -->
+  <ResearchProjectDef>
+    <defName>MMT_ApparelEnchantment</defName>
+    <label>防具附魔</label>
+    <description>研究将效应模块嫁接到防具纤维上的工艺，解锁防具附魔模块制作（强化台）：防御强化/生存机制/功能辅助/反击特效四类词条。附魔 100% 成功：防具基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽，同词条不可重复。高档模块需要探索据点的远古材料。</description>
+    <baseCost>6000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li>MMT_ApparelEnhancement</li>
+    </prerequisites>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>5.00</researchViewY>
+  </ResearchProjectDef>
+
   <!-- 深空扫描：解锁深空扫描仪与探索据点 -->
   <ResearchProjectDef>
     <defName>MMT_DeepSpaceScan</defName>
