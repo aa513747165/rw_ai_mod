@@ -320,15 +320,16 @@ namespace MyModeTest
                         && (c - center).LengthHorizontal <= 3f, map, 50);
                 GenSpawn.Spawn(stack, cell.IsValid ? cell : center, map);
             }
-            // 沙袋围圈（纯视觉标记，中立无阵营）
+            // 沙袋围圈（纯视觉标记，中立无阵营）；1.7 沙袋 madeFromStuff，必须显式给默认材料否则红字刷屏
             ThingDef sandbags = ThingDefOf.Sandbags;
             if (sandbags != null)
             {
+                ThingDef sandbagStuff = GenStuff.DefaultStuffFor(sandbags);
                 foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, 2.9f, false))
                 {
                     if (!cell.InBounds(map) || !cell.Standable(map) || cell.GetFirstBuilding(map) != null)
                         continue;
-                    GenSpawn.Spawn(ThingMaker.MakeThing(sandbags), cell, map, Rot4.North);
+                    GenSpawn.Spawn(ThingMaker.MakeThing(sandbags, sandbagStuff), cell, map, Rot4.North);
                 }
             }
         }

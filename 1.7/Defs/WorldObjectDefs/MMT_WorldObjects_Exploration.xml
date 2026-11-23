@@ -11,6 +11,7 @@
     <description>一处被遗弃的矿脉富集点，散落着外界无法冶炼的远古合金。</description>
     <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
     <siteTexture>World/WorldObjects/Sites/MMT_SiteRareDeposit</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteRareDeposit</expandingIconTexture>
     <tags>
       <li>MMT_ExplorationSite</li>
     </tags>
@@ -31,6 +32,7 @@
     <description>坠落轨道站的物资舱，封存着远古文明的碎晶储备。</description>
     <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
     <siteTexture>World/WorldObjects/Sites/MMT_SiteOrbitalRuin</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteOrbitalRuin</expandingIconTexture>
     <tags>
       <li>MMT_ExplorationSite</li>
     </tags>
@@ -52,6 +54,7 @@
     <description>机械集群的中枢库房，深处藏有一枚完好的远古数据核心。</description>
     <workerClass>MyModeTest.SitePartWorker_MMT_Stockpile</workerClass>
     <siteTexture>World/WorldObjects/Sites/MMT_SiteMechStronghold</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteMechStronghold</expandingIconTexture>
     <tags>
       <li>MMT_ExplorationSite</li>
     </tags>
