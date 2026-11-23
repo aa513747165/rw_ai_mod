@@ -414,7 +414,7 @@ namespace MyModeTest
     /// <summary>
     /// 防具强化数值统一补丁（ildump 核实 1.7 StatWorker.GetValueUnfinalized(StatRequest, bool) 有方法体，
     /// 且目标 stat 全部用默认 StatWorker 无子类重写）：
-    /// 防具自身维度（护甲三防/保暖/隔温，乘系数）与穿戴者维度（移速/负重/闪避/工作速度）。
+    /// 防具自身维度（护甲三防/保暖/隔温，乘系数）与穿戴者维度（移速/负重/闪避/工作速度/痛阈/射击精度/崩溃阈值/心灵敏感/愈合/免疫）。
     /// </summary>
     [HarmonyPatch(typeof(StatWorker), "GetValueUnfinalized")]
     public static class Patch_ApparelEnhanceStats
@@ -448,15 +448,16 @@ namespace MyModeTest
                     __result *= comp.InsulationHeatFactor;
                 return;
             }
-            // ---- 穿戴者维度：移速（乘法）/负重（加法）/闪避（加法）/全局工作速度（乘法） ----
+            // ---- 穿戴者维度：移速/工作速度/射击精度/灵敏/愈合/免疫（乘法），负重/闪避/痛阈/崩溃阈值（加法） ----
             Pawn pawn = req.Pawn;
             if (pawn?.apparel == null)
                 return;
-            bool moveSpeed = stat == StatDefOf.MoveSpeed;
-            bool carry = stat == StatDefOf.CarryingCapacity;
-            bool dodge = stat == StatDefOf.MeleeDodgeChance;
-            bool workSpeed = stat == StatDefOf.WorkSpeedGlobal;
-            if (!moveSpeed && !carry && !dodge && !workSpeed)
+            bool additive = stat == StatDefOf.CarryingCapacity || stat == StatDefOf.MeleeDodgeChance
+                || stat == StatDefOf.PainShockThreshold || stat == StatDefOf.MentalBreakThreshold;
+            bool multiplicative = stat == StatDefOf.MoveSpeed || stat == StatDefOf.WorkSpeedGlobal
+                || stat == StatDefOf.ShootingAccuracyPawn || stat == StatDefOf.PsychicSensitivity
+                || stat == StatDefOf.InjuryHealingFactor || stat == StatDefOf.ImmunityGainSpeedFactor;
+            if (!additive && !multiplicative)
                 return;
             float sum = 0f;
             foreach (Apparel ap in pawn.apparel.WornApparel)
@@ -464,18 +465,31 @@ namespace MyModeTest
                 CompApparelEnhancement comp = ap.TryGetComp<CompApparelEnhancement>();
                 if (comp == null || !EnhanceLadder.ApparelEquipEligible(ap.def))
                     continue;
-                if (moveSpeed)
+                if (stat == StatDefOf.MoveSpeed)
                     sum += comp.GetEffectSum(ModuleEffectKeys.ApparelMoveSpeed);
-                else if (carry)
+                else if (stat == StatDefOf.CarryingCapacity)
                     sum += comp.GetEffectSum(ModuleEffectKeys.ApparelCarryCapacity);
-                else if (dodge)
+                else if (stat == StatDefOf.MeleeDodgeChance)
                     sum += comp.GetEffectSum(ModuleEffectKeys.ApparelDodgeChance);
-                else
+                else if (stat == StatDefOf.WorkSpeedGlobal)
                     sum += comp.GetEffectSum(ModuleEffectKeys.ApparelWorkSpeedFactor);
+                else if (stat == StatDefOf.PainShockThreshold)
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelPainShockThreshold);
+                else if (stat == StatDefOf.ShootingAccuracyPawn)
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelShootingAccuracy);
+                else if (stat == StatDefOf.MentalBreakThreshold)
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelMentalThreshold);
+                else if (stat == StatDefOf.PsychicSensitivity)
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelPsychicSensitivity);
+                else if (stat == StatDefOf.InjuryHealingFactor)
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelHealingFactor);
+                else
+                    sum += comp.GetEffectSum(ModuleEffectKeys.ApparelImmunitySpeed);
             }
-            if (sum <= 0f)
+            // 注意不能 sum <= 0 短路：硬撑/灵壁等词条本就是负值
+            if (sum == 0f)
                 return;
-            if (carry || dodge)
+            if (additive)
                 __result += sum;
             else
                 __result *= 1f + sum;

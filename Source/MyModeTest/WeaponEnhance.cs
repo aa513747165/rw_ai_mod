@@ -206,6 +206,12 @@ namespace MyModeTest
             get { return Mathf.Max(0.1f, 1f + GetEffectSum(ModuleEffectKeys.WeaponHitChance)); }
         }
 
+        /// <summary>射程加值（词条合计加法，格；仅远程 verb 有意义）。</summary>
+        public float RangeBonus
+        {
+            get { return GetEffectSum(ModuleEffectKeys.WeaponRangeBonus); }
+        }
+
         /// <summary>强化到下一级的成功率（满级为 0；结果 × 设置倍率）。</summary>
         public float NextLevelSuccessRate
         {
@@ -305,13 +311,14 @@ namespace MyModeTest
         {
             foreach (Gizmo g in base.CompGetGizmosExtra())
                 yield return g;
-            // 只有装了危险词条（爆炸/引雷/毒气/燃烧）才出开关 gizmo
+            // 只有装了危险词条（爆炸/引雷/毒气/燃烧/烟幕/尸爆）才出开关 gizmo
             if (GetEffectSum(ModuleEffectKeys.WeaponExplode) + GetEffectSum(ModuleEffectKeys.WeaponStormCall)
-                + GetEffectSum(ModuleEffectKeys.WeaponGas) + GetEffectSum(ModuleEffectKeys.WeaponIncendiary) <= 0f)
+                + GetEffectSum(ModuleEffectKeys.WeaponGas) + GetEffectSum(ModuleEffectKeys.WeaponIncendiary)
+                + GetEffectSum(ModuleEffectKeys.WeaponSmoke) + GetEffectSum(ModuleEffectKeys.WeaponCorpseBurst) <= 0f)
                 yield break;
             Command_Toggle toggle = new Command_Toggle();
             toggle.defaultLabel = "危险命中特效";
-            toggle.defaultDesc = "关闭后此武器的爆炸/引雷/毒气/燃烧不再触发（防误伤与引燃基地）。";
+            toggle.defaultDesc = "关闭后此武器的爆炸/引雷/毒气/燃烧/烟幕/尸爆不再触发（防误伤与引燃基地）。";
             toggle.isActive = () => triggerEffectsEnabled;
             toggle.toggleAction = delegate { triggerEffectsEnabled = !triggerEffectsEnabled; };
             toggle.icon = parent.def.uiIcon;
@@ -936,6 +943,33 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>射程：VerbProperties.AdjustedRange + 词条射程加值（长程词条；EffectiveRange 全链路经此取值）。</summary>
+    [HarmonyPatch(typeof(VerbProperties), nameof(VerbProperties.AdjustedRange), typeof(Verb), typeof(Thing))]
+    public static class Patch_WeaponRange
+    {
+        public static void Postfix(Verb ownerVerb, ref float __result)
+        {
+            CompWeaponEnhancement comp = WeaponEnhancePatches.ActiveEnhancement(ownerVerb?.EquipmentSource);
+            if (comp != null)
+                __result += comp.RangeBonus;
+        }
+    }
+
+    /// <summary>连发弹数：Verb.get_BurstShotCount + 词条加成（扩容词条；保底 1 发）。</summary>
+    [HarmonyPatch(typeof(Verb), "get_BurstShotCount")]
+    public static class Patch_WeaponBurstCount
+    {
+        public static void Postfix(Verb __instance, ref int __result)
+        {
+            CompWeaponEnhancement comp = WeaponEnhancePatches.ActiveEnhancement(__instance?.EquipmentSource);
+            if (comp == null)
+                return;
+            int bonus = Mathf.RoundToInt(comp.GetEffectSum(ModuleEffectKeys.WeaponBurstShots));
+            if (bonus > 0)
+                __result = Mathf.Max(1, __result + bonus);
+        }
+    }
+
     /// <summary>近战伤害：Tool.AdjustedBaseMeleeDamageAmount（实例重载）× 强化伤害倍率。</summary>
     [HarmonyPatch(typeof(Tool), nameof(Tool.AdjustedBaseMeleeDamageAmount), typeof(Thing), typeof(DamageDef))]
     public static class Patch_WeaponDamageMelee
@@ -1023,6 +1057,20 @@ namespace MyModeTest
             get { return frostDef ?? (frostDef = DefDatabase<HediffDef>.GetNamedSilentFail("MMT_Hediff_FrostSlow")); }
         }
 
+        /// <summary>致盲 hediff（惰性解析）。</summary>
+        private static HediffDef blindDef;
+        private static HediffDef BlindDef
+        {
+            get { return blindDef ?? (blindDef = DefDatabase<HediffDef>.GetNamedSilentFail("MMT_Hediff_Blinded")); }
+        }
+
+        /// <summary>蚀甲 hediff（惰性解析）。</summary>
+        private static HediffDef armorShredDef;
+        private static HediffDef ArmorShredDef
+        {
+            get { return armorShredDef ?? (armorShredDef = DefDatabase<HediffDef>.GetNamedSilentFail("MMT_Hediff_ArmorShred")); }
+        }
+
         /// <summary>CompShield.energy 字段访问（保护字段，Harmony FieldRef 免反射开销）。</summary>
         private static readonly AccessTools.FieldRef<CompShield, float> ShieldEnergyField =
             AccessTools.FieldRefAccess<CompShield, float>("energy");
@@ -1062,11 +1110,13 @@ namespace MyModeTest
                 return;
             }
 
-            // ---- 暴击：掷词条暴击率，命中追加一次等额伤害（合计 ×2） ----
+            // ---- 暴击：掷词条暴击率，命中追加 1+暴虐值 次等额伤害（默认 ×2，暴虐词条 ×3） ----
             float critChance = comp.GetEffectSum(ModuleEffectKeys.WeaponCritChance);
             if (critChance > 0f && baseDamage > 0f && Rand.Chance(critChance))
             {
-                hitThing.TakeDamage(new DamageInfo(damageDef ?? DamageDefOf.Cut, baseDamage, 0f, -1f, attacker));
+                int critExtra = 1 + (int)comp.GetEffectSum(ModuleEffectKeys.WeaponCritDamage);
+                for (int i = 0; i < critExtra; i++)
+                    hitThing.TakeDamage(new DamageInfo(damageDef ?? DamageDefOf.Cut, baseDamage, 0f, -1f, attacker));
                 MoteMaker.ThrowText(hitThing.DrawPos, map, "暴击!", Color.yellow, 1.5f);
             }
 
@@ -1078,11 +1128,12 @@ namespace MyModeTest
                 MoteMaker.ThrowText(victim.DrawPos, map, "处决!", Color.red, 1.5f);
             }
 
-            // ---- EMP 弹：对机械追加 50% EMP 伤害并短路眩晕 ----
-            if (comp.GetEffectSum(ModuleEffectKeys.WeaponEmp) > 0f && victim != null
+            // ---- EMP 弹：对机械按词条倍率追加 EMP 伤害并短路眩晕 ----
+            float empFactor = comp.GetEffectSum(ModuleEffectKeys.WeaponEmp);
+            if (empFactor > 0f && victim != null
                 && victim.RaceProps != null && victim.RaceProps.IsMechanoid && baseDamage > 0f)
             {
-                victim.TakeDamage(new DamageInfo(DamageDefOf.EMP, baseDamage * 0.5f, 0f, -1f, attacker));
+                victim.TakeDamage(new DamageInfo(DamageDefOf.EMP, baseDamage * empFactor, 0f, -1f, attacker));
                 if (!victim.Dead && victim.stances?.stunner != null)
                     victim.stances.stunner.StunFor(120, attacker, false);
             }
@@ -1235,6 +1286,105 @@ namespace MyModeTest
             {
                 shooter.stances.SetStance(new Stance_Mobile());
                 MoteMaker.ThrowText(shooter.DrawPos, map, "时空折叠", Color.white, 1f);
+            }
+
+            // ---- 致盲：命中附加致盲 hediff（视力 -30%，5 秒；重复命中刷新时长） ----
+            if (comp.GetEffectSum(ModuleEffectKeys.WeaponBlinding) > 0f && victim != null && !victim.Dead && BlindDef != null)
+            {
+                Hediff oldBlind = victim.health.hediffSet.GetFirstHediffOfDef(BlindDef);
+                if (oldBlind != null)
+                    victim.health.RemoveHediff(oldBlind);
+                victim.health.AddHediff(BlindDef);
+            }
+
+            // ---- 蚀甲：命中附加蚀甲 hediff（利刃/钝器护甲 -25%，5 秒；重复命中刷新时长） ----
+            if (comp.GetEffectSum(ModuleEffectKeys.WeaponArmorShred) > 0f && victim != null && !victim.Dead && ArmorShredDef != null)
+            {
+                Hediff oldShred = victim.health.hediffSet.GetFirstHediffOfDef(ArmorShredDef);
+                if (oldShred != null)
+                    victim.health.RemoveHediff(oldShred);
+                victim.health.AddHediff(ArmorShredDef);
+            }
+
+            // ---- 放血：命中血肉目标叠加流血积累（仅血肉） ----
+            float bleed = comp.GetEffectSum(ModuleEffectKeys.WeaponBleed);
+            if (bleed > 0f && victim != null && !victim.Dead
+                && victim.RaceProps != null && victim.RaceProps.IsFlesh)
+            {
+                Hediff bloodLoss = victim.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
+                if (bloodLoss == null)
+                {
+                    bloodLoss = victim.health.AddHediff(HediffDefOf.BloodLoss);
+                    bloodLoss.Severity = 0.03f * bleed;
+                }
+                else
+                {
+                    bloodLoss.Severity += 0.03f * bleed;
+                }
+            }
+
+            // ---- 威慑：命中概率使目标恐慌逃跑（跳过倒地/死亡/机械） ----
+            float terror = comp.GetEffectSum(ModuleEffectKeys.WeaponTerror);
+            if (terror > 0f && MMTSettings.EnableWeaponTerror && victim != null && !victim.Dead && !victim.Downed
+                && victim.RaceProps != null && !victim.RaceProps.IsMechanoid && victim.mindState != null
+                && Rand.Chance(terror))
+            {
+                victim.mindState.mentalStateHandler.TryStartMentalState(MentalStateDefOf.PanicFlee);
+                MoteMaker.ThrowText(victim.DrawPos, map, "威慑", new Color(0.8f, 0.3f, 0.8f), 1f);
+            }
+
+            // ---- 烟幕（危险特效）：命中概率在落点放烟雾 ----
+            float smoke = comp.GetEffectSum(ModuleEffectKeys.WeaponSmoke);
+            if (smoke > 0f && hazardOn && MMTSettings.EnableWeaponSmoke && map != null && Rand.Chance(smoke))
+            {
+                GasUtility.AddGas(hitThing.Position, map, GasType.BlindSmoke, 2.9f);
+                MoteMaker.ThrowText(hitThing.DrawPos, map, "烟幕", Color.gray, 1f);
+            }
+
+            // ---- 屠夫：对血肉目标追加伤害（镜像虫敌/EMP） ----
+            float fleshBane = comp.GetEffectSum(ModuleEffectKeys.WeaponFleshBane);
+            if (fleshBane > 0f && MMTSettings.EnableWeaponFleshBane && victim != null && !victim.Dead
+                && victim.RaceProps != null && victim.RaceProps.IsFlesh && baseDamage > 0f)
+            {
+                victim.TakeDamage(new DamageInfo(damageDef ?? DamageDefOf.Cut, baseDamage * fleshBane, 0f, -1f, attacker));
+                MoteMaker.ThrowText(victim.DrawPos, map, "屠夫", new Color(0.9f, 0.2f, 0.2f), 1f);
+            }
+
+            // ---- 破城：命中建筑/墙体追加伤害（目标非 Pawn 时生效） ----
+            float demolition = comp.GetEffectSum(ModuleEffectKeys.WeaponDemolition);
+            if (demolition > 0f && MMTSettings.EnableWeaponDemolition && victim == null && baseDamage > 0f
+                && hitThing.def.category == ThingCategory.Building)
+            {
+                hitThing.TakeDamage(new DamageInfo(damageDef ?? DamageDefOf.Cut, baseDamage * demolition, 0f, -1f, attacker));
+                MoteMaker.ThrowText(hitThing.DrawPos, map, "破城", new Color(0.8f, 0.6f, 0.2f), 1f);
+            }
+
+            // ---- 汲取（远程吸血）：远程命中按伤害 × 系数治疗攻击者 ----
+            float rangedLeech = comp.GetEffectSum(ModuleEffectKeys.WeaponRangedLeech);
+            if (!isMelee && rangedLeech > 0f && MMTSettings.EnableWeaponRangedLeech && baseDamage > 0f
+                && attacker is Pawn leechPawn)
+            {
+                float leechBudget = baseDamage * rangedLeech;
+                List<Hediff> leechInjuries = leechPawn.health.hediffSet.hediffs;
+                for (int i = 0; i < leechInjuries.Count && leechBudget > 0f; i++)
+                {
+                    if (leechInjuries[i] is Hediff_Injury injury && injury.Severity > 0f)
+                    {
+                        float heal = Mathf.Min(leechBudget, injury.Severity);
+                        injury.Severity -= heal;
+                        leechBudget -= heal;
+                    }
+                }
+            }
+
+            // ---- 尸爆（危险特效）：击杀时尸体处触发小爆炸 ----
+            float corpseBurst = comp.GetEffectSum(ModuleEffectKeys.WeaponCorpseBurst);
+            if (corpseBurst > 0f && hazardOn && MMTSettings.EnableWeaponCorpseBurst && victim != null && victim.Dead
+                && baseDamage > 0f && map != null)
+            {
+                GenExplosion.DoExplosion(victim.Position, map, 1.5f, DamageDefOf.Bomb, attacker,
+                    Mathf.RoundToInt(baseDamage * 0.5f), -1f);
+                MoteMaker.ThrowText(victim.DrawPos, map, "尸爆", new Color(0.7f, 0.3f, 0.3f), 1f);
             }
 
             // ---- 悟战：有效命中敌对目标给攻击者武器技能经验（段尾结算） ----

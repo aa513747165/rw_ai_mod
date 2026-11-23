@@ -66,7 +66,7 @@ namespace MyModeTest
         /// <summary>击退力度（0=无，1=标准击退）。重击。</summary>
         public const string WeaponKnockback = "WeaponKnockback";
         // 特殊机制词条（命中结算，逻辑在伤害补丁）：
-        /// <summary>EMP 弹：对机械伤害 ×1.5 + 短路眩晕。</summary>
+        /// <summary>EMP 弹：对机械追加 EMP 伤害（值=追加倍率，0.5 = +50%）并短路眩晕。EMP弹/磁暴。</summary>
         public const string WeaponEmp = "WeaponEmp";
         /// <summary>燃烧弹：命中点燃目标。</summary>
         public const string WeaponIncendiary = "WeaponIncendiary";
@@ -104,8 +104,34 @@ namespace MyModeTest
         public const string WeaponGuardian = "WeaponGuardian";
         /// <summary>悟战：每次有效命中攻击者获得武器技能经验（值>0 启用）。</summary>
         public const string WeaponSkillExp = "WeaponSkillExp";
-        /// <summary>必中：每发概率必中（值=概率；按 tick 缓存掷骰，命中补丁消费）。</summary>
+        /// <summary>必中：每发概率必中（值=概率；按 tick 缓存掷骰，命中补丁消费）。必中。</summary>
         public const string WeaponGuaranteedHit = "WeaponGuaranteedHit";
+
+        // ---- 武器附魔扩展词条（附魔3 扩展批次；消费端见 WeaponEnhance.cs） ----
+        /// <summary>射程加成（加法，2 = +2 格；AdjustedRange 补丁消费，仅远程有意义）。长程。</summary>
+        public const string WeaponRangeBonus = "WeaponRangeBonus";
+        /// <summary>连发弹数加成（加法，2 = +2 发；BurstShotCount 补丁消费，保底 1）。扩容。</summary>
+        public const string WeaponBurstShots = "WeaponBurstShots";
+        /// <summary>暴击伤害加成（加法，1 = 暴击多追加 1 次等额伤害，即暴击 ×3）。暴虐。</summary>
+        public const string WeaponCritDamage = "WeaponCritDamage";
+        /// <summary>致盲：命中附加致盲 hediff（视力 -30%，5 秒；值>0 启用）。致盲。</summary>
+        public const string WeaponBlinding = "WeaponBlinding";
+        /// <summary>蚀甲：命中附加蚀甲 hediff（利刃/钝器护甲 -25%，5 秒；值>0 启用）。蚀甲。</summary>
+        public const string WeaponArmorShred = "WeaponArmorShred";
+        /// <summary>放血：命中血肉目标附加流血积累（值×0.03 severity/次，仅血肉）。放血。</summary>
+        public const string WeaponBleed = "WeaponBleed";
+        /// <summary>威慑：命中概率使目标恐慌逃跑（值=概率；跳过倒地/死亡/机械）。威慑。</summary>
+        public const string WeaponTerror = "WeaponTerror";
+        /// <summary>烟幕：命中概率在落点放烟雾（值=概率；危险特效，受 gizmo/设置门控）。烟幕。</summary>
+        public const string WeaponSmoke = "WeaponSmoke";
+        /// <summary>屠夫：对血肉目标追加伤害（值=追加倍率，镜像虫敌/EMP）。屠夫。</summary>
+        public const string WeaponFleshBane = "WeaponFleshBane";
+        /// <summary>破城：对建筑/墙体追加伤害（值=追加倍率；命中目标非 Pawn 时生效）。破城。</summary>
+        public const string WeaponDemolition = "WeaponDemolition";
+        /// <summary>汲取：远程伤害的百分比转为治疗（值=转化比例；远程吸血，镜像近战吸血）。汲取。</summary>
+        public const string WeaponRangedLeech = "WeaponRangedLeech";
+        /// <summary>尸爆：击杀时尸体处触发小爆炸（值>0 启用；危险特效，受 gizmo/设置门控）。尸爆。</summary>
+        public const string WeaponCorpseBurst = "WeaponCorpseBurst";
 
         // ---- 防具附魔词条键（防具强化线；值>0 即启用，见 ApparelEnhance.cs） ----
         /// <summary>全护甲加成（乘法，0.10 = 三防再 ×1.10）。强固/神佑。</summary>
@@ -140,6 +166,20 @@ namespace MyModeTest
         public const string ApparelShockBurst = "ApparelShockBurst";
         /// <summary>毒雾：受击概率落点放毒气（值=概率；危险特效）。毒雾。</summary>
         public const string ApparelToxicCloud = "ApparelToxicCloud";
+
+        // ---- 防具附魔扩展词条（附魔3 扩展批次；StatWorker 补丁 pawn 维度消费，见 ApparelEnhance.cs） ----
+        /// <summary>疼痛休克阈值加成（加法，0.10 = +10%）。镇痛。</summary>
+        public const string ApparelPainShockThreshold = "ApparelPainShockThreshold";
+        /// <summary>射击精度加成（乘法，0.05 = ×1.05）。稳手。</summary>
+        public const string ApparelShootingAccuracy = "ApparelShootingAccuracy";
+        /// <summary>精神崩溃阈值加成（加法，负值降低阈值更抗压，-0.04 = -4%）。硬撑。</summary>
+        public const string ApparelMentalThreshold = "ApparelMentalThreshold";
+        /// <summary>心灵敏感度加成（乘法，-0.20 = ×0.80）。灵壁。</summary>
+        public const string ApparelPsychicSensitivity = "ApparelPsychicSensitivity";
+        /// <summary>伤口愈合速度加成（乘法，0.25 = ×1.25）。再生。</summary>
+        public const string ApparelHealingFactor = "ApparelHealingFactor";
+        /// <summary>免疫速度加成（乘法，0.15 = ×1.15）。免疫。</summary>
+        public const string ApparelImmunitySpeed = "ApparelImmunitySpeed";
     }
 
     /// <summary>设备侧槽位上限条目：key 对应物品扩展的 slotKey。</summary>

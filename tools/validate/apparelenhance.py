@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""防具强化静态验证：18 词条模块/配方/comp 挂载补丁/研究/贴图（由 tools/validate_new.py 自动发现）。"""
+"""防具强化静态验证：24 词条模块/配方/comp 挂载补丁/研究/贴图（由 tools/validate_new.py 自动发现）。"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -41,6 +41,14 @@ MODULE_KEYS = {
     "MMT_ApparelModAegis": ["ApparelArmorFactor", "ApparelDamageTakenFactor"],
     "MMT_ApparelModFeather": ["ApparelMoveSpeed", "ApparelDodgeChance"],
     "MMT_ApparelModToxicCloud": ["ApparelToxicCloud"],
+    # 附魔3 扩展批次（中级）
+    "MMT_ApparelModNumbing": ["ApparelPainShockThreshold"],
+    "MMT_ApparelModSteady": ["ApparelShootingAccuracy"],
+    "MMT_ApparelModGrit": ["ApparelMentalThreshold"],
+    "MMT_ApparelModImmunity": ["ApparelImmunitySpeed"],
+    # 附魔3 扩展批次（高级）
+    "MMT_ApparelModMindWard": ["ApparelPsychicSensitivity"],
+    "MMT_ApparelModRegen": ["ApparelHealingFactor"],
 }
 
 # 档位材料抽查基准（低/极品两档）
@@ -52,10 +60,10 @@ def validate_apparelenhance() -> None:
     require_files([MODULES_XML, RECIPES_XML, PATCH_XML, BENCH_XML, RESEARCH_XML,
                    CS_APPAREL, CS_COMMON, CS_MODULE, CS_IFACE])
 
-    # ---- 18 词条模块：slotKey + labelPrefix + 效果键一一对应 + 贴图 ----
+    # ---- 24 词条模块：slotKey + labelPrefix + 效果键一一对应 + 贴图 ----
     modules = def_map(parse_xml(MODULES_XML))
-    if len(modules) != 18:
-        fail(f"防具附魔模块应为 18 个，实际 {len(modules)}")
+    if len(modules) != 24:
+        fail(f"防具附魔模块应为 24 个，实际 {len(modules)}")
     for name, want_keys in MODULE_KEYS.items():
         if name not in modules:
             fail(f"缺少防具附魔模块 {name}")
@@ -75,7 +83,7 @@ def validate_apparelenhance() -> None:
         if not Path(tex).exists():
             fail(f"{name} 缺少贴图 {tex}")
 
-    # ---- 18 条配方：命名规则 + 前置研究 + 档位材料抽查 ----
+    # ---- 24 条配方：命名规则 + 前置研究 + 档位材料抽查 ----
     recipes = def_map(parse_xml(RECIPES_XML))
     for name in MODULE_KEYS:
         recipe = "MMT_Make" + name[len("MMT_"):]

@@ -75,6 +75,22 @@
       <li>MMT_MakeWeaponModGuardian</li>
       <li>MMT_MakeWeaponModInsight</li>
       <li>MMT_MakeWeaponModSureHit</li>
+      <!-- 附魔3 扩展批次（武器） -->
+      <li>MMT_MakeWeaponModLongRange</li>
+      <li>MMT_MakeWeaponModDeadeye</li>
+      <li>MMT_MakeWeaponModMagazine</li>
+      <li>MMT_MakeWeaponModBlinding</li>
+      <li>MMT_MakeWeaponModCorrode</li>
+      <li>MMT_MakeWeaponModBleed</li>
+      <li>MMT_MakeWeaponModSmoke</li>
+      <li>MMT_MakeWeaponModSlaughter</li>
+      <li>MMT_MakeWeaponModDemolition</li>
+      <li>MMT_MakeWeaponModVampire</li>
+      <li>MMT_MakeWeaponModDisruptor</li>
+      <li>MMT_MakeWeaponModBrutal</li>
+      <li>MMT_MakeWeaponModTerror</li>
+      <li>MMT_MakeWeaponModRangedLeech</li>
+      <li>MMT_MakeWeaponModCorpseBurst</li>
       <!-- 防具附魔模块（防具强化线，槽位类别 ApparelEnchant） -->
       <li>MMT_MakeApparelModFortify</li>
       <li>MMT_MakeApparelModBladeWard</li>
@@ -94,6 +110,13 @@
       <li>MMT_MakeApparelModAegis</li>
       <li>MMT_MakeApparelModFeather</li>
       <li>MMT_MakeApparelModToxicCloud</li>
+      <!-- 附魔3 扩展批次（防具） -->
+      <li>MMT_MakeApparelModNumbing</li>
+      <li>MMT_MakeApparelModSteady</li>
+      <li>MMT_MakeApparelModGrit</li>
+      <li>MMT_MakeApparelModImmunity</li>
+      <li>MMT_MakeApparelModMindWard</li>
+      <li>MMT_MakeApparelModRegen</li>
     </recipes>
     <comps>
       <li Class="CompProperties_Flickable" />

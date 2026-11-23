@@ -20,4 +20,47 @@
       </li>
     </stages>
   </HediffDef>
+
+  <!-- 致盲（致盲附魔模块命中特效）：视力 -30%，持续 300 tick（5 秒），重复命中刷新 -->
+  <HediffDef>
+    <defName>MMT_Hediff_Blinded</defName>
+    <label>致盲</label>
+    <description>被强光眩目弹头命中，暂时视物不清。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>300~300</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <Sight>-0.3</Sight>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 蚀甲（蚀甲附魔模块命中特效）：利刃/钝器护甲 -25%，持续 300 tick（5 秒），重复命中刷新 -->
+  <HediffDef>
+    <defName>MMT_Hediff_ArmorShred</defName>
+    <label>护甲腐蚀</label>
+    <description>被强酸蚀刻弹头命中，护甲结构被腐蚀削弱。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>300~300</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>-0.25</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.25</ArmorRating_Blunt>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
 </Defs>

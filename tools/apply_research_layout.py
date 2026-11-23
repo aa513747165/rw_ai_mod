@@ -103,6 +103,8 @@ LAYOUT = {
     "MMT_ElectricElectronics": (2, 6),
     "MMT_PersonaCoreCrafting": (3, 6),
     "MMT_Robotics1": (5, 6),
+    # 机械集控核心（前置 机器人工程 I x5，x 必须大于前置；半行错开避免与 (6,6) 重叠）
+    "MMT_MechControlHub": (6, 6.5),
     "MMT_WardTalismanCraft": (6, 6),
     "MMT_DeployableShieldTech": (7, 6),
     "MMT_MatterConversion1": (8, 6),

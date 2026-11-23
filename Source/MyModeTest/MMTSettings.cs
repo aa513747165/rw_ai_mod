@@ -50,6 +50,20 @@ namespace MyModeTest
         /// <summary>悟战词条（命中获取武器技能经验）。</summary>
         public bool enableWeaponSkillExp = true;
 
+        // —— 武器附魔特效（附魔3 扩展批次） ——
+        /// <summary>威慑词条（命中概率恐慌逃跑）。</summary>
+        public bool enableWeaponTerror = true;
+        /// <summary>烟幕词条（命中落点放烟雾；危险特效）。</summary>
+        public bool enableWeaponSmoke = true;
+        /// <summary>屠夫词条（对血肉追加伤害）。</summary>
+        public bool enableWeaponFleshBane = true;
+        /// <summary>破城词条（对建筑追加伤害）。</summary>
+        public bool enableWeaponDemolition = true;
+        /// <summary>汲取词条（远程吸血）。</summary>
+        public bool enableWeaponRangedLeech = true;
+        /// <summary>尸爆词条（击杀时尸体爆炸；危险特效）。</summary>
+        public bool enableWeaponCorpseBurst = true;
+
         // —— 防具附魔特效（危险类另有单件防具 gizmo 开关） ——
         /// <summary>危险受击特效总开关（荆棘/放电/毒雾；与防具 gizmo 两层门控）。</summary>
         public bool apparelHazardEffects = true;
@@ -196,6 +210,36 @@ namespace MyModeTest
             get { return Instance == null || Instance.enableWeaponSkillExp; }
         }
 
+        public static bool EnableWeaponTerror
+        {
+            get { return Instance == null || Instance.enableWeaponTerror; }
+        }
+
+        public static bool EnableWeaponSmoke
+        {
+            get { return Instance == null || Instance.enableWeaponSmoke; }
+        }
+
+        public static bool EnableWeaponFleshBane
+        {
+            get { return Instance == null || Instance.enableWeaponFleshBane; }
+        }
+
+        public static bool EnableWeaponDemolition
+        {
+            get { return Instance == null || Instance.enableWeaponDemolition; }
+        }
+
+        public static bool EnableWeaponRangedLeech
+        {
+            get { return Instance == null || Instance.enableWeaponRangedLeech; }
+        }
+
+        public static bool EnableWeaponCorpseBurst
+        {
+            get { return Instance == null || Instance.enableWeaponCorpseBurst; }
+        }
+
         public static bool ApparelEnhanceVanillaOnly
         {
             get { return Instance != null && Instance.apparelEnhanceVanillaOnly; }
@@ -260,6 +304,12 @@ namespace MyModeTest
             enableWeaponInsectBane = true;
             enableWeaponMending = true;
             enableWeaponSkillExp = true;
+            enableWeaponTerror = true;
+            enableWeaponSmoke = true;
+            enableWeaponFleshBane = true;
+            enableWeaponDemolition = true;
+            enableWeaponRangedLeech = true;
+            enableWeaponCorpseBurst = true;
             apparelEnhanceVanillaOnly = false;
             apparelHazardEffects = true;
             enableApparelThorns = true;
@@ -299,6 +349,12 @@ namespace MyModeTest
             Scribe_Values.Look(ref enableWeaponInsectBane, "enableWeaponInsectBane", true);
             Scribe_Values.Look(ref enableWeaponMending, "enableWeaponMending", true);
             Scribe_Values.Look(ref enableWeaponSkillExp, "enableWeaponSkillExp", true);
+            Scribe_Values.Look(ref enableWeaponTerror, "enableWeaponTerror", true);
+            Scribe_Values.Look(ref enableWeaponSmoke, "enableWeaponSmoke", true);
+            Scribe_Values.Look(ref enableWeaponFleshBane, "enableWeaponFleshBane", true);
+            Scribe_Values.Look(ref enableWeaponDemolition, "enableWeaponDemolition", true);
+            Scribe_Values.Look(ref enableWeaponRangedLeech, "enableWeaponRangedLeech", true);
+            Scribe_Values.Look(ref enableWeaponCorpseBurst, "enableWeaponCorpseBurst", true);
             Scribe_Values.Look(ref apparelEnhanceVanillaOnly, "apparelEnhanceVanillaOnly", false);
             Scribe_Values.Look(ref apparelHazardEffects, "apparelHazardEffects", true);
             Scribe_Values.Look(ref enableApparelThorns, "enableApparelThorns", true);

@@ -67,6 +67,31 @@ namespace MyModeTest
             advance.icon = Props.nextStage.uiIcon;
             advance.action = AdvanceStage;
             yield return advance;
+            // 开发者模式：跳过蓝图建造，直接落位下一阶段成品
+            if (Prefs.DevMode)
+            {
+                Command_Action devAdvance = new Command_Action();
+                devAdvance.defaultLabel = "DEV: 立即进入下一阶段";
+                devAdvance.defaultDesc = "开发者模式：跳过材料与建造，直接生成下一阶段建筑：" + Props.nextStage.LabelCap;
+                devAdvance.icon = Props.nextStage.uiIcon;
+                devAdvance.action = DevAdvanceStage;
+                yield return devAdvance;
+            }
+        }
+
+        /// <summary>开发者直建：本阶段消失，原地生成下一阶段成品建筑。</summary>
+        private void DevAdvanceStage()
+        {
+            Map map = parent.Map;
+            IntVec3 pos = parent.Position;
+            Rot4 rot = parent.Rotation;
+            ThingDef stuff = parent.Stuff;
+            parent.Destroy(DestroyMode.Vanish);
+            Thing next = ThingMaker.MakeThing(Props.nextStage, stuff);
+            next.SetFactionDirect(Faction.OfPlayer);
+            GenSpawn.Spawn(next, pos, map, rot);
+            Messages.Message("DEV: 已直接生成 " + Props.nextStage.LabelCap,
+                new LookTargets(next), MessageTypeDefOf.NeutralEvent, false);
         }
 
         /// <summary>造价摘要（菜单文案）。</summary>
@@ -264,13 +289,46 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 纪元奇点建筑绘制：点火时叠画水平发光碟堆叠光柱（1.7 竖直 quad 不渲染，严禁立起 plane10）。
+    /// 纪元奇点建筑绘制：底座为建筑本体贴图，上方实时叠画——三圈稳定环互逆旋转、
+    /// 中央黑洞缓慢旋转+呼吸缩放、周期性黑洞脉冲扩散环；点火时再加水平发光碟堆叠光柱
+    /// （1.7 竖直 quad 不渲染，严禁立起 plane10）。全部用 plane10 水平面片，Y 轴分层。
     /// </summary>
     public class Building_Singularity : Building
     {
         private CompWonderActivation activationComp;
+        private Material holeMat;
+        private Material pulseMat;
+        private Material ringOuterMat;
+        private Material ringMidMat;
+        private Material ringInnerMat;
         private Material glowMat;
-        private const string GlowTexPath = "Things/Building/Production/MMT_Singularity/MMT_SingularityGlow";
+
+        private const string TexDir = "Things/Building/Production/MMT_Singularity/";
+        private const string HoleTexPath = TexDir + "MMT_SingularityHole";
+        private const string PulseTexPath = TexDir + "MMT_SingularityPulse";
+        private const string RingOuterTexPath = TexDir + "MMT_SingularityRingOuter";
+        private const string RingMidTexPath = TexDir + "MMT_SingularityRingMid";
+        private const string RingInnerTexPath = TexDir + "MMT_SingularityRingInner";
+        private const string GlowTexPath = TexDir + "MMT_SingularityGlow";
+
+        // plane10 缩放（片元 10×10 格）：圆环整体 = 底座宽的 0.68，黑洞 = 0.46
+        private const float RingScale = 0.435f;
+        private const float HoleScale = 0.294f;
+
+        // 圆环转速（度/秒，负号反向）
+        private const float RingOuterSpeed = 5f;
+        private const float RingMidSpeed = -9f;
+        private const float RingInnerSpeed = 14f;
+
+        // 黑洞：缓慢自转 + 呼吸缩放
+        private const float HoleSpinSpeed = 3f;
+        private const float HoleBreathe = 0.04f;
+
+        // 脉冲扩散环：从黑洞扩散到外环之外
+        private const float PulsePeriod = 2.8f;
+        private const float PulsePeriodActivating = 1.3f;
+        private const float PulseScaleFrom = 0.18f;
+        private const float PulseScaleTo = 0.72f;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -278,28 +336,69 @@ namespace MyModeTest
             activationComp = this.TryGetComp<CompWonderActivation>();
         }
 
+        private static Material LoadMat(ref Material mat, string texPath)
+        {
+            if (mat == null)
+                mat = MaterialPool.MatFrom(texPath, ShaderDatabase.Transparent, Color.white);
+            return mat;
+        }
+
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
-            if (activationComp == null || (!activationComp.IsActivating && !activationComp.Activated))
-                return;
-            // 点火/常驻辉光：6 片水平发光碟从台面堆叠到空中（俯视投影成光柱）；
-            // 点火时随进度增强亮度与脉动幅度
-            if (glowMat == null)
-                glowMat = MaterialPool.MatFrom(GlowTexPath, ShaderDatabase.Transparent, Color.white);
-            float strength = activationComp.Activated ? 0.35f : 0.35f + activationComp.ActivationProgress * 0.5f;
-            float pulse = strength + 0.15f * Mathf.Sin(Time.realtimeSinceStartup * 4.8f);
-            glowMat.color = new Color(0.7f, 0.5f, 1f, pulse);
-            float baseY = AltitudeLayer.Item.AltitudeFor() + 0.08f;
-            float time = Time.realtimeSinceStartup * 4.2f;
-            for (int i = 0; i < 6; i++)
+            float time = Time.realtimeSinceStartup;
+            bool activating = activationComp != null && activationComp.IsActivating;
+            bool activated = activationComp != null && activationComp.Activated;
+            float baseY = AltitudeLayer.Item.AltitudeFor();
+
+            // 三圈稳定环互逆旋转
+            DrawPlane(drawLoc, baseY + 0.10f, RingScale, time * RingOuterSpeed,
+                LoadMat(ref ringOuterMat, RingOuterTexPath), Color.white);
+            DrawPlane(drawLoc, baseY + 0.11f, RingScale, time * RingMidSpeed,
+                LoadMat(ref ringMidMat, RingMidTexPath), Color.white);
+            DrawPlane(drawLoc, baseY + 0.12f, RingScale, time * RingInnerSpeed,
+                LoadMat(ref ringInnerMat, RingInnerTexPath), Color.white);
+
+            // 中央黑洞：慢速自转 + 呼吸缩放（点火时呼吸加剧）
+            float breathe = (activating ? HoleBreathe * 2.5f : HoleBreathe) * Mathf.Sin(time * 2.2f);
+            DrawPlane(drawLoc, baseY + 0.14f, HoleScale * (1f + breathe), time * HoleSpinSpeed,
+                LoadMat(ref holeMat, HoleTexPath), Color.white);
+
+            // 黑洞脉冲：周期性扩散环，点火时更频繁更亮
+            float period = activating ? PulsePeriodActivating : PulsePeriod;
+            float t = (time % period) / period;
+            float pulseScale = Mathf.Lerp(PulseScaleFrom, PulseScaleTo, t);
+            float pulseAlpha = (1f - t) * (activating ? 0.9f : 0.55f);
+            DrawPlane(drawLoc, baseY + 0.16f, pulseScale, 0f,
+                LoadMat(ref pulseMat, PulseTexPath), new Color(1f, 1f, 1f, pulseAlpha));
+
+            // 点火/常驻辉光：6 片水平发光碟从台面堆叠到空中（俯视投影成光柱）
+            if (activating || activated)
             {
-                float t = i / 5f;
-                float s = (2.2f - t * 0.9f) * (1f + 0.15f * Mathf.Sin(time + i * 1.1f));
-                Vector3 p = new Vector3(drawLoc.x, baseY + i * 0.22f, drawLoc.z);
-                Graphics.DrawMesh(MeshPool.plane10,
-                    Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), glowMat, 0);
+                Material glow = LoadMat(ref glowMat, GlowTexPath);
+                float strength = activated ? 0.18f : 0.35f + activationComp.ActivationProgress * 0.5f;
+                float pulse = strength + 0.15f * Mathf.Sin(time * 4.8f);
+                glow.color = new Color(0.7f, 0.5f, 1f, pulse);
+                float spin = time * 4.2f;
+                for (int i = 0; i < 6; i++)
+                {
+                    float k = i / 5f;
+                    float s = (2.2f - k * 0.9f) * (1f + 0.15f * Mathf.Sin(spin + i * 1.1f));
+                    Vector3 p = new Vector3(drawLoc.x, baseY + 0.08f + i * 0.22f, drawLoc.z);
+                    Graphics.DrawMesh(MeshPool.plane10,
+                        Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), glow, 0);
+                }
             }
+        }
+
+        /// <summary>水平面片叠画：绕 Y 轴旋转（俯视即原地自转）。</summary>
+        private static void DrawPlane(Vector3 center, float y, float scale, float angleDeg, Material mat, Color color)
+        {
+            mat.color = color;
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(new Vector3(center.x, y, center.z),
+                    Quaternion.AngleAxis(angleDeg, Vector3.up),
+                    new Vector3(scale, 1f, scale)), mat, 0);
         }
     }
 

@@ -6,7 +6,7 @@
 
 ## 1. MMT 物品总表
 
-共 291 件（不含抽象基类）。
+共 367 件（不含抽象基类）。
 
 ### 1.1 资源与材料
 
@@ -14,11 +14,11 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 镍合金（`MMT_NickelBar`） | 6.0 | 150 | 金属 | MMT_SmeltNickelBar | 5 |
-| 钴合金（`MMT_Cobalt`） | 10.0 | 150 | — | MMT_ExtractCobalt | 4 |
-| 铬合金（`MMT_Chromium`） | 5.0 | 150 | — | MMT_ExtractChromium | 2 |
+| 镍合金（`MMT_NickelBar`） | 6.0 | 150 | 金属 | MMT_SmeltNickelBar | 4 |
+| 钴合金（`MMT_Cobalt`） | 10.0 | 150 | — | MMT_ExtractCobalt | 3 |
+| 铬合金（`MMT_Chromium`） | 5.0 | 150 | — | MMT_ExtractChromium | 1 |
 | 钨合金（`MMT_Tungsten`） | 40.0 | 150 | — | MMT_SmeltTungsten | 3 |
-| 钛合金（`MMT_Titanium`） | 45.0 | 75 | 金属 | MMT_SmeltTitanium | 8 |
+| 钛合金（`MMT_Titanium`） | 45.0 | 75 | 金属 | MMT_SmeltTitanium | 22 |
 | 司太立合金（钨铬钴合金）（`MMT_StelliteAlloy`） | 30.0 | 150 | 金属 | MMT_MakeStellite | 1 |
 | 镍钛合金（`MMT_NitinolAlloy`） | 27.0 | 150 | 金属 | MMT_MakeNitinol | 5 |
 | 钨钴合金（`MMT_PobediteAlloy`） | 33.0 | 150 | 金属 | MMT_MakePobedite | 1 |
@@ -41,7 +41,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 堆肥料（`MMT_Compost`） | 2.4 | 300 | — | MMT_MakeCompost | 1 |
 | 肥料（`MMT_Fertilizer`） | 3.8 | 300 | — | MMT_MakeFertilizer | 3 |
-| 土堆（`MMT_Dirt`） | 0.2 | 900 | — | MMT_MakeDirt、MMT_MakeDirt_Hand、MMT_MakeDirt_Electric | 0 |
+| 土堆（`MMT_Dirt`） | 0.2 | 900 | — | MMT_MakeDirt、MMT_MakeDirt_Hand、MMT_MakeDirt_Electric | 2 |
 | 盐（`MMT_Salt`） | 1 | 600 | — | MMT_MineSalt | 2 |
 
 #### 仿生（Bionics）
@@ -70,7 +70,7 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 混凝土（`MMT_Concrete`） | 6.0 | 150 | — | MMT_MixConcrete_Hand、MMT_MixConcrete_Electric | 2 |
+| 混凝土（`MMT_Concrete`） | 6.0 | 150 | — | MMT_MixConcrete_Hand、MMT_MixConcrete_Electric | 3 |
 | 钢筋混凝土（`MMT_ReinforcedConcrete`） | 16.0 | 75 | 石质 | MMT_MakeReinforcedConcrete_Hand、MMT_MakeReinforcedConcrete_Electric | 4 |
 
 #### 作物（Crops）
@@ -104,16 +104,24 @@
 | --- | --- | --- | --- | --- | --- |
 | 硅（`MMT_Silicon`） | 4.0 | 300 | — | MMT_ExtractSilicon_Electric、MMT_MakeSilicon_Bulk、MMT_ExtractSilicon_Hand | 6 |
 | 电子元件（`MMT_ElectronicParts`） | 25.0 | 75 | — | MMT_AssembleElectronicParts_Electric、MMT_AssembleElectronicParts_Hand | 18 |
-| 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 13 |
-| 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 17 |
+| 集成电路（`MMT_IntegratedCircuit`） | 55.0 | 75 | — | MMT_AssembleIC_Electric、MMT_AssembleIC_Hand、MMT_DeconstructPersonalShield | 15 |
+| 微芯片集成电路（`MMT_Microchip`） | 100.0 | 25 | — | MMT_AssembleMicrochip_Electric、MMT_AssembleMicrochip_Hand | 20 |
 
 #### EnergyCrystal（EnergyCrystal）
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| 能量结晶（`MMT_EnergyCrystal`） | 60 | 25 | — | MMT_MakeEnergyCrystal | 0 |
+| 能量结晶（`MMT_EnergyCrystal`） | 60 | 25 | — | MMT_MakeEnergyCrystal | 9 |
 | 辉晶球茎（`MMT_LumenBulb`） | 8 | 75 | — | — | 1 |
 | 晶能精粹（`MMT_CrystalEssence`） | 30 | 75 | — | MMT_RefineCrystalEssence | 0 |
+
+#### Exploration（Exploration）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 远古合金（`MMT_AncientAlloy`） | 35 | 75 | — | — | 31 |
+| 远古碎晶（`MMT_ArchotechShard`） | 90 | 50 | — | — | 18 |
+| 远古数据核心（`MMT_AncientDatacore`） | 150 | 10 | — | — | 17 |
 
 #### 玻璃（Glass）
 
@@ -122,19 +130,26 @@
 | 碎石（`MMT_CrushedStone`） | 0.3 | 900 | — | MMT_MakeCrushedStone_Hand、MMT_MakeCrushedStone_Electric、MMT_MakeCrushedStone_Hand_Chunk、MMT_MakeCrushedStone_Electric_Chunk | 4 |
 | 沙（`MMT_Sand`） | 0.3 | 900 | — | MMT_MakeSand_Hand、MMT_MakeSand_Electric、MMT_MakeSand_Hand_Chunk、MMT_MakeSand_Electric_Chunk | 9 |
 | 玻璃生料（`MMT_GlassBatch`） | 1.2 | 300 | — | MMT_MakeGlassBatch | 3 |
-| 玻璃块（`MMT_Glass`） | 5.0 | 150 | — | MMT_MakeGlass | 15 |
-| 强化玻璃块（`MMT_ReinforcedGlass`） | 17.0 | 150 | — | MMT_MakeReinforcedGlass | 1 |
+| 玻璃块（`MMT_Glass`） | 5.0 | 150 | — | MMT_MakeGlass | 16 |
+| 强化玻璃块（`MMT_ReinforcedGlass`） | 17.0 | 150 | — | MMT_MakeReinforcedGlass | 4 |
 
 #### 物质（Matter）
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 无机物（`MMT_Matter`） | 10 | 150 | — | MMT_ConvertResourcesRaw | 15 |
-| 反物质（`MMT_Antimatter`） | 120 | 75 | — | MMT_MakeAntimatter | 1 |
+| 反物质（`MMT_Antimatter`） | 120 | 75 | — | MMT_MakeAntimatter | 2 |
 | 生物质（`MMT_Biomatter`） | 10 | 150 | — | MMT_ExtractBiomatterCorpse、MMT_ExtractBiomatterMeat | 4 |
 | 磁性材料（`MMT_MagneticMaterial`） | 110 | 75 | — | MMT_BuildMagneticMaterial | 6 |
 | 生物合成材料（`MMT_BiosyntheticMaterial`） | 90 | 75 | — | MMT_BuildBiosyntheticMaterial | 6 |
 | 生物电子元件（`MMT_BioMicrochips`） | 2100 | 25 | — | MMT_MakeBioelectronicDevices、MMT_DisassembleAIPersonaCore | 1 |
+
+#### MechControlModules（MechControlModules）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 机械带宽模块（`MMT_MechBandwidthModule`） | 1500 | 10 | — | MMT_MakeMechBandwidthModule | 0 |
+| 机械控制组模块（`MMT_MechControlGroupModule`） | 1200 | 10 | — | MMT_MakeMechControlGroupModule | 0 |
 
 #### 医药（Medicine）
 
@@ -164,7 +179,7 @@
 | 铅合金（`MMT_LeadBar`） | 6 | 300 | 金属 | MMT_SmeltLeadBar_Electric、MMT_SmeltLeadBar_Hand | 0 |
 | 铝合金（`MMT_AluminiumBar`） | 3 | 300 | 金属 | MMT_SmeltAluminiumBar_Electric | 3 |
 | 斯特合金（`MMT_FerrosiliconAlloy`） | 5 | 300 | 金属 | MMT_MakeFerrosiliconAlloy | 5 |
-| 金属罐（`MMT_MetalCan`） | 1.7 | 200 | — | MMT_MakeMetalCan | 0 |
+| 金属罐（`MMT_MetalCan`） | 1.7 | 200 | — | MMT_MakeMetalCan | 1 |
 
 #### 核能（Nuclear）
 
@@ -186,8 +201,8 @@
 | 原始零部件（`MMT_ComponentMedieval`） | 6 | 300 | — | MMT_MakeComponentMedieval_Wood、MMT_MakeComponentMedieval_Metal | 2 |
 | 电线（`MMT_Wire`） | 1.5 | 600 | — | MMT_MakeWire_Hand、MMT_MakeWire_Electric | 12 |
 | 机械组件（`MMT_Mechanism`） | 200 | 75 | — | MMT_MakeMechanism_Hand、MMT_MakeMechanism_Electric | 27 |
-| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 15 |
-| 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 18 |
+| 先进机械组件（`MMT_AdvMechanism`） | 400 | 75 | — | MMT_MakeAdvMechanism_Hand、MMT_MakeAdvMechanism_Electric | 17 |
+| 高级零部件（`MMT_SpacerComponent`） | 150 | 150 | — | MMT_MakeSpacerComponent | 20 |
 | 超级零部件（`MMT_UltraComponent`） | 200 | 150 | — | MMT_MakeUltraComponent | 11 |
 
 #### 石化（Petrochem）
@@ -212,8 +227,8 @@
 | 火药（`MMT_Powder`） | 25.0 | 150 | — | MMT_MakePowder | 9 |
 | 凝固汽油（`MMT_Napalm`） | 5.0 | 300 | — | MMT_MakeNapalm | 1 |
 | 硝石（`MMT_Nitre`） | 3.0 | 300 | — | — | 2 |
-| 氧化化合燃料（`MMT_OxidizedChemfuel`） | 9.0 | 375 | — | MMT_MakeOxidizedChemfuel | 0 |
-| 碳纤维锭（`MMT_CarbonAlloy`） | 40.0 | 75 | 金属 | MMT_MakeCarbonAlloy、MMT_DisassembleAIPersonaCore | 6 |
+| 氧化化合燃料（`MMT_OxidizedChemfuel`） | 9.0 | 375 | — | MMT_MakeOxidizedChemfuel | 2 |
+| 碳纤维锭（`MMT_CarbonAlloy`） | 40.0 | 75 | 金属 | MMT_MakeCarbonAlloy、MMT_DisassembleAIPersonaCore | 8 |
 
 #### 贵金属（Precious）
 
@@ -235,8 +250,8 @@
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
 | 动力电池（`MMT_Hexcell`） | 150 | 50 | — | MMT_MakeHexcell | 1 |
-| 机器人部件（`MMT_RobotParts`） | 70 | 75 | — | MMT_MakeRobotParts | 0 |
-| 矿物声纳模块（`MMT_MineralSonarModule`） | 300 | 25 | — | MMT_MakeMineralSonarModule | 0 |
+| 机器人部件（`MMT_RobotParts`） | 70 | 75 | — | MMT_MakeRobotParts | 2 |
+| 矿物声纳模块（`MMT_MineralSonarModule`） | 300 | 25 | — | MMT_MakeMineralSonarModule | 1 |
 
 #### 筛网（SieveMeshes）
 
@@ -256,7 +271,7 @@
 
 | 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
 | --- | --- | --- | --- | --- | --- |
-| α阿尔法聚合物（`MMT_AlphaPoly`） | 45 | 75 | 金属 | MMT_DisassembleAIPersonaCore、MMT_ProduceAPoly | 1 |
+| α阿尔法聚合物（`MMT_AlphaPoly`） | 45 | 75 | 金属 | MMT_DisassembleAIPersonaCore、MMT_ProduceAPoly | 2 |
 | β贝塔聚合物（`MMT_BetaPoly`） | 65 | 75 | 金属 | MMT_ProduceBPoly | 0 |
 | 生物铁合金（`MMT_BioferriteAlloy`） | 9 | 600 | Bioferrite/金属 | MMT_MakeBioferriteAlloy | 0 |
 
@@ -276,9 +291,15 @@
 | 凯夫拉（`MMT_Kevlar`） | 25 | 150 | 织物 | MMT_MakeKevlar | 0 |
 | 甲壳板（`MMT_ChitinPlating`） | 35 | 75 | 织物 | MMT_MakeChitinPlating | 0 |
 | 甲壳（`MMT_Chitin`） | 7 | 150 | 是 | — | 1 |
-| 兽脂（`MMT_Tallow`） | 2 | 75 | — | MMT_MakeTallow | 0 |
-| 绘画用品（`MMT_PaintingSupplies`） | 50 | 10 | — | MMT_CookPaint、MMT_CookPaintDye | 0 |
+| 兽脂（`MMT_Tallow`） | 2 | 75 | — | MMT_MakeTallow | 1 |
+| 绘画用品（`MMT_PaintingSupplies`） | 50 | 10 | — | MMT_CookPaint、MMT_CookPaintDye | 1 |
 | 染料（`MMT_Dye`） | 1.5 | 150 | — | MMT_MakeDye | 1 |
+
+#### WeaponEnhance（WeaponEnhance）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 淬火油（`MMT_QuenchOil`） | 12 | 75 | — | MMT_MakeQuenchOil | 70 |
 
 #### 武器部件（WeaponParts）
 
@@ -310,6 +331,35 @@
 | 红木木板（`MMT_RedWoodPlank`） | 3.5 | 300 | 木质 | MMT_MakeRedWoodPlanks_Electric、MMT_MakeRedWoodPlanks_Hand | 2 |
 
 ### 1.2 制品（仿生/药品/护盾/炮塔弹药等）
+
+#### ApparelModules（ApparelModules）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 强固模块（`MMT_ApparelModFortify`） | 400 | 10 | — | MMT_MakeApparelModFortify | 0 |
+| 御刃模块（`MMT_ApparelModBladeWard`） | 400 | 10 | — | MMT_MakeApparelModBladeWard | 0 |
+| 壁垒模块（`MMT_ApparelModBulwark`） | 400 | 10 | — | MMT_MakeApparelModBulwark | 0 |
+| 保暖模块（`MMT_ApparelModWarmth`） | 400 | 10 | — | MMT_MakeApparelModWarmth | 0 |
+| 隔温模块（`MMT_ApparelModCooling`） | 400 | 10 | — | MMT_MakeApparelModCooling | 0 |
+| 御热模块（`MMT_ApparelModHeatWard`） | 700 | 10 | — | MMT_MakeApparelModHeatWard | 0 |
+| 吸收模块（`MMT_ApparelModAbsorb`） | 700 | 10 | — | MMT_MakeApparelModAbsorb | 0 |
+| 灵巧模块（`MMT_ApparelModEvasion`） | 700 | 10 | — | MMT_MakeApparelModEvasion | 0 |
+| 疾行模块（`MMT_ApparelModSwift`） | 700 | 10 | — | MMT_MakeApparelModSwift | 0 |
+| 负重模块（`MMT_ApparelModPorter`） | 700 | 10 | — | MMT_MakeApparelModPorter | 0 |
+| 复苏模块（`MMT_ApparelModRecovery`） | 1200 | 10 | — | MMT_MakeApparelModRecovery | 0 |
+| 法拉第模块（`MMT_ApparelModEmpShield`） | 1200 | 10 | — | MMT_MakeApparelModEmpShield | 0 |
+| 勤勉模块（`MMT_ApparelModDiligent`） | 1200 | 10 | — | MMT_MakeApparelModDiligent | 0 |
+| 荆棘模块（`MMT_ApparelModThorns`） | 1200 | 10 | — | MMT_MakeApparelModThorns | 0 |
+| 放电模块（`MMT_ApparelModDischarge`） | 1200 | 10 | — | MMT_MakeApparelModDischarge | 0 |
+| 神佑模块（`MMT_ApparelModAegis`） | 2000 | 10 | — | MMT_MakeApparelModAegis | 0 |
+| 轻羽模块（`MMT_ApparelModFeather`） | 2000 | 10 | — | MMT_MakeApparelModFeather | 0 |
+| 毒雾模块（`MMT_ApparelModToxicCloud`） | 2000 | 10 | — | MMT_MakeApparelModToxicCloud | 0 |
+| 镇痛模块（`MMT_ApparelModNumbing`） | 700 | 10 | — | MMT_MakeApparelModNumbing | 0 |
+| 稳手模块（`MMT_ApparelModSteady`） | 700 | 10 | — | MMT_MakeApparelModSteady | 0 |
+| 硬撑模块（`MMT_ApparelModGrit`） | 700 | 10 | — | MMT_MakeApparelModGrit | 0 |
+| 免疫模块（`MMT_ApparelModImmunity`） | 700 | 10 | — | MMT_MakeApparelModImmunity | 0 |
+| 灵壁模块（`MMT_ApparelModMindWard`） | 1200 | 10 | — | MMT_MakeApparelModMindWard | 0 |
+| 再生模块（`MMT_ApparelModRegen`） | 1200 | 10 | — | MMT_MakeApparelModRegen | 0 |
 
 #### 仿生（Bionics）
 
@@ -513,6 +563,57 @@
 | 14.5mm KPV重机枪组件箱（`MMT_KPVTurret_Crate`） | 3100 | 1 | — | MMT_BuildKPVTurret_Crate | 1 |
 | M134速射机枪组件箱（`MMT_MinigunTurret_Crate`） | 3000 | 1 | — | MMT_BuildMinigunTurret_Crate | 1 |
 | 20x102mm厄利孔机炮组件箱（`MMT_Oerlikonautocannon_Crate`） | 3400 | 1 | — | MMT_BuildOerlikonautocannon_Crate | 1 |
+
+#### WeaponModules（WeaponModules）
+
+| 物品 | 价值 | 堆叠 | 材料 | 产出配方 | 被引用 |
+| --- | --- | --- | --- | --- | --- |
+| 锋利模块（`MMT_WeaponModSharp`） | 400 | 10 | — | MMT_MakeWeaponModSharp | 0 |
+| 精准模块（`MMT_WeaponModAccurate`） | 400 | 10 | — | MMT_MakeWeaponModAccurate | 0 |
+| 轻巧模块（`MMT_WeaponModSwift`） | 400 | 10 | — | MMT_MakeWeaponModSwift | 0 |
+| 穿透模块（`MMT_WeaponModPierce`） | 400 | 10 | — | MMT_MakeWeaponModPierce | 0 |
+| 致命模块（`MMT_WeaponModDeadly`） | 700 | 10 | — | MMT_MakeWeaponModDeadly | 0 |
+| 疾风模块（`MMT_WeaponModGale`） | 700 | 10 | — | MMT_MakeWeaponModGale | 0 |
+| 重击模块（`MMT_WeaponModHeavy`） | 700 | 10 | — | MMT_MakeWeaponModHeavy | 0 |
+| 速射模块（`MMT_WeaponModRapid`） | 700 | 10 | — | MMT_MakeWeaponModRapid | 0 |
+| EMP弹模块（`MMT_WeaponModEmp`） | 1200 | 10 | — | MMT_MakeWeaponModEmp | 0 |
+| 燃烧弹模块（`MMT_WeaponModIncendiary`） | 1200 | 10 | — | MMT_MakeWeaponModIncendiary | 0 |
+| 吸血模块（`MMT_WeaponModLifeLeech`） | 1200 | 10 | — | MMT_MakeWeaponModLifeLeech | 0 |
+| 破盾模块（`MMT_WeaponModShieldBreaker`） | 1200 | 10 | — | MMT_MakeWeaponModShieldBreaker | 0 |
+| 冰霜模块（`MMT_WeaponModFrost`） | 1200 | 10 | — | MMT_MakeWeaponModFrost | 0 |
+| 处决模块（`MMT_WeaponModExecute`） | 2000 | 10 | — | MMT_MakeWeaponModExecute | 0 |
+| 连锁闪电模块（`MMT_WeaponModChainLightning`） | 2000 | 10 | — | MMT_MakeWeaponModChainLightning | 0 |
+| 时空折叠模块（`MMT_WeaponModTimeFold`） | 2000 | 10 | — | MMT_MakeWeaponModTimeFold | 0 |
+| 过载模块（`MMT_WeaponModOverload`） | 2000 | 10 | — | MMT_MakeWeaponModOverload | 0 |
+| 极速模块（`MMT_WeaponModBlitz`） | 700 | 10 | — | MMT_MakeWeaponModBlitz | 0 |
+| 赌徒诅咒模块（`MMT_WeaponModGambler`） | 2000 | 10 | — | MMT_MakeWeaponModGambler | 0 |
+| 镇暴模块（`MMT_WeaponModRiot`） | 2000 | 10 | — | MMT_MakeWeaponModRiot | 0 |
+| 爆裂模块（`MMT_WeaponModExplode`） | 1200 | 10 | — | MMT_MakeWeaponModExplode | 0 |
+| 引雷模块（`MMT_WeaponModStormCall`） | 2000 | 10 | — | MMT_MakeWeaponModStormCall | 0 |
+| 毒气模块（`MMT_WeaponModGas`） | 1200 | 10 | — | MMT_MakeWeaponModGas | 0 |
+| 压制模块（`MMT_WeaponModSuppress`） | 1200 | 10 | — | MMT_MakeWeaponModSuppress | 0 |
+| 缴械模块（`MMT_WeaponModDisarm`） | 1200 | 10 | — | MMT_MakeWeaponModDisarm | 0 |
+| 剧毒模块（`MMT_WeaponModToxic`） | 1200 | 10 | — | MMT_MakeWeaponModToxic | 0 |
+| 虫敌模块（`MMT_WeaponModInsectBane`） | 1200 | 10 | — | MMT_MakeWeaponModInsectBane | 0 |
+| 急救模块（`MMT_WeaponModMending`） | 1200 | 10 | — | MMT_MakeWeaponModMending | 0 |
+| 守护模块（`MMT_WeaponModGuardian`） | 1200 | 10 | — | MMT_MakeWeaponModGuardian | 0 |
+| 悟战模块（`MMT_WeaponModInsight`） | 1200 | 10 | — | MMT_MakeWeaponModInsight | 0 |
+| 必中模块（`MMT_WeaponModSureHit`） | 2000 | 10 | — | MMT_MakeWeaponModSureHit | 0 |
+| 长程模块（`MMT_WeaponModLongRange`） | 1200 | 10 | — | MMT_MakeWeaponModLongRange | 0 |
+| 神射模块（`MMT_WeaponModDeadeye`） | 1200 | 10 | — | MMT_MakeWeaponModDeadeye | 0 |
+| 扩容模块（`MMT_WeaponModMagazine`） | 1200 | 10 | — | MMT_MakeWeaponModMagazine | 0 |
+| 致盲模块（`MMT_WeaponModBlinding`） | 1200 | 10 | — | MMT_MakeWeaponModBlinding | 0 |
+| 蚀甲模块（`MMT_WeaponModCorrode`） | 1200 | 10 | — | MMT_MakeWeaponModCorrode | 0 |
+| 放血模块（`MMT_WeaponModBleed`） | 1200 | 10 | — | MMT_MakeWeaponModBleed | 0 |
+| 烟幕模块（`MMT_WeaponModSmoke`） | 1200 | 10 | — | MMT_MakeWeaponModSmoke | 0 |
+| 屠夫模块（`MMT_WeaponModSlaughter`） | 1200 | 10 | — | MMT_MakeWeaponModSlaughter | 0 |
+| 破城模块（`MMT_WeaponModDemolition`） | 1200 | 10 | — | MMT_MakeWeaponModDemolition | 0 |
+| 嗜血模块（`MMT_WeaponModVampire`） | 2000 | 10 | — | MMT_MakeWeaponModVampire | 0 |
+| 磁暴模块（`MMT_WeaponModDisruptor`） | 2000 | 10 | — | MMT_MakeWeaponModDisruptor | 0 |
+| 暴虐模块（`MMT_WeaponModBrutal`） | 2000 | 10 | — | MMT_MakeWeaponModBrutal | 0 |
+| 威慑模块（`MMT_WeaponModTerror`） | 2000 | 10 | — | MMT_MakeWeaponModTerror | 0 |
+| 汲取模块（`MMT_WeaponModRangedLeech`） | 2000 | 10 | — | MMT_MakeWeaponModRangedLeech | 0 |
+| 尸爆模块（`MMT_WeaponModCorpseBurst`） | 2000 | 10 | — | MMT_MakeWeaponModCorpseBurst | 0 |
 
 ### 1.3 作物
 

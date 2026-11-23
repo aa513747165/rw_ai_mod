@@ -192,7 +192,7 @@
         <slotKey>WeaponEnchant</slotKey>
         <labelPrefix>EMP</labelPrefix>
         <effectReport>对机械伤害 +50% 并短路眩晕</effectReport>
-        <effects><li><key>WeaponEmp</key><valuePerItem>1</valuePerItem></li></effects>
+        <effects><li><key>WeaponEmp</key><valuePerItem>0.5</valuePerItem></li></effects>
       </li>
     </modExtensions>
   </ThingDef>
@@ -651,6 +651,308 @@
         <labelPrefix>必中</labelPrefix>
         <effectReport>35% 必中，瞄准 +30%</effectReport>
         <effects><li><key>WeaponGuaranteedHit</key><valuePerItem>0.35</valuePerItem></li><li><key>WeaponWarmupFactor</key><valuePerItem>0.30</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 附魔3 扩展批次：高级 ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModLongRange</defName>
+    <label>长程模块</label>
+    <description>高级武器附魔模块：加长导轨与弹道补偿器。安装后武器射程 +2 格（仅远程武器有效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModLongRange</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>长程</labelPrefix>
+        <effectReport>射程 +2</effectReport>
+        <effects><li><key>WeaponRangeBonus</key><valuePerItem>2</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModDeadeye</defName>
+    <label>神射模块</label>
+    <description>高级武器附魔模块：精准模块的进阶版，多通道弹道预测阵列。安装后武器命中 +16%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDeadeye</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>神射</labelPrefix>
+        <effectReport>命中 +16%</effectReport>
+        <effects><li><key>WeaponHitChance</key><valuePerItem>0.16</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModMagazine</defName>
+    <label>扩容模块</label>
+    <description>高级武器附魔模块：并联供弹机构。安装后武器每次连发弹数 +2（仅连发远程武器有效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModMagazine</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>扩容</labelPrefix>
+        <effectReport>连发弹数 +2</effectReport>
+        <effects><li><key>WeaponBurstShots</key><valuePerItem>2</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModBlinding</defName>
+    <label>致盲模块</label>
+    <description>高级武器附魔模块：强光眩目弹头。安装后命中使目标致盲（视力 -30%，持续 5 秒，重复命中刷新）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBlinding</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>致盲</labelPrefix>
+        <effectReport>命中致盲（视力 -30%，5 秒）</effectReport>
+        <effects><li><key>WeaponBlinding</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModCorrode</defName>
+    <label>蚀甲模块</label>
+    <description>高级武器附魔模块：强酸蚀刻弹头。安装后命中使目标护甲被腐蚀（利刃/钝器护甲 -25%，持续 5 秒，重复命中刷新）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModCorrode</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>蚀甲</labelPrefix>
+        <effectReport>命中蚀甲（护甲 -25%，5 秒）</effectReport>
+        <effects><li><key>WeaponArmorShred</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModBleed</defName>
+    <label>放血模块</label>
+    <description>高级武器附魔模块：锯齿放血刃口/弹头。安装后每次命中血肉目标都会加深其失血（流血积累 +3%，仅血肉）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBleed</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>放血</labelPrefix>
+        <effectReport>命中流血积累 +3%（仅血肉）</effectReport>
+        <effects><li><key>WeaponBleed</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModSmoke</defName>
+    <label>烟幕模块</label>
+    <description>高级武器附魔模块：烟雾播撒战斗部。安装后命中 25% 在落点释放烟幕。可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSmoke</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>烟幕</labelPrefix>
+        <effectReport>命中 25% 释放烟幕</effectReport>
+        <effects><li><key>WeaponSmoke</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModSlaughter</defName>
+    <label>屠夫模块</label>
+    <description>高级武器附魔模块：生物组织识别弹头。安装后对血肉目标追加 30% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSlaughter</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>屠夫</labelPrefix>
+        <effectReport>对血肉伤害 +30%</effectReport>
+        <effects><li><key>WeaponFleshBane</key><valuePerItem>0.3</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModDemolition</defName>
+    <label>破城模块</label>
+    <description>高级武器附魔模块：结构弱点解算器。安装后对建筑与墙体追加 50% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDemolition</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>破城</labelPrefix>
+        <effectReport>对建筑伤害 +50%</effectReport>
+        <effects><li><key>WeaponDemolition</key><valuePerItem>0.5</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 附魔3 扩展批次：极品 ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModVampire</defName>
+    <label>嗜血模块</label>
+    <description>极品武器附魔模块：吸血模块的进阶版，高效生物电虹吸回路（仅近战武器有效）。安装后近战造成伤害的 10% 转化为对使用者的治疗。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModVampire</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>嗜血</labelPrefix>
+        <effectReport>近战：伤害 10% 转为治疗</effectReport>
+        <effects><li><key>WeaponLifeLeech</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModDisruptor</defName>
+    <label>磁暴模块</label>
+    <description>极品武器附魔模块：EMP 弹模块的进阶版，过载电磁脉冲战斗部。安装后对机械单位伤害 +100%（合计 ×2）并造成短路眩晕。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDisruptor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>磁暴</labelPrefix>
+        <effectReport>对机械伤害 +100% 并短路眩晕</effectReport>
+        <effects><li><key>WeaponEmp</key><valuePerItem>1.0</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModBrutal</defName>
+    <label>暴虐模块</label>
+    <description>极品武器附魔模块：弱点处决协处理器。安装后暴击造成三倍伤害（需配合暴击率词条使用）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBrutal</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>暴虐</labelPrefix>
+        <effectReport>暴击伤害 ×3</effectReport>
+        <effects><li><key>WeaponCritDamage</key><valuePerItem>1</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModTerror</defName>
+    <label>威慑模块</label>
+    <description>极品武器附魔模块：次声波恐惧谐振器。安装后命中 15% 使目标恐慌逃跑（对倒地与机械目标无效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModTerror</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>威慑</labelPrefix>
+        <effectReport>命中 15% 恐慌逃跑</effectReport>
+        <effects><li><key>WeaponTerror</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModRangedLeech</defName>
+    <label>汲取模块</label>
+    <description>极品武器附魔模块：远程生物电虹吸管。安装后远程造成伤害的 3% 转化为对使用者的治疗。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModRangedLeech</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>汲取</labelPrefix>
+        <effectReport>远程：伤害 3% 转为治疗</effectReport>
+        <effects><li><key>WeaponRangedLeech</key><valuePerItem>0.03</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_WeaponModCorpseBurst</defName>
+    <label>尸爆模块</label>
+    <description>极品武器附魔模块：延时起爆植入战斗部。安装后击杀目标时其尸体触发小爆炸（半径 1.5，伤害 = 本次 50%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModCorpseBurst</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
+    <statBases><MarketValue>2000</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>WeaponEnchant</slotKey>
+        <labelPrefix>尸爆</labelPrefix>
+        <effectReport>击杀时尸体爆炸</effectReport>
+        <effects><li><key>WeaponCorpseBurst</key><valuePerItem>1</valuePerItem></li></effects>
       </li>
     </modExtensions>
   </ThingDef>

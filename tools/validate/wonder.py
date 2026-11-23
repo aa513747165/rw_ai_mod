@@ -71,6 +71,10 @@ def validate_wonder() -> None:
                 fail(f"纪元选项缺少 {cond}")
     if not Path("1.7/Textures/Things/Building/Production/MMT_Singularity/MMT_SingularityGlow.png").exists():
         fail("缺少奇点辉光叠加层贴图")
+    for fx in ("Hole", "Pulse", "RingOuter", "RingMid", "RingInner"):
+        fx_tex = f"1.7/Textures/Things/Building/Production/MMT_Singularity/MMT_Singularity{fx}.png"
+        if not Path(fx_tex).exists():
+            fail(f"缺少奇点特效贴图 {fx_tex}")
 
     # ---- 条件与 hediff ----
     conds = def_map(parse_xml(COND_XML))

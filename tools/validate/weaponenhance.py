@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""武器强化静态验证：强化台/17 词条模块/材料阶梯/comp 挂载补丁/淬火油/贴图。"""
+"""武器强化静态验证：强化台/46 词条模块/材料阶梯/comp 挂载补丁/淬火油/贴图。"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -31,6 +31,12 @@ MODULE_DEFS = [
     "MMT_WeaponModSuppress", "MMT_WeaponModDisarm", "MMT_WeaponModToxic",
     "MMT_WeaponModInsectBane", "MMT_WeaponModMending", "MMT_WeaponModGuardian",
     "MMT_WeaponModInsight", "MMT_WeaponModSureHit",
+    # 附魔3 扩展批次（15 个）
+    "MMT_WeaponModLongRange", "MMT_WeaponModDeadeye", "MMT_WeaponModMagazine",
+    "MMT_WeaponModBlinding", "MMT_WeaponModCorrode", "MMT_WeaponModBleed",
+    "MMT_WeaponModSmoke", "MMT_WeaponModSlaughter", "MMT_WeaponModDemolition",
+    "MMT_WeaponModVampire", "MMT_WeaponModDisruptor", "MMT_WeaponModBrutal",
+    "MMT_WeaponModTerror", "MMT_WeaponModRangedLeech", "MMT_WeaponModCorpseBurst",
 ]
 
 # 词条 → 效果键（与 ModuleEffectKeys 常量一一对应）
@@ -66,6 +72,22 @@ MODULE_KEYS = {
     "MMT_WeaponModGuardian": ["WeaponGuardian"],
     "MMT_WeaponModInsight": ["WeaponSkillExp"],
     "MMT_WeaponModSureHit": ["WeaponGuaranteedHit", "WeaponWarmupFactor"],
+    # 附魔3 扩展批次
+    "MMT_WeaponModLongRange": ["WeaponRangeBonus"],
+    "MMT_WeaponModDeadeye": ["WeaponHitChance"],
+    "MMT_WeaponModMagazine": ["WeaponBurstShots"],
+    "MMT_WeaponModBlinding": ["WeaponBlinding"],
+    "MMT_WeaponModCorrode": ["WeaponArmorShred"],
+    "MMT_WeaponModBleed": ["WeaponBleed"],
+    "MMT_WeaponModSmoke": ["WeaponSmoke"],
+    "MMT_WeaponModSlaughter": ["WeaponFleshBane"],
+    "MMT_WeaponModDemolition": ["WeaponDemolition"],
+    "MMT_WeaponModVampire": ["WeaponLifeLeech"],
+    "MMT_WeaponModDisruptor": ["WeaponEmp"],
+    "MMT_WeaponModBrutal": ["WeaponCritDamage"],
+    "MMT_WeaponModTerror": ["WeaponTerror"],
+    "MMT_WeaponModRangedLeech": ["WeaponRangedLeech"],
+    "MMT_WeaponModCorpseBurst": ["WeaponCorpseBurst"],
 }
 
 
@@ -81,13 +103,13 @@ def validate_weaponenhance() -> None:
     assert_equal(child_text(bench, "thingClass"), "MyModeTest.Building_WeaponEnhanceBench", "强化台 thingClass")
     assert_equal(child_text(bench, "size"), "(2,2)", "强化台尺寸")
     recipes = [li.text for li in bench.findall("recipes/li")]
-    if len(recipes) != 49:
-        fail(f"强化台应挂 49 个附魔模块配方（31 武器 + 18 防具），实际 {len(recipes)}")
+    if len(recipes) != 70:
+        fail(f"强化台应挂 70 个附魔模块配方（46 武器 + 24 防具），实际 {len(recipes)}")
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")
 
-    # ---- 17 词条模块：slotKey + 效果键一一对应 ----
+    # ---- 46 词条模块：slotKey + 效果键一一对应 ----
     modules = def_map(parse_xml(MODULES_XML))
     for name in MODULE_DEFS:
         if name not in modules:
@@ -153,10 +175,11 @@ def validate_weaponenhance() -> None:
         else:
             assert_equal(child_text(jobs[job], "driverClass"), driver, f"{job} driverClass")
 
-    # ---- 冰霜 hediff ----
+    # ---- 冰霜/致盲/蚀甲 hediff ----
     hediffs = def_map(parse_xml(HEDIFF_XML))
-    if "MMT_Hediff_FrostSlow" not in hediffs:
-        fail("缺少冰霜减速 Hediff MMT_Hediff_FrostSlow")
+    for hdef in ("MMT_Hediff_FrostSlow", "MMT_Hediff_Blinded", "MMT_Hediff_ArmorShred"):
+        if hdef not in hediffs:
+            fail(f"缺少命中特效 Hediff {hdef}")
 
     # ---- C# 关键实现 ----
     cs = Path(CS_WEAPON).read_text(encoding="utf-8")
@@ -169,12 +192,20 @@ def validate_weaponenhance() -> None:
                   "WeaponDisarm", "WeaponToxic", "WeaponInsectBane", "WeaponMending",
                   "WeaponSkillExp", "WeaponGuaranteedHit", "WeaponGuardian",
                   "RollGuaranteedHit", "triggerEffectsEnabled", "CompGetGizmosExtra",
-                  "PreApplyDamage", "overwritten"):
+                  "PreApplyDamage", "overwritten",
+                  # 附魔3 扩展批次：射程/连发补丁与新机制键消费端
+                  "AdjustedRange", "get_BurstShotCount", "WeaponRangeBonus", "WeaponBurstShots",
+                  "WeaponCritDamage", "WeaponBlinding", "WeaponArmorShred", "WeaponBleed",
+                  "WeaponTerror", "WeaponSmoke", "WeaponFleshBane", "WeaponDemolition",
+                  "WeaponRangedLeech", "WeaponCorpseBurst", "MMT_Hediff_Blinded", "MMT_Hediff_ArmorShred"):
         if token not in cs:
             fail(f"WeaponEnhance.cs 缺少: {token}")
     settings = Path("Source/MyModeTest/MMTSettings.cs").read_text(encoding="utf-8")
     for token in ("weaponHazardEffects", "enableWeaponExplode", "enableWeaponGuaranteedHit",
-                  "enableWeaponMending", "enableWeaponSkillExp"):
+                  "enableWeaponMending", "enableWeaponSkillExp",
+                  # 附魔3 扩展批次开关
+                  "enableWeaponTerror", "enableWeaponSmoke", "enableWeaponFleshBane",
+                  "enableWeaponDemolition", "enableWeaponRangedLeech", "enableWeaponCorpseBurst"):
         if token not in settings:
             fail(f"MMTSettings.cs 缺少: {token}")
     common = Path(CS_COMMON).read_text(encoding="utf-8")

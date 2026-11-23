@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 机械集控核心：MMT 机器人工程线终端（前置原版高等机械科技 + MMT 机器人工程 I），
+       解锁机械集控核心建筑与带宽/控制组模块配方 -->
+  <ResearchProjectDef>
+    <defName MayRequire="Ludeon.Rimworld.Biotech">MMT_MechControlHub</defName>
+    <label>机械集控核心</label>
+    <description>研究人格级超级计算机的建造技术：一台可统一接管殖民地机械体指挥权的中央集控核心，无需机械师即可管控机械体，并可通过插入带宽/控制组模块进一步扩展。</description>
+    <baseCost>4000</baseCost>
+    <techLevel>Ultra</techLevel>
+    <tab>MMT_ResearchTab</tab>
+    <prerequisites>
+      <li MayRequire="Ludeon.Rimworld.Biotech">HighMechtech</li>
+      <li>MMT_Robotics1</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>6.50</researchViewY>
+  </ResearchProjectDef>
+</Defs>

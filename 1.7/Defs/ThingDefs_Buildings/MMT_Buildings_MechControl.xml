@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 机械集控核心：参考已授权的 Gestalt Engine（Workshop 3392334612）重实现，仅依赖原版+Harmony。
+       建筑内藏一个不可见的"虚拟机械师"假人（见 Source/MyModeTest/MechControlHub.cs），
+       通过原版 Overseer 关系统一接管殖民地机械体，无需机械师小人。
+       带宽/控制组通过插入模块扩展（复用通用模块槽 CompModuleSlots）：
+       基础带宽 20，每个带宽模块 +20（最多 4 个 → 上限 100）；控制组基础 1，每个控制组模块 +1（最多 3 个 → 上限 4）。
+       断电/关停时带宽归 0，由原版带宽不足机制接管失控逻辑。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName MayRequire="Ludeon.Rimworld.Biotech">MMT_MechControlHub</defName>
+    <label>机械集控核心</label>
+    <description>一台违禁的人格级超级计算机，作为本地机械体的中央指挥控制枢纽。建成后无需机械师即可统一管控殖民地机械体。\n\n基础提供 20 点机械带宽与 1 个控制组；可插入带宽模块（每个 +20 带宽，最多 4 个）与控制组模块（每个 +1 控制组，最多 3 个）进行扩展。安装方式：选中殖民者右键本建筑。\n\n断电或被关闭时带宽归零，受控机械体将失去指挥。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_MechControlHub/MMT_MechControlHub</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(7,7)</drawSize>
+      <shadowData>
+        <volume>(5.03,1.0,4.25)</volume>
+        <offset>(0,0,-0.25)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Production/MMT_MechControlHub_MenuIcon</uiIconPath>
+    <size>(5,5)</size>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <canOverlapZones>false</canOverlapZones>
+    <fillPercent>1</fillPercent>
+    <rotatable>false</rotatable>
+    <statBases>
+      <MaxHitPoints>2500</MaxHitPoints>
+      <WorkToBuild>40000</WorkToBuild>
+      <Flammability>0.5</Flammability>
+      <Beauty>-20</Beauty>
+    </statBases>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <costList>
+      <Steel>250</Steel>
+      <Plasteel>200</Plasteel>
+      <ComponentSpacer>8</ComponentSpacer>
+      <AIPersonaCore>1</AIPersonaCore>
+    </costList>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <designationCategory MayRequire="Ludeon.Rimworld.Biotech">Biotech</designationCategory>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-3)</interactionCellOffset>
+    <inspectorTabs>
+      <li>MyModeTest.ITab_ModuleSlots</li>
+    </inspectorTabs>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <destroySound>BuildingDestroyed_Metal_Big</destroySound>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>MMT_MechControlHub</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>500</basePowerConsumption>
+        <shortCircuitInRain>true</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <!-- 模块槽：带宽模块最多 4 个、控制组模块最多 3 个（安装/卸载走通用右键菜单与模块页签） -->
+      <li Class="MyModeTest.CompProperties_ModuleSlots">
+        <slotLimits>
+          <li><key>MechBandwidth</key><max>4</max></li>
+          <li><key>MechControlGroup</key><max>3</max></li>
+        </slotLimits>
+      </li>
+      <!-- 集控核心本体：虚拟机械师假人 + 连接/骇入 gizmo + 模块可视化叠层（见 MechControlHub.cs） -->
+      <li Class="MyModeTest.CompProperties_MechControlHub">
+        <baseBandwidth>20</baseBandwidth>
+        <baseControlGroups>1</baseControlGroups>
+        <powerPerModule>250</powerPerModule>
+      </li>
+      <li Class="CompProperties_AmbientSound">
+        <sound>GeothermalPlant_Ambience</sound>
+        <disabledOnUnpowered>true</disabledOnUnpowered>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

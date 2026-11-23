@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 机械带宽模块：插入机械集控核心，每个 +20 机械带宽，单台最多 4 个；拆除核心时返还 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName MayRequire="Ludeon.Rimworld.Biotech">MMT_MechBandwidthModule</defName>
+    <label>机械带宽模块</label>
+    <description>机械集控核心的带宽扩展模块，由殖民者安装进机械集控核心内生效。每个使机械带宽上限提高 20 点，单台最多安装 4 个。拆除核心时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/MechBandwidthModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>1.5</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>MechBandwidth</slotKey>
+        <effectReport>机械带宽 +20/个</effectReport>
+        <effects>
+          <li><key>MechBandwidth</key><valuePerItem>20</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- 机械控制组模块：插入机械集控核心，每个 +1 控制组，单台最多 3 个；拆除核心时返还 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName MayRequire="Ludeon.Rimworld.Biotech">MMT_MechControlGroupModule</defName>
+    <label>机械控制组模块</label>
+    <description>机械集控核心的控制组扩展模块，由殖民者安装进机械集控核心内生效。每个使可用控制组数量增加 1 个，单台最多安装 3 个。拆除核心时返还。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_Electronics/MechControlGroupModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>1200</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0.2</Flammability>
+      <Mass>1.5</Mass>
+    </statBases>
+    <thingCategories>
+      <li>MMT_ElectronicsCat</li>
+    </thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>MechControlGroup</slotKey>
+        <effectReport>控制组 +1/个</effectReport>
+        <effects>
+          <li><key>MechControlGroup</key><valuePerItem>1</valuePerItem></li>
+        </effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+</Defs>

@@ -64,7 +64,7 @@ namespace MyModeTest
 
             // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
             list.Label("【武器附魔特效】（关闭后对应词条不生效，模块仍可制作安装）");
-            list.CheckboxLabeled("危险命中特效总开关（爆炸/引雷/毒气/燃烧）", ref s.weaponHazardEffects,
+            list.CheckboxLabeled("危险命中特效总开关（爆炸/引雷/毒气/燃烧/烟幕/尸爆）", ref s.weaponHazardEffects,
                 "总保险丝：关闭后全部危险命中特效不触发（防误伤/引燃基地）；单件武器还可用 gizmo 单独关闭。");
             list.CheckboxLabeled("爆裂（命中小爆炸）", ref s.enableWeaponExplode);
             list.CheckboxLabeled("引雷（命中召唤落雷）", ref s.enableWeaponStormCall);
@@ -76,6 +76,13 @@ namespace MyModeTest
             list.CheckboxLabeled("虫敌（对昆虫追加伤害）", ref s.enableWeaponInsectBane);
             list.CheckboxLabeled("急救（命中友军改治疗）", ref s.enableWeaponMending);
             list.CheckboxLabeled("悟战（命中获取武器技能经验）", ref s.enableWeaponSkillExp);
+            // 附魔3 扩展批次
+            list.CheckboxLabeled("威慑（命中概率恐慌逃跑）", ref s.enableWeaponTerror);
+            list.CheckboxLabeled("烟幕（命中落点放烟雾）", ref s.enableWeaponSmoke);
+            list.CheckboxLabeled("屠夫（对血肉追加伤害）", ref s.enableWeaponFleshBane);
+            list.CheckboxLabeled("破城（对建筑追加伤害）", ref s.enableWeaponDemolition);
+            list.CheckboxLabeled("汲取（远程吸血）", ref s.enableWeaponRangedLeech);
+            list.CheckboxLabeled("尸爆（击杀时尸体爆炸）", ref s.enableWeaponCorpseBurst);
             list.Gap();
 
             // —— 防具附魔特效（危险类另有单件防具 gizmo 开关） ——

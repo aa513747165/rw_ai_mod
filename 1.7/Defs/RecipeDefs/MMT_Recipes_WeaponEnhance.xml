@@ -610,4 +610,282 @@
     <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
   </RecipeDef>
 
+  <!-- ==================== 附魔3 扩展批次：高级模块（淬火油×4 + 远古合金×10，手工 6000） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModLongRange</defName>
+    <label>制作长程模块</label>
+    <description>高级附魔模块：射程 +2。</description>
+    <jobString>正在制作长程模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModLongRange>1</MMT_WeaponModLongRange></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModDeadeye</defName>
+    <label>制作神射模块</label>
+    <description>高级附魔模块：命中 +16%。</description>
+    <jobString>正在制作神射模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModDeadeye>1</MMT_WeaponModDeadeye></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModMagazine</defName>
+    <label>制作扩容模块</label>
+    <description>高级附魔模块：连发弹数 +2。</description>
+    <jobString>正在制作扩容模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModMagazine>1</MMT_WeaponModMagazine></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModBlinding</defName>
+    <label>制作致盲模块</label>
+    <description>高级附魔模块：命中致盲（视力 -30%，5 秒）。</description>
+    <jobString>正在制作致盲模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModBlinding>1</MMT_WeaponModBlinding></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModCorrode</defName>
+    <label>制作蚀甲模块</label>
+    <description>高级附魔模块：命中蚀甲（护甲 -25%，5 秒）。</description>
+    <jobString>正在制作蚀甲模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModCorrode>1</MMT_WeaponModCorrode></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModBleed</defName>
+    <label>制作放血模块</label>
+    <description>高级附魔模块：命中流血积累 +3%（仅血肉）。</description>
+    <jobString>正在制作放血模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModBleed>1</MMT_WeaponModBleed></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModSmoke</defName>
+    <label>制作烟幕模块</label>
+    <description>高级附魔模块：命中 25% 释放烟幕。</description>
+    <jobString>正在制作烟幕模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModSmoke>1</MMT_WeaponModSmoke></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModSlaughter</defName>
+    <label>制作屠夫模块</label>
+    <description>高级附魔模块：对血肉伤害 +30%。</description>
+    <jobString>正在制作屠夫模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModSlaughter>1</MMT_WeaponModSlaughter></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModDemolition</defName>
+    <label>制作破城模块</label>
+    <description>高级附魔模块：对建筑伤害 +50%。</description>
+    <jobString>正在制作破城模块。</jobString>
+    <workAmount>6000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>MMT_AncientAlloy</li></thingDefs></filter><count>10</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_AncientAlloy</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModDemolition>1</MMT_WeaponModDemolition></products>
+    <skillRequirements><Crafting>10</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <!-- ==================== 附魔3 扩展批次：极品模块（淬火油×5 + 远古碎晶×5 + 数据核心×1，手工 9000） ==================== -->
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModVampire</defName>
+    <label>制作嗜血模块</label>
+    <description>极品附魔模块：近战伤害 10% 转为治疗。</description>
+    <jobString>正在制作嗜血模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModVampire>1</MMT_WeaponModVampire></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModDisruptor</defName>
+    <label>制作磁暴模块</label>
+    <description>极品附魔模块：对机械伤害 +100% 并短路眩晕。</description>
+    <jobString>正在制作磁暴模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModDisruptor>1</MMT_WeaponModDisruptor></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModBrutal</defName>
+    <label>制作暴虐模块</label>
+    <description>极品附魔模块：暴击伤害 ×3。</description>
+    <jobString>正在制作暴虐模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModBrutal>1</MMT_WeaponModBrutal></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModTerror</defName>
+    <label>制作威慑模块</label>
+    <description>极品附魔模块：命中 15% 恐慌逃跑。</description>
+    <jobString>正在制作威慑模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModTerror>1</MMT_WeaponModTerror></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModRangedLeech</defName>
+    <label>制作汲取模块</label>
+    <description>极品附魔模块：远程伤害 3% 转为治疗。</description>
+    <jobString>正在制作汲取模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModRangedLeech>1</MMT_WeaponModRangedLeech></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>MMT_MakeWeaponModCorpseBurst</defName>
+    <label>制作尸爆模块</label>
+    <description>极品附魔模块：击杀时尸体爆炸。</description>
+    <jobString>正在制作尸爆模块。</jobString>
+    <workAmount>9000</workAmount>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <ingredients>
+      <li><filter><thingDefs><li>MMT_QuenchOil</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_ArchotechShard</li></thingDefs></filter><count>5</count></li>
+      <li><filter><thingDefs><li>MMT_AncientDatacore</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <fixedIngredientFilter><thingDefs><li>MMT_QuenchOil</li><li>MMT_ArchotechShard</li><li>MMT_AncientDatacore</li></thingDefs></fixedIngredientFilter>
+    <products><MMT_WeaponModCorpseBurst>1</MMT_WeaponModCorpseBurst></products>
+    <skillRequirements><Crafting>12</Crafting></skillRequirements>
+    <researchPrerequisites><li>MMT_WeaponEnchantment</li></researchPrerequisites>
+  </RecipeDef>
+
 </Defs>

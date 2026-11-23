@@ -3,7 +3,7 @@
 <!-- 生成物：由 tools/build_research_mindmap.py 生成，改研究 Def 后重跑，请勿手改 -->
 <!-- 可用 markmap（如 VS Code Markmap 插件 / markmap.js）渲染为思维导图 -->
 
-- MMT 研究总览（115 项）
+- MMT 研究总览（116 项）
   - **木工加工** `MMT_Woodworking` ｜ 坐标 (0.00, 0.00) ｜ 300点 ｜ Neolithic
     - 解锁建筑: 手工锯台
     - 解锁配方: 加工木板、加工柴火、加工竹板、加工红木木板
@@ -117,6 +117,9 @@
       - **近战武器 IV** `MMT_MeleeAdvanced` ｜ 坐标 (9.00, 7.00) ｜ 1400点 ｜ Spacer ｜ 前置(原版): LongBlades ｜ 交叉前置: 高级零件
     - **机器人工程 I** `MMT_Robotics1` ｜ 坐标 (5.00, 6.00) ｜ 2000点 ｜ Spacer
       - 解锁配方: 制造动力电池、制造机器人部件
+      - **机械集控核心** `MMT_MechControlHub` ｜ 坐标 (6.00, 6.50) ｜ 4000点 ｜ Ultra ｜ 前置(原版): HighMechtech ｜ 需要研究台: HiTechResearchBench
+        - 解锁建筑: 机械集控核心
+        - 解锁配方: 组装机械带宽模块、组装机械控制组模块
     - **物质转换 I** `MMT_MatterConversion1` ｜ 坐标 (8.00, 6.00) ｜ 2500点 ｜ Spacer ｜ 交叉前置: 零件加工
       - 解锁建筑: 无机物转化器
       - 解锁配方: 转化为无机物、从尸体提取生物质、从生肉提取生物质

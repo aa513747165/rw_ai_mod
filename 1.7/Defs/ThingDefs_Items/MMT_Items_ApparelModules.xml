@@ -374,4 +374,126 @@
       </li>
     </modExtensions>
   </ThingDef>
+
+  <!-- ==================== 附魔3 扩展批次：中级 ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModNumbing</defName>
+    <label>镇痛模块</label>
+    <description>中级防具附魔模块：神经镇痛贴片阵列。安装后穿戴者疼痛休克阈值 +10%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModNumbing</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>镇痛</labelPrefix>
+        <effectReport>疼痛休克阈值 +10%</effectReport>
+        <effects><li><key>ApparelPainShockThreshold</key><valuePerItem>0.10</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModSteady</defName>
+    <label>稳手模块</label>
+    <description>中级防具附魔模块：陀螺稳定外衬。安装后穿戴者射击精度 +5%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModSteady</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>稳手</labelPrefix>
+        <effectReport>射击精度 +5%</effectReport>
+        <effects><li><key>ApparelShootingAccuracy</key><valuePerItem>0.05</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModGrit</defName>
+    <label>硬撑模块</label>
+    <description>中级防具附魔模块：情绪稳定给药器。安装后穿戴者精神崩溃阈值 -4%（更不容易崩溃）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModGrit</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>硬撑</labelPrefix>
+        <effectReport>精神崩溃阈值 -4%</effectReport>
+        <effects><li><key>ApparelMentalThreshold</key><valuePerItem>-0.04</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModImmunity</defName>
+    <label>免疫模块</label>
+    <description>中级防具附魔模块：免疫增强缓释器。安装后穿戴者免疫速度 +15%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModImmunity</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>700</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>免疫</labelPrefix>
+        <effectReport>免疫速度 +15%</effectReport>
+        <effects><li><key>ApparelImmunitySpeed</key><valuePerItem>0.15</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <!-- ==================== 附魔3 扩展批次：高级 ==================== -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModMindWard</defName>
+    <label>灵壁模块</label>
+    <description>高级防具附魔模块：心灵屏蔽法拉第层。安装后穿戴者心灵敏感度 -20%（受心灵影响更弱）。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModMindWard</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>灵壁</labelPrefix>
+        <effectReport>心灵敏感度 -20%</effectReport>
+        <effects><li><key>ApparelPsychicSensitivity</key><valuePerItem>-0.20</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ApparelModRegen</defName>
+    <label>再生模块</label>
+    <description>高级防具附魔模块：纳米修复织网。安装后穿戴者伤口愈合速度 +25%。在强化台对台内防具安装（右键强化台）。</description>
+    <graphicData><texPath>Things/Item/MMT/ApparelMod/MMT_ApparelModRegen</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
+    <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
+    <statBases><MarketValue>1200</MarketValue><DeteriorationRate>0</DeteriorationRate><Flammability>0.2</Flammability><Mass>1</Mass></statBases>
+    <thingCategories><li>MMT_ElectronicsCat</li></thingCategories>
+    <stackLimit>10</stackLimit>
+    <modExtensions>
+      <li Class="MyModeTest.ModuleExtension">
+        <slotKey>ApparelEnchant</slotKey>
+        <labelPrefix>再生</labelPrefix>
+        <effectReport>伤口愈合速度 +25%</effectReport>
+        <effects><li><key>ApparelHealingFactor</key><valuePerItem>0.25</valuePerItem></li></effects>
+      </li>
+    </modExtensions>
+  </ThingDef>
 </Defs>

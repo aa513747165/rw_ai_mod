@@ -48,6 +48,8 @@
       <li>MMT_MakeRobotParts</li>
       <li>MMT_MakeMineralSonarModule</li>
       <li>MMT_MakeEnergyCrystal</li>
+      <li MayRequire="Ludeon.Rimworld.Biotech">MMT_MakeMechBandwidthModule</li>
+      <li MayRequire="Ludeon.Rimworld.Biotech">MMT_MakeMechControlGroupModule</li>
     </recipes>
     <tickerType>Normal</tickerType>
     <comps>

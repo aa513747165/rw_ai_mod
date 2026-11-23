@@ -6,7 +6,7 @@
 
 ## 1. MMT 建筑总表
 
-共 84 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
+共 93 座建筑（不含抽象基类），按链分组；矿脉类建筑的产量对比见对比文档第 2 节。
 
 ### 深钻井（AdvancedRocks）
 
@@ -161,7 +161,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 9 |  |
+| 电子器件工作台（`MMT_ElectricElectronicsTable`） | (3,1) | 铜×40 + 工业零件×10 + [金属]×140 | 600W | 2750 | 电动电子工艺 | 11 |  |
 
 **电子器件工作台（`MMT_ElectricElectronicsTable`） 的配方：**
 
@@ -172,6 +172,8 @@
 - `MMT_MakeRobotParts`：[MMT_USLDBar](60) + 先进机械组件(15) -> 机器人部件×25 ｜ 工作量=8000 ｜ 研究:机器人工程 I ｜ 技能:制作≥15
 - `MMT_MakeMineralSonarModule`：[MMT_MetallicBar](25) + 太空零件(5) + 电子元件(10) + 机械组件(1) -> 矿物声纳模块×1 ｜ 工作量=4800 ｜ 研究:高级零件 ｜ 技能:制作≥10
 - `MMT_MakeEnergyCrystal`：微芯片集成电路(1) + 硅(10) + 黄金(10) -> 能量结晶×2 ｜ 工作量=6000 ｜ 研究:能量聚能 ｜ 技能:制作≥10
+- `MMT_MakeMechBandwidthModule`：微芯片集成电路(1) + 集成电路(3) + 先进机械组件(2) + 玻璃钢(15) + 黄金(10) -> 机械带宽模块×1 ｜ 工作量=4800 ｜ 研究:机械集控核心 ｜ 技能:制作≥10
+- `MMT_MakeMechControlGroupModule`：微芯片集成电路(1) + 集成电路(2) + 先进机械组件(1) + 玻璃钢(10) -> 机械控制组模块×1 ｜ 工作量=3600 ｜ 研究:机械集控核心 ｜ 技能:制作≥10
 - `MMT_MakeFuelRod`：铀(100) + [MMT_SLDBar](20) -> 核燃料棒×1 ｜ 工作量=8000 ｜ 研究:核能发电 ｜ 技能:制作≥12
 - `MMT_MakeAIPersonaCore`：微芯片集成电路(10) + 聚合物(60) + 碳纤维锭(80) -> AIPersonaCore×1 ｜ 工作量=8000 ｜ 研究:人格核心合成 ｜ 技能:制作≥16
 
@@ -179,7 +181,7 @@
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 石化产品实验室（`MMT_ElectricChemLab`） | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件×20 + 电子元件×5 + [金属]×130 | 450W | 5500 | 电动石化工艺 | 12 |  |
+| 石化产品实验室（`MMT_ElectricChemLab`） | (4,5) | 钢筋混凝土×40 + 玻璃块×50 + 工业零件×20 + 电子元件×5 + [金属]×130 | 450W | 5500 | 电动石化工艺 | 13 |  |
 
 **石化产品实验室（`MMT_ElectricChemLab`） 的配方：**
 
@@ -195,6 +197,7 @@
 - `MMT_ExtractBiomatterCorpse`：[Corpses](1) -> 生物质×20 ｜ 工作量=6000 ｜ 研究:物质转换 I ｜ 技能:制作≥8
 - `MMT_ExtractBiomatterMeat`：[MeatRaw](40) -> 生物质×20 ｜ 工作量=4000 ｜ 研究:物质转换 I ｜ 技能:制作≥8
 - `MMT_RefineCrystalEssence`：辉晶球茎(8) + Neutroamine(1) -> 晶能精粹×2 ｜ 工作量=4000 ｜ 研究:能量结晶培育 ｜ 技能:制作≥8
+- `MMT_MakeQuenchOil`：兽脂(5) + 氧化化合燃料(2) -> 淬火油×3 ｜ 工作量=2400 ｜ 技能:制作≥6
 
 ### 电动木材（ElectricWood）
 
@@ -239,6 +242,12 @@
 | 能量聚能发电站（`MMT_EnergyConvergencePlant`） | (3,3) | 钢×200 + 碳纤维锭×40 + 黄金×30 + 先进机械组件×4 | -100000W | 10000 | 能量聚能 | 0 | CompProperties_EnergyIgnition |
 | 点火充能装置（`MMT_IgnitionCharger`） | (1,1) | 钢×50 + 黄金×10 + 工业零件×2 | 50W | 2000 | 能量聚能 | 0 | CompProperties_IgnitionCharger |
 | 晶体培养舱（`MMT_CrystalIncubator`） | (2,2) | 钢×80 + 玻璃块×20 + 黄金×20 + 先进机械组件×2 | 600W | 4000 | 能量结晶培育 | 0 | CompProperties_ModuleSlots、CompProperties_AutoProcessor |
+
+### Exploration（Exploration）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 深空扫描仪（`MMT_DeepSpaceScanner`） | (3,3) | 钢×150 + 矿物声纳模块×10 + 高级零部件×6 + 黄金×20 | 3000W | 8000 | 深空扫描 | 0 | CompProperties_BuildingBattery、CompProperties_ModuleSlots、CompProperties_DeepSpaceScanner |
 
 ### FieldMedical（FieldMedical）
 
@@ -320,6 +329,12 @@
 **粒子对撞台（`MMT_ParticleCollider`） 的配方：**
 
 - `MMT_MakeAntimatter`：无机物(50) + 铀(20) -> 反物质×2 ｜ 工作量=10000 ｜ 技能:制作≥15
+
+### MechControl（MechControl）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 机械集控核心（`MMT_MechControlHub`） | (5,5) | 钢×250 + 玻璃钢×200 + 太空零件×8 + AIPersonaCore×1 | 500W | 40000 | 机械集控核心 | 0 | CompProperties_ModuleSlots、CompProperties_MechControlHub |
 
 ### MedicalTurret（MedicalTurret）
 
@@ -556,6 +571,12 @@
 
 - `MMT_SiftOrePowder_Electric`：矿粉(20) -> — ｜ 工作量=900
 
+### Storm（Storm）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 风暴阻尼器（`MMT_StormDampener`） | (2,2) | 强化玻璃块×40 + 黄金×15 | 800W | 4000 | 风暴防护 | 0 | CompProperties_StormDampener |
+
 ### 硫（Sulfur）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
@@ -568,6 +589,12 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 折跃传送台（`MMT_TeleportPad`） | (3,3) | 玻璃钢×120 + 铀×40 + 太空零件×6 | 3000W | 12000 | 折跃传送 | 0 | CompProperties_TeleportPad、CompProperties_ModuleSlots、CompProperties_BuildingBattery |
 
+### TrainingDummy（TrainingDummy）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 沙袋人偶（`MMT_TrainingDummy`） | — | 土堆×40 + 布×20 + 原木×10 | — | 800 | — | 0 |  |
+
 ### 炮塔（Turrets）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
@@ -576,6 +603,64 @@
 | M134速射机枪（`MMT_Turret_Minigun`） | (1,1) | M134速射机枪组件箱×1 + [金属]×90 | — | 1900 | 重型炮塔 II | 0 | 炮塔（M134型速射机枪） |
 | 20mm厄利孔机炮（`MMT_Turret_Oerlikonautocannon`） | (2,2) | 20x102mm厄利孔机炮组件箱×1 + [金属]×100 | — | 1700 | 重型炮塔 III | 0 | 炮塔（20x102mm厄利孔机炮） |
 | 14.5mm KPV重机枪（`MMT_TurretKPV`） | (1,1) | 14.5mm KPV重机枪组件箱×1 + [金属]×80 | — | 1500 | 重机枪塔 | 0 | 炮塔（14.5mm KPV重机枪） |
+
+### WeaponEnhance（WeaponEnhance）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 武器强化台（`MMT_WeaponEnhanceBench`） | (2,2) | 强化玻璃块×80 + 机器人部件×20 + 碳纤维锭×40 + 微芯片集成电路×4 | 1500W | 6000 | 武器强化 | 49 | CompProperties_WeaponEnhanceBench |
+
+**武器强化台（`MMT_WeaponEnhanceBench`） 的配方：**
+
+- `MMT_MakeWeaponModSharp`：淬火油(2) + 能量结晶(3) -> 锋利模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeWeaponModAccurate`：淬火油(2) + 能量结晶(3) -> 精准模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeWeaponModSwift`：淬火油(2) + 能量结晶(3) -> 轻巧模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeWeaponModPierce`：淬火油(2) + 能量结晶(3) -> 穿透模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeWeaponModDeadly`：淬火油(3) + 钛合金(8) -> 致命模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeWeaponModGale`：淬火油(3) + 钛合金(8) -> 疾风模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeWeaponModHeavy`：淬火油(3) + 钛合金(8) -> 重击模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeWeaponModRapid`：淬火油(3) + 钛合金(8) -> 速射模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeWeaponModEmp`：淬火油(4) + 远古合金(10) -> EMP弹模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModIncendiary`：淬火油(4) + 远古合金(10) -> 燃烧弹模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModLifeLeech`：淬火油(4) + 远古合金(10) -> 吸血模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModShieldBreaker`：淬火油(4) + 远古合金(10) -> 破盾模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModFrost`：淬火油(4) + 远古合金(10) -> 冰霜模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModExecute`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 处决模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModChainLightning`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 连锁闪电模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModTimeFold`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 时空折叠模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModOverload`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 过载模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModBlitz`：淬火油(3) + 钛合金(8) -> 极速模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeWeaponModGambler`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 赌徒诅咒模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModRiot`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 镇暴模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModExplode`：淬火油(4) + 远古合金(10) -> 爆裂模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModStormCall`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 引雷模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeWeaponModGas`：淬火油(4) + 远古合金(10) -> 毒气模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModSuppress`：淬火油(4) + 远古合金(10) -> 压制模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModDisarm`：淬火油(4) + 远古合金(10) -> 缴械模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModToxic`：淬火油(4) + 远古合金(10) -> 剧毒模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModInsectBane`：淬火油(4) + 远古合金(10) -> 虫敌模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModMending`：淬火油(4) + 远古合金(10) -> 急救模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModGuardian`：淬火油(4) + 远古合金(10) -> 守护模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModInsight`：淬火油(4) + 远古合金(10) -> 悟战模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeWeaponModSureHit`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 必中模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeApparelModFortify`：淬火油(2) + 能量结晶(3) -> 强固模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeApparelModBladeWard`：淬火油(2) + 能量结晶(3) -> 御刃模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeApparelModBulwark`：淬火油(2) + 能量结晶(3) -> 壁垒模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeApparelModWarmth`：淬火油(2) + 能量结晶(3) -> 保暖模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeApparelModCooling`：淬火油(2) + 能量结晶(3) -> 隔温模块×1 ｜ 工作量=2400 ｜ 技能:制作≥6
+- `MMT_MakeApparelModHeatWard`：淬火油(3) + 钛合金(8) -> 御热模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeApparelModAbsorb`：淬火油(3) + 钛合金(8) -> 吸收模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeApparelModEvasion`：淬火油(3) + 钛合金(8) -> 灵巧模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeApparelModSwift`：淬火油(3) + 钛合金(8) -> 疾行模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeApparelModPorter`：淬火油(3) + 钛合金(8) -> 负重模块×1 ｜ 工作量=4000 ｜ 技能:制作≥8
+- `MMT_MakeApparelModRecovery`：淬火油(4) + 远古合金(10) -> 复苏模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeApparelModEmpShield`：淬火油(4) + 远古合金(10) -> 法拉第模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeApparelModDiligent`：淬火油(4) + 远古合金(10) -> 勤勉模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeApparelModThorns`：淬火油(4) + 远古合金(10) -> 荆棘模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeApparelModDischarge`：淬火油(4) + 远古合金(10) -> 放电模块×1 ｜ 工作量=6000 ｜ 技能:制作≥10
+- `MMT_MakeApparelModAegis`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 神佑模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeApparelModFeather`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 轻羽模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
+- `MMT_MakeApparelModToxicCloud`：淬火油(5) + 远古碎晶(5) + 远古数据核心(1) -> 毒雾模块×1 ｜ 工作量=9000 ｜ 技能:制作≥12
 
 ### 武器部件（WeaponParts）
 
@@ -716,6 +801,15 @@
 - `MMT_MakeGrenadeChargedFrag`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 电荷武器部件(1) -> 电荷手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
 - `MMT_MakePlasmaGrenades`：[MMT_MetallicBar](15) + 武器部件(3) + 高级零部件(3) + 离子武器部件(1) -> 等离子手榴弹×5 ｜ 工作量=7000 ｜ 研究:充能射击 ｜ 技能:制作≥14
 
+### Wonder（Wonder）
+
+| 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 奇点地基（`MMT_WonderFoundation`） | (5,5) | 土堆×2000 + 混凝土×400 + 钢×300 | — | 15000 | 奇点工程 | 0 | CompProperties_WonderStage |
+| 奇点框架（`MMT_WonderFrame`） | (5,5) | 强化玻璃块×300 + 金属罐×200 + 碳纤维锭×150 + 黄金×50 | — | 20000 | — | 0 | CompProperties_WonderStage |
+| 奇点核心（`MMT_WonderCore`） | (5,5) | 反物质×10 + α阿尔法聚合物×100 + 机器人部件×60 + 远古合金×80 + 高级零部件×20 | — | 30000 | — | 0 | CompProperties_WonderStage |
+| 纪元奇点（`MMT_Singularity`） | (5,5) | 氧化化合燃料×400 + 远古碎晶×30 + 绘画用品×50 + 铀×100 | 5000W | 20000 | — | 0 | CompProperties_BuildingBattery、CompProperties_WonderActivation |
+
 ### 木材（Wood）
 
 | 建筑 | 尺寸 | 造价 | 功耗 | 建造工作量 | 研究前置 | 配方数 | 备注 |
@@ -743,23 +837,23 @@
 
 | 建筑 | defName | 尺寸 | 造价 | 功耗 | 配方数 | 源文件 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 皮革工作台 | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
-| 回收站 | `TableRecycling` | (3,1) | 普通零部件×12 + 电子元件×3 + 机械组件×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
-| 洗涤盆 | `HolyBasin` | — | 原始零部件×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
-| 厨房案桌 | `TableKitchen` | (3,1) | 原始零部件×8 + 机械组件×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
-| 开放式炉灶 | `OpenHearth` | (1,1) | 原始零部件×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
-| 专业化烹饪炉 | `ElectricStove_Pro` | (4,1) | 普通零部件×20 + 合成橡胶×30 + 集成电路×5 + 先进机械组件×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
-| 电压力锅 | `Canningstove` | (1,1) | 普通零部件×12 + 电子元件×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
-| 石磨 | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
-| 电磨 | `MillElectric` | (1,1) | 合成橡胶×45 + 玻璃块×25 + 普通零部件×8 + 机械组件×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
-| 烤箱 | `TableOven` | (2,2) | 原始零部件×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
-| 电烤箱 | `ElectricOven` | (1,1) | 普通零部件×10 + 电子元件×3 + 机械组件×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
-| 营养物质机 | `soylenttable` | (2,1) | 合成橡胶×50 + 塑料×40 + 普通零部件×10 + 集成电路×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
-| 酒类发酵桶 | `UniversalFermenter` | (1,1) | 原始零部件×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
-| 干肉架 | `JerkyRack` | (2,1) | 原始零部件×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
-| 干酪槽 | `CheeseBasin` | (1,1) | 原始零部件×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
-| 窑炉 | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
-| 强子对撞机料斗 | `HadronColliderFeeder` | (1,1) | 高级零部件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
-| 堆肥桶 | `CompostBarrel` | — | 原始零部件×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
-| 重型弹药工作台 | `TableHeavyAmmunition` | (3,1) | 普通零部件×10 + 电子元件×5 + 机械组件×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
+| LeatherworkerTable | `LeatherworkerTable` | (3,1) | [石质/砖]×80 | — | 1 | Buildings_Production_Apparel.xml |
+| TableRecycling | `TableRecycling` | (3,1) | 工业零件×12 + ElectronicComponents×3 + Mechanism×5 + [粗金属]×120 | 500W | 3 | Buildings_Production_Apparel.xml |
+| HolyBasin | `HolyBasin` | — | ComponentMedieval×3 + [金属]×70 | — | 1 | Buildings_Production_Apparel.xml |
+| TableKitchen | `TableKitchen` | (3,1) | ComponentMedieval×8 + Mechanism×2 + [坚固金属/木质]×115 | — | 12 | Buildings_Production_Food.xml |
+| OpenHearth | `OpenHearth` | (1,1) | ComponentMedieval×6 + [石质/砖]×90 | — | 5 | Buildings_Production_Food.xml |
+| ElectricStove_Pro | `ElectricStove_Pro` | (4,1) | 工业零件×20 + Rubber×30 + Electronics×5 + AdvMechanism×3 + [坚固金属]×155 | 500W | 2 | Buildings_Production_Food.xml |
+| Canningstove | `Canningstove` | (1,1) | 工业零件×12 + ElectronicComponents×3 + [坚固金属]×115 | 250W | 4 | Buildings_Production_Food.xml |
+| GrindStone | `GrindStone` | (1,1) | [石质/砖]×70 | — | 3 | Buildings_Production_Food.xml |
+| MillElectric | `MillElectric` | (1,1) | Rubber×45 + Glass×25 + 工业零件×8 + Mechanism×5 + [坚固金属/塑料]×50 | 300W | 3 | Buildings_Production_Food.xml |
+| TableOven | `TableOven` | (2,2) | ComponentMedieval×5 + [石质/砖]×120 | — | 5 | Buildings_Production_Food.xml |
+| ElectricOven | `ElectricOven` | (1,1) | 工业零件×10 + ElectronicComponents×3 + Mechanism×3 + [坚固金属]×100 | 400W | 8 | Buildings_Production_Food.xml |
+| soylenttable | `soylenttable` | (2,1) | Rubber×50 + Plastic×40 + 工业零件×10 + Electronics×5 + [坚固金属]×130 | 500W | 1 | Buildings_Production_Food.xml |
+| UniversalFermenter | `UniversalFermenter` | (1,1) | ComponentMedieval×2 + [木质]×50 | — | 0 | Buildings_Production_Food.xml |
+| JerkyRack | `JerkyRack` | (2,1) | ComponentMedieval×2 + [木质]×60 | — | 0 | Buildings_Production_Food.xml |
+| CheeseBasin | `CheeseBasin` | (1,1) | ComponentMedieval×2 + [木质]×40 | — | 0 | Buildings_Production_Food.xml |
+| Kiln | `Kiln` | (3,3) | [石质/砖]×180 | — | 8 | Buildings_Production_Furnaces.xml |
+| HadronColliderFeeder | `HadronColliderFeeder` | (1,1) | 太空零件×2 + [坚固金属]×20 | — | 0 | Buildings_Production_Futuristic.xml |
+| CompostBarrel | `CompostBarrel` | — | ComponentMedieval×2 + [坚固金属/木质]×75 | — | 0 | Buildings_Production_UF_Processors.xml |
+| TableHeavyAmmunition | `TableHeavyAmmunition` | (3,1) | 工业零件×10 + ElectronicComponents×5 + Mechanism×10 + [粗金属]×210 | 500W | 3 | Buildings_Production_Weapons.xml |
 
