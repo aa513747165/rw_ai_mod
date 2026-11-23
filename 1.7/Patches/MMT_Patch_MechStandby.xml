@@ -33,7 +33,7 @@
               </li>
             </subNodes>
           </li>
-          <!-- 闲下来：回待机点关机睡眠（有敌意时该节点返回空，让位给原版 Idle 游走） -->
+          <!-- 闲下来：回待机点关机睡眠（65 格内有活动敌人时该节点返回空，保持清醒让位给战斗/游走） -->
           <li Class="MyModeTest.JobGiver_MechStandby" />
         </subNodes>
       </li>

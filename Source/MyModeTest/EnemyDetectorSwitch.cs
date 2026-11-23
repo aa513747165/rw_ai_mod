@@ -198,6 +198,10 @@ namespace MyModeTest
             {
                 countedLords.Add(lord);
                 Increment(lord.Map);
+                // 新敌对 Lord 出现即唤醒本图哨戒睡眠的机械体：不能只在计数 0->1 翻转时唤醒
+                //（Increment 内的 Notify），否则地图上已存在潜伏型威胁（如地图生成的血肉兽
+                // 突袭 Lord）占用计数后，真正的袭击不会触发翻转，睡眠的机械体永远不会被唤醒。
+                MechStandbyManager.OnHostileStateChanged(lord.Map, true);
             }
             else
             {

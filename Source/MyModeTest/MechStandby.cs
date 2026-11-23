@@ -23,12 +23,16 @@ namespace MyModeTest
     /// 哨戒待机 JobGiver（挂在 Mechanoid ThinkTree 的 MMT_Sentinel 工作模式分支末尾，见 MMT_Patch_MechStandby.xml）：
     /// 机械体闲下来时发原版 SelfShutdown 作业（躺地关机、不再跑任何 JobGiver 扫描、电量冻结并缓慢自充）。
     /// 优先走玩家在指令面板标定的待机点，未标定则复用原版自关机选址（RCellFinder）。
-    /// 有进攻事件（EnemyRaidTracker）或已征召时不发睡眠作业，让位给战斗/工作节点。
-    /// 唤醒不在这里处理：敌意唤醒见 <see cref="MechStandbyManager"/>；
+    /// 征召时或附近有活动敌人（65 格内，与战斗节点索敌半径一致）时不发睡眠作业，保持清醒应对；
+    /// 远处的潜伏型威胁（如地图生成的血肉兽突袭 Lord，65 格内才交战）不挡睡眠，
+    /// 真正的进攻由 <see cref="MechStandbyManager"/> 在新敌对 Lord 出现时事件驱动唤醒。
     /// 征召/受击/切换工作模式走原版作业中断逻辑（set_Drafted 结束可中断作业、SetWorkModeForPawn 触发 CheckForJobOverride）。
     /// </summary>
     public class JobGiver_MechStandby : ThinkNode_JobGiver
     {
+        /// <summary>索敌半径，与 MMT_Patch_MechStandby.xml 里 JobGiver_AIFightEnemies 的 targetAcquireRadius 一致。</summary>
+        private const float HostileCheckRadius = 65f;
+
         protected override Job TryGiveJob(Pawn pawn)
         {
             Map map = pawn.Map;
@@ -36,8 +40,9 @@ namespace MyModeTest
             {
                 return null;
             }
-            // 有敌对进攻事件时不睡（保持清醒响应；已睡着的由唤醒管理器即时唤醒）
-            if (EnemyRaidTracker.HasHostileLord(map))
+            // 附近有活动敌人时不睡（保持清醒让位给战斗节点）；远处潜伏敌人不管，避免
+            // 地图生成的血肉兽之类"永不进攻"的敌对 Lord 把睡眠门永久堵死
+            if (AnyHostileNearby(pawn, map))
             {
                 return null;
             }
@@ -63,10 +68,40 @@ namespace MyModeTest
             job.forceSleep = true;
             return job;
         }
+
+        /// <summary>指定半径内是否有清醒的、敌对玩家的在场单位（休眠威胁不算，与 EnemyRaidTracker.IsAwake 同口径）。</summary>
+        private static bool AnyHostileNearby(Pawn pawn, Map map)
+        {
+            Faction player = Faction.OfPlayer;
+            if (player == null)
+            {
+                return false;
+            }
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn other = pawns[i];
+                if (other == pawn || other.Dead || other.Downed || !other.HostileTo(player))
+                {
+                    continue;
+                }
+                CompCanBeDormant dormant = other.TryGetComp<CompCanBeDormant>();
+                if (dormant != null && !dormant.Awake)
+                {
+                    continue;
+                }
+                if (other.Position.InHorDistOf(pawn.Position, HostileCheckRadius))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /// <summary>
-    /// 哨戒待机唤醒管理器（事件驱动，零轮询）：由 EnemyRaidTracker 在"无威胁 -&gt; 有威胁"翻转时回调，
+    /// 哨戒待机唤醒管理器（事件驱动，零轮询）：由 EnemyRaidTracker 在新敌对 Lord 出现
+    /// （含"无威胁 -&gt; 有威胁"翻转与已有潜伏威胁时又来真袭击）时回调，
     /// 唤醒本图所有哨戒模式下正在睡眠的机械体（结束 SelfShutdown 作业，下一 tick 由 ThinkTree 分配战斗/工作作业）。
     /// </summary>
     public static class MechStandbyManager
