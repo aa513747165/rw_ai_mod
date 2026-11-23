@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 机械集控核心：把虚拟机械师的带宽/控制组接入原版属性计算。
+       1.7 的 Pawn_MechanitorTracker.TotalBandwidth / TotalAvailableControlGroups 是单行 getter，
+       会被 JIT 内联导致 Harmony postfix 失效（带宽显示回退为机械链接植入体默认的 6），
+       故改为给 MechBandwidth / MechControlGroups 属性注入 StatPart（见 MechControlHub.cs）。 -->
+  <Operation Class="PatchOperationAdd" MayRequire="Ludeon.Rimworld.Biotech">
+    <xpath>Defs/StatDef[defName="MechBandwidth"]</xpath>
+    <value>
+      <parts>
+        <li Class="MyModeTest.StatPart_MechControlHub" />
+      </parts>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd" MayRequire="Ludeon.Rimworld.Biotech">
+    <xpath>Defs/StatDef[defName="MechControlGroups"]</xpath>
+    <value>
+      <parts>
+        <li Class="MyModeTest.StatPart_MechControlHub" />
+      </parts>
+    </value>
+  </Operation>
+</Patch>

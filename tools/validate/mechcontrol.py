@@ -25,6 +25,7 @@ ITEMS_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_MechControlModules.xml"
 RECIPES_XML = "1.7/Defs/RecipeDefs/MMT_Recipes_MechControl.xml"
 RESEARCH_XML = "1.7/Defs/ResearchProjectDefs/MMT_Research_MechControl.xml"
 ELECTRONICS_BENCH_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_ElectricElectronics.xml"
+STATPART_PATCH_XML = "1.7/Patches/MMT_Patch_MechControlStats.xml"
 CS_FILE = "Source/MyModeTest/MechControlHub.cs"
 
 TEX_DIR = "1.7/Textures/Things/Building/Production/MMT_MechControlHub"
@@ -163,9 +164,10 @@ def validate_mechcontrol() -> None:
     # ---- C#：核心类与补丁 ----
     cs = read_text(CS_FILE)
     for token in ("class CompProperties_MechControlHub", "class CompMechControlHub",
+                  "class StatPart_MechControlHub",
                   "PawnKindDefOf.Mechanitor_Basic", "PawnRelationDefOf.Overseer",
-                  "nameof(Pawn_MechanitorTracker.TotalBandwidth)",
-                  "nameof(Pawn_MechanitorTracker.TotalAvailableControlGroups)",
+                  "StatDefOf.MechBandwidth", "StatDefOf.MechControlGroups",
+                  "HediffDefOf.MechlinkImplant",
                   "nameof(Pawn_MechanitorTracker.CanControlMechs)",
                   "nameof(MechanitorUtility.InMechanitorCommandRange)",
                   "nameof(MechanitorUtility.GetMechGizmos)",
@@ -175,6 +177,13 @@ def validate_mechcontrol() -> None:
                   "GetEffectSum(\"MechControlGroup\")"):
         if token not in cs:
             fail(f"MechControlHub.cs 缺少 {token}")
+
+    # ---- StatPart 注入补丁（单行 getter 会被 JIT 内联，带宽/控制组改走属性计算） ----
+    stat_patch = read_text(STATPART_PATCH_XML)
+    for token in ('defName="MechBandwidth"', 'defName="MechControlGroups"',
+                  "MyModeTest.StatPart_MechControlHub"):
+        if token not in stat_patch:
+            fail(f"{STATPART_PATCH_XML} 缺少 {token}")
 
 
 SUITES = {"mechcontrol": validate_mechcontrol}

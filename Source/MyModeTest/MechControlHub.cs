@@ -478,6 +478,37 @@ namespace MyModeTest
             }
             yield return connect;
             yield return hack;
+            // 开发者模式：随机生成一台可控机械体并直接接入本核心（测试接管/带宽用）
+            if (Prefs.DevMode)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: 随机增加一台机械体",
+                    defaultDesc = "开发者模式：在建筑附近随机生成一台可控机械体，并直接接入集控核心。",
+                    icon = ContentFinder<Texture2D>.Get("UI/Icons/MMT_ConnectMechanoid"),
+                    action = DevSpawnRandomMech
+                };
+            }
+        }
+
+        /// <summary>DEV：随机生成一台原版可控机械体（带宽占用 > 0 的机械族，仅限官方内容包），落位建筑旁并接入本核心。</summary>
+        private void DevSpawnRandomMech()
+        {
+            List<PawnKindDef> kinds = DefDatabase<PawnKindDef>.AllDefsListForReading
+                .Where(k => k.RaceProps != null && k.RaceProps.IsMechanoid && k.race != null
+                    && k.modContentPack != null && k.modContentPack.IsOfficialMod
+                    && k.race.GetStatValueAbstract(StatDefOf.BandwidthCost) > 0f)
+                .ToList();
+            if (kinds.Count == 0 || parent.Map == null)
+            {
+                return;
+            }
+            Pawn mech = PawnGenerator.GeneratePawn(kinds.RandomElement(), Faction.OfPlayer);
+            IntVec3 cell = CellFinder.RandomClosewalkCellNear(parent.Position, parent.Map, 15);
+            GenSpawn.Spawn(mech, cell, parent.Map);
+            dummyPawn.relations.AddDirectRelation(PawnRelationDefOf.Overseer, mech);
+            dummyPawn.mechanitor?.Notify_BandwidthChanged();
+            Messages.Message("DEV: 已生成并接管 " + mech.LabelCap, mech, MessageTypeDefOf.NeutralEvent, false);
         }
 
         private TargetingParameters ConnectTargetParameters(bool nonColony)
@@ -551,43 +582,68 @@ namespace MyModeTest
 
     // ======================== Harmony 补丁：把虚拟机械师挂到建筑状态上 ========================
 
-    /// <summary>虚拟机械师总带宽 = 所属核心的当前带宽 + 其身上频段节点类 hediff 的带宽加成。</summary>
-    [HarmonyPatch(typeof(Pawn_MechanitorTracker), nameof(Pawn_MechanitorTracker.TotalBandwidth), MethodType.Getter)]
-    public static class Patch_MechControlHub_TotalBandwidth
+    /// <summary>
+    /// 集控核心带宽/控制组 StatPart（注入 MechBandwidth / MechControlGroups 属性计算，见 Patches/MMT_Patch_MechControlStats.xml）。
+    /// 1.7 的 TotalBandwidth/TotalAvailableControlGroups 是单行 getter（约 20 字节 IL），会被 JIT 内联，
+    /// Harmony postfix 在调用点被跳过导致带宽回退为植入体默认值 6——故改为注入 GetStatValue 的属性计算
+    /// （GetStatValue 体积大不会被内联），带宽 gizmo/机械页签/工作设置等所有读取方统一生效。
+    /// </summary>
+    public class StatPart_MechControlHub : StatPart
     {
-        public static void Postfix(Pawn_MechanitorTracker __instance, ref int __result)
+        public override void TransformValue(StatRequest req, ref float val)
         {
-            if (!__instance.Pawn.TryGetMechControlHub(out CompMechControlHub hub))
+            if (req.Thing is Pawn pawn && pawn.TryGetMechControlHub(out CompMechControlHub hub))
             {
-                return;
-            }
-            __result = hub.CurrentBandwidth;
-            List<Hediff> hediffs = hub.dummyPawn?.health?.hediffSet?.hediffs;
-            if (hediffs == null)
-            {
-                return;
-            }
-            foreach (Hediff hediff in hediffs)
-            {
-                StatModifier statOffset = hediff.CurStage?.statOffsets?.FirstOrDefault(x => x.stat == StatDefOf.MechBandwidth);
-                if (statOffset != null)
+                if (parentStat == StatDefOf.MechBandwidth)
                 {
-                    __result += (int)statOffset.value;
+                    // 假人自带的机械链接植入体(+6)不算数，只保留频段节点等外部带宽加成
+                    val = hub.CurrentBandwidth + ExternalBandwidthBonus(pawn);
+                }
+                else if (parentStat == StatDefOf.MechControlGroups)
+                {
+                    val = hub.CurrentControlGroups;
                 }
             }
         }
-    }
 
-    /// <summary>虚拟机械师可用控制组数 = 所属核心的当前控制组数。</summary>
-    [HarmonyPatch(typeof(Pawn_MechanitorTracker), nameof(Pawn_MechanitorTracker.TotalAvailableControlGroups), MethodType.Getter)]
-    public static class Patch_MechControlHub_ControlGroups
-    {
-        public static void Postfix(Pawn_MechanitorTracker __instance, ref int __result)
+        public override string ExplanationPart(StatRequest req)
         {
-            if (__instance.Pawn.TryGetMechControlHub(out CompMechControlHub hub))
+            if (req.Thing is Pawn pawn && pawn.TryGetMechControlHub(out CompMechControlHub hub))
             {
-                __result = hub.CurrentControlGroups;
+                if (parentStat == StatDefOf.MechBandwidth)
+                {
+                    return "机械集控核心: " + hub.CurrentBandwidth;
+                }
+                if (parentStat == StatDefOf.MechControlGroups)
+                {
+                    return "机械集控核心: " + hub.CurrentControlGroups;
+                }
             }
+            return null;
+        }
+
+        /// <summary>假人身上除机械链接植入体以外的带宽加成（频段节点调谐等）。</summary>
+        private static float ExternalBandwidthBonus(Pawn pawn)
+        {
+            float bonus = 0f;
+            List<Hediff> hediffs = pawn.health?.hediffSet?.hediffs;
+            if (hediffs == null)
+            {
+                return bonus;
+            }
+            foreach (Hediff hediff in hediffs)
+            {
+                if (hediff.def == HediffDefOf.MechlinkImplant)
+                {
+                    continue;
+                }
+                StatModifier mod = hediff.CurStage?.statOffsets?.FirstOrDefault(x => x.stat == StatDefOf.MechBandwidth);
+                if (mod != null)
+                {
+                    bonus += mod.value;
+                }
+            }
+            return bonus;
         }
     }
 
@@ -820,7 +876,9 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>开局/读档时清空静态注册表（防止上一局的假人引用泄漏到新局）。</summary>
+    /// <summary>开局/读档前清空静态注册表（防止上一局的假人引用泄漏到新局）。
+    /// 必须 Prefix：读档时建筑的 PostSpawnSetup 在 LoadGameFromSaveFileNow 内部执行并注册假人，
+    /// 若用 Postfix 会在方法末尾把刚注册好的表清空，导致补丁失配、带宽回退为原版默认值。</summary>
     [HarmonyPatch]
     public static class Patch_MechControlHub_ResetStatics
     {
@@ -832,7 +890,7 @@ namespace MyModeTest
             yield return AccessTools.Method(typeof(SavedGameLoaderNow), "LoadGameFromSaveFileNow");
         }
 
-        public static void Postfix()
+        public static void Prefix()
         {
             CompMechControlHub.ResetStatics();
         }
