@@ -26,6 +26,12 @@ namespace MyModeTest
         /// <summary>仅限 MMT/原版防具强化：勾上后防具强化 comp 对其它 mod 防具不生效。</summary>
         public bool apparelEnhanceVanillaOnly = false;
 
+        // —— 随机掉落强化/附魔（RPG 支柱一，mmt-rpg-design.md §1） ——
+        /// <summary>随机强化/附魔总开关：袭击者装备生成时掷初始强化等级与附魔词条（关闭不掷点，既有数据保留）。</summary>
+        public bool lootRollEnabled = true;
+        /// <summary>掷点概率倍率（0-3）：放大非 +0 强化档权重与附魔概率。</summary>
+        public float lootRollChanceFactor = 1f;
+
         // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
         /// <summary>危险命中特效总开关（爆炸/引雷/毒气/燃烧；与武器 gizmo 两层门控）。</summary>
         public bool weaponHazardEffects = true;
@@ -245,6 +251,16 @@ namespace MyModeTest
             get { return Instance != null && Instance.apparelEnhanceVanillaOnly; }
         }
 
+        public static bool LootRollEnabled
+        {
+            get { return Instance == null || Instance.lootRollEnabled; }
+        }
+
+        public static float LootRollChanceFactor
+        {
+            get { return Instance != null ? Instance.lootRollChanceFactor : 1f; }
+        }
+
         public static bool ApparelHazardEffects
         {
             get { return Instance == null || Instance.apparelHazardEffects; }
@@ -311,6 +327,8 @@ namespace MyModeTest
             enableWeaponRangedLeech = true;
             enableWeaponCorpseBurst = true;
             apparelEnhanceVanillaOnly = false;
+            lootRollEnabled = true;
+            lootRollChanceFactor = 1f;
             apparelHazardEffects = true;
             enableApparelThorns = true;
             enableApparelDischarge = true;
@@ -356,6 +374,8 @@ namespace MyModeTest
             Scribe_Values.Look(ref enableWeaponRangedLeech, "enableWeaponRangedLeech", true);
             Scribe_Values.Look(ref enableWeaponCorpseBurst, "enableWeaponCorpseBurst", true);
             Scribe_Values.Look(ref apparelEnhanceVanillaOnly, "apparelEnhanceVanillaOnly", false);
+            Scribe_Values.Look(ref lootRollEnabled, "lootRollEnabled", true);
+            Scribe_Values.Look(ref lootRollChanceFactor, "lootRollChanceFactor", 1f);
             Scribe_Values.Look(ref apparelHazardEffects, "apparelHazardEffects", true);
             Scribe_Values.Look(ref enableApparelThorns, "enableApparelThorns", true);
             Scribe_Values.Look(ref enableApparelDischarge, "enableApparelDischarge", true);

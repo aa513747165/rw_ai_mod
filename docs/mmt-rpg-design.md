@@ -1,6 +1,6 @@
 # MMT RPG 内容包设计方案
 
-> 手工维护的设计文档（非脚本生成物）。记录 RPG 内容包全套设计：装备稀有度与随机词条、角色成长与职业、任务链与 Boss 副本。
+> 手工维护的设计文档（非脚本生成物）。记录 RPG 内容包全套设计：装备随机强化与随机附魔、角色成长与职业、任务链与 Boss 副本。
 > 状态：**设计定稿，未实现**。后续实现以本文为唯一依据（地位同 `mmt-endgame-design.md`）。
 
 ## 0. 背景与动机
@@ -22,9 +22,9 @@ MMT 现有 RPG 相邻基础已相当完整，但互不成体系：
 三大支柱互相咬合成环：
 
 ```
-副本/Boss/任务链 ──掉落──→ 稀有度随机词条装备 + 职业凭证 + 历练经验
+副本/Boss/任务链 ──掉落──→ 随机强化/附魔装备 + 职业凭证 + 历练经验
 角色成长(历练/perk/职业) ──增强──→ 攻略更高档副本的能力
-重铸台(消耗淬火油/能量结晶等自产材料) ──洗词条──→ 消化生产链过剩产出
+强化台冲级/补附魔(消耗淬火油/能量结晶等自产材料) ──消化──→ 生产链过剩产出
 ```
 
 **硬性设计规则**（全文适用）：
@@ -37,99 +37,69 @@ MMT 现有 RPG 相邻基础已相当完整，但互不成体系：
 
 ---
 
-## 1. 支柱一：装备稀有度 + 随机词条
+## 1. 支柱一：装备随机强化 + 随机附魔
 
-### 1.1 稀有度体系
+> 范围裁减决定（v1）：**不做稀有度档位、不做独立随机词条 comp、不做重铸**。掉落惊喜直接落在两个既有系统上——强化等级（0–15，原赌博线）与附魔词条（模块 Def，原确定线），装备生成瞬间一次掷好。**难度越高，强化等级越高、附魔越多越高级。**
 
-5 档稀有度，与原版 QualityCategory **正交**（品质 = 制造精度，稀有度 = 词条运气），互不影响、可叠加：
+### 1.1 为什么这样最省
 
-| 稀有度 | 色 | 词条数 | 词条池构成 |
-|---|---|---|---|
-| 普通 | 白 | 0 | — |
-| 精良 | 绿 | 1 | 低级池 |
-| 稀有 | 蓝 | 2 | 低级池 + 中级池 |
-| 史诗 | 紫 | 3 | 低级池 + 中级池 + 高级池 |
-| 传说 | 橙 | 3+1 | 低级池 + 中级池 + 高级池 + **极品池**（第 4 条固定从极品池抽） |
+- 数值结算零改动：`CompWeaponEnhancement`/`CompApparelEnhancement` 的 `level`/`enchants` 字段与 `GetEffectSum` 聚合原样复用，40+ 词条键的既有消费端（伤害补丁/StatWorker）自动生效；
+- 显示零改动：`TransformLabel` 已实现「前缀·装备名 +N」，`CompInspectStringExtra` 已列强化等级与附魔词条；
+- 存档零改动：不新增 comp、不新增字段，掷点结果就写在既有存档字段里；
+- 挂载零改动：强化 comp 已挂全体武器/防具（跨 Mod），只需在生成钩子处掷点。
 
-label 显示：`「稀有」电荷步枪 +7（极佳）`——稀有度前缀（带颜色）+ 既有强化等级 + 品质。v1 不做稀有度角标贴图，仅 label 颜色与 inspect 文本。
+### 1.2 随机强化等级（难度分档）
+
+袭击者装备按生成时威胁点（`StorytellerUtility.DefaultThreatPointsNow`）分档掷初始强化等级（直接写 `level`，不耗材料；据点/任务按各自 tier 走同一函数，tier 0–3 对应下表四档）：
+
+| 威胁点 | +0 | +1~3 | +4~6 | +7~9 | +10~12 | +13~15 |
+|---|---|---|---|---|---|---|
+| < 500 | 70% | 25% | 5% | — | — | — |
+| 500–2000 | 50% | 33% | 14% | 3% | — | — |
+| 2000–5000 | 35% | 33% | 20% | 9% | 3% | — |
+| > 5000 | 25% | 28% | 25% | 13% | 7% | 2% |
+
+`lootRollChanceFactor` 倍率整体放大非 +0 档概率。袭击者携带高强化装备会提升敌对强度——视为特性（掉落与威胁对等），由财富/点数缩放自然平衡。掉落装备极少到 +13 以上，强化台冲满级仍是材料消化口（淬火油/能量结晶），原强化玩法不变。
+
+### 1.3 随机附魔（词条池沿用模块档位）
+
+掷完强化等级后掷附魔：直接 `AddEnchant(moduleDef)`（不消耗模块物品；词条数 ≤ 当前槽位 1/+7→2/+13→3，强化等级天然限制低难度掉落的词条数）：
+
+| 威胁点 | 附魔概率与条数 | 开放池 |
+|---|---|---|
+| < 500 | 15% 概率 1 条 | 低级池 |
+| 500–2000 | 30% 概率 1 条 | 低级 + 中级 |
+| 2000–5000 | 45% 概率 1~2 条 | 低级 + 中级 + 高级 |
+| > 5000 | 60% 概率 1 条~槽满 | 全池（极品权重减半） |
 
 **词条规则**：
 
-- 随机词条 = 直接引用现有附魔模块 Def（`MMT_WeaponMod*`/`MMT_ApparelMod*`）的 `ModuleExtension.effects` 效果表，**不消耗模块物品、不占手工附魔槽、新增零个效果键**；
-- 随机词条之间互不重复；若与手工附魔词条相同则**效果叠加**（视为特性，GetEffectSum 天然累加）；
+- 词条池 = 既有附魔模块 Def（`MMT_WeaponMod*`/`MMT_ApparelMod*`）按 XML 档位注释分低/中/高/极品四组（实现时照抄分组，校验套件防漏），**新增零个效果键**；
+- 随机附魔与手工附魔**共用同一 `enchants` 列表与槽位**：互不重复、效果叠加、可被手工附魔覆盖——掉落线与制作线完全合流；
 - 类型约束：近战限定词条（吸血 `MMT_WeaponModLifeLeech`）不对远程武器入池，远程限定词条（`MMT_WeaponModRangedLeech`、`MMT_WeaponModMagazine`、`MMT_WeaponModLongRange` 等）不对近战武器入池；防具池与武器池完全分离；
 - 危险特效词条（爆炸/引雷/毒气/烟幕/尸爆等，见 ModuleEffectKeys 注释标注"危险特效"者）在池内权重减半，且仍受既有 gizmo/设置门控；
-- 随机词条数值 = 模块 Def 的 valuePerItem 原值（不缩放，与手工附魔等值）。
+- 数值 = 模块 Def 的 valuePerItem 原值（不缩放，与手工附魔等值）。
 
-### 1.2 词条池（按既有 XML 档位注释归组，实现时直接照抄分组）
+### 1.4 掉落钩子（掷点从哪触发）
 
-**武器池**（源：`1.7/Defs/ThingDefs_Items/MMT_Items_WeaponModules.xml`）：
-
-| 池 | 模块 defName |
-|---|---|
-| 低级 | MMT_WeaponModSharp / Accurate / Swift / Pierce |
-| 中级 | MMT_WeaponModDeadly / Gale / Heavy / Rapid / Blitz / Gambler / Riot / Explode※ / StormCall※ / Gas※ / Suppress / Disarm / Toxic / InsectBane / Mending / Guardian / Insight / SureHit |
-| 高级 | MMT_WeaponModEmp / Incendiary / LifeLeech(近战) / ShieldBreaker / Frost / LongRange / Deadeye / Magazine / Blinding / Corrode / Bleed / Smoke※ / Slaughter / Demolition |
-| 极品 | MMT_WeaponModExecute / ChainLightning / TimeFold / Overload / Vampire / Disruptor / Brutal / Terror / RangedLeech(远程) / CorpseBurst※ |
-
-（※ = 危险特效，权重减半。）
-
-**防具池**（源：`1.7/Defs/ThingDefs_Items/MMT_Items_ApparelModules.xml`）：
-
-| 池 | 模块 defName |
-|---|---|
-| 低级 | MMT_ApparelModFortify / BladeWard / Bulwark / Warmth / Cooling |
-| 中级 | MMT_ApparelModHeatWard / Absorb / Evasion / Swift / Porter / Numbing / Steady / Grit / Immunity |
-| 高级 | MMT_ApparelModRecovery / EmpShield / Diligent / Thorns※ / Discharge※ / MindWard / Regen |
-| 极品 | MMT_ApparelModAegis / Feather / ToxicCloud※ |
-
-池内除标注外等权抽取。池子维护方式：实现时在 `tools/validate/loot_rarity.py` 中校验"池表 = XML 档位注释的实际分组"，防止后续新增模块漏入池。
-
-### 1.3 掉落钩子（稀有度从哪来）
-
-| 来源 | 钩子 | 稀有度分布 |
+| 来源 | 钩子 | 难度依据 |
 |---|---|---|
-| 袭击者装备 | `PawnWeaponGenerator.TryGenerateWeaponFor` postfix（紧跟现有 BudgetPatch）；防具同理 spike `PawnApparelGenerator` 钩子 | 按袭击点数分档（见下表） |
-| 副本/据点奖励 | 自有生成代码（`SitePartWorker_MMT_Stockpile` 扩展、Boss 掉落）直接调 `Roll(tier)` | 据点档位决定（见 §3.1） |
+| 袭击者装备 | `PawnWeaponGenerator.TryGenerateWeaponFor` postfix（紧跟现有 BudgetPatch）；防具同理 spike `PawnApparelGenerator` 钩子 | 生成时威胁点分档（§1.2/§1.3） |
+| 副本/据点奖励 | 自有生成代码（`SitePartWorker_MMT_Stockpile` 扩展、Boss 掉落）直接调 `LootRoll.Roll(gear, tier)` | 据点档位（§3.1） |
 | 任务奖励 | QuestScriptDef 奖励生成走同一 `Roll` | 任务节点配置 |
 
-袭击者装备稀有度分布（按生成时袭击点数 points 分档；`lootRarityChanceFactor` 倍率整体放大非普通概率）：
+### 1.5 C# 设计（`Source/MyModeTest/LootRoll.cs`，新增）
 
-| 袭击点数 | 普通 | 精良 | 稀有 | 史诗 | 传说 |
-|---|---|---|---|---|---|
-| < 500 | 82% | 14% | 3.5% | 0.5% | 0% |
-| 500–2000 | 70% | 20% | 8% | 1.8% | 0.2% |
-| 2000–5000 | 58% | 26% | 12% | 3.5% | 0.5% |
-| > 5000 | 45% | 30% | 18% | 6% | 1% |
-
-袭击者携带稀有装备会提升敌对强度——视为特性（掉落与威胁对等），由财富/点数缩放自然平衡。
-
-### 1.4 重铸（洗词条）
-
-`MMT_WeaponEnhanceBench` 武器强化台新增"重铸词条"右键模式（复用 `CompWeaponEnhanceBench` 容器与 JobDriver 模式）：重掷该装备**全部随机词条**（稀有度不变、品质不变、强化等级与手工附魔不动）。材料按稀有度：
-
-| 稀有度 | 重铸材料 |
-|---|---|
-| 精良 | 淬火油×2 + 能量结晶×3 |
-| 稀有 | 淬火油×3 + 能量结晶×5 |
-| 史诗 | 淬火油×4 + 能量结晶×8 + 远古合金×3 |
-| 传说 | 淬火油×5 + 能量结晶×10 + 远古碎晶×2 |
-
-普通（无词条）不可重铸。给生产链产出（淬火油/能量结晶）与探索材料开新消费口。
-
-### 1.5 C# 设计（`Source/MyModeTest/LootRarity.cs`，新增）
-
-- `CompProperties_LootRarity` / `CompLootRarity`：字段 `rarity`(int 0–4) + `rolledAffixes`(List\<ThingDef\>)；`Roll(int tier)` 按 §1.1/§1.2 抽词条；`ExposeData` 持久化。
-- **不改 IEnchantable 接口**：`CompWeaponEnhancement`/`CompApparelEnhancement` 各加 `RolledAffixes` 列表字段（或 LootRarity comp 与强化 comp 并列、`GetEffectSum` 改读两处——实现时二选一，倾向并入强化 comp 少一个补丁目标），`GetEffectSum` 累加随机词条效果后，40+ 词条键的既有消费端（伤害补丁/StatWorker）自动生效。
-- `TransformLabel` 加稀有度前缀（含颜色，参考模块 labelPrefix 机制）；`CompInspectStringExtra` 列词条与效果文案（复用 `effectReport`）。
-- 挂载：在现有 `MMT_Patch_WeaponEnhancement.xml`/`MMT_Patch_ApparelEnhancement.xml` 补丁同位置追加，无新挂载逻辑。
-- 防具生成钩子实现前 spike：`PawnApparelGenerator` 在 1.7 的具体方法签名（候选 `GenerateStartingApparelFor`/着装流程出口），确认后写入本文档附录。
+- 静态类 `LootRoll`：`RollForPoints(ThingWithComps gear, float points)`（袭击者入口）与 `Roll(ThingWithComps gear, int tier)`（据点/任务入口）；内部按 §1.2 表掷强化等级写入 comp，按 §1.3 表掷附魔逐条 `AddEnchant`。
+- 池表：静态只读分组（低/中/高/极品 × 武器/防具），近战/远程限定与危险特效清单内嵌；抽取前按 `gear.def.IsRangedWeapon` 过滤限定词条。
+- 不新增 comp/字段/挂载补丁；`CompWeaponEnhancement`/`CompApparelEnhancement` 各加一个 `SetLevelForLoot(int)` 写入方法（`level` 现为私有字段，仅 LootRoll 调用）。
+- 防具生成钩子（已 spike 回填）：1.7 的 `PawnApparelGenerator.GenerateStartingApparelFor(Pawn pawn, PawnGenerationRequest request)` 是着装生成唯一出口，postfix 后遍历 `pawn.apparel.WornApparel` 逐件掷点（护盾腰带无附魔 comp 自动跳过）；武器钩子为 `PawnWeaponGenerator.TryGenerateWeaponFor` postfix 读 `pawn.equipment.Primary`。两钩子仅对玩家敌对派系生效，威胁点取 `StorytellerUtility.DefaultThreatPointsNow(pawn.Map ?? Find.AnyPlayerHomeMap)`。
 
 ### 1.6 设置与校验
 
-- 设置：`lootRarityEnabled`（总开关，默认开；关闭时不掷点、label/inspect 不显示，既有数据保留）、`lootRarityChanceFactor`（0–3，默认 1）。
-- 校验套件 `tools/validate/loot_rarity.py`：池表与 XML 分组一致、模块 defName 有效、近战/远程限定标注完整、重铸材料 defName 有效。
-- 贴图：无新物品贴图需求。
+- 设置：`lootRollEnabled`（总开关，默认开；关闭时不掷点，既有数据天然保留——数据就在普通强化字段里）、`lootRollChanceFactor`（0–3，默认 1）。
+- 校验套件 `tools/validate/loot_roll.py`：池表与 XML 档位注释分组一致、模块 defName 有效、近战/远程限定标注完整。
+- 贴图：无新贴图需求。
 
 ---
 
@@ -238,8 +208,8 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 | 据点 | defName | 威胁系数 | 守卫 | 奖励 |
 |---|---|---|---|---|
-| 试炼场 | MMT_SitePart_TrainingGround | ×1.2 | 宿主派系小队 | 精良/稀有随机词条装备箱×1–2 + 历练书（使用品 +500 XP）×1 |
-| 职业圣殿 | MMT_SitePart_ClassShrine | ×1.4 | 宿主派系小队 | 职业凭证碎片×1–2（3 碎片合成 1 凭证，配方在工作台）+ 稀有装备箱 |
+| 试炼场 | MMT_SitePart_TrainingGround | ×1.2 | 宿主派系小队 | 随机强化/附魔装备箱（tier 1）×1–2 + 历练书（使用品 +500 XP）×1 |
+| 职业圣殿 | MMT_SitePart_ClassShrine | ×1.4 | 宿主派系小队 | 职业凭证碎片×1–2（3 碎片合成 1 凭证，配方在工作台）+ 装备箱（tier 2） |
 | 远古守卫巢穴 | MMT_SitePart_BossLair | ×2.0 | **Boss + 宿主派系护卫** | 见 §3.2 掉落表 |
 
 **跨 Mod 敌人兼容（硬性规则）**：
@@ -252,11 +222,11 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 **接入扫描仪**：`CompDeepSpaceScanner.SiteTypes` 加权表追加试炼场/职业圣殿（低档副本进随机池，与既有三类据点并列）；**Boss 巢穴不进随机池**，仅由任务链（§3.3）生成。据点沿用 30 天过期 TimeoutComp。
 
-**装备箱**：生成时直接调 `CompLootRarity.Roll(tier)` 产出对应稀有度的随机武器/防具堆，武器从玩家科技水平可用的 weaponTags 池抽（沿用 `PawnWeaponGenerator` 的技术等级过滤思路）。
+**装备箱**：生成时直接调 `LootRoll.Roll(gear, tier)` 产出随机强化/附魔的武器/防具堆（tier：试炼场=1、职业圣殿=2、Boss=3，映射 §1.2 威胁点档），武器从玩家科技水平可用的 weaponTags 池抽（沿用 `PawnWeaponGenerator` 的技术等级过滤思路）。
 
 ### 3.2 Boss：远古守卫者
 
-- PawnKindDef `MMT_BossAncientGuardian`（机械体，基于大型机械体 race，healthScale 大幅提高）：武器为 MMT 未来武器 + 固定传说词条（生成时 `Roll(传说)`）。
+- PawnKindDef `MMT_BossAncientGuardian`（机械体，基于大型机械体 race，healthScale 大幅提高）：武器为 MMT 未来武器 + 固定满强化 +15、附魔满槽（生成时 `Roll(tier 3)` 后补足：极品池保底 1 条）。
 - **阶段机制**：HediffComp severity 由 C# 按 HP 推进（血量 <50% 进 P2），数值全在 HediffDef stage XML：
 
 | 阶段 | 触发 | 效果 |
@@ -264,7 +234,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 | P1 | 默认 | 标准属性 |
 | P2 | 血量 <50% | MoveSpeed ×1.3，AimingDelayFactor ×0.8，ShootingAccuracyPawn ×1.1 |
 
-- **掉落**（必掉）：传说随机词条装备×1 + 随机职业凭证×1 + 远古数据核心×2；护卫（宿主派系抽取，见 §3.1）按袭击者规则正常掉装备。
+- **掉落**（必掉）：高档随机强化/附魔装备（tier 3）×1 + 随机职业凭证×1 + 远古数据核心×2；护卫（宿主派系抽取，见 §3.1）按袭击者规则正常掷点掉装备。
 - Boss 本体为 MMT 独占单位（据点标题内容，可硬编码）；**护卫不硬编码**，跨 Mod 兼容规则同 §3.1。
 
 ### 3.3 任务链「远古军械库」（QuestScriptDef，纯 XML 优先）
@@ -288,8 +258,8 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 | 设置项 | 字段 | 默认 | 说明 |
 |---|---|---|---|
-| 稀有度总开关 | lootRarityEnabled | true | 关闭不掷点不显示，数据保留 |
-| 稀有度概率倍率 | lootRarityChanceFactor | 1.0 | 0–3，放大非普通概率 |
+| 随机强化/附魔总开关 | lootRollEnabled | true | 关闭不掷点，数据保留 |
+| 掷点概率倍率 | lootRollChanceFactor | 1.0 | 0–3，放大非 +0 档与附魔概率 |
 | 历练/职业总开关 | pawnProgressEnabled | true | 关闭不再获得 XP，Hediff 保留 |
 | 任务链开关 | rpgQuestsEnabled | true | 入口 Incident 第一行短路 |
 | Boss 巢穴开关 | bossEncountersEnabled | true | 玩家主动触发型，默认开 |
@@ -299,7 +269,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 ## 5. 性能与存档兼容
 
-- 稀有度掷点只在装备生成瞬间；XP 钩子复用既有伤害补丁上下文与 `SkillRecord.Learn`（高频但单条廉价加法，无分配）；无新增 per-tick 全图扫描。
+- 随机强化/附魔掷点只在装备生成瞬间，结果写入既有 comp 字段（零新增存档字段）；XP 钩子复用既有伤害补丁上下文与 `SkillRecord.Learn`（高频但单条廉价加法，无分配）；无新增 per-tick 全图扫描。
 - 历练/职业/perk 数值全走 Hediff stage 原生 statOffsets/statFactors，享受原版 stat 缓存，不写自定义 StatWorker。
 - 存档：全部新字段带默认值；旧存档小人无 comp 时静默跳过；关开关不删数据。
 - 已知风险：CE 环境下远程伤害补丁可能不生效（与终局包 §2 相同结论，设置面板标注；本包不声明 CE 依赖）。
@@ -308,7 +278,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 | 阶段 | 内容 | 主要产出 |
 |---|---|---|
-| A | 稀有度+随机词条+重铸 | `LootRarity.cs`、强化 comp 扩展、重铸交互、`validate/loot_rarity.py` |
+| A | 随机强化+随机附魔 | `LootRoll.cs`、武器/防具生成钩子、`validate/loot_roll.py` |
 | B | 历练/perk/职业 | 按 `mmt-class-design.md` §7 的 B1–B5 分步：历练/Perk 框架 → 技能效果库+职业导师台 → RoM 全职业生成器铺量 → 收尾 |
 | C | 副本/Boss/任务链 | SitePart×3、`BossEncounter.cs`、Boss PawnKindDef、QuestScriptDef 链、`validate/rpg_quests.py`、据点/Boss 贴图 |
 | D | 整合 | `MMTSettings` 面板分区、Keyed 翻译、AGENTS.md Source 清单更新、全量校验回归 |
@@ -317,14 +287,14 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 游戏内手测路径：
 
-1. Dev mode 生成袭击者 → 检查装备稀有度 label/inspect；强化台重铸洗词条；
+1. Dev mode 生成袭击者 → 检查装备强化等级/附魔的 label 与 inspect；多档威胁点各抽一批验证分布；
 2. 击杀/工作攒 XP → 升级选 perk → 导师台就职 → 技能 gizmo 可用；
 3. 任务链三幕走完 → Boss 击杀 → 掉落传说装备与凭证；
 4. 加装任意含敌对派系的 mod → 副本守卫出现该 mod 单位（跨 Mod 兼容验收）。
 
 ## 7. 待定项（实现时回填）
 
-- `PawnApparelGenerator` 在 1.7 的防具生成钩子签名（spike 后回填 §1.5）；
+- ~~`PawnApparelGenerator` 在 1.7 的防具生成钩子签名~~（已回填 §1.5：`GenerateStartingApparelFor(Pawn, PawnGenerationRequest)`）；
 - perk/职业 stat defName 以 1.7 实际为准逐一核对（§2.2/§2.3 表）；
 - 品质暴击的品质生成 patch 点（`QualityUtility.GenerateQualityCreatedByPawn` 候选）；
 - Boss race 基底选型（大型机械体 vs 自定义 body，实现时评估贴图成本）。

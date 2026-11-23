@@ -85,6 +85,7 @@ python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器�
   - `AutoProcessor.cs`：自动处理机 Comp（营养膏机模式，定时从相邻进料口消耗输入并产出；outputDef 为空时走矿石池随机）。
   - `ChunkDrill.cs`：手动采石机 Comp（产粗矿石，含工作量与采矿经验参数）。
   - `BionicsComps.cs`：仿生链 CONN 特殊效果重实现（狂战士芯片狂暴 gizmo、精神扭曲思想清除、缪斯娱乐供给、手电照明 mote、六种神经调制使用品效果），对照 CONN.dll 行为简化实现。
+  - `LootRoll.cs`：装备随机强化/附魔掷点（RPG 支柱一，`docs/mmt-rpg-design.md` §1）：按威胁点四档掷初始强化等级与附魔词条，直接写入既有强化 comp 的 level/enchants（零新增存档字段）；词条池照抄模块 XML 档位注释分组（`tools/validate/loot_roll.py` 同步校验）；袭击者武器/防具生成钩子（`TryGenerateWeaponFor`/`GenerateStartingApparelFor` postfix，仅敌对派系）。
   - `Rechargeable.cs`：通用可充能 Comp（电量存档 + 充/放电接口），充能台与充能设备共用的电量载体。
   - `ChargingStation.cs`：充能台（内置容器持一件设备，通电回充；右键小人手动装卸：空台从穿戴/背包选设备装入，有设备确认后取回；DrawAt 画飘浮设备与充能光柱；装卸各一个 JobDriver）。
   - `ShieldPack.cs`：充能护盾腰带（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡，用 MMT 专属贴图 `Things/Item/MMT/Shield/MMT_ShieldBubbleTech`；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。

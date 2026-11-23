@@ -258,6 +258,12 @@ namespace MyModeTest
             return false;
         }
 
+        /// <summary>掉落掷点直接写入强化等级（仅 LootRoll 调用：不耗材料、不走成功率）。</summary>
+        public void SetLevelForLoot(int newLevel)
+        {
+            level = Mathf.Clamp(newLevel, 0, Props.maxLevel);
+        }
+
         /// <summary>物品标签：首个带前缀的附魔词条加"前缀·"，再追加强化等级后缀（多词条只取第一个，防交易/堆叠界面超长）。</summary>
         public override string TransformLabel(string label)
         {

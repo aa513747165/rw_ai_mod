@@ -35,7 +35,7 @@ namespace MyModeTest
             if (s == null) return;
 
             // 单页滚动：内容高度按行数估算（附魔特效分组后约 40 行 × 34 + 分组间距）
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1580f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1700f);
             Widgets.BeginScrollView(inRect, ref settingsScrollPos, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.maxOneColumn = true;
@@ -60,6 +60,15 @@ namespace MyModeTest
                 "勾上后强化 comp 不挂到其它 mod 的武器与护盾装备。");
             list.CheckboxLabeled("仅限 MMT/原版防具强化（其它 mod 防具不开放强化）", ref s.apparelEnhanceVanillaOnly,
                 "勾上后防具强化 comp 对其它 mod 的防具不生效。");
+            list.Gap();
+
+            // —— 随机掉落强化/附魔（RPG 支柱一） ——
+            list.Label("【随机掉落强化/附魔】（袭击者装备生成时掷强化等级与附魔词条，威胁点越高掷得越好）");
+            list.CheckboxLabeled("启用随机强化/附魔掉落", ref s.lootRollEnabled,
+                "关闭后袭击者装备不再掷点（纯原版白板）；已掷出的装备数据保留。");
+            s.lootRollChanceFactor = list.SliderLabeled(
+                "掷点概率倍率 ×" + s.lootRollChanceFactor.ToString("F2"),
+                s.lootRollChanceFactor, 0f, 3f, 0.6f, "放大非 +0 强化档权重与附魔概率（0 = 全部白板）。");
             list.Gap();
 
             // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
