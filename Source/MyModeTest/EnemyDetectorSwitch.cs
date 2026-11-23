@@ -121,12 +121,48 @@ namespace MyModeTest
         private static readonly Dictionary<Map, int> counts = new Dictionary<Map, int>();
         private static readonly HashSet<Lord> countedLords = new HashSet<Lord>();
         private static readonly Dictionary<Map, List<CompEnemyDetector>> switches = new Dictionary<Map, List<CompEnemyDetector>>();
+        // "实际进攻"跟踪（哨戒待机用）：排除地图生成的潜伏型 Lord（血肉兽等 65 格才交战、
+        // 永不主动进攻），否则警报被永久占用——睡眠门恒关、真袭击也无法触发翻转唤醒
+        private static readonly Dictionary<Map, int> assaultCounts = new Dictionary<Map, int>();
+        private static readonly HashSet<Lord> assaultLords = new HashSet<Lord>();
         /// <summary>已做过全图重扫的地图（惰性初始化，每图一次）。</summary>
         private static readonly HashSet<Map> scannedMaps = new HashSet<Map>();
 
         public static bool HasHostileLord(Map map)
         {
             return map != null && counts.TryGetValue(map, out int count) && count > 0;
+        }
+
+        /// <summary>是否有"实际进攻"（非潜伏型的敌对 Lord）——哨戒待机的唤醒与持续清醒判定用。</summary>
+        public static bool HasActiveAssault(Map map)
+        {
+            return map != null && assaultCounts.TryGetValue(map, out int count) && count > 0;
+        }
+
+        /// <summary>
+        /// 潜伏型威胁：地图生成时就在的血肉兽突袭 Lord（全部成员 spawnedTick 为 0）。
+        /// 其职责是 65 格内才交战、从不主动进攻殖民地，不计为"实际进攻"；
+        /// 坑道门在局中涌出的血肉兽（成员 spawnedTick &gt; 0）仍是真袭击。
+        /// </summary>
+        private static bool IsLurkerLord(Lord lord)
+        {
+            if (!(lord.LordJob is LordJob_FleshbeastAssault))
+            {
+                return false;
+            }
+            List<Pawn> pawns = lord.ownedPawns;
+            if (pawns.Count == 0)
+            {
+                return false;
+            }
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (pawns[i].spawnedTick != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static void Register(Map map, CompEnemyDetector comp)
@@ -157,7 +193,10 @@ namespace MyModeTest
             // 先清掉本图可能存在的陈旧计数，再以 IsHostile 重算
             countedLords.RemoveWhere(l => l.Map == map);
             counts.Remove(map);
+            assaultLords.RemoveWhere(l => l.Map == map);
+            assaultCounts.Remove(map);
             int count = 0;
+            int assault = 0;
             List<Lord> lords = map.lordManager.lords;
             for (int i = 0; i < lords.Count; i++)
             {
@@ -165,11 +204,20 @@ namespace MyModeTest
                 {
                     countedLords.Add(lords[i]);
                     count++;
+                    if (!IsLurkerLord(lords[i]))
+                    {
+                        assaultLords.Add(lords[i]);
+                        assault++;
+                    }
                 }
             }
             if (count > 0)
             {
                 counts[map] = count;
+            }
+            if (assault > 0)
+            {
+                assaultCounts[map] = assault;
             }
         }
 
@@ -198,24 +246,38 @@ namespace MyModeTest
             {
                 countedLords.Add(lord);
                 Increment(lord.Map);
-                // 新敌对 Lord 出现即唤醒本图哨戒睡眠的机械体：不能只在计数 0->1 翻转时唤醒
-                //（Increment 内的 Notify），否则地图上已存在潜伏型威胁（如地图生成的血肉兽
-                // 突袭 Lord）占用计数后，真正的袭击不会触发翻转，睡眠的机械体永远不会被唤醒。
-                MechStandbyManager.OnHostileStateChanged(lord.Map, true);
+                // 新"实际进攻"出现即唤醒本图哨戒睡眠的机械体并锁住清醒状态：
+                // 不能只在计数 0->1 翻转时唤醒，否则潜伏威胁占用计数后真袭击不触发翻转
+                if (!IsLurkerLord(lord) && assaultLords.Add(lord))
+                {
+                    IncrementAssault(lord.Map);
+                }
             }
             else
             {
                 countedLords.Remove(lord);
                 Decrement(lord.Map);
+                if (assaultLords.Remove(lord))
+                {
+                    DecrementAssault(lord.Map);
+                }
             }
         }
 
         /// <summary>事件入口：Lord 解散（前缀调用，此时 Lord 仍持有地图与成员信息）。</summary>
         public static void OnLordRemoved(Lord lord)
         {
-            if (lord != null && countedLords.Remove(lord))
+            if (lord == null)
+            {
+                return;
+            }
+            if (countedLords.Remove(lord))
             {
                 Decrement(lord.Map);
+            }
+            if (assaultLords.Remove(lord))
+            {
+                DecrementAssault(lord.Map);
             }
         }
 
@@ -224,6 +286,8 @@ namespace MyModeTest
         {
             countedLords.Clear();
             counts.Clear();
+            assaultLords.Clear();
+            assaultCounts.Clear();
             scannedMaps.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
@@ -238,6 +302,12 @@ namespace MyModeTest
                         countedLords.Add(lords[j]);
                         counts.TryGetValue(map, out int c);
                         counts[map] = c + 1;
+                        if (!IsLurkerLord(lords[j]))
+                        {
+                            assaultLords.Add(lords[j]);
+                            assaultCounts.TryGetValue(map, out int a);
+                            assaultCounts[map] = a + 1;
+                        }
                     }
                 }
             }
@@ -296,6 +366,30 @@ namespace MyModeTest
             if (c == 0)
             {
                 Notify(map);
+            }
+        }
+
+        /// <summary>"实际进攻"计数 +1 并唤醒本图哨戒睡眠的机械体（任何新进攻都唤醒，不限 0->1 翻转）。</summary>
+        private static void IncrementAssault(Map map)
+        {
+            assaultCounts.TryGetValue(map, out int c);
+            assaultCounts[map] = c + 1;
+            MechStandbyManager.OnHostileStateChanged(map, true);
+        }
+
+        private static void DecrementAssault(Map map)
+        {
+            if (map == null || !assaultCounts.TryGetValue(map, out int c) || c <= 0)
+            {
+                return;
+            }
+            if (c == 1)
+            {
+                assaultCounts.Remove(map);
+            }
+            else
+            {
+                assaultCounts[map] = c - 1;
             }
         }
 

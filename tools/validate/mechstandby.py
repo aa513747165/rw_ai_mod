@@ -72,10 +72,11 @@ def validate_mechstandby() -> None:
     cs = open(CS_FILE, encoding="utf-8").read()
     for token in ("class JobGiver_MechStandby", "class MechStandbyManager",
                   "class MapComponent_MechStandby", "HarmonyPatch(typeof(Pawn), \"GetGizmos\")",
-                  "JobDefOf.SelfShutdown", "AnyHostileNearby", "CompCanBeDormant"):
+                  "JobDefOf.SelfShutdown", "AnyHostileNearby", "CompCanBeDormant",
+                  "EnemyRaidTracker.HasActiveAssault"):
         if token not in cs:
             fail(f"MechStandby.cs 缺少 {token}")
-    # 睡眠门必须是"近距离活动敌人"判定，不能退回全图敌对 Lord 判定
+    # 睡眠门必须是"实际进攻 + 近距离活动敌人"两级判定，不能退回全图敌对 Lord 判定
     # （地图生成的潜伏型敌对 Lord，如血肉兽突袭，会把全图判定永久堵死导致哨戒永不睡眠）
     if "EnemyRaidTracker.HasHostileLord" in cs:
         fail("JobGiver_MechStandby 不得用全图 HasHostileLord 当睡眠门（潜伏型敌 Lord 会永久堵死睡眠）")
@@ -90,10 +91,13 @@ def validate_mechstandby() -> None:
     early_return_idx = tracker.find("switches.TryGetValue", notify_idx)
     if not (notify_idx != -1 and early_return_idx != -1 and notify_idx < hook_idx < early_return_idx):
         fail("唤醒挂钩必须位于 Notify 内、感应开关 TryGetValue 早退判断之前（无开关的图也要能唤醒）")
-    # 新敌对 Lord 出现时也要唤醒（已有潜伏威胁占用计数时，真袭击不触发 0->1 翻转）
-    sync_idx = tracker.find("public static void SyncLord")
-    if sync_idx == -1 or hook not in tracker[sync_idx:tracker.find("public static void OnLordRemoved")]:
-        fail("SyncLord 必须在 Lord 新转为敌对时回调唤醒管理器（潜伏威胁占用计数时真袭击无法触发翻转唤醒）")
+    # "实际进攻"跟踪：排除潜伏型 Lord，且新进攻出现（IncrementAssault）即唤醒
+    for token in ("IsLurkerLord", "assaultCounts", "HasActiveAssault"):
+        if token not in tracker:
+            fail(f"EnemyDetectorSwitch.cs 缺少 {token}（实际进攻跟踪：潜伏型敌 Lord 不得堵死哨戒待机）")
+    inc_idx = tracker.find("private static void IncrementAssault")
+    if inc_idx == -1 or hook not in tracker[inc_idx:tracker.find("private static void DecrementAssault")]:
+        fail("IncrementAssault 必须回调唤醒管理器（新进攻出现即唤醒，不能只在计数 0->1 翻转时唤醒）")
 
 
 SUITES = {"mechstandby": validate_mechstandby}

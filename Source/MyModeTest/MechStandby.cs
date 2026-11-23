@@ -23,9 +23,10 @@ namespace MyModeTest
     /// 哨戒待机 JobGiver（挂在 Mechanoid ThinkTree 的 MMT_Sentinel 工作模式分支末尾，见 MMT_Patch_MechStandby.xml）：
     /// 机械体闲下来时发原版 SelfShutdown 作业（躺地关机、不再跑任何 JobGiver 扫描、电量冻结并缓慢自充）。
     /// 优先走玩家在指令面板标定的待机点，未标定则复用原版自关机选址（RCellFinder）。
-    /// 征召时或附近有活动敌人（65 格内，与战斗节点索敌半径一致）时不发睡眠作业，保持清醒应对；
-    /// 远处的潜伏型威胁（如地图生成的血肉兽突袭 Lord，65 格内才交战）不挡睡眠，
-    /// 真正的进攻由 <see cref="MechStandbyManager"/> 在新敌对 Lord 出现时事件驱动唤醒。
+    /// 征召时不发睡眠作业；有"实际进攻"（非潜伏型敌对 Lord）期间保持清醒直到威胁解除，
+    /// 附近 65 格内有活动敌人（与战斗节点索敌半径一致）时也不睡，让位给战斗节点；
+    /// 远处的潜伏型威胁（如地图生成的血肉兽突袭 Lord，65 格内才交战）不挡睡眠。
+    /// 唤醒由 <see cref="MechStandbyManager"/> 在新进攻 Lord 出现时事件驱动完成。
     /// 征召/受击/切换工作模式走原版作业中断逻辑（set_Drafted 结束可中断作业、SetWorkModeForPawn 触发 CheckForJobOverride）。
     /// </summary>
     public class JobGiver_MechStandby : ThinkNode_JobGiver
@@ -40,9 +41,12 @@ namespace MyModeTest
             {
                 return null;
             }
-            // 附近有活动敌人时不睡（保持清醒让位给战斗节点）；远处潜伏敌人不管，避免
-            // 地图生成的血肉兽之类"永不进攻"的敌对 Lord 把睡眠门永久堵死
-            if (AnyHostileNearby(pawn, map))
+            // 睡眠门两级判定：
+            // 1) 有"实际进攻"（非潜伏型敌对 Lord，见 EnemyRaidTracker.HasActiveAssault）时保持清醒
+            //    直到威胁解除——否则敌人在远处行军时被唤醒的机械体下一 tick 又会被塞回去睡；
+            // 2) 附近 65 格内有活动敌人（与战斗节点索敌半径一致）也不睡，让位给战斗节点。
+            // 远处的潜伏型威胁（如地图生成的血肉兽）不挡睡眠。
+            if (EnemyRaidTracker.HasActiveAssault(map) || AnyHostileNearby(pawn, map))
             {
                 return null;
             }
