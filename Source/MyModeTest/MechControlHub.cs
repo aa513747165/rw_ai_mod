@@ -183,6 +183,24 @@ namespace MyModeTest
             {
                 dummyPawn?.mechanitor?.Notify_BandwidthChanged();
             }
+            else if (signal == CompModuleSlots.SignalModulesChanged)
+            {
+                // 模块插拔即时同步：带宽/控制组数量（原版按此物化控制组对象，少了就无法分组）/耗电
+                RefreshMechanitorState();
+            }
+        }
+
+        /// <summary>带宽/控制组数量变化时同步原版机械师状态并刷新耗电。</summary>
+        private void RefreshMechanitorState()
+        {
+            lastBandwidth = CurrentBandwidth;
+            lastControlGroups = CurrentControlGroups;
+            if (dummyPawn?.mechanitor != null)
+            {
+                dummyPawn.mechanitor.Notify_BandwidthChanged();
+                NotifyControlGroups();
+            }
+            UpdatePowerOutput();
         }
 
         /// <summary>已插模块总数（带宽 + 控制组）。</summary>
@@ -239,10 +257,15 @@ namespace MyModeTest
             TierGraphic(TierIndex()).Draw(parent.DrawPos + new Vector3(0f, 2f * Altitudes.AltInc, 0f), Rot4.North, parent);
         }
 
-        public override void CompTickRare()
+        public override void CompTickInterval(int delta)
         {
-            base.CompTickRare();
-            // 模块插拔/手动开关没有信号，用低频轮询检测数值变化并同步原版机械师状态
+            base.CompTickInterval(delta);
+            // 手动开关等无信号路径的低频轮询兜底（1.7 Normal 物体收不到 CompTickRare，
+            // 必须用 CompTickInterval；模块插拔走 SignalModulesChanged 信号即时刷新，不靠这里）
+            if (!parent.IsHashIntervalTick(250, delta))
+            {
+                return;
+            }
             int bandwidth = CurrentBandwidth;
             if (bandwidth != lastBandwidth)
             {

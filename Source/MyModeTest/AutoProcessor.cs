@@ -68,6 +68,9 @@ namespace MyModeTest
     /// </summary>
     public class CompModuleSlots : CompItemSlotBase
     {
+        /// <summary>模块插拔后向建筑全部 comp 广播的信号（带宽/耗电等消费端即时刷新用）。</summary>
+        public const string SignalModulesChanged = "MMT_ModuleSlotsChanged";
+
         // 已安装模块列表（物品实体在安装时销毁，卸载/拆除时按 itemDef 再造返还）
         private List<InstalledSlotItem> installed = new List<InstalledSlotItem>();
 
@@ -227,6 +230,7 @@ namespace MyModeTest
             ModuleExtension ext = module.def.GetModExtension<ModuleExtension>();
             installed.Add(new InstalledSlotItem { slotKey = ext.slotKey, itemDef = module.def });
             module.Destroy();
+            parent.BroadcastCompSignal(SignalModulesChanged);
             return true;
         }
 
@@ -241,6 +245,7 @@ namespace MyModeTest
                 installed.RemoveAt(i);
                 if (itemDef != null)
                     GenPlace.TryPlaceThing(ThingMaker.MakeThing(itemDef), parent.InteractionCell, parent.Map, ThingPlaceMode.Near);
+                parent.BroadcastCompSignal(SignalModulesChanged);
                 return;
             }
         }

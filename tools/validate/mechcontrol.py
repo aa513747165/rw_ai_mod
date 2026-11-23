@@ -174,9 +174,14 @@ def validate_mechcontrol() -> None:
                   "nameof(MechanitorBandwidthGizmo.Visible)",
                   "typeof(CompBandNode)", "nameof(GameEnder.CheckOrUpdateGameOver)",
                   "EffecterDefOf.ControlMech", "GetEffectSum(\"MechBandwidth\")",
-                  "GetEffectSum(\"MechControlGroup\")"):
+                  "GetEffectSum(\"MechControlGroup\")",
+                  # 模块插拔走信号即时同步（控制组对象物化），低频轮询走 CompTickInterval 兜底
+                  "CompModuleSlots.SignalModulesChanged", "CompTickInterval"):
         if token not in cs:
             fail(f"MechControlHub.cs 缺少 {token}")
+    # 1.7 Normal 物体收不到 CompTickRare，周期同步绝不能回退到它
+    if "override void CompTickRare" in cs:
+        fail("MechControlHub.cs 不得使用 CompTickRare（1.7 不派发，模块变化会永远不同步导致无法分组）")
 
     # ---- StatPart 注入补丁（单行 getter 会被 JIT 内联，带宽/控制组改走属性计算） ----
     stat_patch = read_text(STATPART_PATCH_XML)
