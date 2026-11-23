@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- 向原版机械体 ThinkTree 注入哨戒待机（MMT_Sentinel）工作模式分支：
+       与原版 Work/SelfShutdown/Recharge/Escort 分支平级且按工作模式互斥。
+       分支结构 = 原版 Work 分支（充电/回允许区/工作/战斗机械体接敌）
+       去掉游走（JobGiver_WanderColony），末尾替换为 JobGiver_MechStandby（去待机点睡眠）。 -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThinkTreeDef[defName="Mechanoid"]/thinkRoot/subNodes/li[@Class="ThinkNode_ConditionalPlayerControlledMech"]/subNodes/li[@Class="ThinkNode_ConditionalNotFormingCaravan"]/subNodes</xpath>
+    <value>
+      <li Class="ThinkNode_ConditionalWorkMode" MayRequire="Ludeon.RimWorld.Biotech">
+        <workMode>MMT_Sentinel</workMode>
+        <subNodes>
+          <!-- 充电中的机械体继续充完 -->
+          <li Class="ThinkNode_ConditionalRecharging">
+            <subNodes>
+              <li Class="JobGiver_GetEnergy_Charger" />
+            </subNodes>
+          </li>
+          <li Class="JobGiver_SeekAllowedArea" />
+          <li Class="JobGiver_GetEnergy_Charger" />
+          <!-- 工人机械体平时照常干活 -->
+          <li Class="JobGiver_Work">
+            <emergency>true</emergency>
+          </li>
+          <li Class="JobGiver_Work" />
+          <!-- 战斗机械体：有敌人时接敌（同原版 Work 分支的半径） -->
+          <li Class="ThinkNode_ConditionalWorkMech">
+            <invert>true</invert>
+            <subNodes>
+              <li Class="JobGiver_AIFightEnemies">
+                <targetAcquireRadius>65</targetAcquireRadius>
+                <targetKeepRadius>72</targetKeepRadius>
+              </li>
+            </subNodes>
+          </li>
+          <!-- 闲下来：回待机点关机睡眠（有敌意时该节点返回空，让位给原版 Idle 游走） -->
+          <li Class="MyModeTest.JobGiver_MechStandby" />
+        </subNodes>
+      </li>
+    </value>
+  </Operation>
+</Patch>

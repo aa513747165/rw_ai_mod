@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 哨戒待机工作模式（Biotech 机械体）：
+       平时工人机械体照常干活，闲下来的机械体走到指定待机点（未设定则附近自选）关机睡眠，
+       不再游走白耗 CPU；有进攻事件时由 EnemyRaidTracker 事件驱动即时唤醒（MechStandby.cs）。
+       睡眠复用原版 SelfShutdown 作业（躺地关机、电量冻结并缓慢自充），
+       征召/受击/切换工作模式走原版中断逻辑自动唤醒。 -->
+  <MechWorkModeDef>
+    <defName>MMT_Sentinel</defName>
+    <label>哨戒待机</label>
+    <uiOrder>100</uiOrder>
+    <description>平时自动工作，闲置时前往待机点关机睡眠以节省性能；侦测到敌人进攻时立即自动唤醒迎战。可在机械体的指令面板中为其设定待机点。</description>
+    <iconPath>UI/Icons/MMT_WorkModeSentinel</iconPath>
+  </MechWorkModeDef>
+</Defs>

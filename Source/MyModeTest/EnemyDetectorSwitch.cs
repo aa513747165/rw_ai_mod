@@ -112,7 +112,8 @@ namespace MyModeTest
 
     /// <summary>
     /// 敌对 Lord 跟踪器（事件驱动，零轮询）：由 Harmony 补丁在 Lord 建立/解散、成员进出、
-    /// 派系关系翻转时维护每张地图的敌对 Lord 计数，计数在 0 与非 0 间跨越时通知本图所有感应开关刷新。
+    /// 派系关系翻转时维护每张地图的敌对 Lord 计数，计数在 0 与非 0 间跨越时通知本图所有感应开关刷新，
+    /// 并回调哨戒待机唤醒管理器（MechStandbyManager.OnHostileStateChanged）唤醒睡眠中的哨戒机械体。
     /// 已计数的 Lord 记录于集合中，避免解散时因成员已清空而误判为非敌对导致计数泄漏。
     /// </summary>
     public static class EnemyRaidTracker
@@ -310,7 +311,14 @@ namespace MyModeTest
 
         private static void Notify(Map map)
         {
-            if (map == null || !switches.TryGetValue(map, out List<CompEnemyDetector> list))
+            if (map == null)
+            {
+                return;
+            }
+            // 哨戒待机（MechStandby.cs）：敌意状态翻转时唤醒本图哨戒睡眠的机械体。
+            // 必须在感应开关列表判断之前调用：本图没建感应开关时机械体唤醒也不能被跳过。
+            MechStandbyManager.OnHostileStateChanged(map, HasHostileLord(map));
+            if (!switches.TryGetValue(map, out List<CompEnemyDetector> list))
             {
                 return;
             }
