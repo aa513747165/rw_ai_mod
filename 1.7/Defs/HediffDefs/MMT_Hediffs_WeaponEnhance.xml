@@ -35,9 +35,13 @@
     </comps>
     <stages>
       <li>
-        <statOffsets>
-          <Sight>-0.3</Sight>
-        </statOffsets>
+        <!-- Sight 是 PawnCapacityDef 而非 StatDef，必须走 capMods（statOffsets 会报红字） -->
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>-0.3</offset>
+          </li>
+        </capMods>
       </li>
     </stages>
   </HediffDef>

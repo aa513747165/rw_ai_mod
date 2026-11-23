@@ -242,6 +242,23 @@ namespace MyModeTest
                     Messages.Message("纪元奇点点火程序启动", new LookTargets(parent), MessageTypeDefOf.PositiveEvent, false);
                 };
             yield return activate;
+            // 开发者模式：一键充满蓄电（测试点火链路用）
+            if (Prefs.DevMode)
+            {
+                Command_Action devCharge = new Command_Action();
+                devCharge.defaultLabel = "DEV: 一键充满电能";
+                devCharge.defaultDesc = "开发者模式：立即将奇点蓄电充满（"
+                    + (batteryComp != null ? batteryComp.MaxChargeWd.ToString("F0") : Props.requiredChargeWd.ToString("F0")) + " Wd）。";
+                devCharge.icon = parent.def.uiIcon;
+                devCharge.action = delegate
+                {
+                    if (batteryComp == null)
+                        return;
+                    batteryComp.FillFull();
+                    Messages.Message("DEV: 奇点蓄电已充满", new LookTargets(parent), MessageTypeDefOf.NeutralEvent, false);
+                };
+                yield return devCharge;
+            }
         }
 
         /// <summary>点火完成：三选一弹窗。</summary>
@@ -311,9 +328,10 @@ namespace MyModeTest
         private const string RingInnerTexPath = TexDir + "MMT_SingularityRingInner";
         private const string GlowTexPath = TexDir + "MMT_SingularityGlow";
 
-        // plane10 缩放（片元 10×10 格）：圆环整体 = 底座宽的 0.68，黑洞 = 0.46
-        private const float RingScale = 0.435f;
-        private const float HoleScale = 0.294f;
+        // plane10 在 1.7/Waylith 是 1×1 平面（非旧版 10×10），缩放直接写格数：
+        // 圆环整体 = 底座宽的 0.68（6.4×0.68≈4.35），黑洞 = 0.46（≈2.94）
+        private const float RingScale = 4.35f;
+        private const float HoleScale = 2.94f;
 
         // 圆环转速（度/秒，负号反向）
         private const float RingOuterSpeed = 5f;
@@ -324,11 +342,11 @@ namespace MyModeTest
         private const float HoleSpinSpeed = 3f;
         private const float HoleBreathe = 0.04f;
 
-        // 脉冲扩散环：从黑洞扩散到外环之外
+        // 脉冲扩散环：从黑洞扩散到外环之外（格数）
         private const float PulsePeriod = 2.8f;
         private const float PulsePeriodActivating = 1.3f;
-        private const float PulseScaleFrom = 0.18f;
-        private const float PulseScaleTo = 0.72f;
+        private const float PulseScaleFrom = 1.8f;
+        private const float PulseScaleTo = 7.2f;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -349,20 +367,26 @@ namespace MyModeTest
             float time = Time.realtimeSinceStartup;
             bool activating = activationComp != null && activationComp.IsActivating;
             bool activated = activationComp != null && activationComp.Activated;
+            // 未点火（既非点火中亦非已激活）只是底座，不显示黑洞/圆环/脉冲/辉光
+            if (!activating && !activated)
+                return;
             float baseY = AltitudeLayer.Item.AltitudeFor();
+            // 相机前向每帧只取一次（Camera.main 本身有查找成本），整帧 11 片面片共用
+            Camera cam = Camera.main;
+            Vector3 camForward = cam != null ? cam.transform.forward : new Vector3(0f, -1f, 0f);
 
             // 三圈稳定环互逆旋转
             DrawPlane(drawLoc, baseY + 0.10f, RingScale, time * RingOuterSpeed,
-                LoadMat(ref ringOuterMat, RingOuterTexPath), Color.white);
+                LoadMat(ref ringOuterMat, RingOuterTexPath), Color.white, camForward);
             DrawPlane(drawLoc, baseY + 0.11f, RingScale, time * RingMidSpeed,
-                LoadMat(ref ringMidMat, RingMidTexPath), Color.white);
+                LoadMat(ref ringMidMat, RingMidTexPath), Color.white, camForward);
             DrawPlane(drawLoc, baseY + 0.12f, RingScale, time * RingInnerSpeed,
-                LoadMat(ref ringInnerMat, RingInnerTexPath), Color.white);
+                LoadMat(ref ringInnerMat, RingInnerTexPath), Color.white, camForward);
 
             // 中央黑洞：慢速自转 + 呼吸缩放（点火时呼吸加剧）
             float breathe = (activating ? HoleBreathe * 2.5f : HoleBreathe) * Mathf.Sin(time * 2.2f);
             DrawPlane(drawLoc, baseY + 0.14f, HoleScale * (1f + breathe), time * HoleSpinSpeed,
-                LoadMat(ref holeMat, HoleTexPath), Color.white);
+                LoadMat(ref holeMat, HoleTexPath), Color.white, camForward);
 
             // 黑洞脉冲：周期性扩散环，点火时更频繁更亮
             float period = activating ? PulsePeriodActivating : PulsePeriod;
@@ -370,35 +394,44 @@ namespace MyModeTest
             float pulseScale = Mathf.Lerp(PulseScaleFrom, PulseScaleTo, t);
             float pulseAlpha = (1f - t) * (activating ? 0.9f : 0.55f);
             DrawPlane(drawLoc, baseY + 0.16f, pulseScale, 0f,
-                LoadMat(ref pulseMat, PulseTexPath), new Color(1f, 1f, 1f, pulseAlpha));
+                LoadMat(ref pulseMat, PulseTexPath), new Color(1f, 1f, 1f, pulseAlpha), camForward);
 
             // 点火/常驻辉光：6 片水平发光碟从台面堆叠到空中（俯视投影成光柱）
-            if (activating || activated)
+            Material glow = LoadMat(ref glowMat, GlowTexPath);
+            float strength = activated ? 0.18f : 0.35f + activationComp.ActivationProgress * 0.5f;
+            float pulse = strength + 0.15f * Mathf.Sin(time * 4.8f);
+            Color glowColor = new Color(0.7f, 0.5f, 1f, pulse);
+            float spin = time * 4.2f;
+            for (int i = 0; i < 6; i++)
             {
-                Material glow = LoadMat(ref glowMat, GlowTexPath);
-                float strength = activated ? 0.18f : 0.35f + activationComp.ActivationProgress * 0.5f;
-                float pulse = strength + 0.15f * Mathf.Sin(time * 4.8f);
-                glow.color = new Color(0.7f, 0.5f, 1f, pulse);
-                float spin = time * 4.2f;
-                for (int i = 0; i < 6; i++)
-                {
-                    float k = i / 5f;
-                    float s = (2.2f - k * 0.9f) * (1f + 0.15f * Mathf.Sin(spin + i * 1.1f));
-                    Vector3 p = new Vector3(drawLoc.x, baseY + 0.08f + i * 0.22f, drawLoc.z);
-                    Graphics.DrawMesh(MeshPool.plane10,
-                        Matrix4x4.TRS(p, Quaternion.identity, new Vector3(s, 1f, s)), glow, 0);
-                }
+                float k = i / 5f;
+                float s = (2.2f - k * 0.9f) * (1f + 0.15f * Mathf.Sin(spin + i * 1.1f));
+                DrawPlane(drawLoc, baseY + 0.08f + i * 0.22f, s, 0f, glow, glowColor, camForward);
             }
         }
 
-        /// <summary>水平面片叠画：绕 Y 轴旋转（俯视即原地自转）。</summary>
-        private static void DrawPlane(Vector3 center, float y, float scale, float angleDeg, Material mat, Color color)
+        /// <summary>
+        /// 水平面片叠画：绕 Y 轴旋转（俯视即原地自转）。两个坑都封在这里——
+        /// ①透视相机下抬高 y 的面片会向上（北）偏移出圆心，须沿相机水平前向反向补偿（p' = p + y/f.y·f_h）；
+        /// ②1.7 渲染器有实时阴影，特效面片必须 ShadowCastingMode.Off，否则高空面片在地面投出大黑影。
+        /// </summary>
+        private static void DrawPlane(Vector3 center, float y, float scale, float angleDeg, Material mat, Color color, Vector3 camForward)
         {
             mat.color = color;
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(new Vector3(center.x, y, center.z),
+                Matrix4x4.TRS(PerspectiveCompensate(center, y, camForward),
                     Quaternion.AngleAxis(angleDeg, Vector3.up),
-                    new Vector3(scale, 1f, scale)), mat, 0);
+                    new Vector3(scale, 1f, scale)), mat, 0, null, 0, null,
+                UnityEngine.Rendering.ShadowCastingMode.Off, false);
+        }
+
+        /// <summary>透视补偿：抬高 y 的面片向相机方向平移，使俯视投影仍落在建筑圆心。camForward 由调用方按帧缓存。</summary>
+        private static Vector3 PerspectiveCompensate(Vector3 center, float y, Vector3 camForward)
+        {
+            if (camForward.y >= -0.0001f)
+                return new Vector3(center.x, y, center.z);
+            float t = y / camForward.y; // f.y<0 → 沿水平前向反向（朝相机）平移
+            return new Vector3(center.x + t * camForward.x, y, center.z + t * camForward.z);
         }
     }
 

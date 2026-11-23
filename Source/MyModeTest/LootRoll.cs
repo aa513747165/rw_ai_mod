@@ -203,7 +203,9 @@ namespace MyModeTest
         {
             points = 0f;
             Faction faction = pawn?.Faction;
-            if (faction == null || Faction.OfPlayer == null || !faction.HostileTo(Faction.OfPlayer))
+            // 世界生成阶段（派系领袖生成）玩家派系尚不存在，必须用 SilentFail 版避免红字
+            Faction player = Faction.OfPlayerSilentFail;
+            if (faction == null || player == null || !faction.HostileTo(player))
                 return false;
             Map map = pawn.Map ?? Find.AnyPlayerHomeMap;
             if (map == null)

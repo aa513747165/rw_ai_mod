@@ -248,6 +248,26 @@ namespace MyModeTest
                 scan.action = StartScan;
             }
             yield return scan;
+            // 开发者模式：即刻扫描（跳过蓄电/声纳模块消耗与等待，直接出据点）
+            if (Prefs.DevMode)
+            {
+                Command_Action devScan = new Command_Action();
+                devScan.defaultLabel = "DEV: 即刻扫描";
+                devScan.defaultDesc = IsScanning
+                    ? "开发者模式：立即完成当前扫描并生成据点。"
+                    : "开发者模式：跳过蓄电与声纳模块消耗，立即完成一次扫描并生成据点。";
+                devScan.icon = parent.def.uiIcon;
+                devScan.action = DevInstantScan;
+                yield return devScan;
+            }
+        }
+
+        /// <summary>开发者即刻扫描：扫描中直接结算；空闲时不消耗资源直接走完成流程。</summary>
+        private void DevInstantScan()
+        {
+            if (IsScanning)
+                scanTicksLeft = -1;
+            FinishScan();
         }
 
         public override string CompInspectStringExtra()
