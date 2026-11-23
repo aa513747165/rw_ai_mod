@@ -108,6 +108,10 @@ def validate_weaponenhance() -> None:
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")
+    # 1.7 BuildingBase 不自带账单页，附魔模块配方必须显式声明 ITab_Bills 才能在游戏里下单
+    tabs = [li.text for li in bench.findall("inspectorTabs/li")]
+    if "ITab_Bills" not in tabs:
+        fail("强化台缺少 inspectorTabs/ITab_Bills（没有账单页就无法制作附魔模块）")
 
     # ---- 46 词条模块：slotKey + 效果键一一对应 ----
     modules = def_map(parse_xml(MODULES_XML))

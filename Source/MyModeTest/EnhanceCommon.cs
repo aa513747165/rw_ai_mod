@@ -71,7 +71,7 @@ namespace MyModeTest
         Thing ParentThing { get; }
     }
 
-    /// <summary>强化工位接口：充能台与武器强化台共用（持有待强化装备）。</summary>
+    /// <summary>强化工位接口：充能台与装备强化台共用（持有待强化装备）。</summary>
     public interface IEnhanceStation
     {
         /// <summary>台内装备；空台为 null。</summary>
@@ -270,7 +270,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 通用强化作业（护盾充能台与武器强化台共用，targetA=工位）：
+    /// 通用强化作业（护盾充能台与装备强化台共用，targetA=工位）：
     /// 按材料阶梯逐种收集（轮替条目在派活时已解析定死），走到工位消耗材料并掷成功率。
     /// 存档安全：作业不持久化解析结果，中途读档后重建 toil 时按当前状态重新解析。
     /// </summary>

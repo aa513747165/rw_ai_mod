@@ -2,11 +2,11 @@
 <Defs>
   <!-- 终局内容包研究（设计方案 §6；坐标唯一事实来源是 tools/apply_research_layout.py 的 LAYOUT 表） -->
 
-  <!-- 武器强化：解锁武器强化台（赌博线 +1~+15） -->
+  <!-- 武器强化：解锁装备强化台（赌博线 +1~+15） -->
   <ResearchProjectDef>
     <defName>MMT_WeaponEnhancement</defName>
     <label>武器强化</label>
-    <description>研究能量结晶在武器约束场上的应用，解锁武器强化台：消耗材料逐级强化武器（每级伤害 ×1.05，满级 15 级额外护甲穿透 +10%）。+6 级以后需要探索据点或任务获得的远古材料。兼容其它 Mod 的武器。</description>
+    <description>研究能量结晶在武器约束场上的应用，解锁装备强化台：消耗材料逐级强化武器（每级伤害 ×1.05，满级 15 级额外护甲穿透 +10%）。+6 级以后需要探索据点或任务获得的远古材料。兼容其它 Mod 的武器。</description>
     <baseCost>4000</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>
@@ -18,11 +18,11 @@
     <researchViewY>5.00</researchViewY>
   </ResearchProjectDef>
 
-  <!-- 武器附魔：解锁 17 个附魔模块配方（武器强化台制作，确定线安装） -->
+  <!-- 武器附魔：解锁 17 个附魔模块配方（装备强化台制作，确定线安装） -->
   <ResearchProjectDef>
     <defName>MMT_WeaponEnchantment</defName>
     <label>武器附魔</label>
-    <description>研究将淬火油封装的效应模块永久嫁接到武器上的工艺，解锁附魔模块制作（武器强化台）。附魔 100% 成功：武器基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽，同词条不可重复。词条分低级/中级/高级/极品四档，高档需要探索据点的远古材料。</description>
+    <description>研究将淬火油封装的效应模块永久嫁接到武器上的工艺，解锁附魔模块制作（装备强化台）。附魔 100% 成功：武器基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽，同词条不可重复。词条分低级/中级/高级/极品四档，高档需要探索据点的远古材料。</description>
     <baseCost>6000</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>MMT_ResearchTab</tab>

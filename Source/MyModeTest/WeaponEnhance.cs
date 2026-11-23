@@ -332,7 +332,7 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>武器强化台参数（目前仅 compClass 载体，预留 XML 扩展位）。</summary>
+    /// <summary>装备强化台参数（目前仅 compClass 载体，预留 XML 扩展位）。</summary>
     public class CompProperties_WeaponEnhanceBench : CompProperties
     {
         public CompProperties_WeaponEnhanceBench()
@@ -342,7 +342,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 武器强化台建筑：绘制台内武器（中心上方飘浮），逻辑在 CompWeaponEnhanceBench。
+    /// 装备强化台建筑：绘制台内武器（中心上方飘浮），逻辑在 CompWeaponEnhanceBench。
     /// 继承 Building_WorkTable：附魔模块制作走配方账单，强化/附魔操作走右键作业。
     /// </summary>
     public class Building_WeaponEnhanceBench : Building_WorkTable
@@ -371,7 +371,7 @@ namespace MyModeTest
     }
 
     /// <summary>
-    /// 武器强化台核心 Comp：内置容器持 1 件武器，右键"装载武器/取出/强化/附魔"。
+    /// 装备强化台核心 Comp：内置容器持 1 件武器，右键"装载武器/取出/强化/附魔"。
     /// 结构照搬 CompChargingStation（1.7 ThingComp 不自带 IThingHolder，显式实现）。
     /// </summary>
     public class CompWeaponEnhanceBench : ThingComp, IThingHolder, IEnhanceStation
@@ -455,12 +455,12 @@ namespace MyModeTest
                 yield break;
             if (parent.IsForbidden(selPawn))
             {
-                yield return new FloatMenuOption("武器强化台（被禁止或在小人活动区域外）", null);
+                yield return new FloatMenuOption("装备强化台（被禁止或在小人活动区域外）", null);
                 yield break;
             }
             if (!selPawn.CanReserve(parent, 1, -1, null, false))
             {
-                yield return new FloatMenuOption("武器强化台（已被其他人预定）", null);
+                yield return new FloatMenuOption("装备强化台（已被其他人预定）", null);
                 yield break;
             }
             Thing held = HeldItem;

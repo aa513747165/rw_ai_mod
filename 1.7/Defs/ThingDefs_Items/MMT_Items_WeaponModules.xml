@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 武器附魔模块（设计方案 §2 确定线）：在武器强化台制作（材料按档位），右键强化台安装到台内武器。
+  <!-- 武器附魔模块（设计方案 §2 确定线）：在装备强化台制作（材料按档位），右键强化台安装到台内武器。
        槽位：武器基础 1 槽，强化 +7 解锁第 2 槽、+13 解锁第 3 槽；同词条不可重复。
        全部词条 = ModuleExtension(slotKey=WeaponEnchant)，效果键语义见 ModuleEffectKeys.Weapon*。
        档位材料：低级=淬火油×2+能量结晶×3；中级=淬火油×3+钛×8；高级=淬火油×4+远古合金×10；极品=淬火油×5+远古碎晶×5+数据核心×1 -->
@@ -9,7 +9,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSharp</defName>
     <label>锋利模块</label>
-    <description>低级武器附魔模块：高频震动刃口校准器。安装后武器伤害 +8%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>低级武器附魔模块：高频震动刃口校准器。安装后武器伤害 +8%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSharp</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -29,7 +29,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModAccurate</defName>
     <label>精准模块</label>
-    <description>低级武器附魔模块：弹道预测协处理器。安装后武器命中 +8%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>低级武器附魔模块：弹道预测协处理器。安装后武器命中 +8%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModAccurate</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -49,7 +49,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSwift</defName>
     <label>轻巧模块</label>
-    <description>低级武器附魔模块：枪机轻量化改造件。安装后武器冷却 -8%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>低级武器附魔模块：枪机轻量化改造件。安装后武器冷却 -8%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSwift</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -69,7 +69,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModPierce</defName>
     <label>穿透模块</label>
-    <description>低级武器附魔模块：穿甲弹头套件。安装后武器护甲穿透 +15%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>低级武器附魔模块：穿甲弹头套件。安装后武器护甲穿透 +15%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModPierce</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -90,7 +90,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModDeadly</defName>
     <label>致命模块</label>
-    <description>中级武器附魔模块：弱点分析芯片。安装后暴击率 +5%，暴击造成双倍伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>中级武器附魔模块：弱点分析芯片。安装后暴击率 +5%，暴击造成双倍伤害。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDeadly</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -110,7 +110,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModGale</defName>
     <label>疾风模块</label>
-    <description>中级武器附魔模块：整套反应加速器。安装后冷却 -12%、瞄准时间 -20%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>中级武器附魔模块：整套反应加速器。安装后冷却 -12%、瞄准时间 -20%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGale</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -133,7 +133,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModHeavy</defName>
     <label>重击模块</label>
-    <description>中级武器附魔模块：惯性增重锤头。安装后伤害 +12%，近战命中使目标踉跄击退。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>中级武器附魔模块：惯性增重锤头。安装后伤害 +12%，近战命中使目标踉跄击退。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModHeavy</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -156,7 +156,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModRapid</defName>
     <label>速射模块</label>
-    <description>中级武器附魔模块：超载扳机组，以精度换射速。安装后冷却 -15%，但命中 -4%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>中级武器附魔模块：超载扳机组，以精度换射速。安装后冷却 -15%，但命中 -4%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModRapid</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -180,7 +180,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModEmp</defName>
     <label>EMP弹模块</label>
-    <description>高级武器附魔模块：电磁脉冲弹头。安装后对机械单位伤害 +50% 并造成短路眩晕。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：电磁脉冲弹头。安装后对机械单位伤害 +50% 并造成短路眩晕。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModEmp</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -200,7 +200,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModIncendiary</defName>
     <label>燃烧弹模块</label>
-    <description>高级武器附魔模块：白磷弹头改装。安装后命中点燃目标。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：白磷弹头改装。安装后命中点燃目标。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModIncendiary</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -220,7 +220,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModLifeLeech</defName>
     <label>吸血模块</label>
-    <description>高级武器附魔模块：生物电反馈回路（仅近战武器有效）。安装后近战造成伤害的 5% 转化为对使用者的治疗。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：生物电反馈回路（仅近战武器有效）。安装后近战造成伤害的 5% 转化为对使用者的治疗。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModLifeLeech</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -240,7 +240,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModShieldBreaker</defName>
     <label>破盾模块</label>
-    <description>高级武器附魔模块：谐振破盾弹头。安装后攻击被能量护盾拦截时，额外消耗护盾 50% 能量。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：谐振破盾弹头。安装后攻击被能量护盾拦截时，额外消耗护盾 50% 能量。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModShieldBreaker</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -260,7 +260,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModFrost</defName>
     <label>冰霜模块</label>
-    <description>高级武器附魔模块：低温弹头。安装后命中使目标减速 20%，持续 3 秒。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：低温弹头。安装后命中使目标减速 20%，持续 3 秒。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModFrost</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -281,7 +281,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModExecute</defName>
     <label>处决模块</label>
-    <description>极品武器附魔模块：弱点终结协议。安装后目标血量低于 20% 时伤害 ×2。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：弱点终结协议。安装后目标血量低于 20% 时伤害 ×2。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModExecute</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -301,7 +301,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModChainLightning</defName>
     <label>连锁闪电模块</label>
-    <description>极品武器附魔模块：电弧谐振器。安装后命中会弹射至 2 格内的另一敌对目标，造成 50% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：电弧谐振器。安装后命中会弹射至 2 格内的另一敌对目标，造成 50% 伤害。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModChainLightning</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -321,7 +321,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModTimeFold</defName>
     <label>时空折叠模块</label>
-    <description>极品武器附魔模块：时间锚定器。安装后每次击杀都会让本次攻击的冷却归零，立刻可以再次开火。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：时间锚定器。安装后每次击杀都会让本次攻击的冷却归零，立刻可以再次开火。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModTimeFold</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -341,7 +341,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModOverload</defName>
     <label>过载模块</label>
-    <description>极品武器附魔模块：约束解除器，以过热为代价压榨极限输出。安装后伤害 +25%，但冷却 +15%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：约束解除器，以过热为代价压榨极限输出。安装后伤害 +25%，但冷却 +15%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModOverload</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -365,7 +365,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModBlitz</defName>
     <label>极速模块</label>
-    <description>中级武器附魔模块：反应炉超频改造，以威力换射速的极端调校。安装后武器冷却 -65%、伤害 -75%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>中级武器附魔模块：反应炉超频改造，以威力换射速的极端调校。安装后武器冷却 -65%、伤害 -75%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBlitz</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -386,7 +386,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModGambler</defName>
     <label>赌徒诅咒模块</label>
-    <description>极品武器附魔模块：来源不明的诅咒芯片，把全部精度献祭给威力。安装后武器伤害 ×3，命中 -90%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：来源不明的诅咒芯片，把全部精度献祭给威力。安装后武器伤害 ×3，命中 -90%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGambler</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -407,7 +407,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModRiot</defName>
     <label>镇暴模块</label>
-    <description>极品武器附魔模块：镇暴镇压协议，低致命高压制。安装后武器伤害 -50%，命中 35% 使目标眩晕。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：镇暴镇压协议，低致命高压制。安装后武器伤害 -50%，命中 35% 使目标眩晕。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModRiot</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -428,7 +428,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModExplode</defName>
     <label>爆裂模块</label>
-    <description>高级武器附魔模块：微型装药战斗部。安装后命中 25% 触发小爆炸（半径 1.9，伤害 = 本次 35%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：微型装药战斗部。安装后命中 25% 触发小爆炸（半径 1.9，伤害 = 本次 35%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModExplode</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -449,7 +449,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModStormCall</defName>
     <label>引雷模块</label>
-    <description>极品武器附魔模块：大气电荷引导器。安装后命中 2.5% 在命中点召唤落雷。小心引燃基地——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：大气电荷引导器。安装后命中 2.5% 在命中点召唤落雷。小心引燃基地——可在武器 gizmo 或 Mod 设置关闭。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModStormCall</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -470,7 +470,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModGas</defName>
     <label>毒气模块</label>
-    <description>高级武器附魔模块：毒气播撒战斗部。安装后命中 25% 在落点释放毒气（无 Biotech 时退化为对血肉目标附加毒性积累）。可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：毒气播撒战斗部。安装后命中 25% 在落点释放毒气（无 Biotech 时退化为对血肉目标附加毒性积累）。可在武器 gizmo 或 Mod 设置关闭。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGas</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -491,7 +491,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSuppress</defName>
     <label>压制模块</label>
-    <description>高级武器附魔模块：冲击震荡弹头。安装后命中 10% 使目标眩晕 1.5 秒。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：冲击震荡弹头。安装后命中 10% 使目标眩晕 1.5 秒。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSuppress</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -512,7 +512,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModDisarm</defName>
     <label>缴械模块</label>
-    <description>高级武器附魔模块：武器干扰谐振器。安装后命中 5% 打掉目标手中的武器。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：武器干扰谐振器。安装后命中 5% 打掉目标手中的武器。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDisarm</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -533,7 +533,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModToxic</defName>
     <label>剧毒模块</label>
-    <description>高级武器附魔模块：淬毒刃口/弹头涂层。安装后每次命中使血肉目标毒性积累 +8%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：淬毒刃口/弹头涂层。安装后每次命中使血肉目标毒性积累 +8%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModToxic</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -554,7 +554,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModInsectBane</defName>
     <label>虫敌模块</label>
-    <description>高级武器附魔模块：虫族信息素标记器。安装后对昆虫类目标追加 40% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：虫族信息素标记器。安装后对昆虫类目标追加 40% 伤害。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModInsectBane</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -575,7 +575,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModMending</defName>
     <label>急救模块</label>
-    <description>高级武器附魔模块：纳米修复弹头。安装后命中同派系友军时，按本次伤害 ×2 治疗其伤口（注意：先承伤后双倍治疗，净治疗为正）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：纳米修复弹头。安装后命中同派系友军时，按本次伤害 ×2 治疗其伤口（注意：先承伤后双倍治疗，净治疗为正）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModMending</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -596,7 +596,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModGuardian</defName>
     <label>守护模块</label>
-    <description>高级武器附魔模块：偏导力场发生器。安装后持有此武器期间受到的伤害 -20%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：偏导力场发生器。安装后持有此武器期间受到的伤害 -20%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModGuardian</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -617,7 +617,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModInsight</defName>
     <label>悟战模块</label>
-    <description>高级武器附魔模块：战斗数据回传芯片，把每次命中转化为肌肉记忆训练。安装后每次有效命中敌对目标，使用者获得武器技能经验。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：战斗数据回传芯片，把每次命中转化为肌肉记忆训练。安装后每次有效命中敌对目标，使用者获得武器技能经验。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModInsight</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -638,7 +638,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSureHit</defName>
     <label>必中模块</label>
-    <description>极品武器附魔模块：弹道预知协处理器，以更长的瞄准换取必然命中的一击。安装后每发 35% 概率必中，瞄准时间 +30%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：弹道预知协处理器，以更长的瞄准换取必然命中的一击。安装后每发 35% 概率必中，瞄准时间 +30%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSureHit</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -659,7 +659,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModLongRange</defName>
     <label>长程模块</label>
-    <description>高级武器附魔模块：加长导轨与弹道补偿器。安装后武器射程 +2 格（仅远程武器有效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：加长导轨与弹道补偿器。安装后武器射程 +2 格（仅远程武器有效）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModLongRange</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -679,7 +679,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModDeadeye</defName>
     <label>神射模块</label>
-    <description>高级武器附魔模块：精准模块的进阶版，多通道弹道预测阵列。安装后武器命中 +16%。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：精准模块的进阶版，多通道弹道预测阵列。安装后武器命中 +16%。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDeadeye</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -699,7 +699,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModMagazine</defName>
     <label>扩容模块</label>
-    <description>高级武器附魔模块：并联供弹机构。安装后武器每次连发弹数 +2（仅连发远程武器有效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：并联供弹机构。安装后武器每次连发弹数 +2（仅连发远程武器有效）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModMagazine</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -719,7 +719,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModBlinding</defName>
     <label>致盲模块</label>
-    <description>高级武器附魔模块：强光眩目弹头。安装后命中使目标致盲（视力 -30%，持续 5 秒，重复命中刷新）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：强光眩目弹头。安装后命中使目标致盲（视力 -30%，持续 5 秒，重复命中刷新）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBlinding</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -739,7 +739,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModCorrode</defName>
     <label>蚀甲模块</label>
-    <description>高级武器附魔模块：强酸蚀刻弹头。安装后命中使目标护甲被腐蚀（利刃/钝器护甲 -25%，持续 5 秒，重复命中刷新）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：强酸蚀刻弹头。安装后命中使目标护甲被腐蚀（利刃/钝器护甲 -25%，持续 5 秒，重复命中刷新）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModCorrode</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -759,7 +759,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModBleed</defName>
     <label>放血模块</label>
-    <description>高级武器附魔模块：锯齿放血刃口/弹头。安装后每次命中血肉目标都会加深其失血（流血积累 +3%，仅血肉）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：锯齿放血刃口/弹头。安装后每次命中血肉目标都会加深其失血（流血积累 +3%，仅血肉）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBleed</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -779,7 +779,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSmoke</defName>
     <label>烟幕模块</label>
-    <description>高级武器附魔模块：烟雾播撒战斗部。安装后命中 25% 在落点释放烟幕。可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：烟雾播撒战斗部。安装后命中 25% 在落点释放烟幕。可在武器 gizmo 或 Mod 设置关闭。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSmoke</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -799,7 +799,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModSlaughter</defName>
     <label>屠夫模块</label>
-    <description>高级武器附魔模块：生物组织识别弹头。安装后对血肉目标追加 30% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：生物组织识别弹头。安装后对血肉目标追加 30% 伤害。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModSlaughter</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -819,7 +819,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModDemolition</defName>
     <label>破城模块</label>
-    <description>高级武器附魔模块：结构弱点解算器。安装后对建筑与墙体追加 50% 伤害。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>高级武器附魔模块：结构弱点解算器。安装后对建筑与墙体追加 50% 伤害。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDemolition</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Spacer</techLevel>
@@ -840,7 +840,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModVampire</defName>
     <label>嗜血模块</label>
-    <description>极品武器附魔模块：吸血模块的进阶版，高效生物电虹吸回路（仅近战武器有效）。安装后近战造成伤害的 10% 转化为对使用者的治疗。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：吸血模块的进阶版，高效生物电虹吸回路（仅近战武器有效）。安装后近战造成伤害的 10% 转化为对使用者的治疗。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModVampire</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -860,7 +860,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModDisruptor</defName>
     <label>磁暴模块</label>
-    <description>极品武器附魔模块：EMP 弹模块的进阶版，过载电磁脉冲战斗部。安装后对机械单位伤害 +100%（合计 ×2）并造成短路眩晕。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：EMP 弹模块的进阶版，过载电磁脉冲战斗部。安装后对机械单位伤害 +100%（合计 ×2）并造成短路眩晕。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModDisruptor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -880,7 +880,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModBrutal</defName>
     <label>暴虐模块</label>
-    <description>极品武器附魔模块：弱点处决协处理器。安装后暴击造成三倍伤害（需配合暴击率词条使用）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：弱点处决协处理器。安装后暴击造成三倍伤害（需配合暴击率词条使用）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModBrutal</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -900,7 +900,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModTerror</defName>
     <label>威慑模块</label>
-    <description>极品武器附魔模块：次声波恐惧谐振器。安装后命中 15% 使目标恐慌逃跑（对倒地与机械目标无效）。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：次声波恐惧谐振器。安装后命中 15% 使目标恐慌逃跑（对倒地与机械目标无效）。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModTerror</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -920,7 +920,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModRangedLeech</defName>
     <label>汲取模块</label>
-    <description>极品武器附魔模块：远程生物电虹吸管。安装后远程造成伤害的 3% 转化为对使用者的治疗。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：远程生物电虹吸管。安装后远程造成伤害的 3% 转化为对使用者的治疗。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModRangedLeech</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>
@@ -940,7 +940,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>MMT_WeaponModCorpseBurst</defName>
     <label>尸爆模块</label>
-    <description>极品武器附魔模块：延时起爆植入战斗部。安装后击杀目标时其尸体触发小爆炸（半径 1.5，伤害 = 本次 50%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在武器强化台对台内武器安装（右键强化台）。</description>
+    <description>极品武器附魔模块：延时起爆植入战斗部。安装后击杀目标时其尸体触发小爆炸（半径 1.5，伤害 = 本次 50%）。小心误伤——可在武器 gizmo 或 Mod 设置关闭。在装备强化台对台内武器安装（右键强化台）。</description>
     <graphicData><texPath>Things/Item/MMT/WeaponMod/MMT_WeaponModCorpseBurst</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <soundInteract>Metal_Drop</soundInteract><soundDrop>Metal_Drop</soundDrop>
     <tickerType>Rare</tickerType><techLevel>Archotech</techLevel>

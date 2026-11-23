@@ -50,7 +50,7 @@ namespace MyModeTest
         /// <summary>传送次数上限加成：每件 +1 次。</summary>
         public const string ExtraTeleportCharges = "ExtraTeleportCharges";
 
-        // ---- 武器附魔词条键（武器强化台确定线；值>0 即启用，见 WeaponEnhance.cs） ----
+        // ---- 武器附魔词条键（装备强化台确定线；值>0 即启用，见 WeaponEnhance.cs） ----
         /// <summary>伤害加成（加法，0.08 = +8%）。锋利/重击/过载。</summary>
         public const string WeaponDamageFactor = "WeaponDamageFactor";
         /// <summary>命中加成（加法，0.08 = +8%；负值为代价）。精准/速射。</summary>
