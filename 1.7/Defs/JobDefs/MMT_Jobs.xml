@@ -78,6 +78,13 @@
     <reportString>正在附魔装备（TargetA）。</reportString>
   </JobDef>
 
+  <!-- 重铸装备作业：搬合金/远古合金到强化台边，消耗材料并掷成功率重铸台内装备品质（JobDriver_ReforgeGear） -->
+  <JobDef>
+    <defName>MMT_ReforgeGear</defName>
+    <driverClass>MyModeTest.JobDriver_ReforgeGear</driverClass>
+    <reportString>正在重铸装备（TargetA）。</reportString>
+  </JobDef>
+
   <!-- 装填药品作业：取药品搬到医疗注射炮台装入药仓（JobDriver_LoadMedicalTurret） -->
   <JobDef>
     <defName>MMT_LoadMedicalTurret</defName>

@@ -18,6 +18,19 @@ SHIELD1_XML = "1.7/Defs/ThingDefs_Items/MMT_Items_ChargeShield.xml"
 SHIELD2_XML = "1.7/Defs/ThingDefs_Items/MMT_Items_ShieldTiers.xml"
 CS_WEAPON = "Source/MyModeTest/WeaponEnhance.cs"
 CS_COMMON = "Source/MyModeTest/EnhanceCommon.cs"
+CS_REFORGE = "Source/MyModeTest/Reforge.cs"
+ALLOY_XML1 = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_AdvancedAlloys.xml"
+ALLOY_XML2 = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Metal.xml"
+EXPLORATION_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Exploration.xml"
+
+# 重铸合金轮替池（与强化台建筑 Def / ReforgeUtil.DefaultAlloyDefNames 保持一致）
+REFORGE_ALLOYS = [
+    "MMT_LeadBar", "MMT_AluminiumBar", "MMT_FerrosiliconAlloy",
+    "MMT_NickelBar", "MMT_Cobalt", "MMT_Chromium",
+    "MMT_Tungsten", "MMT_Titanium", "MMT_SteelBar", "MMT_DepletedUranium",
+    "MMT_StelliteAlloy", "MMT_NitinolAlloy", "MMT_PobediteAlloy",
+    "MMT_CupronickelAlloy", "MMT_AlnicoAlloy",
+]
 
 MODULE_DEFS = [
     "MMT_WeaponModSharp", "MMT_WeaponModAccurate", "MMT_WeaponModSwift", "MMT_WeaponModPierce",
@@ -93,7 +106,8 @@ MODULE_KEYS = {
 
 def validate_weaponenhance() -> None:
     require_files([BENCH_XML, MODULES_XML, RECIPES_XML, OIL_XML, PATCH_XML, JOBS_XML, HEDIFF_XML,
-                   SHIELD1_XML, SHIELD2_XML, CS_WEAPON, CS_COMMON])
+                   SHIELD1_XML, SHIELD2_XML, CS_WEAPON, CS_COMMON, CS_REFORGE,
+                   ALLOY_XML1, ALLOY_XML2, EXPLORATION_XML])
 
     # ---- 强化台建筑 ----
     benches = def_map(parse_xml(BENCH_XML))
@@ -112,6 +126,31 @@ def validate_weaponenhance() -> None:
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")
+    # ---- 重铸（品质线）参数：合金轮替池 ×10 / 远古合金 ×5，成功率 50%/30%/10% ----
+    bench_comp = None
+    for li in bench.findall("comps/li"):
+        if li.attrib.get("Class", "") == "MyModeTest.CompProperties_WeaponEnhanceBench":
+            bench_comp = li
+    if bench_comp is None or bench_comp.find("reforgeAlloyDefs") is None:
+        fail("强化台 comp 缺少重铸配置 reforgeAlloyDefs")
+    else:
+        alloy_pool = [li.text for li in bench_comp.findall("reforgeAlloyDefs/li")]
+        if alloy_pool != REFORGE_ALLOYS:
+            fail(f"重铸合金轮替池应为 {REFORGE_ALLOYS}，实际 {alloy_pool}")
+        # 轮替池每个 def 必须真实存在（高级合金链 + 金属链资源文件）
+        alloy_defs = def_map(parse_xml(ALLOY_XML1))
+        alloy_defs.update(def_map(parse_xml(ALLOY_XML2)))
+        for name in REFORGE_ALLOYS:
+            if name not in alloy_defs:
+                fail(f"重铸合金池 {name} 在资源 Def 中不存在")
+        assert_equal(child_text(bench_comp, "reforgeAlloyCount"), "10", "重铸合金数量")
+        assert_equal(child_text(bench_comp, "reforgeAncientAlloy"), "MMT_AncientAlloy", "重铸远古合金 def")
+        assert_equal(child_text(bench_comp, "reforgeAncientAlloyCount"), "5", "重铸远古合金数量")
+        assert_equal(child_text(bench_comp, "reforgeRateToGood"), "0.5", "一般→良好成功率")
+        assert_equal(child_text(bench_comp, "reforgeRateToExcellent"), "0.3", "良好→极佳成功率")
+        assert_equal(child_text(bench_comp, "reforgeRateToMasterwork"), "0.1", "极佳→大师成功率")
+        if "MMT_AncientAlloy" not in def_map(parse_xml(EXPLORATION_XML)):
+            fail("探索资源缺少 MMT_AncientAlloy（重铸极佳→大师材料）")
     # 1.7 BuildingBase 不自带账单页，附魔模块配方必须显式声明 ITab_Bills 才能在游戏里下单
     tabs = [li.text for li in bench.findall("inspectorTabs/li")]
     if "ITab_Bills" not in tabs:
@@ -177,7 +216,8 @@ def validate_weaponenhance() -> None:
     for job, driver in (("MMT_LoadEnhanceBench", "MyModeTest.JobDriver_LoadEnhanceBench"),
                         ("MMT_UnloadEnhanceBench", "MyModeTest.JobDriver_UnloadEnhanceBench"),
                         ("MMT_EnhanceWeapon", "MyModeTest.JobDriver_EnhanceGeneric"),
-                        ("MMT_EnchantWeapon", "MyModeTest.JobDriver_EnchantWeapon")):
+                        ("MMT_EnchantWeapon", "MyModeTest.JobDriver_EnchantWeapon"),
+                        ("MMT_ReforgeGear", "MyModeTest.JobDriver_ReforgeGear")):
         if job not in jobs:
             fail(f"JobDefs 缺少 {job}")
         else:
@@ -208,6 +248,21 @@ def validate_weaponenhance() -> None:
                   "WeaponRangedLeech", "WeaponCorpseBurst", "MMT_Hediff_Blinded", "MMT_Hediff_ArmorShred"):
         if token not in cs:
             fail(f"WeaponEnhance.cs 缺少: {token}")
+    # 重铸入口接线（WeaponEnhance.cs 侧）
+    for token in ("reforgeAlloyDefs", "reforgeAncientAlloy", "reforgeRateToGood",
+                  "OrderReforge", "MMT_ReforgeGear", "ReforgeUtil", "BenchProps"):
+        if token not in cs:
+            fail(f"WeaponEnhance.cs 缺少重铸接线: {token}")
+    # 重铸核心实现（Reforge.cs 侧）
+    reforge_cs = Path(CS_REFORGE).read_text(encoding="utf-8")
+    for token in ("ReforgeUtil", "JobDriver_ReforgeGear", "QualityCategory.Masterwork",
+                  "SetQuality", "DefaultAlloyDefNames", "重铸成功", "重铸失败"):
+        if token not in reforge_cs:
+            fail(f"Reforge.cs 缺少: {token}")
+    # 默认合金池与 XML 保持一致
+    for name in REFORGE_ALLOYS:
+        if f'"{name}"' not in reforge_cs:
+            fail(f"Reforge.cs 默认合金池缺少 {name}")
     settings = Path("Source/MyModeTest/MMTSettings.cs").read_text(encoding="utf-8")
     for token in ("weaponHazardEffects", "enableWeaponExplode", "enableWeaponGuaranteedHit",
                   "enableWeaponMending", "enableWeaponSkillExp",

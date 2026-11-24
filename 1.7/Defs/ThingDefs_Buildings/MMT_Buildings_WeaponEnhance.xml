@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 装备强化台（设计方案 §2，兼容武器与防具）：赌博线强化 +1~+15（每级伤害 ×1.05，满级额外穿甲 +10%）
-       + 确定线附魔（模块物品安装，基础 1 槽，+7/+13 解锁第 2/3 槽）。
+       + 确定线附魔（模块物品安装，基础 1 槽，+7/+13 解锁第 2/3 槽）
+       + 品质重铸（一般→良好 50% / 良好→极佳 30% 耗合金轮替池 ×10；极佳→大师 10% 耗远古合金 ×5）。
        强化材料阶梯：+1~+6 常规自产材料，+7 起必须探索据点/任务获取远古材料。
-       右键建筑：装载武器（从主手/背包）→ 强化/附魔 → 取出。 -->
+       右键建筑：装载武器（从主手/背包）→ 强化/附魔/重铸 → 取出。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_WeaponEnhanceBench</defName>
     <label>装备强化台</label>
-    <description>对武器与防具进行强化与附魔的精密工作台。\n\n强化（赌博线）：消耗材料逐级提升，武器每级伤害 ×1.05、防具每级护甲 ×1.03，满级 15 级武器额外护甲穿透 +10%、防具额外护甲 +10%/隔温 +20%；成功率随等级递减（1-3 级必成，15 级仅 5%）。+6 级以后需要探索据点或任务获得的远古材料。\n\n附魔（确定线）：先在本台制作附魔模块，再安装到台内装备，100% 成功；基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽。武器与防具模块互不通用。\n\n右键建筑装载武器或防具后开始操作。兼容其它 Mod 的武器与防具（可在 Mod 设置中关闭）。</description>
+    <description>对武器与防具进行强化与附魔的精密工作台。\n\n强化（赌博线）：消耗材料逐级提升，武器每级伤害 ×1.05、防具每级护甲 ×1.03，满级 15 级武器额外护甲穿透 +10%、防具额外护甲 +10%/隔温 +20%；成功率随等级递减（1-3 级必成，15 级仅 5%）。+6 级以后需要探索据点或任务获得的远古材料。\n\n附魔（确定线）：先在本台制作附魔模块，再安装到台内装备，100% 成功；基础 1 个槽位，强化 +7 解锁第 2 槽、+13 解锁第 3 槽。武器与防具模块互不通用。\n\n重铸（品质线）：消耗合金重铸台内装备品质——一般→良好 50%、良好→极佳 30%（每次合金×10，任意合金锭轮替）；极佳→大师 10%（每次远古合金×5）。失败仅损失材料，装备品质不变；仅一般/良好/极佳品质可重铸，大师封顶。\n\n右键建筑装载武器或防具后开始操作。兼容其它 Mod 的武器与防具（可在 Mod 设置中关闭）。</description>
     <thingClass>MyModeTest.Building_WeaponEnhanceBench</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_WeaponEnhanceBench/MMT_WeaponEnhanceBench</texPath>
@@ -127,7 +128,32 @@
         <basePowerConsumption>1500</basePowerConsumption>
       </li>
       <li Class="CompProperties_Breakdownable" />
-      <li Class="MyModeTest.CompProperties_WeaponEnhanceBench" />
+      <!-- 重铸（品质线）：一般→良好 50% / 良好→极佳 30% 耗合金轮替池 ×10（任选其一）；极佳→大师 10% 耗远古合金 ×5 -->
+      <li Class="MyModeTest.CompProperties_WeaponEnhanceBench">
+        <reforgeAlloyDefs>
+          <li>MMT_LeadBar</li>
+          <li>MMT_AluminiumBar</li>
+          <li>MMT_FerrosiliconAlloy</li>
+          <li>MMT_NickelBar</li>
+          <li>MMT_Cobalt</li>
+          <li>MMT_Chromium</li>
+          <li>MMT_Tungsten</li>
+          <li>MMT_Titanium</li>
+          <li>MMT_SteelBar</li>
+          <li>MMT_DepletedUranium</li>
+          <li>MMT_StelliteAlloy</li>
+          <li>MMT_NitinolAlloy</li>
+          <li>MMT_PobediteAlloy</li>
+          <li>MMT_CupronickelAlloy</li>
+          <li>MMT_AlnicoAlloy</li>
+        </reforgeAlloyDefs>
+        <reforgeAlloyCount>10</reforgeAlloyCount>
+        <reforgeAncientAlloy>MMT_AncientAlloy</reforgeAncientAlloy>
+        <reforgeAncientAlloyCount>5</reforgeAncientAlloyCount>
+        <reforgeRateToGood>0.5</reforgeRateToGood>
+        <reforgeRateToExcellent>0.3</reforgeRateToExcellent>
+        <reforgeRateToMasterwork>0.1</reforgeRateToMasterwork>
+      </li>
     </comps>
     <constructEffect>ConstructMetal</constructEffect>
     <researchPrerequisites>

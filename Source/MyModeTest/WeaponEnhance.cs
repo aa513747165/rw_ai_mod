@@ -332,9 +332,33 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>装备强化台参数（目前仅 compClass 载体，预留 XML 扩展位）。</summary>
+    /// <summary>
+    /// 装备强化台参数：重铸（品质线）配置——一般→良好 50% / 良好→极佳 30% 耗合金轮替池，
+    /// 极佳→大师 10% 耗远古合金；失败仅损失材料，大师封顶。
+    /// </summary>
     public class CompProperties_WeaponEnhanceBench : CompProperties
     {
+        /// <summary>重铸合金轮替池（任选其一满足；XML 缺省时回退 ReforgeUtil 内置默认池）。</summary>
+        public List<ThingDef> reforgeAlloyDefs;
+
+        /// <summary>重铸合金单次消耗数量（一般→良好 / 良好→极佳）。</summary>
+        public int reforgeAlloyCount = 10;
+
+        /// <summary>极佳→大师 消耗的材料（远古合金；XML 缺省时回退 MMT_AncientAlloy）。</summary>
+        public ThingDef reforgeAncientAlloy;
+
+        /// <summary>极佳→大师 单次消耗数量。</summary>
+        public int reforgeAncientAlloyCount = 5;
+
+        /// <summary>一般→良好 成功率。</summary>
+        public float reforgeRateToGood = 0.5f;
+
+        /// <summary>良好→极佳 成功率。</summary>
+        public float reforgeRateToExcellent = 0.3f;
+
+        /// <summary>极佳→大师 成功率。</summary>
+        public float reforgeRateToMasterwork = 0.1f;
+
         public CompProperties_WeaponEnhanceBench()
         {
             compClass = typeof(CompWeaponEnhanceBench);
@@ -391,6 +415,12 @@ namespace MyModeTest
         public ThingOwner GetDirectlyHeldThings()
         {
             return container;
+        }
+
+        /// <summary>强化台参数（含重铸配置；重铸助手 ReforgeUtil 经此读取）。</summary>
+        public CompProperties_WeaponEnhanceBench BenchProps
+        {
+            get { return (CompProperties_WeaponEnhanceBench)props; }
         }
 
         /// <summary>台内武器；空台为 null。</summary>
@@ -510,6 +540,16 @@ namespace MyModeTest
             {
                 yield return new FloatMenuOption("附魔装备：" + name + "（槽位 " + enh.Enchants.Count + "/" + enh.EnchantSlots + "）",
                     delegate { StartEnchantSelection(selPawn); });
+            }
+            // 重铸入口（品质线：一般→良好→极佳→大师，极佳→大师需远古合金；失败仅损失材料）
+            CompQuality quality = held.TryGetComp<CompQuality>();
+            if (quality != null)
+            {
+                string reforgeLabel;
+                if (ReforgeUtil.BuildMenuOption(BenchProps, held, quality, selPawn, out reforgeLabel))
+                    yield return new FloatMenuOption(reforgeLabel, delegate { OrderReforge(selPawn); });
+                else
+                    yield return new FloatMenuOption(reforgeLabel, null);
             }
         }
 
@@ -669,6 +709,18 @@ namespace MyModeTest
                 return;
             }
             Job job = JobMaker.MakeJob(MMT_WeaponEnhanceDefOf.MMT_EnchantWeapon, parent, module);
+            job.count = 1; // 1.7 自定义作业必须显式 count
+            pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+        }
+
+        private void OrderReforge(Pawn pawn)
+        {
+            if (!pawn.CanReach(parent, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                Messages.Message(pawn.LabelShort + " 无法到达强化台（路径不通）", parent, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            Job job = JobMaker.MakeJob(MMT_WeaponEnhanceDefOf.MMT_ReforgeGear, parent);
             job.count = 1; // 1.7 自定义作业必须显式 count
             pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
@@ -1429,6 +1481,8 @@ namespace MyModeTest
         public static JobDef MMT_EnhanceWeapon;
         /// <summary>附魔武器作业。</summary>
         public static JobDef MMT_EnchantWeapon;
+        /// <summary>重铸装备作业（品质线）。</summary>
+        public static JobDef MMT_ReforgeGear;
 
         static MMT_WeaponEnhanceDefOf()
         {
