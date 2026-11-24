@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -32,6 +33,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Sprint</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +55,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -66,6 +71,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Cleave</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -85,6 +94,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -102,6 +112,11 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_Cleave</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Cleave</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -122,6 +137,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>DropPod_Leaving</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -140,6 +156,10 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_Cleave</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -160,6 +180,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -176,6 +197,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -195,6 +219,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -212,6 +237,11 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_Cleave</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Cleave</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Cleave</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

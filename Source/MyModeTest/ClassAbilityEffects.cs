@@ -13,6 +13,57 @@ namespace MyModeTest
     // 本文件提供参数化 CompAbilityEffect_MMT_* 桶，生成器（tools/build_mmt_rom_classes.py）按映射表填参。
     // 单体 buff/debuff、位移、眩晕、精神控制单体等能用原版 comp 的桶不在此重复实现。
 
+    // ========== 施法特效（RoM 战斗特效复刻：施法者/目标点 fleck） ==========
+
+    public class CompProperties_MMTFleckFX : CompProperties_AbilityEffect
+    {
+        /// <summary>施法者身上的 fleck（生成器按职业主题填 MMT_Fleck_*）。</summary>
+        public string casterFleckDefName;
+        /// <summary>目标点的 fleck；self 技能生成器只填施法者。</summary>
+        public string targetFleckDefName;
+        public float scale = 2f;
+
+        public CompProperties_MMTFleckFX()
+        {
+            compClass = typeof(CompAbilityEffect_MMTFleckFX);
+        }
+    }
+
+    /// <summary>纯视觉桶：施放瞬间在施法者/目标点放主题 fleck，无玩法效果。</summary>
+    public class CompAbilityEffect_MMTFleckFX : CompAbilityEffect
+    {
+        public new CompProperties_MMTFleckFX Props => (CompProperties_MMTFleckFX)props;
+
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            base.Apply(target, dest);
+            Pawn caster = parent.pawn;
+            Map map = caster.MapHeld;
+            if (map == null)
+            {
+                return;
+            }
+            SpawnFleck(Props.casterFleckDefName, caster.Position, map);
+            if (target.IsValid && target.Cell != caster.Position)
+            {
+                SpawnFleck(Props.targetFleckDefName, target.Cell, map);
+            }
+        }
+
+        private void SpawnFleck(string defName, IntVec3 cell, Map map)
+        {
+            if (defName.NullOrEmpty() || !cell.InBounds(map))
+            {
+                return;
+            }
+            FleckDef fleck = DefDatabase<FleckDef>.GetNamedSilentFail(defName);
+            if (fleck != null)
+            {
+                FleckMaker.Static(cell.ToVector3Shifted(), map, fleck, Props.scale);
+            }
+        }
+    }
+
     // ========== 群体 buff/debuff ==========
 
     public class CompProperties_MMTGiveHediffAoE : CompProperties_AbilityEffect

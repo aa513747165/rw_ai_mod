@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -31,6 +32,10 @@
         <healAmount>8</healAmount>
         <maxInjuries>3</maxInjuries>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -50,6 +55,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -64,6 +70,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -84,6 +94,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -97,6 +109,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_HolyLight</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -116,6 +131,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -130,6 +146,10 @@
         <damageDef>Blunt</damageDef>
         <damageAmount>25</damageAmount>
         <radius>1.5</radius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -149,6 +169,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>InfernoCannon_Fire</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -163,6 +184,10 @@
         <radius>4</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -182,6 +207,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Gong</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -199,6 +225,11 @@
         <pulses>8</pulses>
         <pulseIntervalTicks>80</pulseIntervalTicks>
         <randomStrikes>true</randomStrikes>
+        <fleckDefName>MMT_Fleck_Holy</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

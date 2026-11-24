@@ -18,6 +18,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>false</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
@@ -33,6 +35,10 @@
         <durationTicks>36000</durationTicks>
         <maxActive>3</maxActive>
         <fromCorpse>true</fromCorpse>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -52,6 +58,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -67,6 +75,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BoneDust</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BoneDust</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -86,6 +98,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Launch</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -105,6 +119,10 @@
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BoneDust</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BoneDust</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -123,6 +141,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>false</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
@@ -137,6 +157,10 @@
         <damageAmount>30</damageAmount>
         <radius>2.5</radius>
         <delayTicks>90</delayTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BoneDust</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BoneDust</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -156,6 +180,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -173,6 +199,11 @@
         <pulses>8</pulses>
         <pulseIntervalTicks>120</pulseIntervalTicks>
         <hitHediffDef>ToxicBuildup</hitHediffDef>
+        <fleckDefName>MMT_Fleck_BoneDust</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BoneDust</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BoneDust</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

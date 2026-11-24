@@ -18,6 +18,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Open</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -37,6 +39,10 @@
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ice</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -55,6 +61,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Shot_ChargeRifle</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -67,6 +74,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_Icebolt</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ice</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -86,6 +97,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Launch</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -104,6 +117,10 @@
         <radius>2.5</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ice</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -124,6 +141,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -137,6 +156,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Soothe</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -157,6 +179,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -170,6 +193,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <weatherDef>Rain</weatherDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -189,6 +215,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -207,6 +235,11 @@
         <pulseIntervalTicks>90</pulseIntervalTicks>
         <randomStrikes>true</randomStrikes>
         <hitHediffDef>MMT_HD_FrostSlow</hitHediffDef>
+        <fleckDefName>MMT_Fleck_Ice</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ice</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ice</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

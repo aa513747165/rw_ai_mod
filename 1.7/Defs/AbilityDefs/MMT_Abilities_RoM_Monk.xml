@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Gong</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -38,6 +39,10 @@
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
         <hitHediffDef>MMT_HD_Stagger</hitHediffDef>
+        <fleckDefName>MMT_Fleck_Chi_Grayscale</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Chi_Grayscale</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -58,6 +63,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -72,6 +78,9 @@
       <li Class="MyModeTest.CompProperties_MMTSelfEntropy">
         <entropyChange>-12</entropyChange>
         <healAmount>6</healAmount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Chi_Grayscale</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -91,6 +100,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_AirWoosh</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -104,6 +114,10 @@
       <li Class="MyModeTest.CompProperties_MMTDashStrike">
         <damageDef>Blunt</damageDef>
         <damageAmount>24</damageAmount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Chi_Grayscale</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Chi_Grayscale</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -142,6 +156,10 @@
         <armorPen>0</armorPen>
         <pulses>3</pulses>
         <pulseIntervalTicks>100</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_Chi_Grayscale</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Chi_Grayscale</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>

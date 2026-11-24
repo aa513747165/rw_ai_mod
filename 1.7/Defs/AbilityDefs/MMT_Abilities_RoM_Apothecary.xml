@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Powerup</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -32,6 +33,10 @@
         <maxInjuries>2</maxInjuries>
         <tendBleeding>true</tendBleeding>
         <cureInfection>true</cureInfection>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +56,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -69,6 +75,10 @@
         <radius>2</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Poison</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Poison</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -102,6 +112,10 @@
         <maxInjuries>2</maxInjuries>
         <cureInfection>true</cureInfection>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -120,6 +134,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Powerup</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -138,6 +153,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -158,6 +177,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Powerup</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -174,6 +194,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Poison</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -193,6 +216,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -204,6 +228,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <extinguishRadius>4</extinguishRadius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Poison</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Poison</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -238,6 +266,10 @@
         <radius>8</radius>
         <tendBleeding>true</tendBleeding>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -256,6 +288,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Powerup</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -270,6 +303,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Poison</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Poison</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -32,6 +33,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Suppress</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GreenTwinkle</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +55,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -62,6 +67,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTFadeEmotions">
         <moodHediffDef>MMT_HD_MoodCalm</moodHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GreenTwinkle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GreenTwinkle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -81,6 +90,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -94,6 +104,10 @@
         <mentalStateDef>Wander_Psychotic</mentalStateDef>
         <radius>6</radius>
         <targetFriendly>false</targetFriendly>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GreenTwinkle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GreenTwinkle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

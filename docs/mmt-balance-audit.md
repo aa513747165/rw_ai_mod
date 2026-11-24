@@ -10,10 +10,9 @@
 
 ## 1. 硬伤
 
-### 1.1 "精英爆破手"设置无任何实现（死设置）
-- 证据：`Source/MyModeTest/MMTSettings.cs:99` 声明 `eliteBreacherEnabled`（含存档 Scribe 与默认值），`MyModeTestMod.cs:125` 有设置 UI 勾选框（"精英爆破手（财富 50 万+ 专职爆破单位）"），但全 `Source/` 无任何代码读取该字段（grep 仅命中上述 3 处 + obj 编译产物）。
-- 影响：玩家打开开关以为会有新敌人类型，实际无任何效果——设置诈骗。
-- 建议：二选一。①实现该单位（新 PawnKindDef + 配发逻辑）；②删除设置项与 UI，避免误导。若暂不实现，至少在 UI 标注"暂未实装"。
+### 1.1 "精英爆破手"设置无任何实现（死设置）——【已解决】
+- 证据（当时）：`Source/MyModeTest/MMTSettings.cs` 声明 `eliteBreacherEnabled`（含存档 Scribe 与默认值），设置 UI 有勾选框，但全 `Source/` 无任何代码读取该字段。
+- 解决：已按 `docs/mmt-endgame-design.md` §10.5 候选实装——`Source/MyModeTest/EliteBreacher.cs`（袭击生成注入 + 点数预扣 + 财富名额曲线）+ `MMT_EliteBreacher` PawnKindDef + `BreachCharge.cs` 精英分支（100% 主动、直奔墙体、炸弹消耗语义）。设置项现在有真实效果。
 
 ### 1.2 敌人武器预算动态缩放被整体禁用（死功能）
 - 证据：`Source/MyModeTest/PawnWeaponBudgetPatch.cs:19` `private const bool Enabled = false;`，注释自述"禁用原因：待补充 tick 级缓存以兼容解除袭击上限的 mod"。补丁已注册但 Prefix 第一行直接放行。
@@ -164,7 +163,7 @@
 
 | # | 级别 | 条目 | 建议动作 |
 | --- | --- | --- | --- |
-| 1.1 | 硬伤 | 精英爆破手死设置 | 实现或删除 |
+| 1.1 | ~~硬伤~~ | 精英爆破手死设置 | 已解决（EliteBreacher.cs 实装，见 §5 设计文档） |
 | 1.2 | 硬伤 | 敌人预算缩放禁用 | 修缓存兼容后启用，或删除 |
 | 1.3 | 硬伤 | 4 类单位 weaponMoney 下限 555<600 | 补丁下限抬到 600 |
 | 1.4 | 硬伤 | NPC 武器标签半数死内容 | 补派系/改限定/删除；确认 Lancer 池注入是否有意 |

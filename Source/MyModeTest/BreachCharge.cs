@@ -1,3 +1,4 @@
+using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -12,9 +13,12 @@ namespace MyModeTest
     /// 背包放入物品本体 + 注入携带者 Hediff（MMT_Hediff_BreachChargeCarrier，经 HediffComp_VerbGiver 授予投掷动词），
     /// 原有武器与常规战斗逻辑完全不受影响。
     /// 破墙者单位（isGoodBreacher）全概率、其他战斗单位半概率。
+    /// 炸弹为消耗品：自定义投掷作业每出手一次消耗背包中一枚，耗尽即摘除携带者 Hediff 回归普通战斗
+    /// （原版破墙 AI 路径直接驱动动词、不经消耗；精英爆破手标配多枚，见 EliteBreacher.cs）。
     /// 炸弹的使用由三条路径触发：
     /// 1. 原版破墙 AI：FindVerbToUseForBreaching 补丁让携带者破墙时优先用炸弹动词；
-    /// 2. 主动炸建筑：TryGiveJob 补丁按保守概率让携带者主动攻击最近玩家建筑；
+    /// 2. 主动炸建筑：TryGiveJob 补丁按保守概率让携带者主动攻击最近玩家建筑
+    ///    （精英爆破手 100% 主动且直奔墙体，无墙可炸时退化为最近建筑）；
     /// 3. 投掷动作本身由自定义 JobDriver_ThrowBreachCharge 驱动（AttackStatic 不支持非装备动词）。
     /// </summary>
     public static class BreachChargeUtil
@@ -119,6 +123,8 @@ namespace MyModeTest
 
     /// <summary>
     /// 补丁二：携带者按保守财富概率主动攻击最近玩家建筑（不要求路径被堵）。
+    /// 精英爆破手（MMT_EliteBreacher）为专职爆破单位：100% 主动出击且直奔墙体
+    /// （满格且不可通行的玩家建筑；无墙可炸时退化为最近建筑，仍履行爆破职责）。
     /// 命中时下发自定义投掷作业（MMT_ThrowBreachCharge）并跳过原战斗逻辑；
     /// 作业设过期重评估，避免敌人永久锁死在炸建筑上。
     /// </summary>
@@ -133,13 +139,13 @@ namespace MyModeTest
             if (!BreachChargeUtil.IsCarrier(pawn)) return true;
             if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayerSilentFail)) return true;
             if (pawn.Map == null) return true;
-            // 按保守曲线掷点（每次决策掷一次）
-            if (!Rand.Chance(BreachChargeUtil.AggroChance())) return true;
-            // 节点流转：找最近的可到达的玩家建筑（不考虑是否挡路，只要求能走到，避免墙外卡死）
-            Thing target = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
-                ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.Touch,
-                TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), 9999f,
-                t => t is Building b && b.Faction == Faction.OfPlayerSilentFail);
+            bool elite = EliteBreacherUtil.IsElite(pawn);
+            // 精英 100% 主动；普通携带者按保守曲线掷点（每次决策掷一次）
+            if (!elite && !Rand.Chance(BreachChargeUtil.AggroChance())) return true;
+            // 目标选取：精英直奔墙体，无墙可炸时退化为最近玩家建筑；普通携带者直接找最近建筑
+            // （统一要求能走到贴脸，避免墙外卡死）
+            Thing target = elite ? FindWallTarget(pawn) : null;
+            if (target == null) target = FindBuildingTarget(pawn);
             if (target == null) return true;
             // 下发投掷爆墙炸弹作业；定期过期重评估以便脱战回打 pawn
             Job job = JobMaker.MakeJob(BreachChargeUtil.ThrowJobDef, target);
@@ -147,6 +153,25 @@ namespace MyModeTest
             job.checkOverrideOnExpire = true;
             __result = job;
             return false;
+        }
+
+        // 最近可到达的玩家建筑（墙/门/炮塔/家具均可）
+        private static Thing FindBuildingTarget(Pawn pawn)
+        {
+            return GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
+                ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.Touch,
+                TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), 9999f,
+                t => t is Building b && b.Faction == Faction.OfPlayerSilentFail);
+        }
+
+        // 最近可到达的玩家墙体：满格且不可通行的建筑（排除门等可通过结构）
+        private static Thing FindWallTarget(Pawn pawn)
+        {
+            return GenClosest.ClosestThingReachable(pawn.Position, pawn.Map,
+                ThingRequest.ForGroup(ThingRequestGroup.BuildingArtificial), PathEndMode.Touch,
+                TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn), 9999f,
+                t => t is Building b && b.Faction == Faction.OfPlayerSilentFail
+                    && b.def.Fillage == FillCategory.Full && b.def.passability == Traversability.Impassable);
         }
     }
 
@@ -188,6 +213,8 @@ namespace MyModeTest
     /// <summary>
     /// 投掷爆墙炸弹作业驱动：走到目标建筑贴脸后用携带者 Hediff 的投掷动词打一发。
     /// 原版 JobDriver_AttackStatic 只用装备/近战动词（忽略 job.verbToUse），故需自定义驱动。
+    /// 炸弹为消耗品：出手即从背包消耗一枚（投掷被打断也算消耗，炸药已离手）；
+    /// 投掷完成后背包无弹即摘除携带者 Hediff，单位回归普通战斗（精英爆破手多枚标配见 EliteBreacher.cs）。
     /// </summary>
     public class JobDriver_ThrowBreachCharge : JobDriver
     {
@@ -212,11 +239,23 @@ namespace MyModeTest
                     return;
                 }
                 castStarted = true;
+                // 出手即耗弹：消耗背包中一枚爆墙炸弹
+                Thing bomb = pawn.inventory.innerContainer.FirstOrDefault(t => t.def == BreachChargeUtil.BombDef);
+                bomb?.Destroy(DestroyMode.Vanish);
             };
             cast.defaultCompleteMode = ToilCompleteMode.Never;
             cast.tickIntervalAction = delegate
             {
-                if (castStarted && !pawn.stances.FullBodyBusy) EndJobWith(JobCondition.Succeeded);
+                if (castStarted && !pawn.stances.FullBodyBusy)
+                {
+                    // 投掷完成：炸弹耗尽即摘除携带者 Hediff（此时站姿已释放，摘除安全）
+                    if (!pawn.inventory.innerContainer.Any(t => t.def == BreachChargeUtil.BombDef))
+                    {
+                        Hediff carrier = pawn.health.hediffSet.GetFirstHediffOfDef(BreachChargeUtil.CarrierHediff, false);
+                        if (carrier != null) pawn.health.RemoveHediff(carrier);
+                    }
+                    EndJobWith(JobCondition.Succeeded);
+                }
             };
             yield return cast;
             // 流程结束

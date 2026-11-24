@@ -19,6 +19,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Gong</soundCast>
+      <soundCastTail>MMT_Thunder_OffMap</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -32,6 +34,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTAlterFate">
         <fateHediffDef>MMT_HD_AlterFate</fateHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_AlterFate</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +56,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -65,6 +72,10 @@
         <radius>5</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_AlterFate</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_AlterFate</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

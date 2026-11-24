@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -30,6 +31,10 @@
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <spawnThingDef>TorchLamp</spawnThingDef>
         <spawnCount>1</spawnCount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ManaPuff</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ManaPuff</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -49,6 +54,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -60,6 +67,10 @@
     <comps>
       <li Class="CompProperties_AbilityEffect">
         <compClass>CompAbilityEffect_Smokepop</compClass>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ManaPuff</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ManaPuff</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -79,6 +90,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -92,6 +105,10 @@
         <healAmount>6</healAmount>
         <maxInjuries>2</maxInjuries>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -111,6 +128,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_AirWooshLow</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -123,6 +141,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_ArcaneBolt</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ManaPuff</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ManaPuff</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -142,6 +164,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -153,6 +177,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <extinguishRadius>5</extinguishRadius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ManaPuff</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ManaPuff</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -173,6 +201,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -189,6 +219,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ManaPuff</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>

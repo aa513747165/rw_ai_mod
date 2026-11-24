@@ -18,6 +18,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -32,6 +34,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GlowingRune</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GlowingRune</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +57,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -65,6 +73,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GlowingRune</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GlowingRune</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -84,6 +96,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -98,6 +112,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GlowingRune</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GlowingRune</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -117,6 +135,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -131,6 +151,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GlowingRune</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GlowingRune</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -150,6 +174,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -164,6 +190,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_GlowingRune</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_GlowingRune</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

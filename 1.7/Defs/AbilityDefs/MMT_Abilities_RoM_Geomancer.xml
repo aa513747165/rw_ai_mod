@@ -19,6 +19,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -32,6 +34,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Stoneskin</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EarthCrack</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -51,6 +56,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Gong</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -62,6 +69,10 @@
     <comps>
       <li Class="CompProperties_AbilityWallraise">
         <thingDef>RaisedRocks</thingDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EarthCrack</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EarthCrack</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -81,6 +92,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -95,6 +108,10 @@
         <count>1</count>
         <durationTicks>30000</durationTicks>
         <maxActive>2</maxActive>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -114,6 +131,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -130,6 +149,11 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_EarthCrack</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EarthCrack</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EarthCrack</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -149,6 +173,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -166,10 +192,15 @@
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
         <startFireChance>0.3</startFireChance>
+        <fleckDefName>MMT_Fleck_EarthCrack</fleckDefName>
       </li>
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <spawnThingDef>ChunkSlagSteel</spawnThingDef>
         <spawnCount>2</spawnCount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EarthCrack</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EarthCrack</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

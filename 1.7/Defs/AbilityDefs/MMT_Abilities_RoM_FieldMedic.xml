@@ -33,6 +33,10 @@
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -52,6 +56,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -68,6 +73,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -104,6 +112,10 @@
           <li>AmbrosiaHigh</li>
         </hediffPool>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -122,6 +134,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -134,6 +147,10 @@
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <spawnThingDef>MedicineIndustrial</spawnThingDef>
         <spawnCount>2</spawnCount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

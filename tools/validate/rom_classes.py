@@ -27,6 +27,8 @@ OUT_HEDIFFS = os.path.join(ROOT, "1.7/Defs/HediffDefs/MMT_Hediffs_RoMClasses.xml
 OUT_PROJECTILES = os.path.join(ROOT, "1.7/Defs/ThingDefs_Misc/MMT_Projectiles_RoM.xml")
 OUT_CONDITIONS = os.path.join(ROOT, "1.7/Defs/Misc/MMT_GameConditions_RoM.xml")
 OUT_BUILDINGS = os.path.join(ROOT, "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_RoMSummons.xml")
+OUT_SOUNDS = os.path.join(ROOT, "1.7/Defs/SoundDefs/MMT_Sounds_RoM.xml")
+OUT_FLECKS = os.path.join(ROOT, "1.7/Defs/Effects/MMT_Flecks_RoM.xml")
 FRAMEWORK_XML = [
     "1.7/Defs/HediffDefs/MMT_Hediffs_ClassSystem.xml",
     "1.7/Defs/ThingDefs_Misc/MMT_Misc_ClassSystem.xml",
@@ -77,7 +79,7 @@ def _check_generator() -> None:
 
 def validate_rom_classes() -> None:
     require_files([os.path.relpath(p, ROOT) for p in [MAPPING, PAWNCLASS_CS, OUT_HEDIFFS,
-                   OUT_PROJECTILES, OUT_CONDITIONS, OUT_BUILDINGS]])
+                   OUT_PROJECTILES, OUT_CONDITIONS, OUT_BUILDINGS, OUT_SOUNDS, OUT_FLECKS]])
     with open(MAPPING, encoding="utf-8") as f:
         mapping = json.load(f)
     game = _game_defnames()
@@ -201,6 +203,34 @@ def validate_rom_classes() -> None:
         for icon in re.findall(r"<iconPath>([^<]+)</iconPath>", text):
             rel = icon.replace("UI/RoM/", "1.7/Textures/UI/RoM/") + ".png"
             need(os.path.isfile(os.path.join(ROOT, rel)), "%s: 图标缺失 %s" % (fn, icon))
+
+    # 音效/特效引用闭环（RoM 复刻：soundCast + MMTFleckFX/AoE fleckDefName）
+    gen_sounds = _xml_defnames(OUT_SOUNDS, "SoundDef")
+    gen_flecks = _xml_defnames(OUT_FLECKS, "FleckDef")
+    known_sounds = gen_sounds | game.get("SoundDef", set())
+    known_flecks = gen_flecks | game.get("FleckDef", set())
+    for fn in os.listdir(OUT_ABILITY_DIR):
+        if not fn.startswith("MMT_Abilities_RoM_"):
+            continue
+        with open(os.path.join(OUT_ABILITY_DIR, fn), encoding="utf-8") as f:
+            text = f.read()
+        for tag in ("soundCast", "soundCastTail"):
+            for snd in re.findall(r"<%s>([^<]+)</%s>" % (tag, tag), text):
+                need(snd in known_sounds, "%s: SoundDef %s 不存在" % (fn, snd))
+        for fleck in re.findall(r"<(?:casterFleckDefName|targetFleckDefName|fleckDefName)>([^<]+)</", text):
+            need(fleck in known_flecks, "%s: FleckDef %s 不存在" % (fn, fleck))
+
+    # 音效 wav 目录与特效贴图存在
+    with open(OUT_SOUNDS, encoding="utf-8") as f:
+        stext = f.read()
+    for clip in re.findall(r"<clipFolderPath>(RoM/[^<]+)</clipFolderPath>", stext):
+        need(os.path.isdir(os.path.join(ROOT, "1.7/Sounds", clip)),
+             "音效目录缺失 1.7/Sounds/%s" % clip)
+    with open(OUT_FLECKS, encoding="utf-8") as f:
+        ftext = f.read()
+    for tex in re.findall(r"<texPath>([^<]+)</texPath>", ftext):
+        need(os.path.isfile(os.path.join(ROOT, "1.7/Textures", tex + ".png")),
+             "特效贴图缺失 %s" % tex)
     if os.path.isfile(OUT_PROJECTILES):
         with open(OUT_PROJECTILES, encoding="utf-8") as f:
             ptext = f.read()

@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -34,6 +35,9 @@
         <healAmount>10</healAmount>
         <maxInjuries>2</maxInjuries>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -53,6 +57,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Shot_Shotgun</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -67,6 +72,10 @@
         <projectileDef>MMT_Proj_Buckshot</projectileDef>
         <shotCount>6</shotCount>
         <scatterRadius>2</scatterRadius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -86,6 +95,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MeleeHit_Wood</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -100,6 +110,10 @@
         <damageAmount>12</damageAmount>
         <disarm>true</disarm>
         <stunHediffDef>MMT_HD_Stagger</stunHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -119,6 +133,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Shot_HeavySMG</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -133,6 +148,10 @@
         <projectileDef>MMT_Proj_SuppressRound</projectileDef>
         <shotCount>10</shotCount>
         <scatterRadius>3</scatterRadius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -152,6 +171,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Shot_IncendiaryLauncher</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -164,6 +184,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_Mk203</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -183,6 +207,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -194,6 +219,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_BreachCharge</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -214,6 +243,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -229,6 +259,9 @@
         <healAmount>14</healAmount>
         <maxInjuries>3</maxInjuries>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -248,6 +281,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>40</range>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -259,6 +293,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_Mortar60</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Strike</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

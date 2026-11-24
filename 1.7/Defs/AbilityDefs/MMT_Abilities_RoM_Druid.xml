@@ -18,6 +18,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -33,6 +35,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flowers</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flowers</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -52,6 +58,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -66,6 +74,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flowers</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flowers</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -85,6 +97,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -99,6 +113,10 @@
         <radius>6</radius>
         <targetFriendly>false</targetFriendly>
         <animalsOnly>true</animalsOnly>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flowers</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flowers</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -118,6 +136,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowMolotovCocktail</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -131,6 +151,10 @@
         <healAmount>5</healAmount>
         <maxInjuries>5</maxInjuries>
         <cureInfection>true</cureInfection>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

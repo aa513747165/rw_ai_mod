@@ -54,7 +54,7 @@ MMT 目前无任何 ModSettings。新增：
 | 能量风暴 | energyStormEnabled | true | §5 能量风暴事件 |
 | 电磁脉冲日 | empDayEnabled | true | §10.5 护盾/充能设备离线事件 |
 | 陨石雨 | meteorShowerEnabled | true | §10.5 陨石坠落（远古合金第二来源） |
-| 精英爆破手 | eliteBreacherEnabled | true | §10.5 财富 50 万+ 专职爆破单位 |
+| 精英爆破手 | eliteBreacherEnabled | true | §5 财富 50 万+ 专职爆破单位（已实装） |
 | 黑市中间人 | blackMarketEnabled | true | §11.1 远古合金收购事件 |
 | 强化材料赏金任务 | materialQuestsEnabled | true | §11.1 定居点委托任务 |
 | 据点生成总开关 | explorationSitesEnabled | true | §3 扫描仪生成据点（含坠毁船等后续据点类型） |
@@ -229,6 +229,15 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 
 `BreachChargeUtil` 的 4 个常量（财富门槛/封顶/携带曲线/进攻曲线端点）改读 `MMTSettings`，逻辑零改动，回归 `breachcharge` 套件。
 
+### 精英爆破手（财富 50 万+ 专职爆破单位，已实装）
+
+- C#：`Source/MyModeTest/EliteBreacher.cs`；Def：`1.7/Defs/PawnKindDefs/MMT_PawnKinds_EliteBreacher.xml`；校验套件：`tools/validate/elitebreacher.py`。
+- 注入：`PawnGroupMakerUtility.GeneratePawns(PawnGroupMakerParms, bool)` 补丁（1.7 袭击小兵生成总出口，`raidStrategy` 非空即袭击；商队/定居点/副本守卫不受影响）——前缀按财富算名额并从袭击点数预扣（每名预扣 = `MMT_EliteBreacher.combatPower` 180，预扣后至少保留 200 点），后缀生成精英追加进袭击名单并发警告消息。名额：财富 50 万起 1 名，每 +50 万 +1，封顶 3。
+- 单位：`MMT_EliteBreacher`（isGoodBreacher + 高预算军用装备/护盾腰带/战斗药剂，combatPower 180），不登记任何派系 PawnGroupMaker，仅由补丁注入。
+- 行为（`BreachCharge.cs` 精英分支）：100% 主动出击、直奔墙体（满格且不可通行的玩家建筑），无墙可炸时退化为最近玩家建筑；标配 5 枚爆墙炸弹。
+- 消耗语义（随本特性落地）：爆墙炸弹改为消耗品——自定义投掷作业每出手消耗背包 1 枚，耗尽即摘除携带者 Hediff、单位回归普通战斗（普通携带者仍只配发 1 枚；原版破墙 AI 路径直接驱动动词、不经消耗）。
+- 开关：`eliteBreacherEnabled`（默认开）。
+
 ### 贴图与校验
 
 - 阻尼器多朝向 6 张。
@@ -366,7 +375,6 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | 闪电收集器 | `MMT_LightningCollector`：仅风暴期间发电（8000W），风险与收益并存 | 风暴从纯负面变双刃剑 | 低 |
 | 电磁脉冲日 | 新 GameCondition：护盾腰带/充能设备全部离线 12-24h，克制护盾流 | 反制玩家最强装备 | 低 |
 | 陨石雨 | 新 Incident：小规模陨石坠落，坑内可挖远古合金（据点之外的第二获取源，量小） | 合金双通道 | 中 |
-| 精英爆破手 | 财富 50 万+袭击中出现专职爆破单位（多枚爆墙炸弹+直奔墙体），爆墙系统进阶 | 威胁曲线延伸 | 中 |
 
 ### 10.6 全局/研究扩展
 
@@ -469,4 +477,4 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | 堆垛无人机坞（§11.3） | 高成本标注不变：若实现，寻址用 `StoreUtility` 缓存槽位，禁止每 tick `ClosestThingReachable` |
 | 集中控制台（§11.3） | ITab 打开时才收集状态，后台不跑任何轮询 |
 | 风暴点名（§5） | 候选列表由建筑 comp 注册/注销维护，点名时从列表随机取，不扫图 |
-| 精英爆破手/黑市事件 | 走原版 Incident 管线（自带频率控制），不加自定义 ticker |
+| 黑市事件 | 走原版 Incident 管线（自带频率控制），不加自定义 ticker |

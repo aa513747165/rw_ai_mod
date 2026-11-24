@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_AirWoosh</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -30,6 +31,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_Firebolt</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -50,6 +55,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -63,6 +70,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_InnerFire</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -82,6 +92,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -94,6 +106,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_Fireball</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -113,6 +129,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -130,6 +147,11 @@
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
         <startFireChance>0.4</startFireChance>
+        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -149,6 +171,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>DropPod_Leaving</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -167,6 +191,11 @@
         <pulseIntervalTicks>90</pulseIntervalTicks>
         <randomStrikes>true</randomStrikes>
         <startFireChance>0.5</startFireChance>
+        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

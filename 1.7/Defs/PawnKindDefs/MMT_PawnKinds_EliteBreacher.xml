@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<!-- 精英爆破手：财富 50 万+ 袭击中由 C# 补丁注入的专职爆破单位（mmt-endgame-design.md §10.5）。
+	     不登记进任何派系 PawnGroupMaker（不参与自然抽选），仅由 EliteBreacher.cs 在袭击生成时追加；
+	     高预算装备（军用护甲/护盾腰带/战斗药剂），isGoodBreacher 使原版破墙 AI 与 MMT 爆墙逻辑
+	     均视其为合格破墙者；combatPower 同时是注入时的袭击点数预扣单价。 -->
+	<PawnKindDef>
+		<defName>MMT_EliteBreacher</defName>
+		<label>精英爆破手</label>
+		<race>Human</race>
+		<defaultFactionDef>Pirate</defaultFactionDef>
+		<combatPower>180</combatPower>
+		<isGoodBreacher>true</isGoodBreacher>
+		<canBeSapper>true</canBeSapper>
+		<chemicalAddictionChance>0.1</chemicalAddictionChance>
+		<combatEnhancingDrugsChance>0.25</combatEnhancingDrugsChance>
+		<combatEnhancingDrugsCount>1~2</combatEnhancingDrugsCount>
+		<invNutrition>2.55</invNutrition>
+		<itemQuality>Normal</itemQuality>
+		<gearHealthRange>0.8~2.5</gearHealthRange>
+		<maxGenerationAge>60</maxGenerationAge>
+		<apparelMoney>1500~3000</apparelMoney>
+		<apparelAllowHeadgearChance>0.8</apparelAllowHeadgearChance>
+		<apparelTags>
+			<li>IndustrialAdvanced</li>
+			<li>IndustrialMilitaryBasic</li>
+			<li>IndustrialMilitaryAdvanced</li>
+			<li>BeltDefensePop</li>
+		</apparelTags>
+		<weaponMoney>800~1500</weaponMoney>
+		<weaponTags>
+			<li>Gun</li>
+		</weaponTags>
+		<techHediffsChance>0.3</techHediffsChance>
+		<techHediffsMoney>700~2000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Simple</li>
+			<li>Advanced</li>
+			<li>ImplantEmpireCommon</li>
+		</techHediffsTags>
+		<disallowedTraits>
+			<li>Brawler</li>
+		</disallowedTraits>
+		<initialWillRange>2~5</initialWillRange>
+		<initialResistanceRange>10~20</initialResistanceRange>
+		<backstoryCryptosleepCommonality>0.08</backstoryCryptosleepCommonality>
+	</PawnKindDef>
+</Defs>

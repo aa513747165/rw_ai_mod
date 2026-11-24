@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -31,6 +32,10 @@
       <li Class="MyModeTest.CompProperties_MMTSelfEntropy">
         <entropyChange>-8</entropyChange>
         <targetHediffDef>MMT_HD_Weaken</targetHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ghost</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ghost</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -50,6 +55,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Gong</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -64,6 +70,10 @@
         <radius>4</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ghost</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ghost</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -83,6 +93,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetPawns>false</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
@@ -98,6 +109,10 @@
         <durationTicks>24000</durationTicks>
         <maxActive>4</maxActive>
         <fromCorpse>true</fromCorpse>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -117,6 +132,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -131,6 +147,10 @@
         <count>3</count>
         <durationTicks>24000</durationTicks>
         <maxActive>6</maxActive>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -150,6 +170,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_FireWooshSD</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -167,6 +188,11 @@
         <pulses>8</pulses>
         <pulseIntervalTicks>100</pulseIntervalTicks>
         <randomStrikes>true</randomStrikes>
+        <fleckDefName>MMT_Fleck_Ghost</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Ghost</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Ghost</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

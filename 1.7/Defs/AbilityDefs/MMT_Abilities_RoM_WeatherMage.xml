@@ -33,6 +33,9 @@
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <weatherDef>Clear</weatherDef>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -67,6 +70,9 @@
         <gameConditionDef>MMT_Cond_WarmFront</gameConditionDef>
         <conditionDurationTicks>28800</conditionDurationTicks>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -100,6 +106,9 @@
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <gameConditionDef>MMT_Cond_CoolFront</gameConditionDef>
         <conditionDurationTicks>28800</conditionDurationTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -136,6 +145,9 @@
         <conditionDurationTicks>28800</conditionDurationTicks>
         <weatherDef>Rain</weatherDef>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -170,6 +182,9 @@
         <shortenConditionDef>ToxicFallout</shortenConditionDef>
         <shortenFactor>0.5</shortenFactor>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -203,6 +218,9 @@
       <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
         <gameConditionDef>Aurora</gameConditionDef>
         <conditionDurationTicks>48000</conditionDurationTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BlueSwirl</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>

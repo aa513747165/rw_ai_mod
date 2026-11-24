@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -35,6 +36,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_DeceptionMask</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -55,6 +59,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -71,6 +76,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_DeceptionMask</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -90,6 +98,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_AirWoosh</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -103,6 +112,10 @@
       <li Class="MyModeTest.CompProperties_MMTTranspose">
         <stunHediffDef>MMT_HD_Stagger</stunHediffDef>
         <selfBuffHediffDef>MMT_HD_Reversal</selfBuffHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_DeceptionMask</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_DeceptionMask</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -122,6 +135,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -136,6 +150,10 @@
         <stateDef>Berserk</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_DeceptionMask</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_DeceptionMask</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

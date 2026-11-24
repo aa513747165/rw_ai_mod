@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -35,6 +36,9 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EnergyStream</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -54,6 +58,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -68,6 +74,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EnergyStream</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EnergyStream</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -87,6 +97,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -102,6 +114,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EnergyStream</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EnergyStream</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -133,6 +149,10 @@
       <li Class="MyModeTest.CompProperties_MMTSummon">
         <buildingDef>MMT_Bld_TechnoTurret</buildingDef>
       </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
+      </li>
     </comps>
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
@@ -151,6 +171,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -165,6 +187,10 @@
         <radius>6</radius>
         <targetFriendly>true</targetFriendly>
         <includeSelf>true</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EnergyStream</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EnergyStream</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -184,6 +210,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -201,6 +229,11 @@
         <pulses>6</pulses>
         <pulseIntervalTicks>90</pulseIntervalTicks>
         <randomStrikes>true</randomStrikes>
+        <fleckDefName>MMT_Fleck_EnergyStream</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_EnergyStream</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_EnergyStream</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

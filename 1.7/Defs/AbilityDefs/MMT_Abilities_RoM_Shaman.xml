@@ -18,6 +18,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -33,6 +35,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -52,6 +58,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -64,6 +72,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_ChainLightning</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -83,6 +95,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -98,6 +112,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -117,6 +135,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -132,6 +152,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -151,6 +175,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -165,6 +191,10 @@
         <stateDef>Wander_Psychotic</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -184,6 +214,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -195,6 +226,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSummon">
         <buildingDef>MMT_Bld_TotemLightning</buildingDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -214,6 +249,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -225,6 +261,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSummon">
         <buildingDef>MMT_Bld_TotemEarth</buildingDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -244,6 +284,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -255,6 +296,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTSummon">
         <buildingDef>MMT_Bld_TotemHealing</buildingDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -274,6 +319,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -288,6 +335,10 @@
         <stateDef>Berserk</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Hex</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Hex</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -307,6 +358,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_WolfHowl</soundCast>
+      <soundCastTail>GunTail_Heavy</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -321,6 +374,10 @@
         <count>3</count>
         <durationTicks>24000</durationTicks>
         <maxActive>6</maxActive>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -340,6 +397,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -354,6 +413,10 @@
         <count>1</count>
         <durationTicks>24000</durationTicks>
         <maxActive>1</maxActive>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_SummoningCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_SummoningCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

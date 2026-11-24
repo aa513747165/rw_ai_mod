@@ -19,6 +19,7 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -37,6 +38,10 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_BladeSweep</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BladeSweep</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -56,6 +61,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -69,6 +75,10 @@
       <li Class="MyModeTest.CompProperties_MMTDashStrike">
         <damageDef>Cut</damageDef>
         <damageAmount>22</damageAmount>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BladeSweep</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BladeSweep</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -88,6 +98,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -105,6 +116,11 @@
         <armorPen>0</armorPen>
         <pulses>1</pulses>
         <pulseIntervalTicks>60</pulseIntervalTicks>
+        <fleckDefName>MMT_Fleck_BladeSweep</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BladeSweep</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BladeSweep</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -138,6 +154,10 @@
         <damageDef>Cut</damageDef>
         <damageAmount>25</damageAmount>
         <radius>1.5</radius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_BladeSweep</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_BladeSweep</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

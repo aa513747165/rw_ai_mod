@@ -3,14 +3,14 @@
   <!-- 职业导师台（mmt-class-design.md §5.1）：右键 FloatMenu 就职/升阶（CompClassMentor）。
        造价按设计§5.1：微芯片×6 + 高级合金×40 + 玻璃钢×60；
        spike 回填：MMT 无"玻璃钢"与通用"高级合金"物品，取最近似的高级链产物——钨钴合金 + 强化玻璃块。
-       贴图暂用 RoM 奥术防御塔贴图占位（待 AI 生成专属贴图，见 §5.1）。 -->
+       贴图为 AI 生成专属贴图（mmt-class-texture-prompts.md §一），Graphic_Multi 三朝向 + 全黑遮罩。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_ClassMentorBench</defName>
     <label>职业导师台</label>
     <description>铭刻着三十六种职业纹章的导师台。右键建筑可为小人举行就职仪式（消耗随身携带的职业凭证×1，需历练 5 级；无灵能链接者将在仪式中觉醒灵能）或晋升阶位（II 阶需历练 10 级 + 能量结晶×10，III 阶需历练 15 级 + 能量结晶×20）。每人限一个职业。</description>
     <graphicData>
       <texPath>Things/Building/Production/RoM/MMT_ClassMentorBench</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(2.6,2.6)</drawSize>
     </graphicData>
@@ -19,7 +19,7 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.5</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <tickerType>Rare</tickerType>
     <designationCategory>MMT_Production</designationCategory>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>

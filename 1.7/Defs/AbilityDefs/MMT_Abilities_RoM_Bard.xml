@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -29,6 +30,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTFadeEmotions">
         <moodHediffDef>MMT_HD_MoodCalm</moodHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Note</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Note</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -49,6 +54,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -62,6 +69,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Inspire</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Note</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -81,6 +91,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Vibration</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -95,6 +107,10 @@
         <radius>5</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Note</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Note</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -128,6 +144,10 @@
         <radius>8</radius>
         <targetFriendly>true</targetFriendly>
         <includeSelf>true</includeSelf>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Note</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Note</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

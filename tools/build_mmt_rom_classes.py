@@ -10,7 +10,10 @@
   - 1.7/Defs/HediffDefs/MMT_Hediffs_RoMClasses.xml（37 职业×3 阶 + 技能 buff/debuff/光环 Hediff）
   - 1.7/Defs/ThingDefs_Misc/MMT_Projectiles_RoM.xml（投射物桶的 ThingDef）
   - 1.7/Defs/Misc/MMT_GameConditions_RoM.xml（气象法师自定义事件条件）
+  - 1.7/Defs/SoundDefs/MMT_Sounds_RoM.xml（技能施放音效，RoM SoundDef 复刻）
+  - 1.7/Defs/Effects/MMT_Flecks_RoM.xml（技能战斗特效 FleckDef，RoM Mote 复刻）
   - 1.7/Textures/UI/RoM/（技能图标）、1.7/Textures/Things/Projectile/RoM/（投射物贴图）
+  - 1.7/Textures/Things/Fleck/RoM/（特效贴图）、1.7/Sounds/RoM/（音效 wav）
 
 用法：
   python tools/build_mmt_rom_classes.py          # 全量生成 + 复制贴图
@@ -34,6 +37,37 @@ OUT_CONDITIONS = os.path.join(ROOT, "1.7/Defs/Misc/MMT_GameConditions_RoM.xml")
 OUT_BUILDINGS = os.path.join(ROOT, "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_RoMSummons.xml")
 OUT_ICON_DIR = os.path.join(ROOT, "1.7/Textures/UI/RoM")
 OUT_PROJ_TEX_DIR = os.path.join(ROOT, "1.7/Textures/Things/Projectile/RoM")
+OUT_SOUNDS = os.path.join(ROOT, "1.7/Defs/SoundDefs/MMT_Sounds_RoM.xml")
+OUT_SOUND_DIR = os.path.join(ROOT, "1.7/Sounds/RoM")
+OUT_FLECKS = os.path.join(ROOT, "1.7/Defs/Effects/MMT_Flecks_RoM.xml")
+OUT_FLECK_TEX_DIR = os.path.join(ROOT, "1.7/Textures/Things/Fleck/RoM")
+
+# 职业 → 战斗特效主题（RoM MoteDefs defName；技能可用映射表 fx 字段覆盖，
+# 桶级覆盖见 BUCKET_FLECK，兜底 Mote_ManaPuff）
+CLASS_FLECK = {
+    "FireMage": "Mote_Flame", "IceMage": "Mote_Ice", "LightningMage": "Mote_Bolt",
+    "Arcanist": "Mote_ArcaneCircle", "Druid": "Mote_Flowers", "Paladin": "Mote_Holy",
+    "Summoner": "Mote_SummoningCircle", "Necromancer": "Mote_BoneDust", "Priest": "Mote_Holy",
+    "Bard": "Mote_Note", "DemonKin": "Mote_Demon_Flame", "Geomancer": "Mote_EarthCrack",
+    "Technomancer": "Mote_EnergyStream", "BloodMage": "Mote_BloodMist", "Enchanter": "Mote_Enchanting",
+    "Chronomancer": "Mote_AlterFate", "Shadow": "Mote_Shadow", "Brightmage": "Mote_Twinkle",
+    "Shaman": "Mote_Hex", "Golemancer": "Mote_GlowingRune", "Empath": "Mote_GreenTwinkle",
+    "Possessor": "Mote_Ghost", "Wanderer": "Mote_ManaPuff", "WeatherMage": "Mote_BlueSwirl",
+    "Gladiator": "Mote_Cleave", "Ranger": "Mote_Strike", "Sniper": "Mote_Strike",
+    "Bladedancer": "Mote_BladeSweep", "Faceless": "Mote_DeceptionMask", "Psionic": "Mote_Psi",
+    "DeathKnight": "Mote_GraveBlade", "Monk": "Mote_Chi_Grayscale", "Commander": "Mote_Exclamation",
+    "SuperSoldier": "Mote_Strike", "Apothecary": "Mote_Poison", "Wayfarer": "Mote_Strike",
+    "FieldMedic": "Mote_Healing_Small",
+}
+
+# 桶级特效覆盖（优先于职业主题，低于技能 fx 覆盖）
+BUCKET_FLECK = {
+    "Heal": "Mote_Healing_Small",
+    "Summon": "Mote_SummoningCircle",
+    "ResurrectLite": "Mote_Holy",
+}
+
+FLECK_FALLBACK = "Mote_ManaPuff"
 
 # 威力档 → 灵能消耗（mmt-class-design.md §2.2）
 TIERS = {
@@ -91,7 +125,8 @@ def parse_rom_abilities():
             def_el = el.find("defName")
             if def_el is None or not def_el.text:
                 continue
-            entry = {"icon": None, "cooldown": None, "label": None}
+            entry = {"icon": None, "cooldown": None, "label": None,
+                     "soundCast": None, "soundCastTail": None}
             icon = el.find("uiIconPath")
             if icon is None:
                 icon = el.find("iconPath")
@@ -105,8 +140,75 @@ def parse_rom_abilities():
                 cd = verb.find("SecondsToRecharge")
                 if cd is not None and cd.text:
                     entry["cooldown"] = cd.text.strip()
+                for tag, key in (("soundCast", "soundCast"), ("soundCastTail", "soundCastTail")):
+                    snd = verb.find(tag)
+                    if snd is not None and snd.text:
+                        entry[key] = snd.text.strip()
             abilities[def_el.text.strip()] = entry
     return abilities
+
+
+def parse_rom_sounddefs():
+    """解析 RoM 全部 SoundDef（v1.7/Defs/SoundDefs/*.xml），返回 defName → ET 元素。"""
+    defs = {}
+    sdir = os.path.join(ROM, "v1.7/Defs/SoundDefs")
+    for fn in sorted(os.listdir(sdir)):
+        if not fn.endswith(".xml"):
+            continue
+        try:
+            tree = ET.parse(os.path.join(sdir, fn))
+        except ET.ParseError:
+            continue
+        for el in tree.getroot():
+            if el.tag != "SoundDef":
+                continue
+            dn = el.find("defName")
+            if dn is not None and dn.text:
+                defs[dn.text.strip()] = el
+    return defs
+
+
+def parse_rom_motes():
+    """解析 RoM MoteDefs（ThingDef ParentName=MoteBase），返回 defName → {tex, timings, altitude}。"""
+    motes = {}
+    path = os.path.join(ROM, "v1.7/Defs/GraphicDefs/MoteDefs.xml")
+    tree = ET.parse(path)
+    for el in tree.getroot():
+        if el.tag != "ThingDef":
+            continue
+        dn = el.find("defName")
+        tex = el.find("graphicData/texPath")
+        if dn is None or not dn.text or tex is None or not tex.text:
+            continue
+        mote = el.find("mote")
+        spec = {"tex": tex.text.strip(), "altitude": "MoteOverhead",
+                "fadeIn": 0.05, "solid": 0.2, "fadeOut": 0.4}
+        alt = el.find("altitudeLayer")
+        if alt is not None and alt.text:
+            spec["altitude"] = alt.text.strip()
+        if mote is not None:
+            for tag, key in (("fadeInTime", "fadeIn"), ("solidTime", "solid"), ("fadeOutTime", "fadeOut")):
+                v = mote.find(tag)
+                if v is not None and v.text:
+                    try:
+                        spec[key] = float(v.text.strip())
+                    except ValueError:
+                        pass
+        motes[dn.text.strip()] = spec
+    return motes
+
+
+def mmt_sound_name(rom_name):
+    """RoM 音效 defName → MMT defName（TM_ 前缀换 MMT_，原版名原样保留）。"""
+    if rom_name.startswith("TM_"):
+        return "MMT_" + rom_name[3:]
+    return rom_name
+
+
+def mmt_fleck_name(rom_mote):
+    """RoM Mote defName → MMT FleckDef defName。"""
+    base = rom_mote[len("Mote_"):] if rom_mote.startswith("Mote_") else rom_mote
+    return "MMT_Fleck_" + base
 
 
 def parse_rom_zh_labels():
@@ -203,6 +305,8 @@ def comp_xml(ab):
         for opt in ("randomStrikes", "friendlyFire", "startFireChance", "hitHediffDef", "fleckDefName"):
             if opt in p:
                 fields[opt] = str(p[opt]).lower() if isinstance(p[opt], bool) else p[opt]
+        if "fleckDefName" not in fields and ab.get("_fleck"):
+            fields["fleckDefName"] = ab["_fleck"]
         return li("MyModeTest.CompProperties_MMTAoEDamage", fields)
     if comp == "Heal":
         fields = {"healAmount": p.get("heal", 10), "maxInjuries": p.get("maxInjuries", 3)}
@@ -300,6 +404,19 @@ def comp_xml(ab):
     return ""
 
 
+def fx_comp_xml(ab):
+    """RoM 战斗特效 comp：施法者 + 目标点主题 fleck。"""
+    fleck = ab.get("_fleck")
+    if not fleck:
+        return ""
+    lines = ['      <li Class="MyModeTest.CompProperties_MMTFleckFX">',
+             x("casterFleckDefName", fleck, 8)]
+    if ab["target"] != "self":
+        lines.append(x("targetFleckDefName", fleck, 8))
+    lines.append("      </li>")
+    return "\n".join(lines)
+
+
 def ability_xml(ab, rom_abilities):
     rom = rom_abilities.get(ab["romDef"], {})
     tier = TIERS[ab["tier"]]
@@ -330,17 +447,24 @@ def ability_xml(ab, rom_abilities):
     lines.append(x("range", 0 if ab["target"] == "self" else ab.get("range", 24.9), 6))
     if ab["target"] == "self":
         lines.append(x("targetRequired", "false", 6))
+    if ab.get("_sound"):
+        lines.append(x("soundCast", ab["_sound"], 6))
+    if ab.get("_soundTail"):
+        lines.append(x("soundCastTail", ab["_soundTail"], 6))
     lines.append(target_params_xml(ab["target"], 6))
     lines.append("    </verbProperties>")
     cx = comp_xml(ab)
     extras = [comp_xml(dict(x, mmtDef=ab["mmtDef"])) for x in ab.get("extraComps", [])]
-    if cx or any(extras):
+    fx = fx_comp_xml(ab)
+    if cx or any(extras) or fx:
         lines.append("    <comps>")
         if cx:
             lines.append(cx)
         for ex in extras:
             if ex:
                 lines.append(ex)
+        if fx:
+            lines.append(fx)
         lines.append("    </comps>")
     lines.append("  </AbilityDef>")
     return "\n".join(lines)
@@ -555,6 +679,100 @@ def copy_texture(src_rel, dst_dir, mapping_note):
     return base
 
 
+def pick_rom_sound(rom_def, rom_abilities):
+    """施放音效选取：优先精确 romDef 的 soundCast，缺失时找同基名分级变体。"""
+    entry = rom_abilities.get(rom_def)
+    if entry and entry.get("soundCast"):
+        return entry["soundCast"], entry.get("soundCastTail")
+    base = rom_base_name(rom_def)
+    for name, e in rom_abilities.items():
+        if rom_base_name(name) == base and e.get("soundCast"):
+            return e["soundCast"], e.get("soundCastTail")
+    return None, None
+
+
+def pick_fleck(ab):
+    """战斗特效选取：技能 fx 覆盖 > 桶级覆盖 > 职业主题 > 兜底。"""
+    return (ab.get("fx") or BUCKET_FLECK.get(ab["comp"])
+            or CLASS_FLECK.get(ab.get("class", ""), FLECK_FALLBACK))
+
+
+def build_sound_defs(used_rom_sounds, rom_sounddefs, check_only):
+    """生成 MMT_Sounds_RoM.xml 并复制音效文件。返回生成的 defName 数。"""
+    import copy as _copy
+    lines = ['<?xml version="1.0" encoding="utf-8"?>', "<Defs>",
+             "  <!-- 生成物：tools/build_mmt_rom_classes.py，不要手改。",
+             "       RoM SoundDef 复刻（defName TM_* → MMT_*，clipFolderPath 前缀 RoM/）。 -->"]
+    count = 0
+    for name in sorted(used_rom_sounds):
+        el = rom_sounddefs.get(name)
+        if el is None:
+            fail("音效 %s 在 RoM SoundDefs 中不存在" % name)
+            continue
+        el = _copy.deepcopy(el)
+        el.find("defName").text = mmt_sound_name(name)
+        for node in el.iter():
+            if node.tag not in ("clipFolderPath", "clipPath") or not node.text:
+                continue
+            rel = node.text.strip()
+            src = os.path.join(ROM, "Sounds", rel.replace("/", os.sep))
+            if os.path.exists(src):
+                node.text = "RoM/" + rel
+                if not check_only:
+                    dst = os.path.join(OUT_SOUND_DIR, rel.replace("/", os.sep))
+                    if os.path.isdir(src):
+                        if not os.path.isdir(dst):
+                            shutil.copytree(src, dst)
+                    elif not os.path.isfile(dst):
+                        os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        shutil.copyfile(src, dst)
+        try:
+            ET.indent(el, space="    ")
+        except AttributeError:
+            pass
+        lines.append("  " + ET.tostring(el, encoding="unicode").replace("\n", "\n  ").rstrip())
+        count += 1
+    lines.append("</Defs>")
+    if not check_only:
+        os.makedirs(os.path.dirname(OUT_SOUNDS), exist_ok=True)
+        with open(OUT_SOUNDS, "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(lines) + "\n")
+    return count
+
+
+def build_fleck_defs(used_motes, rom_motes, check_only):
+    """生成 MMT_Flecks_RoM.xml 并复制特效贴图。返回生成的 defName 数。"""
+    lines = ['<?xml version="1.0" encoding="utf-8"?>', "<Defs>",
+             "  <!-- 生成物：tools/build_mmt_rom_classes.py，不要手改。",
+             "       RoM Mote 复刻为 FleckDef（贴图 1.7/Textures/Things/Fleck/RoM/）。 -->"]
+    count = 0
+    for mote in sorted(used_motes):
+        spec = rom_motes.get(mote)
+        if spec is None:
+            fail("特效 %s 在 RoM MoteDefs 中不存在" % mote)
+            continue
+        base = os.path.basename(spec["tex"])
+        lines.append('  <FleckDef ParentName="FleckBase">')
+        lines.append(x("defName", mmt_fleck_name(mote), 4))
+        lines.append(x("altitudeLayer", spec["altitude"], 4))
+        lines.append(x("fadeInTime", spec["fadeIn"], 4))
+        lines.append(x("solidTime", spec["solid"], 4))
+        lines.append(x("fadeOutTime", spec["fadeOut"], 4))
+        lines.append("    <graphicData>")
+        lines.append(x("texPath", "Things/Fleck/RoM/" + base, 6))
+        lines.append("    </graphicData>")
+        lines.append("  </FleckDef>")
+        count += 1
+        if not check_only:
+            copy_texture(spec["tex"], OUT_FLECK_TEX_DIR, mote)
+    lines.append("</Defs>")
+    if not check_only:
+        os.makedirs(os.path.dirname(OUT_FLECKS), exist_ok=True)
+        with open(OUT_FLECKS, "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(lines) + "\n")
+    return count
+
+
 # ---------------- 主流程 ----------------
 
 def main():
@@ -563,6 +781,8 @@ def main():
         mapping = json.load(f)
     rom_abilities = parse_rom_abilities()
     zh_labels = parse_rom_zh_labels()
+    rom_sounddefs = parse_rom_sounddefs()
+    rom_motes = parse_rom_motes()
 
     classes = mapping["classes"]
     abilities = mapping["abilities"]
@@ -606,6 +826,28 @@ def main():
             if base:
                 ab["iconPath"] = "UI/RoM/" + base
 
+    # 音效/战斗特效：soundCast 照抄 RoM（TM_* 更名 MMT_*），fleck 按主题表
+    used_rom_sounds = set()
+    used_motes = set()
+    for mmt_def, ab in abilities.items():
+        if ab.get("status", "mapped") != "mapped":
+            continue
+        sound, tail = pick_rom_sound(ab["romDef"], rom_abilities)
+        if sound:
+            if sound.startswith("TM_"):
+                used_rom_sounds.add(sound)
+            ab["_sound"] = mmt_sound_name(sound)
+        if tail:
+            if tail.startswith("TM_"):
+                used_rom_sounds.add(tail)
+            ab["_soundTail"] = mmt_sound_name(tail)
+        mote = pick_fleck(ab)
+        if mote not in rom_motes:
+            warn("%s: 特效 %s 在 RoM MoteDefs 中不存在，回退 %s" % (mmt_def, mote, FLECK_FALLBACK))
+            mote = FLECK_FALLBACK
+        used_motes.add(mote)
+        ab["_fleck"] = mmt_fleck_name(mote)
+
     # --check：RoM 技能全集核对
     mapped_bases = set()
     for ab in abilities.values():
@@ -622,6 +864,9 @@ def main():
     for e in mapping.get("deferred", []):
         if e["romDef"] not in rom_abilities and rom_base_name(e["romDef"]) not in {rom_base_name(r) for r in rom_abilities}:
             warn("deferred 条目 %s 在 RoM 中不存在（版本漂移？）" % e["romDef"])
+
+    snd_count = build_sound_defs(used_rom_sounds, rom_sounddefs, check_only)
+    fleck_count = build_fleck_defs(used_motes, rom_motes, check_only)
 
     if check_only:
         for w in warnings:
@@ -750,8 +995,9 @@ def main():
             print("FAIL:", e)
         print("生成完成但有 %d 项错误" % len(errors))
         sys.exit(1)
-    print("生成完成：%d 职业 / %d 技能 / %d 技能Hediff / %d 投射物" % (
-        len(classes), sum(len(v) for v in by_class.values()), len(emitted), len(seen_proj)))
+    print("生成完成：%d 职业 / %d 技能 / %d 技能Hediff / %d 投射物 / %d 音效 / %d 特效" % (
+        len(classes), sum(len(v) for v in by_class.values()), len(emitted), len(seen_proj),
+        snd_count, fleck_count))
 
 
 if __name__ == "__main__":

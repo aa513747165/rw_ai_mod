@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -31,6 +32,10 @@
         <healAmount>15</healAmount>
         <maxInjuries>4</maxInjuries>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -50,6 +55,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -64,6 +71,10 @@
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
         <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -83,6 +94,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -97,6 +110,10 @@
         <maxInjuries>3</maxInjuries>
         <radius>6</radius>
         <tendBleeding>true</tendBleeding>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -116,6 +133,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetSelf>true</canTargetSelf>
@@ -129,6 +147,10 @@
         <healAmount>20</healAmount>
         <maxInjuries>2</maxInjuries>
         <cureScar>true</cureScar>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Healing_Small</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Healing_Small</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -148,6 +170,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetPawns>false</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
@@ -160,6 +183,10 @@
       <li Class="MyModeTest.CompProperties_MMTResurrectLite">
         <revivedHediffDef>ResurrectionSickness</revivedHediffDef>
         <casterHediffDef>MMT_HD_CasterDrain</casterHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Holy</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Holy</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>

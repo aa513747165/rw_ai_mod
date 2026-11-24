@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py，不要手改。
+       RoM Mote 复刻为 FleckDef（贴图 1.7/Textures/Things/Fleck/RoM/）。 -->
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_AlterFate</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.01</fadeInTime>
+    <solidTime>0.35</solidTime>
+    <fadeOutTime>0.2</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/alterfateMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_ArcaneCircle</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.15</fadeInTime>
+    <solidTime>0.05</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/ArcaneCircleMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_BladeSweep</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/BladeSweepMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_BloodMist</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.5</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>1.2</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/BloodMist</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_BlueSwirl</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.1</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.2</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/BlueSwirlMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Bolt</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/BoltMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_BoneDust</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/BoneDustMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Chi_Grayscale</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.12</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/PsiMote_curved_grayscale</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Cleave</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/cleave</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_DeceptionMask</defName>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <fadeInTime>0.0</fadeInTime>
+    <solidTime>1.0</solidTime>
+    <fadeOutTime>0.0</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/DeceptionMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Demon_Flame</defName>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <fadeInTime>0.01</fadeInTime>
+    <solidTime>0.05</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/flame</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_EarthCrack</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/EarthCrackMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Enchanting</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.0</fadeInTime>
+    <solidTime>0.1</solidTime>
+    <fadeOutTime>0.35</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/EnchantMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_EnergyStream</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.1</fadeInTime>
+    <solidTime>0.05</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/EnergyStreamMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Exclamation</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.85</solidTime>
+    <fadeOutTime>0.15</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/ExclamationMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Flame</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.1</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/FlameMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Flowers</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/FlowersMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Ghost</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/GhostMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_GlowingRune</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.25</fadeInTime>
+    <solidTime>0.15</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/glowingrune</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_GraveBlade</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.01</fadeInTime>
+    <solidTime>0.35</solidTime>
+    <fadeOutTime>0.2</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/graveblade</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_GreenTwinkle</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.25</solidTime>
+    <fadeOutTime>1.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/TwinkleMote_green</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Healing_Small</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.5</solidTime>
+    <fadeOutTime>0.2</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/HealingMote_small</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Hex</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/hexMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Holy</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/HolyMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Ice</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/IceMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_ManaPuff</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>0.35</fadeInTime>
+    <solidTime>0.03</solidTime>
+    <fadeOutTime>1.0</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/ManaMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Note</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.85</solidTime>
+    <fadeOutTime>0.15</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/NoteMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Poison</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.25</fadeInTime>
+    <solidTime>0.05</solidTime>
+    <fadeOutTime>0.35</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/PoisonMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Psi</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.12</solidTime>
+    <fadeOutTime>0.1</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/PsiMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Shadow</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.01</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.75</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/ShadowMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Strike</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/StrikeMote</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_SummoningCircle</defName>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <fadeInTime>1.0</fadeInTime>
+    <solidTime>2.0</solidTime>
+    <fadeOutTime>2.0</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/summoning_circle</texPath>
+    </graphicData>
+  </FleckDef>
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_Twinkle</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.25</solidTime>
+    <fadeOutTime>1.5</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Fleck/RoM/TwinkleMote</texPath>
+    </graphicData>
+  </FleckDef>
+</Defs>

@@ -912,7 +912,7 @@
       "radius": 20,
       "intervalTicks": 90,
       "lifespanTicks": 36000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_SummonPylon/MMT_Bld_SummonPylon"
     },
     "MMT_Bld_TechnoTurret": {
       "label": "神经炮塔",
@@ -923,7 +923,7 @@
       "radius": 22,
       "intervalTicks": 80,
       "lifespanTicks": 36000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_TechnoTurret/MMT_Bld_TechnoTurret"
     },
     "MMT_Bld_TotemLightning": {
       "label": "闪电图腾",
@@ -934,7 +934,7 @@
       "radius": 18,
       "intervalTicks": 120,
       "lifespanTicks": 30000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_TotemLightning/MMT_Bld_TotemLightning"
     },
     "MMT_Bld_TotemEarth": {
       "label": "大地图腾",
@@ -945,7 +945,7 @@
       "radius": 14,
       "intervalTicks": 180,
       "lifespanTicks": 30000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_TotemEarth/MMT_Bld_TotemEarth"
     },
     "MMT_Bld_TotemHealing": {
       "label": "治疗图腾",
@@ -956,7 +956,7 @@
       "radius": 10,
       "intervalTicks": 300,
       "lifespanTicks": 30000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_TotemHealing/MMT_Bld_TotemHealing"
     },
     "MMT_Bld_ManaMine": {
       "label": "魔法地雷",
@@ -968,7 +968,7 @@
       "explosionRadius": 2.9,
       "intervalTicks": 30,
       "lifespanTicks": 60000,
-      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+      "tex": "Things/Building/Production/MMT_Bld_ManaMine/MMT_Bld_ManaMine"
     }
   },
   "externalHediffs": [

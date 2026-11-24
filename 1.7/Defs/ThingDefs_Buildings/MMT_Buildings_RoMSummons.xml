@@ -6,7 +6,7 @@
     <label>魔法防御塔</label>
     <description>召唤的奥术炮塔，自动轰击附近敌人，限时存在。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_SummonPylon/MMT_Bld_SummonPylon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
@@ -39,7 +39,7 @@
     <label>神经炮塔</label>
     <description>限时遥控炮塔。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_TechnoTurret/MMT_Bld_TechnoTurret</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
@@ -72,7 +72,7 @@
     <label>闪电图腾</label>
     <description>萨满图腾，周期性电击附近敌人。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_TotemLightning/MMT_Bld_TotemLightning</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
@@ -105,7 +105,7 @@
     <label>大地图腾</label>
     <description>萨满图腾，抛掷石块砸击附近敌人。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_TotemEarth/MMT_Bld_TotemEarth</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
@@ -138,7 +138,7 @@
     <label>治疗图腾</label>
     <description>萨满图腾，周期性治疗周围友军。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_TotemHealing/MMT_Bld_TotemHealing</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>
@@ -171,7 +171,7 @@
     <label>魔法地雷</label>
     <description>敌人接近即引爆的法力地雷，限时存在。</description>
     <graphicData>
-      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <texPath>Things/Building/Production/MMT_Bld_ManaMine/MMT_Bld_ManaMine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1.4,1.4)</drawSize>

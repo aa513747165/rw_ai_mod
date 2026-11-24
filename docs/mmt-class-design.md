@@ -660,11 +660,12 @@ RoM 跨职业通用技（45 个 Standalone + 7 个 Sustained）经筛选后作�
 
 原 4 职业草案的工匠大师 III 阶品质暴击改为**第 19 个独立 Perk** `MMT_Perk_Masterwork`（生存/生产支）：消耗 perk 点×2，制作成品 10% 概率品质 +1 档；Harmony postfix `QualityUtility.GenerateQualityCreatedByPawn`（§8 spike）。设置开关 `classQualityCritEnabled`（默认开）。
 
-### 5.4 贴图/音效复制规则
+### 5.4 贴图/音效/特效复制规则
 
-- 技能图标：RoM `Textures/UI/<语义名>.png` → `1.7/Textures/UI/RoM/`（生成器按映射表顺带复制，约 150 张）；
+- 技能图标：RoM `Textures/UI/<语义名>.png` → `1.7/Textures/UI/RoM/`（生成器按映射表顺带复制，约 174 张）；
 - 投射物贴图：RoM `Textures/Spells/` → `1.7/Textures/Things/Projectile/RoM/`（投射物技能按需）；
-- 音效：RoM `Sounds/` 中施法/命中音按需 → `1.7/Sounds/RoM/`（SoundDef 手写引用）；
+- 音效：生成器照抄 RoM 技能的 `soundCast`/`soundCastTail`；TM_* 音效更名 `MMT_*` 生成 `MMT_Sounds_RoM.xml`（RoM SoundDef 复制件），wav 复制到 `1.7/Sounds/RoM/`；原版音效名原样引用；
+- 战斗特效：RoM MoteDefs 复刻为 FleckDef（`MMT_Flecks_RoM.xml`，贴图 `1.7/Textures/Things/Fleck/RoM/`）；每个技能经 `CompAbilityEffect_MMTFleckFX` 在施法者/目标点放主题 fleck（职业主题表 `CLASS_FLECK` + 桶级覆盖 + 映射表 `fx` 字段单技能覆盖），AoE 桶的 `fleckDefName` 默认填主题 fleck；
 - About.xml 备注资源来源（RoM 已授权）。
 
 ### 5.5 设置项（`MMTSettings.cs` 追加）
@@ -725,7 +726,7 @@ RoM 跨职业通用技（45 个 Standalone + 7 个 Sustained）经筛选后作�
 2. 伤害 XP 钩子：§2.1（rpg-design）原方案"复用武器机制伤害补丁上下文"不可行（该补丁在无强化 comp 时短路），实现改为 `Pawn.PostApplyDamage` postfix 读 instigator，全伤害源覆盖且同样廉价；
 3. 召唤建筑（魔法防御塔/神经炮塔/三图腾/法力地雷）落地为 `SummonTurret.cs` 参数化建筑 comp（attack/heal/mine 三模式）+ 原版 `CompProperties_Lifespan` 限时，生成器 `summonBuildings` 段产出；
 4. 职业导师台造价：MMT 无"玻璃钢"与通用"高级合金"物品，取最近似高级链产物——`MMT_PobediteAlloy`（钨钴合金）×40 + `MMT_ReinforcedGlass`（强化玻璃块）×60；
-5. 贴图：技能图标/投射物贴图已从 RoM 复制（174 图标 + 20 投射物）；**导师台与召唤建筑暂用 RoM 防御塔贴图占位**（`Things/Building/Production/RoM/`，待 AI 生成专属贴图）；音效未复制，暂用原版灵能施法音；
+5. 贴图：技能图标/投射物贴图已从 RoM 复制（174 图标 + 20 投射物）；**导师台与召唤建筑暂用 RoM 防御塔贴图占位**（`Things/Building/Production/RoM/`，待 AI 生成专属贴图）；音效与战斗特效 v2.1 已复刻（17 个 SoundDef + 33 个 FleckDef，照抄 RoM soundCast 与主题 Mote，见 §5.4）；
 6. 就职/升阶材料改为"随身携带"制（右键菜单明示需求），作业为走到导师台短仪式；
 7. 混沌法师未入导师台（37 职业 = 法师 24 + 斗士 13）。
 

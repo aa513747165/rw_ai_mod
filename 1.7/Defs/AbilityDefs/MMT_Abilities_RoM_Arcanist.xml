@@ -18,6 +18,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -28,6 +29,10 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityTeleport">
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ArcaneCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -47,6 +52,8 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>InfernoCannon_Fire</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -59,6 +66,10 @@
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_MagicMissile</projectileDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ArcaneCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -79,6 +90,8 @@
       <warmupTime>0.5</warmupTime>
       <range>0</range>
       <targetRequired>false</targetRequired>
+      <soundCast>Message_PositiveEvent</soundCast>
+      <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -92,6 +105,9 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTToggleAura">
         <auraHediffDef>MMT_Aura_Shadow</auraHediffDef>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -111,6 +127,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>MMT_Gong</soundCast>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetAnimals>true</canTargetAnimals>
@@ -123,6 +140,10 @@
     <comps>
       <li Class="CompProperties_AbilityEffect">
         <compClass>MyModeTest.CompAbilityEffect_MMTPull</compClass>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ArcaneCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -142,6 +163,7 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>24.9</range>
+      <soundCast>ThrowGrenade</soundCast>
       <targetParams>
         <canTargetLocations>true</canTargetLocations>
         <canTargetPawns>true</canTargetPawns>
@@ -153,6 +175,10 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTGroupTeleport">
         <radius>4</radius>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_ArcaneCircle</targetFleckDefName>
       </li>
     </comps>
   </AbilityDef>
