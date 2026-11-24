@@ -93,7 +93,7 @@
   <ThingDef ParentName="BasePawn">
     <defName>MMT_FireElementalLesser</defName>
     <label>小火元素</label>
-    <description>从熔火元素领主身上分裂出的火焰碎块，悬浮的岩核被烈焰环绕。存在时间有限，但烧起来毫不含糊。</description>
+    <description>从熔火元素领主身上分裂出的火焰碎块，悬浮的岩核被烈焰环绕。存在时间有限，被击杀时会像爆炸羊一样炸成一团烈焰。</description>
     <statBases>
       <Mass>40</Mass>
       <MoveSpeed>4.2</MoveSpeed>
@@ -112,6 +112,9 @@
     <tradeability>None</tradeability>
     <race>
       <body>QuadrupedAnimalWithPaws</body>
+      <deathAction>
+        <workerClass>MyModeTest.DeathActionWorker_MMTFlameBurst</workerClass>
+      </deathAction>
       <thinkTreeMain>MMT_FireElementalLesser</thinkTreeMain>
       <thinkTreeConstant>MMT_FireElementalConstant</thinkTreeConstant>
       <renderTree>Animal</renderTree>

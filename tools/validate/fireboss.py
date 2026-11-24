@@ -29,6 +29,7 @@ TREES_XML = "1.7/Defs/ThinkTreeDefs/MMT_ThinkTrees_FireElemental.xml"
 ABILITIES_XML = "1.7/Defs/AbilityDefs/MMT_Abilities_FireBoss.xml"
 DUNGEONS_XML = "1.7/Defs/WorldObjectDefs/MMT_WorldObjects_RpgDungeons.xml"
 SUMMONER_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Dungeon.xml"
+FIRE_CS = "Source/MyModeTest/FireElemental.cs"
 TEX_DIR = "1.7/Textures/Things/Pawn/FireElemental"
 
 BOSS_KIND = "MMT_BossFireElementalLord"
@@ -37,7 +38,7 @@ ABILITIES = ("MMT_BossFire_SummonLesser", "MMT_BossFire_FireRain", "MMT_BossFire
 
 
 def validate_fireboss() -> None:
-    require_files([RACES_XML, KINDS_XML, TREES_XML, ABILITIES_XML, DUNGEONS_XML, SUMMONER_XML])
+    require_files([RACES_XML, KINDS_XML, TREES_XML, ABILITIES_XML, DUNGEONS_XML, SUMMONER_XML, FIRE_CS])
 
     # ---- 种族：免疫点燃、虫族血肉（派系解析关键）、自定义 ThinkTree、近战工具 ----
     races = def_map(parse_xml(RACES_XML))
@@ -61,6 +62,17 @@ def validate_fireboss() -> None:
                      f"{name} constant 树")
         if race.find("tools") is None:
             fail(f"{name} 缺少近战 tools")
+
+    # ---- 小火元素死亡爆燃（爆炸羊式亡语）：XML 挂自写 worker，C# 类须存在 ----
+    lesser_race = races["MMT_FireElementalLesser"].find("race")
+    da = lesser_race.find("deathAction") if lesser_race is not None else None
+    assert_equal(child_text(da, "workerClass") if da is not None else None,
+                 "MyModeTest.DeathActionWorker_MMTFlameBurst", "小火元素死亡爆燃 worker")
+    fe_cs = read_text(FIRE_CS)
+    for needle in ("DeathActionWorker_MMTFlameBurst", "GenExplosion.DoExplosion",
+                   "DamageDefOf.Flame", "chanceToStartFire", "DangerousInMelee"):
+        if needle not in fe_cs:
+            fail(f"FireElemental.cs 缺少死亡爆燃关键实现: {needle}")
 
     # ---- PawnKindDef：战力档位、isFighter、技能挂载、贴图路径 ----
     kinds = def_map(parse_xml(KINDS_XML))
