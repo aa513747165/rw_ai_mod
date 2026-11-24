@@ -6,11 +6,11 @@
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_DeepSpaceScanner</defName>
     <label>深空扫描仪</label>
-    <description>向深空发射探测脉冲的大型相控阵，能定位轨道残骸与失落据点的微弱信号。\n\n蓄电充满（30000 Wd）且地图上有矿物声纳模块时可启动扫描：消耗全部蓄电与 1 个声纳模块，1 天后在世界地图上标出一处探索据点（30 天有效）。安装处理速度模块可缩短扫描时间。\n\n据点守卫森严，但藏有外界无法生产的远古材料——那是武器高级强化与纪元奇点的关键。</description>
+    <description>向深空发射探测脉冲的大型相控阵，能定位轨道残骸与失落据点的微弱信号。\n\n蓄电充满（30000 Wd）且地图上有矿物声纳模块时可启动扫描：消耗全部蓄电与声纳模块，在世界地图上标出一处探索据点（30 天有效）。扫描分浅层/深层/全域三档——档位越高，声纳模块消耗与扫描时长越大，据点守卫越强，奖励越好。安装处理速度模块可缩短扫描时间。\n\n据点守卫森严，但藏有外界无法生产的远古材料——那是武器高级强化与纪元奇点的关键。</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/MMT_DeepSpaceScanner/MMT_DeepSpaceScanner</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
+      <texPath>Things/Building/Production/MMT_DeepSpaceScanner</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(4.6,4.6)</drawSize>
     </graphicData>
@@ -19,8 +19,7 @@
     <passability>Impassable</passability>
     <pathCost>70</pathCost>
     <fillPercent>1</fillPercent>
-    <rotatable>true</rotatable>
-    <defaultPlacingRot>South</defaultPlacingRot>
+    <rotatable>false</rotatable>
     <tickerType>Normal</tickerType>
     <designationCategory>MMT_Production</designationCategory>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -61,6 +60,79 @@
       <li Class="MyModeTest.CompProperties_DeepSpaceScanner">
         <scanDays>1</scanDays>
         <sonarModulesPerScan>1</sonarModulesPerScan>
+        <!-- 三档扫描（mmt-dungeon-design.md §1.1）：模块数/天数成本 × 设置 dungeonTierCostFactor；
+             威胁 = clamp(财富/100, 800, 5000) × 据点类型系数 × 档位威胁系数；
+             lootTier/品质地板喂装备箱掷点（精良~稀有 ↔ Good~Excellent，史诗~传说 ↔ Masterwork~Legendary） -->
+        <scanTiers>
+          <li>
+            <tier>1</tier>
+            <label>浅层扫描</label>
+            <sonarModules>1</sonarModules>
+            <scanDaysFactor>1.0</scanDaysFactor>
+            <threatFactor>1.0</threatFactor>
+            <lootTier>1</lootTier>
+            <gearQualityMin>Good</gearQualityMin>
+            <gearQualityMax>Excellent</gearQualityMax>
+          </li>
+          <li>
+            <tier>2</tier>
+            <label>深层扫描</label>
+            <sonarModules>2</sonarModules>
+            <scanDaysFactor>1.5</scanDaysFactor>
+            <threatFactor>1.6</threatFactor>
+            <lootTier>2</lootTier>
+            <gearQualityMin>Excellent</gearQualityMin>
+            <gearQualityMax>Masterwork</gearQualityMax>
+          </li>
+          <li>
+            <tier>3</tier>
+            <label>全域扫描</label>
+            <sonarModules>3</sonarModules>
+            <scanDaysFactor>2.0</scanDaysFactor>
+            <threatFactor>2.5</threatFactor>
+            <lootTier>3</lootTier>
+            <gearQualityMin>Masterwork</gearQualityMin>
+            <gearQualityMax>Legendary</gearQualityMax>
+          </li>
+        </scanTiers>
+        <!-- 据点加权池（§0 清单 XML 化；其它 mod 可 XPath 追加自己的据点条目）。
+             Boss 巢穴（MMT_SitePart_BossLair）锁定 III 档、不进随机池，由任务链/Dev 生成。 -->
+        <sitePool>
+          <li>
+            <sitePart>MMT_SitePart_RareDeposit</sitePart>
+            <label>稀有资源点</label>
+            <weight>28</weight>
+            <threatFactor>0.5</threatFactor>
+          </li>
+          <li>
+            <sitePart>MMT_SitePart_OrbitalRuinCache</sitePart>
+            <label>轨道遗迹</label>
+            <weight>22</weight>
+            <threatFactor>1.0</threatFactor>
+            <mechGuardFallback>true</mechGuardFallback>
+          </li>
+          <li>
+            <sitePart>MMT_SitePart_StrongholdCache</sitePart>
+            <label>机械据点</label>
+            <weight>12</weight>
+            <threatFactor>1.6</threatFactor>
+            <mechGuardFallback>true</mechGuardFallback>
+          </li>
+          <li>
+            <sitePart>MMT_SitePart_TrainingGround</sitePart>
+            <label>试炼场</label>
+            <weight>22</weight>
+            <threatFactor>1.2</threatFactor>
+            <factionGuards>true</factionGuards>
+          </li>
+          <li>
+            <sitePart>MMT_SitePart_ClassShrine</sitePart>
+            <label>职业圣殿</label>
+            <weight>16</weight>
+            <threatFactor>1.4</threatFactor>
+            <factionGuards>true</factionGuards>
+          </li>
+        </sitePool>
       </li>
     </comps>
     <inspectorTabs>

@@ -10,15 +10,15 @@
     <thingClass>MyModeTest.Building_TrainingDummy</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/MMT_TrainingDummy/MMT_TrainingDummy</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>CutoutComplex</shaderType>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
       <drawSize>(1.6,1.6)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>14</pathCost>
     <fillPercent>0.5</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <designationCategory>Joy</designationCategory>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>

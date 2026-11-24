@@ -6,4 +6,6 @@
   <MMT_TabModuleSlots>增效模块</MMT_TabModuleSlots>
   <!-- 筛子"滤网"页签标题（ITab_SieveMesh.labelKey） -->
   <MMT_TabSieveMesh>滤网</MMT_TabSieveMesh>
+  <!-- 小人"历练"页签标题（ITab_Pawn_Progress.labelKey，支柱二） -->
+  <MMT_TabPawnProgress>历练</MMT_TabPawnProgress>
 </LanguageData>

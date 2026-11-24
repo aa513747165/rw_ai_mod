@@ -1,7 +1,7 @@
 # MMT 职业系统设计文档（RoM 全职业复刻）
 
 > 手工维护的设计文档（非脚本生成物）。本文件是 MMT 职业体系的**唯一设计依据**（地位同 `mmt-rpg-design.md`、`mmt-endgame-design.md`）。
-> 状态：**设计定稿，未实现**。
+> 状态：**v1 已实现**（B1–B5 全部落地：历练/19 Perk/37 职业/生成器/校验套件；§8 spike 项已全部回填）。
 > 关系：本文档**取代** `mmt-rpg-design.md` §2.3（原 4 职业草案作废）；历练等级与 Perk 仍以 `mmt-rpg-design.md` §2.1/§2.2 为准，本文档仅引用不重复。
 
 ## 1. 总纲
@@ -710,11 +710,74 @@ RoM 跨职业通用技（45 个 Standalone + 7 个 Sustained）经筛选后作�
 
 游戏内手测路径：Dev 发凭证 → 建导师台 → 37 职业分组 FloatMenu → 就职（自动觉醒灵能）→ 技能 gizmo 出现、耗心灵集中/涨熵 → 升 II/III 阶解锁全技能 → 升级选 perk（含品质暴击 perk）→ ITab 正确；抽查各桶代表技能（火球/圣光治疗/召唤仆从/闪烁/恐惧支配/箭雨/指挥官光环的脉冲间隔表现）。
 
-## 8. 待定项（实现时 spike 回填）
+## 8. 待定项（实现时 spike 回填）——已全部回填（v1）
 
-- 灵能觉醒 API（`Pawn.ChangePsylinkLevel` 系）在 1.7 的确切签名；失败回退"要求已有灵能链接"并在就职菜单明示；
-- 品质生成 patch 点（`QualityUtility.GenerateQualityCreatedByPawn` 是否 1.7 唯一出口）；
-- 心灵控制原版先例：Royalty 精神冲击枪/狂暴脉冲的 Hediff→MentalState 机制，能纯 XML 则 MentalState comp 缩减；
-- perk/职业/光环 stat defName 逐一以 1.7 实际核对（ShootingAccuracyPawn/AimingDelayFactor/SocialImpact 等）；
-- RoM 各技能冷却/伤害原值回填映射表（本文档空缺的冷却列）；
-- 召唤物 PawnKindDef 选型：优先复用原版/Anomaly/Biotech 生物（波皮→原版爆炸鼠类、灵狼→狼变体、元素→机械体变体），贴图复用 RoM `Textures/PawnKind/` 候选，实现时逐个定。
+- ~~灵能觉醒 API~~ → 1.7 为 `RimWorld.PawnUtility.ChangePsylinkLevel(Pawn pawn, int levelOffset, bool sendLetter)`，就职时 `offset=1, sendLetter=false`（已实现）；
+- ~~品质生成 patch 点~~ → `QualityUtility.GenerateQualityCreatedByPawn(Pawn, SkillDef)` 存在且已 postfix（`Patch_MasterworkQualityCrit`）；
+- ~~心灵控制原版先例~~ → 单体走原版 `CompProperties_AbilityGiveMentalState`（纯 XML），范围用自研 `CompAbilityEffect_MMTMentalStateAoE`；
+- ~~stat defName 核对~~ → 1.7 变更：`CookingSpeed` 更名 `CookSpeed`；**1.7 已删除 HungerRate 属性** → 饥饿类效果改用 HediffStage `hungerRateFactor`；其余（ShootingAccuracyPawn/AimingDelayFactor/SocialImpact/NegotiationAbility/MedicalTendQuality/ComfyTemperatureMin/PsychicEntropyRecoveryRate）均核实存在；
+- ~~RoM 冷却/伤害回填~~ → 生成器自动读 RoM `SecondsToRecharge` 回填冷却（映射表可覆盖），伤害按 §2.2 威力档设计值；
+- ~~召唤物选型~~ → 已落定（映射表 `summonBuildings`/`pawnKind`）：仆从=Colonist、波皮=Boomrat、元素/血月恶魔=Chimera、恶魔=Devourer、亡灵=Ghoul、石哨兵=Megaspider、守护灵兽=Thrumbo、灵狼=Wolf_Timber/Wolf_Arctic、动物伙伴=Bear_Grizzly、光之精灵=Fingerspike。
+
+**实现偏差记录（v1，供溯源）**：
+
+1. 1.7 的 `HediffStage` **没有** abilities 字段（abilities 在 HediffDef 级、整 Hediff 生效）——§2.1 的"升阶=摘除低阶+添加高阶"原样成立，各阶 HediffDef 的 `<abilities>` 累积列出（I⊂II⊂III，校验套件核对）；
+2. 伤害 XP 钩子：§2.1（rpg-design）原方案"复用武器机制伤害补丁上下文"不可行（该补丁在无强化 comp 时短路），实现改为 `Pawn.PostApplyDamage` postfix 读 instigator，全伤害源覆盖且同样廉价；
+3. 召唤建筑（魔法防御塔/神经炮塔/三图腾/法力地雷）落地为 `SummonTurret.cs` 参数化建筑 comp（attack/heal/mine 三模式）+ 原版 `CompProperties_Lifespan` 限时，生成器 `summonBuildings` 段产出；
+4. 职业导师台造价：MMT 无"玻璃钢"与通用"高级合金"物品，取最近似高级链产物——`MMT_PobediteAlloy`（钨钴合金）×40 + `MMT_ReinforcedGlass`（强化玻璃块）×60；
+5. 贴图：技能图标/投射物贴图已从 RoM 复制（174 图标 + 20 投射物）；**导师台与召唤建筑暂用 RoM 防御塔贴图占位**（`Things/Building/Production/RoM/`，待 AI 生成专属贴图）；音效未复制，暂用原版灵能施法音；
+6. 就职/升阶材料改为"随身携带"制（右键菜单明示需求），作业为走到导师台短仪式；
+7. 混沌法师未入导师台（37 职业 = 法师 24 + 斗士 13）。
+
+## 9. v2：历练 × 职业深度绑定（天赋树 / 全源经验 / 公会委托，2026-11）
+
+参照 Isekai RPG Leveling（workshop 3657580708，贴图已获授权直接复制；代码仅作实现参考）重构成长体系。v1 的"perk FloatMenu + 阶位 Hediff 带技能"被天赋树取代。
+
+### 9.1 体系总览
+
+- **历练上限 20→60 级**，曲线仍为 `100×N^1.5`；每级 +1 **天赋点**（取代每 3 级 1 perk 点）。20 档历练 Hediff 不变（20 级后成长全走天赋树）。
+- **通用天赋树**（`MMT_TalentTree_General`，59 节点）：战斗/灵能/生产/生存/社交五支；19 个旧 perk 原 Hediff 节点化并入；五支末端挂 10 个**家族解锁 Keystone**（ClassUnlock，cost 3）。
+- **职业家族树**（10 棵，`MMT_TalentTree_F_<key>`）：37 职业分 10 家族（元素/奥秘/死灵/圣光/自然/心灵/剑刃/先锋/神射/战辅）；Start 就职免费解锁；主干家族被动 + 每职业一簇技能链（requireTier=技能 stage）+ 2 个强化节点（II/III 阶门控）+ 家族 Keystone。
+- **就职流程不变**：点出家族解锁 → 导师台 + 凭证就职（菜单只列已解锁家族）；升阶门槛随 60 级重排为 **5/20/35 级**。
+- **技能授予改道**：阶位 Hediff 不再携带 `<abilities>`（生成器已改），技能由家族树技能节点直接 `GainAbility`；旧档迁移自动补发当前阶位应得技能节点。
+- **凭证来源**：A 级以上公会委托奖励（另保留 Dev 发放）。
+
+### 9.2 数据与生成管线
+
+- 新 Def：`MyModeTest.MMT_TalentTreeDef`（nodes + `"A~B"` 无向连线，`ResolveReferences` 建邻接表）；节点效果二选一：`hediff`（被动，解锁 AddHediff）/ `abilities`（技能，直接 GainAbility）；`classBaseName`（技能节点限定职业）、`familyKey`（ClassUnlock）、`requireTier`、`requireAllConnected`。
+- 生成器 `tools/build_mmt_talent_trees.py` + 映射表 `tools/data/mmt_talent_tree_mapping.json`（唯一人工维护点：通用树布局、家族主题、perk 映射）；rom 映射表 classes 段新增 `family` 字段。
+- 产出（生成物）：`MMT_Talents_General.xml`、`MMT_Talents_Families.xml`、`MMT_Hediffs_Talents.xml`（201 个被动 Hediff）；并复制 Isekai 授权贴图 41 张到 `1.7/Textures/UI/TalentTree/`（节点形状 8 + 图标 27 + UI 底图 3 + 世界图标 3）。
+- 校验套件 `tools/validate/talent_tree.py`：图连通/唯一 Start/cost 规则/家族覆盖/技能全覆盖 requireTier=stage/stat 白名单/贴图存在/C# 接线。
+
+### 9.3 全源经验（TalentXPPatches.cs）
+
+在既有三钩子（伤害/击杀/技能学习）外新增：工作完成按 JobDef 分档（手术 25/治疗 18/制作研究烹饪 8/采矿 6/建造收获 4/搬运 2/清洁 1，60 tick 冷却）、品质产出（糟糕 2→传奇 75）、社交 2、贸易 15、招募 38、捕获（12 格内殖民者各 6）、击杀 combatPower 分档加成（2→160）、灵能释放（5+熵耗，钳 3-50）、熵累积/集中消耗/冥想（2500 tick 冷却）。所有来源经 `AddXp` 统一乘 `MMTSettings.xpMultiplier`（默认 1.0，0.1-5）。
+
+### 9.4 公会狩猎委托（GuildQuest.cs）
+
+- `GameComponent_GuildQuests` 定时器：间隔（默认 1 天，设置 0.5-5）生成委托；段位 F-SSS 按殖民者历练水平 + 财富加权。
+- F-D 本地图边缘刷敌对生物（动物永久猎杀/虫挂虫族派系）；B-A 世界站点群猎（4/6 只，2-8 格，`SiteMaker.MakeSite` + `MMT_SitePart_GuildHunt`，15 天过期）；S-SSS 站点单 Boss（combatPower ≥220）。
+- **据点联动（委托×副本）**：世界委托优先挂载扫描仪已发现未清剿的据点（`GuildQuestUtil.TryFindLinkedSite`：`MMT_SitePart_*` 且非狩猎场 + 有敌对派系宿主/机械集群守卫 + 未被其它委托占用，取距家最近者）；清剿该据点即完成（战利品+委托报酬双份收益）。无合格据点时按 `guildQuestDungeonChance`（默认 35%）直建新副本（`DungeonSiteGen.GenerateRandomSite`：扫描仪同池同公式、仅抽有守卫条目、段位映射档位 B→I/A→II/S+→III，`generatedDungeon` 标记区分信件措辞；出无守卫据点则销毁回退），再回退自建狩猎场。完成检测走 `sawHostiles`（图上见过敌对威胁后全清→完成；站点消失时按 sawHostiles 区分清剿移除/超时判负），空投在站点已移除时回退殖民地。
+- 期限：本地 7 天 / 世界 14 天（`QuestPart_Delay` 超时信号→失败）；完成检测由 GameComponent 250 tick 节流驱动（1.7 `QuestPart` 无 tick 虚方法；`QuestEndOutcome` 替代旧 `EndResult`）。
+- 奖励：战斗图殖民者均分 XP（60×2^rank）+ 白银（50×1.8^rank）空投；B+ 附能量结晶 2-6；A+ 附职业凭证×1。
+
+### 9.5 存档兼容与迁移（TalentTreeUtil.Migrate，幂等）
+
+- 旧 perk Hediff/Def 全保留；读档时按"perk→节点"映射补登记通用树节点（不扣点），剩余 perk 点 1:1 转天赋点。
+- 已就职小人：按当前阶位免费补发家族树 Start + 全部应得技能节点（阶 Hediff 去 abilities 后技能不丢）。
+- 新字段：`talentPoints`/`unlockedTalents`（"tree:node" 字符串）/`unlockedFamilies`/`perkMigrated`，全部带默认值。
+
+### 9.6 UI（TalentTreeWindow.cs，本 Mod 首个自定义 Window）
+
+左侧树页签（通用+本族）/中间画布（右键平移、滚轮朝鼠标缩放 0.35-2.0）/右侧详情（效果文本、解锁/链式解锁按钮）/底部点数。连线 `Widgets.DrawLine` + Cohen–Sutherland 画布裁剪（GL 不吃 GUI 裁剪）；节点形状/图标用 Isekai 授权贴图，技能节点用 RoM 技能图标；双击链式解锁（Dijkstra 最短路，逐节点过门禁）。洗点 v1 仅 DebugAction。
+
+### 9.7 已知边界（v2）
+
+- 家族技能强化节点以主题被动为主（熵/集中/恢复），真升级变体（强化版技能）未做；
+- 洗点 UI、精英词缀、称号决斗、法力核心掉落未做（Isekai 特性，非本系统目标）；
+- 公会委托为自动接受制（无拒绝按钮），不做 QuestPart_Choice 报价流程；
+- 游戏内手测未执行（见 §9.8 路径）。
+
+### 9.8 v2 手测路径
+
+Dev"天赋点+10"→ ITab/ gizmo 开天赋树 → 加点（含双击链式）→ 点出家族解锁 Keystone → 导师台就职（菜单过滤生效）→ 家族树 Start 自动解锁 → 技能节点出 gizmo → 放技能涨经验 → Dev"生成公会狩猎委托"→ 本地猎杀领奖（含凭证）→ 升 II 阶（历练 20 级+结晶×10）→ 高阶技能节点可点；旧档验证 perk/技能迁移。

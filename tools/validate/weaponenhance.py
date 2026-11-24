@@ -103,8 +103,12 @@ def validate_weaponenhance() -> None:
     assert_equal(child_text(bench, "thingClass"), "MyModeTest.Building_WeaponEnhanceBench", "强化台 thingClass")
     assert_equal(child_text(bench, "size"), "(2,2)", "强化台尺寸")
     recipes = [li.text for li in bench.findall("recipes/li")]
-    if len(recipes) != 70:
-        fail(f"强化台应挂 70 个附魔模块配方（46 武器 + 24 防具），实际 {len(recipes)}")
+    module_recipes = [r for r in recipes if r and r.startswith("MMT_MakeWeaponMod") or r and r.startswith("MMT_MakeApparelMod")]
+    if len(module_recipes) != 70:
+        fail(f"强化台应挂 70 个附魔模块配方（46 武器 + 24 防具），实际 {len(module_recipes)}")
+    # 副本链配方（凭证碎片 3 合 1，mmt-dungeon-design.md §3.2）也挂在强化台
+    if "MMT_CraftClassToken" not in recipes:
+        fail("强化台缺少副本链配方 MMT_CraftClassToken")
     comp_classes = [li.attrib.get("Class", "") for li in bench.findall("comps/li")]
     if "MyModeTest.CompProperties_WeaponEnhanceBench" not in comp_classes:
         fail("强化台缺少 CompProperties_WeaponEnhanceBench")

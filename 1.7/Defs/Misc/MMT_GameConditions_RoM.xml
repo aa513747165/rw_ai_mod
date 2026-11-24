@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 气象法师自定义事件条件（生成物：build_mmt_rom_classes.py） -->
+  <GameConditionDef>
+    <defName>MMT_Cond_WarmFront</defName>
+    <label>暖流</label>
+    <description>魔法唤来的暖流，全图气温升高。</description>
+    <conditionClass>GameCondition</conditionClass>
+    <temperatureOffset>8</temperatureOffset>
+    <endWhenSilenced>false</endWhenSilenced>
+    <preventRain>false</preventRain>
+    <canBePermanent>false</canBePermanent>
+  </GameConditionDef>
+  <GameConditionDef>
+    <defName>MMT_Cond_CoolFront</defName>
+    <label>寒流</label>
+    <description>魔法唤来的寒流，全图气温降低。</description>
+    <conditionClass>GameCondition</conditionClass>
+    <temperatureOffset>-8</temperatureOffset>
+    <endWhenSilenced>false</endWhenSilenced>
+    <preventRain>false</preventRain>
+    <canBePermanent>false</canBePermanent>
+  </GameConditionDef>
+  <GameConditionDef>
+    <defName>MMT_Cond_FertileRain</defName>
+    <label>丰饶之雨</label>
+    <description>蕴含自然魔力的雨水，种植区作物加速生长。</description>
+    <conditionClass>MyModeTest.GameCondition_MMTFertility</conditionClass>
+    <endWhenSilenced>false</endWhenSilenced>
+    <preventRain>false</preventRain>
+    <canBePermanent>false</canBePermanent>
+  </GameConditionDef>
+</Defs>

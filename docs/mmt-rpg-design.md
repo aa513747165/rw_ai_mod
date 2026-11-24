@@ -159,7 +159,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 | 抗压 | MMT_Perk_GritMind | MentalBreakThreshold -0.04 |
 | 驮兽 | MMT_Perk_PackMule | CarryingCapacity +20 |
 
-（stat defName 以 1.7 实际为准，实现时逐一核对；核对结果回填本表。）
+（stat defName 以 1.7 实际为准，实现时逐一核对；核对结果回填本表。**v1 已回填**：`CookingSpeed` 在 1.7 为 `CookSpeed`；1.7 已删除 `HungerRate` 属性，"大胃王"改用 HediffStage `hungerRateFactor`。）
 
 ### 2.3 职业系统
 

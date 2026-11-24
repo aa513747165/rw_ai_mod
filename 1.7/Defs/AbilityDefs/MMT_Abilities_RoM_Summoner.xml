@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。召唤师 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SummonMinion</defName>
+    <label>召唤仆从</label>
+    <description>召唤一个干活的仆从，限时存在。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/minion_south</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Colonist</pawnKindDef>
+        <count>1</count>
+        <durationTicks>36000</durationTicks>
+        <maxActive>2</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SummonPylon</defName>
+    <label>召唤魔法防御塔</label>
+    <description>在目标点召唤一座定点奥术炮塔，限时存在。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/defense_pylon</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>1200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <buildingDef>MMT_Bld_SummonPylon</buildingDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SummonExplosive</defName>
+    <label>召唤魔法地雷</label>
+    <description>在目标点布置一枚法力地雷，敌人接近即爆。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/ManaMine</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>1200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <buildingDef>MMT_Bld_ManaMine</buildingDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SummonPoppi</defName>
+    <label>召唤波皮</label>
+    <description>召唤一群狂暴爆炸鼠扑向敌人。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/poppihorde</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Boomrat</pawnKindDef>
+        <count>4</count>
+        <durationTicks>18000</durationTicks>
+        <maxActive>8</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SummonElemental</defName>
+    <label>元素召唤</label>
+    <description>召唤强大的元素生物（嵌合兽）作战，限时存在。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/Elemental</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>35</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.04</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>9000</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Chimera</pawnKindDef>
+        <count>1</count>
+        <durationTicks>30000</durationTicks>
+        <maxActive>1</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

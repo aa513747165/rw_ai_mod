@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -31,6 +32,24 @@ namespace MyModeTest
         public bool lootRollEnabled = true;
         /// <summary>掷点概率倍率（0-3）：放大非 +0 强化档权重与附魔概率。</summary>
         public float lootRollChanceFactor = 1f;
+
+        // —— 历练/职业（RPG 支柱二，mmt-rpg-design.md §2 + mmt-class-design.md §5.5） ——
+        /// <summary>历练/职业总开关：关闭不再获得 XP、gizmo/页签隐藏，既有 Hediff 保留。</summary>
+        public bool pawnProgressEnabled = true;
+        /// <summary>XP 飘字（性能项，默认关）。</summary>
+        public bool xpGainMotes = false;
+        /// <summary>维持型光环脉冲间隔 tick（性能项，调大降载）。</summary>
+        public int classAuraInterval = 300;
+        /// <summary>品质暴击 perk（MMT_Perk_Masterwork）生效开关。</summary>
+        public bool classQualityCritEnabled = true;
+        /// <summary>历练 XP 全局倍率（0.1-5）。</summary>
+        public float xpMultiplier = 1f;
+        /// <summary>公会狩猎委托总开关（天赋树任务系统）。</summary>
+        public bool talentQuestsEnabled = true;
+        /// <summary>公会委托间隔天数（0.5-5）。</summary>
+        public float guildQuestIntervalDays = 1f;
+        /// <summary>世界委托直建新副本概率（0-1；无既有据点可挂载时按此概率生成扫描仪同池据点）。</summary>
+        public float guildQuestDungeonChance = 0.35f;
 
         // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——
         /// <summary>危险命中特效总开关（爆炸/引雷/毒气/燃烧；与武器 gizmo 两层门控）。</summary>
@@ -113,6 +132,18 @@ namespace MyModeTest
         public bool wonderOverloadEnabled = false;
         /// <summary>奇观周年庆典。</summary>
         public bool wonderAnniversaryEnabled = true;
+
+        // —— 副本/据点（mmt-dungeon-design.md §5.1；rpg 文档 §4 同表） ——
+        /// <summary>任务链开关（rpg 文档 §3.3 入口 Incident 第一行短路；本包实装后生效）。</summary>
+        public bool rpgQuestsEnabled = true;
+        /// <summary>Boss 巢穴开关（玩家主动触发型，默认开）。</summary>
+        public bool bossEncountersEnabled = true;
+        /// <summary>副本派系黑名单（defName 逗号分隔，默认空）。</summary>
+        public string dungeonFactionBlacklist = "";
+        /// <summary>副本炮塔黑名单（defName 逗号分隔，排除个别不平衡的 mod 炮塔）。</summary>
+        public string dungeonTurretBlacklist = "";
+        /// <summary>档位成本倍率（0.5-3）：整体缩放三档声纳模块/扫描天数成本。</summary>
+        public float dungeonTierCostFactor = 1f;
 
         /// <summary>当前生效的设置实例（Mod 构造时注入）。</summary>
         public static MMTSettings Instance
@@ -261,6 +292,42 @@ namespace MyModeTest
             get { return Instance != null ? Instance.lootRollChanceFactor : 1f; }
         }
 
+        public static bool PawnProgressEnabled
+        {
+            get { return Instance == null || Instance.pawnProgressEnabled; }
+        }
+
+        public static int ClassAuraInterval
+        {
+            get { return Instance != null ? Mathf.Max(60, Instance.classAuraInterval) : 300; }
+        }
+
+        public static bool ClassQualityCritEnabled
+        {
+            get { return Instance == null || Instance.classQualityCritEnabled; }
+        }
+
+        /// <summary>历练 XP 全局倍率（AddXp 统一乘算口）。</summary>
+        public static float XpMultiplier
+        {
+            get { return Instance != null ? Mathf.Clamp(Instance.xpMultiplier, 0.1f, 5f) : 1f; }
+        }
+
+        public static bool TalentQuestsEnabled
+        {
+            get { return Instance == null || Instance.talentQuestsEnabled; }
+        }
+
+        public static float GuildQuestIntervalDays
+        {
+            get { return Instance != null ? Mathf.Clamp(Instance.guildQuestIntervalDays, 0.5f, 5f) : 1f; }
+        }
+
+        public static float GuildQuestDungeonChance
+        {
+            get { return Instance != null ? Mathf.Clamp01(Instance.guildQuestDungeonChance) : 0.35f; }
+        }
+
         public static bool ApparelHazardEffects
         {
             get { return Instance == null || Instance.apparelHazardEffects; }
@@ -279,6 +346,73 @@ namespace MyModeTest
         public static bool EnableApparelToxicCloud
         {
             get { return Instance == null || Instance.enableApparelToxicCloud; }
+        }
+
+        // —— 副本/据点便捷读取 ——
+
+        public static bool RpgQuestsEnabled
+        {
+            get { return Instance == null || Instance.rpgQuestsEnabled; }
+        }
+
+        public static bool BossEncountersEnabled
+        {
+            get { return Instance == null || Instance.bossEncountersEnabled; }
+        }
+
+        public static float DungeonTierCostFactor
+        {
+            get { return Instance != null ? Mathf.Clamp(Instance.dungeonTierCostFactor, 0.5f, 3f) : 1f; }
+        }
+
+        // 黑名单解析缓存：按 raw 字符串变化自动失效重解析（避免每次查询都 Split+建集合）
+        private static string factionBlacklistRaw;
+        private static HashSet<string> factionBlacklistSet;
+        private static string turretBlacklistRaw;
+        private static HashSet<string> turretBlacklistSet;
+
+        /// <summary>派系是否在副本黑名单内（defName 逗号分隔，大小写不敏感）。</summary>
+        public static bool DungeonFactionBlacklisted(string defName)
+        {
+            if (defName == null)
+                return false;
+            string raw = Instance != null ? Instance.dungeonFactionBlacklist : null;
+            if (raw != factionBlacklistRaw)
+            {
+                factionBlacklistRaw = raw;
+                factionBlacklistSet = ParseDefNameList(raw);
+            }
+            return factionBlacklistSet.Contains(defName);
+        }
+
+        /// <summary>炮塔是否在黑名单内（defName 逗号分隔，大小写不敏感）。</summary>
+        public static bool DungeonTurretBlacklisted(string defName)
+        {
+            if (defName == null)
+                return false;
+            string raw = Instance != null ? Instance.dungeonTurretBlacklist : null;
+            if (raw != turretBlacklistRaw)
+            {
+                turretBlacklistRaw = raw;
+                turretBlacklistSet = ParseDefNameList(raw);
+            }
+            return turretBlacklistSet.Contains(defName);
+        }
+
+        /// <summary>逗号分隔 defName 列表 → 集合（空安全）。</summary>
+        private static HashSet<string> ParseDefNameList(string raw)
+        {
+            HashSet<string> set = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+            if (raw.NullOrEmpty())
+                return set;
+            string[] parts = raw.Split(',');
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string s = parts[i].Trim();
+                if (s.Length > 0)
+                    set.Add(s);
+            }
+            return set;
         }
 
         /// <summary>强化成功率 × 设置倍率（0-1 截断）；护盾与武器强化共用入口。</summary>
@@ -329,10 +463,23 @@ namespace MyModeTest
             apparelEnhanceVanillaOnly = false;
             lootRollEnabled = true;
             lootRollChanceFactor = 1f;
+            pawnProgressEnabled = true;
+            xpGainMotes = false;
+            classAuraInterval = 300;
+            classQualityCritEnabled = true;
+            xpMultiplier = 1f;
+            talentQuestsEnabled = true;
+            guildQuestIntervalDays = 1f;
+            guildQuestDungeonChance = 0.35f;
             apparelHazardEffects = true;
             enableApparelThorns = true;
             enableApparelDischarge = true;
             enableApparelToxicCloud = true;
+            rpgQuestsEnabled = true;
+            bossEncountersEnabled = true;
+            dungeonFactionBlacklist = "";
+            dungeonTurretBlacklist = "";
+            dungeonTierCostFactor = 1f;
         }
 
         public override void ExposeData()
@@ -376,10 +523,23 @@ namespace MyModeTest
             Scribe_Values.Look(ref apparelEnhanceVanillaOnly, "apparelEnhanceVanillaOnly", false);
             Scribe_Values.Look(ref lootRollEnabled, "lootRollEnabled", true);
             Scribe_Values.Look(ref lootRollChanceFactor, "lootRollChanceFactor", 1f);
+            Scribe_Values.Look(ref pawnProgressEnabled, "pawnProgressEnabled", true);
+            Scribe_Values.Look(ref xpGainMotes, "xpGainMotes", false);
+            Scribe_Values.Look(ref classAuraInterval, "classAuraInterval", 300);
+            Scribe_Values.Look(ref classQualityCritEnabled, "classQualityCritEnabled", true);
+            Scribe_Values.Look(ref xpMultiplier, "xpMultiplier", 1f);
+            Scribe_Values.Look(ref talentQuestsEnabled, "talentQuestsEnabled", true);
+            Scribe_Values.Look(ref guildQuestIntervalDays, "guildQuestIntervalDays", 1f);
+            Scribe_Values.Look(ref guildQuestDungeonChance, "guildQuestDungeonChance", 0.35f);
             Scribe_Values.Look(ref apparelHazardEffects, "apparelHazardEffects", true);
             Scribe_Values.Look(ref enableApparelThorns, "enableApparelThorns", true);
             Scribe_Values.Look(ref enableApparelDischarge, "enableApparelDischarge", true);
             Scribe_Values.Look(ref enableApparelToxicCloud, "enableApparelToxicCloud", true);
+            Scribe_Values.Look(ref rpgQuestsEnabled, "rpgQuestsEnabled", true);
+            Scribe_Values.Look(ref bossEncountersEnabled, "bossEncountersEnabled", true);
+            Scribe_Values.Look(ref dungeonFactionBlacklist, "dungeonFactionBlacklist", "");
+            Scribe_Values.Look(ref dungeonTurretBlacklist, "dungeonTurretBlacklist", "");
+            Scribe_Values.Look(ref dungeonTierCostFactor, "dungeonTierCostFactor", 1f);
         }
     }
 }

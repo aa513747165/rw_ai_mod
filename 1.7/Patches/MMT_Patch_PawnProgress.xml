@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- 支柱二：给 Human 挂历练 comp 与"历练"页签（mmt-rpg-design.md §2.1/§2.4） -->
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Human" and not(comps)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Human" and not(comps)]</xpath>
+      <value><comps /></value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Human" and not(comps/li[@Class="MyModeTest.CompProperties_PawnProgress"])]/comps</xpath>
+    <value>
+      <li Class="MyModeTest.CompProperties_PawnProgress" />
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Human" and not(inspectorTabs)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Human" and not(inspectorTabs)]</xpath>
+      <value><inspectorTabs /></value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Human"]/inspectorTabs</xpath>
+    <value>
+      <li>MyModeTest.ITab_Pawn_Progress</li>
+    </value>
+  </Operation>
+</Patch>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。光法师 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_LightLance</defName>
+    <label>光矛</label>
+    <description>光之长矛刺穿目标。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/lightlance</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityLaunchProjectile">
+        <projectileDef>MMT_Proj_LightLance</projectileDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_LightBurst</defName>
+    <label>闪光爆发</label>
+    <description>强光爆发，致盲区域敌人。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/lightburst</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTGiveHediffAoE">
+        <hediffDef>MMT_HD_Blind</hediffDef>
+        <radius>5</radius>
+        <targetFriendly>false</targetFriendly>
+        <includeSelf>false</includeSelf>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_LightSkip</defName>
+    <label>光行</label>
+    <description>化光而行，瞬移到目标位置。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/lightskip</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>1800</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityTeleport">
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Refraction</defName>
+    <label>光墙折射</label>
+    <description>光墙隆起作为掩体（简化：RoM 的弹道偏移未移植）。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/refraction</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityWallraise">
+        <thingDef>RaisedRocks</thingDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Sunfire</defName>
+    <label>日焰</label>
+    <description>日焰切割区域。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/sunfire</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>35</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.04</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
+        <damageDef>Burn</damageDef>
+        <damageAmount>24</damageAmount>
+        <radius>4</radius>
+        <armorPen>0</armorPen>
+        <pulses>6</pulses>
+        <pulseIntervalTicks>80</pulseIntervalTicks>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_SpiritOfLight</defName>
+    <label>光之精灵</label>
+    <description>召唤光之精灵作战，限时存在。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/sol</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>35</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.04</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>1800</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Fingerspike</pawnKindDef>
+        <count>1</count>
+        <durationTicks>30000</durationTicks>
+        <maxActive>1</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

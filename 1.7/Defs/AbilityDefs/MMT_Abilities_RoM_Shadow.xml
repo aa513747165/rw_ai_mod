@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。暗影 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_ShadowWalk</defName>
+    <label>暗影行走</label>
+    <description>瞬移到目标影中。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/shadowwalk</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>2700</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityTeleport">
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Nightshade</defName>
+    <label>夜影淬毒</label>
+    <description>开启后武器淬毒，近战更致命（持续型）。再次施放关闭。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/nightshade</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>120</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTToggleAura">
+        <auraHediffDef>MMT_Aura_Nightshade</auraHediffDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_ShadowStrike</defName>
+    <label>暗影突袭</label>
+    <description>闪现背刺目标并返回原位。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/shadowstrike</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTDashStrike">
+        <damageDef>Cut</damageDef>
+        <damageAmount>30</damageAmount>
+        <returnToStart>true</returnToStart>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_VeilOfShadows</defName>
+    <label>暗影斗篷</label>
+    <description>隐身并遁入烟雾。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/veilofshadows</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>35</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.04</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>5400</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityGiveHediff">
+        <hediffDef>PsychicInvisibility</hediffDef>
+        <psychic>true</psychic>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+        <applicableToMechs>false</applicableToMechs>
+      </li>
+      <li Class="CompProperties_AbilityEffect">
+        <compClass>CompAbilityEffect_Smokepop</compClass>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

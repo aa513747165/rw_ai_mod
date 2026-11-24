@@ -33,7 +33,7 @@ def validate_trainingdummy() -> None:
     assert_equal(child_text(node, "building/joyKind"), "Gaming_Dexterity", "假人 joyKind")
     assert_equal(child_text(node, "passability"), "PassThroughOnly", "假人通行性（避免 Impassable+fillPercent<1 的 config error）")
 
-    for f in ("MMT_TrainingDummy.png", "MMT_TrainingDummy_m.png"):
+    for f in ("MMT_TrainingDummy_south.png", "MMT_TrainingDummy_east.png", "MMT_TrainingDummy_north.png"):
         if not Path(f"{TEX_DIR}/{f}").exists():
             fail(f"假人缺少贴图 {TEX_DIR}/{f}")
 

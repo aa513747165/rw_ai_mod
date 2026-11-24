@@ -11,6 +11,7 @@ BUILDING_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Exploration.xml"
 SITES_XML = "1.7/Defs/WorldObjectDefs/MMT_WorldObjects_Exploration.xml"
 RES_XML = "1.7/Defs/ThingDefs_Resources/MMT_Items_Resource_Exploration.xml"
 CS = "Source/MyModeTest/Exploration.cs"
+DUNGEON_CS = "Source/MyModeTest/Dungeon.cs"
 
 SITES = {
     "MMT_SitePart_RareDeposit": ["MMT_AncientAlloy"],
@@ -66,19 +67,21 @@ def validate_exploration() -> None:
             fail(f"{name} 缺少贴图")
     assert_equal(child_text(res["MMT_AncientDatacore"], "tradeability"), "None", "数据核心必须不可交易（强制闭环）")
 
-    # ---- C# 关键实现 ----
-    cs = Path(CS).read_text(encoding="utf-8")
+    # ---- C# 关键实现（据点生成部分已迁入 Dungeon.cs，跨两文件检查） ----
+    cs = Path(CS).read_text(encoding="utf-8") + Path(DUNGEON_CS).read_text(encoding="utf-8")
     for token in ("CompDeepSpaceScanner", "SitePartWorker_MMT_Stockpile", "PostMapGenerate",
                   "MakeSite", "TryFindNewSiteTile", "StartTimeout", "CompTickInterval",
                   "ExplorationSitesEnabled", "StockpileRewardExtension"):
         if token not in cs:
-            fail(f"Exploration.cs 缺少: {token}")
+            fail(f"Exploration.cs/Dungeon.cs 缺少: {token}")
 
-    # ---- 扫描仪贴图（多朝向 3 + 遮罩 3） ----
-    for suffix in ("_south", "_north", "_east", "_southm", "_northm", "_eastm"):
-        tex = f"1.7/Textures/Things/Building/Production/MMT_DeepSpaceScanner/MMT_DeepSpaceScanner{suffix}.png"
-        if not Path(tex).exists():
-            fail(f"扫描仪缺少贴图 {tex}")
+    # ---- 扫描仪贴图（单方向，不可旋转） ----
+    tex = "1.7/Textures/Things/Building/Production/MMT_DeepSpaceScanner.png"
+    if not Path(tex).exists():
+        fail(f"扫描仪缺少贴图 {tex}")
+    scanner = buildings["MMT_DeepSpaceScanner"]
+    assert_equal(child_text(scanner, "graphicData/graphicClass"), "Graphic_Single", "扫描仪 graphicClass")
+    assert_equal(child_text(scanner, "rotatable"), "false", "扫描仪必须不可旋转")
 
     print("exploration: OK")
 

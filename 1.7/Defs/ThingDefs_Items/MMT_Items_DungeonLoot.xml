@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 副本奖励物品（mmt-dungeon-design.md §3.2）：
+       历练书 = 副本消耗品奖励（研读 +500 历练 XP）；职业凭证碎片 = 3 合 1 职业凭证（MMT_CraftClassToken）。 -->
+
+  <!-- 历练书：服用式使用品（右键"研读"），+500 历练 XP（IngestionOutcomeDoer_GiveProgressXp） -->
+  <ThingDef ParentName="DrugBase">
+    <defName>MMT_XpBook</defName>
+    <label>历练书</label>
+    <description>记载着远古战士实战心得的手抄本，字里行间仿佛仍有刀光剑影。通读一遍即可获得 500 点历练经验。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_XpBook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>120</MarketValue>
+      <Mass>0.4</Mass>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <stackLimit>10</stackLimit>
+    <ingestible>
+      <foodType>Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <drugCategory>Medical</drugCategory>
+      <ingestCommandString>研读{0}</ingestCommandString>
+      <ingestReportString>正在研读{0}。</ingestReportString>
+      <outcomeDoers>
+        <li Class="MyModeTest.IngestionOutcomeDoer_GiveProgressXp">
+          <xpAmount>500</xpAmount>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+  </ThingDef>
+
+  <!-- 职业凭证碎片：职业圣殿/Boss 巢穴产出，3 碎片在装备强化台合成 1 张职业凭证 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ClassTokenFragment</defName>
+    <label>职业凭证碎片</label>
+    <description>职业凭证的残片，边缘的纹章烫印仍隐约可辨。集齐 3 块碎片，可在装备强化台重新装订成一张完整的职业凭证。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ClassTokenFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>500</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.2</Mass>
+      <Beauty>2</Beauty>
+    </statBases>
+    <stackLimit>25</stackLimit>
+  </ThingDef>
+</Defs>

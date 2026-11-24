@@ -1,7 +1,9 @@
 # MMT 副本/据点生成设计方案
 
 > 手工维护的设计文档（非脚本生成物）。副本/据点生成专项设计：难度分层、敌人类型、物品奖励、地图建筑。
-> 状态：**设计定稿，未实现**。后续实现以本文为唯一依据（地位同 `mmt-rpg-design.md` / `mmt-endgame-design.md`）。
+> 状态：**主体已实现**（v1：三档扫描/派系守卫/分档奖励池/程序化布局/设置与校验均已落地；
+> 未实现：Boss 本体与任务链三幕——Boss 挂载点 `bossPawnKindDefName` 已预留 `MMT_BossAncientGuardian`，
+> 自建 Boss 填入 defName 即生效；Dev 模式可用扫描仪 gizmo 直接生成 Boss 巢穴验收）。
 > 本文是 `mmt-rpg-design.md` §3（支柱三）的展开与细化，遵循其 §0 硬性规则；稀有度掷点 `Roll(tier)`、Boss 掉落表、任务链三幕等以 rpg 文档为准，本文不重复定义。
 
 ## 0. 跨 Mod 兼容总原则（全文最高优先级）
@@ -216,7 +218,35 @@ XML `turretDefs`/`wallStuffDef` 从"唯一来源"降级为**兜底与人工修�
 
 ## 6. 待定项（实现时回填）
 
-- 是否在 `mmt-rpg-design.md` §3 头部加一行指向本文档（默认不加）；
-- 奖励池条目若数量区间/权重表达不足，升级为 ThingSetMakerDef，届时回填 §3.1；
-- 奖励价值系数（§3.3，初始 ×1.2）与工事预算拆分（§2.2，初始 70%/30%）经游戏内实测后回填调整值；
-- Boss 巢位形态（开阔区 vs 半掩体）实现时按 Boss 战手感定。
+- ~~是否在 `mmt-rpg-design.md` §3 头部加一行指向本文档~~（v1 回填：不加，保持默认）；
+- ~~奖励池条目若数量区间/权重表达不足，升级为 ThingSetMakerDef~~（v1 回填：已加 `maxTier` 字段，
+  各档构成按"叠加语义 + maxTier 封顶"表达（如装备箱 1@全档 + 0~1@II + 1@III → I×1 / II 1~2 / III×2），
+  暂不升级 ThingSetMakerDef）；
+- 奖励价值系数（§3.3，初始 ×1.2）与工事预算拆分（§2.2，初始 70%/30%）经游戏内实测后回填调整值
+  （v1 实现定稿：拆分 70%/30% 写入 `DungeonSiteGen.GuardBudgetFraction/FortBudgetFraction` 常量，
+  守卫预算封顶 10000 威胁点——超出后多数派系 PawnGroupMaker 无法抽组；
+  奖励价值 ×1.2 未做代码强制校验，待游戏内实测）；
+- ~~Boss 巢位形态（开阔区 vs 半掩体）~~（v1 回填：开阔巢位——有 Boss 时库房偏移、中央留空；
+  Boss 本体待自建，`bossPawnKindDefName` 已预留 `MMT_BossAncientGuardian`，缺失静默退化为大型据点）。
+
+## 7. v1 实现回填（实现期决策记录）
+
+- **档位传递**：扫描档位写入 `SitePartParams.randomValue`（vanilla 未使用字段，存档安全），
+  worker 读取时非法值按 I 档处理（旧存档据点无档位信息，不会误发高档奖励）；
+- **据点池权重**（实现期选定，可调）：稀有资源点 28 / 轨道遗迹 22 / 机械据点 12 / 试炼场 22 / 职业圣殿 16；
+- **品质地板映射**（"精良~稀有"等 RPG 语 → 原版品质档）：I Good~Excellent / II Excellent~Masterwork / III Masterwork~Legendary，
+  与 lootTier 1/2/3 一起写在扫描仪 comp 的 `scanTiers` XML 里；
+- **炮塔供电**：布局完成后调用原版 `GenStep_Power`（与原版任务据点同机制，自动接发电机+电池+电缆）；
+- **守卫 lord**：`LordJob_SitePawns`（原版任务据点守卫 lord：驻守 + 受击/超时后转反攻）；
+- **历练书**：服用式使用品（右键"研读"，`IngestionOutcomeDoer_GiveProgressXp`，+500 XP）；
+- **凭证碎片配方**：`MMT_CraftClassToken`（3 碎片 → 1 凭证）挂装备强化台（MMT_WeaponEnhanceBench）；
+- **贴图**：3 个据点世界图标 + 历练书/凭证碎片物品图标已生成（PIL 代码绘制）；
+  Boss 贴图随 Boss 本体一并实装（届时先按 `.claude/skills/rw-texture-design/SKILL.md` 写贴图元素描述）；
+- **校验**：`tools/validate/rpg_quests.py`（档位表/据点池/奖励池/布局白名单/配方/设置接线）；
+- **Boss 召唤器**（dev 测试工具）：`MMT_BossSummoner`（`MMT_Buildings_Dungeon.xml`），
+  仅 Dev 模式在建造菜单可见（`Designator_Build.Visible` postfix 强制隐藏）；
+  gizmo 菜单 = XML 白名单 ∪ 全库自动扫描（isFighter 且 combatPower ≥ `autoBossMinCombatPower`（默认 150）的
+  PawnKindDef 全收，原版与 Mod Boss 通吃，菜单标注战力与来源包），目标选格生成；
+  机械族挂机械族派系、类人走副本宿主派系选取（均挂 `LordJob_AssaultColony` 立即进攻），
+  动物/实体无派系生成并强制永久狂暴兜底；
+  白名单默认预留 `MMT_BossAncientGuardian`（与巢穴挂载点同名，自建 Boss 一处定义两处生效）。

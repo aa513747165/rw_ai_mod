@@ -13,6 +13,8 @@
 - 游戏目录：`D:\RimWorld v1.7.4979`（RimWorld 1.7，DLC 全，可使用 DLC 依赖）
 - 开发目录：`D:\project\rw`（即本仓库根）
 - HSK 参考克隆：`Hardcore-SK/`（分支 `1.7-super-unstable`），**只读参考，不要改动**
+- RoM 参考：`D:\steamcmd\steamapps\workshop\content\294100\3823345404`（A RimWorld of Magic，职业系统设计参照与贴图/音效资源库，已获授权；**只读，不改动；不依赖其程序集/Def**）
+- Isekai 参考：`D:\steamcmd\steamapps\workshop\content\294100\3657580708`（Isekai RPG Leveling，天赋树/任务系统设计参照与天赋树 UI 贴图来源，贴图已获授权直接复制；**只读，不改动；不复制其代码**）
 - 中文翻译参考：`Hardcore-SK/1.6`
 - 所有 HSK 资源已获授权使用
 - 如果需要生成AI贴图先让AI详情描述贴图所需元素再生成尽量立体符合风格
@@ -65,6 +67,8 @@ python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器�
 
 - `tools/build_mmt_weapons_from_hsk.py`：从本地 HSK/CE XML 批量生成 MMT 武器 Def，人工覆盖写入 `tools/data/mmt_weapon_mapping.json`，支持 `--write` 落盘与 `--check` 比对。
 - `tools/build_mmt_bionics_from_hsk.py`：从 HSK 生成全部仿生链 Def（物品/Hediff/安装手术/研究树/原版部件补丁）并复制贴图；复用 `docs/temp/extract_hsk_bionics.py` 的解析索引，材料/研究/工作台经内置映射表转 MMT defName。仿生链 XML 均为**生成物**，要改就改脚本重跑。
+- `tools/build_mmt_rom_classes.py`：RoM 职业系统生成器（`docs/mmt-class-design.md`）：按 `tools/data/mmt_rom_class_mapping.json`（唯一人工维护点，classes 段含 `family` 家族分组字段）产出 37 职业技能 AbilityDef（`MMT_Abilities_RoM_<职业>.xml`）、职业×3 阶 + 技能 buff/光环 Hediff（`MMT_Hediffs_RoMClasses.xml`；**v2 起阶位 Hediff 不再携带 abilities，技能授予移交天赋树**）、投射物、召唤建筑、气象事件条件，并复制 RoM 图标/投射物贴图；`--check` 核对 RoM 技能全集 = mapped + passives + deferred + ignored。产出 XML 均为**生成物**，要改就改映射表/脚本重跑。
+- `tools/build_mmt_talent_trees.py`：天赋树生成器（`docs/mmt-class-design.md` §9）：按 `tools/data/mmt_talent_tree_mapping.json`（唯一人工维护点）产出通用树 + 10 棵职业家族树 TalentDef（`1.7/Defs/TalentDefs/`）与节点被动 Hediff（`MMT_Hediffs_Talents.xml`），并复制 Isekai 授权贴图到 `1.7/Textures/UI/TalentTree/`；`--check` 幂等校验。产出均为**生成物**。
 - `tools/apply_research_layout.py`：一次性布局工具，按内置 mapping 重排研究的 `researchViewX/Y`。
 
 ## 测试策略
@@ -91,6 +95,17 @@ python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器�
   - `ShieldPack.cs`：充能护盾腰带（征召时开关 gizmo、开启全额吸收伤害按量耗电、耗尽/解除征召自动关、EMP 击穿；`Apparel_ChargeShieldPack` 重写 `DrawWornExtras` 画常驻护盾气泡，用 MMT 专属贴图 `Things/Item/MMT/Shield/MMT_ShieldBubbleTech`；Harmony 补丁 Pawn.GetGizmos / Pawn.PreApplyDamage / set_Drafted）。
   - `MechStandby.cs`：哨戒待机模式（Biotech 机械体新工作模式 `MMT_Sentinel`：`JobGiver_MechStandby` 由 ThinkTree patch 挂入 Mechanoid 树，闲置时复用原版 SelfShutdown 作业到待机点关机睡眠省性能；`MechStandbyManager` 由 EnemyRaidTracker 事件驱动在敌意出现时唤醒；`MapComponent_MechStandby` 持久化每台机械体的标定待机点；GetGizmos 补丁提供"设定/清除待机点、立即唤醒"gizmo）。
   - `AutoFarm.cs`：自动种植机（5x5 无人值守水培，`Building_AutoFarm`：gizmo 全局选种（sowTags 含 "Ground" 的全部植物），25 格虚拟种植格逐 tick 生长（基础肥力 300%，燃料舱有肥料时 400%），成熟自动收获到交互格并重播；`DrawAt` 按 `visualSizeRange` 缩放逐格绘制植物图形）。
+  - `PawnProgress.cs`：历练框架（RPG 支柱二，`docs/mmt-class-design.md` §9）：`CompPawnProgress`（XP/等级 1-60/天赋点/已解锁天赋节点/职业记录，XPath 挂 Human）、每级 +1 天赋点、XP 三钩子（PostApplyDamage 伤害 0.1×/Kill 击杀分档/SkillRecord.Learn 0.2×，全源钩子见 TalentXPPatches.cs）、20 档历练 Hediff（20 级后成长走天赋树）、旧 19 perk（含品质暴击 MMT_Perk_Masterwork + QualityUtility postfix，v2 已并入通用天赋树）、ITab_Pawn_Progress（含天赋树入口）、死亡骑士近战吸血。
+  - `TalentTreeDef.cs`：天赋树数据与运行时（`docs/mmt-class-design.md` §9）：`MMT_TalentTreeDef`（nodes + "A~B" 连线建邻接表）、`TalentTreeUtil`（解锁门禁 CanUnlock/效果施加 Unlock/Dijkstra 链式解锁/就职联动 OnClassAttuned/旧档迁移 Migrate）、Debug 加点/洗点/解锁全家族。
+  - `TalentTreeWindow.cs`：天赋树窗口（本 Mod 首个自定义 Window）：左侧树页签/中间画布（右键平移、滚轮缩放 0.35-2.0）/右侧详情/底部点数；连线 Widgets.DrawLine + Cohen–Sutherland 裁剪；双击链式解锁；节点形状/图标用 Isekai 授权贴图（UI/TalentTree/）。
+  - `TalentXPPatches.cs`：全源历练经验钩子（工作完成分档/品质产出/社交/贸易/招募/捕获/击杀 combatPower 分档加成/灵能释放/熵累积/集中消耗/冥想；高频源按 pawn 冷却节流；数值为 Isekai ~1/4，经 AddXp 统一乘 xpMultiplier）。
+  - `PawnClass.cs`：职业就职/升阶（`docs/mmt-class-design.md` §2.5/§9）：37 职业表、导师台 CompClassMentor（FloatMenu 法师/斗士两组，**v2 按已解锁职业家族过滤**，就职耗凭证、升阶耗能量结晶，门槛历练 5/20/35 级）、JobDriver_MMTClassAttune、无灵能链接者就职自动觉醒（PawnUtility.ChangePsylinkLevel）、就职联动家族树 Start 解锁、Dev 发凭证 DebugAction。
+  - `ClassAbilityEffects.cs`：职业技能通用效果库（约 12 个参数化 CompAbilityEffect_MMT_* 桶：GiveHediffAoE/AoEDamage(含脉冲区)/Heal/Summon(含限时)/DashStrike/MentalStateAoE/SpawnEffect(天气/条件/物品/灭火)/MultiShot/ToggleAura(熵压光环)/ResurrectLite + 个案：自伤降熵/抚平心绪/拉取/群体传送/移形换位/战斗药剂/尸爆/改写命运(死亡回溯)/枪托猛击 + 丰饶之雨 GameCondition）。
+  - `SummonTurret.cs`：召唤建筑 comp（炮塔/图腾/地雷三模式 attack/heal/mine，原版 Lifespan 限时）。
+  - `GuildQuest.cs`：公会狩猎委托（`docs/mmt-class-design.md` §9.4）：`GameComponent_GuildQuests` 定时器按间隔生成委托（F-SSS 段位按历练+财富加权）、F-D 本地图刷怪/B-A 世界站点群猎/S-SSS 站点 Boss（`SitePartWorker_MMT_GuildHunt` 地图生成时刷怪，站点记录存 GameComponent）、完成检测由 GameComponent 250 tick 驱动、奖励 XP 均分 + 白银空投（B+ 附能量结晶、A+ 附职业凭证）、QuestPart_Delay 超时判负、站点世界图标为 Isekai 授权贴图。世界委托据点联动三级目标来源：既有未清剿据点（`TryFindLinkedSite`，清剿即完成，双份收益）→ 按 `guildQuestDungeonChance` 直建新副本（`DungeonSiteGen.GenerateRandomSite`，与扫描仪同池同公式、仅抽有守卫条目）→ 自建狩猎场；联动完成判定走 `sawHostiles`（见过敌对威胁后全清/站点消失分成败）。
+  - `Exploration.cs`：深空扫描仪与探索据点（三档扫描 FloatMenu 选档，档位表/据点池全在扫描仪 comp props XML——`scanTiers`/`sitePool`；威胁 = clamp(财富/100, 800, 5000) × 类型系数 × 档位系数；`StockpileRewardExtension` 含静态 rewards + 分档 tieredRewards/gearRewards；档位经 SitePartParams.randomValue 传给 worker）。
+  - `Dungeon.cs`：副本/据点生成（`docs/mmt-dungeon-design.md`）：`SitePartWorker_MMT_Dungeon` 程序化布局（外墙围合+入口/奖励库房/守卫哨位掩体炮塔/照明/Boss 巢位）、宿主派系选取（原版 `TryGetRandomFactionForCombatPawnGroup` + 派系黑名单）、守卫经 PawnGroupMaker 产出挂 LordJob_SitePawns、炮塔全库扫描+同包加权+预算过滤（缓存一次）、墙体材质从守卫装备采样、炮塔供电走原版 GenStep_Power、装备箱生成（DungeonGearGen，品质地板+LootRoll 掷点）；Boss 由 DungeonLayoutExtension.bossPawnKindDefName 惰性解析（预留 MMT_BossAncientGuardian，缺失静默退化为大型据点）。
+  - `BossSummoner.cs`：Boss 召唤器（dev 模式专用测试工具）：CompBossSummoner gizmo 列出全部 Boss 级单位（XML 白名单 ∪ 全库自动扫描 isFighter 且 combatPower ≥ 阈值，原版/Mod 通吃，菜单标注战力与来源包）→ 目标选格 → 敌对生成（机械族挂机械族派系/类人走副本宿主派系 + LordJob_AssaultColony 立即进攻，动物/实体无派系 + 永久狂暴兜底）；`Designator_Build.Visible` postfix 使建筑仅 Dev 模式可建。
 - C# 注释与日志均用中文。
 
 ## 代码与命名约定

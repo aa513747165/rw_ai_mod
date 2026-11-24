@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 职业凭证（mmt-class-design.md §5.1）：全职业通用单种凭证。
+       来源：副本据点掉落（职业圣殿/Boss 巢穴，mmt-dungeon-design.md §3.2）、
+       职业凭证碎片 3 合 1（MMT_CraftClassToken，装备强化台）、Dev 模式发放（DebugAction"MMT 职业/发放职业凭证"）。 -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>MMT_ClassToken</defName>
+    <label>职业凭证</label>
+    <description>记载着古老职业传承的秘典，封面上烫印着三十六种职业纹章。在职业导师台上消耗它，可以让一名历练有成的殖民者踏上职业之路。</description>
+    <graphicData>
+      <texPath>Things/Item/MMT/MMT_ClassToken</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>1500</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>1.0</Flammability>
+      <Mass>0.5</Mass>
+      <Beauty>2</Beauty>
+    </statBases>
+    <stackLimit>5</stackLimit>
+  </ThingDef>
+</Defs>

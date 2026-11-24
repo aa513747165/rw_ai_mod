@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。游侠 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Might_PoisonTrap</defName>
+    <label>毒素陷阱</label>
+    <description>在目标点部署一枚陷阱（简化：借用原版尖刺陷阱）。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/trap</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>180</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <spawnThingDef>TrapSpike</spawnThingDef>
+        <spawnCount>1</spawnCount>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Might_ArrowStorm</defName>
+    <label>箭雨风暴</label>
+    <description>向目标泼洒 6 连箭雨。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/arrowstorm</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>1200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTMultiShot">
+        <projectileDef>MMT_Proj_Arrow</projectileDef>
+        <shotCount>6</shotCount>
+        <scatterRadius>2</scatterRadius>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Might_AnimalFriend</defName>
+    <label>动物伙伴</label>
+    <description>召唤一只野兽伙伴协战，限时存在（简化：RoM 的永久羁绊未移植）。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/animalfriend</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Bear_Grizzly</pawnKindDef>
+        <count>1</count>
+        <durationTicks>24000</durationTicks>
+        <maxActive>2</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Might_RangerSafeTrail</defName>
+    <label>安全小径</label>
+    <description>范围友军行动加速（简化：RoM 的路径标记未移植）。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/rangertraining</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>2400</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTGiveHediffAoE">
+        <hediffDef>MMT_HD_SpeedBuff</hediffDef>
+        <radius>6</radius>
+        <targetFriendly>true</targetFriendly>
+        <includeSelf>true</includeSelf>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

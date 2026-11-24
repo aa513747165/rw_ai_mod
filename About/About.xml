@@ -22,12 +22,17 @@
       <packageId>Ludeon.RimWorld.Ideology</packageId>
       <displayName>RimWorld - Ideology</displayName>
     </li>
+    <li>
+      <packageId>Ludeon.RimWorld.Anomaly</packageId>
+      <displayName>RimWorld - Anomaly</displayName>
+    </li>
   </modDependencies>
   <loadAfter>
     <li>Ludeon.RimWorld</li>
     <li>Ludeon.RimWorld.Royalty</li>
     <li>Ludeon.RimWorld.Ideology</li>
+    <li>Ludeon.RimWorld.Anomaly</li>
     <li>brrainz.harmony</li>
   </loadAfter>
-  <description>参考 HSK 资源生产流程实现的独立资源生产 Mod。</description>
+  <description>参考 HSK 资源生产流程实现的独立资源生产 Mod。含 RPG 内容包：装备随机强化/附魔、历练/Perk、RoM（A RimWorld of Magic，已获授权使用其贴图与音效，仅作设计参照、不依赖其程序集/Def）全职业复刻的职业系统。</description>
 </ModMetaData>

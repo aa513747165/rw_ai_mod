@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。气象法师 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherClearSkies</defName>
+    <label>驱散阴云</label>
+    <description>驱散雨雪雷暴，天气放晴。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/whirlwind</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <weatherDef>Clear</weatherDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherWarmFront</defName>
+    <label>暖流</label>
+    <description>全图气温 +8°C，持续 8 小时。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/sunfire</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <gameConditionDef>MMT_Cond_WarmFront</gameConditionDef>
+        <conditionDurationTicks>28800</conditionDurationTicks>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherCoolFront</defName>
+    <label>寒流</label>
+    <description>全图气温 -8°C，持续 8 小时。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/blizzard</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <gameConditionDef>MMT_Cond_CoolFront</gameConditionDef>
+        <conditionDurationTicks>28800</conditionDurationTicks>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherFertileRain</defName>
+    <label>丰饶之雨</label>
+    <description>8 小时降雨，种植区作物加速生长。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/rain</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <gameConditionDef>MMT_Cond_FertileRain</gameConditionDef>
+        <conditionDurationTicks>28800</conditionDurationTicks>
+        <weatherDef>Rain</weatherDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherDisperseFallout</defName>
+    <label>消散毒尘</label>
+    <description>使毒尘的剩余时间减半。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/purify</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>14400</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <shortenConditionDef>ToxicFallout</shortenConditionDef>
+        <shortenFactor>0.5</shortenFactor>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_WeatherAurora</defName>
+    <label>极光</label>
+    <description>召唤极光，夜晚带来好心情。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/rayoflight</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>8</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>10800</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <gameConditionDef>Aurora</gameConditionDef>
+        <conditionDurationTicks>48000</conditionDurationTicks>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

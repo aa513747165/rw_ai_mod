@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，
+       不要手改（改动会在重跑时被覆盖）。地占师 职业技能 -->
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Stoneskin</defName>
+    <label>石肤</label>
+    <description>开启后石肤护体，大幅减伤（简化：限时减伤，RoM 的层数格挡未移植）。再次施放关闭。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/stoneskin</iconPath>
+    <writeCombatLog>false</writeCombatLog>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>0</range>
+      <targetRequired>false</targetRequired>
+      <targetParams>
+        <canTargetSelf>true</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetLocations>false</canTargetLocations>
+        <canTargetAnimals>false</canTargetAnimals>
+        <canTargetHumans>false</canTargetHumans>
+        <canTargetMechs>false</canTargetMechs>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTToggleAura">
+        <auraHediffDef>MMT_Aura_Stoneskin</auraHediffDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Encase</defName>
+    <label>石墙禁锢</label>
+    <description>目标点石墙隆起封锁。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/encase</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>14400</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="CompProperties_AbilityWallraise">
+        <thingDef>RaisedRocks</thingDef>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Sentinel</defName>
+    <label>石哨兵</label>
+    <description>召唤石哨兵（巨蜘蛛）守卫，限时存在。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/gargoyle_south</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>Megaspider</pawnKindDef>
+        <count>1</count>
+        <durationTicks>30000</durationTicks>
+        <maxActive>2</maxActive>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_EarthernHammer</defName>
+    <label>大地之锤</label>
+    <description>引力抛石砸击区域。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/earthernhammer</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>16</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>7200</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
+        <damageDef>Blunt</damageDef>
+        <damageAmount>20</damageAmount>
+        <radius>3.5</radius>
+        <armorPen>0</armorPen>
+        <pulses>1</pulses>
+        <pulseIntervalTicks>60</pulseIntervalTicks>
+      </li>
+    </comps>
+  </AbilityDef>
+  <AbilityDef ParentName="PsycastBase">
+    <defName>MMT_Magic_Meteor</defName>
+    <label>陨石轰击</label>
+    <description>陨石轰击，落点留下矿渣。</description>
+    <level>1</level>
+    <iconPath>UI/RoM/meteorite</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <statBases>
+      <Ability_EntropyGain>35</Ability_EntropyGain>
+      <Ability_PsyfocusCost>0.04</Ability_PsyfocusCost>
+    </statBases>
+    <cooldownTicksRange>36000</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.5</warmupTime>
+      <range>24.9</range>
+      <targetParams>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
+        <damageDef>Bomb</damageDef>
+        <damageAmount>35</damageAmount>
+        <radius>4</radius>
+        <armorPen>0</armorPen>
+        <pulses>1</pulses>
+        <pulseIntervalTicks>60</pulseIntervalTicks>
+        <startFireChance>0.3</startFireChance>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSpawnEffect">
+        <spawnThingDef>ChunkSlagSteel</spawnThingDef>
+        <spawnCount>2</spawnCount>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>

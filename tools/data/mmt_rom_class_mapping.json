@@ -1,0 +1,6001 @@
+{
+  "_comment": "MMT 职业系统映射表（mmt-class-design.md §2.4，唯一人工维护点）。生成器：tools/build_mmt_rom_classes.py。tier: small/mid/big → 灵能消耗档；stage: 解锁阶位 1/2/3；target: self/friendly/enemy/location/corpse；labelSource: copied=抄 RoM 自带汉化，translated=自译。",
+  "classes": {
+    "FireMage": {
+      "label": "火系魔法师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "火焰投射与区域焚烧（原型 RoM InnerFire）。",
+      "abilities": [
+        "MMT_Magic_Firebolt",
+        "MMT_Magic_RayofHope",
+        "MMT_Magic_Fireball",
+        "MMT_Magic_Fireclaw",
+        "MMT_Magic_Firestorm"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.03
+          }
+        },
+        "2": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.06
+          }
+        },
+        "3": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.1
+          }
+        }
+      },
+      "family": "elemental"
+    },
+    "IceMage": {
+      "label": "冰系魔法师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "减速冻结与控制（原型 RoM HeartOfFrost）。",
+      "abilities": [
+        "MMT_Magic_FrostRay",
+        "MMT_Magic_Icebolt",
+        "MMT_Magic_Snowball",
+        "MMT_Magic_Soothe",
+        "MMT_Magic_Rainmaker",
+        "MMT_Magic_Blizzard"
+      ],
+      "passives": {},
+      "family": "elemental"
+    },
+    "LightningMage": {
+      "label": "雷系魔法师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "雷击与眩晕（原型 RoM StormBorn）。",
+      "abilities": [
+        "MMT_Magic_LightningBolt",
+        "MMT_Magic_AMP",
+        "MMT_Magic_LightningCloud",
+        "MMT_Magic_EyeOfTheStorm",
+        "MMT_Magic_LightningStorm"
+      ],
+      "passives": {},
+      "family": "elemental"
+    },
+    "Arcanist": {
+      "label": "奥术法师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "空间操控（原型 RoM Arcanist）。",
+      "abilities": [
+        "MMT_Magic_Blink",
+        "MMT_Magic_MagicMissile",
+        "MMT_Magic_Shadow",
+        "MMT_Magic_Summon",
+        "MMT_Magic_Teleport"
+      ],
+      "passives": {},
+      "family": "arcane"
+    },
+    "Druid": {
+      "label": "德鲁伊",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "自然恢复与动物（原型 RoM Druid）。",
+      "abilities": [
+        "MMT_Magic_Poison",
+        "MMT_Magic_Regenerate",
+        "MMT_Magic_SootheAnimal",
+        "MMT_Magic_CureDisease"
+      ],
+      "passives": {},
+      "family": "nature"
+    },
+    "Paladin": {
+      "label": "圣骑士",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "防护与治疗（原型 RoM Paladin）。",
+      "abilities": [
+        "MMT_Magic_Heal",
+        "MMT_Magic_Shield",
+        "MMT_Magic_P_RayofHope",
+        "MMT_Magic_ValiantCharge",
+        "MMT_Magic_Overwhelm",
+        "MMT_Magic_HolyWrath"
+      ],
+      "passives": {
+        "1": {
+          "statOffsets": {
+            "MeleeHitChance": 2
+          }
+        },
+        "2": {
+          "statOffsets": {
+            "MeleeHitChance": 4
+          }
+        },
+        "3": {
+          "statOffsets": {
+            "MeleeHitChance": 6
+          }
+        }
+      },
+      "family": "holy"
+    },
+    "Summoner": {
+      "label": "召唤师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "召唤物海（原型 RoM Summoner），召唤物全部限时存在。",
+      "abilities": [
+        "MMT_Magic_SummonMinion",
+        "MMT_Magic_SummonPylon",
+        "MMT_Magic_SummonExplosive",
+        "MMT_Magic_SummonPoppi",
+        "MMT_Magic_SummonElemental"
+      ],
+      "passives": {},
+      "family": "nature"
+    },
+    "Necromancer": {
+      "label": "死灵法师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "尸体与亡灵（原型 RoM Necromancer）。",
+      "abilities": [
+        "MMT_Magic_RaiseUndead",
+        "MMT_Magic_DeathMark",
+        "MMT_Magic_DeathBolt",
+        "MMT_Magic_CorpseExplosion",
+        "MMT_Magic_FogOfTorment"
+      ],
+      "passives": {},
+      "family": "necro"
+    },
+    "Priest": {
+      "label": "牧师",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "纯粹治疗（原型 RoM Priest）。",
+      "abilities": [
+        "MMT_Magic_AdvancedHeal",
+        "MMT_Magic_BestowMight",
+        "MMT_Magic_HealingCircle",
+        "MMT_Magic_Purify",
+        "MMT_Magic_Resurrection"
+      ],
+      "passives": {},
+      "family": "holy"
+    },
+    "Bard": {
+      "label": "吟游诗人",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "情绪与激励（原型 RoM Bard）。",
+      "abilities": [
+        "MMT_Magic_Entertain",
+        "MMT_Magic_Inspire",
+        "MMT_Magic_Lullaby",
+        "MMT_Magic_BattleHymn"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "SocialImpact": 1.1
+          }
+        },
+        "2": {
+          "statFactors": {
+            "SocialImpact": 1.2
+          }
+        },
+        "3": {
+          "statFactors": {
+            "SocialImpact": 1.3
+          }
+        }
+      },
+      "family": "mind"
+    },
+    "DemonKin": {
+      "label": "恶魔术士",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "暗影与支配（RoM Warlock/Succubus 合并）。",
+      "abilities": [
+        "MMT_Magic_ShadowBolt",
+        "MMT_Magic_Repulsion",
+        "MMT_Magic_Dominate",
+        "MMT_Magic_Attraction",
+        "MMT_Magic_Scorn",
+        "MMT_Magic_PsychicShock",
+        "MMT_Magic_SummonDemon"
+      ],
+      "passives": {},
+      "family": "necro"
+    },
+    "Geomancer": {
+      "label": "地占师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "岩石与大地（原型 RoM Geomancer）。",
+      "abilities": [
+        "MMT_Magic_Stoneskin",
+        "MMT_Magic_Encase",
+        "MMT_Magic_Sentinel",
+        "MMT_Magic_EarthernHammer",
+        "MMT_Magic_Meteor"
+      ],
+      "passives": {},
+      "family": "elemental"
+    },
+    "Technomancer": {
+      "label": "技法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "科技与机械克制（原型 RoM Technomancer）。",
+      "abilities": [
+        "MMT_Magic_NanoStimulant",
+        "MMT_Magic_TechnoShield",
+        "MMT_Magic_Sabotage",
+        "MMT_Magic_TechnoTurret",
+        "MMT_Magic_Overdrive",
+        "MMT_Magic_OrbitalStrike"
+      ],
+      "passives": {},
+      "family": "arcane"
+    },
+    "BloodMage": {
+      "label": "血法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "以血换力（原型 RoM BloodMage）。",
+      "abilities": [
+        "MMT_Magic_BloodGift",
+        "MMT_Magic_BloodForBlood",
+        "MMT_Magic_IgniteBlood",
+        "MMT_Magic_BloodShield",
+        "MMT_Magic_Rend",
+        "MMT_Magic_BloodMoon"
+      ],
+      "passives": {},
+      "family": "necro"
+    },
+    "Enchanter": {
+      "label": "附魔师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "增益与造物（原型 RoM Enchanter，薄职业，核心附魔机制与 MMT 模块系统重叠而 deferred）。",
+      "abilities": [
+        "MMT_Magic_EnchantedBody",
+        "MMT_Magic_EnchantedAura"
+      ],
+      "passives": {},
+      "family": "arcane"
+    },
+    "Chronomancer": {
+      "label": "时空法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "时间操控（原型 RoM Chronomancer，薄职业）。",
+      "abilities": [
+        "MMT_Magic_AlterFate",
+        "MMT_Magic_AccelerateTime"
+      ],
+      "passives": {},
+      "family": "arcane"
+    },
+    "Shadow": {
+      "label": "暗影",
+      "branch": "magic",
+      "labelSource": "copied",
+      "description": "潜行背刺（原型 RoM TheShadow，含影行者变体）。",
+      "abilities": [
+        "MMT_Magic_ShadowWalk",
+        "MMT_Magic_Nightshade",
+        "MMT_Magic_ShadowStrike",
+        "MMT_Magic_VeilOfShadows"
+      ],
+      "passives": {},
+      "family": "mind"
+    },
+    "Brightmage": {
+      "label": "光法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "光与致盲（原型 RoM Brightmage）。",
+      "abilities": [
+        "MMT_Magic_LightLance",
+        "MMT_Magic_LightBurst",
+        "MMT_Magic_LightSkip",
+        "MMT_Magic_Refraction",
+        "MMT_Magic_Sunfire",
+        "MMT_Magic_SpiritOfLight"
+      ],
+      "passives": {},
+      "family": "holy"
+    },
+    "Shaman": {
+      "label": "萨满",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "图腾与灵狼（原型 RoM Shaman）。",
+      "abilities": [
+        "MMT_Magic_Hex",
+        "MMT_Magic_ChainLightning",
+        "MMT_Magic_Hex_Pain",
+        "MMT_Magic_Hex_CriticalFail",
+        "MMT_Magic_Hex_MentalAssault",
+        "MMT_Magic_SummonTotemLightning",
+        "MMT_Magic_SummonTotemEarth",
+        "MMT_Magic_SummonTotemHealing",
+        "MMT_Magic_Enrage",
+        "MMT_Magic_SpiritWolves",
+        "MMT_Magic_GuardianSpirit"
+      ],
+      "passives": {},
+      "family": "nature"
+    },
+    "Golemancer": {
+      "label": "傀儡师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "烙印网络（原型 RoM Golemancer，薄职业，傀儡制作体系 deferred）。",
+      "abilities": [
+        "MMT_Magic_FitnessBrand",
+        "MMT_Magic_EmotionBrand",
+        "MMT_Magic_VitalityBrand",
+        "MMT_Magic_ProtectionBrand",
+        "MMT_Magic_AwarenessBrand"
+      ],
+      "passives": {},
+      "family": "nature"
+    },
+    "Empath": {
+      "label": "共情者",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "情绪操控（原型 RoM Empath）。",
+      "abilities": [
+        "MMT_Magic_SuppressiveAura",
+        "MMT_Magic_FadeEmotions",
+        "MMT_Magic_MindKiller"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "SocialImpact": 1.05
+          }
+        },
+        "2": {
+          "statFactors": {
+            "SocialImpact": 1.1
+          }
+        },
+        "3": {
+          "statFactors": {
+            "SocialImpact": 1.15
+          }
+        }
+      },
+      "family": "mind"
+    },
+    "Possessor": {
+      "label": "附身灵",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "灵体与亡魂（原型 RoM Possessor）。",
+      "abilities": [
+        "MMT_Magic_SpiritDrain",
+        "MMT_Magic_DistortSpirit",
+        "MMT_Magic_SpiritRally",
+        "MMT_Magic_SummonSpiritAnimalMass",
+        "MMT_Magic_SpiritStorm"
+      ],
+      "passives": {},
+      "family": "necro"
+    },
+    "Wanderer": {
+      "label": "流浪法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "通用成长（原型 RoM Wanderer）。无专属技，III 阶解锁法师通用技。",
+      "abilities": [
+        "MMT_Magic_MageLight",
+        "MMT_Magic_SmokeCloud",
+        "MMT_Magic_CauterizeWound",
+        "MMT_Magic_ArcaneBolt",
+        "MMT_Magic_Extinguish",
+        "MMT_Magic_Invisibility"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "WorkSpeedGlobal": 1.05,
+            "GlobalLearningFactor": 1.1
+          },
+          "statOffsets": {
+            "MoveSpeed": 0.1
+          }
+        },
+        "2": {
+          "statFactors": {
+            "WorkSpeedGlobal": 1.1,
+            "GlobalLearningFactor": 1.2
+          },
+          "statOffsets": {
+            "MoveSpeed": 0.2
+          }
+        },
+        "3": {
+          "statFactors": {
+            "WorkSpeedGlobal": 1.15,
+            "GlobalLearningFactor": 1.2
+          },
+          "statOffsets": {
+            "MoveSpeed": 0.3
+          }
+        }
+      },
+      "family": "arcane"
+    },
+    "WeatherMage": {
+      "label": "气象法师",
+      "branch": "magic",
+      "labelSource": "translated",
+      "description": "天气操控（原型 RoM CustomDefs/TM_WeatherMage）。",
+      "abilities": [
+        "MMT_Magic_WeatherClearSkies",
+        "MMT_Magic_WeatherWarmFront",
+        "MMT_Magic_WeatherCoolFront",
+        "MMT_Magic_WeatherFertileRain",
+        "MMT_Magic_WeatherDisperseFallout",
+        "MMT_Magic_WeatherAurora"
+      ],
+      "passives": {},
+      "family": "elemental"
+    },
+    "Gladiator": {
+      "label": "角斗士",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "近战生存与横扫（原型 RoM Gladiator）。",
+      "abilities": [
+        "MMT_Might_Sprint",
+        "MMT_Might_Grapple",
+        "MMT_Might_Cleave",
+        "MMT_Might_Whirlwind",
+        "MMT_Might_GladiatorManeuver",
+        "MMT_Might_GladiatorSweep"
+      ],
+      "passives": {
+        "1": {
+          "statOffsets": {
+            "PainShockThreshold": 0.05
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.98
+          }
+        },
+        "2": {
+          "statOffsets": {
+            "PainShockThreshold": 0.1
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.96
+          }
+        },
+        "3": {
+          "statOffsets": {
+            "PainShockThreshold": 0.15
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.94
+          }
+        }
+      },
+      "family": "blade"
+    },
+    "Ranger": {
+      "label": "游侠",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "弓箭与陷阱（原型 RoM Ranger）。",
+      "abilities": [
+        "MMT_Might_PoisonTrap",
+        "MMT_Might_ArrowStorm",
+        "MMT_Might_AnimalFriend",
+        "MMT_Might_RangerSafeTrail"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.03
+          }
+        },
+        "2": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.06
+          }
+        },
+        "3": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.1
+          }
+        }
+      },
+      "family": "marksman"
+    },
+    "Sniper": {
+      "label": "狙击手",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "致命射击（原型 RoM Sniper）。",
+      "abilities": [
+        "MMT_Might_SniperAimedShot",
+        "MMT_Might_DisablingShot",
+        "MMT_Might_Headshot",
+        "MMT_Might_AntiArmor",
+        "MMT_Might_ShadowSlayer",
+        "MMT_Might_SniperArmorFracture",
+        "MMT_Might_SniperSingleOpening"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "AimingDelayFactor": 0.97
+          }
+        },
+        "2": {
+          "statFactors": {
+            "AimingDelayFactor": 0.94
+          }
+        },
+        "3": {
+          "statFactors": {
+            "AimingDelayFactor": 0.9
+          }
+        }
+      },
+      "family": "marksman"
+    },
+    "Bladedancer": {
+      "label": "刀锋舞者",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "位移连斩（原型 RoM Bladedancer）。",
+      "abilities": [
+        "MMT_Might_BladeSpin",
+        "MMT_Might_PhaseStrike",
+        "MMT_Might_SeismicSlash",
+        "MMT_Might_BladePassage"
+      ],
+      "passives": {
+        "1": {
+          "statOffsets": {
+            "MeleeHitChance": 2,
+            "MoveSpeed": 0.1
+          }
+        },
+        "2": {
+          "statOffsets": {
+            "MeleeHitChance": 4,
+            "MoveSpeed": 0.2
+          }
+        },
+        "3": {
+          "statOffsets": {
+            "MeleeHitChance": 6,
+            "MoveSpeed": 0.3
+          }
+        }
+      },
+      "family": "blade"
+    },
+    "Faceless": {
+      "label": "无面者",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "欺诈与反制（原型 RoM Faceless）。",
+      "abilities": [
+        "MMT_Might_Disguise",
+        "MMT_Might_Reversal",
+        "MMT_Might_Transpose",
+        "MMT_Might_Possess"
+      ],
+      "passives": {},
+      "family": "marksman"
+    },
+    "Psionic": {
+      "label": "灵能武者",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "灵能近战（原型 RoM Psionic）。",
+      "abilities": [
+        "MMT_Might_PsionicBlast",
+        "MMT_Might_PsionicBarrier",
+        "MMT_Might_PsionicDash",
+        "MMT_Might_PsionicKineticCrucible",
+        "MMT_Might_PsionicStorm"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "PsychicSensitivity": 1.05
+          }
+        },
+        "2": {
+          "statFactors": {
+            "PsychicSensitivity": 1.1
+          }
+        },
+        "3": {
+          "statFactors": {
+            "PsychicSensitivity": 1.15
+          }
+        }
+      },
+      "family": "vanguard"
+    },
+    "DeathKnight": {
+      "label": "死亡骑士",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "恐惧与吸血（原型 RoM DeathKnight；近战吸血 1%/2%/3% 由 PawnProgress 伤害钩子结算）。",
+      "abilities": [
+        "MMT_Might_Spite",
+        "MMT_Might_WaveOfFear",
+        "MMT_Might_GraveBlade",
+        "MMT_Might_Shroud"
+      ],
+      "passives": {},
+      "family": "vanguard"
+    },
+    "Monk": {
+      "label": "武僧",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "空手格斗（原型 RoM Monk，\"气\"资源灵能化）。",
+      "abilities": [
+        "MMT_Might_ChiBurst",
+        "MMT_Might_Meditate",
+        "MMT_Might_DragonStrike",
+        "MMT_Might_MonkSilentMeridian"
+      ],
+      "passives": {
+        "1": {
+          "statOffsets": {
+            "MeleeDodgeChance": 3
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.97
+          }
+        },
+        "2": {
+          "statOffsets": {
+            "MeleeDodgeChance": 6
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.94
+          }
+        },
+        "3": {
+          "statOffsets": {
+            "MeleeDodgeChance": 9
+          },
+          "statFactors": {
+            "IncomingDamageFactor": 0.9
+          }
+        }
+      },
+      "family": "blade"
+    },
+    "Commander": {
+      "label": "指挥官",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "群体光环（原型 RoM Commander；光环大户，注意脉冲间隔设置）。",
+      "abilities": [
+        "MMT_Might_ProvisionerAura",
+        "MMT_Might_TaskMasterAura",
+        "MMT_Might_CommanderAura",
+        "MMT_Might_MoveOut",
+        "MMT_Might_StayAlert",
+        "MMT_Might_HoldTheLine",
+        "MMT_Might_CommanderWorkCrew",
+        "MMT_Might_CommanderRally",
+        "MMT_Might_CommanderOperationEvac"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "SocialImpact": 1.05,
+            "NegotiationAbility": 1.05
+          }
+        },
+        "2": {
+          "statFactors": {
+            "SocialImpact": 1.1,
+            "NegotiationAbility": 1.1
+          }
+        },
+        "3": {
+          "statFactors": {
+            "SocialImpact": 1.15,
+            "NegotiationAbility": 1.15
+          }
+        }
+      },
+      "family": "support"
+    },
+    "SuperSoldier": {
+      "label": "超级士兵",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "现代武器战术（原型 RoM SuperSoldier）。",
+      "abilities": [
+        "MMT_Might_FirstAid",
+        "MMT_Might_Buckshot",
+        "MMT_Might_PistolWhip",
+        "MMT_Might_SuppressingFire",
+        "MMT_Might_Mk203GL",
+        "MMT_Might_BreachingCharge",
+        "MMT_Might_SuperSoldierFieldDressing",
+        "MMT_Might_60mmMortar"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.03,
+            "AimingDelayFactor": 0.98
+          }
+        },
+        "2": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.06,
+            "AimingDelayFactor": 0.96
+          }
+        },
+        "3": {
+          "statFactors": {
+            "ShootingAccuracyPawn": 1.1,
+            "AimingDelayFactor": 0.94
+          }
+        }
+      },
+      "family": "vanguard"
+    },
+    "Apothecary": {
+      "label": "药剂师",
+      "branch": "might",
+      "labelSource": "copied",
+      "description": "药剂与治疗（原型 RoM Apothecary，\"草药\"资源灵能化）。",
+      "abilities": [
+        "MMT_Might_SoothingBalm",
+        "MMT_Might_PoisonFlask",
+        "MMT_Might_ApothecaryAntitoxin",
+        "MMT_Might_Elixir",
+        "MMT_Might_HerbalClarity",
+        "MMT_Might_FireSuppressionFlask",
+        "MMT_Might_ApothecaryGoldenHour",
+        "MMT_Might_HerbalBliss"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.1
+          }
+        },
+        "2": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.2
+          }
+        },
+        "3": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.3
+          }
+        }
+      },
+      "family": "support"
+    },
+    "Wayfarer": {
+      "label": "旅者",
+      "branch": "might",
+      "labelSource": "translated",
+      "description": "斗士版通用成长（原型 RoM Wayfarer）。无专属技，III 阶解锁斗士通用技。",
+      "abilities": [
+        "MMT_Might_Taunt",
+        "MMT_Might_ShieldOther",
+        "MMT_Might_ThrowingKnife",
+        "MMT_Might_HeavyBlow",
+        "MMT_Might_ThickSkin",
+        "MMT_Might_InnerHealing"
+      ],
+      "passives": {
+        "1": {
+          "statOffsets": {
+            "MoveSpeed": 0.1,
+            "CarryingCapacity": 10
+          },
+          "statFactors": {
+            "ImmunityGainSpeed": 1.05
+          }
+        },
+        "2": {
+          "statOffsets": {
+            "MoveSpeed": 0.2,
+            "CarryingCapacity": 20
+          },
+          "statFactors": {
+            "ImmunityGainSpeed": 1.1
+          }
+        },
+        "3": {
+          "statOffsets": {
+            "MoveSpeed": 0.3,
+            "CarryingCapacity": 30
+          },
+          "statFactors": {
+            "ImmunityGainSpeed": 1.15
+          }
+        }
+      },
+      "family": "support"
+    },
+    "FieldMedic": {
+      "label": "战地军医",
+      "branch": "might",
+      "labelSource": "translated",
+      "description": "战场救护（原型 RoM Field Medic 血清职业）。",
+      "abilities": [
+        "MMT_Might_Medigel",
+        "MMT_Might_Emergency",
+        "MMT_Might_CombatDrugs",
+        "MMT_Might_MedicalSupply"
+      ],
+      "passives": {
+        "1": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.1
+          },
+          "statOffsets": {
+            "MedicalTendQuality": 0.05
+          }
+        },
+        "2": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.25
+          },
+          "statOffsets": {
+            "MedicalTendQuality": 0.1
+          }
+        },
+        "3": {
+          "statFactors": {
+            "MedicalTendSpeed": 1.4
+          },
+          "statOffsets": {
+            "MedicalTendQuality": 0.15
+          }
+        }
+      },
+      "family": "support"
+    }
+  },
+  "gameConditions": {
+    "MMT_Cond_WarmFront": {
+      "label": "暖流",
+      "description": "魔法唤来的暖流，全图气温升高。",
+      "temperatureOffset": 8
+    },
+    "MMT_Cond_CoolFront": {
+      "label": "寒流",
+      "description": "魔法唤来的寒流，全图气温降低。",
+      "temperatureOffset": -8
+    },
+    "MMT_Cond_FertileRain": {
+      "label": "丰饶之雨",
+      "description": "蕴含自然魔力的雨水，种植区作物加速生长。",
+      "conditionClass": "MyModeTest.GameCondition_MMTFertility"
+    }
+  },
+  "summonBuildings": {
+    "MMT_Bld_SummonPylon": {
+      "label": "魔法防御塔",
+      "description": "召唤的奥术炮塔，自动轰击附近敌人，限时存在。",
+      "mode": "attack",
+      "damageDef": "Bullet",
+      "damageAmount": 12,
+      "radius": 20,
+      "intervalTicks": 90,
+      "lifespanTicks": 36000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    },
+    "MMT_Bld_TechnoTurret": {
+      "label": "神经炮塔",
+      "description": "限时遥控炮塔。",
+      "mode": "attack",
+      "damageDef": "Bullet",
+      "damageAmount": 15,
+      "radius": 22,
+      "intervalTicks": 80,
+      "lifespanTicks": 36000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    },
+    "MMT_Bld_TotemLightning": {
+      "label": "闪电图腾",
+      "description": "萨满图腾，周期性电击附近敌人。",
+      "mode": "attack",
+      "damageDef": "EMP",
+      "damageAmount": 14,
+      "radius": 18,
+      "intervalTicks": 120,
+      "lifespanTicks": 30000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    },
+    "MMT_Bld_TotemEarth": {
+      "label": "大地图腾",
+      "description": "萨满图腾，抛掷石块砸击附近敌人。",
+      "mode": "attack",
+      "damageDef": "Blunt",
+      "damageAmount": 25,
+      "radius": 14,
+      "intervalTicks": 180,
+      "lifespanTicks": 30000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    },
+    "MMT_Bld_TotemHealing": {
+      "label": "治疗图腾",
+      "description": "萨满图腾，周期性治疗周围友军。",
+      "mode": "heal",
+      "healAmount": 6,
+      "healMaxTargets": 3,
+      "radius": 10,
+      "intervalTicks": 300,
+      "lifespanTicks": 30000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    },
+    "MMT_Bld_ManaMine": {
+      "label": "魔法地雷",
+      "description": "敌人接近即引爆的法力地雷，限时存在。",
+      "mode": "mine",
+      "damageDef": "Bomb",
+      "damageAmount": 25,
+      "radius": 1.8,
+      "explosionRadius": 2.9,
+      "intervalTicks": 30,
+      "lifespanTicks": 60000,
+      "tex": "Things/Building/Production/RoM/MMT_SummonPylon"
+    }
+  },
+  "externalHediffs": [
+    "ToxicBuildup",
+    "Anesthetic",
+    "ResurrectionSickness",
+    "PsychicInvisibility",
+    "GoJuiceHigh",
+    "WakeUpHigh",
+    "YayoHigh",
+    "AmbrosiaHigh"
+  ],
+  "ignored": [
+    {
+      "romDef": "TM_CompVerb",
+      "reason": "RoM 内部基类，非技能"
+    },
+    {
+      "romDef": "TM_Elemental_Icebolt",
+      "reason": "RoM 召唤元素生物自带攻击技，非职业技能"
+    },
+    {
+      "romDef": "TM_Elemental_Firebolt",
+      "reason": "同上"
+    }
+  ],
+  "passives": [
+    {
+      "romDef": "TM_BardTraining",
+      "class": "Bard",
+      "reason": "吟游诗人训练 → 阶位被动 SocialImpact"
+    },
+    {
+      "romDef": "TM_RangerTraining",
+      "class": "Ranger",
+      "reason": "游侠训练 → 阶位被动射击精度"
+    },
+    {
+      "romDef": "TM_BowTraining",
+      "class": "Ranger",
+      "reason": "弓箭训练 → 阶位被动射击精度"
+    },
+    {
+      "romDef": "TM_Fortitude",
+      "class": "Gladiator",
+      "reason": "坚忍 → 阶位被动 IncomingDamageFactor"
+    },
+    {
+      "romDef": "TM_BladeFocus",
+      "class": "Bladedancer",
+      "reason": "剑术专注 → 阶位被动近战命中/移速"
+    },
+    {
+      "romDef": "TM_BladeArt",
+      "class": "Bladedancer",
+      "reason": "剑术精通 → 阶位被动"
+    },
+    {
+      "romDef": "TM_PsionicAugmentation",
+      "class": "Psionic",
+      "reason": "灵能强化 → 阶位被动心灵敏感度"
+    },
+    {
+      "romDef": "TM_LifeSteal",
+      "class": "DeathKnight",
+      "reason": "吸血 → 阶位被动近战吸血（C# 伤害钩子结算）"
+    },
+    {
+      "romDef": "TM_Chi",
+      "class": "Monk",
+      "reason": "气 → 阶位被动闪避/减伤"
+    },
+    {
+      "romDef": "TM_MindOverBody",
+      "class": "Monk",
+      "reason": "心胜于物 → 阶位被动"
+    },
+    {
+      "romDef": "TM_PistolSpec",
+      "class": "SuperSoldier",
+      "reason": "手枪专精 → 阶位被动"
+    },
+    {
+      "romDef": "TM_RifleSpec",
+      "class": "SuperSoldier",
+      "reason": "步枪专精 → 阶位被动"
+    },
+    {
+      "romDef": "TM_ShotgunSpec",
+      "class": "SuperSoldier",
+      "reason": "霰弹专精 → 阶位被动"
+    },
+    {
+      "romDef": "TM_Herbalist",
+      "class": "Apothecary",
+      "reason": "草药辨识 → 阶位被动医护速度"
+    },
+    {
+      "romDef": "TM_Empathy",
+      "class": "Empath",
+      "reason": "共情 → 阶位被动 SocialImpact"
+    },
+    {
+      "romDef": "TM_SniperFocus",
+      "class": "Sniper",
+      "reason": "狙击专注 → 阶位被动瞄准速度"
+    },
+    {
+      "romDef": "TM_Cantrips",
+      "class": "Wanderer",
+      "reason": "戏法 → III 阶通用技能池入口"
+    },
+    {
+      "romDef": "TM_FieldTraining",
+      "class": "Wayfarer",
+      "reason": "实战训练 → III 阶通用技能池入口"
+    },
+    {
+      "romDef": "TM_Branding",
+      "class": "Golemancer",
+      "reason": "烙印网络入口被动"
+    },
+    {
+      "romDef": "TM_Totems",
+      "class": "Shaman",
+      "reason": "图腾掌控入口被动"
+    }
+  ],
+  "deferred": [
+    {
+      "romDef": "TM_FoldReality",
+      "class": "Arcanist",
+      "reason": "双向星门跨格转移实体"
+    },
+    {
+      "romDef": "TM_RegrowLimb",
+      "class": "Druid",
+      "reason": "生成手术材料+解锁手术，跨医疗系统"
+    },
+    {
+      "romDef": "TM_ConsumeCorpse",
+      "class": "Necromancer",
+      "reason": "吞尸体回蓝，灵能模型无对应资源"
+    },
+    {
+      "romDef": "TM_LichForm",
+      "class": "Necromancer",
+      "reason": "永久变身不可逆"
+    },
+    {
+      "romDef": "TM_DismissUndead",
+      "class": "Necromancer",
+      "reason": "Dismiss 解除技：召唤物限时消失替代"
+    },
+    {
+      "romDef": "TM_SoulBond",
+      "class": "DemonKin",
+      "reason": "双 pawn 契约纽带"
+    },
+    {
+      "romDef": "TM_ShadowCall",
+      "class": "DemonKin",
+      "reason": "双 pawn 契约纽带"
+    },
+    {
+      "romDef": "TM_ShadowStep",
+      "class": "DemonKin",
+      "reason": "双 pawn 契约纽带互相传送"
+    },
+    {
+      "romDef": "TM_DispelStoneskin",
+      "class": "Geomancer",
+      "reason": "配套解除技"
+    },
+    {
+      "romDef": "TM_EarthSprites",
+      "class": "Geomancer",
+      "reason": "地形改造"
+    },
+    {
+      "romDef": "TM_DismissEarthSprites",
+      "class": "Geomancer",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_ShatterSentinel",
+      "class": "Geomancer",
+      "reason": "多召唤物联动引爆"
+    },
+    {
+      "romDef": "TM_TechnoBit",
+      "class": "Technomancer",
+      "reason": "自主随从 AI"
+    },
+    {
+      "romDef": "TM_TechnoWeapon",
+      "class": "Technomancer",
+      "reason": "法力铸造武器"
+    },
+    {
+      "romDef": "TM_Transmutate",
+      "class": "Enchanter",
+      "reason": "物品材质转换"
+    },
+    {
+      "romDef": "TM_EnchanterStone",
+      "class": "Enchanter",
+      "reason": "永久造物"
+    },
+    {
+      "romDef": "TM_DismissEnchanterStones",
+      "class": "Enchanter",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_EnchantWeapon",
+      "class": "Enchanter",
+      "reason": "与 MMT 模块附魔系统冲突"
+    },
+    {
+      "romDef": "TM_DispelEnchantWeapon",
+      "class": "Enchanter",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_Polymorph",
+      "class": "Enchanter",
+      "reason": "变形"
+    },
+    {
+      "romDef": "TM_Shapeshift",
+      "class": "Enchanter",
+      "reason": "变形"
+    },
+    {
+      "romDef": "TM_Prediction",
+      "class": "Chronomancer",
+      "reason": "预言资源积攒"
+    },
+    {
+      "romDef": "TM_ReverseTime",
+      "class": "Chronomancer",
+      "reason": "腐化逆转"
+    },
+    {
+      "romDef": "TM_ChronostaticField",
+      "class": "Chronomancer",
+      "reason": "时间静滞"
+    },
+    {
+      "romDef": "TM_TimeMark",
+      "class": "Chronomancer",
+      "reason": "状态快照时标"
+    },
+    {
+      "romDef": "TM_Recall",
+      "class": "Chronomancer",
+      "reason": "状态快照回溯"
+    },
+    {
+      "romDef": "TM_SoL_CreateLight",
+      "class": "Brightmage",
+      "reason": "召唤物联动"
+    },
+    {
+      "romDef": "TM_SoL_Equalize",
+      "class": "Brightmage",
+      "reason": "召唤物联动"
+    },
+    {
+      "romDef": "TM_LightSkipMass",
+      "class": "Brightmage",
+      "reason": "群体光行（单人版已映射）"
+    },
+    {
+      "romDef": "TM_LightSkipGlobal",
+      "class": "Brightmage",
+      "reason": "全图光行（单人版已映射）"
+    },
+    {
+      "romDef": "TM_Mimic",
+      "class": "Faceless",
+      "reason": "复制存储他人技能"
+    },
+    {
+      "romDef": "TM_FacelessEcho",
+      "class": "Faceless",
+      "reason": "复制存储他人技能"
+    },
+    {
+      "romDef": "TM_TigerStrike",
+      "class": "Monk",
+      "reason": "近战多段连招需自定义 Verb"
+    },
+    {
+      "romDef": "TM_ThunderStrike",
+      "class": "Monk",
+      "reason": "近战多段连招需自定义 Verb"
+    },
+    {
+      "romDef": "TM_MonkPalmSeal",
+      "class": "Monk",
+      "reason": "近战多段连招需自定义 Verb"
+    },
+    {
+      "romDef": "TM_CQC",
+      "class": "SuperSoldier",
+      "reason": "近战多段连招需自定义 Verb"
+    },
+    {
+      "romDef": "TM_BladeSevenSteps",
+      "class": "Bladedancer",
+      "reason": "12 格路径 7 连斩，需路径编排"
+    },
+    {
+      "romDef": "TM_HarvestPassion",
+      "class": "Empath",
+      "reason": "操作 passion 数据"
+    },
+    {
+      "romDef": "TM_IncitePassion",
+      "class": "Empath",
+      "reason": "操作 passion 数据"
+    },
+    {
+      "romDef": "TM_Symbiosis",
+      "class": "Empath",
+      "reason": "双 pawn 命运绑定"
+    },
+    {
+      "romDef": "TM_SpiritPossession",
+      "class": "Possessor",
+      "reason": "接管 pawn 控制权"
+    },
+    {
+      "romDef": "TM_ControlSpiritStorm",
+      "class": "Possessor",
+      "reason": "引导移动风暴实体"
+    },
+    {
+      "romDef": "TM_Golemancy",
+      "class": "Golemancer",
+      "reason": "傀儡制作体系"
+    },
+    {
+      "romDef": "TM_RuneCarving",
+      "class": "Golemancer",
+      "reason": "符文雕刻体系"
+    },
+    {
+      "romDef": "TM_SiphonBrand",
+      "class": "Golemancer",
+      "reason": "烙印网络管理"
+    },
+    {
+      "romDef": "TM_SigilSurge",
+      "class": "Golemancer",
+      "reason": "烙印网络超载"
+    },
+    {
+      "romDef": "TM_SigilDrain",
+      "class": "Golemancer",
+      "reason": "烙印网络反转"
+    },
+    {
+      "romDef": "TM_LivingWall",
+      "class": "Golemancer",
+      "reason": "墙体活化"
+    },
+    {
+      "romDef": "TM_DispelLivingWall",
+      "class": "Golemancer",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_DispelBranding",
+      "class": "Golemancer",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_CommanderOperationAid",
+      "class": "Commander",
+      "reason": "按工作类型筛选目标+引导维持"
+    },
+    {
+      "romDef": "TM_RangerBreakthrough",
+      "class": "Ranger",
+      "reason": "人宠协同 AI 编排"
+    },
+    {
+      "romDef": "TM_ChaosTradition",
+      "class": "ChaosMage",
+      "reason": "混沌法师职业整体 deferred（随机技能池机制与固定职业体系冲突）"
+    },
+    {
+      "romDef": "TM_DismissMinion",
+      "class": "Summoner",
+      "reason": "Dismiss 解除技：召唤物限时消失替代"
+    },
+    {
+      "romDef": "TM_DismissGuardianSpirit",
+      "class": "Shaman",
+      "reason": "Dismiss 解除技：召唤物限时消失替代"
+    },
+    {
+      "romDef": "TM_WandererCraft",
+      "class": "Wanderer",
+      "reason": "魔法造物，与生产链定位重叠"
+    },
+    {
+      "romDef": "TM_WayfarerCraft",
+      "class": "Wayfarer",
+      "reason": "魔法造物，与生产链定位重叠"
+    },
+    {
+      "romDef": "TM_Heater",
+      "class": "Standalone",
+      "reason": "通用池未入选：热源，与 MMT 生产链/电力定位重叠"
+    },
+    {
+      "romDef": "TM_DismissHeater",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_Cooler",
+      "class": "Standalone",
+      "reason": "通用池未入选：冷源，定位重叠"
+    },
+    {
+      "romDef": "TM_DismissCooler",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_PowerNode",
+      "class": "Standalone",
+      "reason": "通用池未入选：发电节点，定位重叠"
+    },
+    {
+      "romDef": "TM_DismissPowerNode",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_Sunlight",
+      "class": "Standalone",
+      "reason": "通用池未入选：日光灯塔，定位重叠"
+    },
+    {
+      "romDef": "TM_DismissSunlight",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_DryGround",
+      "class": "Standalone",
+      "reason": "通用池未入选：地形改造"
+    },
+    {
+      "romDef": "TM_WetGround",
+      "class": "Standalone",
+      "reason": "通用池未入选：地形改造"
+    },
+    {
+      "romDef": "TM_FertileLands",
+      "class": "Standalone",
+      "reason": "通用池未入选：沃土，与农业链重叠"
+    },
+    {
+      "romDef": "TM_DismissFertileLands",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_ChargeBattery",
+      "class": "Standalone",
+      "reason": "通用池未入选：充电池，与电力链重叠"
+    },
+    {
+      "romDef": "TM_TransferMana",
+      "class": "Standalone",
+      "reason": "pawn 间法力转移，灵能模型无对应"
+    },
+    {
+      "romDef": "TM_SiphonMana",
+      "class": "Standalone",
+      "reason": "pawn 间法力转移，灵能模型无对应"
+    },
+    {
+      "romDef": "TM_ManaShield",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_ArcaneBarrier",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Flight",
+      "class": "Standalone",
+      "reason": "通用池未入选：飞行位移"
+    },
+    {
+      "romDef": "TM_SpellMending",
+      "class": "Standalone",
+      "reason": "通用池未入选：装备维修"
+    },
+    {
+      "romDef": "TM_TeachMagic",
+      "class": "Standalone",
+      "reason": "通用池未入选：传授经验"
+    },
+    {
+      "romDef": "TM_TeachMight",
+      "class": "Standalone",
+      "reason": "通用池未入选：传授经验"
+    },
+    {
+      "romDef": "TM_Blur",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_BlankMind",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_DirtDevil",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_MechaniteReprogramming",
+      "class": "Standalone",
+      "reason": "通用池未入选：机械再编程"
+    },
+    {
+      "romDef": "TM_PommelStrike",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_LightningTrap",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_DismissLightningTrap",
+      "class": "Standalone",
+      "reason": "Dismiss 解除技"
+    },
+    {
+      "romDef": "TM_BriarPatch",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Legion",
+      "class": "Standalone",
+      "reason": "通用池未入选：军团复制"
+    },
+    {
+      "romDef": "TM_TempestStrike",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Ignite",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_SnapFreeze",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Discord",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_MagicWardrobe",
+      "class": "Standalone",
+      "reason": "通用池未入选：次元衣柜"
+    },
+    {
+      "romDef": "TM_HeatShield",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_AlterStorm",
+      "class": "Standalone",
+      "reason": "通用池未入选：天气改造（气象法师已覆盖）"
+    },
+    {
+      "romDef": "TM_EMP",
+      "class": "Standalone",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Explosion",
+      "class": "Standalone",
+      "reason": "彩蛋大爆炸"
+    },
+    {
+      "romDef": "TM_GearRepair",
+      "class": "Sustained",
+      "reason": "通用池未入选：装备维修"
+    },
+    {
+      "romDef": "TM_StrongBack",
+      "class": "Sustained",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_FightersFocus",
+      "class": "Sustained",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_BurningFury",
+      "class": "Sustained",
+      "reason": "通用池未入选"
+    },
+    {
+      "romDef": "TM_Artifact_Conviction",
+      "class": "Artifact",
+      "reason": "神器技能：强行招募，不移植"
+    },
+    {
+      "romDef": "TM_Weapon_WintersFury",
+      "class": "Artifact",
+      "reason": "神器武器技，不移植"
+    }
+  ],
+  "abilities": {
+    "MMT_Magic_Firebolt": {
+      "romDef": "TM_Firebolt",
+      "class": "FireMage",
+      "label": "燃烧之箭",
+      "labelSource": "copied",
+      "description": "发射一枚燃烧之箭，命中点燃目标。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "cooldownSeconds": 4,
+      "params": {
+        "projectile": "MMT_Proj_Firebolt",
+        "projectileSpec": {
+          "damageDef": "Flame",
+          "damage": 12,
+          "speed": 60,
+          "tex": "firebolt"
+        }
+      }
+    },
+    "MMT_Magic_RayofHope": {
+      "romDef": "TM_RayofHope",
+      "class": "FireMage",
+      "label": "内心之火",
+      "labelSource": "translated",
+      "description": "开启后围绕施法者维持内心之火光环：周围友军抗寒、自愈、休息与饥饿消耗降低。维持会积累心灵熵，再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_InnerFire"
+      }
+    },
+    "MMT_Magic_Fireball": {
+      "romDef": "TM_Fireball",
+      "class": "FireMage",
+      "label": "火球术",
+      "labelSource": "copied",
+      "description": "掷出爆裂火球，落点范围爆炸并点燃。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "cooldownSeconds": 20,
+      "params": {
+        "projectile": "MMT_Proj_Fireball",
+        "projectileSpec": {
+          "damageDef": "Flame",
+          "damage": 20,
+          "speed": 45,
+          "explosionRadius": 2.5,
+          "tex": "fireball4"
+        }
+      }
+    },
+    "MMT_Magic_Fireclaw": {
+      "romDef": "TM_Fireclaw",
+      "class": "FireMage",
+      "label": "焰爪",
+      "labelSource": "copied",
+      "description": "火焰之爪横扫一片区域，造成伤害并引燃。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "damageDef": "Flame",
+        "damage": 15,
+        "radius": 3.5,
+        "startFireChance": 0.4
+      }
+    },
+    "MMT_Magic_Firestorm": {
+      "romDef": "TM_Firestorm",
+      "class": "FireMage",
+      "label": "火焰风暴",
+      "labelSource": "copied",
+      "description": "召唤流星火雨持续轰击大片区域。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 120,
+      "params": {
+        "damageDef": "Flame",
+        "damage": 25,
+        "radius": 5,
+        "pulses": 10,
+        "pulseIntervalTicks": 90,
+        "randomStrikes": true,
+        "startFireChance": 0.5
+      }
+    },
+    "MMT_Magic_FrostRay": {
+      "romDef": "TM_FrostRay",
+      "class": "IceMage",
+      "label": "霜冻之寒",
+      "labelSource": "copied",
+      "description": "霜冻射线，命中造成伤害并冻结减速。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_FrostRay",
+        "projectileSpec": {
+          "damageDef": "Frostbite",
+          "damage": 10,
+          "speed": 55,
+          "tex": "FrostRay"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediff",
+          "params": {
+            "hediff": "MMT_HD_FrostSlow"
+          }
+        }
+      ]
+    },
+    "MMT_Magic_Icebolt": {
+      "romDef": "TM_Icebolt",
+      "class": "IceMage",
+      "label": "冰箭术",
+      "labelSource": "copied",
+      "description": "锐利的冰箭，重创目标。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Icebolt",
+        "projectileSpec": {
+          "damageDef": "Frostbite",
+          "damage": 14,
+          "speed": 60,
+          "tex": "Icebolt"
+        }
+      }
+    },
+    "MMT_Magic_Snowball": {
+      "romDef": "TM_Snowball",
+      "class": "IceMage",
+      "label": "冰雪术",
+      "labelSource": "copied",
+      "description": "雪球爆裂，范围伤害并冻结。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Snowball",
+        "projectileSpec": {
+          "damageDef": "Frostbite",
+          "damage": 16,
+          "speed": 40,
+          "explosionRadius": 2.5,
+          "tex": "Snowball"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediffAoE",
+          "params": {
+            "hediff": "MMT_HD_FrostSlow",
+            "radius": 2.5,
+            "targetFriendly": false,
+            "includeSelf": false
+          }
+        }
+      ]
+    },
+    "MMT_Magic_Soothe": {
+      "romDef": "TM_Soothe",
+      "class": "IceMage",
+      "label": "抚慰之风",
+      "labelSource": "copied",
+      "description": "开启后维持抚慰之风光环：周围友军疼痛减轻、休息效率提升。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Soothe"
+      }
+    },
+    "MMT_Magic_Rainmaker": {
+      "romDef": "TM_Rainmaker",
+      "class": "IceMage",
+      "label": "唤雨者",
+      "labelSource": "copied",
+      "description": "召唤降雨。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "cooldownSeconds": 120,
+      "params": {
+        "weatherDef": "Rain"
+      }
+    },
+    "MMT_Magic_Blizzard": {
+      "romDef": "TM_Blizzard",
+      "class": "IceMage",
+      "label": "暴风雪",
+      "labelSource": "copied",
+      "description": "暴风雪掩埋敌人：大范围持续冰霜伤害与减速。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Frostbite",
+        "damage": 18,
+        "radius": 6,
+        "pulses": 12,
+        "pulseIntervalTicks": 90,
+        "randomStrikes": true,
+        "hitHediffDef": "MMT_HD_FrostSlow"
+      }
+    },
+    "MMT_Magic_LightningBolt": {
+      "romDef": "TM_LightningBolt",
+      "class": "LightningMage",
+      "label": "电闪雷鸣",
+      "labelSource": "copied",
+      "description": "单体雷击，对机械与护盾尤为致命，并眩晕目标。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_LightningBolt",
+        "projectileSpec": {
+          "damageDef": "EMP",
+          "damage": 20,
+          "speed": 70,
+          "tex": "LightningBolt"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "Stun",
+          "params": {}
+        }
+      ]
+    },
+    "MMT_Magic_AMP": {
+      "romDef": "TM_AMP",
+      "class": "LightningMage",
+      "label": "AMP",
+      "labelSource": "copied",
+      "description": "电流强化躯体：操纵、移动、意识大幅提升。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "cooldownSeconds": 600,
+      "params": {
+        "hediff": "MMT_HD_AMP"
+      }
+    },
+    "MMT_Magic_LightningCloud": {
+      "romDef": "TM_LightningCloud",
+      "class": "LightningMage",
+      "label": "天丛云雷",
+      "labelSource": "copied",
+      "description": "召来雷云，区域内连番落雷并震慑敌人。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "damageDef": "EMP",
+        "damage": 12,
+        "radius": 4,
+        "pulses": 5,
+        "pulseIntervalTicks": 60,
+        "randomStrikes": true,
+        "hitHediffDef": "MMT_HD_Stagger"
+      }
+    },
+    "MMT_Magic_EyeOfTheStorm": {
+      "romDef": "TM_EyeOfTheStorm",
+      "class": "LightningMage",
+      "label": "风暴之眼",
+      "labelSource": "copied",
+      "description": "凝聚湮灭电球掷向目标。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_EyeOfStorm",
+        "projectileSpec": {
+          "damageDef": "EMP",
+          "damage": 25,
+          "speed": 40,
+          "explosionRadius": 2,
+          "tex": "eyeofthestorm"
+        }
+      }
+    },
+    "MMT_Magic_LightningStorm": {
+      "romDef": "TM_LightningStorm",
+      "class": "LightningMage",
+      "label": "闪电风暴",
+      "labelSource": "copied",
+      "description": "召唤失控雷暴，大范围持续落雷。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 300,
+      "params": {
+        "damageDef": "EMP",
+        "damage": 22,
+        "radius": 6,
+        "pulses": 14,
+        "pulseIntervalTicks": 70,
+        "randomStrikes": true
+      }
+    },
+    "MMT_Magic_Blink": {
+      "romDef": "TM_Blink",
+      "class": "Arcanist",
+      "label": "闪烁",
+      "labelSource": "copied",
+      "description": "自身瞬移到目标位置。",
+      "comp": "Teleport",
+      "tier": "small",
+      "stage": 1,
+      "target": "location",
+      "cooldownSeconds": 6
+    },
+    "MMT_Magic_MagicMissile": {
+      "romDef": "TM_MagicMissile",
+      "class": "Arcanist",
+      "label": "魔法飞弹",
+      "labelSource": "copied",
+      "description": "奥术飞弹打击目标（RoM 的几率迷惑效果未移植）。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_MagicMissile",
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 12,
+          "speed": 60,
+          "tex": "MagicMissile"
+        }
+      }
+    },
+    "MMT_Magic_Shadow": {
+      "romDef": "TM_Shadow",
+      "class": "Arcanist",
+      "label": "暗影随形",
+      "labelSource": "copied",
+      "description": "开启后暗影随形光环强化周围友军的工作与躯体能力。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Shadow"
+      }
+    },
+    "MMT_Magic_Summon": {
+      "romDef": "TM_Summon",
+      "class": "Arcanist",
+      "label": "召唤",
+      "labelSource": "copied",
+      "description": "把远处的目标强行拉到身边（简化：仅对生物）。",
+      "comp": "Pull",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy"
+    },
+    "MMT_Magic_Teleport": {
+      "romDef": "TM_Teleport",
+      "class": "Arcanist",
+      "label": "传送",
+      "labelSource": "copied",
+      "description": "将自身与周围友军群体传送到目标位置。",
+      "comp": "GroupTeleport",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 1800,
+      "params": {
+        "radius": 4
+      }
+    },
+    "MMT_Magic_Poison": {
+      "romDef": "TM_Poison",
+      "class": "Druid",
+      "label": "施毒术",
+      "labelSource": "copied",
+      "description": "使目标中毒（毒性积累）。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "hediff": "ToxicBuildup"
+      }
+    },
+    "MMT_Magic_Regenerate": {
+      "romDef": "TM_Regenerate",
+      "class": "Druid",
+      "label": "再生术",
+      "labelSource": "copied",
+      "description": "目标持续高速自愈。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_Regen"
+      }
+    },
+    "MMT_Magic_SootheAnimal": {
+      "romDef": "TM_SootheAnimal",
+      "class": "Druid",
+      "label": "诱惑动物",
+      "labelSource": "copied",
+      "description": "激怒区域内动物冲向敌人（简化：RoM 的安抚/激怒双效只保留激怒）。",
+      "comp": "MentalStateAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "mentalState": "Manhunter",
+        "radius": 6,
+        "animalsOnly": true
+      }
+    },
+    "MMT_Magic_CureDisease": {
+      "romDef": "TM_CureDisease",
+      "class": "Druid",
+      "label": "治愈疾病",
+      "labelSource": "copied",
+      "description": "驱除目标的疾病与感染。",
+      "comp": "Heal",
+      "tier": "mid",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "heal": 5,
+        "maxInjuries": 5,
+        "cureInfection": true
+      }
+    },
+    "MMT_Magic_Heal": {
+      "romDef": "TM_Heal",
+      "class": "Paladin",
+      "label": "圣光术",
+      "labelSource": "copied",
+      "description": "圣光治疗目标数处伤口并止血。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "cooldownSeconds": 15,
+      "params": {
+        "heal": 8,
+        "maxInjuries": 3,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Magic_Shield": {
+      "romDef": "TM_Shield",
+      "class": "Paladin",
+      "label": "神佑之盾",
+      "labelSource": "copied",
+      "description": "为目标套上吸收伤害的神佑能量盾。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_DivineShield"
+      }
+    },
+    "MMT_Magic_P_RayofHope": {
+      "romDef": "TM_P_RayofHope",
+      "class": "Paladin",
+      "label": "希望之光",
+      "labelSource": "copied",
+      "description": "开启后维持希望之光光环：周围友军加速自愈、意志坚定。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_HolyLight"
+      }
+    },
+    "MMT_Magic_ValiantCharge": {
+      "romDef": "TM_ValiantCharge",
+      "class": "Paladin",
+      "label": "神圣附体",
+      "labelSource": "copied",
+      "description": "飞跃向目标并震击落点周围敌人。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 25,
+        "radius": 1.5
+      }
+    },
+    "MMT_Magic_Overwhelm": {
+      "romDef": "TM_Overwhelm",
+      "class": "Paladin",
+      "label": "圣光压制",
+      "labelSource": "copied",
+      "description": "近身圣光震慑一片敌人。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Stagger",
+        "radius": 4,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_HolyWrath": {
+      "romDef": "TM_HolyWrath",
+      "class": "Paladin",
+      "label": "神圣之怒",
+      "labelSource": "copied",
+      "description": "天降圣光轰击区域。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Bomb",
+        "damage": 22,
+        "radius": 4.5,
+        "pulses": 8,
+        "pulseIntervalTicks": 80,
+        "randomStrikes": true
+      }
+    },
+    "MMT_Magic_SummonMinion": {
+      "romDef": "TM_SummonMinion",
+      "class": "Summoner",
+      "label": "召唤仆从",
+      "labelSource": "copied",
+      "description": "召唤一个干活的仆从，限时存在。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "pawnKind": "Colonist",
+        "count": 1,
+        "durationTicks": 36000,
+        "maxActive": 2
+      }
+    },
+    "MMT_Magic_SummonPylon": {
+      "romDef": "TM_SummonPylon",
+      "class": "Summoner",
+      "label": "魔法防御塔",
+      "labelSource": "copied",
+      "description": "在目标点召唤一座定点奥术炮塔，限时存在。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_SummonPylon"
+      }
+    },
+    "MMT_Magic_SummonExplosive": {
+      "romDef": "TM_SummonExplosive",
+      "class": "Summoner",
+      "label": "魔法地雷",
+      "labelSource": "copied",
+      "description": "在目标点布置一枚法力地雷，敌人接近即爆。",
+      "comp": "Summon",
+      "tier": "small",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_ManaMine"
+      }
+    },
+    "MMT_Magic_SummonPoppi": {
+      "romDef": "TM_SummonPoppi",
+      "class": "Summoner",
+      "label": "召唤波皮",
+      "labelSource": "copied",
+      "description": "召唤一群狂暴爆炸鼠扑向敌人。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "pawnKind": "Boomrat",
+        "count": 4,
+        "durationTicks": 18000,
+        "maxActive": 8
+      }
+    },
+    "MMT_Magic_SummonElemental": {
+      "romDef": "TM_SummonElemental",
+      "class": "Summoner",
+      "label": "元素召唤",
+      "labelSource": "copied",
+      "description": "召唤强大的元素生物（嵌合兽）作战，限时存在。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "pawnKind": "Chimera",
+        "count": 1,
+        "durationTicks": 30000,
+        "maxActive": 1
+      }
+    },
+    "MMT_Magic_RaiseUndead": {
+      "romDef": "TM_RaiseUndead",
+      "class": "Necromancer",
+      "label": "死者苏生",
+      "labelSource": "copied",
+      "description": "把一具尸体点化为食尸鬼仆从，限时存在。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 1,
+      "target": "corpse",
+      "params": {
+        "pawnKind": "Ghoul",
+        "count": 1,
+        "durationTicks": 36000,
+        "maxActive": 3,
+        "fromCorpse": true
+      }
+    },
+    "MMT_Magic_DeathMark": {
+      "romDef": "TM_DeathMark",
+      "class": "Necromancer",
+      "label": "死亡印记",
+      "labelSource": "copied",
+      "description": "烙印死亡印记：目标命中与攻击欲大幅下降。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_DeathMark"
+      }
+    },
+    "MMT_Magic_DeathBolt": {
+      "romDef": "TM_DeathBolt",
+      "class": "Necromancer",
+      "label": "死亡螺旋",
+      "labelSource": "copied",
+      "description": "死亡能量螺旋击中目标，造成范围剧痛。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_DeathBolt",
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 16,
+          "speed": 50,
+          "tex": "deathbolt"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediff",
+          "params": {
+            "hediff": "MMT_HD_PainSpike"
+          }
+        }
+      ]
+    },
+    "MMT_Magic_CorpseExplosion": {
+      "romDef": "TM_CorpseExplosion",
+      "class": "Necromancer",
+      "label": "尸爆术",
+      "labelSource": "copied",
+      "description": "引爆一具尸体，延时后爆炸。",
+      "comp": "CorpseExplosion",
+      "tier": "mid",
+      "stage": 2,
+      "target": "corpse",
+      "params": {
+        "damage": 30,
+        "radius": 2.5,
+        "delayTicks": 90
+      }
+    },
+    "MMT_Magic_FogOfTorment": {
+      "romDef": "TM_FogOfTorment",
+      "class": "Necromancer",
+      "label": "窒息之雾",
+      "labelSource": "copied",
+      "description": "毒雾弥漫，雾中活物受折磨。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Nerve",
+        "damage": 10,
+        "radius": 5,
+        "pulses": 8,
+        "pulseIntervalTicks": 120,
+        "hitHediffDef": "ToxicBuildup"
+      }
+    },
+    "MMT_Magic_AdvancedHeal": {
+      "romDef": "TM_AdvancedHeal",
+      "class": "Priest",
+      "label": "强效治疗",
+      "labelSource": "copied",
+      "description": "大量治疗并止血。",
+      "comp": "Heal",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "heal": 15,
+        "maxInjuries": 4,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Magic_BestowMight": {
+      "romDef": "TM_BestowMight",
+      "class": "Priest",
+      "label": "激励",
+      "labelSource": "copied",
+      "description": "祝福目标，躯体能力大幅提升。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BestowMight"
+      }
+    },
+    "MMT_Magic_HealingCircle": {
+      "romDef": "TM_HealingCircle",
+      "class": "Priest",
+      "label": "治愈之环",
+      "labelSource": "copied",
+      "description": "治疗场：范围内友军获得治疗。",
+      "comp": "Heal",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "heal": 8,
+        "maxInjuries": 3,
+        "radius": 6,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Magic_Purify": {
+      "romDef": "TM_Purify",
+      "class": "Priest",
+      "label": "净化术",
+      "labelSource": "copied",
+      "description": "净化身心疤痕。",
+      "comp": "Heal",
+      "tier": "big",
+      "stage": 3,
+      "target": "friendly",
+      "cooldownSeconds": 600,
+      "params": {
+        "heal": 20,
+        "maxInjuries": 2,
+        "cureScar": true
+      }
+    },
+    "MMT_Magic_Resurrection": {
+      "romDef": "TM_Resurrection",
+      "class": "Priest",
+      "label": "英雄不朽",
+      "labelSource": "copied",
+      "description": "复活刚死未腐的死者，双方虚弱数日。",
+      "comp": "ResurrectLite",
+      "tier": "big",
+      "stage": 3,
+      "target": "corpse",
+      "cooldownSeconds": 600,
+      "params": {
+        "revivedHediff": "ResurrectionSickness",
+        "casterHediff": "MMT_HD_CasterDrain"
+      }
+    },
+    "MMT_Magic_Entertain": {
+      "romDef": "TM_Entertain",
+      "class": "Bard",
+      "label": "招待",
+      "labelSource": "copied",
+      "description": "弹唱一曲，抚平目标心中最沉重的一段负面记忆。",
+      "comp": "FadeEmotions",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "moodHediff": "MMT_HD_MoodCalm"
+      }
+    },
+    "MMT_Magic_Inspire": {
+      "romDef": "TM_Inspire",
+      "class": "Bard",
+      "label": "鼓舞",
+      "labelSource": "copied",
+      "description": "开启后维持激励光环：周围友军工效与意志提升。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Inspire"
+      }
+    },
+    "MMT_Magic_Lullaby": {
+      "romDef": "TM_Lullaby",
+      "class": "Bard",
+      "label": "催眠曲",
+      "labelSource": "copied",
+      "description": "范围催眠，敌人沉沉睡去（对机械无效）。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "Anesthetic",
+        "radius": 5,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_BattleHymn": {
+      "romDef": "TM_BattleHymn",
+      "class": "Bard",
+      "label": "战斗之曲",
+      "labelSource": "copied",
+      "description": "战歌响起，大范围友军战力强化。",
+      "comp": "GiveHediffAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_CombatBuff",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Magic_ShadowBolt": {
+      "romDef": "TM_ShadowBolt",
+      "class": "DemonKin",
+      "label": "暗影弹",
+      "labelSource": "translated",
+      "description": "暗影能量弹。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_ShadowBolt",
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 13,
+          "speed": 55,
+          "tex": "shadowbolt"
+        }
+      }
+    },
+    "MMT_Magic_Repulsion": {
+      "romDef": "TM_Repulsion",
+      "class": "DemonKin",
+      "label": "斥力冲击",
+      "labelSource": "translated",
+      "description": "斥力震荡，范围内敌人踉跄难行（简化：不做位移）。",
+      "comp": "GiveHediffAoE",
+      "tier": "small",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Stagger",
+        "radius": 3,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_Dominate": {
+      "romDef": "TM_Dominate",
+      "class": "DemonKin",
+      "label": "恐惧支配",
+      "labelSource": "translated",
+      "description": "恐惧支配目标区域，敌人溃逃。",
+      "comp": "MentalStateAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "mentalState": "PanicFlee",
+        "radius": 4
+      }
+    },
+    "MMT_Magic_Attraction": {
+      "romDef": "TM_Attraction",
+      "class": "DemonKin",
+      "label": "暗影之井",
+      "labelSource": "translated",
+      "description": "暗影之井迟滞敌人脚步（简化：范围减速，不做聚拢）。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Slow",
+        "radius": 4,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_Scorn": {
+      "romDef": "TM_Scorn",
+      "class": "DemonKin",
+      "label": "魔神飞跃",
+      "labelSource": "translated",
+      "description": "恶魔化飞跃砸地。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 30,
+        "radius": 2
+      }
+    },
+    "MMT_Magic_PsychicShock": {
+      "romDef": "TM_PsychicShock",
+      "class": "DemonKin",
+      "label": "灵能巨浪",
+      "labelSource": "translated",
+      "description": "范围精神冲击，敌人陷入狂暴错乱。",
+      "comp": "MentalStateAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 240,
+      "params": {
+        "mentalState": "Berserk",
+        "radius": 5
+      }
+    },
+    "MMT_Magic_SummonDemon": {
+      "romDef": "TM_SummonDemon",
+      "class": "DemonKin",
+      "label": "召唤恶魔",
+      "labelSource": "translated",
+      "description": "召唤吞噬魔作战，限时存在。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 1200,
+      "params": {
+        "pawnKind": "Devourer",
+        "count": 1,
+        "durationTicks": 30000,
+        "maxActive": 1
+      }
+    },
+    "MMT_Magic_Stoneskin": {
+      "romDef": "TM_Stoneskin",
+      "class": "Geomancer",
+      "label": "石肤",
+      "labelSource": "translated",
+      "description": "开启后石肤护体，大幅减伤（简化：限时减伤，RoM 的层数格挡未移植）。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Stoneskin"
+      }
+    },
+    "MMT_Magic_Encase": {
+      "romDef": "TM_Encase",
+      "class": "Geomancer",
+      "label": "石墙禁锢",
+      "labelSource": "translated",
+      "description": "目标点石墙隆起封锁。",
+      "comp": "Wallraise",
+      "tier": "mid",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "wallDef": "RaisedRocks"
+      }
+    },
+    "MMT_Magic_Sentinel": {
+      "romDef": "TM_Sentinel",
+      "class": "Geomancer",
+      "label": "石哨兵",
+      "labelSource": "translated",
+      "description": "召唤石哨兵（巨蜘蛛）守卫，限时存在。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "pawnKind": "Megaspider",
+        "count": 1,
+        "durationTicks": 30000,
+        "maxActive": 2
+      }
+    },
+    "MMT_Magic_EarthernHammer": {
+      "romDef": "TM_EarthernHammer",
+      "class": "Geomancer",
+      "label": "大地之锤",
+      "labelSource": "translated",
+      "description": "引力抛石砸击区域。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 20,
+        "radius": 3.5
+      }
+    },
+    "MMT_Magic_Meteor": {
+      "romDef": "TM_Meteor",
+      "class": "Geomancer",
+      "label": "陨石轰击",
+      "labelSource": "translated",
+      "description": "陨石轰击，落点留下矿渣。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 600,
+      "params": {
+        "damageDef": "Bomb",
+        "damage": 35,
+        "radius": 4,
+        "startFireChance": 0.3
+      },
+      "extraComps": [
+        {
+          "comp": "SpawnEffect",
+          "params": {
+            "spawnThingDef": "ChunkSlagSteel",
+            "spawnCount": 2
+          }
+        }
+      ]
+    },
+    "MMT_Magic_NanoStimulant": {
+      "romDef": "TM_NanoStimulant",
+      "class": "Technomancer",
+      "label": "纳米强化",
+      "labelSource": "translated",
+      "description": "纳米机械强化自身。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_NanoStimulant"
+      }
+    },
+    "MMT_Magic_TechnoShield": {
+      "romDef": "TM_TechnoShield",
+      "class": "Technomancer",
+      "label": "动能护盾",
+      "labelSource": "translated",
+      "description": "为目标张开偏转投射物的动能护盾。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_TechnoShield"
+      }
+    },
+    "MMT_Magic_Sabotage": {
+      "romDef": "TM_Sabotage",
+      "class": "Technomancer",
+      "label": "瘫痪破坏",
+      "labelSource": "translated",
+      "description": "瘫痪目标的机械与电子系统。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_Sabotage"
+      }
+    },
+    "MMT_Magic_TechnoTurret": {
+      "romDef": "TM_TechnoTurret",
+      "class": "Technomancer",
+      "label": "神经炮塔",
+      "labelSource": "translated",
+      "description": "召唤限时遥控炮塔。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_TechnoTurret"
+      }
+    },
+    "MMT_Magic_Overdrive": {
+      "romDef": "TM_Overdrive",
+      "class": "Technomancer",
+      "label": "超载",
+      "labelSource": "translated",
+      "description": "超载强化范围内友军的机体性能。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Overdrive",
+        "radius": 6,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Magic_OrbitalStrike": {
+      "romDef": "TM_OrbitalStrike",
+      "class": "Technomancer",
+      "label": "轨道打击",
+      "labelSource": "translated",
+      "description": "呼叫轨道火力覆盖区域。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Bomb",
+        "damage": 28,
+        "radius": 4.5,
+        "pulses": 6,
+        "pulseIntervalTicks": 90,
+        "randomStrikes": true
+      }
+    },
+    "MMT_Magic_BloodGift": {
+      "romDef": "TM_BloodGift",
+      "class": "BloodMage",
+      "label": "鲜血献祭",
+      "labelSource": "translated",
+      "description": "自残放血，换取心灵熵下降（RoM 的回蓝灵能化改编）。",
+      "comp": "SelfEntropy",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "selfDamage": 8,
+        "entropyChange": -15
+      }
+    },
+    "MMT_Magic_BloodForBlood": {
+      "romDef": "TM_BloodForBlood",
+      "class": "BloodMage",
+      "label": "鲜血诅咒",
+      "labelSource": "translated",
+      "description": "诅咒目标血流不止。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_BloodDoT"
+      }
+    },
+    "MMT_Magic_IgniteBlood": {
+      "romDef": "TM_IgniteBlood",
+      "class": "BloodMage",
+      "label": "燃血术",
+      "labelSource": "translated",
+      "description": "点燃区域内暴露的血液。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "damageDef": "Flame",
+        "damage": 15,
+        "radius": 3.5,
+        "startFireChance": 0.5
+      }
+    },
+    "MMT_Magic_BloodShield": {
+      "romDef": "TM_BloodShield",
+      "class": "BloodMage",
+      "label": "血能护盾",
+      "labelSource": "translated",
+      "description": "血能护盾护体并加速再生。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_BloodShield"
+      }
+    },
+    "MMT_Magic_Rend": {
+      "romDef": "TM_Rend",
+      "class": "BloodMage",
+      "label": "血爆",
+      "labelSource": "translated",
+      "description": "区域大出血。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 25,
+        "radius": 4,
+        "hitHediffDef": "MMT_HD_BloodDoT"
+      }
+    },
+    "MMT_Magic_BloodMoon": {
+      "romDef": "TM_BloodMoon",
+      "class": "BloodMage",
+      "label": "血月",
+      "labelSource": "translated",
+      "description": "血月降临：区域敌人狂暴，并召唤狂怒恶魔猎杀他们。",
+      "comp": "MentalStateAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 300,
+      "params": {
+        "mentalState": "Berserk",
+        "radius": 6
+      },
+      "extraComps": [
+        {
+          "comp": "Summon",
+          "params": {
+            "pawnKind": "Chimera",
+            "count": 1,
+            "durationTicks": 24000,
+            "maxActive": 1
+          }
+        }
+      ]
+    },
+    "MMT_Magic_EnchantedBody": {
+      "romDef": "TM_EnchantedBody",
+      "class": "Enchanter",
+      "label": "附魔之躯",
+      "labelSource": "translated",
+      "description": "附魔强化自身操纵与攻速。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_EnchantedBody"
+      }
+    },
+    "MMT_Magic_EnchantedAura": {
+      "romDef": "TM_EnchantedAura",
+      "class": "Enchanter",
+      "label": "魅力光环",
+      "labelSource": "translated",
+      "description": "开启后维持魅力光环：周围友军社交能力提升。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Enchanted"
+      }
+    },
+    "MMT_Magic_AlterFate": {
+      "romDef": "TM_AlterFate",
+      "class": "Chronomancer",
+      "label": "改写命运",
+      "labelSource": "translated",
+      "description": "记录当前健康状态；限时内遭受致死伤害时回溯抵消（RoM 的预言资源简化为纯冷却）。",
+      "comp": "AlterFate",
+      "tier": "big",
+      "stage": 1,
+      "target": "self",
+      "cooldownSeconds": 600,
+      "params": {
+        "fateHediff": "MMT_HD_AlterFate"
+      }
+    },
+    "MMT_Magic_AccelerateTime": {
+      "romDef": "TM_AccelerateTime",
+      "class": "Chronomancer",
+      "label": "时间加速",
+      "labelSource": "translated",
+      "description": "区域内敌人时间加速老化：行动迟缓、饥饿加剧（简化版）。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_AccelTime",
+        "radius": 5,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_ShadowWalk": {
+      "romDef": "TM_ShadowWalk",
+      "class": "Shadow",
+      "label": "暗影行走",
+      "labelSource": "translated",
+      "description": "瞬移到目标影中。",
+      "comp": "Teleport",
+      "tier": "small",
+      "stage": 1,
+      "target": "location"
+    },
+    "MMT_Magic_Nightshade": {
+      "romDef": "TM_Nightshade",
+      "class": "Shadow",
+      "label": "夜影淬毒",
+      "labelSource": "translated",
+      "description": "开启后武器淬毒，近战更致命（持续型）。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Nightshade"
+      }
+    },
+    "MMT_Magic_ShadowStrike": {
+      "romDef": "TM_ShadowStrike",
+      "class": "Shadow",
+      "label": "暗影突袭",
+      "labelSource": "translated",
+      "description": "闪现背刺目标并返回原位。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 30,
+        "returnToStart": true
+      }
+    },
+    "MMT_Magic_VeilOfShadows": {
+      "romDef": "TM_VeilOfShadows",
+      "class": "Shadow",
+      "label": "暗影斗篷",
+      "labelSource": "translated",
+      "description": "隐身并遁入烟雾。",
+      "comp": "GiveHediff",
+      "tier": "big",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "hediff": "PsychicInvisibility"
+      },
+      "extraComps": [
+        {
+          "comp": "Smokepop",
+          "params": {}
+        }
+      ]
+    },
+    "MMT_Magic_LightLance": {
+      "romDef": "TM_LightLance",
+      "class": "Brightmage",
+      "label": "光矛",
+      "labelSource": "translated",
+      "description": "光之长矛刺穿目标。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_LightLance",
+        "projectileSpec": {
+          "damageDef": "Burn",
+          "damage": 14,
+          "speed": 70,
+          "tex": "light_laser"
+        }
+      }
+    },
+    "MMT_Magic_LightBurst": {
+      "romDef": "TM_LightBurst",
+      "class": "Brightmage",
+      "label": "闪光爆发",
+      "labelSource": "translated",
+      "description": "强光爆发，致盲区域敌人。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Blind",
+        "radius": 5,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_LightSkip": {
+      "romDef": "TM_LightSkip",
+      "class": "Brightmage",
+      "label": "光行",
+      "labelSource": "translated",
+      "description": "化光而行，瞬移到目标位置。",
+      "comp": "Teleport",
+      "tier": "small",
+      "stage": 2,
+      "target": "location"
+    },
+    "MMT_Magic_Refraction": {
+      "romDef": "TM_Refraction",
+      "class": "Brightmage",
+      "label": "光墙折射",
+      "labelSource": "translated",
+      "description": "光墙隆起作为掩体（简化：RoM 的弹道偏移未移植）。",
+      "comp": "Wallraise",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "wallDef": "RaisedRocks"
+      }
+    },
+    "MMT_Magic_Sunfire": {
+      "romDef": "TM_Sunfire",
+      "class": "Brightmage",
+      "label": "日焰",
+      "labelSource": "translated",
+      "description": "日焰切割区域。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Burn",
+        "damage": 24,
+        "radius": 4,
+        "pulses": 6,
+        "pulseIntervalTicks": 80
+      }
+    },
+    "MMT_Magic_SpiritOfLight": {
+      "romDef": "TM_SpiritOfLight",
+      "class": "Brightmage",
+      "label": "光之精灵",
+      "labelSource": "translated",
+      "description": "召唤光之精灵作战，限时存在。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "pawnKind": "Fingerspike",
+        "count": 1,
+        "durationTicks": 30000,
+        "maxActive": 1
+      }
+    },
+    "MMT_Magic_Hex": {
+      "romDef": "TM_Hex",
+      "class": "Shaman",
+      "label": "咒印",
+      "labelSource": "translated",
+      "description": "给目标烙下咒印（简化：RoM 的后续技前提未移植，各咒技独立可用）。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_HexMark"
+      }
+    },
+    "MMT_Magic_ChainLightning": {
+      "romDef": "TM_ChainLightning",
+      "class": "Shaman",
+      "label": "连环闪电",
+      "labelSource": "translated",
+      "description": "闪电打击目标（简化：单链不跳跃）。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_ChainLightning",
+        "projectileSpec": {
+          "damageDef": "EMP",
+          "damage": 16,
+          "speed": 60,
+          "tex": "LightningBolt_w"
+        }
+      }
+    },
+    "MMT_Magic_Hex_Pain": {
+      "romDef": "TM_Hex_Pain",
+      "class": "Shaman",
+      "label": "咒印·剧痛",
+      "labelSource": "translated",
+      "description": "咒印引发持续剧痛。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_HexPain"
+      }
+    },
+    "MMT_Magic_Hex_CriticalFail": {
+      "romDef": "TM_Hex_CriticalFail",
+      "class": "Shaman",
+      "label": "咒印·厄运",
+      "labelSource": "translated",
+      "description": "咒印使目标极度倒霉。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_HexCurse"
+      }
+    },
+    "MMT_Magic_Hex_MentalAssault": {
+      "romDef": "TM_Hex_MentalAssault",
+      "class": "Shaman",
+      "label": "咒印·精神冲击",
+      "labelSource": "translated",
+      "description": "咒印冲垮目标神志。",
+      "comp": "MentalState",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "mentalState": "Wander_Psychotic"
+      }
+    },
+    "MMT_Magic_SummonTotemLightning": {
+      "romDef": "TM_SummonTotemLightning",
+      "class": "Shaman",
+      "label": "闪电图腾",
+      "labelSource": "translated",
+      "description": "召唤闪电图腾，周期性电击附近敌人。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_TotemLightning"
+      }
+    },
+    "MMT_Magic_SummonTotemEarth": {
+      "romDef": "TM_SummonTotemEarth",
+      "class": "Shaman",
+      "label": "大地图腾",
+      "labelSource": "translated",
+      "description": "召唤大地图腾，抛石砸击附近敌人。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_TotemEarth"
+      }
+    },
+    "MMT_Magic_SummonTotemHealing": {
+      "romDef": "TM_SummonTotemHealing",
+      "class": "Shaman",
+      "label": "治疗图腾",
+      "labelSource": "translated",
+      "description": "召唤治疗图腾，周期性治疗周围友军。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "building": "MMT_Bld_TotemHealing"
+      }
+    },
+    "MMT_Magic_Enrage": {
+      "romDef": "TM_Enrage",
+      "class": "Shaman",
+      "label": "狂怒",
+      "labelSource": "translated",
+      "description": "使目标陷入狂暴。",
+      "comp": "MentalState",
+      "tier": "mid",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "mentalState": "Berserk"
+      }
+    },
+    "MMT_Magic_SpiritWolves": {
+      "romDef": "TM_SpiritWolves",
+      "class": "Shaman",
+      "label": "灵狼群",
+      "labelSource": "translated",
+      "description": "召唤灵狼群撕咬敌人。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "pawnKind": "Wolf_Timber",
+        "count": 3,
+        "durationTicks": 24000,
+        "maxActive": 6
+      }
+    },
+    "MMT_Magic_GuardianSpirit": {
+      "romDef": "TM_GuardianSpirit",
+      "class": "Shaman",
+      "label": "守护灵兽",
+      "labelSource": "translated",
+      "description": "召唤强大的守护灵兽（敲击兽）。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "pawnKind": "Thrumbo",
+        "count": 1,
+        "durationTicks": 24000,
+        "maxActive": 1
+      }
+    },
+    "MMT_Magic_FitnessBrand": {
+      "romDef": "TM_FitnessBrand",
+      "class": "Golemancer",
+      "label": "体能烙印",
+      "labelSource": "translated",
+      "description": "烙印强化目标体能。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BrandFitness"
+      }
+    },
+    "MMT_Magic_EmotionBrand": {
+      "romDef": "TM_EmotionBrand",
+      "class": "Golemancer",
+      "label": "心绪烙印",
+      "labelSource": "translated",
+      "description": "烙印安定目标心绪。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BrandEmotion"
+      }
+    },
+    "MMT_Magic_VitalityBrand": {
+      "romDef": "TM_VitalityBrand",
+      "class": "Golemancer",
+      "label": "活力烙印",
+      "labelSource": "translated",
+      "description": "烙印强化目标健康。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BrandVitality"
+      }
+    },
+    "MMT_Magic_ProtectionBrand": {
+      "romDef": "TM_ProtectionBrand",
+      "class": "Golemancer",
+      "label": "护卫烙印",
+      "labelSource": "translated",
+      "description": "烙印为目标减伤。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BrandProtection"
+      }
+    },
+    "MMT_Magic_AwarenessBrand": {
+      "romDef": "TM_AwarenessBrand",
+      "class": "Golemancer",
+      "label": "感知烙印",
+      "labelSource": "translated",
+      "description": "烙印强化目标感知与命中。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 3,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_BrandAwareness"
+      }
+    },
+    "MMT_Magic_SuppressiveAura": {
+      "romDef": "TM_SuppressiveAura",
+      "class": "Empath",
+      "label": "情绪压制",
+      "labelSource": "translated",
+      "description": "开启后维持压制光环：周围敌人情绪与战力受压。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Suppress"
+      }
+    },
+    "MMT_Magic_FadeEmotions": {
+      "romDef": "TM_FadeEmotions",
+      "class": "Empath",
+      "label": "抚平心绪",
+      "labelSource": "translated",
+      "description": "移除目标一段负面记忆并安抚。",
+      "comp": "FadeEmotions",
+      "tier": "mid",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "moodHediff": "MMT_HD_MoodCalm"
+      }
+    },
+    "MMT_Magic_MindKiller": {
+      "romDef": "TM_MindKiller",
+      "class": "Empath",
+      "label": "心灵杀手",
+      "labelSource": "translated",
+      "description": "范围情绪洪流冲垮周围敌人。",
+      "comp": "MentalStateAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "mentalState": "Wander_Psychotic",
+        "radius": 6
+      }
+    },
+    "MMT_Magic_SpiritDrain": {
+      "romDef": "TM_SpiritDrain",
+      "class": "Possessor",
+      "label": "灵能汲取",
+      "labelSource": "translated",
+      "description": "汲取目标精神：目标虚弱一天，自身心灵熵下降。",
+      "comp": "SelfEntropy",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "entropyChange": -8,
+        "targetHediffDef": "MMT_HD_Weaken"
+      }
+    },
+    "MMT_Magic_DistortSpirit": {
+      "romDef": "TM_DistortSpirit",
+      "class": "Possessor",
+      "label": "灵体扭曲",
+      "labelSource": "translated",
+      "description": "扭曲区域敌人的灵体，受伤加深。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Vulnerable",
+        "radius": 4,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Magic_SpiritRally": {
+      "romDef": "TM_SpiritRally",
+      "class": "Possessor",
+      "label": "亡魂集结",
+      "labelSource": "translated",
+      "description": "新死之魂化为灵狼作战。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "corpse",
+      "params": {
+        "pawnKind": "Wolf_Timber",
+        "count": 2,
+        "durationTicks": 24000,
+        "maxActive": 4,
+        "fromCorpse": true
+      }
+    },
+    "MMT_Magic_SummonSpiritAnimalMass": {
+      "romDef": "TM_SummonSpiritAnimalMass",
+      "class": "Possessor",
+      "label": "灵兽齐召",
+      "labelSource": "translated",
+      "description": "成批召唤灵兽。",
+      "comp": "Summon",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "pawnKind": "Wolf_Arctic",
+        "count": 3,
+        "durationTicks": 24000,
+        "maxActive": 6
+      }
+    },
+    "MMT_Magic_SpiritStorm": {
+      "romDef": "TM_SpiritStorm",
+      "class": "Possessor",
+      "label": "灵能风暴",
+      "labelSource": "translated",
+      "description": "定点灵能风暴（简化：RoM 的引导移动未移植）。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Nerve",
+        "damage": 18,
+        "radius": 5,
+        "pulses": 8,
+        "pulseIntervalTicks": 100,
+        "randomStrikes": true
+      }
+    },
+    "MMT_Magic_MageLight": {
+      "romDef": "TM_MageLight",
+      "class": "Wanderer",
+      "label": "法师之光",
+      "labelSource": "translated",
+      "description": "在目标点生成一盏长明灯火。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "spawnThingDef": "TorchLamp",
+        "spawnCount": 1
+      }
+    },
+    "MMT_Magic_SmokeCloud": {
+      "romDef": "TM_SmokeCloud",
+      "class": "Wanderer",
+      "label": "烟幕",
+      "labelSource": "copied",
+      "description": "爆开一团烟幕。",
+      "comp": "Smokepop",
+      "tier": "small",
+      "stage": 3,
+      "target": "location"
+    },
+    "MMT_Magic_CauterizeWound": {
+      "romDef": "TM_CauterizeWound",
+      "class": "Wanderer",
+      "label": "烧灼止血",
+      "labelSource": "copied",
+      "description": "烧灼伤口止血。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 3,
+      "target": "friendly",
+      "params": {
+        "heal": 6,
+        "maxInjuries": 2,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Magic_ArcaneBolt": {
+      "romDef": "TM_ArcaneBolt",
+      "class": "Wanderer",
+      "label": "奥术箭",
+      "labelSource": "translated",
+      "description": "奥术能量箭。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_ArcaneBolt",
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 14,
+          "speed": 60,
+          "tex": "arcanebolt1"
+        }
+      }
+    },
+    "MMT_Magic_Extinguish": {
+      "romDef": "TM_Extinguish",
+      "class": "Wanderer",
+      "label": "灭火",
+      "labelSource": "copied",
+      "description": "扑灭范围内火焰。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "extinguishRadius": 5
+      }
+    },
+    "MMT_Magic_Invisibility": {
+      "romDef": "TM_Invisibility",
+      "class": "Wanderer",
+      "label": "隐身",
+      "labelSource": "translated",
+      "description": "短暂隐身。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "hediff": "PsychicInvisibility"
+      }
+    },
+    "MMT_Magic_WeatherClearSkies": {
+      "romDef": "TM_WeatherClearSkies",
+      "class": "WeatherMage",
+      "label": "驱散阴云",
+      "labelSource": "translated",
+      "description": "驱散雨雪雷暴，天气放晴。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "weatherDef": "Clear"
+      }
+    },
+    "MMT_Magic_WeatherWarmFront": {
+      "romDef": "TM_WeatherWarmFront",
+      "class": "WeatherMage",
+      "label": "暖流",
+      "labelSource": "translated",
+      "description": "全图气温 +8°C，持续 8 小时。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "gameConditionDef": "MMT_Cond_WarmFront",
+        "conditionDurationTicks": 28800
+      }
+    },
+    "MMT_Magic_WeatherCoolFront": {
+      "romDef": "TM_WeatherCoolFront",
+      "class": "WeatherMage",
+      "label": "寒流",
+      "labelSource": "translated",
+      "description": "全图气温 -8°C，持续 8 小时。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "gameConditionDef": "MMT_Cond_CoolFront",
+        "conditionDurationTicks": 28800
+      }
+    },
+    "MMT_Magic_WeatherFertileRain": {
+      "romDef": "TM_WeatherFertileRain",
+      "class": "WeatherMage",
+      "label": "丰饶之雨",
+      "labelSource": "translated",
+      "description": "8 小时降雨，种植区作物加速生长。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "weatherDef": "Rain",
+        "gameConditionDef": "MMT_Cond_FertileRain",
+        "conditionDurationTicks": 28800
+      }
+    },
+    "MMT_Magic_WeatherDisperseFallout": {
+      "romDef": "TM_WeatherDisperseFallout",
+      "class": "WeatherMage",
+      "label": "消散毒尘",
+      "labelSource": "translated",
+      "description": "使毒尘的剩余时间减半。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "shortenConditionDef": "ToxicFallout",
+        "shortenFactor": 0.5
+      }
+    },
+    "MMT_Magic_WeatherAurora": {
+      "romDef": "TM_WeatherAurora",
+      "class": "WeatherMage",
+      "label": "极光",
+      "labelSource": "translated",
+      "description": "召唤极光，夜晚带来好心情。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "gameConditionDef": "Aurora",
+        "conditionDurationTicks": 48000
+      }
+    },
+    "MMT_Might_Sprint": {
+      "romDef": "TM_Sprint",
+      "class": "Gladiator",
+      "label": "冲刺",
+      "labelSource": "copied",
+      "description": "开启后移速大增（RoM 的疲劳累积简化为心灵熵维持消耗）。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Sprint"
+      }
+    },
+    "MMT_Might_Grapple": {
+      "romDef": "TM_Grapple",
+      "class": "Gladiator",
+      "label": "钩爪",
+      "labelSource": "copied",
+      "description": "钩爪缠住目标，使其踉跄定身（简化：不做拉拽位移）。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "hediff": "MMT_HD_Grapple"
+      }
+    },
+    "MMT_Might_Cleave": {
+      "romDef": "TM_Cleave",
+      "class": "Gladiator",
+      "label": "顺劈斩",
+      "labelSource": "copied",
+      "description": "近战横扫一片敌人（RoM 的自动施放改为手动）。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 18,
+        "radius": 1.8
+      }
+    },
+    "MMT_Might_Whirlwind": {
+      "romDef": "TM_Whirlwind",
+      "class": "Gladiator",
+      "label": "旋风斩",
+      "labelSource": "copied",
+      "description": "旋风般连斩周身敌人。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 15,
+        "radius": 1.8
+      }
+    },
+    "MMT_Might_GladiatorManeuver": {
+      "romDef": "TM_GladiatorManeuver",
+      "class": "Gladiator",
+      "label": "机动",
+      "labelSource": "copied",
+      "description": "短时移速提升。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 3,
+      "target": "self",
+      "cooldownSeconds": 30,
+      "params": {
+        "hediff": "MMT_HD_SpeedBuff"
+      }
+    },
+    "MMT_Might_GladiatorSweep": {
+      "romDef": "TM_GladiatorSweep",
+      "class": "Gladiator",
+      "label": "横扫",
+      "labelSource": "copied",
+      "description": "强力横扫，对周围敌人造成双倍打击。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 22,
+        "radius": 1.8
+      }
+    },
+    "MMT_Might_PoisonTrap": {
+      "romDef": "TM_PoisonTrap",
+      "class": "Ranger",
+      "label": "毒素陷阱",
+      "labelSource": "copied",
+      "description": "在目标点部署一枚陷阱（简化：借用原版尖刺陷阱）。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 1,
+      "target": "location",
+      "params": {
+        "spawnThingDef": "TrapSpike",
+        "spawnCount": 1
+      }
+    },
+    "MMT_Might_ArrowStorm": {
+      "romDef": "TM_ArrowStorm",
+      "class": "Ranger",
+      "label": "箭雨风暴",
+      "labelSource": "copied",
+      "description": "向目标泼洒 6 连箭雨。",
+      "comp": "MultiShot",
+      "tier": "mid",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Arrow",
+        "shotCount": 6,
+        "scatterRadius": 2,
+        "projectileSpec": {
+          "damageDef": "ArrowHighVelocity",
+          "damage": 10,
+          "speed": 70,
+          "tex": "shotlit"
+        }
+      }
+    },
+    "MMT_Might_AnimalFriend": {
+      "romDef": "TM_AnimalFriend",
+      "class": "Ranger",
+      "label": "动物伙伴",
+      "labelSource": "copied",
+      "description": "召唤一只野兽伙伴协战，限时存在（简化：RoM 的永久羁绊未移植）。",
+      "comp": "Summon",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "pawnKind": "Bear_Grizzly",
+        "count": 1,
+        "durationTicks": 24000,
+        "maxActive": 2
+      }
+    },
+    "MMT_Might_RangerSafeTrail": {
+      "romDef": "TM_RangerSafeTrail",
+      "class": "Ranger",
+      "label": "安全小径",
+      "labelSource": "copied",
+      "description": "范围友军行动加速（简化：RoM 的路径标记未移植）。",
+      "comp": "GiveHediffAoE",
+      "tier": "small",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_SpeedBuff",
+        "radius": 6,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_SniperAimedShot": {
+      "romDef": "TM_SniperAimedShot",
+      "class": "Sniper",
+      "label": "瞄准射击",
+      "labelSource": "copied",
+      "description": "精确瞄准的一击。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "cooldownSeconds": 30,
+      "params": {
+        "projectile": "MMT_Proj_AimedShot",
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 20,
+          "speed": 90,
+          "armorPenetrationBase": 0.3,
+          "tex": "shotlit"
+        }
+      }
+    },
+    "MMT_Might_DisablingShot": {
+      "romDef": "TM_DisablingShot",
+      "class": "Sniper",
+      "label": "残废射击",
+      "labelSource": "copied",
+      "description": "电击麻痹弹，命中眩晕目标。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_DisablingShot",
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 10,
+          "speed": 80,
+          "tex": "shotlit"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "Stun",
+          "params": {}
+        }
+      ]
+    },
+    "MMT_Might_Headshot": {
+      "romDef": "TM_Headshot",
+      "class": "Sniper",
+      "label": "爆头一击",
+      "labelSource": "copied",
+      "description": "直指要害的高伤狙击。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Headshot",
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 35,
+          "speed": 90,
+          "armorPenetrationBase": 0.4,
+          "tex": "shotlit"
+        }
+      }
+    },
+    "MMT_Might_AntiArmor": {
+      "romDef": "TM_AntiArmor",
+      "class": "Sniper",
+      "label": "破甲",
+      "labelSource": "copied",
+      "description": "破甲弹撕开目标护甲。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_AntiArmor",
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 15,
+          "speed": 90,
+          "armorPenetrationBase": 0.6,
+          "tex": "shotlit"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediff",
+          "params": {
+            "hediff": "MMT_HD_ArmorBreak"
+          }
+        }
+      ]
+    },
+    "MMT_Might_ShadowSlayer": {
+      "romDef": "TM_ShadowSlayer",
+      "class": "Sniper",
+      "label": "暗影杀手",
+      "labelSource": "copied",
+      "description": "长时隐形力场。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "hediff": "PsychicInvisibility"
+      }
+    },
+    "MMT_Might_SniperArmorFracture": {
+      "romDef": "TM_SniperArmorFracture",
+      "class": "Sniper",
+      "label": "破甲射击",
+      "labelSource": "copied",
+      "description": "为团队制造 6 秒破甲缺口。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_ArmorBreak",
+        "radius": 4,
+        "targetFriendly": false,
+        "includeSelf": false
+      }
+    },
+    "MMT_Might_SniperSingleOpening": {
+      "romDef": "TM_SniperSingleOpening",
+      "class": "Sniper",
+      "label": "一线战机",
+      "labelSource": "copied",
+      "description": "抓住一线战机，三连精准狙击。",
+      "comp": "MultiShot",
+      "tier": "big",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_SniperShot",
+        "shotCount": 3,
+        "scatterRadius": 0.5,
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 25,
+          "speed": 95,
+          "armorPenetrationBase": 0.5,
+          "tex": "shotlit"
+        }
+      }
+    },
+    "MMT_Might_BladeSpin": {
+      "romDef": "TM_BladeSpin",
+      "class": "Bladedancer",
+      "label": "剑刃回旋",
+      "labelSource": "copied",
+      "description": "剑刃回旋斩击周身敌人。",
+      "comp": "AoEDamage",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 14,
+        "radius": 1.8
+      }
+    },
+    "MMT_Might_PhaseStrike": {
+      "romDef": "TM_PhaseStrike",
+      "class": "Bladedancer",
+      "label": "次元之刃",
+      "labelSource": "copied",
+      "description": "相位闪现背刺目标。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 22
+      }
+    },
+    "MMT_Might_SeismicSlash": {
+      "romDef": "TM_SeismicSlash",
+      "class": "Bladedancer",
+      "label": "地裂斩",
+      "labelSource": "copied",
+      "description": "裂地斩击一片区域。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 18,
+        "radius": 2.5
+      }
+    },
+    "MMT_Might_BladePassage": {
+      "romDef": "TM_BladePassage",
+      "class": "Bladedancer",
+      "label": "穿刃步",
+      "labelSource": "copied",
+      "description": "直线突进，斩击沿途敌人。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 25,
+        "radius": 1.5
+      }
+    },
+    "MMT_Might_Disguise": {
+      "romDef": "TM_Disguise",
+      "class": "Faceless",
+      "label": "认知遮蔽",
+      "labelSource": "translated",
+      "description": "遮蔽自身认知，近似隐身。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "hediff": "PsychicInvisibility"
+      }
+    },
+    "MMT_Might_Reversal": {
+      "romDef": "TM_Reversal",
+      "class": "Faceless",
+      "label": "反转",
+      "labelSource": "translated",
+      "description": "短时几乎免疫近战与投射物伤害。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_Reversal"
+      }
+    },
+    "MMT_Might_Transpose": {
+      "romDef": "TM_Transpose",
+      "class": "Faceless",
+      "label": "移形换位",
+      "labelSource": "translated",
+      "description": "与目标交换位置，双方眩晕，自获反弹。",
+      "comp": "Transpose",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "stunHediff": "MMT_HD_Stagger",
+        "selfBuffHediff": "MMT_HD_Reversal"
+      }
+    },
+    "MMT_Might_Possess": {
+      "romDef": "TM_Possess",
+      "class": "Faceless",
+      "label": "精神操控",
+      "labelSource": "translated",
+      "description": "使目标狂暴错乱（简化：RoM 的接管控制未移植）。",
+      "comp": "MentalState",
+      "tier": "big",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "mentalState": "Berserk"
+      }
+    },
+    "MMT_Might_PsionicBlast": {
+      "romDef": "TM_PsionicBlast",
+      "class": "Psionic",
+      "label": "灵能爆弹",
+      "labelSource": "translated",
+      "description": "灵能爆弹四连发。",
+      "comp": "MultiShot",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_PsiBlast",
+        "shotCount": 4,
+        "scatterRadius": 1,
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 8,
+          "speed": 70,
+          "tex": "psiblast"
+        }
+      }
+    },
+    "MMT_Might_PsionicBarrier": {
+      "romDef": "TM_PsionicBarrier",
+      "class": "Psionic",
+      "label": "灵能屏障",
+      "labelSource": "translated",
+      "description": "为目标张开灵能屏障。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_PsionicBarrier"
+      }
+    },
+    "MMT_Might_PsionicDash": {
+      "romDef": "TM_PsionicDash",
+      "class": "Psionic",
+      "label": "灵能冲刺",
+      "labelSource": "translated",
+      "description": "冲刺并放出冲击波。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 18,
+        "radius": 1.5
+      }
+    },
+    "MMT_Might_PsionicKineticCrucible": {
+      "romDef": "TM_PsionicKineticCrucible",
+      "class": "Psionic",
+      "label": "动能熔炉",
+      "labelSource": "copied",
+      "description": "引导动能脉冲伤害周围敌人，并为周围友军套上屏障。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 15,
+        "radius": 3,
+        "pulses": 4,
+        "pulseIntervalTicks": 60
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediffAoE",
+          "params": {
+            "hediff": "MMT_HD_CrucibleShield",
+            "radius": 4,
+            "targetFriendly": true
+          }
+        }
+      ]
+    },
+    "MMT_Might_PsionicStorm": {
+      "romDef": "TM_PsionicStorm",
+      "class": "Psionic",
+      "label": "灵能风暴",
+      "labelSource": "translated",
+      "description": "掀起灵能风暴（自耗巨大）。",
+      "comp": "AoEDamage",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "damageDef": "Nerve",
+        "damage": 20,
+        "radius": 5,
+        "pulses": 8,
+        "pulseIntervalTicks": 80,
+        "randomStrikes": true
+      }
+    },
+    "MMT_Might_Spite": {
+      "romDef": "TM_Spite",
+      "class": "DeathKnight",
+      "label": "怨毒冲击",
+      "labelSource": "translated",
+      "description": "怨毒能量冲击（RoM 的憎恨资源灵能化）。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "cooldownSeconds": 3,
+      "params": {
+        "projectile": "MMT_Proj_Spite",
+        "projectileSpec": {
+          "damageDef": "Blunt",
+          "damage": 11,
+          "speed": 60,
+          "tex": "spite"
+        }
+      }
+    },
+    "MMT_Might_WaveOfFear": {
+      "romDef": "TM_WaveOfFear",
+      "class": "DeathKnight",
+      "label": "恐惧之波",
+      "labelSource": "translated",
+      "description": "恐惧之波席卷敌人：溃逃并削弱。",
+      "comp": "MentalStateAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "mentalState": "PanicFlee",
+        "radius": 5
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediffAoE",
+          "params": {
+            "hediff": "MMT_HD_Slow",
+            "radius": 5,
+            "targetFriendly": false,
+            "includeSelf": false
+          }
+        }
+      ]
+    },
+    "MMT_Might_GraveBlade": {
+      "romDef": "TM_GraveBlade",
+      "class": "DeathKnight",
+      "label": "墓地灵剑",
+      "labelSource": "translated",
+      "description": "灵剑自墓地突起，连斩目标。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Cut",
+        "damage": 22,
+        "radius": 2,
+        "pulses": 3,
+        "pulseIntervalTicks": 30
+      }
+    },
+    "MMT_Might_Shroud": {
+      "romDef": "TM_Shroud",
+      "class": "DeathKnight",
+      "label": "黑暗斗篷",
+      "labelSource": "translated",
+      "description": "开启后黑暗斗篷护体：减伤并强化近战（RoM 的憎恨积攒简化为光环）。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Shroud"
+      }
+    },
+    "MMT_Might_ChiBurst": {
+      "romDef": "TM_ChiBurst",
+      "class": "Monk",
+      "label": "气爆",
+      "labelSource": "translated",
+      "description": "气劲爆发，打断周身敌人。",
+      "comp": "AoEDamage",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 12,
+        "radius": 2,
+        "hitHediffDef": "MMT_HD_Stagger"
+      }
+    },
+    "MMT_Might_Meditate": {
+      "romDef": "TM_Meditate",
+      "class": "Monk",
+      "label": "冥想",
+      "labelSource": "translated",
+      "description": "冥想净化身心：小幅自愈并降低心灵熵。",
+      "comp": "SelfEntropy",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "entropyChange": -12,
+        "healAmount": 6
+      }
+    },
+    "MMT_Might_DragonStrike": {
+      "romDef": "TM_DragonStrike",
+      "class": "Monk",
+      "label": "龙翔踢",
+      "labelSource": "translated",
+      "description": "飞跃踢击目标。",
+      "comp": "DashStrike",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 24
+      }
+    },
+    "MMT_Might_MonkSilentMeridian": {
+      "romDef": "TM_MonkSilentMeridian",
+      "class": "Monk",
+      "label": "寂静经脉",
+      "labelSource": "copied",
+      "description": "站桩蓄力后连续气劲脉冲。",
+      "comp": "AoEDamage",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "damageDef": "Blunt",
+        "damage": 16,
+        "radius": 2.5,
+        "pulses": 3,
+        "pulseIntervalTicks": 100
+      }
+    },
+    "MMT_Might_ProvisionerAura": {
+      "romDef": "TM_ProvisionerAura",
+      "class": "Commander",
+      "label": "后勤光环",
+      "labelSource": "translated",
+      "description": "开启后维持后勤光环：周围友军休息与饥饿改善。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Provisioner"
+      }
+    },
+    "MMT_Might_TaskMasterAura": {
+      "romDef": "TM_TaskMasterAura",
+      "class": "Commander",
+      "label": "监工光环",
+      "labelSource": "translated",
+      "description": "开启后维持监工光环：周围友军工作加速、社交下降。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_TaskMaster"
+      }
+    },
+    "MMT_Might_CommanderAura": {
+      "romDef": "TM_CommanderAura",
+      "class": "Commander",
+      "label": "统御光环",
+      "labelSource": "translated",
+      "description": "开启后维持统御光环：周围友军心情改善、产能略降。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_Commander"
+      }
+    },
+    "MMT_Might_MoveOut": {
+      "romDef": "TM_MoveOut",
+      "class": "Commander",
+      "label": "全员推进",
+      "labelSource": "translated",
+      "description": "范围友军移速大增。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_MoveOut",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_StayAlert": {
+      "romDef": "TM_StayAlert",
+      "class": "Commander",
+      "label": "保持警戒",
+      "labelSource": "translated",
+      "description": "范围友军精神振奋、命中提升。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_StayAlert",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_HoldTheLine": {
+      "romDef": "TM_HoldTheLine",
+      "class": "Commander",
+      "label": "坚守阵地",
+      "labelSource": "translated",
+      "description": "范围友军减伤、忍痛、射速提升。",
+      "comp": "GiveHediffAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_HoldLine",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_CommanderWorkCrew": {
+      "romDef": "TM_CommanderWorkCrew",
+      "class": "Commander",
+      "label": "工作队",
+      "labelSource": "copied",
+      "description": "范围友军工作速度提升。",
+      "comp": "GiveHediffAoE",
+      "tier": "small",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_WorkCrew",
+        "radius": 6,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_CommanderRally": {
+      "romDef": "TM_CommanderRally",
+      "class": "Commander",
+      "label": "集合点",
+      "labelSource": "copied",
+      "description": "范围友军获得防护（简化：RoM 的集合点实体未移植）。",
+      "comp": "GiveHediffAoE",
+      "tier": "mid",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Rally",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_CommanderOperationEvac": {
+      "romDef": "TM_CommanderOperationEvac",
+      "class": "Commander",
+      "label": "全员归队",
+      "labelSource": "copied",
+      "description": "范围友军加速并获得防护。",
+      "comp": "GiveHediffAoE",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "hediff": "MMT_HD_Evac",
+        "radius": 8,
+        "targetFriendly": true
+      }
+    },
+    "MMT_Might_FirstAid": {
+      "romDef": "TM_FirstAid",
+      "class": "SuperSoldier",
+      "label": "自我急救",
+      "labelSource": "translated",
+      "description": "战场自救，治疗并止血。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 1,
+      "target": "self",
+      "params": {
+        "heal": 10,
+        "maxInjuries": 2,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Might_Buckshot": {
+      "romDef": "TM_Buckshot",
+      "class": "SuperSoldier",
+      "label": "散射鹿弹",
+      "labelSource": "translated",
+      "description": "鹿弹扇面散射。",
+      "comp": "MultiShot",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Buckshot",
+        "shotCount": 6,
+        "scatterRadius": 2,
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 6,
+          "speed": 60,
+          "tex": "TT_Shell"
+        }
+      }
+    },
+    "MMT_Might_PistolWhip": {
+      "romDef": "TM_PistolWhip",
+      "class": "SuperSoldier",
+      "label": "枪托猛击",
+      "labelSource": "translated",
+      "description": "枪托猛击，击晕并缴械。",
+      "comp": "PistolWhip",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "damage": 12,
+        "stunHediff": "MMT_HD_Stagger"
+      }
+    },
+    "MMT_Might_SuppressingFire": {
+      "romDef": "TM_SuppressingFire",
+      "class": "SuperSoldier",
+      "label": "压制火力",
+      "labelSource": "translated",
+      "description": "弹幕压制目标区域。",
+      "comp": "MultiShot",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_SuppressRound",
+        "shotCount": 10,
+        "scatterRadius": 3,
+        "projectileSpec": {
+          "damageDef": "Bullet",
+          "damage": 5,
+          "speed": 70,
+          "tex": "TT_Shell"
+        }
+      }
+    },
+    "MMT_Might_Mk203GL": {
+      "romDef": "TM_Mk203GL",
+      "class": "SuperSoldier",
+      "label": "枪挂榴弹",
+      "labelSource": "translated",
+      "description": "发射枪挂榴弹。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_Mk203",
+        "projectileSpec": {
+          "damageDef": "Bomb",
+          "damage": 20,
+          "speed": 40,
+          "explosionRadius": 2,
+          "tex": "rocket_small"
+        }
+      }
+    },
+    "MMT_Might_BreachingCharge": {
+      "romDef": "TM_BreachingCharge",
+      "class": "SuperSoldier",
+      "label": "爆破炸药",
+      "labelSource": "translated",
+      "description": "对建筑特化的爆破装药。",
+      "comp": "LaunchProjectile",
+      "tier": "mid",
+      "stage": 2,
+      "target": "location",
+      "params": {
+        "projectile": "MMT_Proj_BreachCharge",
+        "projectileSpec": {
+          "damageDef": "Demolish",
+          "damage": 40,
+          "speed": 35,
+          "explosionRadius": 1.5,
+          "armorPenetrationBase": 0.5,
+          "tex": "rocket_small"
+        }
+      }
+    },
+    "MMT_Might_SuperSoldierFieldDressing": {
+      "romDef": "TM_SuperSoldierFieldDressing",
+      "class": "SuperSoldier",
+      "label": "战地包扎",
+      "labelSource": "copied",
+      "description": "快速战地包扎。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "heal": 14,
+        "maxInjuries": 3,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Might_60mmMortar": {
+      "romDef": "TM_60mmMortar",
+      "class": "SuperSoldier",
+      "label": "便携迫击炮",
+      "labelSource": "translated",
+      "description": "便携迫击炮轰击远处目标。",
+      "comp": "LaunchProjectile",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "range": 40,
+      "params": {
+        "projectile": "MMT_Proj_Mortar60",
+        "projectileSpec": {
+          "damageDef": "Bomb",
+          "damage": 30,
+          "speed": 35,
+          "explosionRadius": 3.5,
+          "tex": "rocket_small"
+        }
+      }
+    },
+    "MMT_Might_SoothingBalm": {
+      "romDef": "TM_SoothingBalm",
+      "class": "Apothecary",
+      "label": "舒缓药膏",
+      "labelSource": "translated",
+      "description": "止血抗感染止痛的药膏。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "heal": 8,
+        "maxInjuries": 2,
+        "tendBleeding": true,
+        "cureInfection": true
+      }
+    },
+    "MMT_Might_PoisonFlask": {
+      "romDef": "TM_PoisonFlask",
+      "class": "Apothecary",
+      "label": "毒气瓶",
+      "labelSource": "translated",
+      "description": "掷出毒气瓶，范围中毒。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 1,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_PoisonFlask",
+        "projectileSpec": {
+          "damageDef": "ToxicBite",
+          "damage": 8,
+          "speed": 45,
+          "explosionRadius": 1.5,
+          "tex": "poison"
+        }
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediffAoE",
+          "params": {
+            "hediff": "ToxicBuildup",
+            "radius": 2,
+            "targetFriendly": false,
+            "includeSelf": false
+          }
+        }
+      ]
+    },
+    "MMT_Might_ApothecaryAntitoxin": {
+      "romDef": "TM_ApothecaryAntitoxin",
+      "class": "Apothecary",
+      "label": "解毒剂",
+      "labelSource": "copied",
+      "description": "解毒并减轻食物中毒。",
+      "comp": "Heal",
+      "tier": "small",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "heal": 5,
+        "maxInjuries": 2,
+        "cureInfection": true
+      }
+    },
+    "MMT_Might_Elixir": {
+      "romDef": "TM_Elixir",
+      "class": "Apothecary",
+      "label": "万能灵药",
+      "labelSource": "translated",
+      "description": "治疗并强化目标。",
+      "comp": "Heal",
+      "tier": "mid",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "heal": 12,
+        "maxInjuries": 3
+      },
+      "extraComps": [
+        {
+          "comp": "GiveHediff",
+          "params": {
+            "hediff": "MMT_HD_Elixir"
+          }
+        }
+      ]
+    },
+    "MMT_Might_HerbalClarity": {
+      "romDef": "TM_HerbalClarity",
+      "class": "Apothecary",
+      "label": "清明药剂",
+      "labelSource": "translated",
+      "description": "加速心灵集中与心灵熵恢复（灵能化改编）。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_HerbalClarity"
+      }
+    },
+    "MMT_Might_FireSuppressionFlask": {
+      "romDef": "TM_FireSuppressionFlask",
+      "class": "Apothecary",
+      "label": "灭火罐",
+      "labelSource": "translated",
+      "description": "扑灭范围内火焰。",
+      "comp": "SpawnEffect",
+      "tier": "small",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "extinguishRadius": 4
+      }
+    },
+    "MMT_Might_ApothecaryGoldenHour": {
+      "romDef": "TM_ApothecaryGoldenHour",
+      "class": "Apothecary",
+      "label": "黄金急救",
+      "labelSource": "copied",
+      "description": "黄金时间急救：大范围友军获得治疗。",
+      "comp": "Heal",
+      "tier": "big",
+      "stage": 3,
+      "target": "location",
+      "params": {
+        "heal": 18,
+        "maxInjuries": 3,
+        "radius": 8,
+        "tendBleeding": true
+      }
+    },
+    "MMT_Might_HerbalBliss": {
+      "romDef": "TM_HerbalBliss",
+      "class": "Apothecary",
+      "label": "极乐药",
+      "labelSource": "translated",
+      "description": "遮蔽疼痛的极乐药剂（有过量风险）。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 3,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_HerbalBliss"
+      }
+    },
+    "MMT_Might_Taunt": {
+      "romDef": "TM_Taunt",
+      "class": "Wayfarer",
+      "label": "嘲讽",
+      "labelSource": "translated",
+      "description": "激怒目标冲向自己。",
+      "comp": "MentalState",
+      "tier": "small",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "mentalState": "Berserk"
+      }
+    },
+    "MMT_Might_ShieldOther": {
+      "romDef": "TM_ShieldOther",
+      "class": "Wayfarer",
+      "label": "援护之盾",
+      "labelSource": "translated",
+      "description": "为友军套上护盾。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 3,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_ShieldPhys"
+      }
+    },
+    "MMT_Might_ThrowingKnife": {
+      "romDef": "TM_ThrowingKnife",
+      "class": "Wayfarer",
+      "label": "飞刀",
+      "labelSource": "translated",
+      "description": "掷出飞刀。",
+      "comp": "LaunchProjectile",
+      "tier": "small",
+      "stage": 3,
+      "target": "enemy",
+      "params": {
+        "projectile": "MMT_Proj_ThrowingKnife",
+        "projectileSpec": {
+          "damageDef": "Cut",
+          "damage": 12,
+          "speed": 60,
+          "tex": "throwingknife"
+        }
+      }
+    },
+    "MMT_Might_HeavyBlow": {
+      "romDef": "TM_HeavyBlow",
+      "class": "Wayfarer",
+      "label": "强力打击",
+      "labelSource": "copied",
+      "description": "短时强化近战攻击（RoM 的持续型改为一次性）。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_HeavyBlow"
+      }
+    },
+    "MMT_Might_ThickSkin": {
+      "romDef": "TM_ThickSkin",
+      "class": "Wayfarer",
+      "label": "石化皮肤",
+      "labelSource": "copied",
+      "description": "开启后皮肤石化减伤。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_ThickSkin"
+      }
+    },
+    "MMT_Might_InnerHealing": {
+      "romDef": "TM_InnerHealing",
+      "class": "Wayfarer",
+      "label": "内在治疗",
+      "labelSource": "copied",
+      "description": "开启后持续自愈。再次施放关闭。",
+      "comp": "ToggleAura",
+      "tier": "mid",
+      "stage": 3,
+      "target": "self",
+      "params": {
+        "aura": "MMT_Aura_InnerHealing"
+      }
+    },
+    "MMT_Might_Medigel": {
+      "romDef": "TM_Medigel",
+      "class": "FieldMedic",
+      "label": "医疗凝胶",
+      "labelSource": "translated",
+      "description": "缓释医疗凝胶，持续加速愈合。",
+      "comp": "GiveHediff",
+      "tier": "small",
+      "stage": 1,
+      "target": "friendly",
+      "params": {
+        "hediff": "MMT_HD_Medigel"
+      }
+    },
+    "MMT_Might_Emergency": {
+      "romDef": "TM_Emergency",
+      "class": "FieldMedic",
+      "label": "紧急动员",
+      "labelSource": "translated",
+      "description": "自身移速、医护速度与品质提升。",
+      "comp": "GiveHediff",
+      "tier": "mid",
+      "stage": 2,
+      "target": "self",
+      "params": {
+        "hediff": "MMT_HD_Emergency"
+      }
+    },
+    "MMT_Might_CombatDrugs": {
+      "romDef": "TM_CombatDrugs",
+      "class": "FieldMedic",
+      "label": "战斗药剂",
+      "labelSource": "translated",
+      "description": "向友军投掷一剂随机正面战斗药剂。",
+      "comp": "CombatDrugs",
+      "tier": "mid",
+      "stage": 2,
+      "target": "friendly",
+      "params": {
+        "hediffPool": [
+          "GoJuiceHigh",
+          "WakeUpHigh",
+          "YayoHigh",
+          "AmbrosiaHigh"
+        ]
+      }
+    },
+    "MMT_Might_MedicalSupply": {
+      "romDef": "TM_MedicalSupply",
+      "class": "FieldMedic",
+      "label": "医疗补给",
+      "labelSource": "translated",
+      "description": "空投医疗物资（RoM 的虚空补给改为长冷却）。",
+      "comp": "SpawnEffect",
+      "tier": "mid",
+      "stage": 3,
+      "target": "location",
+      "cooldownSeconds": 2400,
+      "params": {
+        "spawnThingDef": "MedicineIndustrial",
+        "spawnCount": 2
+      }
+    }
+  },
+  "hediffs": {
+    "MMT_Aura_InnerFire": {
+      "label": "内心之火（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_InnerFire",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_InnerFire": {
+      "label": "内心之火",
+      "description": "内心之火温暖身心：抗寒、自愈、休息与饥饿消耗改善。",
+      "durationTicks": 600,
+      "statFactors": {
+        "RestRateMultiplier": 1.1,
+        "InjuryHealingFactor": 1.2
+      },
+      "statOffsets": {
+        "ComfyTemperatureMin": -6
+      },
+      "hungerRateFactor": 0.9
+    },
+    "MMT_Aura_Soothe": {
+      "label": "抚慰之风（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Soothe",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_Soothe": {
+      "label": "抚慰之风",
+      "description": "抚慰之风减轻疼痛、平复疲劳。",
+      "durationTicks": 600,
+      "painOffset": -0.2,
+      "statFactors": {
+        "RestRateMultiplier": 1.1
+      }
+    },
+    "MMT_Aura_Shadow": {
+      "label": "暗影随形（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_ShadowBless",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_ShadowBless": {
+      "label": "暗影随形",
+      "description": "暗影之力强化工作与躯体。",
+      "durationTicks": 600,
+      "statFactors": {
+        "WorkSpeedGlobal": 1.1
+      },
+      "capMods": {
+        "Manipulation": 0.1
+      }
+    },
+    "MMT_Aura_HolyLight": {
+      "label": "希望之光（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_HolyLight",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_HolyLight": {
+      "label": "希望之光",
+      "description": "圣光庇佑，加速自愈、意志坚定。",
+      "durationTicks": 600,
+      "naturalHealingFactor": 2,
+      "statOffsets": {
+        "MentalBreakThreshold": -0.04
+      }
+    },
+    "MMT_Aura_Inspire": {
+      "label": "鼓舞（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Inspire",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_Inspire": {
+      "label": "鼓舞",
+      "description": "战歌激励，工效与意志提升。",
+      "durationTicks": 600,
+      "statFactors": {
+        "WorkSpeedGlobal": 1.08
+      },
+      "statOffsets": {
+        "MentalBreakThreshold": -0.03
+      }
+    },
+    "MMT_Aura_Stoneskin": {
+      "label": "石肤（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Stoneskin",
+        "radius": 0.5,
+        "entropyPerPulse": 0.2
+      }
+    },
+    "MMT_HD_Stoneskin": {
+      "label": "石肤",
+      "description": "皮肤坚如岩石，大幅减伤。",
+      "durationTicks": 600,
+      "statFactors": {
+        "IncomingDamageFactor": 0.45
+      }
+    },
+    "MMT_Aura_Enchanted": {
+      "label": "魅力光环（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_EnchantedAura",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_EnchantedAura": {
+      "label": "魅力光环",
+      "description": "魅力加持，社交能力提升。",
+      "durationTicks": 600,
+      "statFactors": {
+        "SocialImpact": 1.15,
+        "NegotiationAbility": 1.15
+      }
+    },
+    "MMT_Aura_Nightshade": {
+      "label": "夜影淬毒（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Nightshade",
+        "radius": 0.5,
+        "entropyPerPulse": 0.2
+      }
+    },
+    "MMT_HD_Nightshade": {
+      "label": "夜影淬毒",
+      "description": "武器淬毒，近战更加致命。",
+      "durationTicks": 600,
+      "statOffsets": {
+        "MeleeHitChance": 3
+      }
+    },
+    "MMT_Aura_Suppress": {
+      "label": "情绪压制（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Suppress",
+        "radius": 8,
+        "targetFriendly": false,
+        "entropyPerPulse": 0.5
+      }
+    },
+    "MMT_HD_Suppress": {
+      "label": "情绪压制",
+      "isBad": true,
+      "description": "情绪被压制，战力与意志下降。",
+      "durationTicks": 600,
+      "statFactors": {
+        "ShootingAccuracyPawn": 0.85
+      },
+      "statOffsets": {
+        "MeleeHitChance": -3,
+        "MentalBreakThreshold": 0.08
+      }
+    },
+    "MMT_Aura_Sprint": {
+      "label": "冲刺（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Sprint",
+        "radius": 0.5,
+        "entropyPerPulse": 0.25
+      }
+    },
+    "MMT_HD_Sprint": {
+      "label": "冲刺",
+      "description": "全速冲刺。",
+      "durationTicks": 600,
+      "statOffsets": {
+        "MoveSpeed": 2.0
+      }
+    },
+    "MMT_Aura_Shroud": {
+      "label": "黑暗斗篷（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Shroud",
+        "radius": 0.5,
+        "entropyPerPulse": 0.25
+      }
+    },
+    "MMT_HD_Shroud": {
+      "label": "黑暗斗篷",
+      "description": "黑暗斗篷护体：减伤并强化近战。",
+      "durationTicks": 600,
+      "statFactors": {
+        "IncomingDamageFactor": 0.8
+      },
+      "statOffsets": {
+        "MeleeHitChance": 3
+      }
+    },
+    "MMT_Aura_Provisioner": {
+      "label": "后勤光环（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_Provisioner",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_Provisioner": {
+      "label": "后勤保障",
+      "description": "后勤改善：休息与饥饿消耗下降。",
+      "durationTicks": 600,
+      "statFactors": {
+        "RestRateMultiplier": 1.1
+      },
+      "hungerRateFactor": 0.9
+    },
+    "MMT_Aura_TaskMaster": {
+      "label": "监工光环（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_TaskMaster",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_TaskMaster": {
+      "label": "监工督促",
+      "description": "监工督促：工作加速、社交下降。",
+      "durationTicks": 600,
+      "statFactors": {
+        "WorkSpeedGlobal": 1.1,
+        "SocialImpact": 0.9
+      }
+    },
+    "MMT_Aura_Commander": {
+      "label": "统御光环（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_CommanderMorale",
+        "radius": 8,
+        "entropyPerPulse": 0.4
+      }
+    },
+    "MMT_HD_CommanderMorale": {
+      "label": "统御鼓舞",
+      "description": "统御鼓舞：心情改善、产能略降。",
+      "durationTicks": 600,
+      "statOffsets": {
+        "MentalBreakThreshold": -0.05
+      },
+      "statFactors": {
+        "WorkSpeedGlobal": 0.95
+      }
+    },
+    "MMT_Aura_ThickSkin": {
+      "label": "石化皮肤（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_ThickSkin",
+        "radius": 0.5,
+        "entropyPerPulse": 0.2
+      }
+    },
+    "MMT_HD_ThickSkin": {
+      "label": "石化皮肤",
+      "description": "皮肤石化，减伤。",
+      "durationTicks": 600,
+      "statFactors": {
+        "IncomingDamageFactor": 0.7
+      }
+    },
+    "MMT_Aura_InnerHealing": {
+      "label": "内在治疗（维持中）",
+      "hidden": true,
+      "aura": {
+        "targetHediff": "MMT_HD_InnerHealing",
+        "radius": 0.5,
+        "entropyPerPulse": 0.25
+      }
+    },
+    "MMT_HD_InnerHealing": {
+      "label": "内在治疗",
+      "description": "持续自愈。",
+      "durationTicks": 600,
+      "naturalHealingFactor": 4
+    },
+    "MMT_HD_FrostSlow": {
+      "label": "冻结减速",
+      "isBad": true,
+      "description": "冰霜迟滞了行动。",
+      "durationTicks": 480,
+      "statFactors": {
+        "MoveSpeed": 0.6
+      }
+    },
+    "MMT_HD_Stagger": {
+      "label": "踉跄",
+      "isBad": true,
+      "description": "立足不稳。",
+      "durationTicks": 180,
+      "statFactors": {
+        "MoveSpeed": 0.2
+      }
+    },
+    "MMT_HD_Slow": {
+      "label": "迟滞",
+      "isBad": true,
+      "description": "暗影迟滞了脚步。",
+      "durationTicks": 600,
+      "statFactors": {
+        "MoveSpeed": 0.6
+      }
+    },
+    "MMT_HD_Blind": {
+      "label": "眩目",
+      "isBad": true,
+      "description": "强光眩目，视物不清。",
+      "durationTicks": 600,
+      "capMods": {
+        "Sight": -0.7
+      }
+    },
+    "MMT_HD_Weaken": {
+      "label": "灵能枯竭",
+      "isBad": true,
+      "description": "精神被汲取，虚弱不堪。",
+      "durationTicks": 60000,
+      "capMods": {
+        "Consciousness": -0.2
+      },
+      "statFactors": {
+        "MoveSpeed": 0.8
+      }
+    },
+    "MMT_HD_Vulnerable": {
+      "label": "灵体扭曲",
+      "isBad": true,
+      "description": "灵体被扭曲，受伤加深。",
+      "durationTicks": 900,
+      "statFactors": {
+        "IncomingDamageFactor": 1.2
+      }
+    },
+    "MMT_HD_ArmorBreak": {
+      "label": "破甲缺口",
+      "isBad": true,
+      "description": "护甲被撕开缺口。",
+      "durationTicks": 360,
+      "statFactors": {
+        "IncomingDamageFactor": 1.35
+      }
+    },
+    "MMT_HD_DeathMark": {
+      "label": "死亡印记",
+      "isBad": true,
+      "description": "死亡印记削弱了战斗意志与命中。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "ShootingAccuracyPawn": 0.8
+      },
+      "statOffsets": {
+        "MeleeHitChance": -4
+      }
+    },
+    "MMT_HD_PainSpike": {
+      "label": "死亡剧痛",
+      "isBad": true,
+      "description": "死亡螺旋带来范围剧痛。",
+      "durationTicks": 1800,
+      "painOffset": 0.3
+    },
+    "MMT_HD_BloodDoT": {
+      "label": "鲜血诅咒",
+      "isBad": true,
+      "description": "血液不断渗出。",
+      "durationTicks": 1800,
+      "totalBleedFactor": 2.0
+    },
+    "MMT_HD_HexMark": {
+      "label": "咒印",
+      "isBad": true,
+      "description": "被烙上了萨满咒印。",
+      "durationTicks": 3600
+    },
+    "MMT_HD_HexPain": {
+      "label": "咒印·剧痛",
+      "isBad": true,
+      "description": "咒印引发持续剧痛。",
+      "durationTicks": 3600,
+      "painOffset": 0.25
+    },
+    "MMT_HD_HexCurse": {
+      "label": "咒印·厄运",
+      "isBad": true,
+      "description": "极度倒霉。",
+      "durationTicks": 3600,
+      "statFactors": {
+        "ShootingAccuracyPawn": 0.7
+      },
+      "statOffsets": {
+        "MeleeHitChance": -5,
+        "MeleeDodgeChance": -5
+      }
+    },
+    "MMT_HD_Sabotage": {
+      "label": "瘫痪破坏",
+      "isBad": true,
+      "description": "机械与电子系统被瘫痪。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "MoveSpeed": 0.4,
+        "ShootingAccuracyPawn": 0.5
+      }
+    },
+    "MMT_HD_AccelTime": {
+      "label": "时间加速",
+      "isBad": true,
+      "description": "时间加速流逝：行动迟缓、饥饿加剧。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "MoveSpeed": 0.6
+      },
+      "hungerRateFactor": 1.5
+    },
+    "MMT_HD_AMP": {
+      "label": "AMP",
+      "description": "电流强化躯体。",
+      "durationTicks": 3600,
+      "capMods": {
+        "Manipulation": 0.4,
+        "Moving": 0.3,
+        "Consciousness": 0.2
+      },
+      "statFactors": {
+        "MoveSpeed": 1.15
+      }
+    },
+    "MMT_HD_Regen": {
+      "label": "再生术",
+      "description": "高速再生。",
+      "durationTicks": 1200,
+      "naturalHealingFactor": 5
+    },
+    "MMT_HD_DivineShield": {
+      "label": "神佑之盾",
+      "description": "圣光护盾吸收伤害。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.4
+      }
+    },
+    "MMT_HD_BestowMight": {
+      "label": "激励",
+      "description": "躯体能力大幅提升。",
+      "durationTicks": 3600,
+      "capMods": {
+        "Manipulation": 0.3,
+        "Moving": 0.2,
+        "Consciousness": 0.15
+      }
+    },
+    "MMT_HD_CombatBuff": {
+      "label": "战斗祝福",
+      "description": "战意高昂，战力强化。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "ShootingAccuracyPawn": 1.12,
+        "AimingDelayFactor": 0.9
+      },
+      "statOffsets": {
+        "MeleeHitChance": 4
+      }
+    },
+    "MMT_HD_MoodCalm": {
+      "label": "心绪宁静",
+      "description": "心绪被抚平。",
+      "durationTicks": 7200,
+      "statOffsets": {
+        "MentalBreakThreshold": -0.05
+      }
+    },
+    "MMT_HD_NanoStimulant": {
+      "label": "纳米强化",
+      "description": "纳米机械强化机体。",
+      "durationTicks": 1800,
+      "capMods": {
+        "Manipulation": 0.2,
+        "Consciousness": 0.1
+      }
+    },
+    "MMT_HD_TechnoShield": {
+      "label": "动能护盾",
+      "description": "动能护盾偏转攻击。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.45
+      }
+    },
+    "MMT_HD_Overdrive": {
+      "label": "超载",
+      "description": "机体超载运转。",
+      "durationTicks": 1800,
+      "capMods": {
+        "Manipulation": 0.2
+      },
+      "statFactors": {
+        "WorkSpeedGlobal": 1.2
+      }
+    },
+    "MMT_HD_BloodShield": {
+      "label": "血能护盾",
+      "description": "血能护盾护体并加速再生。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.5
+      },
+      "naturalHealingFactor": 3
+    },
+    "MMT_HD_EnchantedBody": {
+      "label": "附魔之躯",
+      "description": "附魔强化操纵与攻速。",
+      "durationTicks": 3600,
+      "capMods": {
+        "Manipulation": 0.25
+      },
+      "statFactors": {
+        "AimingDelayFactor": 0.85
+      }
+    },
+    "MMT_HD_CasterDrain": {
+      "label": "施法枯竭",
+      "isBad": true,
+      "description": "复活法术耗尽了心神。",
+      "durationTicks": 120000,
+      "capMods": {
+        "Consciousness": -0.3
+      }
+    },
+    "MMT_HD_AlterFate": {
+      "label": "命运快照",
+      "hidden": true,
+      "alterFate": {
+        "durationTicks": 36000
+      }
+    },
+    "MMT_HD_BrandFitness": {
+      "label": "体能烙印",
+      "description": "烙印强化体能。",
+      "durationTicks": 7200,
+      "capMods": {
+        "Moving": 0.15,
+        "Manipulation": 0.15
+      }
+    },
+    "MMT_HD_BrandEmotion": {
+      "label": "心绪烙印",
+      "description": "烙印安定心绪。",
+      "durationTicks": 7200,
+      "statOffsets": {
+        "MentalBreakThreshold": -0.08
+      }
+    },
+    "MMT_HD_BrandVitality": {
+      "label": "活力烙印",
+      "description": "烙印强化健康。",
+      "durationTicks": 7200,
+      "statFactors": {
+        "ImmunityGainSpeed": 1.3
+      },
+      "naturalHealingFactor": 2
+    },
+    "MMT_HD_BrandProtection": {
+      "label": "护卫烙印",
+      "description": "烙印减伤。",
+      "durationTicks": 3600,
+      "statFactors": {
+        "IncomingDamageFactor": 0.6
+      }
+    },
+    "MMT_HD_BrandAwareness": {
+      "label": "感知烙印",
+      "description": "烙印强化感知与命中。",
+      "durationTicks": 7200,
+      "statFactors": {
+        "ShootingAccuracyPawn": 1.1
+      }
+    },
+    "MMT_HD_SpeedBuff": {
+      "label": "迅捷",
+      "description": "行动迅捷。",
+      "durationTicks": 600,
+      "statOffsets": {
+        "MoveSpeed": 1.2
+      }
+    },
+    "MMT_HD_Reversal": {
+      "label": "反转",
+      "description": "反转力场几乎免疫攻击。",
+      "durationTicks": 480,
+      "statFactors": {
+        "IncomingDamageFactor": 0.15
+      }
+    },
+    "MMT_HD_PsionicBarrier": {
+      "label": "灵能屏障",
+      "description": "灵能屏障吸收伤害。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.4
+      }
+    },
+    "MMT_HD_CrucibleShield": {
+      "label": "熔炉屏障",
+      "description": "动能熔炉赋予的屏障。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.5
+      }
+    },
+    "MMT_HD_MoveOut": {
+      "label": "全员推进",
+      "description": "全速推进。",
+      "durationTicks": 1200,
+      "statOffsets": {
+        "MoveSpeed": 1.5
+      }
+    },
+    "MMT_HD_StayAlert": {
+      "label": "保持警戒",
+      "description": "精神振奋、命中提升。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "ShootingAccuracyPawn": 1.1
+      },
+      "capMods": {
+        "Consciousness": 0.1
+      }
+    },
+    "MMT_HD_HoldLine": {
+      "label": "坚守阵地",
+      "description": "减伤、忍痛、射速提升。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "IncomingDamageFactor": 0.75,
+        "AimingDelayFactor": 0.9
+      },
+      "statOffsets": {
+        "PainShockThreshold": 0.15
+      }
+    },
+    "MMT_HD_WorkCrew": {
+      "label": "工作队",
+      "description": "工作速度提升。",
+      "durationTicks": 1800,
+      "statFactors": {
+        "WorkSpeedGlobal": 1.15
+      }
+    },
+    "MMT_HD_Rally": {
+      "label": "集合防护",
+      "description": "集合点防护。",
+      "durationTicks": 1200,
+      "statFactors": {
+        "IncomingDamageFactor": 0.8
+      }
+    },
+    "MMT_HD_Evac": {
+      "label": "全员归队",
+      "description": "加速并获得防护。",
+      "durationTicks": 1200,
+      "statOffsets": {
+        "MoveSpeed": 1.5
+      },
+      "statFactors": {
+        "IncomingDamageFactor": 0.8
+      }
+    },
+    "MMT_HD_Elixir": {
+      "label": "万能灵药",
+      "description": "灵药滋养身心。",
+      "durationTicks": 3600,
+      "naturalHealingFactor": 2,
+      "statFactors": {
+        "ImmunityGainSpeed": 1.2
+      }
+    },
+    "MMT_HD_HerbalClarity": {
+      "label": "清明药剂",
+      "description": "心智清明，心灵熵恢复加速。",
+      "durationTicks": 3600,
+      "statFactors": {
+        "PsychicEntropyRecoveryRate": 1.5
+      }
+    },
+    "MMT_HD_HerbalBliss": {
+      "label": "极乐药",
+      "description": "遮蔽疼痛的极乐体验（有过量风险）。",
+      "durationTicks": 7200,
+      "painOffset": -0.6,
+      "capMods": {
+        "Consciousness": 0.1
+      }
+    },
+    "MMT_HD_Medigel": {
+      "label": "医疗凝胶",
+      "description": "缓释凝胶加速愈合。",
+      "durationTicks": 3600,
+      "naturalHealingFactor": 3
+    },
+    "MMT_HD_Emergency": {
+      "label": "紧急动员",
+      "description": "移速、医护速度与品质提升。",
+      "durationTicks": 3600,
+      "statOffsets": {
+        "MoveSpeed": 0.8,
+        "MedicalTendQuality": 0.1
+      },
+      "statFactors": {
+        "MedicalTendSpeed": 1.3
+      }
+    },
+    "MMT_HD_HeavyBlow": {
+      "label": "强力打击",
+      "description": "近战攻击强化。",
+      "durationTicks": 900,
+      "statOffsets": {
+        "MeleeHitChance": 6
+      }
+    },
+    "MMT_HD_ShieldPhys": {
+      "label": "援护之盾",
+      "description": "护盾吸收伤害。",
+      "durationTicks": 900,
+      "statFactors": {
+        "IncomingDamageFactor": 0.5
+      }
+    },
+    "MMT_HD_Grapple": {
+      "label": "钩爪缠身",
+      "isBad": true,
+      "description": "被钩爪缠住，动弹不得。",
+      "durationTicks": 300,
+      "statFactors": {
+        "MoveSpeed": 0.1
+      }
+    }
+  },
+  "MMT_HD_Grapple": {
+    "label": "钩爪缠身",
+    "isBad": true,
+    "description": "被钩爪缠住，动弹不得。",
+    "durationTicks": 300,
+    "statFactors": {
+      "MoveSpeed": 0.1
+    }
+  },
+  "MMT_HD_AMP": {
+    "label": "AMP",
+    "description": "电流强化躯体。",
+    "durationTicks": 3600,
+    "capMods": {
+      "Manipulation": 0.4,
+      "Moving": 0.3,
+      "Consciousness": 0.2
+    },
+    "statFactors": {
+      "MoveSpeed": 1.15
+    }
+  },
+  "MMT_HD_Regen": {
+    "label": "再生术",
+    "description": "高速再生。",
+    "durationTicks": 1200,
+    "naturalHealingFactor": 5
+  },
+  "MMT_HD_DivineShield": {
+    "label": "神佑之盾",
+    "description": "圣光护盾吸收伤害。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.4
+    }
+  },
+  "MMT_HD_BestowMight": {
+    "label": "激励",
+    "description": "躯体能力大幅提升。",
+    "durationTicks": 3600,
+    "capMods": {
+      "Manipulation": 0.3,
+      "Moving": 0.2,
+      "Consciousness": 0.15
+    }
+  },
+  "MMT_HD_CombatBuff": {
+    "label": "战斗祝福",
+    "description": "战意高昂，战力强化。",
+    "durationTicks": 1800,
+    "statFactors": {
+      "ShootingAccuracyPawn": 1.12,
+      "AimingDelayFactor": 0.9
+    },
+    "statOffsets": {
+      "MeleeHitChance": 4
+    }
+  },
+  "MMT_HD_MoodCalm": {
+    "label": "心绪宁静",
+    "description": "心绪被抚平。",
+    "durationTicks": 7200,
+    "statOffsets": {
+      "MentalBreakThreshold": -0.05
+    }
+  },
+  "MMT_HD_NanoStimulant": {
+    "label": "纳米强化",
+    "description": "纳米机械强化机体。",
+    "durationTicks": 1800,
+    "capMods": {
+      "Manipulation": 0.2,
+      "Consciousness": 0.1
+    }
+  },
+  "MMT_HD_TechnoShield": {
+    "label": "动能护盾",
+    "description": "动能护盾偏转攻击。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.45
+    }
+  },
+  "MMT_HD_Overdrive": {
+    "label": "超载",
+    "description": "机体超载运转。",
+    "durationTicks": 1800,
+    "capMods": {
+      "Manipulation": 0.2
+    },
+    "statFactors": {
+      "WorkSpeedGlobal": 1.2
+    }
+  },
+  "MMT_HD_BloodShield": {
+    "label": "血能护盾",
+    "description": "血能护盾护体并加速再生。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.5
+    },
+    "naturalHealingFactor": 3
+  },
+  "MMT_HD_EnchantedBody": {
+    "label": "附魔之躯",
+    "description": "附魔强化操纵与攻速。",
+    "durationTicks": 3600,
+    "capMods": {
+      "Manipulation": 0.25
+    },
+    "statFactors": {
+      "AimingDelayFactor": 0.85
+    }
+  },
+  "MMT_HD_CasterDrain": {
+    "label": "施法枯竭",
+    "isBad": true,
+    "description": "复活法术耗尽了心神。",
+    "durationTicks": 120000,
+    "capMods": {
+      "Consciousness": -0.3
+    }
+  },
+  "MMT_HD_AlterFate": {
+    "label": "命运快照",
+    "hidden": true,
+    "alterFate": {
+      "durationTicks": 36000
+    }
+  },
+  "MMT_HD_BrandFitness": {
+    "label": "体能烙印",
+    "description": "烙印强化体能。",
+    "durationTicks": 7200,
+    "capMods": {
+      "Moving": 0.15,
+      "Manipulation": 0.15
+    }
+  },
+  "MMT_HD_BrandEmotion": {
+    "label": "心绪烙印",
+    "description": "烙印安定心绪。",
+    "durationTicks": 7200,
+    "statOffsets": {
+      "MentalBreakThreshold": -0.08
+    }
+  },
+  "MMT_HD_BrandVitality": {
+    "label": "活力烙印",
+    "description": "烙印强化健康。",
+    "durationTicks": 7200,
+    "statFactors": {
+      "ImmunityGainSpeed": 1.3
+    },
+    "naturalHealingFactor": 2
+  },
+  "MMT_HD_BrandProtection": {
+    "label": "护卫烙印",
+    "description": "烙印减伤。",
+    "durationTicks": 3600,
+    "statFactors": {
+      "IncomingDamageFactor": 0.6
+    }
+  },
+  "MMT_HD_BrandAwareness": {
+    "label": "感知烙印",
+    "description": "烙印强化感知与命中。",
+    "durationTicks": 7200,
+    "statFactors": {
+      "ShootingAccuracyPawn": 1.1
+    }
+  },
+  "MMT_HD_SpeedBuff": {
+    "label": "迅捷",
+    "description": "行动迅捷。",
+    "durationTicks": 600,
+    "statOffsets": {
+      "MoveSpeed": 1.2
+    }
+  },
+  "MMT_HD_Reversal": {
+    "label": "反转",
+    "description": "反转力场几乎免疫攻击。",
+    "durationTicks": 480,
+    "statFactors": {
+      "IncomingDamageFactor": 0.15
+    }
+  },
+  "MMT_HD_PsionicBarrier": {
+    "label": "灵能屏障",
+    "description": "灵能屏障吸收伤害。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.4
+    }
+  },
+  "MMT_HD_CrucibleShield": {
+    "label": "熔炉屏障",
+    "description": "动能熔炉赋予的屏障。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.5
+    }
+  },
+  "MMT_HD_MoveOut": {
+    "label": "全员推进",
+    "description": "全速推进。",
+    "durationTicks": 1200,
+    "statOffsets": {
+      "MoveSpeed": 1.5
+    }
+  },
+  "MMT_HD_StayAlert": {
+    "label": "保持警戒",
+    "description": "精神振奋、命中提升。",
+    "durationTicks": 1800,
+    "statFactors": {
+      "ShootingAccuracyPawn": 1.1
+    },
+    "capMods": {
+      "Consciousness": 0.1
+    }
+  },
+  "MMT_HD_HoldLine": {
+    "label": "坚守阵地",
+    "description": "减伤、忍痛、射速提升。",
+    "durationTicks": 1800,
+    "statFactors": {
+      "IncomingDamageFactor": 0.75,
+      "AimingDelayFactor": 0.9
+    },
+    "statOffsets": {
+      "PainShockThreshold": 0.15
+    }
+  },
+  "MMT_HD_WorkCrew": {
+    "label": "工作队",
+    "description": "工作速度提升。",
+    "durationTicks": 1800,
+    "statFactors": {
+      "WorkSpeedGlobal": 1.15
+    }
+  },
+  "MMT_HD_Rally": {
+    "label": "集合防护",
+    "description": "集合点防护。",
+    "durationTicks": 1200,
+    "statFactors": {
+      "IncomingDamageFactor": 0.8
+    }
+  },
+  "MMT_HD_Evac": {
+    "label": "全员归队",
+    "description": "加速并获得防护。",
+    "durationTicks": 1200,
+    "statOffsets": {
+      "MoveSpeed": 1.5
+    },
+    "statFactors": {
+      "IncomingDamageFactor": 0.8
+    }
+  },
+  "MMT_HD_Elixir": {
+    "label": "万能灵药",
+    "description": "灵药滋养身心。",
+    "durationTicks": 3600,
+    "naturalHealingFactor": 2,
+    "statFactors": {
+      "ImmunityGainSpeed": 1.2
+    }
+  },
+  "MMT_HD_HerbalClarity": {
+    "label": "清明药剂",
+    "description": "心智清明，心灵熵恢复加速。",
+    "durationTicks": 3600,
+    "statFactors": {
+      "PsychicEntropyRecoveryRate": 1.5
+    }
+  },
+  "MMT_HD_HerbalBliss": {
+    "label": "极乐药",
+    "description": "遮蔽疼痛的极乐体验（有过量风险）。",
+    "durationTicks": 7200,
+    "painOffset": -0.6,
+    "capMods": {
+      "Consciousness": 0.1
+    }
+  },
+  "MMT_HD_Medigel": {
+    "label": "医疗凝胶",
+    "description": "缓释凝胶加速愈合。",
+    "durationTicks": 3600,
+    "naturalHealingFactor": 3
+  },
+  "MMT_HD_Emergency": {
+    "label": "紧急动员",
+    "description": "移速、医护速度与品质提升。",
+    "durationTicks": 3600,
+    "statOffsets": {
+      "MoveSpeed": 0.8,
+      "MedicalTendQuality": 0.1
+    },
+    "statFactors": {
+      "MedicalTendSpeed": 1.3
+    }
+  },
+  "MMT_HD_HeavyBlow": {
+    "label": "强力打击",
+    "description": "近战攻击强化。",
+    "durationTicks": 900,
+    "statOffsets": {
+      "MeleeHitChance": 6
+    }
+  },
+  "MMT_HD_ShieldPhys": {
+    "label": "援护之盾",
+    "description": "护盾吸收伤害。",
+    "durationTicks": 900,
+    "statFactors": {
+      "IncomingDamageFactor": 0.5
+    }
+  }
+}

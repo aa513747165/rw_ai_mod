@@ -117,6 +117,8 @@
       <li>MMT_MakeApparelModImmunity</li>
       <li>MMT_MakeApparelModMindWard</li>
       <li>MMT_MakeApparelModRegen</li>
+      <!-- 副本链：职业凭证碎片 3 合 1（mmt-dungeon-design.md §3.2） -->
+      <li>MMT_CraftClassToken</li>
     </recipes>
     <comps>
       <li Class="CompProperties_Flickable" />

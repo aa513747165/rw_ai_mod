@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Boss 召唤器（dev 模式专用测试工具，mmt-dungeon-design.md §7）：
+       仅 Dev 模式在建造菜单可见（Designator_Build.Visible postfix 强制隐藏）；
+       gizmo 选 Boss 种类 → 目标选格 → 敌对身份生成并立即主动进攻（LordJob_AssaultColony）。
+       候选 Boss 列表 XML 可配：自建 Boss 实装后把 PawnKindDef defName 追加进 bossPawnKindDefNames 即可。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_BossSummoner</defName>
+    <label>Boss 召唤器（DEV）</label>
+    <description>开发者测试装置：向虚空发出一道挑衅信号，把指定的 Boss 单位拉到本图并使其立即进攻殖民地。\n\n仅开发者模式可建造。用于 Boss 战力/机制测试，勿在正常游玩中使用。</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_BossSummoner</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <size>(1,1)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Never</tickerType>
+    <designationCategory>MMT_Production</designationCategory>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <statBases>
+      <WorkToBuild>100</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>5</Steel>
+    </costList>
+    <comps>
+      <li Class="MyModeTest.CompProperties_BossSummoner">
+        <!-- 白名单（无条件入选）：预留副本链 Boss（rpg 文档 §3.2 远古守卫者，待自建）。
+             白名单之外自动扫描全库 isFighter 且 combatPower ≥ autoBossMinCombatPower 的单位（原版/Mod Boss 通吃）。 -->
+        <bossPawnKindDefNames>
+          <li>MMT_BossAncientGuardian</li>
+        </bossPawnKindDefNames>
+        <autoBossMinCombatPower>150</autoBossMinCombatPower>
+      </li>
+    </comps>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building/>
+  </ThingDef>
+</Defs>

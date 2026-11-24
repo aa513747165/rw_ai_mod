@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 职业系统框架级 Hediff（手写，非生成物）。技能 buff/debuff 与 36 职业×3 阶 Hediff 由生成器产出。 -->
+
+  <!-- 召唤物限时存在标记：到期由 HediffComp_MMTSummonTimer 销毁召唤物（becomeVisible=false 不显示） -->
+  <HediffDef>
+    <defName>MMT_SummonTimer</defName>
+    <label>限时召唤</label>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <everCurableByItem>false</everCurableByItem>
+    <stages>
+      <li>
+        <becomeVisible>false</becomeVisible>
+      </li>
+    </stages>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_MMTSummonTimer" />
+    </comps>
+  </HediffDef>
+</Defs>

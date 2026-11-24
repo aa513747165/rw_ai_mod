@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 生成物：tools/build_mmt_rom_classes.py，不要手改。召唤建筑（炮塔/图腾/地雷） -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_SummonPylon</defName>
+    <label>魔法防御塔</label>
+    <description>召唤的奥术炮塔，自动轰击附近敌人，限时存在。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>36000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>attack</mode>
+        <damageDef>Bullet</damageDef>
+        <damageAmount>12</damageAmount>
+        <radius>20</radius>
+        <intervalTicks>90</intervalTicks>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_TechnoTurret</defName>
+    <label>神经炮塔</label>
+    <description>限时遥控炮塔。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>36000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>attack</mode>
+        <damageDef>Bullet</damageDef>
+        <damageAmount>15</damageAmount>
+        <radius>22</radius>
+        <intervalTicks>80</intervalTicks>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_TotemLightning</defName>
+    <label>闪电图腾</label>
+    <description>萨满图腾，周期性电击附近敌人。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>30000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>attack</mode>
+        <damageDef>EMP</damageDef>
+        <damageAmount>14</damageAmount>
+        <radius>18</radius>
+        <intervalTicks>120</intervalTicks>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_TotemEarth</defName>
+    <label>大地图腾</label>
+    <description>萨满图腾，抛掷石块砸击附近敌人。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>30000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>attack</mode>
+        <damageDef>Blunt</damageDef>
+        <damageAmount>25</damageAmount>
+        <radius>14</radius>
+        <intervalTicks>180</intervalTicks>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_TotemHealing</defName>
+    <label>治疗图腾</label>
+    <description>萨满图腾，周期性治疗周围友军。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>30000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>heal</mode>
+        <radius>10</radius>
+        <intervalTicks>300</intervalTicks>
+        <healAmount>6</healAmount>
+        <healMaxTargets>3</healMaxTargets>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_Bld_ManaMine</defName>
+    <label>魔法地雷</label>
+    <description>敌人接近即引爆的法力地雷，限时存在。</description>
+    <graphicData>
+      <texPath>Things/Building/Production/RoM/MMT_SummonPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>60000</lifespanTicks>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTSummonTurret">
+        <mode>mine</mode>
+        <damageDef>Bomb</damageDef>
+        <damageAmount>25</damageAmount>
+        <radius>1.8</radius>
+        <intervalTicks>30</intervalTicks>
+        <explosionRadius>2.9</explosionRadius>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

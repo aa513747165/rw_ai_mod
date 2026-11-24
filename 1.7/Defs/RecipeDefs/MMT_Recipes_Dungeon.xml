@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 副本相关配方（mmt-dungeon-design.md §3.2 凭证类）：职业凭证碎片 3 合 1。
+       挂在装备强化台（MMT_WeaponEnhanceBench 配方列表同步登记）。 -->
+  <RecipeDef>
+    <defName>MMT_CraftClassToken</defName>
+    <label>装订职业凭证</label>
+    <description>将 3 块职业凭证碎片重新装订成一张完整的职业凭证。</description>
+    <jobString>正在装订职业凭证。</jobString>
+    <workAmount>4000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <soundWorking>Recipe_Machine</soundWorking>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>MMT_ClassTokenFragment</li></thingDefs></filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MMT_ClassTokenFragment</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <MMT_ClassToken>1</MMT_ClassToken>
+    </products>
+    <skillRequirements>
+      <Crafting>6</Crafting>
+    </skillRequirements>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0.5</workSkillLearnFactor>
+  </RecipeDef>
+</Defs>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 副本据点（mmt-dungeon-design.md）：试炼场/职业圣殿/远古守卫巢穴。
+       worker = SitePartWorker_MMT_Dungeon（程序化布局：外墙围合 + 奖励库房 + 守卫哨位 + 照明）；
+       守卫经宿主派系 PawnGroupMaker 产出（mod 派系自动兼容，绝不硬编码 PawnKindDef）；
+       档位经 parms.randomValue 传入（I/II/III），奖励池按 minTier/maxTier 门控（§3.2 各档构成为叠加语义：
+       II 档总奖励 = I 档条目 + II 档条目，装备箱用 maxTier 封顶抵消叠加）；
+       Boss 巢穴锁定 III 档、不进扫描随机池（rpg 文档 §3.1），由任务链/Dev 生成。
+       跨 mod 扩展点：奖励池/掩体/炮塔白名单/照明均可 XPath 追加（§0）。 -->
+
+  <!-- 试炼场：威胁系数 ×1.2，装备箱 + 历练书 + 远古合金 -->
+  <SitePartDef>
+    <defName>MMT_SitePart_TrainingGround</defName>
+    <label>试炼场</label>
+    <description>一处远古战士的试炼之地，如今被武装势力占据。围墙之内的库房里封存着强化装备与历练典籍。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Dungeon</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteTrainingGround</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteTrainingGround</expandingIconTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.DungeonLayoutExtension">
+        <wallRadiusRange>13~16</wallRadiusRange>
+        <vaultRadiusRange>1~2</vaultRadiusRange>
+        <postCountRange>2~3</postCountRange>
+        <entranceCountRange>1~2</entranceCountRange>
+        <coverDefs>
+          <li><defName>Sandbags</defName><weight>1</weight></li>
+        </coverDefs>
+        <lightDefs>
+          <li><defName>TorchLamp</defName><weight>1</weight></li>
+        </lightDefs>
+      </li>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <tieredRewards>
+          <!-- 远古合金：I ×10~15 / II +8~12 / III +5~8 -->
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>10~15</countRange><minTier>1</minTier></li>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>8~12</countRange><minTier>2</minTier></li>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>5~8</countRange><minTier>3</minTier></li>
+          <!-- 远古碎晶：II +4~6 / III +6~10 -->
+          <li><thingDefName>MMT_ArchotechShard</thingDefName><countRange>4~6</countRange><minTier>2</minTier></li>
+          <li><thingDefName>MMT_ArchotechShard</thingDefName><countRange>6~10</countRange><minTier>3</minTier></li>
+          <!-- 历练书：I ×1 / II 1~2 / III ×2 -->
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>1~1</countRange><minTier>1</minTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>0~1</countRange><minTier>2</minTier><maxTier>2</maxTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>1~1</countRange><minTier>3</minTier></li>
+        </tieredRewards>
+        <gearRewards>
+          <!-- 装备箱：I ×1 / II 1~2 / III ×2 -->
+          <li><count>1~1</count><minTier>1</minTier></li>
+          <li><count>0~1</count><minTier>2</minTier><maxTier>2</maxTier></li>
+          <li><count>1~1</count><minTier>3</minTier></li>
+        </gearRewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+
+  <!-- 职业圣殿：威胁系数 ×1.4，同试炼场奖励 + 职业凭证碎片（II 档起必出） -->
+  <SitePartDef>
+    <defName>MMT_SitePart_ClassShrine</defName>
+    <label>职业圣殿</label>
+    <description>供奉三十六种职业纹章的远古圣殿，守卫比试炼场更为森严。圣殿深处的祭坛上散落着职业凭证的碎片。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Dungeon</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteClassShrine</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteClassShrine</expandingIconTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.DungeonLayoutExtension">
+        <wallRadiusRange>14~17</wallRadiusRange>
+        <vaultRadiusRange>2~2</vaultRadiusRange>
+        <postCountRange>3~4</postCountRange>
+        <entranceCountRange>1~2</entranceCountRange>
+        <coverDefs>
+          <li><defName>Sandbags</defName><weight>1</weight></li>
+        </coverDefs>
+        <lightDefs>
+          <li><defName>TorchLamp</defName><weight>1</weight></li>
+        </lightDefs>
+      </li>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <tieredRewards>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>10~15</countRange><minTier>1</minTier></li>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>8~12</countRange><minTier>2</minTier></li>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>5~8</countRange><minTier>3</minTier></li>
+          <li><thingDefName>MMT_ArchotechShard</thingDefName><countRange>4~6</countRange><minTier>2</minTier></li>
+          <li><thingDefName>MMT_ArchotechShard</thingDefName><countRange>6~10</countRange><minTier>3</minTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>1~1</countRange><minTier>1</minTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>0~1</countRange><minTier>2</minTier><maxTier>2</maxTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>1~1</countRange><minTier>3</minTier></li>
+          <!-- 职业凭证碎片：II ×1~2 / III ×2~3（3 碎片合成 1 凭证，见 MMT_CraftClassToken） -->
+          <li><thingDefName>MMT_ClassTokenFragment</thingDefName><countRange>1~2</countRange><minTier>2</minTier><maxTier>2</maxTier></li>
+          <li><thingDefName>MMT_ClassTokenFragment</thingDefName><countRange>2~3</countRange><minTier>3</minTier></li>
+        </tieredRewards>
+        <gearRewards>
+          <li><count>1~1</count><minTier>1</minTier></li>
+          <li><count>0~1</count><minTier>2</minTier><maxTier>2</maxTier></li>
+          <li><count>1~1</count><minTier>3</minTier></li>
+        </gearRewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+
+  <!-- 远古守卫巢穴（Boss 巢穴）：威胁系数 ×2.0，锁定 III 档，不进扫描随机池。
+       bossPawnKindDefName 预留 Boss 挂载点（rpg 文档 §3.2 远古守卫者，待自建）：
+       defName 解析失败时静默退化为大型守卫据点（中央巢位留空、库房偏移）；
+       Boss 必掉表（传说装备 + 职业凭证 + 远古数据核心×2）随 Boss 本体一并实装。 -->
+  <SitePartDef>
+    <defName>MMT_SitePart_BossLair</defName>
+    <label>远古守卫巢穴</label>
+    <description>信号源头的巢穴。远古守卫者沉睡于中央的开阔巢位，四周布满其宿主的爪牙与工事。只有最强的小队才应踏足此地。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_Dungeon</workerClass>
+    <siteTexture>World/WorldObjects/Sites/MMT_SiteBossLair</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteBossLair</expandingIconTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <tags>
+      <li>MMT_ExplorationSite</li>
+    </tags>
+    <modExtensions>
+      <li Class="MyModeTest.DungeonLayoutExtension">
+        <wallRadiusRange>18~22</wallRadiusRange>
+        <vaultRadiusRange>2~3</vaultRadiusRange>
+        <postCountRange>4~6</postCountRange>
+        <entranceCountRange>2~2</entranceCountRange>
+        <bossPawnKindDefName>MMT_BossAncientGuardian</bossPawnKindDefName>
+        <coverDefs>
+          <li><defName>Sandbags</defName><weight>1</weight></li>
+        </coverDefs>
+        <lightDefs>
+          <li><defName>TorchLamp</defName><weight>1</weight></li>
+        </lightDefs>
+      </li>
+      <li Class="MyModeTest.StockpileRewardExtension">
+        <tieredRewards>
+          <li><thingDefName>MMT_AncientAlloy</thingDefName><countRange>5~8</countRange><minTier>3</minTier></li>
+          <li><thingDefName>MMT_ArchotechShard</thingDefName><countRange>6~10</countRange><minTier>3</minTier></li>
+          <li><thingDefName>MMT_XpBook</thingDefName><countRange>2~2</countRange><minTier>3</minTier></li>
+          <li><thingDefName>MMT_ClassTokenFragment</thingDefName><countRange>2~3</countRange><minTier>3</minTier></li>
+        </tieredRewards>
+        <gearRewards>
+          <li><count>2~2</count><minTier>3</minTier></li>
+        </gearRewards>
+      </li>
+    </modExtensions>
+  </SitePartDef>
+</Defs>

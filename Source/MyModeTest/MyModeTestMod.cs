@@ -35,7 +35,7 @@ namespace MyModeTest
             if (s == null) return;
 
             // 单页滚动：内容高度按行数估算（附魔特效分组后约 40 行 × 34 + 分组间距）
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 1700f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 2200f);
             Widgets.BeginScrollView(inRect, ref settingsScrollPos, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.maxOneColumn = true;
@@ -69,6 +69,44 @@ namespace MyModeTest
             s.lootRollChanceFactor = list.SliderLabeled(
                 "掷点概率倍率 ×" + s.lootRollChanceFactor.ToString("F2"),
                 s.lootRollChanceFactor, 0f, 3f, 0.6f, "放大非 +0 强化档权重与附魔概率（0 = 全部白板）。");
+            list.Gap();
+
+            // —— 历练/职业（RPG 支柱二） ——
+            list.Label("【历练/职业】（小人历练等级、强化点与 RoM 职业体系）");
+            list.CheckboxLabeled("启用历练/职业系统", ref s.pawnProgressEnabled,
+                "关闭后不再获得历练 XP、强化 gizmo/页签隐藏；既有 Hediff 与已选强化保留。");
+            list.CheckboxLabeled("XP 飘字（性能项，默认关）", ref s.xpGainMotes,
+                "获得历练 XP 时在小人头顶飘字；命中密集时有视觉/分配开销，低配建议保持关闭。");
+            s.classAuraInterval = Mathf.RoundToInt(list.SliderLabeled(
+                "职业光环脉冲间隔 " + s.classAuraInterval + " tick",
+                s.classAuraInterval, 60f, 1200f, 0.6f, "维持型光环（抚慰之风/指挥官光环等）刷新间隔，调大降载（默认 300）。"));
+            list.CheckboxLabeled("品质暴击强化（制作成品 10% 概率品质 +1 档）", ref s.classQualityCritEnabled);
+            s.xpMultiplier = list.SliderLabeled(
+                "历练 XP 倍率 ×" + s.xpMultiplier.ToString("F2"),
+                s.xpMultiplier, 0.1f, 5f, 0.6f, "全源历练经验统一倍率（0.1-5）。");
+            list.CheckboxLabeled("公会狩猎委托（每日狩猎任务，奖励含职业凭证/能量结晶）", ref s.talentQuestsEnabled,
+                "关闭后不再生成新的狩猎委托（进行中的不受影响）。");
+            s.guildQuestIntervalDays = list.SliderLabeled(
+                "公会委托间隔 " + s.guildQuestIntervalDays.ToString("F1") + " 天",
+                s.guildQuestIntervalDays, 0.5f, 5f, 0.6f, "两次狩猎委托之间的间隔天数（0.5-5）。");
+            s.guildQuestDungeonChance = list.SliderLabeled(
+                "委托直建新副本概率 " + s.guildQuestDungeonChance.ToString("P0"),
+                s.guildQuestDungeonChance, 0f, 1f, 0.6f, "世界委托无既有据点可挂载时，按此概率直接生成一处新据点（与深空扫描同池同规则），清剿即完成委托并拿据点战利品。");
+            list.Gap();
+
+            // —— 副本/据点（mmt-dungeon-design.md §5.1） ——
+            list.Label("【副本/据点】（深空扫描三档选档、宿主派系守卫与程序化据点布局）");
+            list.CheckboxLabeled("任务链开关（远古军械库三幕）", ref s.rpgQuestsEnabled,
+                "关闭后任务链入口不再触发（进行中的任务不受影响）。");
+            list.CheckboxLabeled("Boss 巢穴（远古守卫巢穴）", ref s.bossEncountersEnabled,
+                "玩家主动触发型终局挑战，默认开。");
+            s.dungeonTierCostFactor = list.SliderLabeled(
+                "档位成本倍率 ×" + s.dungeonTierCostFactor.ToString("F2"),
+                s.dungeonTierCostFactor, 0.5f, 3f, 0.6f, "整体缩放三档扫描的声纳模块消耗与扫描天数（0.5-3）。");
+            list.Label("副本派系黑名单（defName，逗号分隔；列出的派系不会成为据点宿主）：");
+            s.dungeonFactionBlacklist = Widgets.TextField(list.GetRect(24f), s.dungeonFactionBlacklist ?? "");
+            list.Label("副本炮塔黑名单（defName，逗号分隔；排除个别不平衡的 mod 炮塔）：");
+            s.dungeonTurretBlacklist = Widgets.TextField(list.GetRect(24f), s.dungeonTurretBlacklist ?? "");
             list.Gap();
 
             // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——

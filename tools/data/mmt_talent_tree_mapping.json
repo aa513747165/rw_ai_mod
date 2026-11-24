@@ -1,0 +1,235 @@
+{
+  "_comment": "MMT 天赋树映射表（唯一人工维护点，tools/build_mmt_talent_trees.py 消费）。generalTree 全手工布局；families 只写主题配置，家族树节点由生成器按 rom 映射表 abilities 自动铺。图标为 Isekai 授权贴图 UI/TalentTree/Icons/*；perk 节点复用既有 perk Hediff；effects 节点由生成器自动产出 MMT_Talent_<nodeId> Hediff。",
+  "generalTree": {
+    "defName": "MMT_TalentTree_General",
+    "label": "通用天赋",
+    "description": "历练者的共通修行。五条支路通往不同的成长方向：战斗、灵能、生产、生存、社交。支路末端的「道」之基石将解锁对应职业家族的就职资格。",
+    "nodes": [
+      { "nodeId": "G_Start", "label": "历练启蒙", "description": "踏上历练之路的起点。全局工作速度 ×1.02。", "nodeType": "Start", "icon": "UI/TalentTree/Icons/star", "x": 0, "y": 0, "cost": 0, "effects": { "statFactors": { "WorkSpeedGlobal": 1.02 } } },
+
+      { "nodeId": "G_C1", "label": "基础格斗", "description": "近战命中 +2。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/hand-fist", "x": 2, "y": 0.3, "effects": { "statOffsets": { "MeleeHitChance": 2 } } },
+      { "nodeId": "G_C2", "label": "基础射击", "description": "射击精度 ×1.03。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/crosshairs", "x": 3.4, "y": -0.6, "effects": { "statFactors": { "ShootingAccuracyPawn": 1.03 } } },
+      { "nodeId": "G_Veteran", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/medal", "x": 4.8, "y": 0.4, "perk": "MMT_Perk_Veteran" },
+      { "nodeId": "G_Brawler", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/hand-fist", "x": 6.2, "y": 1.4, "perk": "MMT_Perk_Brawler" },
+      { "nodeId": "G_C3", "label": "卸力", "description": "近战闪避 +2。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/shield", "x": 6.2, "y": -1.2, "effects": { "statOffsets": { "MeleeDodgeChance": 2 } } },
+      { "nodeId": "G_Tough", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/shield", "x": 7.8, "y": 0.6, "perk": "MMT_Perk_Tough" },
+      { "nodeId": "G_Fleet", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/shoe-prints", "x": 7.8, "y": -1.4, "perk": "MMT_Perk_Fleet" },
+      { "nodeId": "G_C4", "label": "硬皮", "description": "利器护甲 +3%。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/shield-halved", "x": 9.4, "y": 1.6, "effects": { "statOffsets": { "ArmorRating_Sharp": 0.03 } } },
+      { "nodeId": "G_FastHeal", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/heart", "x": 10.8, "y": 0.6, "perk": "MMT_Perk_FastHeal" },
+      { "nodeId": "G_BattleSense", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/bullseye", "x": 10.8, "y": -1.4, "perk": "MMT_Perk_BattleSense" },
+      { "nodeId": "G_C5", "label": "战场机动", "description": "移动速度 ×1.03。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/person-running", "x": 12.2, "y": 0.2, "effects": { "statFactors": { "MoveSpeed": 1.03 } } },
+      { "nodeId": "G_UnlockBlade", "label": "剑刃之道", "description": "领悟近战武道的极致。解锁剑刃家族职业的就职资格：刀锋舞者、角斗士、武僧。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/khanda", "x": 13.8, "y": 1.8, "cost": 3, "familyKey": "blade" },
+      { "nodeId": "G_UnlockMarksman", "label": "神射之道", "description": "领悟远程狙杀的极致。解锁神射家族职业的就职资格：游侠、狙击手、无面者。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/crosshairs", "x": 15.4, "y": 0.2, "cost": 3, "familyKey": "marksman" },
+      { "nodeId": "G_UnlockVanguard", "label": "先锋之道", "description": "领悟正面破阵的极致。解锁先锋家族职业的就职资格：死亡骑士、超级士兵、灵能武者。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/shield", "x": 13.8, "y": -1.6, "cost": 3, "familyKey": "vanguard" },
+
+      { "nodeId": "G_P1", "label": "灵能觉醒", "description": "灵能敏感度 ×1.04。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": -1, "y": 2, "effects": { "statFactors": { "PsychicSensitivity": 1.04 } } },
+      { "nodeId": "G_P2", "label": "静心", "description": "灵能熵恢复速度 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": 1, "y": 2, "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.05 } } },
+      { "nodeId": "G_P3", "label": "心灵扩容", "description": "灵能熵上限 +6。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": -2.4, "y": 3.4, "effects": { "statOffsets": { "PsychicEntropyMax": 6 } } },
+      { "nodeId": "G_P4", "label": "冥想入门", "description": "冥想集中获取 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": 2.4, "y": 3.4, "effects": { "statFactors": { "MeditationFocusGain": 1.05 } } },
+      { "nodeId": "G_P5", "label": "深层意识", "description": "灵能熵上限 +12。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": -1.2, "y": 4.6, "effects": { "statOffsets": { "PsychicEntropyMax": 12 } } },
+      { "nodeId": "G_P6", "label": "循环吐纳", "description": "灵能熵恢复速度 ×1.1。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": 1.2, "y": 4.6, "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.1 } } },
+      { "nodeId": "G_P7", "label": "精神敏锐", "description": "灵能敏感度 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": -3.6, "y": 5.6, "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+      { "nodeId": "G_P8", "label": "心灵蓄水池", "description": "灵能熵上限 +8。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": 3.6, "y": 5.6, "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } },
+      { "nodeId": "G_P9", "label": "灵能回流", "description": "灵能熵恢复速度 ×1.1。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": -2.4, "y": 6.8, "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.1 } } },
+      { "nodeId": "G_P10", "label": "深度冥想", "description": "冥想集中获取 ×1.1。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": 2.4, "y": 6.8, "effects": { "statFactors": { "MeditationFocusGain": 1.1 } } },
+      { "nodeId": "G_P11", "label": "灵能核心", "description": "灵能熵上限 +16。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/star", "x": 0, "y": 7.6, "effects": { "statOffsets": { "PsychicEntropyMax": 16 } } },
+      { "nodeId": "G_UnlockNecro", "label": "死灵之道", "description": "触碰生死边界的禁忌知识。解锁死灵家族职业的就职资格：死灵法师、血法师、恶魔术士、附身灵。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/skull", "x": -6.5, "y": 8.6, "cost": 3, "familyKey": "necro" },
+      { "nodeId": "G_UnlockElemental", "label": "元素之道", "description": "领悟元素之力的本源。解锁元素家族职业的就职资格：火系魔法师、冰系魔法师、雷系魔法师、地占师、气象法师。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/bolt", "x": -4, "y": 9.4, "cost": 3, "familyKey": "elemental" },
+      { "nodeId": "G_UnlockArcane", "label": "奥秘之道", "description": "领悟奥术与时空的深层法则。解锁奥秘家族职业的就职资格：奥术法师、附魔师、时空法师、技法师、流浪法师。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/star", "x": -1.3, "y": 9.8, "cost": 3, "familyKey": "arcane" },
+      { "nodeId": "G_UnlockHoly", "label": "圣光之道", "description": "领悟守护与治愈的信仰之力。解锁圣光家族职业的就职资格：牧师、圣骑士、光法师。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/heart", "x": 1.3, "y": 9.8, "cost": 3, "familyKey": "holy" },
+      { "nodeId": "G_UnlockNature", "label": "自然之道", "description": "领悟万物生长的自然之力。解锁自然家族职业的就职资格：德鲁伊、萨满、召唤师、傀儡师。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/feather-pointed", "x": 4, "y": 9.4, "cost": 3, "familyKey": "nature" },
+      { "nodeId": "G_UnlockMind", "label": "心灵之道", "description": "领悟情感与暗影的心灵之力。解锁心灵家族职业的就职资格：吟游诗人、共情者、暗影。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/ghost", "x": 6.5, "y": 8.6, "cost": 3, "familyKey": "mind" },
+
+      { "nodeId": "G_W1", "label": "勤劳", "description": "全局工作速度 ×1.03。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/gavel", "x": -2, "y": -0.4, "effects": { "statFactors": { "WorkSpeedGlobal": 1.03 } } },
+      { "nodeId": "G_Deft", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/gavel", "x": -3.6, "y": 0.6, "perk": "MMT_Perk_Deft" },
+      { "nodeId": "G_Miner", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/dumbbell", "x": -3.6, "y": -1.4, "perk": "MMT_Perk_Miner" },
+      { "nodeId": "G_W2", "label": "熟练工", "description": "普通劳动速度 ×1.03。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/gavel", "x": -5, "y": 1.4, "effects": { "statFactors": { "GeneralLaborSpeed": 1.03 } } },
+      { "nodeId": "G_Farmer", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/paw", "x": -6.4, "y": 0.4, "perk": "MMT_Perk_Farmer" },
+      { "nodeId": "G_Builder", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/gavel", "x": -6.4, "y": -1.6, "perk": "MMT_Perk_Builder" },
+      { "nodeId": "G_W3", "label": "园艺巧手", "description": "种植速度 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/feather-pointed", "x": -7.8, "y": 1.6, "effects": { "statFactors": { "PlantWorkSpeed": 1.05 } } },
+      { "nodeId": "G_Scholar", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": -9.2, "y": 0.6, "perk": "MMT_Perk_Scholar" },
+      { "nodeId": "G_Chef", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/medal", "x": -9.2, "y": -1.4, "perk": "MMT_Perk_Chef" },
+      { "nodeId": "G_Masterwork", "nodeType": "Keystone", "icon": "UI/TalentTree/Icons/crown", "x": -10.8, "y": 0, "cost": 2, "perk": "MMT_Perk_Masterwork" },
+      { "nodeId": "G_W4", "label": "博闻强记", "description": "研究速度 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/brain", "x": -10.8, "y": 1.8, "effects": { "statFactors": { "ResearchSpeed": 1.05 } } },
+
+      { "nodeId": "G_S1", "label": "硬撑", "description": "免疫获取速度 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/heart", "x": 0.6, "y": -2, "effects": { "statFactors": { "ImmunityGainSpeed": 1.05 } } },
+      { "nodeId": "G_IronBody", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/shield", "x": -0.6, "y": -3.4, "perk": "MMT_Perk_IronBody" },
+      { "nodeId": "G_S2", "label": "抗毒体质", "description": "毒性抗性 +5%。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/shield-halved", "x": 1.8, "y": -3.4, "effects": { "statOffsets": { "ToxicResistance": 0.05 } } },
+      { "nodeId": "G_EfficientGut", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/heart", "x": -1.8, "y": -4.8, "perk": "MMT_Perk_EfficientGut" },
+      { "nodeId": "G_DeepSleep", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/bed", "x": 0.6, "y": -4.8, "perk": "MMT_Perk_DeepSleep" },
+      { "nodeId": "G_S3", "label": "节食", "description": "移动速度 ×1.02，疼痛休克阈值 +2%。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/shoe-prints", "x": 2.6, "y": -5, "effects": { "statFactors": { "MoveSpeed": 1.02 }, "statOffsets": { "PainShockThreshold": 0.02 } } },
+      { "nodeId": "G_MindWall", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/brain", "x": -0.6, "y": -6.2, "perk": "MMT_Perk_MindWall" },
+      { "nodeId": "G_GritMind", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/star", "x": 1.8, "y": -6.4, "perk": "MMT_Perk_GritMind" },
+      { "nodeId": "G_PackMule", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/shoe-prints", "x": 0.6, "y": -7.6, "perk": "MMT_Perk_PackMule" },
+      { "nodeId": "G_S4", "label": "忍痛", "description": "疼痛休克阈值 +3%。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/shield", "x": -1.8, "y": -7.8, "effects": { "statOffsets": { "PainShockThreshold": 0.03 } } },
+      { "nodeId": "G_UnlockSupport", "label": "战辅之道", "description": "领悟支援与统率的艺术。解锁战辅家族职业的就职资格：指挥官、药剂师、战地军医、旅者。", "nodeType": "ClassUnlock", "icon": "UI/TalentTree/Icons/chess-rook", "x": 0, "y": -9.2, "cost": 3, "familyKey": "support" },
+
+      { "nodeId": "G_L1", "label": "健谈", "description": "社交影响 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/handshake", "x": -1.6, "y": 1.6, "effects": { "statFactors": { "SocialImpact": 1.05 } } },
+      { "nodeId": "G_L2", "label": "讨价还价", "description": "贸易价格改善 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/handshake", "x": -3, "y": 2.6, "effects": { "statFactors": { "TradePriceImprovement": 1.05 } } },
+      { "nodeId": "G_L3", "label": "谈判专家", "description": "谈判能力 ×1.08。", "nodeType": "Notable", "icon": "UI/TalentTree/Icons/trophy", "x": -4.4, "y": 3.6, "effects": { "statFactors": { "NegotiationAbility": 1.08 } } },
+      { "nodeId": "G_L4", "label": "亲和动物", "description": "驯服动物成功率 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/paw", "x": -3.2, "y": 4.4, "effects": { "statFactors": { "TameAnimalChance": 1.05 } } },
+      { "nodeId": "G_L5", "label": "执法者", "description": "逮捕成功率 ×1.05。", "nodeType": "Minor", "icon": "UI/TalentTree/Icons/gavel", "x": -5.4, "y": 4.8, "effects": { "statFactors": { "ArrestSuccessChance": 1.05 } } }
+    ],
+    "connections": [
+      "G_Start~G_C1", "G_C1~G_C2", "G_C1~G_Veteran", "G_Veteran~G_Brawler", "G_Veteran~G_C3",
+      "G_Brawler~G_Tough", "G_C3~G_Fleet", "G_Tough~G_C4", "G_C4~G_FastHeal", "G_Fleet~G_BattleSense",
+      "G_FastHeal~G_C5", "G_BattleSense~G_C5", "G_C5~G_UnlockMarksman", "G_FastHeal~G_UnlockBlade", "G_BattleSense~G_UnlockVanguard",
+
+      "G_Start~G_P1", "G_Start~G_P2", "G_P1~G_P3", "G_P2~G_P4", "G_P3~G_P5", "G_P4~G_P6",
+      "G_P5~G_P7", "G_P6~G_P8", "G_P5~G_P9", "G_P6~G_P10", "G_P9~G_P11", "G_P10~G_P11",
+      "G_P7~G_UnlockNecro", "G_P9~G_UnlockElemental", "G_P11~G_UnlockArcane", "G_P11~G_UnlockHoly", "G_P10~G_UnlockNature", "G_P8~G_UnlockMind",
+
+      "G_Start~G_W1", "G_W1~G_Deft", "G_W1~G_Miner", "G_Deft~G_W2", "G_Miner~G_Builder",
+      "G_W2~G_Farmer", "G_Farmer~G_W3", "G_Builder~G_Chef", "G_W3~G_Scholar", "G_Scholar~G_Masterwork", "G_Chef~G_Masterwork", "G_Scholar~G_W4",
+
+      "G_Start~G_S1", "G_S1~G_IronBody", "G_S1~G_S2", "G_IronBody~G_EfficientGut", "G_S2~G_DeepSleep",
+      "G_EfficientGut~G_MindWall", "G_DeepSleep~G_GritMind", "G_S2~G_S3", "G_MindWall~G_PackMule", "G_GritMind~G_PackMule",
+      "G_MindWall~G_S4", "G_PackMule~G_UnlockSupport", "G_S4~G_UnlockSupport",
+
+      "G_Start~G_L1", "G_L1~G_L2", "G_L2~G_L3", "G_L1~G_L4", "G_L3~G_L5", "G_L2~G_P3"
+    ]
+  },
+
+  "families": {
+    "elemental": {
+      "label": "元素之道",
+      "description": "火、冰、雷、地与气象的元素传承。主干强化灵能根基，各职业分支沿元素之路展开。",
+      "trunk": [
+        { "label": "元素亲和", "description": "灵能敏感度 ×1.05。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+        { "label": "元素涌动", "description": "灵能熵上限 +6。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statOffsets": { "PsychicEntropyMax": 6 } } },
+        { "label": "元素循环", "description": "灵能熵恢复速度 ×1.08。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+        { "label": "元素坚韧", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } },
+        { "label": "元素迅捷", "description": "移动速度 ×1.04。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statFactors": { "MoveSpeed": 1.04 } } }
+      ],
+      "keystone": { "label": "元素主宰", "description": "元素之道的集大成者：灵能敏感度 ×1.1，灵能熵上限 +12。", "icon": "UI/TalentTree/Icons/bolt", "effects": { "statFactors": { "PsychicSensitivity": 1.1 }, "statOffsets": { "PsychicEntropyMax": 12 } } },
+      "upgrade1": { "labelSuffix": "元素掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "元素深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "arcane": {
+      "label": "奥秘之道",
+      "description": "奥术、附魔、时空与技艺的理性传承。主干强化心智与学识。",
+      "trunk": [
+        { "label": "奥秘学识", "description": "研究速度 ×1.06。", "icon": "UI/TalentTree/Icons/star", "effects": { "statFactors": { "ResearchSpeed": 1.06 } } },
+        { "label": "奥秘循环", "description": "灵能熵恢复速度 ×1.08。", "icon": "UI/TalentTree/Icons/star", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+        { "label": "奥秘心智", "description": "全球学习系数 ×1.06。", "icon": "UI/TalentTree/Icons/star", "effects": { "statFactors": { "GlobalLearningFactor": 1.06 } } },
+        { "label": "奥秘扩容", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/star", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } },
+        { "label": "奥秘冥思", "description": "冥想集中获取 ×1.1。", "icon": "UI/TalentTree/Icons/star", "effects": { "statFactors": { "MeditationFocusGain": 1.1 } } }
+      ],
+      "keystone": { "label": "大奥秘师", "description": "奥秘之道的集大成者：灵能熵恢复速度 ×1.12，研究速度 ×1.1。", "icon": "UI/TalentTree/Icons/star", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.12, "ResearchSpeed": 1.1 } } },
+      "upgrade1": { "labelSuffix": "奥秘掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "奥秘深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "necro": {
+      "label": "死灵之道",
+      "description": "死亡、鲜血与恶魔的禁忌传承。主干强化生存与灵能池。",
+      "trunk": [
+        { "label": "死灵感知", "description": "灵能敏感度 ×1.05。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+        { "label": "死灵池", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } },
+        { "label": "腐朽之躯", "description": "疼痛休克阈值 +4%。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statOffsets": { "PainShockThreshold": 0.04 } } },
+        { "label": "疫病亲和", "description": "免疫获取速度 ×1.08。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statFactors": { "ImmunityGainSpeed": 1.08 } } },
+        { "label": "死灵循环", "description": "灵能熵恢复速度 ×1.08。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } }
+      ],
+      "keystone": { "label": "死亡主宰", "description": "死灵之道的集大成者：灵能熵上限 +14，疼痛休克阈值 +6%。", "icon": "UI/TalentTree/Icons/skull", "effects": { "statOffsets": { "PsychicEntropyMax": 14, "PainShockThreshold": 0.06 } } },
+      "upgrade1": { "labelSuffix": "死灵掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "死灵深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "holy": {
+      "label": "圣光之道",
+      "description": "治愈、守护与信仰的光明传承。主干强化医疗与防护。",
+      "trunk": [
+        { "label": "圣光祝福", "description": "灵能敏感度 ×1.05。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+        { "label": "圣光愈合", "description": "伤势愈合速度 ×1.1。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statFactors": { "InjuryHealingFactor": 1.1 } } },
+        { "label": "圣光护盾", "description": "热能护甲 +4%。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statOffsets": { "ArmorRating_Heat": 0.04 } } },
+        { "label": "圣光池", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } },
+        { "label": "圣光医术", "description": "医疗质量 ×1.08。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statFactors": { "MedicalTendQuality": 1.08 } } }
+      ],
+      "keystone": { "label": "圣光化身", "description": "圣光之道的集大成者：伤势愈合速度 ×1.15，灵能敏感度 ×1.08。", "icon": "UI/TalentTree/Icons/heart", "effects": { "statFactors": { "InjuryHealingFactor": 1.15, "PsychicSensitivity": 1.08 } } },
+      "upgrade1": { "labelSuffix": "圣光掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "圣光深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "nature": {
+      "label": "自然之道",
+      "description": "生长、野兽与造物的自然传承。主干强化劳作与驯兽。",
+      "trunk": [
+        { "label": "自然亲和", "description": "灵能敏感度 ×1.05。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+        { "label": "自然生长", "description": "种植速度 ×1.08。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statFactors": { "PlantWorkSpeed": 1.08 } } },
+        { "label": "野兽亲和", "description": "驯服动物成功率 ×1.08。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statFactors": { "TameAnimalChance": 1.08 } } },
+        { "label": "自然迅捷", "description": "移动速度 ×1.04。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statFactors": { "MoveSpeed": 1.04 } } },
+        { "label": "自然池", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } }
+      ],
+      "keystone": { "label": "自然化身", "description": "自然之道的集大成者：移动速度 ×1.06，灵能熵上限 +12。", "icon": "UI/TalentTree/Icons/paw", "effects": { "statFactors": { "MoveSpeed": 1.06 }, "statOffsets": { "PsychicEntropyMax": 12 } } },
+      "upgrade1": { "labelSuffix": "自然掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "自然深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "mind": {
+      "label": "心灵之道",
+      "description": "情感、共鸣与暗影的心灵传承。主干强化精神与社交。",
+      "trunk": [
+        { "label": "心灵共鸣", "description": "灵能敏感度 ×1.05。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statFactors": { "PsychicSensitivity": 1.05 } } },
+        { "label": "心灵安抚", "description": "精神崩溃阈值 -2%。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statOffsets": { "MentalBreakThreshold": -0.02 } } },
+        { "label": "心灵感染", "description": "社交影响 ×1.08。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statFactors": { "SocialImpact": 1.08 } } },
+        { "label": "心灵深潜", "description": "冥想集中获取 ×1.1。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statFactors": { "MeditationFocusGain": 1.1 } } },
+        { "label": "心灵池", "description": "灵能熵上限 +8。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statOffsets": { "PsychicEntropyMax": 8 } } }
+      ],
+      "keystone": { "label": "心灵主宰", "description": "心灵之道的集大成者：精神崩溃阈值 -4%，灵能熵上限 +12。", "icon": "UI/TalentTree/Icons/ghost", "effects": { "statOffsets": { "MentalBreakThreshold": -0.04, "PsychicEntropyMax": 12 } } },
+      "upgrade1": { "labelSuffix": "心灵掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "心灵深潜", "description": "灵能熵上限 +10。", "effects": { "statOffsets": { "PsychicEntropyMax": 10 } } }
+    },
+    "blade": {
+      "label": "剑刃之道",
+      "description": "近战武道的极致传承。主干强化近战命中、闪避与机动。",
+      "trunk": [
+        { "label": "剑刃架势", "description": "近战命中 +2。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statOffsets": { "MeleeHitChance": 2 } } },
+        { "label": "剑刃步伐", "description": "近战闪避 +2。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statOffsets": { "MeleeDodgeChance": 2 } } },
+        { "label": "剑刃疾风", "description": "移动速度 ×1.04。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statFactors": { "MoveSpeed": 1.04 } } },
+        { "label": "剑刃精准", "description": "近战命中 +3。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statOffsets": { "MeleeHitChance": 3 } } },
+        { "label": "剑刃残影", "description": "近战闪避 +3。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statOffsets": { "MeleeDodgeChance": 3 } } }
+      ],
+      "keystone": { "label": "剑圣", "description": "剑刃之道的集大成者：近战命中 +4，移动速度 ×1.05。", "icon": "UI/TalentTree/Icons/khanda", "effects": { "statOffsets": { "MeleeHitChance": 4 }, "statFactors": { "MoveSpeed": 1.05 } } },
+      "upgrade1": { "labelSuffix": "武技掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "武技深潜", "description": "灵能熵上限 +8，近战命中 +1。", "effects": { "statOffsets": { "PsychicEntropyMax": 8, "MeleeHitChance": 1 } } }
+    },
+    "vanguard": {
+      "label": "先锋之道",
+      "description": "正面破阵与承伤的攻坚传承。主干强化护甲、忍痛与近战。",
+      "trunk": [
+        { "label": "先锋坚甲", "description": "利器护甲 +3%。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statOffsets": { "ArmorRating_Sharp": 0.03 } } },
+        { "label": "先锋忍痛", "description": "疼痛休克阈值 +3%。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statOffsets": { "PainShockThreshold": 0.03 } } },
+        { "label": "先锋重击", "description": "近战命中 +2。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statOffsets": { "MeleeHitChance": 2 } } },
+        { "label": "先锋韧性", "description": "钝器护甲 +3%。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statOffsets": { "ArmorRating_Blunt": 0.03 } } },
+        { "label": "先锋恢复", "description": "伤势愈合速度 ×1.08。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statFactors": { "InjuryHealingFactor": 1.08 } } }
+      ],
+      "keystone": { "label": "不灭先锋", "description": "先锋之道的集大成者：疼痛休克阈值 +6%，利器护甲 +4%。", "icon": "UI/TalentTree/Icons/shield", "effects": { "statOffsets": { "PainShockThreshold": 0.06, "ArmorRating_Sharp": 0.04 } } },
+      "upgrade1": { "labelSuffix": "战意掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "战意深潜", "description": "灵能熵上限 +8，疼痛休克阈值 +2%。", "effects": { "statOffsets": { "PsychicEntropyMax": 8, "PainShockThreshold": 0.02 } } }
+    },
+    "marksman": {
+      "label": "神射之道",
+      "description": "远程狙杀与隐秘行动的传承。主干强化射击、瞄准与机动。",
+      "trunk": [
+        { "label": "神射稳定", "description": "射击精度 ×1.04。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statFactors": { "ShootingAccuracyPawn": 1.04 } } },
+        { "label": "神射速瞄", "description": "瞄准延迟 ×0.96。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statFactors": { "AimingDelayFactor": 0.96 } } },
+        { "label": "神射机动", "description": "移动速度 ×1.04。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statFactors": { "MoveSpeed": 1.04 } } },
+        { "label": "神射鹰眼", "description": "射击精度 ×1.04。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statFactors": { "ShootingAccuracyPawn": 1.04 } } },
+        { "label": "神射直觉", "description": "近战闪避 +2。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statOffsets": { "MeleeDodgeChance": 2 } } }
+      ],
+      "keystone": { "label": "百步穿杨", "description": "神射之道的集大成者：射击精度 ×1.08，瞄准延迟 ×0.94。", "icon": "UI/TalentTree/Icons/crosshairs", "effects": { "statFactors": { "ShootingAccuracyPawn": 1.08, "AimingDelayFactor": 0.94 } } },
+      "upgrade1": { "labelSuffix": "射术掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "射术深潜", "description": "灵能熵上限 +8，射击精度 ×1.02。", "effects": { "statOffsets": { "PsychicEntropyMax": 8 }, "statFactors": { "ShootingAccuracyPawn": 1.02 } } }
+    },
+    "support": {
+      "label": "战辅之道",
+      "description": "统率、医疗与后勤的支援传承。主干强化医疗、工作与指挥。",
+      "trunk": [
+        { "label": "战辅医术", "description": "医疗质量 ×1.08。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statFactors": { "MedicalTendQuality": 1.08 } } },
+        { "label": "战辅干练", "description": "全局工作速度 ×1.04。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statFactors": { "WorkSpeedGlobal": 1.04 } } },
+        { "label": "战辅指挥", "description": "社交影响 ×1.06。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statFactors": { "SocialImpact": 1.06 } } },
+        { "label": "战辅机敏", "description": "移动速度 ×1.04。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statFactors": { "MoveSpeed": 1.04 } } },
+        { "label": "战辅坚忍", "description": "精神崩溃阈值 -2%。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statOffsets": { "MentalBreakThreshold": -0.02 } } }
+      ],
+      "keystone": { "label": "军团之魂", "description": "战辅之道的集大成者：全局工作速度 ×1.06，医疗质量 ×1.08。", "icon": "UI/TalentTree/Icons/chess-rook", "effects": { "statFactors": { "WorkSpeedGlobal": 1.06, "MedicalTendQuality": 1.08 } } },
+      "upgrade1": { "labelSuffix": "战技掌控", "description": "灵能熵恢复速度 ×1.08。", "effects": { "statFactors": { "PsychicEntropyRecoveryRate": 1.08 } } },
+      "upgrade2": { "labelSuffix": "战技深潜", "description": "灵能熵上限 +8，全局工作速度 ×1.02。", "effects": { "statOffsets": { "PsychicEntropyMax": 8 }, "statFactors": { "WorkSpeedGlobal": 1.02 } } }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 职业系统框架级杂项（手写，非生成物）：脉冲伤害载体 + 脉冲区贴图不需要（不可见） -->
+
+  <!-- 多脉冲区域伤害的临时载体（ClassAbilityEffects.cs MMTAoEPulseZone）：不可见，脉冲耗尽自毁 -->
+  <ThingDef>
+    <defName>MMT_AoEPulseZone</defName>
+    <label>法术脉冲</label>
+    <thingClass>MyModeTest.MMTAoEPulseZone</thingClass>
+    <category>None</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MapDataOverlay</altitudeLayer>
+    <drawerType>None</drawerType>
+    <useHitPoints>false</useHitPoints>
+    <saveCompressible>true</saveCompressible>
+  </ThingDef>
+</Defs>

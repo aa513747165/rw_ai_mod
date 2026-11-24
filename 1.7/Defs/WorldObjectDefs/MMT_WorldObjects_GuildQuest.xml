@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 公会狩猎委托站点（mmt-class-design.md v2）：B 级以上远征/讨伐任务的世界站点，
+       生物目标由 SitePartWorker_MMT_GuildHunt 在地图生成时刷出（数据存 GameComponent_GuildQuests）。
+       世界图标为 Isekai 授权贴图。 -->
+
+  <SitePartDef>
+    <defName>MMT_SitePart_GuildHunt</defName>
+    <label>狩猎场</label>
+    <description>公会委托标记的猎场，目标生物在此出没。</description>
+    <workerClass>MyModeTest.SitePartWorker_MMT_GuildHunt</workerClass>
+    <siteTexture>UI/TalentTree/World/Isekai_Expedition</siteTexture>
+    <expandingIconTexture>UI/TalentTree/World/Isekai_Expedition</expandingIconTexture>
+    <tags>
+      <li>MMT_GuildHunt</li>
+    </tags>
+  </SitePartDef>
+</Defs>
