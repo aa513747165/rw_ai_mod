@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 副本蓝图分类（mmt-dungeon-design.md 蓝图布局）：框选保存玩家布局为据点蓝图，
+       管理入口在 Mod 设置【副本蓝图】（缩略图/类型开关/删除）。 -->
+  <DesignationCategoryDef>
+    <defName>MMT_Cat_DungeonBlueprint</defName>
+    <label>副本蓝图</label>
+    <order>3000</order>
+    <specialDesignatorClasses>
+      <li>MyModeTest.Designator_SaveDungeonBlueprint</li>
+    </specialDesignatorClasses>
+  </DesignationCategoryDef>
+</Defs>

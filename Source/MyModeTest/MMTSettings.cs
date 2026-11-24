@@ -144,6 +144,8 @@ namespace MyModeTest
         public string dungeonTurretBlacklist = "";
         /// <summary>档位成本倍率（0.5-3）：整体缩放三档声纳模块/扫描天数成本。</summary>
         public float dungeonTierCostFactor = 1f;
+        /// <summary>玩家自建副本蓝图（跨存档全局；恢复默认设置不清除——蓝图是内容不是调参）。</summary>
+        public List<DungeonBlueprint> dungeonBlueprints = new List<DungeonBlueprint>();
 
         /// <summary>当前生效的设置实例（Mod 构造时注入）。</summary>
         public static MMTSettings Instance
@@ -540,6 +542,9 @@ namespace MyModeTest
             Scribe_Values.Look(ref dungeonFactionBlacklist, "dungeonFactionBlacklist", "");
             Scribe_Values.Look(ref dungeonTurretBlacklist, "dungeonTurretBlacklist", "");
             Scribe_Values.Look(ref dungeonTierCostFactor, "dungeonTierCostFactor", 1f);
+            Scribe_Collections.Look(ref dungeonBlueprints, "dungeonBlueprints", LookMode.Deep);
+            if (dungeonBlueprints == null)
+                dungeonBlueprints = new List<DungeonBlueprint>();
         }
     }
 }

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using HarmonyLib;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -35,7 +37,7 @@ namespace MyModeTest
             if (s == null) return;
 
             // 单页滚动：内容高度按行数估算（附魔特效分组后约 40 行 × 34 + 分组间距）
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 2200f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, 2600f);
             Widgets.BeginScrollView(inRect, ref settingsScrollPos, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.maxOneColumn = true;
@@ -107,6 +109,60 @@ namespace MyModeTest
             s.dungeonFactionBlacklist = Widgets.TextField(list.GetRect(24f), s.dungeonFactionBlacklist ?? "");
             list.Label("副本炮塔黑名单（defName，逗号分隔；排除个别不平衡的 mod 炮塔）：");
             s.dungeonTurretBlacklist = Widgets.TextField(list.GetRect(24f), s.dungeonTurretBlacklist ?? "");
+            list.Gap();
+
+            // —— 副本蓝图管理（缩略图 + 类型开关 + 删除） ——
+            list.Label("【副本蓝图】（建筑师菜单「副本蓝图」分类框选保存；勾选启用的据点类型后，该类型据点生成时随机选用已启用蓝图，敌人仍动态生成）");
+            List<DungeonBlueprint> blueprints = s.dungeonBlueprints;
+            if (blueprints.Count == 0)
+            {
+                list.Label("（暂无蓝图：游戏中 建筑师 → 副本蓝图 → 保存为副本蓝图 框选保存）");
+            }
+            List<SitePartDef> siteParts = DungeonBlueprintStore.DungeonSiteParts;
+            foreach (DungeonBlueprint bp in blueprints)
+            {
+                if (bp == null)
+                    continue;
+                Rect row = list.GetRect(78f);
+                GUI.DrawTexture(new Rect(row.x, row.y, 64f, 64f), bp.GetThumbnail(), ScaleMode.ScaleToFit, true);
+                Rect info = new Rect(row.x + 70f, row.y, row.width - 70f, 24f);
+                Widgets.Label(info, bp.name + "（" + bp.width + "×" + bp.height + "，" + bp.entries.Count + " 座建筑）");
+                if (Widgets.ButtonText(new Rect(row.xMax - 60f, row.y, 60f, 24f), "删除"))
+                    DungeonBlueprintStore.Remove(bp.name);
+                // 副本类型开关行
+                float tx = row.x + 70f;
+                foreach (SitePartDef sp in siteParts)
+                {
+                    float tw = Mathf.Max(90f, Text.CalcSize(sp.label ?? sp.defName).x + 30f);
+                    bool on = bp.EnabledFor(sp.defName);
+                    bool before = on;
+                    Widgets.CheckboxLabeled(new Rect(tx, row.y + 26f, tw, 24f), sp.label, ref on);
+                    if (on != before)
+                    {
+                        bp.SetEnabled(sp.defName, on);
+                        DungeonBlueprintStore.InvalidatePickCache();
+                    }
+                    tx += tw + 8f;
+                }
+                // 档位开关行（I/II/III）
+                tx = row.x + 70f;
+                Widgets.Label(new Rect(tx, row.y + 52f, 70f, 24f), "启用档位：");
+                tx += 70f;
+                for (int tier = 1; tier <= 3; tier++)
+                {
+                    int t = tier;
+                    bool on = bp.EnabledAtTier(t);
+                    bool before = on;
+                    Widgets.CheckboxLabeled(new Rect(tx, row.y + 52f, 60f, 24f), t + " 档", ref on);
+                    if (on != before)
+                    {
+                        bp.SetTierEnabled(t, on);
+                        DungeonBlueprintStore.InvalidatePickCache();
+                    }
+                    tx += 68f;
+                }
+                list.Gap(6f);
+            }
             list.Gap();
 
             // —— 武器附魔特效（附魔2 借鉴词条；危险类另有单件武器 gizmo 开关） ——

@@ -189,6 +189,17 @@ XML `turretDefs`/`wallStuffDef` 从"唯一来源"降级为**兜底与人工修�
 
 全部生成逻辑只在据点地图 `PostMapGenerate` 瞬间执行一次；无 Comp、无 per-tick 扫描，符合 rpg 文档 §5 性能规则。
 
+### 4.6 玩家蓝图布局（已实现）
+
+玩家可自建据点布局替代程序化生成：
+
+- **捕捉**：建筑师菜单「副本蓝图」分类（`MMT_Cat_DungeonBlueprint`，`specialDesignatorClasses` 零补丁挂载）→「保存为副本蓝图」框选矩形 → 捕捉矩形内全部已建成建筑（排除 Frame/未建成蓝图，单边上限 40 格，多格建筑只记 Position 一次），记录 defName/材质/朝向/相对偏移（选区左下角为原点）→ 命名弹窗保存（重名确认覆盖）。
+- **存储**：跨存档全局，存 `MMTSettings.dungeonBlueprints`（Scribe Deep 序列化）；恢复默认设置不清除。
+- **副本类型开关**：每张蓝图带 `enabledSiteParts`（SitePartDef defName 列表）——**只有勾选的据点类型才能随机选用该蓝图**；另带 `enabledTiers` 档位开关（I/II/III，默认全档），生成时按"类型 + 档位"双重过滤（`PickFor(sitePart, tier)`），旧存档蓝图自动补全档。管理在 Mod 设置【副本蓝图】（缩略图 + 类型开关 + 档位开关 + 删除）。缩略图按条目类别着色逐格绘制（炮塔红/门黄/满格墙灰/用电橙/其它蓝灰），运行时生成并缓存。
+- **生成接入**：`SitePartWorker_MMT_Dungeon.PostMapGenerate` 先查 `DungeonBlueprintStore.PickFor(sitePart, tier)`（该类型该档启用蓝图随机抽一；无可用 → 程序化布局兜底，完全静默）。蓝图路径：外接矩形定中心 → 逐条 `TrySpawnBuilding`（炮塔挂宿主派系、其余中立、材质缺失用 GenStuff 默认）→ 奖励散布据点内部空格（无独立库房）→ 哨位取炮塔/门格。守卫（PawnGroupMaker 动态生成）/lord/Boss/威胁公式/分档奖励全部不变；蓝图含需电建筑仍走 `GenStep_Power`。
+- 蓝图中的炮塔不过 `dungeonTurretBlacklist`（玩家显式设计），也不计工事预算。
+
+
 ---
 
 ## 5. 设置与校验

@@ -531,31 +531,46 @@ namespace MyModeTest
             ThingDef wallDef = layout.ResolveWallDef();
             ThingDef wallStuff = SampleStuffFromGuards(guards) ?? layout.ResolveWallStuff(wallDef);
 
-            // 3. 布局中心：地图中心附近找可建造区
-            int half = layout.wallRadiusRange.RandomInRange;
+            // 3. 玩家蓝图选用：在设置面板为本据点类型启用过蓝图时随机抽一张，无则程序化布局兜底
+            DungeonBlueprint blueprint = DungeonBlueprintStore.PickFor(def, tier);
+
+            // 4. 布局中心：地图中心附近找可建造区（蓝图为其外接矩形半径）
+            int half = blueprint != null
+                ? Mathf.Max(blueprint.width, blueprint.height) / 2 + 1
+                : layout.wallRadiusRange.RandomInRange;
             IntVec3 center = FindLayoutCenter(map, half);
 
-            // 4. 外墙 + 入口
-            List<IntVec3> entranceCells;
-            List<IntVec3> innerGateCells;
-            BuildWalls(map, center, half, wallDef, wallStuff, layout, out entranceCells, out innerGateCells);
-
-            // 5. 奖励库房（Boss 巢穴：库房偏移，中央留开阔巢位）
-            IntVec3 vaultCenter = center;
-            if (layout.HasBossNest)
-                vaultCenter = center + new IntVec3(layout.vaultRadiusRange.max + 3, 0, 0);
-            int vaultHalf = layout.vaultRadiusRange.RandomInRange;
-            CellRect vaultInterior = BuildVault(map, vaultCenter, vaultHalf, wallDef, wallStuff, layout, faction);
-
-            // 6. 奖励堆 + 装备箱
-            SpawnRewards(map, vaultInterior, rewardExt, tier);
-
-            // 7. 守卫哨位（掩体 + 可选炮塔）与照明
-            float fortBudget = threatPoints * DungeonSiteGen.FortBudgetFraction;
             List<IntVec3> postCells;
-            bool poweredTurret = BuildPosts(map, center, half, layout, faction, wallStuff,
-                entranceCells, innerGateCells, fortBudget, out postCells);
-            BuildLights(map, center, half, layout, faction);
+            bool poweredTurret;
+            if (blueprint != null)
+            {
+                // 蓝图路径：逐条落建筑（炮塔挂宿主派系），奖励散布内部空格（无独立库房）
+                poweredTurret = StampBlueprint(map, blueprint, center, faction, out postCells);
+                SpawnRewards(map, CellRect.CenteredOn(center, half - 1), rewardExt, tier);
+            }
+            else
+            {
+                // 5. 外墙 + 入口
+                List<IntVec3> entranceCells;
+                List<IntVec3> innerGateCells;
+                BuildWalls(map, center, half, wallDef, wallStuff, layout, out entranceCells, out innerGateCells);
+
+                // 6. 奖励库房（Boss 巢穴：库房偏移，中央留开阔巢位）
+                IntVec3 vaultCenter = center;
+                if (layout.HasBossNest)
+                    vaultCenter = center + new IntVec3(layout.vaultRadiusRange.max + 3, 0, 0);
+                int vaultHalf = layout.vaultRadiusRange.RandomInRange;
+                CellRect vaultInterior = BuildVault(map, vaultCenter, vaultHalf, wallDef, wallStuff, layout, faction);
+
+                // 7. 奖励堆 + 装备箱
+                SpawnRewards(map, vaultInterior, rewardExt, tier);
+
+                // 8. 守卫哨位（掩体 + 可选炮塔）与照明
+                float fortBudget = threatPoints * DungeonSiteGen.FortBudgetFraction;
+                poweredTurret = BuildPosts(map, center, half, layout, faction, wallStuff,
+                    entranceCells, innerGateCells, fortBudget, out postCells);
+                BuildLights(map, center, half, layout, faction);
+            }
 
             // 8. 守卫落位 + lord（敌意全走原版机制）
             Lord lord = null;
@@ -909,6 +924,53 @@ namespace MyModeTest
                 if (fuel != null)
                     fuel.Refuel(fuel.Props.fuelCapacity);
             }
+        }
+
+        // ==================== 玩家蓝图 ====================
+
+        /// <summary>
+        /// 盖蓝图：按记录的偏移逐条落建筑（def 缺失静默跳过；炮塔挂宿主派系，其余中立；
+        /// 材质缺失用 GenStuff 默认）。postCells 取炮塔/门格（无则中心）。返回是否生成了需供电建筑。
+        /// </summary>
+        private static bool StampBlueprint(Map map, DungeonBlueprint bp, IntVec3 center, Faction faction,
+            out List<IntVec3> postCells)
+        {
+            postCells = new List<IntVec3>();
+            bool needsPower = false;
+            IntVec3 origin = center - new IntVec3(bp.width / 2, 0, bp.height / 2);
+            for (int i = 0; i < bp.entries.Count; i++)
+            {
+                DungeonBlueprintEntry e = bp.entries[i];
+                if (e == null || e.defName.NullOrEmpty())
+                    continue;
+                ThingDef bd = DefDatabase<ThingDef>.GetNamedSilentFail(e.defName);
+                if (bd == null || bd.building == null)
+                    continue;
+                ThingDef stuff = null;
+                if (bd.MadeFromStuff)
+                {
+                    if (!e.stuffDefName.NullOrEmpty())
+                        stuff = DefDatabase<ThingDef>.GetNamedSilentFail(e.stuffDefName);
+                    if (stuff == null)
+                        stuff = GenStuff.DefaultStuffFor(bd);
+                }
+                IntVec3 cell = origin + e.offset;
+                bool isTurret = bd.building.turretGunDef != null;
+                Thing spawned = TrySpawnBuilding(map, bd, stuff, cell, new Rot4(e.rot), isTurret ? faction : null);
+                if (spawned == null)
+                    continue;
+                if (isTurret || spawned is Building_Door)
+                    postCells.Add(cell);
+                if (bd.HasComp(typeof(CompPowerTrader)))
+                    needsPower = true;
+                // 燃料灯具生成时补满（与程序化布局一致）
+                CompRefuelable fuel = spawned.TryGetComp<CompRefuelable>();
+                if (fuel != null)
+                    fuel.Refuel(fuel.Props.fuelCapacity);
+            }
+            if (postCells.Count == 0)
+                postCells.Add(center);
+            return needsPower;
         }
 
         // ==================== 奖励 ====================
