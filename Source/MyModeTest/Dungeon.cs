@@ -118,13 +118,20 @@ namespace MyModeTest
         /// <summary>外墙入口数量区间。</summary>
         public IntRange entranceCountRange = new IntRange(1, 2);
 
-        /// <summary>Boss PawnKindDef defName（可空 = 无 Boss；Boss 本体为 MMT 独占单位，后续自建后填入即生效）。</summary>
-        public string bossPawnKindDefName;
+        /// <summary>Boss 白名单（XML 登记、惰性解析、缺失静默跳过；其它 mod 可 XPath 追加）。
+        /// 后继新增 MMT Boss（如远古守卫者）在此登记即入池参选（§4.7）。</summary>
+        public List<string> bossPawnKindDefNames;
+
+        /// <summary>Boss 预算占据点威胁点的比例（0 = 无 Boss 巢位）。Boss 池按预算选取，预算允许可出多只。</summary>
+        public float bossBudgetFraction;
+
+        /// <summary>Boss 数量上限区间（实际只数受预算约束）。</summary>
+        public IntRange bossCountRange = new IntRange(1, 3);
 
         /// <summary>是否有 Boss 巢位（有则库房偏移、中央留开阔巢区）。</summary>
         public bool HasBossNest
         {
-            get { return !bossPawnKindDefName.NullOrEmpty(); }
+            get { return bossBudgetFraction > 0f; }
         }
 
         public ThingDef ResolveWallDef()
@@ -581,8 +588,8 @@ namespace MyModeTest
                 SpawnGuards(map, guards, postCells, center, half, lord);
             }
 
-            // 9. Boss（MMT 独占单位，defName 解析失败静默跳过——用户后续自建 Boss 后填入即生效）
-            TrySpawnBoss(map, layout, faction, center, lord);
+            // 9. Boss（Boss 池按财富预算从「XML 白名单 ∪ 原版/Mod 全库扫描」选取，可多只；抽不出静默退化为大型据点）
+            TrySpawnBoss(map, layout, faction, center, lord, threatPoints);
 
             // 10. 炮塔供电：原版 GenStep_Power（与任务据点同机制，自动接发电机+电池+电缆）
             if (poweredTurret)
@@ -634,26 +641,36 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>Boss 生成：PawnKindDef 惰性解析（用户后续自建 Boss 填入 defName 即生效）；
-        /// 武器稀有度掷点由 LootRoll 的生成钩子自动结算（敌对派系），无需重复掷。</summary>
+        /// <summary>Boss 生成（§4.7 池化选取，可多只）：预算 = 据点威胁点 × bossBudgetFraction，
+        /// BossPool 按战力贴合预算从「白名单 ∪ 全库扫描」抽选；类人 Boss 挂宿主派系入守卫 lord
+        /// （装备稀有度掷点由 LootRoll 生成钩子自动结算），机械/虫/异常实体挂各自原版派系（原生敌对），
+        /// 动物等无派系强制永久狂暴。预算抽不出 Boss 时静默退化为大型守卫据点。</summary>
         private static void TrySpawnBoss(Map map, DungeonLayoutExtension layout, Faction faction,
-            IntVec3 center, Lord lord)
+            IntVec3 center, Lord lord, float threatPoints)
         {
-            if (!layout.HasBossNest || faction == null)
+            if (!layout.HasBossNest)
                 return;
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(layout.bossPawnKindDefName);
-            if (kind == null)
-                return;
-            PawnGenerationRequest req = new PawnGenerationRequest(kind, faction,
-                PawnGenerationContext.NonPlayer, map.Tile, mustBeCapableOfViolence: true);
-            Pawn boss = PawnGenerator.GeneratePawn(req);
-            if (boss == null)
-                return;
-            IntVec3 cell;
-            if (!CellFinder.TryFindRandomSpawnCellForPawnNear(center, map, out cell, 5))
-                cell = center;
-            GenSpawn.Spawn(boss, cell, map);
-            lord?.AddPawn(boss);
+            List<PawnKindDef> kinds = BossPool.PickBosses(threatPoints * layout.bossBudgetFraction,
+                layout.bossCountRange, layout.bossPawnKindDefNames);
+            for (int i = 0; i < kinds.Count; i++)
+            {
+                PawnKindDef kind = kinds[i];
+                Faction bossFaction = BossPool.ResolveBossFaction(kind, faction);
+                if (kind.RaceProps != null && kind.RaceProps.Humanlike && bossFaction == null)
+                    continue; // 类人 Boss 无宿主派系可挂时跳过（静默）
+                Pawn boss = PawnGenerator.GeneratePawn(new PawnGenerationRequest(kind, bossFaction,
+                    PawnGenerationContext.NonPlayer, map.Tile, mustBeCapableOfViolence: true));
+                if (boss == null)
+                    continue;
+                IntVec3 cell;
+                if (!CellFinder.TryFindRandomSpawnCellForPawnNear(center, map, out cell, 5))
+                    cell = center;
+                GenSpawn.Spawn(boss, cell, map);
+                if (bossFaction != null && bossFaction == faction && lord != null)
+                    lord.AddPawn(boss);
+                else if (bossFaction == null)
+                    boss.mindState?.mentalStateHandler?.TryStartMentalState(MentalStateDefOf.ManhunterPermanent);
+            }
         }
 
         // ==================== 材质采样（§4.4） ====================

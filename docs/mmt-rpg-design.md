@@ -210,7 +210,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 |---|---|---|---|---|
 | 试炼场 | MMT_SitePart_TrainingGround | ×1.2 | 宿主派系小队 | 随机强化/附魔装备箱（tier 1）×1–2 + 历练书（使用品 +500 XP）×1 |
 | 职业圣殿 | MMT_SitePart_ClassShrine | ×1.4 | 宿主派系小队 | 职业凭证碎片×1–2（3 碎片合成 1 凭证，配方在工作台）+ 装备箱（tier 2） |
-| 远古守卫巢穴 | MMT_SitePart_BossLair | ×2.0 | **Boss + 宿主派系护卫** | 见 §3.2 掉落表 |
+| 远古守卫巢穴 | MMT_SitePart_BossLair | ×2.0 | **Boss 池化选取（§3.2，可多只）+ 宿主派系护卫** | 档位奖励池（dungeon 文档 §3.2）+ 任务链空投（§3.3） |
 
 **跨 Mod 敌人兼容（硬性规则）**：
 
@@ -220,32 +220,38 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 4. **黑名单**：设置项 `dungeonFactionBlacklist`（defName 逗号列表，默认空），玩家可排除个别不平衡的 mod 派系；
 5. 绝不自写判敌逻辑：守卫/Boss 均挂据点宿主派系，敌意与 lord 全走原版机制。
 
-**接入扫描仪**：`CompDeepSpaceScanner.SiteTypes` 加权表追加试炼场/职业圣殿（低档副本进随机池，与既有三类据点并列）；**Boss 巢穴不进随机池**，仅由任务链（§3.3）生成。据点沿用 30 天过期 TimeoutComp。
+**接入扫描仪**：`CompDeepSpaceScanner.SiteTypes` 加权表追加试炼场/职业圣殿（低档副本进随机池，与既有三类据点并列）；Boss 巢穴低概率在池（权重 4/104 ≈ 3.8%，`requiresBossEncounters` 门控），同时由任务链（§3.3）定向生成。据点沿用 30 天过期 TimeoutComp。
 
 **装备箱**：生成时直接调 `LootRoll.Roll(gear, tier)` 产出随机强化/附魔的武器/防具堆（tier：试炼场=1、职业圣殿=2、Boss=3，映射 §1.2 威胁点档），武器从玩家科技水平可用的 weaponTags 池抽（沿用 `PawnWeaponGenerator` 的技术等级过滤思路）。
 
-### 3.2 Boss：远古守卫者
+### 3.2 Boss：池化选取（原版 + Mod 全库，按财富预算，可多只）
+
+> **v2 设计变更**：Boss 不再绑定 MMT 独占单位「远古守卫者」，改为池化选取（用户决策，2026-11）。实现细则见 `mmt-dungeon-design.md` §4.7。
+
+- **候选池**：各 Boss 据点 SitePartDef 的 `bossPawnKindDefNames` XML 白名单 ∪ 全库自动扫描（`isFighter` 且 combatPower ≥ 150，原版/Mod Boss 通吃，零 mod 感知代码）；Boss 召唤器共用同一候选源。
+- **按财富选取**：Boss 预算 = 据点威胁点 × `bossBudgetFraction`（威胁点由财富公式推导）；逐只抽选、单只战力 ≤ 剩余预算、权重偏向战力贴近预算者；数量上限 `bossCountRange`（巢穴 1~3 只）——低财富出弱 Boss/单 Boss，高财富出强 Boss 或多 Boss。
+- **派系**：类人 → 据点宿主派系（入守卫 lord）；机械/虫/异常实体 → 各自原版派系；动物 → 无派系永久狂暴。不自写判敌逻辑。
+- **掉落**：类人 Boss 与护卫按袭击者规则经 LootRoll 掷点掉装备（§1.4 钩子自动生效）；巢穴档位奖励池不变（dungeon 文档 §3.2）；任务链第三幕空投奖励（传说装备 ×2 + 职业凭证 ×1 + 远古数据核心 ×2）为任务奖励，照常发放。
+- **后继新增 Boss**（含 MMT 自建单位）：定义 PawnKindDef 后把 defName 登记进据点白名单即入池按预算参选，代码零改动；`MMT_BossAncientGuardian` 保留为首个预留登记位。
+
+<details><summary>原「远古守卫者」单体 Boss 设计（已被池化设计取代，仅供溯源）</summary>
 
 - PawnKindDef `MMT_BossAncientGuardian`（机械体，基于大型机械体 race，healthScale 大幅提高）：武器为 MMT 未来武器 + 固定满强化 +15、附魔满槽（生成时 `Roll(tier 3)` 后补足：极品池保底 1 条）。
-- **阶段机制**：HediffComp severity 由 C# 按 HP 推进（血量 <50% 进 P2），数值全在 HediffDef stage XML：
+- 阶段机制：HediffComp severity 由 C# 按 HP 推进（血量 <50% 进 P2：MoveSpeed ×1.3，AimingDelayFactor ×0.8，ShootingAccuracyPawn ×1.1）。
+- 掉落（必掉）：高档随机强化/附魔装备（tier 3）×1 + 随机职业凭证×1 + 远古数据核心×2。
+- 上述定向掉落改由巢穴档位奖励池 + 任务链空投承担；阶段机制等自建 Boss 实装时可按白名单登记复活本设计。
 
-| 阶段 | 触发 | 效果 |
-|---|---|---|
-| P1 | 默认 | 标准属性 |
-| P2 | 血量 <50% | MoveSpeed ×1.3，AimingDelayFactor ×0.8，ShootingAccuracyPawn ×1.1 |
+</details>
 
-- **掉落**（必掉）：高档随机强化/附魔装备（tier 3）×1 + 随机职业凭证×1 + 远古数据核心×2；护卫（宿主派系抽取，见 §3.1）按袭击者规则正常掷点掉装备。
-- Boss 本体为 MMT 独占单位（据点标题内容，可硬编码）；**护卫不硬编码**，跨 Mod 兼容规则同 §3.1。
+### 3.3 任务链「远古军械库」（已实现，`Source/MyModeTest/RpgQuestChain.cs`）
 
-### 3.3 任务链「远古军械库」（QuestScriptDef，纯 XML 优先）
+QuestScriptDef `MMT_Quest_AncientArmory`（`1.7/Defs/QuestScriptDefs/MMT_Quests_RpgChain.xml`，autoAccept、rootSelectionWeight=0 不走随机任务池）+ 自定义根节点挂 `QuestPart_MMTAncientArmory` 阶段机（1.7 QuestPart 无 tick 虚方法，由 `GameComponent_RpgQuestChain` 250 tick 节流驱动），三幕：
 
-`1.7/Defs/QuestScriptDefs/MMT_Quests_RpgChain.xml`，三幕：
+1. **信号截获**：深空扫描完成 20% / 财富 ≥15 万每日 10% 概率触发（双开关 `rpgQuestsEnabled` + `bossEncountersEnabled` 门控）；发信并标注一处试炼场（II 档系数）；
+2. **试炼收集**：收集职业凭证碎片×3（家园地图未禁用堆 + 殖民者背包 + 远行队货物计数；试炼场/职业圣殿均可重复刷）；任务页签实时显示进度（DescriptionPart）；
+3. **守卫巢穴**：碎片凑齐 → 生成 BossLair 据点（III 档系数 ×2.0）→ 清剿判定同公会委托联动（`GenHostility.AnyHostileActiveThreatToPlayer` + sawHostiles 区分成败）→ 空投奖励：传说装备（tier 3，大师~传奇）×2 + 职业凭证×1 + 远古数据核心×2 → 结局信。
 
-1. **信号截获**：深空扫描完成或财富 ≥15 万时概率触发（Incident 入口，开关 `rpgQuestsEnabled`）；任务内容：解密信号（研究式延时）→ 世界图标注一处试炼场；
-2. **试炼收集**：清理副本收集职业凭证碎片×3（试炼场/职业圣殿均可重复刷）；WorldComponent `MMT_RpgQuestTracker` 记数，凑齐后开启第三幕；
-3. **守卫巢穴**：生成 BossLair 据点 → 击杀 Boss → 奖励：传说装备 + 职业凭证 + 远古数据核心 → 结局信。
-
-节点尽量用原版 QuestNode/QuestPart 组合（站点生成、奖励、信件均 XML）；预计仅需 1 个自定义 QuestNode/WorldComponent（碎片计数 → 开启第三幕）。任务链整体可重复（完成后进入冷却，约 30 天后可再次触发）。
+完成/失败均进入 30 天冷却后可再次触发；全部状态（阶段/据点引用/冷却）Scribe 持久化。
 
 ### 3.4 校验
 

@@ -106,13 +106,14 @@
   </SitePartDef>
 
   <!-- 远古守卫巢穴（Boss 巢穴）：威胁系数 ×2.0，锁定 III 档，不进扫描随机池。
-       bossPawnKindDefName 预留 Boss 挂载点（rpg 文档 §3.2 远古守卫者，待自建）：
-       defName 解析失败时静默退化为大型守卫据点（中央巢位留空、库房偏移）；
-       Boss 必掉表（传说装备 + 职业凭证 + 远古数据核心×2）随 Boss 本体一并实装。 -->
+       Boss 池化选取（§4.7）：预算 = 威胁点 × bossBudgetFraction，从「bossPawnKindDefNames 白名单 ∪
+       原版/Mod 全库扫描（isFighter 且战力 ≥150）」按战力贴合预算抽选，最多 bossCountRange 只；
+       低财富抽不出 Boss 时静默退化为大型守卫据点（中央巢位留空、库房偏移）。
+       后继新增 MMT Boss：定义 PawnKindDef 后把 defName 追加进白名单即入池（MMT_BossAncientGuardian 为预留位）。 -->
   <SitePartDef>
     <defName>MMT_SitePart_BossLair</defName>
     <label>远古守卫巢穴</label>
-    <description>信号源头的巢穴。远古守卫者沉睡于中央的开阔巢位，四周布满其宿主的爪牙与工事。只有最强的小队才应踏足此地。</description>
+    <description>信号源头的巢穴。强大的统领者蛰伏于中央的开阔巢位，四周布满其宿主的爪牙与工事。只有最强的小队才应踏足此地。</description>
     <workerClass>MyModeTest.SitePartWorker_MMT_Dungeon</workerClass>
     <siteTexture>World/WorldObjects/Sites/MMT_SiteBossLair</siteTexture>
     <expandingIconTexture>World/WorldObjects/Sites/MMT_SiteBossLair</expandingIconTexture>
@@ -126,7 +127,11 @@
         <vaultRadiusRange>2~3</vaultRadiusRange>
         <postCountRange>4~6</postCountRange>
         <entranceCountRange>2~2</entranceCountRange>
-        <bossPawnKindDefName>MMT_BossAncientGuardian</bossPawnKindDefName>
+        <bossBudgetFraction>0.5</bossBudgetFraction>
+        <bossCountRange>1~3</bossCountRange>
+        <bossPawnKindDefNames>
+          <li>MMT_BossAncientGuardian</li>
+        </bossPawnKindDefNames>
         <coverDefs>
           <li><defName>Sandbags</defName><weight>1</weight></li>
         </coverDefs>

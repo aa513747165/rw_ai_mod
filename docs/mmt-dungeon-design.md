@@ -1,9 +1,8 @@
 # MMT 副本/据点生成设计方案
 
 > 手工维护的设计文档（非脚本生成物）。副本/据点生成专项设计：难度分层、敌人类型、物品奖励、地图建筑。
-> 状态：**主体已实现**（v1：三档扫描/派系守卫/分档奖励池/程序化布局/设置与校验均已落地；
-> 未实现：Boss 本体与任务链三幕——Boss 挂载点 `bossPawnKindDefName` 已预留 `MMT_BossAncientGuardian`，
-> 自建 Boss 填入 defName 即生效；Dev 模式可用扫描仪 gizmo 直接生成 Boss 巢穴验收）。
+> 状态：**已实现**（v1：三档扫描/派系守卫/分档奖励池/程序化布局/设置与校验；任务链三幕已实现（`mmt-rpg-design.md` §3.3）；
+> v2：Boss 改为池化选取——原版/Mod 全库 Boss 按财富预算抽选、可多只，见 §4.7）。
 > 本文是 `mmt-rpg-design.md` §3（支柱三）的展开与细化，遵循其 §0 硬性规则；稀有度掷点 `Roll(tier)`、Boss 掉落表、任务链三幕等以 rpg 文档为准，本文不重复定义。
 
 ## 0. 跨 Mod 兼容总原则（全文最高优先级）
@@ -31,7 +30,7 @@
 | III | 全域扫描 | ×3 | ×2.0 | ×2.5 | 史诗 ~ 传说 |
 
 - 蓄电规则不变（充满后一次清空）；声纳模块数与扫描天数系数写入 `CompProperties_DeepSpaceScanner` 的 XML 字段（如 `tierCosts` 列表），C# 只读表。
-- **Boss 巢穴（`MMT_SitePart_BossLair`）锁定 III 档**，不进扫描随机池（rpg 文档 §3.1），任务链生成时按 III 档系数结算。
+- **Boss 巢穴（`MMT_SitePart_BossLair`）低概率进扫描随机池**（权重 4/104 ≈ 3.8%，类型系数 ×2.0，档位系数正常乘算），受 `bossEncountersEnabled` 设置门控（`requiresBossEncounters` 条目字段）；Dev 模式扫描仪 gizmo 仍可直接生成验收。
 
 ### 1.2 威胁点公式
 
@@ -66,7 +65,7 @@ threatPoints = clamp(基地财富 / 100, 800, 5000) × 据点类型系数 × 档
 | 守卫小队 | ~70% | 宿主派系 `PawnGroupMaker` 按威胁点产出（mod 单位自动在列） |
 | 防御工事 | ~30% | §4 布局生成的炮塔/陷阱/掩体（挂宿主派系，敌意走原版） |
 
-Boss 巢穴护卫经 `PawnGroupMakerParms` 传宿主派系抽组；Boss 本体为 MMT 独占单位（rpg 文档 §3.2），可硬编码，不受本章约束。
+Boss 巢穴护卫经 `PawnGroupMakerParms` 传宿主派系抽组；Boss 本体走 §4.7 池化选取（原版/Mod 全库 + XML 白名单，按财富预算，可多只），同样不做 mod 感知代码。
 
 ### 2.3 回退链（全程静默，不报错不红字）
 
@@ -99,7 +98,7 @@ Boss 巢穴护卫经 `PawnGroupMakerParms` 传宿主派系抽组；Boss 本体�
 | III | 史诗~传说随机词条装备 ×2 | 远古碎晶 ×6~10 + 远古合金 ×5~8 | 历练书 ×2 | 职业凭证碎片 ×2~3（职业圣殿必出） |
 
 - 装备箱武器从玩家科技等级可用的 weaponTags 池抽（沿用 `PawnWeaponGenerator` 技术等级过滤思路），防具同理；稀有度按 §1.3 地板掷点。
-- Boss 必掉表不变（rpg 文档 §3.2）：传说随机词条装备 ×1 + 随机职业凭证 ×1 + 远古数据核心 ×2。
+- Boss 巢穴高档奖励由档位奖励池承担（III 档装备箱 ×2 + 远古碎晶/凭证碎片，见各 SitePartDef XML）；任务链第三幕的空投奖励（传说装备/凭证/数据核心）为任务奖励，与巢穴战利品叠加（rpg 文档 §3.3）。
 - 职业凭证碎片合成配方（3 碎片 → 1 凭证，工作台配方）以 rpg 文档 §3.1 为准。
 
 ### 3.3 难度收益对等
@@ -199,6 +198,16 @@ XML `turretDefs`/`wallStuffDef` 从"唯一来源"降级为**兜底与人工修�
 - **生成接入**：`SitePartWorker_MMT_Dungeon.PostMapGenerate` 先查 `DungeonBlueprintStore.PickFor(sitePart, tier)`（该类型该档启用蓝图随机抽一；无可用 → 程序化布局兜底，完全静默）。蓝图路径：外接矩形定中心 → 逐条 `TrySpawnBuilding`（炮塔挂宿主派系、其余中立、材质缺失用 GenStuff 默认）→ 奖励散布据点内部空格（无独立库房）→ 哨位取炮塔/门格。守卫（PawnGroupMaker 动态生成）/lord/Boss/威胁公式/分档奖励全部不变；蓝图含需电建筑仍走 `GenStep_Power`。
 - 蓝图中的炮塔不过 `dungeonTurretBlacklist`（玩家显式设计），也不计工事预算。
 
+### 4.7 Boss 池化选取（v2，已实现）
+
+Boss 不再绑定单一 MMT 独占单位，改为从**原版 + Mod 全库 Boss 池按财富预算选取**，预算允许时一处巢穴可出**多个 Boss**：
+
+- **候选池**（`BossPool.cs`）：XML 白名单（各 SitePartDef `DungeonLayoutExtension.bossPawnKindDefNames`，惰性解析、缺失静默跳过，其它 mod 可 XPath 追加）∪ 全库自动扫描（`isFighter` 且 combatPower ≥ 150，原版/Mod Boss 通吃，零 mod 感知代码，缓存只扫一次）。Boss 召唤器（§7）与本池共用候选源。
+- **预算**：Boss 预算 = 据点威胁点 × `bossBudgetFraction`（巢穴定稿 0.5；威胁点已由财富公式 §1.2 推导，即"根据财富选 Boss"）。`bossBudgetFraction > 0` 即视为有 Boss 巢位（库房偏移、中央留开阔巢区）。
+- **选取**（`BossPool.PickBosses`）：逐只抽选，单只 combatPower ≤ 剩余预算；数量上限 `bossCountRange`（巢穴定稿 1~3，实际只数受预算约束）；权重偏向战力贴近剩余预算者（财富越高越容易出强 Boss），已选种类不重复。低财富兜底：池内最弱 Boss 不超预算 ×1.5 仍出 1 只；再抽不出则静默退化为大型守卫据点。
+- **派系**（`BossPool.ResolveBossFaction`）：类人 → 据点宿主派系（入守卫 lord，装备稀有度掷点由 LootRoll 生成钩子自动结算）；机械族/虫族/异常实体 → 各自原版派系（原生敌对）；动物等 → 无派系 + 强制永久狂暴。全程不自写判敌逻辑。
+- **后继新增 Boss**（含 MMT 自建的远古守卫者 `MMT_BossAncientGuardian`）：定义 PawnKindDef 后把 defName 登记进巢穴白名单即入池按预算参选，代码零改动——新 Boss 一律走本池化设计，不再单写挂载逻辑。
+
 
 ---
 
@@ -238,13 +247,13 @@ XML `turretDefs`/`wallStuffDef` 从"唯一来源"降级为**兜底与人工修�
   守卫预算封顶 10000 威胁点——超出后多数派系 PawnGroupMaker 无法抽组；
   奖励价值 ×1.2 未做代码强制校验，待游戏内实测）；
 - ~~Boss 巢位形态（开阔区 vs 半掩体）~~（v1 回填：开阔巢位——有 Boss 时库房偏移、中央留空；
-  Boss 本体待自建，`bossPawnKindDefName` 已预留 `MMT_BossAncientGuardian`，缺失静默退化为大型据点）。
+  v2 回填：Boss 本体改 §4.7 池化选取，不再依赖单一自建 Boss；远古守卫者作为后续白名单登记项保留）。
 
 ## 7. v1 实现回填（实现期决策记录）
 
 - **档位传递**：扫描档位写入 `SitePartParams.randomValue`（vanilla 未使用字段，存档安全），
   worker 读取时非法值按 I 档处理（旧存档据点无档位信息，不会误发高档奖励）；
-- **据点池权重**（实现期选定，可调）：稀有资源点 28 / 轨道遗迹 22 / 机械据点 12 / 试炼场 22 / 职业圣殿 16；
+- **据点池权重**（实现期选定，可调）：稀有资源点 28 / 轨道遗迹 22 / 机械据点 12 / 试炼场 22 / 职业圣殿 16 / Boss 巢穴 4（低概率 ≈3.8%，受 bossEncountersEnabled 门控）；
 - **品质地板映射**（"精良~稀有"等 RPG 语 → 原版品质档）：I Good~Excellent / II Excellent~Masterwork / III Masterwork~Legendary，
   与 lootTier 1/2/3 一起写在扫描仪 comp 的 `scanTiers` XML 里；
 - **炮塔供电**：布局完成后调用原版 `GenStep_Power`（与原版任务据点同机制，自动接发电机+电池+电缆）；
@@ -252,12 +261,14 @@ XML `turretDefs`/`wallStuffDef` 从"唯一来源"降级为**兜底与人工修�
 - **历练书**：服用式使用品（右键"研读"，`IngestionOutcomeDoer_GiveProgressXp`，+500 XP）；
 - **凭证碎片配方**：`MMT_CraftClassToken`（3 碎片 → 1 凭证）挂装备强化台（MMT_WeaponEnhanceBench）；
 - **贴图**：3 个据点世界图标 + 历练书/凭证碎片物品图标已生成（PIL 代码绘制）；
-  Boss 贴图随 Boss 本体一并实装（届时先按 `.claude/skills/rw-texture-design/SKILL.md` 写贴图元素描述）；
-- **校验**：`tools/validate/rpg_quests.py`（档位表/据点池/奖励池/布局白名单/配方/设置接线）；
+  Boss 用池内原版/Mod 单位原生贴图，无新增需求（后续自建 Boss 再按 `.claude/skills/rw-texture-design/SKILL.md` 写贴图元素描述）；
+- **校验**：`tools/validate/rpg_quests.py`（档位表/据点池/奖励池/布局白名单/Boss 池化字段/配方/设置接线）；
+- **Boss 池化**（v2）：Boss 生成由"单 defName 挂载点"改为 §4.7 池化选取
+  （`bossBudgetFraction`/`bossCountRange`/`bossPawnKindDefNames` 三字段替换旧 `bossPawnKindDefName`）；
 - **Boss 召唤器**（dev 测试工具）：`MMT_BossSummoner`（`MMT_Buildings_Dungeon.xml`），
   仅 Dev 模式在建造菜单可见（`Designator_Build.Visible` postfix 强制隐藏）；
-  gizmo 菜单 = XML 白名单 ∪ 全库自动扫描（isFighter 且 combatPower ≥ `autoBossMinCombatPower`（默认 150）的
-  PawnKindDef 全收，原版与 Mod Boss 通吃，菜单标注战力与来源包），目标选格生成；
-  机械族挂机械族派系、类人走副本宿主派系选取（均挂 `LordJob_AssaultColony` 立即进攻），
-  动物/实体无派系生成并强制永久狂暴兜底；
-  白名单默认预留 `MMT_BossAncientGuardian`（与巢穴挂载点同名，自建 Boss 一处定义两处生效）。
+  gizmo 菜单候选复用 Boss 池（§4.7：XML 白名单 ∪ 全库自动扫描，原版与 Mod Boss 通吃，
+  菜单标注战力与来源包，候选缓存只扫一次），目标选格生成；
+  派系走 BossPool.ResolveBossFaction（类人走副本宿主派系 + `LordJob_AssaultColony` 立即进攻，
+  机械/虫/异常实体挂各自派系，动物无派系强制永久狂暴兜底）；
+  白名单默认预留 `MMT_BossAncientGuardian`（与巢穴白名单同名，自建 Boss 一处定义两处生效）。

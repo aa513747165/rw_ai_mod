@@ -6,7 +6,8 @@
 - 扫描仪三档成本表字段完整（模块数 > 0、天数/威胁系数递增、品质地板合法）；
 - 据点池条目引用有效、Boss 巢穴不进随机池；
 - 奖励池条目 defName 有效、minTier/maxTier ∈ {1,2,3} 且 minTier ≤ maxTier；
-- DungeonLayoutExtension 引用的建筑 defName 在原版 + MMT 白名单内（bossPawnKindDefName 允许预留缺失）；
+- DungeonLayoutExtension 引用的建筑 defName 在原版 + MMT 白名单内（Boss 白名单允许预留缺失）；
+- Boss 巢穴池化字段（bossBudgetFraction > 0、bossCountRange、bossPawnKindDefNames）齐全；
 - 历练书/凭证碎片/合成配方/设置项/C# 关键实现接线齐全。
 """
 from __future__ import annotations
@@ -27,6 +28,8 @@ EXPLORATION_CS = "Source/MyModeTest/Exploration.cs"
 PROGRESS_CS = "Source/MyModeTest/PawnProgress.cs"
 SETTINGS_CS = "Source/MyModeTest/MMTSettings.cs"
 MOD_CS = "Source/MyModeTest/MyModeTestMod.cs"
+QUEST_XML = "1.7/Defs/QuestScriptDefs/MMT_Quests_RpgChain.xml"
+QUESTCHAIN_CS = "Source/MyModeTest/RpgQuestChain.cs"
 
 DUNGEON_PARTS = ("MMT_SitePart_TrainingGround", "MMT_SitePart_ClassShrine", "MMT_SitePart_BossLair")
 
@@ -56,7 +59,8 @@ def _layout_ok(name: str, mmt_defs: set[str]) -> bool:
 
 def validate_rpg_quests() -> None:
     require_files([BUILDING_XML, DUNGEON_XML, SITES_XML, ITEMS_XML, RECIPE_XML,
-                   DUNGEON_CS, EXPLORATION_CS, PROGRESS_CS, SETTINGS_CS, MOD_CS])
+                   DUNGEON_CS, EXPLORATION_CS, PROGRESS_CS, SETTINGS_CS, MOD_CS,
+                   QUEST_XML, QUESTCHAIN_CS])
     mmt_defs = _all_mmt_defnames()
 
     # ---- 三档成本表（§1.1/§5.2） ----
@@ -91,11 +95,12 @@ def validate_rpg_quests() -> None:
         if QUALITY_ORDER.index(qmin) > QUALITY_ORDER.index(qmax):
             fail(f"档位 {i} 品质地板高于天花板: {qmin} > {qmax}")
 
-    # ---- 据点池（§0：Boss 巢穴不进随机池） ----
+    # ---- 据点池（§0：Boss 巢穴低概率在池，受设置门控） ----
     pool = comp.findall("sitePool/li")
     if len(pool) < 5:
         fail(f"据点池条目不足（应 ≥5：旧三类 + 试炼场/职业圣殿），实际 {len(pool)}")
     pool_parts = {}
+    total_weight = 0.0
     for li in pool:
         part = child_text(li, "sitePart")
         if not part:
@@ -105,11 +110,21 @@ def validate_rpg_quests() -> None:
         weight = float(child_text(li, "weight") or "0")
         if weight <= 0:
             fail(f"据点池 {part} 权重必须 > 0")
+        total_weight += weight
         if not child_text(li, "label"):
             fail(f"据点池 {part} 缺少 label")
         pool_parts[part] = li
-    if "MMT_SitePart_BossLair" in pool_parts:
-        fail("Boss 巢穴不得进入扫描随机池（锁定 III 档，由任务链/Dev 生成）")
+    boss = pool_parts.get("MMT_SitePart_BossLair")
+    if boss is None:
+        fail("据点池缺少 Boss 巢穴（MMT_SitePart_BossLair 应低概率在池）")
+    else:
+        if child_text(boss, "requiresBossEncounters") != "true":
+            fail("Boss 巢穴池条目必须 requiresBossEncounters=true（受设置门控）")
+        if child_text(boss, "factionGuards") != "true":
+            fail("Boss 巢穴必须 factionGuards=true（宿主派系守卫）")
+        bw = float(child_text(boss, "weight") or "0")
+        if total_weight > 0 and bw / total_weight > 0.08:
+            fail(f"Boss 巢穴应为低概率结果（权重占比 ≤8%），实际 {bw / total_weight:.1%}")
     for part in ("MMT_SitePart_TrainingGround", "MMT_SitePart_ClassShrine"):
         if part not in pool_parts:
             fail(f"据点池缺少 {part}")
@@ -156,7 +171,20 @@ def validate_rpg_quests() -> None:
             for li in layout.findall("turretDefs/*"):
                 if not _layout_ok((li.text or "").strip(), mmt_defs):
                     fail(f"{name} 炮塔白名单不在原版/MMT 白名单: {li.text}")
-            # bossPawnKindDefName 允许预留缺失（Boss 后续自建，C# 惰性解析静默跳过）
+            # Boss 白名单允许预留缺失（Boss 后续自建，C# 惰性解析静默跳过；池化选取见 §4.7）
+            for li in layout.findall("bossPawnKindDefNames/li"):
+                if not (li.text or "").strip():
+                    fail(f"{name} Boss 白名单存在空条目")
+            if name == "MMT_SitePart_BossLair":
+                fraction = float(layout.findtext("bossBudgetFraction") or "0")
+                if fraction <= 0:
+                    fail("Boss 巢穴必须 bossBudgetFraction > 0（Boss 预算占威胁点比例）")
+                count_range = layout.findtext("bossCountRange") or ""
+                m = re.match(r"^(\d+)~(\d+)$", count_range.strip())
+                if not m or int(m.group(1)) < 1 or int(m.group(2)) < int(m.group(1)):
+                    fail(f"Boss 巢穴 bossCountRange 非法: {count_range}")
+                if not layout.findall("bossPawnKindDefNames/li"):
+                    fail("Boss 巢穴应保留 bossPawnKindDefNames 白名单（MMT 后续 Boss 登记口）")
 
         # ---- 奖励池（§3.1/§5.2） ----
         if reward is None:
@@ -252,10 +280,20 @@ def validate_rpg_quests() -> None:
     summoner_cs = _read(SUMMONER_CS)
     for token in ("CompBossSummoner", "Patch_BossSummonerDevOnly", "Prefs.DevMode",
                   "LordJob_AssaultColony", "BeginTargeting", "Designator_Build",
-                  "GetNamedSilentFail", "bossPawnKindDefNames", "autoBossMinCombatPower",
-                  "isFighter", "combatPower", "ManhunterPermanent", "modContentPack"):
+                  "BossPool", "bossPawnKindDefNames", "autoBossMinCombatPower",
+                  "combatPower", "ManhunterPermanent", "modContentPack"):
         if token not in summoner_cs:
             fail(f"BossSummoner.cs 缺少: {token}")
+
+    # ---- Boss 池（§4.7：原版/Mod 全库扫描 + 白名单，按财富预算选取、可多只） ----
+    BOSSPOOL_CS = "Source/MyModeTest/BossPool.cs"
+    require_files([BOSSPOOL_CS])
+    bosspool_cs = _read(BOSSPOOL_CS)
+    for token in ("BossPool", "AutoScanMinCombatPower", "Candidates", "PickBosses",
+                  "ResolveBossFaction", "isFighter", "combatPower", "GetNamedSilentFail",
+                  "RandomElementByWeight", "IsAnomalyEntity", "OfMechanoids"):
+        if token not in bosspool_cs:
+            fail(f"BossPool.cs 缺少: {token}")
 
     # ---- 设置项接线（§5.1） ----
     settings = _read(SETTINGS_CS)
@@ -281,7 +319,8 @@ def validate_rpg_quests() -> None:
     for token in ("SitePartWorker_MMT_Dungeon", "DungeonLayoutExtension", "DungeonSiteGen",
                   "GenerateDungeonSite", "GenerateStockpileSite", "PickHostFaction",
                   "TryGetRandomFactionForCombatPawnGroup", "TryPickTurret", "GenStep_Power",
-                  "LordJob_SitePawns", "TrySpawnBoss", "bossPawnKindDefName",
+                  "LordJob_SitePawns", "TrySpawnBoss", "bossPawnKindDefNames",
+                  "bossBudgetFraction", "bossCountRange", "BossPool.PickBosses",
                   "SampleStuffFromGuards", "DungeonGearGen", "DungeonRewardGen",
                   "randomValue", "modContentPack"):
         if token not in dungeon:
@@ -294,6 +333,26 @@ def validate_rpg_quests() -> None:
     progress = _read(PROGRESS_CS)
     if "IngestionOutcomeDoer_GiveProgressXp" not in progress:
         fail("PawnProgress.cs 缺少 IngestionOutcomeDoer_GiveProgressXp")
+
+    # ---- 任务链「远古军械库」（rpg 文档 §3.3） ----
+    quest_defs = def_map(parse_xml(QUEST_XML))
+    qnode = quest_defs.get("MMT_Quest_AncientArmory")
+    if qnode is None:
+        fail("缺少任务链 QuestScriptDef MMT_Quest_AncientArmory")
+    else:
+        assert_equal(child_text(qnode, "autoAccept"), "true", "任务链 autoAccept")
+        assert_equal(child_text(qnode, "rootSelectionWeight"), "0", "任务链 rootSelectionWeight（不走随机任务池）")
+        root = qnode.find("root")
+        if root is None or root.get("Class") != "MyModeTest.QuestNode_Root_MMTAncientArmory":
+            fail("任务链 root 应为 MyModeTest.QuestNode_Root_MMTAncientArmory")
+    chain = _read(QUESTCHAIN_CS)
+    for token in ("QuestPart_MMTAncientArmory", "GameComponent_RpgQuestChain", "QuestNode_Root_MMTAncientArmory",
+                  "NotifyChainEnded", "NotifyScanCompleted", "CountFragments", "GenerateDungeonSite",
+                  "DropPodUtility", "ExposeData", "FragmentNeed", "CooldownTicks"):
+        if token not in chain:
+            fail(f"RpgQuestChain.cs 缺少: {token}")
+    if "GameComponent_RpgQuestChain.Current?.NotifyScanCompleted" not in exploration:
+        fail("Exploration.cs 缺少任务链扫描触发钩子 NotifyScanCompleted")
 
     print("rpg_quests: OK")
 

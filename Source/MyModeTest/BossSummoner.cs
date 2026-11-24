@@ -40,43 +40,15 @@ namespace MyModeTest
         private static List<PawnKindDef> cachedBossKinds;
 
         /// <summary>
-        /// 解析候选 Boss：XML 白名单（缺失静默跳过）∪ 全库自动扫描（isFighter 且战力 ≥ 阈值，
-        /// 原版/Mod Boss 自动在列）。结果按战力降序，供 FloatMenu 展示。
+        /// 解析候选 Boss：复用 BossPool 池（XML 白名单 ∪ 全库自动扫描，原版/Mod Boss 自动在列）。
+        /// 结果按战力降序缓存，供 FloatMenu 展示（gizmo 高频重绘，避免每次全库扫描+排序的 GC 压力）。
         /// </summary>
         private List<PawnKindDef> ResolveBossKinds()
         {
             if (cachedBossKinds != null)
                 return cachedBossKinds;
-            Dictionary<string, PawnKindDef> kinds = new Dictionary<string, PawnKindDef>();
-            if (Props.bossPawnKindDefNames != null)
-            {
-                foreach (string name in Props.bossPawnKindDefNames)
-                {
-                    if (name.NullOrEmpty())
-                        continue;
-                    PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(name);
-                    if (kind != null)
-                        kinds[kind.defName] = kind;
-                }
-            }
-            foreach (PawnKindDef kind in DefDatabase<PawnKindDef>.AllDefsListForReading)
-            {
-                if (kinds.ContainsKey(kind.defName))
-                    continue;
-                if (kind.RaceProps == null || !kind.isFighter)
-                    continue;
-                if (kind.combatPower >= Props.autoBossMinCombatPower)
-                    kinds[kind.defName] = kind;
-            }
-            List<PawnKindDef> list = new List<PawnKindDef>(kinds.Values);
-            // 战力降序；同战力按 defName 稳定排序
-            list.Sort((a, b) =>
-            {
-                int cmp = b.combatPower.CompareTo(a.combatPower);
-                return cmp != 0 ? cmp : string.CompareOrdinal(a.defName, b.defName);
-            });
-            cachedBossKinds = list;
-            return list;
+            cachedBossKinds = BossPool.Candidates(Props.bossPawnKindDefNames, Props.autoBossMinCombatPower);
+            return cachedBossKinds;
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -130,22 +102,16 @@ namespace MyModeTest
         }
 
         /// <summary>
-        /// 生成 Boss：机械族挂机械族派系、类人走副本宿主派系选取，两者挂 LordJob_AssaultColony 立即进攻；
-        /// 动物/实体等无派系生成，靠种族原生敌意并强制永久狂暴兜底。全程静默回退。
+        /// 生成 Boss：派系走 BossPool.ResolveBossFaction（类人→副本宿主派系、机械/虫/异常实体→各自原版派系），
+        /// 有派系挂 LordJob_AssaultColony 立即进攻；动物等无派系靠种族原生敌意并强制永久狂暴兜底。全程静默回退。
         /// </summary>
         private void SpawnBoss(PawnKindDef kind, IntVec3 cell)
         {
             Map map = parent.Map;
             if (!cell.IsValid || !cell.InBounds(map))
                 return;
-            Faction faction = null;
-            if (kind.RaceProps != null)
-            {
-                if (kind.RaceProps.IsMechanoid)
-                    faction = Faction.OfMechanoids;
-                else if (kind.RaceProps.Humanlike)
-                    faction = DungeonSiteGen.PickHostFaction(1000f);
-            }
+            Faction faction = BossPool.ResolveBossFaction(kind,
+                kind.RaceProps != null && kind.RaceProps.Humanlike ? DungeonSiteGen.PickHostFaction(1000f) : null);
             if (kind.RaceProps != null && kind.RaceProps.Humanlike && faction == null)
             {
                 Messages.Message("召唤失败：没有可用的敌对派系", new LookTargets(parent),
