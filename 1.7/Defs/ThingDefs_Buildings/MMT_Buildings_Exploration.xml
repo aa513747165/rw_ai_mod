@@ -132,6 +132,15 @@
             <threatFactor>1.4</threatFactor>
             <factionGuards>true</factionGuards>
           </li>
+          <!-- Boss 巢穴：低概率进池（权重 4/104 ≈ 3.8%），受 bossEncountersEnabled 设置门控 -->
+          <li>
+            <sitePart>MMT_SitePart_BossLair</sitePart>
+            <label>远古守卫巢穴</label>
+            <weight>4</weight>
+            <threatFactor>2.0</threatFactor>
+            <factionGuards>true</factionGuards>
+            <requiresBossEncounters>true</requiresBossEncounters>
+          </li>
         </sitePool>
       </li>
     </comps>

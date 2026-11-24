@@ -53,6 +53,9 @@ namespace MyModeTest
 
         /// <summary>兼容旧三类资源点：守卫用原版机械集群 SitePart（无 Royalty 时静默退化）。</summary>
         public bool mechGuardFallback;
+
+        /// <summary>需要 Boss 巢穴设置开关（bossEncountersEnabled）开启才可入池（Boss 巢穴低概率扫描结果）。</summary>
+        public bool requiresBossEncounters;
     }
 
     /// <summary>深空扫描仪参数（XML 可配置）。</summary>
@@ -67,7 +70,7 @@ namespace MyModeTest
         /// <summary>三档扫描成本/威胁/奖励表（§1.1；C# 只读）。</summary>
         public List<ScanTier> scanTiers;
 
-        /// <summary>据点加权池（§0 清单 XML 化；Boss 巢穴不在池内，由任务链/Dev 生成）。</summary>
+        /// <summary>据点加权池（§0 清单 XML 化；Boss 巢穴低概率在池，受 requiresBossEncounters 开关门控）。</summary>
         public List<ScanSiteEntry> sitePool;
 
         public CompProperties_DeepSpaceScanner()
@@ -367,9 +370,11 @@ namespace MyModeTest
                 LetterDefOf.PositiveEvent, new LookTargets(site));
             Messages.Message("深空扫描完成：" + entry.label + " 已出现在世界地图", new LookTargets(parent),
                 MessageTypeDefOf.PositiveEvent, false);
+            // 任务链「远古军械库」触发钩子（20% 概率；内部有开关/财富/冷却门控）
+            GameComponent_RpgQuestChain.Current?.NotifyScanCompleted(parent.Map);
         }
 
-        /// <summary>据点池加权随机（权重 ≤0 的条目跳过）。</summary>
+        /// <summary>据点池加权随机（权重 ≤0 或开关未满足的条目跳过）。</summary>
         private ScanSiteEntry PickSiteEntry()
         {
             return PickRandomSiteEntry(false);
@@ -387,7 +392,7 @@ namespace MyModeTest
             for (int i = 0; i < pool.Count; i++)
             {
                 ScanSiteEntry e = pool[i];
-                if (e == null || e.sitePart == null || e.weight <= 0f)
+                if (!EntryAvailable(e))
                     continue;
                 if (requireGuards && !e.factionGuards && !e.mechGuardFallback)
                     continue;
@@ -399,7 +404,7 @@ namespace MyModeTest
             for (int i = 0; i < pool.Count; i++)
             {
                 ScanSiteEntry e = pool[i];
-                if (e == null || e.sitePart == null || e.weight <= 0f)
+                if (!EntryAvailable(e))
                     continue;
                 if (requireGuards && !e.factionGuards && !e.mechGuardFallback)
                     continue;
@@ -408,6 +413,16 @@ namespace MyModeTest
                     return e;
             }
             return null;
+        }
+
+        /// <summary>条目是否可入池：权重 > 0、sitePart 有效、设置开关满足（Boss 巢穴受 bossEncountersEnabled 门控）。</summary>
+        private static bool EntryAvailable(ScanSiteEntry e)
+        {
+            if (e == null || e.sitePart == null || e.weight <= 0f)
+                return false;
+            if (e.requiresBossEncounters && !MMTSettings.BossEncountersEnabled)
+                return false;
+            return true;
         }
 
         /// <summary>生成据点：副本类走派系守卫路径，其余走旧版机械集群路径（§1.2 威胁 = 基础 × 类型系数 × 档位系数）。</summary>

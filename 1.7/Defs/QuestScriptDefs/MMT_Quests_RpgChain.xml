@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 任务链「远古军械库」（mmt-rpg-design.md §3.3）：三幕全部由 QuestPart_MMTAncientArmory 阶段机驱动，
+       触发由 GameComponent_RpgQuestChain 控制（扫描完成 20% / 财富 15 万+ 每日 10%，30 天冷却可重复）。
+       rootSelectionWeight=0：不走原版随机任务池，仅由任务系统主动生成。 -->
+  <QuestScriptDef>
+    <defName>MMT_Quest_AncientArmory</defName>
+    <label>远古军械库</label>
+    <description>深空扫描截获的加密信号指向一座远古军械库：清理试炼副本收集职业凭证碎片，拼出远古守卫巢穴的坐标，清剿巢穴取回传说装备。</description>
+    <autoAccept>true</autoAccept>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <root Class="MyModeTest.QuestNode_Root_MMTAncientArmory"/>
+  </QuestScriptDef>
+</Defs>
