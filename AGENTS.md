@@ -120,6 +120,7 @@ python tools/build_mmt_items_doc.py         # → docs/mmt-items.md（非武器�
 - Def 文件按 `MMT_<类别>_<链名>.xml` 命名（如 `MMT_Recipes_Parts.xml`、`MMT_Buildings_ElectricWood.xml`、`MMT_Research_Science.xml`）。
 - label/description 用中文，直接写死在 Def 中。
 - 贴图约定：多状态物品贴图按 `名称_a/_b/_c.png` 放在同名子目录（如 `MMT_Ore/MMT_CopperOre/MMT_CopperOre_a.png`），texPath 指向子目录路径；建筑贴图带朝向与遮罩（`_east/_north/_south`，遮罩为方向字母后直接接 `m`，如 `MMT_EConcreteMixer/MMT_EConcreteMixer_eastm.png`；单图建筑为 `<名>.png` + `<名>_m.png`）。贴图设计细则见 `.claude/skills/rw-texture-design/SKILL.md`。
+- 贴图工作流（占位图先行）：新增贴图时先用 Pillow 程序占位图落盘，让 Def 接线与 validate 套件先行通过、游戏内可用；同批在 `docs/mmt-<主题>-texture-prompts.md` 写好 AI 出图提示词文档（全局风格前缀 + 每条目英文提示词 + 负面词 + 尺寸/遮罩/后处理验收清单，格式参照 `docs/mmt-dungeon-texture-prompts.md`、`docs/mmt-fireboss-texture-prompts.md`）；AI 终稿回来后直接覆盖同名占位图（Def/代码零改动），并在提示词文档顶部标注已出图状态。
 - MMT 与 HSK 的 defName 映射维护在 `tools/data/mmt_hsk_alias.json`——新增与 HSK 对应的资源/建筑/武器时同步更新该表（`build_mmt_chains_compare.js` 与三个手册脚本共用）。
 - 提交信息使用中文 conventional commits（如 `feat: 添加零件链研究与配方`）。
 - 整体代码审查只在用户主动要求时才执行。

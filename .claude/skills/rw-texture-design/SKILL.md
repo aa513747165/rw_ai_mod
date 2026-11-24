@@ -22,6 +22,7 @@ description: 为本 Mod（MMT，RimWorld 1.7）设计/生成物品与建筑贴�
 
 ## 工作流程
 
+0. **占位图定位**：本仓库约定「占位图先行」——AI 美术不在回路时，先按本流程用 Pillow 出程序占位图让 Def/验证先行通过；同时必须在 `docs/mmt-<主题>-texture-prompts.md` 写好 AI 出图提示词文档（全局风格前缀 + 每条目英文提示词 + 负面词 + 尺寸/遮罩/验收清单，格式参照 `docs/mmt-dungeon-texture-prompts.md`、`docs/mmt-fireboss-texture-prompts.md`）。AI 终稿回来后直接覆盖同名占位图（Def 零改动），并在提示词文档顶部标注已出图。
 1. **定位参考**：先找同类已有贴图作基准。优先看本仓库 `1.7/Textures` 中同链贴图（如工作台类看 `MMT_ElectricGrinder`、`MMT_AdvWeaponCraftingTable`），再看 HSK 对应建筑的贴图。用 ReadMediaFile 查看 2-3 张参考图，记录：轮廓粗细、主色板、明暗方向（RimWorld 惯例光源在上方偏左）、地面投影。
 2. **确定规格**：确认建筑格数（drawSize）与朝向需求（是否 Graphic_Multi）、是否需遮罩染色、物品是否多状态。据此确定文件名清单。
 3. **生成贴图**：用 Python + Pillow 纯代码绘制（不依赖图像生成 API，可复现、可迭代）：

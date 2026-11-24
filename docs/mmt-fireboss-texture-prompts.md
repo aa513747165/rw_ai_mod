@@ -1,5 +1,7 @@
 # MMT 熔火元素 Boss — AI 出图提示词集（喂图模型用）
 
+> **状态：已出图完成**（2026-11-24，AI 终稿已覆盖全部 6 张占位图并通过 `validate_new.py fireboss`）。本文档保留作风格基准与后续返工依据。
+
 > 与 `mmt-dungeon-texture-prompts.md`、`mmt-class-texture-prompts.md`、`mmt-endgame-texture-prompts.md` 同格式：把熔火元素领主 Boss 落地时**用程序（Pillow）生成顶替的贴图**展开成可直接喂给图像生成 AI 的英文提示词。
 > 用法：**完整提示词 = 全局风格前缀 + 条目提示词 + 负面词**。
 
