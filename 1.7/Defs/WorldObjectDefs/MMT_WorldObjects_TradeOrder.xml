@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 贸易订单据点：接受商队订单后，商队离图在殖民地附近生成的等待交易点（纯世界交互，无地图）。
+       远行队右键交付订单货物换白银；订单超时/提供人死亡由 GameComponent_MMTTradeOrders 销毁。
+       图标复用原版 GenericSite（与折跃临时落脚点同款已验证路径）。 -->
+  <WorldObjectDef>
+    <defName>MMT_TradeDepot</defName>
+    <label>贸易商队等候点</label>
+    <description>商队成员在此等候殖民地交付订单货物。</description>
+    <worldObjectClass>MyModeTest.WorldObject_TradeDepot</worldObjectClass>
+    <texture>World/WorldObjects/Sites/GenericSite</texture>
+    <expandingIcon>false</expandingIcon>
+  </WorldObjectDef>
+</Defs>

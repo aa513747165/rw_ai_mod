@@ -126,6 +126,8 @@ namespace MyModeTest
         public bool blackMarketEnabled = true;
         /// <summary>强化材料赏金任务（定居点委托）。</summary>
         public bool materialQuestsEnabled = true;
+        /// <summary>贸易商队订单（到访商队随机成员高价收购订单）。</summary>
+        public bool tradeOrdersEnabled = true;
         /// <summary>据点生成总开关（扫描仪生成据点及后续据点类型）。</summary>
         public bool explorationSitesEnabled = true;
         /// <summary>奇观超载事故（硬核向，默认关）。</summary>
@@ -172,6 +174,11 @@ namespace MyModeTest
         public static bool BreachChargeEnabled
         {
             get { return Instance == null || Instance.breachChargeEnabled; }
+        }
+
+        public static bool EliteBreacherEnabled
+        {
+            get { return Instance == null || Instance.eliteBreacherEnabled; }
         }
 
         public static bool EnergyStormEnabled
@@ -350,6 +357,11 @@ namespace MyModeTest
             get { return Instance == null || Instance.enableApparelToxicCloud; }
         }
 
+        public static bool TradeOrdersEnabled
+        {
+            get { return Instance == null || Instance.tradeOrdersEnabled; }
+        }
+
         // —— 副本/据点便捷读取 ——
 
         public static bool RpgQuestsEnabled
@@ -442,6 +454,7 @@ namespace MyModeTest
             eliteBreacherEnabled = true;
             blackMarketEnabled = true;
             materialQuestsEnabled = true;
+            tradeOrdersEnabled = true;
             explorationSitesEnabled = true;
             wonderOverloadEnabled = false;
             wonderAnniversaryEnabled = true;
@@ -502,6 +515,7 @@ namespace MyModeTest
             Scribe_Values.Look(ref eliteBreacherEnabled, "eliteBreacherEnabled", true);
             Scribe_Values.Look(ref blackMarketEnabled, "blackMarketEnabled", true);
             Scribe_Values.Look(ref materialQuestsEnabled, "materialQuestsEnabled", true);
+            Scribe_Values.Look(ref tradeOrdersEnabled, "tradeOrdersEnabled", true);
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", true);
             Scribe_Values.Look(ref wonderOverloadEnabled, "wonderOverloadEnabled", false);
             Scribe_Values.Look(ref wonderAnniversaryEnabled, "wonderAnniversaryEnabled", true);

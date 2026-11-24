@@ -228,6 +228,8 @@ namespace MyModeTest
             list.CheckboxLabeled("精英爆破手（财富 50 万+ 专职爆破单位）", ref s.eliteBreacherEnabled);
             list.CheckboxLabeled("黑市中间人（高价收购远古合金）", ref s.blackMarketEnabled);
             list.CheckboxLabeled("强化材料赏金任务（定居点委托）", ref s.materialQuestsEnabled);
+            list.CheckboxLabeled("贸易商队订单（到访商队随机成员高价收购）", ref s.tradeOrdersEnabled,
+                "关闭后商队到访不再提供贸易订单（进行中的订单不受影响）。");
             list.CheckboxLabeled("深空扫描据点生成", ref s.explorationSitesEnabled,
                 "关闭后扫描仪不生成新据点（含后续据点类型）。");
             list.CheckboxLabeled("奇观超载事故（硬核向，默认关）", ref s.wonderOverloadEnabled,
