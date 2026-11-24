@@ -38,6 +38,7 @@
              白名单之外自动扫描全库 isFighter 且 combatPower ≥ autoBossMinCombatPower 的单位（原版/Mod Boss 通吃）。 -->
         <bossPawnKindDefNames>
           <li>MMT_BossAncientGuardian</li>
+          <li>MMT_BossFireElementalLord</li>
         </bossPawnKindDefNames>
         <autoBossMinCombatPower>150</autoBossMinCombatPower>
       </li>

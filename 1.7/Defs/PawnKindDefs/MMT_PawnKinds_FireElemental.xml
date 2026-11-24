@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 熔火元素 PawnKindDef：贴图走 lifeStages.bodyGraphicData（Animal 渲染树约定，同原版熊）；
+       技能经 abilities 授予（1.7 原生，Anomaly 实体同款），纯 CD 驱动由 ThinkTree 的
+       JobGiver_AIAbilityFight 施放。入 Boss 池经 XML 白名单登记（BossLair + Boss 召唤器）。 -->
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>MMT_BossFireElementalLord</defName>
+    <label>熔火元素领主</label>
+    <race>MMT_FireElementalLord</race>
+    <combatPower>500</combatPower>
+    <isFighter>true</isFighter>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <abilities>
+      <li>MMT_BossFire_SummonLesser</li>
+      <li>MMT_BossFire_FireRain</li>
+      <li>MMT_BossFire_FlamePillar</li>
+    </abilities>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/FireElemental/MMT_FireElementalLord</texPath>
+          <drawSize>2.4</drawSize>
+          <shadowData>
+            <volume>(0.7, 0.5, 0.5)</volume>
+            <offset>(0, 0, -0.25)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/FireElemental/MMT_FireElementalLord</texPath>
+          <drawSize>2.4</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>MMT_FireElementalLesser</defName>
+    <label>小火元素</label>
+    <race>MMT_FireElementalLesser</race>
+    <combatPower>70</combatPower>
+    <isFighter>true</isFighter>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/FireElemental/MMT_FireElementalLesser</texPath>
+          <drawSize>1.2</drawSize>
+          <shadowData>
+            <volume>(0.35, 0.25, 0.25)</volume>
+            <offset>(0, 0, -0.12)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/FireElemental/MMT_FireElementalLesser</texPath>
+          <drawSize>1.2</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

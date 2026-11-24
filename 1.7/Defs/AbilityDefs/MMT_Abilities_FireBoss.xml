@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 熔火元素领主 Boss 技能（纯 CD 路线，用户指定）：
+       不挂 PsycastBase 父类——无灵能熵/精神力消耗，showPsycastEffects 关闭，
+       节奏完全由 cooldownTicksRange 控制（对照 Anomaly 实体技能 Heatspikes/ConsumeLeap 写法）；
+       aiCanUse + ai_IsOffensive 开启，由 ThinkTree 的 JobGiver_AIAbilityFight 驱动施放。
+       效果全部复用 ClassAbilityEffects.cs 现有桶，零新增 C#。 -->
+
+  <!-- ① 召唤小火元素：限时炮灰（到期自动消失），场上同时最多 6 只。 -->
+  <AbilityDef>
+    <defName>MMT_BossFire_SummonLesser</defName>
+    <label>召唤火元素</label>
+    <description>从胸口的熔岩核心分裂出两只小火元素，投入战斗。小火元素存在约 60 秒后溃散。</description>
+    <iconPath>UI/RoM/summon_demon</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <showPsycastEffects>false</showPsycastEffects>
+    <ai_IsOffensive>true</ai_IsOffensive>
+    <aiCanUse>true</aiCanUse>
+    <cooldownTicksRange>2700</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>1.0</warmupTime>
+      <range>24.9</range>
+      <soundCast>MMT_Powerup</soundCast>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSummon">
+        <pawnKindDef>MMT_FireElementalLesser</pawnKindDef>
+        <count>2</count>
+        <durationTicks>3600</durationTicks>
+        <maxActive>6</maxActive>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <!-- ② 火雨：大范围随机落点持续轰击（火焰风暴模式，复用 AoEDamage 脉冲区 + randomStrikes）。 -->
+  <AbilityDef>
+    <defName>MMT_BossFire_FireRain</defName>
+    <label>流星火雨</label>
+    <description>召唤漫天火雨，对目标区域进行 12 轮随机落点轰击，点燃范围内的一切。</description>
+    <iconPath>UI/RoM/firestorm</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <showPsycastEffects>false</showPsycastEffects>
+    <ai_IsOffensive>true</ai_IsOffensive>
+    <aiCanUse>true</aiCanUse>
+    <cooldownTicksRange>3600</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>1.5</warmupTime>
+      <range>24.9</range>
+      <soundCast>MMT_FireBurn</soundCast>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
+        <damageDef>Flame</damageDef>
+        <damageAmount>18</damageAmount>
+        <armorPen>0</armorPen>
+        <radius>6</radius>
+        <pulses>12</pulses>
+        <pulseIntervalTicks>75</pulseIntervalTicks>
+        <randomStrikes>true</randomStrikes>
+        <startFireChance>0.5</startFireChance>
+        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
+      </li>
+    </comps>
+  </AbilityDef>
+
+  <!-- ③ 火柱：窄范围定点三连喷，高伤高穿甲，必点燃。 -->
+  <AbilityDef>
+    <defName>MMT_BossFire_FlamePillar</defName>
+    <label>熔岩火柱</label>
+    <description>在目标脚下喷起一道熔岩火柱，连续喷发三次，小范围内造成高额火焰伤害并必定点燃地面。</description>
+    <iconPath>UI/RoM/sunfire</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <showPsycastEffects>false</showPsycastEffects>
+    <ai_IsOffensive>true</ai_IsOffensive>
+    <aiCanUse>true</aiCanUse>
+    <cooldownTicksRange>900</cooldownTicksRange>
+    <verbProperties>
+      <warmupTime>0.75</warmupTime>
+      <range>24.9</range>
+      <soundCast>MMT_FireWooshSD</soundCast>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
+        <damageDef>Flame</damageDef>
+        <damageAmount>30</damageAmount>
+        <armorPen>0.35</armorPen>
+        <radius>1.5</radius>
+        <pulses>3</pulses>
+        <pulseIntervalTicks>30</pulseIntervalTicks>
+        <randomStrikes>false</randomStrikes>
+        <startFireChance>0.9</startFireChance>
+        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
+      </li>
+      <li Class="MyModeTest.CompProperties_MMTFleckFX">
+        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
+        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
+      </li>
+    </comps>
+  </AbilityDef>
+</Defs>
