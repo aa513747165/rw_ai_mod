@@ -66,22 +66,19 @@ namespace MyModeTest
 
     // ========== 群体 buff/debuff ==========
 
-    public class CompProperties_MMTGiveHediffAoE : CompProperties_AbilityEffect
+    public class CompProperties_MMTGiveHediffAoE : CompProperties_MMTAoETargetBase
     {
         public HediffDef hediffDef;
-        public float radius = 5f;
-        /// <summary>true=作用于友军（含自己派系），false=作用于敌对。</summary>
-        public bool targetFriendly = true;
-        public bool includeSelf = true;
 
         public CompProperties_MMTGiveHediffAoE()
         {
             compClass = typeof(CompAbilityEffect_MMTGiveHediffAoE);
+            radius = 5f;
         }
     }
 
     /// <summary>对目标点半径内的友/敌 pawn 施加（或刷新）Hediff。</summary>
-    public class CompAbilityEffect_MMTGiveHediffAoE : CompAbilityEffect
+    public class CompAbilityEffect_MMTGiveHediffAoE : CompAbilityEffect_MMTAoETargetBase
     {
         public new CompProperties_MMTGiveHediffAoE Props => (CompProperties_MMTGiveHediffAoE)props;
 
@@ -103,12 +100,11 @@ namespace MyModeTest
 
     // ========== 区域伤害（含多脉冲风暴类） ==========
 
-    public class CompProperties_MMTAoEDamage : CompProperties_AbilityEffect
+    public class CompProperties_MMTAoEDamage : CompProperties_MMTAoETargetBase
     {
         public DamageDef damageDef;
         public int damageAmount = 20;
         public float armorPen = 0f;
-        public float radius = 3f;
         /// <summary>脉冲次数（1=一次性）。</summary>
         public int pulses = 1;
         public int pulseIntervalTicks = 60;
@@ -123,12 +119,32 @@ namespace MyModeTest
         public CompProperties_MMTAoEDamage()
         {
             compClass = typeof(CompAbilityEffect_MMTAoEDamage);
+            radius = 3f;
+            targetFriendly = false;
         }
     }
 
-    public class CompAbilityEffect_MMTAoEDamage : CompAbilityEffect
+    public class CompAbilityEffect_MMTAoEDamage : CompAbilityEffect_MMTAoETargetBase
     {
         public new CompProperties_MMTAoEDamage Props => (CompProperties_MMTAoEDamage)props;
+
+        /// <summary>预览与 PulseWorker 伤害筛选一致：friendlyFire=false 仅跳过同派系。</summary>
+        public override IEnumerable<Pawn> AffectedPawns(LocalTargetInfo target)
+        {
+            Pawn caster = parent.pawn;
+            Map map = caster.MapHeld;
+            if (map == null)
+            {
+                yield break;
+            }
+            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(target.Cell, map, Props.radius, true))
+            {
+                if (thing is Pawn p && !p.Dead && (Props.friendlyFire || p.Faction != caster.Faction))
+                {
+                    yield return p;
+                }
+            }
+        }
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
@@ -289,13 +305,11 @@ namespace MyModeTest
 
     // ========== 治疗 ==========
 
-    public class CompProperties_MMTHeal : CompProperties_AbilityEffect
+    public class CompProperties_MMTHeal : CompProperties_MMTAoETargetBase
     {
         /// <summary>每处伤治疗量。</summary>
         public float healAmount = 10f;
         public int maxInjuries = 3;
-        /// <summary>0=单体目标，&gt;0=以目标点为中心的范围治疗。</summary>
-        public float radius;
         public bool tendBleeding;
         public bool cureInfection;
         public bool cureScar;
@@ -306,7 +320,7 @@ namespace MyModeTest
         }
     }
 
-    public class CompAbilityEffect_MMTHeal : CompAbilityEffect
+    public class CompAbilityEffect_MMTHeal : CompAbilityEffect_MMTAoETargetBase
     {
         public new CompProperties_MMTHeal Props => (CompProperties_MMTHeal)props;
 
@@ -1395,8 +1409,8 @@ namespace MyModeTest
 
     public static class MMTAbilityUtil
     {
-        /// <summary>半径内按阵营筛选 pawn（targetFriendly=true 取同派系，false 取敌对）。</summary>
-        public static IEnumerable<Pawn> PawnsInRadius(IntVec3 center, Map map, float radius, Pawn caster, bool targetFriendly, bool includeSelf)
+        /// <summary>半径内按阵营筛选 pawn（targetFriendly=true 取同派系，false 取敌对）；caster 只需提供派系与敌对关系，可为建筑。</summary>
+        public static IEnumerable<Pawn> PawnsInRadius(IntVec3 center, Map map, float radius, Thing caster, bool targetFriendly, bool includeSelf)
         {
             foreach (Thing thing in GenRadial.RadialDistinctThingsAround(center, map, radius, true))
             {
