@@ -19,12 +19,14 @@ namespace MyModeTest
     {
         public static readonly Color FriendlyRingColor = new Color(0.3f, 1f, 0.3f);
         public static readonly Color HostileRingColor = new Color(1f, 0.3f, 0.3f);
+        /// <summary>最大射程环配色：中性白、低透明度（只是距离参考，不应抢范围圈的视觉焦点）。</summary>
+        public static readonly Color MaxRangeRingColor = new Color(1f, 1f, 1f, 0.3f);
 
         /// <summary>圆形选择框贴图（白图，代码按敌我染色）。仅 SkillDelayedStrike 地面警示圈仍在用。</summary>
         public const string CircleTexPath = "Things/Mote/MMT_TargetCircle";
 
         /// <summary>圆环半宽（格）。固定世界宽度，不随半径缩放（贴图方案环随半径一起放大，大圈粗得离谱）。</summary>
-        private const float RingHalfWidth = 0.055f;
+        private const float RingHalfWidth = 0.08f;
         /// <summary>环内微填充相对环色的 alpha 倍率。</summary>
         private const float FillAlphaFactor = 0.08f;
         private static Material ringMat;
@@ -850,7 +852,7 @@ namespace MyModeTest
                     // 落点最大距离环（以自身为中心）
                     if (demo.range > 0f)
                     {
-                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, new Color(1f, 1f, 1f, 0.6f));
+                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, MMTAoETargetPreview.MaxRangeRingColor);
                     }
                     MMTAoETargetPreview.DrawCircle(fromCenter, demo.radius, MMTAoETargetPreview.RingColor(demo.targetFriendly));
                     if (t.IsValid)
@@ -885,7 +887,7 @@ namespace MyModeTest
                     // 自定义瞄准没有 verb 作 targetingSource，原版最大射程环不会画，这里手画（中性白）
                     if (demo.range > 0f)
                     {
-                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, new Color(1f, 1f, 1f, 0.6f));
+                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, MMTAoETargetPreview.MaxRangeRingColor);
                     }
                     if (!t.IsValid)
                     {
