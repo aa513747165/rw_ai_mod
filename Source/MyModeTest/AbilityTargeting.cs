@@ -29,8 +29,12 @@ namespace MyModeTest
 
         /// <summary>圆环半宽（格）。固定世界宽度，不随半径缩放（贴图方案环随半径一起放大，大圈粗得离谱）。</summary>
         private const float RingHalfWidth = 0.08f;
+        /// <summary>柔边过渡环的半宽（格）：主环外再叠一圈更宽更淡的环，模拟抗锯齿（程序网格硬边锯齿明显）。</summary>
+        private const float RingSoftHalfWidth = 0.17f;
+        /// <summary>柔边环相对主环的 alpha 倍率。</summary>
+        private const float RingSoftAlphaFactor = 0.35f;
         /// <summary>环内微填充相对环色的 alpha 倍率（双面渲染 alpha 会叠加一次，实际观感约为两倍）。</summary>
-        private const float FillAlphaFactor = 0.03f;
+        private const float FillAlphaFactor = 0.08f;
         // 关键坑：同帧多次 Graphics.DrawMesh 共用同一材质时，颜色是引用语义——全部按最后一次
         // 设置的 color 渲染（白射程盘 + 红范围盘同帧 → 全部变成满 alpha 红盘，整屏染色）。
         // 必须逐次走 MaterialPropertyBlock；盘/环再分两个材质实例兜底。
@@ -74,7 +78,7 @@ namespace MyModeTest
             Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, discMat, 0, null, 0, matProps);
         }
 
-        /// <summary>画固定细宽圆环描边（语义同 DrawCircle 的环部，供持续特效复用）。</summary>
+        /// <summary>画固定细宽圆环描边（主环 + 更宽更淡的柔边过渡环抗锯齿；语义同 DrawCircle 的环部，供持续特效复用）。</summary>
         public static void DrawRing(Vector3 pos, float radius, Color color)
         {
             if (radius <= 0f)
@@ -82,9 +86,14 @@ namespace MyModeTest
                 return;
             }
             EnsureMats();
+            Color soft = color;
+            soft.a *= RingSoftAlphaFactor;
+            ringMat.color = soft;
+            matProps.SetColor("_Color", soft);
+            Graphics.DrawMesh(GetRingMesh(radius, RingSoftHalfWidth), pos, Quaternion.identity, ringMat, 0, null, 0, matProps);
             ringMat.color = color;
             matProps.SetColor("_Color", color);
-            Graphics.DrawMesh(GetRingMesh(radius), pos, Quaternion.identity, ringMat, 0, null, 0, matProps);
+            Graphics.DrawMesh(GetRingMesh(radius, RingHalfWidth), pos, Quaternion.identity, ringMat, 0, null, 0, matProps);
         }
 
         private static void EnsureMats()
@@ -103,21 +112,21 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>圆环网格（以原点为中心的环形三角带，内外半径差固定）。按 0.05 格精度缓存。</summary>
-        private static Mesh GetRingMesh(float radius)
+        /// <summary>圆环网格（以原点为中心的环形三角带，内外半径差固定）。按 0.05 格精度缓存（key 含半宽档）。</summary>
+        private static Mesh GetRingMesh(float radius, float halfWidth)
         {
-            int key = Mathf.RoundToInt(radius * 20f);
+            int key = Mathf.RoundToInt(radius * 20f) * 10 + (halfWidth > 0.12f ? 1 : 0);
             if (ringMeshCache.TryGetValue(key, out Mesh cached))
             {
                 return cached;
             }
-            float r = key / 20f;
+            float r = Mathf.RoundToInt(radius * 20f) / 20f;
             int segments = Mathf.Clamp(Mathf.RoundToInt(r * 10f), 32, 180);
             Vector3[] verts = new Vector3[segments * 2];
             // 双面索引（正反两套三角形），不同着色器的背面剔除约定下都可见
             int[] tris = new int[segments * 12];
-            float rIn = Mathf.Max(0.01f, r - RingHalfWidth);
-            float rOut = r + RingHalfWidth;
+            float rIn = Mathf.Max(0.01f, r - halfWidth);
+            float rOut = r + halfWidth;
             for (int i = 0; i < segments; i++)
             {
                 float ang = i * Mathf.PI * 2f / segments;
