@@ -111,8 +111,9 @@ namespace MyModeTest
         }
     }
 
-    /// <summary>品质产出 XP：糟糕 2 → 传奇 75（与品质暴击补丁并存）。</summary>
-    [HarmonyPatch(typeof(QualityUtility), nameof(QualityUtility.GenerateQualityCreatedByPawn), typeof(Pawn), typeof(SkillDef))]
+    /// <summary>品质产出 XP：糟糕 2 → 传奇 75（与品质暴击补丁并存）。
+    /// 1.7 方法签名：GenerateQualityCreatedByPawn(Pawn, SkillDef, bool consumeInspiration)。</summary>
+    [HarmonyPatch(typeof(QualityUtility), nameof(QualityUtility.GenerateQualityCreatedByPawn), typeof(Pawn), typeof(SkillDef), typeof(bool))]
     public static class Patch_TalentQualityXp
     {
         public static void Postfix(Pawn pawn, QualityCategory __result)
@@ -245,13 +246,14 @@ namespace MyModeTest
             return AccessTools.Method(typeof(Pawn_PsychicEntropyTracker), "TryAddEntropy");
         }
 
-        public static void Postfix(Pawn_PsychicEntropyTracker __instance, float amount, Pawn ___pawn)
+        // 1.7 参数名由 amount 改为 value（Harmony 按名绑定，名字错了补丁注册失败）
+        public static void Postfix(Pawn_PsychicEntropyTracker __instance, float value, Pawn ___pawn)
         {
-            if (!MMTSettings.PawnProgressEnabled || amount <= 0f || !TalentXpUtil.PassCooldown(___pawn?.thingIDNumber + ":entropy", 2500))
+            if (!MMTSettings.PawnProgressEnabled || value <= 0f || !TalentXpUtil.PassCooldown(___pawn?.thingIDNumber + ":entropy", 2500))
             {
                 return;
             }
-            CompPawnProgress.Get(___pawn)?.AddXp(Mathf.Clamp(amount * 0.25f, 2f, 25f));
+            CompPawnProgress.Get(___pawn)?.AddXp(Mathf.Clamp(value * 0.25f, 2f, 25f));
         }
     }
 

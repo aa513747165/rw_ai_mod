@@ -6,6 +6,7 @@
   <HediffDef>
     <defName>MMT_SummonTimer</defName>
     <label>限时召唤</label>
+    <description>召唤物限时存在的内部标记，到期自动消失。</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>

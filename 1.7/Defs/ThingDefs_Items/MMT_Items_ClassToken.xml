@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 职业凭证（mmt-class-design.md §5.1）：全职业通用单种凭证。
+  <!-- 职业仪式随身组：挂上后凭证/能量结晶在家园地图也有右键"拾取"入背包选项
+       （原版 FloatMenuOptionProvider_PickUpItem 要求 orderedTakeGroup.max>0，否则家园图只能搬运入库）。
+       max 取 25，覆盖升阶最大消耗 能量结晶×20（PawnClassUtil.CrystalCost tier3）。 -->
+  <OrderedTakeGroupDef>
+    <defName>MMT_ClassRitual</defName>
+    <label>职业仪式材料</label>
+    <max>25</max>
+  </OrderedTakeGroupDef>
+
+  <!-- 职业凭证（mmt-class-design.md §5.1）：全职业通用单种凭证。按"物品"对待（不计入顶部资源面板、可右键拾取入背包）。
        来源：副本据点掉落（职业圣殿/Boss 巢穴，mmt-dungeon-design.md §3.2）、
        职业凭证碎片 3 合 1（MMT_CraftClassToken，装备强化台）、Dev 模式发放（DebugAction"MMT 职业/发放职业凭证"）。 -->
   <ThingDef ParentName="ResourceBase">
@@ -13,6 +22,8 @@
     </graphicData>
     <tickerType>Rare</tickerType>
     <techLevel>Spacer</techLevel>
+    <resourceReadoutPriority>Uncounted</resourceReadoutPriority>
+    <orderedTakeGroup>MMT_ClassRitual</orderedTakeGroup>
     <statBases>
       <MarketValue>1500</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>
@@ -21,5 +32,8 @@
       <Beauty>2</Beauty>
     </statBases>
     <stackLimit>5</stackLimit>
+    <thingCategories>
+      <li>MMT_ClassItemsCat</li>
+    </thingCategories>
   </ThingDef>
 </Defs>

@@ -272,8 +272,22 @@ namespace MyModeTest
                     return false;
                 }
             }
-            if ((node.nodeType == TalentNodeType.Skill || node.nodeType == TalentNodeType.SkillUpgrade)
-                && !string.IsNullOrEmpty(node.classBaseName))
+            if (node.nodeType == TalentNodeType.ClassUnlock && !string.IsNullOrEmpty(node.familyKey))
+            {
+                // 通用树职业 Keystone 互斥：已就职、或已点选其它家族 Keystone 后，其余职业不可再选（洗点可重选）
+                if (comp.classDef != null)
+                {
+                    failReason = "已就职，无法改选其它职业";
+                    return false;
+                }
+                if (comp.unlockedFamilies.Count > 0 && !comp.unlockedFamilies.Contains(node.familyKey))
+                {
+                    failReason = "已选择其它职业道路";
+                    return false;
+                }
+            }
+            // 职业限定节点（印记 Notable/技能 Skill/强化 SkillUpgrade 均带 classBaseName）：仅对应职业可点
+            if (!string.IsNullOrEmpty(node.classBaseName))
             {
                 string myClass = comp.classDef != null ? PawnClassUtil.BaseNameOf(comp.classDef) : null;
                 if (myClass != node.classBaseName)

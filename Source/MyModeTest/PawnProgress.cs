@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using LudeonTK;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -365,6 +366,41 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>Dev 模式快速刷历练（mmt-rpg-design.md 调试便利）。</summary>
+    public static class ProgressDebugActions
+    {
+        [DebugAction("MMT 职业", "历练升 1 级（选中者）", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LevelUpOnce(Pawn pawn)
+        {
+            CompPawnProgress comp = CompPawnProgress.Get(pawn);
+            if (comp == null || comp.level >= CompPawnProgress.MaxLevel)
+            {
+                return;
+            }
+            // AddXp 会乘全局倍率，除以倍率保证恰好升 1 级（倍率异常时兜底 1）
+            float mult = Math.Max(0.01f, MMTSettings.XpMultiplier);
+            float need = (CompPawnProgress.XpForLevel(comp.level) - comp.xp) / mult + 1f;
+            comp.AddXp(need);
+        }
+
+        [DebugAction("MMT 职业", "历练直升满级（选中者）", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LevelToMax(Pawn pawn)
+        {
+            CompPawnProgress comp = CompPawnProgress.Get(pawn);
+            if (comp == null)
+            {
+                return;
+            }
+            float mult = Math.Max(0.01f, MMTSettings.XpMultiplier);
+            float need = 0f;
+            for (int n = comp.level; n < CompPawnProgress.MaxLevel; n++)
+            {
+                need += CompPawnProgress.XpForLevel(n);
+            }
+            comp.AddXp((need - comp.xp) / mult + 1f);
+        }
+    }
+
     [DefOf]
     public static class MMT_ProgressDefOf
     {
@@ -472,10 +508,10 @@ namespace MyModeTest
 
     /// <summary>
     /// 品质暴击（mmt-class-design.md §5.3，perk MMT_Perk_Masterwork）：
-    /// 制作成品 10% 概率品质 +1 档。spike 已核实 1.7 品质生成出口为
-    /// QualityUtility.GenerateQualityCreatedByPawn(Pawn, SkillDef)。
+    /// 制作成品 10% 概率品质 +1 档。1.7 品质生成出口为
+    /// QualityUtility.GenerateQualityCreatedByPawn(Pawn, SkillDef, bool consumeInspiration)。
     /// </summary>
-    [HarmonyPatch(typeof(QualityUtility), nameof(QualityUtility.GenerateQualityCreatedByPawn), typeof(Pawn), typeof(SkillDef))]
+    [HarmonyPatch(typeof(QualityUtility), nameof(QualityUtility.GenerateQualityCreatedByPawn), typeof(Pawn), typeof(SkillDef), typeof(bool))]
     public static class Patch_MasterworkQualityCrit
     {
         public static void Postfix(Pawn pawn, ref QualityCategory __result)

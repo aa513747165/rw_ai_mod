@@ -11,6 +11,8 @@
     </graphicData>
     <tickerType>Rare</tickerType>
     <techLevel>Spacer</techLevel>
+    <!-- 升阶材料为"随身携带"制（导师台 ConsumeFromInventory）：挂随身组使其在家园图可右键拾取入背包 -->
+    <orderedTakeGroup>MMT_ClassRitual</orderedTakeGroup>
     <statBases>
       <MarketValue>60</MarketValue>
       <DeteriorationRate>0</DeteriorationRate>

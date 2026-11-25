@@ -146,4 +146,11 @@
     <parent>ItemsMisc</parent>
     <iconPath>Things/Building/Misc/MMT_ChargingStation</iconPath>
   </ThingCategoryDef>
+  <!-- 职业物品聚合：职业凭证/凭证碎片归入此类，否则无 thingCategories 的物品不会出现在储存筛选里 -->
+  <ThingCategoryDef>
+    <defName>MMT_ClassItemsCat</defName>
+    <label>职业物品</label>
+    <parent>Manufactured</parent>
+    <iconPath>Things/Item/MMT/MMT_ClassToken</iconPath>
+  </ThingCategoryDef>
 </Defs>

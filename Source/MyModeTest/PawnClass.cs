@@ -309,6 +309,11 @@ namespace MyModeTest
                 pending.Remove(selPawn);
                 Messages.Message(selPawn.LabelShort + " 当前无法接受作业（征召/倒地/其他强制作业中）", parent, MessageTypeDefOf.RejectInput, false);
             }
+            else
+            {
+                Messages.Message(selPawn.LabelShort + " 前往职业导师台进行" + (tier == 1 ? "就职" : "升阶") + "仪式…",
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+            }
         }
 
         /// <summary>作业到达：校验并消耗材料，执行就职/升阶。</summary>
@@ -316,6 +321,7 @@ namespace MyModeTest
         {
             if (!pending.TryGetValue(pawn, out string request))
             {
+                Log.Warning("[MMT] 升阶作业到达但无待执行请求（pawn=" + pawn.LabelShort + "，可能作业被重派或存档重载）");
                 return;
             }
             pending.Remove(pawn);
@@ -325,6 +331,8 @@ namespace MyModeTest
             CompPawnProgress comp = CompPawnProgress.Get(pawn);
             if (info == null || comp == null)
             {
+                Log.Warning("[MMT] 升阶校验失败：info=" + (info == null ? "null(" + baseName + ")" : "ok")
+                    + " comp=" + (comp == null ? "null" : "ok"));
                 return;
             }
             HediffDef newDef = DefDatabase<HediffDef>.GetNamedSilentFail(info.HediffDefName(tier));
@@ -343,6 +351,7 @@ namespace MyModeTest
             {
                 if (PawnClassUtil.CurrentTier(pawn) != 0)
                 {
+                    Messages.Message(pawn.LabelShort + " 已就职，无法重复就职", pawn, MessageTypeDefOf.RejectInput, false);
                     return;
                 }
                 if (!PawnClassUtil.ConsumeFromInventory(pawn, MMT_ClassMentorDefOf.MMT_ClassToken, 1))
@@ -353,8 +362,11 @@ namespace MyModeTest
             }
             else
             {
-                if (PawnClassUtil.CurrentTier(pawn) != tier - 1)
+                int curTier = PawnClassUtil.CurrentTier(pawn);
+                if (curTier != tier - 1)
                 {
+                    Messages.Message(pawn.LabelShort + " 阶位校验失败（当前 " + curTier + " 阶，需 " + (tier - 1) + " 阶），升阶取消",
+                        pawn, MessageTypeDefOf.RejectInput, false);
                     return;
                 }
                 if (!PawnClassUtil.ConsumeFromInventory(pawn, MMT_ClassMentorDefOf.MMT_EnergyCrystal, PawnClassUtil.CrystalCost(tier)))
@@ -376,7 +388,15 @@ namespace MyModeTest
             // 职业启蒙：无灵能链接者自动觉醒 1 级（mmt-class-design.md §5.2，spike 已核实 API）
             if (tier == 1 && !pawn.HasPsylink)
             {
+                // 1.7 的 Hediff_Psylink.ChangeLevel → TryGiveAbilityOfLevel 会从全 def 池
+                // （含 MMT 职业技能，均为 level 1 Psycast）随机白送一个同级技能；
+                // MMT 技能只走天赋树，故快照觉醒前技能列表，事后撤销该随机授予。
+                List<AbilityDef> before = pawn.abilities?.abilities?.Select(a => a.def).ToList() ?? new List<AbilityDef>();
                 PawnUtility.ChangePsylinkLevel(pawn, 1, false);
+                foreach (AbilityDef granted in pawn.abilities.abilities.Select(a => a.def).Except(before).ToList())
+                {
+                    pawn.abilities.RemoveAbility(granted);
+                }
                 Messages.Message(pawn.LabelShort + " 在职业启蒙中觉醒了灵能链接！", pawn, MessageTypeDefOf.PositiveEvent);
             }
             Messages.Message(pawn.LabelShort + (tier == 1 ? " 就职为「" : " 晋升为「") + newDef.LabelCap + "」",
@@ -389,7 +409,9 @@ namespace MyModeTest
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
+            // 仪式只是站到台边，不操作建筑；不预定可避免导师台被其他作业/残留预定占用时
+            // 升阶作业静默失败（TryTakeOrderedJob 成功但开工即 Errored，无任何提示）。
+            return true;
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -404,7 +426,13 @@ namespace MyModeTest
             finish.initAction = delegate
             {
                 Building bench = job.targetA.Thing as Building;
-                bench?.GetComp<CompClassMentor>()?.CompleteAttune(pawn);
+                CompClassMentor mentor = bench?.GetComp<CompClassMentor>();
+                if (mentor == null)
+                {
+                    Log.Warning("[MMT] 升阶仪式完成 but 导师台/comp 为空（bench=" + (job.targetA.Thing?.LabelShort ?? "null") + "）");
+                    return;
+                }
+                mentor.CompleteAttune(pawn);
             };
             finish.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return finish;
