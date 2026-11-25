@@ -102,8 +102,10 @@ namespace MyModeTest
         private int ticksUntilPulse;
         private bool loadedFromSave;
 
-        // 圆盘材质按贴图全局共享（Graphics.DrawMesh 提交即读当前颜色，逐调用染色即可）
+        // 圆盘材质按贴图全局共享；同帧多次 DrawMesh 共材质时颜色是引用语义（全部按最后一次
+        // 设置渲染——三层旋转盘同帧三色会被压成同一色），必须逐次走 MaterialPropertyBlock 传色
         private static readonly Dictionary<string, Material> sharedMats = new Dictionary<string, Material>();
+        private static MaterialPropertyBlock matProps;
 
         public void Setup(Thing caster, MMTGroundZoneParams p)
         {
@@ -215,7 +217,7 @@ namespace MyModeTest
             map.flecks.CreateFleck(data);
         }
 
-        /// <summary>自绘气雾：三层贴图圆盘反向慢速旋转 + 呼吸透明度（共享材质，逐调用染色）。
+        /// <summary>自绘气雾：三层贴图圆盘反向慢速旋转 + 呼吸透明度（共享材质，逐次 MaterialPropertyBlock 传色）。
         /// 贴图已预乘黑底，加法系着色器下按形状衰减；RGB 与 alpha 同步缩放，两种混合模式明暗都受控。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
@@ -227,6 +229,10 @@ namespace MyModeTest
             if (mat == null)
             {
                 return;
+            }
+            if (matProps == null)
+            {
+                matProps = new MaterialPropertyBlock();
             }
             int elapsed = durationTotal - ticksLeft;
             float fade = Mathf.Clamp01(elapsed / 20f) * Mathf.Clamp01(ticksLeft / 40f);
@@ -244,8 +250,9 @@ namespace MyModeTest
                 color.b *= k;
                 color.a *= k;
                 mat.color = color;
+                matProps.SetColor("_Color", color);
                 Graphics.DrawMesh(MeshPool.plane10,
-                    Matrix4x4.TRS(pos, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(size, 1f, size)), mat, 0);
+                    Matrix4x4.TRS(pos, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(size, 1f, size)), mat, 0, null, 0, matProps);
             }
         }
     }
