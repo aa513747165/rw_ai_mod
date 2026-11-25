@@ -211,16 +211,9 @@ namespace MyModeTest
                 }
                 discMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
             }
-            int elapsed = auraParams.durationTicks - ticksLeft;
-            float k = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f)
-                * (0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f));
-            Color color = auraParams.tint;
-            float kb = k * DiscBaseBrightness;
-            color.r *= kb;
-            color.g *= kb;
-            color.b *= kb;
-            color.a *= k * DiscBaseOpacity;
-            discMat.color = color;
+            // 实验：原贴图直显不作任何处理（无染色、无淡入淡出/呼吸、无 RGB/alpha 缩放），
+            // 看贴图在 TransparentPostLight 下的原生观感再决定后续处理方向
+            discMat.color = Color.white;
             // 高度取小人层（身体中心），略高于 Pawn 层避免与本体闪面；DrawPos 平滑跟随移动
             Vector3 pos = follow.DrawPos;
             pos.y = AltitudeLayer.Pawn.AltitudeFor() + 0.1f;
