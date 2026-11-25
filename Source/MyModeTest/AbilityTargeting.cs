@@ -531,6 +531,8 @@ namespace MyModeTest
         private LocalTargetInfo castingTarget;
         private int castTicksLeft;
         private int castTicksTotal;
+        /// <summary>pawn 读条期间的引导姿态（占用施法者原地不动；建筑不用）。</summary>
+        private Stance_Busy channelStance;
         /// <summary>群体传送：第一段圈选已确认、等待第二段落点瞄准的条目。</summary>
         private MMTSkillDemoEntry pendingTeleportDemo;
 
@@ -780,6 +782,11 @@ namespace MyModeTest
                 },
                 highlightAction: delegate(LocalTargetInfo t)
                 {
+                    // 落点最大距离环（以自身为中心）
+                    if (demo.range > 0f)
+                    {
+                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, new Color(1f, 1f, 1f, 0.6f));
+                    }
                     MMTAoETargetPreview.DrawCircle(fromCenter, demo.radius, MMTAoETargetPreview.RingColor(demo.targetFriendly));
                     if (t.IsValid)
                     {
@@ -810,6 +817,11 @@ namespace MyModeTest
                 delegate(LocalTargetInfo t) { FireDemo(demo, t); },
                 highlightAction: delegate(LocalTargetInfo t)
                 {
+                    // 自定义瞄准没有 verb 作 targetingSource，原版最大射程环不会画，这里手画（中性白）
+                    if (demo.range > 0f)
+                    {
+                        MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, new Color(1f, 1f, 1f, 0.6f));
+                    }
                     if (!t.IsValid)
                     {
                         return;
@@ -933,6 +945,11 @@ namespace MyModeTest
                 castingTarget = target;
                 castTicksTotal = Mathf.Max(1, demo.castSeconds.SecondsToTicks());
                 castTicksLeft = castTicksTotal;
+                // pawn 读条期间挂引导作业原地定身（占用施法者，移动/下令/倒地即打断施法；建筑不需要）
+                if (castTicksLeft > 1 && parent is Pawn pawn)
+                {
+                    channelStance = MMTBeamUtil.StartChannel(pawn, target.IsValid ? target : new LocalTargetInfo(parent), castTicksLeft);
+                }
                 if (demo.castSeconds <= 0f)
                 {
                     ExecuteShot();
@@ -957,6 +974,14 @@ namespace MyModeTest
             base.CompTick();
             if (castingDemo == null)
             {
+                return;
+            }
+            // 引导被打断（移动/被下令/倒地等）：取消读条
+            if (channelStance != null && MMTBeamUtil.ChannelBroken(parent as Pawn, channelStance))
+            {
+                channelStance = null;
+                castingDemo = null;
+                Messages.Message("【MMT】施法被打断！", parent, MessageTypeDefOf.RejectInput, false);
                 return;
             }
             castTicksLeft--;
@@ -994,6 +1019,12 @@ namespace MyModeTest
             MMTSkillDemoEntry demo = castingDemo;
             LocalTargetInfo target = castingTarget;
             castingDemo = null;
+            // 读条结束：结束引导姿态，让小人恢复正常
+            if (channelStance != null && parent is Pawn pawn)
+            {
+                MMTBeamUtil.EndChannel(pawn, channelStance);
+                channelStance = null;
+            }
             if (demo == null || parent.Destroyed || parent.Map == null)
             {
                 return;
