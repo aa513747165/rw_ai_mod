@@ -144,10 +144,11 @@ namespace MyModeTest
         private int ticksLeft = -1;
         private int ticksUntilPulse;
         private Material discMat;
-        /// <summary>圆盘整体不透明度上限（淡入淡出/呼吸脉冲之前的基准）。贴图透明区已预乘黑底，
-        /// 加法系着色器不会泛光。取值历程：0.28（材质 bug 期间遗留，隐形）→ 0.9（符文硬环太扎眼）
-        /// → 0.5（低层光盘只作柔和衬底，不抢小人本体）。</summary>
-        private const float DiscBaseOpacity = 0.5f;
+        /// <summary>圆盘 alpha 上限（透明度基准，越小越透）。</summary>
+        private const float DiscBaseOpacity = 0.3f;
+        /// <summary>圆盘 RGB 亮度基准（与 alpha 解耦：低透明 + 高亮度 = 发光通透感；
+        /// 等比缩放会随 alpha 一起变暗成泥浆色——TransparentPostLight 是 alpha 混合）。</summary>
+        private const float DiscBaseBrightness = 0.9f;
 
         /// <summary>1.7 AttachableThing 抽象成员；光环不可选，仅调试可见。</summary>
         public override string InspectStringAddon => "技能光环（演示实体）";
@@ -212,12 +213,13 @@ namespace MyModeTest
             }
             int elapsed = auraParams.durationTicks - ticksLeft;
             float k = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f)
-                * (0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f)) * DiscBaseOpacity;
+                * (0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f));
             Color color = auraParams.tint;
-            color.r *= k;
-            color.g *= k;
-            color.b *= k;
-            color.a *= k;
+            float kb = k * DiscBaseBrightness;
+            color.r *= kb;
+            color.g *= kb;
+            color.b *= kb;
+            color.a *= k * DiscBaseOpacity;
             discMat.color = color;
             // 高度取小人层（身体中心），略高于 Pawn 层避免与本体闪面；DrawPos 平滑跟随移动
             Vector3 pos = follow.DrawPos;
