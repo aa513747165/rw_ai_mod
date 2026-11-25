@@ -28,9 +28,9 @@ namespace MyModeTest
         public const string CircleTexPath = "Things/Mote/MMT_TargetCircle";
 
         /// <summary>圆环半宽（格）。固定世界宽度，不随半径缩放（贴图方案环随半径一起放大，大圈粗得离谱）。</summary>
-        private const float RingHalfWidth = 0.08f;
+        private const float RingHalfWidth = 0.013f;
         /// <summary>柔边过渡环的半宽（格）：主环外再叠一圈更宽更淡的环，模拟抗锯齿（程序网格硬边锯齿明显）。</summary>
-        private const float RingSoftHalfWidth = 0.17f;
+        private const float RingSoftHalfWidth = 0.06f;
         /// <summary>柔边环相对主环的 alpha 倍率。</summary>
         private const float RingSoftAlphaFactor = 0.35f;
         /// <summary>环内微填充相对环色的 alpha 倍率（双面渲染 alpha 会叠加一次，实际观感约为两倍）。</summary>
