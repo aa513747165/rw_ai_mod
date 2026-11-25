@@ -31,7 +31,12 @@ namespace MyModeTest
         private const float RingHalfWidth = 0.08f;
         /// <summary>环内微填充相对环色的 alpha 倍率（双面渲染 alpha 会叠加一次，实际观感约为两倍）。</summary>
         private const float FillAlphaFactor = 0.03f;
+        // 关键坑：同帧多次 Graphics.DrawMesh 共用同一材质时，颜色是引用语义——全部按最后一次
+        // 设置的 color 渲染（白射程盘 + 红范围盘同帧 → 全部变成满 alpha 红盘，整屏染色）。
+        // 必须逐次走 MaterialPropertyBlock；盘/环再分两个材质实例兜底。
+        private static Material discMat;
         private static Material ringMat;
+        private static MaterialPropertyBlock matProps;
         private static readonly Dictionary<int, Mesh> ringMeshCache = new Dictionary<int, Mesh>();
         private static readonly Dictionary<int, Mesh> fillMeshCache = new Dictionary<int, Mesh>();
 
@@ -63,9 +68,10 @@ namespace MyModeTest
             {
                 return;
             }
-            EnsureRingMat();
-            ringMat.color = color;
-            Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, ringMat, 0);
+            EnsureMats();
+            discMat.color = color;
+            matProps.SetColor("_Color", color);
+            Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, discMat, 0, null, 0, matProps);
         }
 
         /// <summary>画固定细宽圆环描边（语义同 DrawCircle 的环部，供持续特效复用）。</summary>
@@ -75,16 +81,25 @@ namespace MyModeTest
             {
                 return;
             }
-            EnsureRingMat();
+            EnsureMats();
             ringMat.color = color;
-            Graphics.DrawMesh(GetRingMesh(radius), pos, Quaternion.identity, ringMat, 0);
+            matProps.SetColor("_Color", color);
+            Graphics.DrawMesh(GetRingMesh(radius), pos, Quaternion.identity, ringMat, 0, null, 0, matProps);
         }
 
-        private static void EnsureRingMat()
+        private static void EnsureMats()
         {
+            if (discMat == null)
+            {
+                discMat = new Material(ShaderDatabase.Transparent) { mainTexture = BaseContent.WhiteTex };
+            }
             if (ringMat == null)
             {
                 ringMat = new Material(ShaderDatabase.Transparent) { mainTexture = BaseContent.WhiteTex };
+            }
+            if (matProps == null)
+            {
+                matProps = new MaterialPropertyBlock();
             }
         }
 
