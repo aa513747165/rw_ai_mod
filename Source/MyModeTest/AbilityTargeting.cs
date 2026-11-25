@@ -27,8 +27,8 @@ namespace MyModeTest
 
         /// <summary>圆环半宽（格）。固定世界宽度，不随半径缩放（贴图方案环随半径一起放大，大圈粗得离谱）。</summary>
         private const float RingHalfWidth = 0.08f;
-        /// <summary>环内微填充相对环色的 alpha 倍率。</summary>
-        private const float FillAlphaFactor = 0.08f;
+        /// <summary>环内微填充相对环色的 alpha 倍率（双面渲染 alpha 会叠加一次，实际观感约为两倍）。</summary>
+        private const float FillAlphaFactor = 0.03f;
         private static Material ringMat;
         private static readonly Dictionary<int, Mesh> ringMeshCache = new Dictionary<int, Mesh>();
         private static readonly Dictionary<int, Mesh> fillMeshCache = new Dictionary<int, Mesh>();
