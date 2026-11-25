@@ -143,6 +143,7 @@ namespace MyModeTest
         private MMTAuraParams auraParams;
         private int ticksLeft = -1;
         private int ticksUntilPulse;
+        private Material discMat;
         /// <summary>圆盘整体不透明度上限（淡入淡出/呼吸脉冲之前的基准）。</summary>
         private const float DiscBaseOpacity = 0.28f;
 
@@ -189,27 +190,49 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>画光环：程序圆盘浮在小人身体中心高度（DrawPos 平滑跟随，呼吸脉冲 + 淡入淡出）。
-        /// 弃用贴图圆盘：MMT_AuraDisc 透明区 RGB 也是纯白，TransparentPostLight（加法系）下整个 quad
-        /// 均匀发光、alpha 失效，整屏染成绿/红色块；程序网格 + ShaderDatabase.Transparent 的 alpha 确定生效。</summary>
+        /// <summary>画光环：贴图圆盘浮在小人身体中心高度（DrawPos 平滑跟随，呼吸脉冲 + 淡入淡出）。
+        /// MMT_AuraDisc 已预乘黑底（透明区 RGB=0），加法系着色器下按形状衰减不再整屏泛滥；
+        /// RGB 与 alpha 同步缩放——加法（不看 alpha）与透明混合（不看暗 RGB）两种模式下明暗都受控。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (auraParams == null || follow == null || Map != Find.CurrentMap)
             {
                 return;
             }
+            if (discMat == null)
+            {
+                Texture2D tex = ContentFinder<Texture2D>.Get(auraParams.discTexPath, false);
+                if (tex == null)
+                {
+                    return;
+                }
+                discMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+            }
             int elapsed = auraParams.durationTicks - ticksLeft;
-            float alpha = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f);
-            float pulse = 0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f);
+            float k = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f)
+                * (0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f)) * DiscBaseOpacity;
+            Color color = auraParams.tint;
+            color.r *= k;
+            color.g *= k;
+            color.b *= k;
+            color.a *= k;
+            discMat.color = color;
             // 高度取小人层（身体中心），略高于 Pawn 层避免与本体闪面；DrawPos 平滑跟随移动
             Vector3 pos = follow.DrawPos;
             pos.y = AltitudeLayer.Pawn.AltitudeFor() + 0.1f;
-            Color fill = auraParams.tint;
-            fill.a = alpha * pulse * DiscBaseOpacity * 0.4f;
-            Color rim = auraParams.tint;
-            rim.a = alpha * pulse * DiscBaseOpacity;
-            MMTAoETargetPreview.DrawDisc(pos, auraParams.radius, fill);
-            MMTAoETargetPreview.DrawRing(pos, auraParams.radius, rim);
+            float size = auraParams.radius * 2f;
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(pos, Quaternion.identity, new Vector3(size, 1f, size)), discMat, 0);
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (discMat != null)
+            {
+                Object.Destroy(discMat);
+                discMat = null;
+            }
+            base.Destroy(mode);
         }
     }
 
