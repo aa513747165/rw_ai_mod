@@ -91,13 +91,15 @@ namespace MyModeTest
             return angle <= halfAngleDegrees;
         }
 
-        /// <summary>瞄准期间画锥形预览：两条边界线 + 末端弧线（与实喷同一几何）。 </summary>
+        /// <summary>瞄准期间画锥形预览：两条边界线 + 末端弧线（与实喷同一几何）。
+        /// origin 传施法者脚下位置即可，内部与实喷一样前移 MuzzleOffset。 </summary>
         public static void DrawConePreview(Map map, Vector3 origin, Vector3 dir, float range, float halfAngleDegrees, string texPath, Color color)
         {
             if (map == null || map != Find.CurrentMap || dir.sqrMagnitude < 0.01f)
             {
                 return;
             }
+            origin += dir * MMTBeamUtil.MuzzleOffset;
             float baseAngle = dir.AngleFlat();
             MMTBeamUtil.DrawBeamPreview(map, origin,
                 Quaternion.AngleAxis(baseAngle - halfAngleDegrees, Vector3.up) * Vector3.forward, range, 0.12f, texPath, color);
@@ -176,7 +178,7 @@ namespace MyModeTest
         private void DamagePulse()
         {
             Map map = Map;
-            Vector3 origin = caster.Position.ToVector3Shifted();
+            Vector3 origin = MMTBeamUtil.MuzzleOrigin(caster, dir);
             DamageDef damageDef = breathParams.damageDef ?? DamageDefOf.Flame;
             IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
@@ -211,7 +213,7 @@ namespace MyModeTest
             {
                 return;
             }
-            Vector3 origin = caster.Position.ToVector3Shifted();
+            Vector3 origin = MMTBeamUtil.MuzzleOrigin(caster, dir);
             origin.y = AltitudeLayer.MoteOverhead.AltitudeFor();
             float baseAngle = dir.AngleFlat();
             for (int i = 0; i < 2; i++)
@@ -236,7 +238,7 @@ namespace MyModeTest
             float elapsed = Mathf.Max(1, breathParams.durationTicks) - ticksLeft;
             float alpha = Mathf.Clamp01(elapsed / 8f) * Mathf.Clamp01(ticksLeft / 15f);
             float flicker = 0.85f + 0.15f * Mathf.Sin(elapsed * 0.9f) + 0.05f * Mathf.Sin(elapsed * 2.3f);
-            Vector3 origin = caster.Position.ToVector3Shifted();
+            Vector3 origin = MMTBeamUtil.MuzzleOrigin(caster, dir);
             origin.y = AltitudeLayer.MoteOverhead.AltitudeFor();
             float angle = dir.AngleFlat();
             // 三层渐宽段：近窄远宽近似锥形

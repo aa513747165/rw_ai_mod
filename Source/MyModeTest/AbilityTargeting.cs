@@ -901,7 +901,7 @@ namespace MyModeTest
                         Vector3 dir = MMTBeamUtil.BeamDirection(parent, t.Cell);
                         Color preview = demo.beamTint;
                         preview.a = 0.3f;
-                        MMTBeamUtil.DrawBeamPreview(parent.Map, parent.Position.ToVector3Shifted(), dir,
+                        MMTBeamUtil.DrawBeamPreview(parent.Map, MMTBeamUtil.MuzzleOrigin(parent, dir), dir,
                             demo.beamRange, demo.beamWidth, demo.beamTexPath, preview);
                     }
                     else if (demo.demoType == "breathCone")

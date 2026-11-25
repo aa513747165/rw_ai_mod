@@ -34,7 +34,7 @@ namespace MyModeTest
         public string arcTexPath = "Things/Mote/MMT_SkillBeam";
         public Color arcTint = new Color(0.6f, 0.8f, 1f);
         /// <summary>电弧宽度（格）。</summary>
-        public float arcWidth = 0.16f;
+        public float arcWidth = 0.25f;
         /// <summary>每跳间隔 tick（视觉蔓延节奏）。</summary>
         public int hopIntervalTicks = 2;
         /// <summary>最后一跳后电弧驻留 tick。</summary>

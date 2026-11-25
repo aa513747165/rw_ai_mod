@@ -41,12 +41,14 @@ namespace MyModeTest
         public string orbTexPath = "Things/Mote/MMT_SummonOrb";
         public Color orbTint = new Color(0.55f, 0.75f, 1f);
         /// <summary>雷球绘制尺寸（格）。</summary>
-        public float orbSize = 1.2f;
+        public float orbSize = 1.6f;
         /// <summary>雷球：每格耗时 tick（越大越慢）。</summary>
         public float orbTicksPerCell = 15f;
         /// <summary>追踪弹贴图（朝北/上）与染色。</summary>
         public string homingTexPath = "Things/Mote/MMT_HomingBolt";
         public Color homingTint = new Color(1f, 0.75f, 0.35f);
+        /// <summary>追踪弹绘制缩放（格）；MMT_HomingBolt 贴图可见细条仅占约 17%，需放大。</summary>
+        public float homingDrawScale = 1.6f;
         /// <summary>追踪弹：每格耗时 tick（越小越快）。</summary>
         public float homingTicksPerCell = 5f;
         /// <summary>脉冲/命中伤害（空伤害类型由调用方给默认）。</summary>
@@ -234,7 +236,7 @@ namespace MyModeTest
         private DamageDef damageDef;
         private float damage = 8f;
         private float armorPen;
-        private float orbSize = 1.2f;
+        private float orbSize = 1.6f;
         private FleckDef trailFleck;
         private FleckDef vanishFleck;
         private Material mat;
@@ -252,7 +254,7 @@ namespace MyModeTest
             damageDef = p?.damageDef ?? DamageDefOf.Flame;
             damage = p?.damage ?? 8f;
             armorPen = p?.armorPen ?? 0f;
-            orbSize = p?.orbSize ?? 1.2f;
+            orbSize = p?.orbSize ?? 1.6f;
             trailFleck = p?.trailFleckDef;
             vanishFleck = p?.vanishFleckDef;
             string texPath = p?.orbTexPath ?? "Things/Mote/MMT_SummonOrb";
@@ -353,6 +355,7 @@ namespace MyModeTest
         private FleckDef vanishFleck;
         private Material mat;
         private float drawAngle;
+        private float drawScale = 1.6f;
         private bool loadedFromSave;
 
         public void Setup(Thing caster, Thing targetThing, MMTSummonParams p)
@@ -371,6 +374,7 @@ namespace MyModeTest
             vanishFleck = p?.vanishFleckDef;
             string texPath = p?.homingTexPath ?? "Things/Mote/MMT_HomingBolt";
             mat = MaterialPool.MatFrom(texPath, ShaderDatabase.MoteGlow, p?.homingTint ?? Color.white);
+            drawScale = Mathf.Max(0.1f, p?.homingDrawScale ?? 1.6f);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -457,7 +461,7 @@ namespace MyModeTest
             Vector3 pos = curPos;
             pos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(pos, Quaternion.AngleAxis(drawAngle, Vector3.up), new Vector3(1f, 1f, 1f)), mat, 0);
+                Matrix4x4.TRS(pos, Quaternion.AngleAxis(drawAngle, Vector3.up), new Vector3(drawScale, 1f, drawScale)), mat, 0);
         }
     }
 
@@ -537,10 +541,11 @@ namespace MyModeTest
         public MMTSummonMode mode = MMTSummonMode.Orb;
         public string orbTexPath = "Things/Mote/MMT_SummonOrb";
         public Color orbTint = new Color(0.55f, 0.75f, 1f);
-        public float orbSize = 1.2f;
+        public float orbSize = 1.6f;
         public float orbTicksPerCell = 15f;
         public string homingTexPath = "Things/Mote/MMT_HomingBolt";
         public Color homingTint = new Color(1f, 0.75f, 0.35f);
+        public float homingDrawScale = 1.6f;
         public float homingTicksPerCell = 5f;
         public string damageDefName;
         public float damage = 8f;
@@ -578,6 +583,7 @@ namespace MyModeTest
                 orbTicksPerCell = Props.orbTicksPerCell,
                 homingTexPath = Props.homingTexPath,
                 homingTint = Props.homingTint,
+                homingDrawScale = Props.homingDrawScale,
                 homingTicksPerCell = Props.homingTicksPerCell,
                 damageDef = Props.damageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(Props.damageDefName),
                 damage = Props.damage,

@@ -68,7 +68,7 @@ namespace MyModeTest
         }
 
         /// <summary>在指定格放一次位移闪光（当前地图才播放）。</summary>
-        public static void PlayFleck(Map map, IntVec3 cell, FleckDef def, float scale = 1f)
+        public static void PlayFleck(Map map, IntVec3 cell, FleckDef def, float scale = 1.4f)
         {
             if (map == null || map != Find.CurrentMap || def == null)
             {
@@ -274,7 +274,7 @@ namespace MyModeTest
                 {
                     Vector3 pos = GroundPos();
                     pos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
-                    FleckCreationData data = FleckMaker.GetDataStatic(pos, map, trailFleck, Rand.Range(0.45f, 0.7f));
+                    FleckCreationData data = FleckMaker.GetDataStatic(pos, map, trailFleck, Rand.Range(0.7f, 1.05f));
                     data.velocity = new Vector3(Rand.Range(-0.05f, 0.05f), 0f, Rand.Range(0.1f, 0.25f));
                     data.rotationRate = Rand.Range(-30f, 30f);
                     map.flecks.CreateFleck(data);

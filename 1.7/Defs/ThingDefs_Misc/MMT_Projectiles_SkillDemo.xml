@@ -10,6 +10,8 @@
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>TransparentPostLight</shaderType>
       <color>(255,140,40)</color>
+      <!-- 原版 LauncherShot 贴图可见弹体很小，靠 drawSize 放大到火球观感 -->
+      <drawSize>(1.6,1.6)</drawSize>
     </graphicData>
     <thingClass>Projectile_Explosive</thingClass>
     <projectile>
@@ -31,7 +33,7 @@
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>TransparentPostLight</shaderType>
       <color>(255,130,35)</color>
-      <drawSize>(1.2,1.2)</drawSize>
+      <drawSize>(1.8,1.8)</drawSize>
     </graphicData>
     <thingClass>Projectile_Explosive</thingClass>
     <projectile>

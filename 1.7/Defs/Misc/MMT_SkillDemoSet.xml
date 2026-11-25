@@ -53,7 +53,7 @@
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
         <beamDurationSeconds>4</beamDurationSeconds>
         <beamRange>20</beamRange>
-        <beamWidth>0.35</beamWidth>
+        <beamWidth>0.7</beamWidth>
         <beamTint>(1,0.55,0.15)</beamTint>
         <beamDamage>4</beamDamage>
         <beamDamageIntervalTicks>10</beamDamageIntervalTicks>

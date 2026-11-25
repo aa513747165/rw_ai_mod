@@ -27,7 +27,7 @@ namespace MyModeTest
         public string texPath = "Things/Mote/MMT_SkillBeam";
         public Color tint = new Color(1f, 0.55f, 0.15f);
         /// <summary>光柱宽度（格）。</summary>
-        public float width = 0.35f;
+        public float width = 0.7f;
         /// <summary>最大射程（格，撞墙提前截止）。</summary>
         public float range = 20f;
         /// <summary>持续 tick 数。</summary>
@@ -53,6 +53,15 @@ namespace MyModeTest
     {
         /// <summary>步进 raycast 的采样步长（格），与伤害结算共用。</summary>
         public const float MarchStep = 0.5f;
+
+        /// <summary>出膛偏移（格）：光柱起点沿发射方向前移到施法者身前，避免与小人身体重叠。</summary>
+        public const float MuzzleOffset = 0.55f;
+
+        /// <summary>施法者身前的出膛点（脚下位置沿 dir 前移 MuzzleOffset），实射与瞄准预览统一取这里。</summary>
+        public static Vector3 MuzzleOrigin(Thing caster, Vector3 dir)
+        {
+            return caster.Position.ToVector3Shifted() + dir * MuzzleOffset;
+        }
 
         /// <summary>引导作业 Def（持续技能占用施法者用，见 JobDefs/MMT_Jobs.xml）。</summary>
         public const string ChannelJobDefName = "MMT_ChannelSkill";
@@ -115,7 +124,8 @@ namespace MyModeTest
             {
                 return null;
             }
-            Vector3 origin = caster.Position.ToVector3Shifted();
+            // 起点前移 MuzzleOffset：光柱从施法者身前射出，不再穿过小人身体
+            Vector3 origin = MuzzleOrigin(caster, dir);
             float length = BeamLength(map, origin, dir, p.range);
             if (length < MarchStep)
             {
@@ -203,7 +213,8 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>瞄准期间画半透明光柱预览（与实射同一 raycast，所见即所得）。</summary>
+        /// <summary>瞄准期间画半透明光柱预览（与实射同一 raycast，所见即所得）。
+        /// origin 须为已前移的出膛点（用 MuzzleOrigin 取），本方法原样绘制不做偏移。</summary>
         public static void DrawBeamPreview(Map map, Vector3 origin, Vector3 dir, float range, float width, string texPath, Color color)
         {
             if (map == null || map != Find.CurrentMap || dir.sqrMagnitude < 0.01f)
@@ -404,7 +415,7 @@ namespace MyModeTest
     {
         public string texPath = "Things/Mote/MMT_SkillBeam";
         public Color tint = new Color(1f, 0.55f, 0.15f);
-        public float width = 0.35f;
+        public float width = 0.7f;
         public float range = 20f;
         public int durationTicks = 240;
         public string damageDefName = "Burn";
@@ -498,7 +509,7 @@ namespace MyModeTest
             Vector3 dir = MMTBeamUtil.BeamDirection(caster, target.Cell);
             Color preview = Props.tint;
             preview.a = 0.3f;
-            MMTBeamUtil.DrawBeamPreview(caster.MapHeld, caster.Position.ToVector3Shifted(), dir,
+            MMTBeamUtil.DrawBeamPreview(caster.MapHeld, MMTBeamUtil.MuzzleOrigin(caster, dir), dir,
                 Props.range, Props.width, Props.texPath, preview);
         }
     }

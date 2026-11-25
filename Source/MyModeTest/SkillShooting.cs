@@ -87,6 +87,8 @@ namespace MyModeTest
         public int aimTicks = 15;
         /// <summary>浮游单元的静态 fleck（null = 不画浮游图形直接齐射）。</summary>
         public FleckDef funnelFleckDef;
+        /// <summary>浮游图形缩放（格）；LauncherShot 等原版投射物贴图可见部分小，默认放大。</summary>
+        public float fleckScale = 1.5f;
         /// <summary>浮游图形染色（LauncherShot 等白底贴图靠它上色）。</summary>
         public Color tint = new Color(1f, 0.55f, 0.15f);
         public SoundDef sound;
@@ -168,7 +170,7 @@ namespace MyModeTest
             {
                 return;
             }
-            FleckCreationData data = FleckMaker.GetDataStatic(pos, map, p.funnelFleckDef, 1f);
+            FleckCreationData data = FleckMaker.GetDataStatic(pos, map, p.funnelFleckDef, Mathf.Max(0.1f, p.fleckScale));
             data.rotation = (target.CenterVector3 - pos).AngleFlat();
             data.instanceColor = p.tint;
             data.solidTimeOverride = p.aimTicks / 60f + 0.35f;
@@ -222,6 +224,7 @@ namespace MyModeTest
         public float ringRadius = 1.8f;
         public int aimTicks = 15;
         public string funnelFleckDefName;
+        public float fleckScale = 1.5f;
         public Color tint = new Color(1f, 0.55f, 0.15f);
         public string soundDefName;
         public bool preventFriendlyFire = true;
@@ -248,6 +251,7 @@ namespace MyModeTest
                 ringRadius = Props.ringRadius,
                 aimTicks = Props.aimTicks,
                 funnelFleckDef = Props.funnelFleckDefName.NullOrEmpty() ? null : DefDatabase<FleckDef>.GetNamedSilentFail(Props.funnelFleckDefName),
+                fleckScale = Props.fleckScale,
                 tint = Props.tint,
                 sound = Props.soundDefName.NullOrEmpty() ? null : DefDatabase<SoundDef>.GetNamedSilentFail(Props.soundDefName),
                 preventFriendlyFire = Props.preventFriendlyFire,

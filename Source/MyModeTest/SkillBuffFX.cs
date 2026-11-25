@@ -31,7 +31,7 @@ namespace MyModeTest
         /// <summary>图标显示 tick 数。</summary>
         public int iconDurationTicks = 90;
         /// <summary>图标尺寸（格）。</summary>
-        public float iconScale = 0.45f;
+        public float iconScale = 0.6f;
         /// <summary>身上粒子 fleck（null=不放粒子）。</summary>
         public FleckDef particleFleckDef;
         public Color particleTint = new Color(0.3f, 1f, 0.3f);
