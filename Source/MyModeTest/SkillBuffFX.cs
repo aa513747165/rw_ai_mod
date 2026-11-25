@@ -119,12 +119,22 @@ namespace MyModeTest
             fx = p;
             ticksTotal = ticksLeft = Mathf.Max(1, p.iconDurationTicks);
             particleTimer = 1;
-            AttachTo(followTarget);
+            // 建筑等无 CompAttachBase 的目标不能 Attach（AttachTo 报红字且 parent 留空，
+            // 之后 AttachableThing.Tick 每 tick NRE）；跟随/绘制本就只读 follow.DrawPos，
+            // 仅对可挂载目标（pawn 等）走 Attach。
+            if (followTarget.TryGetComp<CompAttachBase>() != null)
+            {
+                AttachTo(followTarget);
+            }
         }
 
         protected override void Tick()
         {
-            base.Tick();
+            // 未 Attach（目标是建筑）时 parent 为空，AttachableThing.Tick 会 NRE，跳过基类
+            if (parent != null)
+            {
+                base.Tick();
+            }
             if (fx == null || ticksLeft < 0 || follow == null || follow.Destroyed || follow.MapHeld != Map)
             {
                 Destroy();
