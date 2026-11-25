@@ -20,38 +20,103 @@ namespace MyModeTest
         public static readonly Color FriendlyRingColor = new Color(0.3f, 1f, 0.3f);
         public static readonly Color HostileRingColor = new Color(1f, 0.3f, 0.3f);
 
-        /// <summary>圆形选择框贴图（白图，代码按敌我染色）。</summary>
+        /// <summary>圆形选择框贴图（白图，代码按敌我染色）。仅 SkillDelayedStrike 地面警示圈仍在用。</summary>
         public const string CircleTexPath = "Things/Mote/MMT_TargetCircle";
-        private static Material circleMat;
+
+        /// <summary>圆环半宽（格）。固定世界宽度，不随半径缩放（贴图方案环随半径一起放大，大圈粗得离谱）。</summary>
+        private const float RingHalfWidth = 0.055f;
+        /// <summary>环内微填充相对环色的 alpha 倍率。</summary>
+        private const float FillAlphaFactor = 0.08f;
+        private static Material ringMat;
+        private static readonly Dictionary<int, Mesh> ringMeshCache = new Dictionary<int, Mesh>();
+        private static readonly Dictionary<int, Mesh> fillMeshCache = new Dictionary<int, Mesh>();
 
         public static Color RingColor(bool friendly)
         {
             return friendly ? FriendlyRingColor : HostileRingColor;
         }
 
-        /// <summary>画平滑圆形选择框（贴图圆环 + 微填充，替换原版方格 DrawRadiusRing）；贴图缺失时退回原版方格环。</summary>
+        /// <summary>画平滑圆形选择框（程序圆环网格，固定细环宽 + 微填充）；比原版方格环平滑。</summary>
         public static void DrawCircle(IntVec3 center, float radius, Color color)
         {
             if (radius <= 0f)
             {
                 return;
             }
-            if (circleMat == null)
+            if (ringMat == null)
             {
-                Texture2D tex = ContentFinder<Texture2D>.Get(CircleTexPath, false);
-                if (tex == null)
-                {
-                    GenDraw.DrawRadiusRing(center, radius, color);
-                    return;
-                }
-                circleMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+                ringMat = new Material(ShaderDatabase.Transparent) { mainTexture = BaseContent.WhiteTex };
             }
-            circleMat.color = color;
             Vector3 pos = center.ToVector3Shifted();
             pos.y = AltitudeLayer.MetaOverlays.AltitudeFor();
-            float size = radius * 2f;
-            Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(pos, Quaternion.identity, new Vector3(size, 1f, size)), circleMat, 0);
+            Color fillColor = color;
+            fillColor.a *= FillAlphaFactor;
+            ringMat.color = fillColor;
+            Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, ringMat, 0);
+            ringMat.color = color;
+            Graphics.DrawMesh(GetRingMesh(radius), pos, Quaternion.identity, ringMat, 0);
+        }
+
+        /// <summary>圆环网格（以原点为中心的环形三角带，内外半径差固定）。按 0.05 格精度缓存。</summary>
+        private static Mesh GetRingMesh(float radius)
+        {
+            int key = Mathf.RoundToInt(radius * 20f);
+            if (ringMeshCache.TryGetValue(key, out Mesh cached))
+            {
+                return cached;
+            }
+            float r = key / 20f;
+            int segments = Mathf.Clamp(Mathf.RoundToInt(r * 10f), 32, 180);
+            Vector3[] verts = new Vector3[segments * 2];
+            // 双面索引（正反两套三角形），不同着色器的背面剔除约定下都可见
+            int[] tris = new int[segments * 12];
+            float rIn = Mathf.Max(0.01f, r - RingHalfWidth);
+            float rOut = r + RingHalfWidth;
+            for (int i = 0; i < segments; i++)
+            {
+                float ang = i * Mathf.PI * 2f / segments;
+                float cos = Mathf.Cos(ang);
+                float sin = Mathf.Sin(ang);
+                verts[i * 2] = new Vector3(cos * rIn, 0f, sin * rIn);
+                verts[i * 2 + 1] = new Vector3(cos * rOut, 0f, sin * rOut);
+                int j = (i + 1) % segments;
+                int t = i * 12;
+                tris[t] = i * 2; tris[t + 1] = j * 2; tris[t + 2] = i * 2 + 1;
+                tris[t + 3] = j * 2; tris[t + 4] = j * 2 + 1; tris[t + 5] = i * 2 + 1;
+                tris[t + 6] = i * 2; tris[t + 7] = i * 2 + 1; tris[t + 8] = j * 2;
+                tris[t + 9] = j * 2; tris[t + 10] = i * 2 + 1; tris[t + 11] = j * 2 + 1;
+            }
+            Mesh mesh = new Mesh { vertices = verts, triangles = tris };
+            ringMeshCache[key] = mesh;
+            return mesh;
+        }
+
+        /// <summary>实心圆盘网格（环内微填充用，三角扇）。</summary>
+        private static Mesh GetDiscMesh(float radius)
+        {
+            int key = Mathf.RoundToInt(radius * 20f);
+            if (fillMeshCache.TryGetValue(key, out Mesh cached))
+            {
+                return cached;
+            }
+            float r = key / 20f;
+            int segments = Mathf.Clamp(Mathf.RoundToInt(r * 10f), 32, 180);
+            Vector3[] verts = new Vector3[segments + 1];
+            // 双面索引，与圆环同理
+            int[] tris = new int[segments * 6];
+            verts[0] = Vector3.zero;
+            for (int i = 0; i < segments; i++)
+            {
+                float ang = i * Mathf.PI * 2f / segments;
+                verts[i + 1] = new Vector3(Mathf.Cos(ang) * r, 0f, Mathf.Sin(ang) * r);
+                int j = (i + 1) % segments;
+                int t = i * 6;
+                tris[t] = 0; tris[t + 1] = j + 1; tris[t + 2] = i + 1;
+                tris[t + 3] = 0; tris[t + 4] = i + 1; tris[t + 5] = j + 1;
+            }
+            Mesh mesh = new Mesh { vertices = verts, triangles = tris };
+            fillMeshCache[key] = mesh;
+            return mesh;
         }
 
         // —— 每 tick 原始扫描缓存 ——
