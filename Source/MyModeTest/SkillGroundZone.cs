@@ -102,9 +102,6 @@ namespace MyModeTest
         private int ticksUntilPulse;
         private bool loadedFromSave;
 
-        // 圆盘材质按贴图全局共享（同火海优化：Graphics.DrawMesh 提交即读当前颜色，逐调用染色即可）
-        private static readonly Dictionary<string, Material> sharedMats = new Dictionary<string, Material>();
-
         public void Setup(Thing caster, MMTGroundZoneParams p)
         {
             this.caster = caster;
@@ -118,21 +115,6 @@ namespace MyModeTest
         {
             base.SpawnSetup(map, respawningAfterLoad);
             loadedFromSave = respawningAfterLoad;
-        }
-
-        private static Material SharedMat(string texPath)
-        {
-            if (!sharedMats.TryGetValue(texPath, out Material mat) || mat == null)
-            {
-                Texture2D tex = ContentFinder<Texture2D>.Get(texPath, false);
-                if (tex == null)
-                {
-                    return null;
-                }
-                mat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
-                sharedMats[texPath] = mat;
-            }
-            return mat;
         }
 
         protected override void Tick()
@@ -215,33 +197,27 @@ namespace MyModeTest
             map.flecks.CreateFleck(data);
         }
 
-        /// <summary>自绘气雾：三层圆盘反向慢速旋转 + 呼吸透明度（共享材质，逐调用染色）。</summary>
+        /// <summary>自绘气雾：三层嵌套程序圆盘 + 呼吸透明度（外淡内浓模拟气雾团）。
+        /// 弃用贴图圆盘：MMT_AuraDisc 透明区 RGB 纯白，加法系着色器下整 quad 发光、alpha 失效；
+        /// 程序网格 + ShaderDatabase.Transparent 的 alpha 确定生效。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (zoneParams == null || Map != Find.CurrentMap)
             {
                 return;
             }
-            Material mat = SharedMat(zoneParams.texPath);
-            if (mat == null)
-            {
-                return;
-            }
             int elapsed = durationTotal - ticksLeft;
             float fade = Mathf.Clamp01(elapsed / 20f) * Mathf.Clamp01(ticksLeft / 40f);
-            float breath = 0.8f + 0.2f * Mathf.Sin(elapsed * 0.07f);
             Vector3 pos = Position.ToVector3Shifted();
             pos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
-            // 三层：尺寸/转速/透明度各异，反向旋转模拟气雾翻卷
+            // 三层嵌套：外层大而淡、内层小而浓，错相位呼吸模拟气雾翻卷
             for (int layer = 0; layer < 3; layer++)
             {
-                float size = zoneParams.radius * 2f * (1f - layer * 0.18f);
-                float angle = elapsed * (layer % 2 == 0 ? 0.35f : -0.5f) * (1f + layer * 0.4f);
+                float r = zoneParams.radius * (1f - layer * 0.18f);
+                float layerBreath = 0.8f + 0.2f * Mathf.Sin(elapsed * 0.07f + layer * 1.9f);
                 Color color = zoneParams.tint;
-                color.a = fade * breath * (0.32f - layer * 0.07f);
-                mat.color = color;
-                Graphics.DrawMesh(MeshPool.plane10,
-                    Matrix4x4.TRS(pos, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(size, 1f, size)), mat, 0);
+                color.a = fade * layerBreath * (0.16f - layer * 0.035f);
+                MMTAoETargetPreview.DrawDisc(pos, r, color);
             }
         }
     }

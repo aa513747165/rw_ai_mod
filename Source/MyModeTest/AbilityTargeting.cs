@@ -47,18 +47,45 @@ namespace MyModeTest
             {
                 return;
             }
-            if (ringMat == null)
-            {
-                ringMat = new Material(ShaderDatabase.Transparent) { mainTexture = BaseContent.WhiteTex };
-            }
             Vector3 pos = center.ToVector3Shifted();
             pos.y = AltitudeLayer.MetaOverlays.AltitudeFor();
             Color fillColor = color;
             fillColor.a *= FillAlphaFactor;
-            ringMat.color = fillColor;
+            DrawDisc(pos, radius, fillColor);
+            DrawRing(pos, radius, color);
+        }
+
+        /// <summary>画实心圆盘（程序网格 + ShaderDatabase.Transparent，alpha 确定生效；
+        /// 持续特效别用贴图圆盘——白底贴图在加法着色器下整个 quad 发光，alpha 无效整屏染色）。</summary>
+        public static void DrawDisc(Vector3 pos, float radius, Color color)
+        {
+            if (radius <= 0f)
+            {
+                return;
+            }
+            EnsureRingMat();
+            ringMat.color = color;
             Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, ringMat, 0);
+        }
+
+        /// <summary>画固定细宽圆环描边（语义同 DrawCircle 的环部，供持续特效复用）。</summary>
+        public static void DrawRing(Vector3 pos, float radius, Color color)
+        {
+            if (radius <= 0f)
+            {
+                return;
+            }
+            EnsureRingMat();
             ringMat.color = color;
             Graphics.DrawMesh(GetRingMesh(radius), pos, Quaternion.identity, ringMat, 0);
+        }
+
+        private static void EnsureRingMat()
+        {
+            if (ringMat == null)
+            {
+                ringMat = new Material(ShaderDatabase.Transparent) { mainTexture = BaseContent.WhiteTex };
+            }
         }
 
         /// <summary>圆环网格（以原点为中心的环形三角带，内外半径差固定）。按 0.05 格精度缓存。</summary>
