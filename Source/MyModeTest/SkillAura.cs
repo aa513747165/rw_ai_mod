@@ -144,6 +144,8 @@ namespace MyModeTest
         private int ticksLeft = -1;
         private int ticksUntilPulse;
         private Material discMat;
+        /// <summary>圆盘整体不透明度上限（淡入淡出/呼吸脉冲之前的基准）。</summary>
+        private const float DiscBaseOpacity = 0.28f;
 
         /// <summary>1.7 AttachableThing 抽象成员；光环不可选，仅调试可见。</summary>
         public override string InspectStringAddon => "技能光环（演示实体）";
@@ -209,7 +211,8 @@ namespace MyModeTest
             float alpha = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f);
             float pulse = 0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f);
             Color color = auraParams.tint;
-            color.a *= alpha * pulse;
+            // 贴图内部接近实心，tint alpha 又是 1，不压基准则整片浓绿/浓红盖住地面
+            color.a *= alpha * pulse * DiscBaseOpacity;
             discMat.color = color;
             // 高度取小人层（身体中心），略高于 Pawn 层避免与本体闪面；DrawPos 平滑跟随移动
             Vector3 pos = follow.DrawPos;
