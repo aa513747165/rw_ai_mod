@@ -6,7 +6,6 @@
     <defName>MMT_Magic_SummonMinion</defName>
     <label>召唤仆从</label>
     <description>召唤一个干活的仆从，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/minion_south</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -44,7 +43,6 @@
     <defName>MMT_Magic_SummonPylon</defName>
     <label>召唤魔法防御塔</label>
     <description>在目标点召唤一座定点奥术炮塔，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/defense_pylon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -79,7 +77,6 @@
     <defName>MMT_Magic_SummonExplosive</defName>
     <label>召唤魔法地雷</label>
     <description>在目标点布置一枚法力地雷，敌人接近即爆。</description>
-    <level>1</level>
     <iconPath>UI/RoM/ManaMine</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -114,7 +111,6 @@
     <defName>MMT_Magic_SummonPoppi</defName>
     <label>召唤波皮</label>
     <description>召唤一群狂暴爆炸鼠扑向敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/poppihorde</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -152,7 +148,6 @@
     <defName>MMT_Magic_SummonElemental</defName>
     <label>元素召唤</label>
     <description>召唤强大的元素生物（嵌合兽）作战，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Elemental</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

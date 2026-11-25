@@ -6,7 +6,6 @@
     <defName>MMT_Might_SniperAimedShot</defName>
     <label>瞄准射击</label>
     <description>精确瞄准的一击。</description>
-    <level>1</level>
     <iconPath>UI/RoM/headshot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -39,15 +38,15 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_DisablingShot</defName>
-    <label>残废射击</label>
+    <label>残废射击（I）</label>
     <description>电击麻痹弹，命中眩晕目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/disablingshot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>3</Ability_Duration>
     </statBases>
     <cooldownTicksRange>2700</cooldownTicksRange>
     <verbProperties>
@@ -66,7 +65,8 @@
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_DisablingShot</projectileDef>
       </li>
-      <li Class="CompProperties_AbilityStun">
+      <li Class="CompProperties_AbilityEffectWithDuration">
+        <compClass>CompAbilityEffect_Stun</compClass>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
@@ -78,7 +78,6 @@
     <defName>MMT_Might_Headshot</defName>
     <label>爆头一击</label>
     <description>直指要害的高伤狙击。</description>
-    <level>1</level>
     <iconPath>UI/RoM/headshot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -113,13 +112,13 @@
     <defName>MMT_Might_AntiArmor</defName>
     <label>破甲</label>
     <description>破甲弹撕开目标护甲。</description>
-    <level>1</level>
     <iconPath>UI/RoM/InfernoCannonShot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>6.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>600</cooldownTicksRange>
     <verbProperties>
@@ -139,6 +138,7 @@
         <projectileDef>MMT_Proj_AntiArmor</projectileDef>
       </li>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_ArmorBreak</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -152,9 +152,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_ShadowSlayer</defName>
-    <label>暗影杀手</label>
+    <label>阴影杀手</label>
     <description>长时隐形力场。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shadowslayer</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -166,7 +165,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_FastReleaseSD</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -180,6 +178,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>PsychicInvisibility</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -194,7 +193,6 @@
     <defName>MMT_Might_SniperArmorFracture</defName>
     <label>破甲射击</label>
     <description>为团队制造 6 秒破甲缺口。</description>
-    <level>1</level>
     <iconPath>UI/RoM/InfernoCannonShot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -231,7 +229,6 @@
     <defName>MMT_Might_SniperSingleOpening</defName>
     <label>一线战机</label>
     <description>抓住一线战机，三连精准狙击。</description>
-    <level>1</level>
     <iconPath>UI/RoM/headshot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

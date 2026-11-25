@@ -6,7 +6,6 @@
     <defName>MMT_Might_ChiBurst</defName>
     <label>气爆</label>
     <description>气劲爆发，打断周身敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/ChiBurst</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Gong</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -50,7 +48,6 @@
     <defName>MMT_Might_Meditate</defName>
     <label>冥想</label>
     <description>冥想净化身心：小幅自愈并降低心灵熵。</description>
-    <level>1</level>
     <iconPath>UI/RoM/meditate</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -62,7 +59,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -88,7 +84,6 @@
     <defName>MMT_Might_DragonStrike</defName>
     <label>龙翔踢</label>
     <description>飞跃踢击目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/dragonstrike</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -125,7 +120,6 @@
     <defName>MMT_Might_MonkSilentMeridian</defName>
     <label>寂静经脉</label>
     <description>站桩蓄力后连续气劲脉冲。</description>
-    <level>1</level>
     <iconPath>UI/RoM/ChiBurst</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -137,7 +131,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>

@@ -22,6 +22,13 @@ namespace MyModeTest
         /// <summary>目标点的 fleck；self 技能生成器只填施法者。</summary>
         public string targetFleckDefName;
         public float scale = 2f;
+        /// <summary>目标点主 fleck 缩放（<0 沿用 scale）；爆发类技能需要远超 2 的闪光。</summary>
+        public float targetScale = -1f;
+        /// <summary>目标点半径内随机散点个数（0=只放主点），用于范围爆发铺特效。</summary>
+        public int targetBurstCount;
+        public float targetBurstRadius = 3f;
+        /// <summary>散点 fleck（空则沿用 targetFleckDefName）；主闪光与散点可用不同贴图。</summary>
+        public string targetBurstFleckDefName;
 
         public CompProperties_MMTFleckFX()
         {
@@ -43,14 +50,24 @@ namespace MyModeTest
             {
                 return;
             }
-            SpawnFleck(Props.casterFleckDefName, caster.Position, map);
+            SpawnFleck(Props.casterFleckDefName, caster.Position, map, Props.scale);
             if (target.IsValid && target.Cell != caster.Position)
             {
-                SpawnFleck(Props.targetFleckDefName, target.Cell, map);
+                float tScale = Props.targetScale >= 0f ? Props.targetScale : Props.scale;
+                SpawnFleck(Props.targetFleckDefName, target.Cell, map, tScale);
+                // 范围爆发：半径内随机散点（默认同主题，可另配散点贴图）
+                string burstFleck = Props.targetBurstFleckDefName.NullOrEmpty()
+                    ? Props.targetFleckDefName : Props.targetBurstFleckDefName;
+                for (int i = 0; i < Props.targetBurstCount; i++)
+                {
+                    IntVec3 cell = GenRadial.RadialCellsAround(target.Cell, Props.targetBurstRadius, true)
+                        .Where(c => c.InBounds(map)).RandomElementWithFallback(target.Cell);
+                    SpawnFleck(burstFleck, cell, map, Props.scale);
+                }
             }
         }
 
-        private void SpawnFleck(string defName, IntVec3 cell, Map map)
+        private void SpawnFleck(string defName, IntVec3 cell, Map map, float scale)
         {
             if (defName.NullOrEmpty() || !cell.InBounds(map))
             {
@@ -59,7 +76,90 @@ namespace MyModeTest
             FleckDef fleck = DefDatabase<FleckDef>.GetNamedSilentFail(defName);
             if (fleck != null)
             {
-                FleckMaker.Static(cell.ToVector3Shifted(), map, fleck, Props.scale);
+                FleckMaker.Static(cell.ToVector3Shifted(), map, fleck, scale);
+            }
+        }
+    }
+
+    // ========== 直线光束（RoM 光矛类：即时连线灼烧路径上一切） ==========
+    // 注：类名用 LightSpear 避免与 SkillBeam.cs 的持续射线 CompProperties_MMTBeam 冲突
+
+    public class CompProperties_MMTLightSpear : CompProperties_AbilityEffect
+    {
+        public DamageDef damageDef;
+        public int damageAmount = 14;
+        public float armorPen = 0f;
+        /// <summary>命中 pawn 点燃概率（0=不点燃）。</summary>
+        public float igniteChance = 0f;
+        /// <summary>true=伤害线上所有 pawn（RoM 光矛烧穿路径不分敌我）。</summary>
+        public bool friendlyFire = true;
+        /// <summary>光束视觉 FleckDef（FleckMaker.ConnectingLine 拉伸线）。</summary>
+        public string beamFleckDefName;
+        public float beamWidth = 0.7f;
+        /// <summary>命中点闪光 FleckDef。</summary>
+        public string impactFleckDefName;
+        public float impactFleckScale = 2.5f;
+
+        public CompProperties_MMTLightSpear()
+        {
+            compClass = typeof(CompAbilityEffect_MMTLightSpear);
+        }
+    }
+
+    /// <summary>即时直线光束：施法者→目标连线伤害路径上所有 pawn，画拉伸光束与命中闪光。</summary>
+    public class CompAbilityEffect_MMTLightSpear : CompAbilityEffect
+    {
+        public new CompProperties_MMTLightSpear Props => (CompProperties_MMTLightSpear)props;
+
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            base.Apply(target, dest);
+            Pawn caster = parent.pawn;
+            Map map = caster.MapHeld;
+            if (map == null || Props.damageDef == null || !target.IsValid)
+            {
+                return;
+            }
+            // 伤害：连线逐格命中格内 pawn（RoM 光矛沿路径灼烧）
+            foreach (IntVec3 cell in GenSight.PointsOnLineOfSight(caster.Position, target.Cell))
+            {
+                if (cell == caster.Position)
+                {
+                    continue;
+                }
+                foreach (Thing thing in cell.GetThingList(map))
+                {
+                    if (!(thing is Pawn p) || p.Dead)
+                    {
+                        continue;
+                    }
+                    if (!Props.friendlyFire && (p.Faction == null || !p.HostileTo(caster)))
+                    {
+                        continue;
+                    }
+                    p.TakeDamage(new DamageInfo(Props.damageDef, Props.damageAmount, Props.armorPen, -1f, caster));
+                    if (Props.igniteChance > 0f && Rand.Chance(Props.igniteChance))
+                    {
+                        FireUtility.TryAttachFire(p, 0.15f, caster);
+                    }
+                }
+            }
+            // 视觉：施法者→目标拉伸光束 + 命中点闪光
+            if (!Props.beamFleckDefName.NullOrEmpty())
+            {
+                FleckDef beam = DefDatabase<FleckDef>.GetNamedSilentFail(Props.beamFleckDefName);
+                if (beam != null)
+                {
+                    FleckMaker.ConnectingLine(caster.DrawPos, target.CenterVector3, beam, map, Props.beamWidth);
+                }
+            }
+            if (!Props.impactFleckDefName.NullOrEmpty())
+            {
+                FleckDef impact = DefDatabase<FleckDef>.GetNamedSilentFail(Props.impactFleckDefName);
+                if (impact != null)
+                {
+                    FleckMaker.Static(target.CenterVector3, map, impact, Props.impactFleckScale);
+                }
             }
         }
     }

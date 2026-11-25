@@ -6,7 +6,6 @@
     <defName>MMT_Magic_Firebolt</defName>
     <label>燃烧之箭</label>
     <description>发射一枚燃烧之箭，命中点燃目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/firebolt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -42,7 +41,6 @@
     <defName>MMT_Magic_RayofHope</defName>
     <label>内心之火</label>
     <description>开启后围绕施法者维持内心之火光环：周围友军抗寒、自愈、休息与饥饿消耗降低。维持会积累心灵熵，再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/innerfire</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -54,7 +52,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -80,7 +77,6 @@
     <defName>MMT_Magic_Fireball</defName>
     <label>火球术</label>
     <description>掷出爆裂火球，落点范围爆炸并点燃。</description>
-    <level>1</level>
     <iconPath>UI/RoM/fireball4</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -115,9 +111,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Fireclaw</defName>
-    <label>焰爪</label>
+    <label>龙息术</label>
     <description>火焰之爪横扫一片区域，造成伤害并引燃。</description>
-    <level>1</level>
     <iconPath>UI/RoM/tendril</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -159,7 +154,6 @@
     <defName>MMT_Magic_Firestorm</defName>
     <label>火焰风暴</label>
     <description>召唤流星火雨持续轰击大片区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/firestorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

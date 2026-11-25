@@ -6,7 +6,6 @@
     <defName>MMT_Magic_AlterFate</defName>
     <label>改写命运</label>
     <description>记录当前健康状态；限时内遭受致死伤害时回溯抵消（RoM 的预言资源简化为纯冷却）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/alterfate</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Gong</soundCast>
       <soundCastTail>MMT_Thunder_OffMap</soundCastTail>
       <targetParams>
@@ -44,7 +42,6 @@
     <defName>MMT_Magic_AccelerateTime</defName>
     <label>时间加速</label>
     <description>区域内敌人时间加速老化：行动迟缓、饥饿加剧（简化版）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/acceleratetime</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

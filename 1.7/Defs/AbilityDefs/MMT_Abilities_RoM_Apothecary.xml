@@ -6,7 +6,6 @@
     <defName>MMT_Might_SoothingBalm</defName>
     <label>舒缓药膏</label>
     <description>止血抗感染止痛的药膏。</description>
-    <level>1</level>
     <iconPath>UI/RoM/health-capsule</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -44,7 +43,6 @@
     <defName>MMT_Might_PoisonFlask</defName>
     <label>毒气瓶</label>
     <description>掷出毒气瓶，范围中毒。</description>
-    <level>1</level>
     <iconPath>UI/RoM/poison_flask</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -86,7 +84,6 @@
     <defName>MMT_Might_ApothecaryAntitoxin</defName>
     <label>解毒剂</label>
     <description>解毒并减轻食物中毒。</description>
-    <level>1</level>
     <iconPath>UI/RoM/health-capsule</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -122,13 +119,13 @@
     <defName>MMT_Might_Elixir</defName>
     <label>万能灵药</label>
     <description>治疗并强化目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/elixir</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>240</cooldownTicksRange>
     <verbProperties>
@@ -149,6 +146,7 @@
         <maxInjuries>3</maxInjuries>
       </li>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_Elixir</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -164,19 +162,18 @@
     <defName>MMT_Might_HerbalClarity</defName>
     <label>清明药剂</label>
     <description>加速心灵集中与心灵熵恢复（灵能化改编）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/clarity</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>300</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Powerup</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -190,6 +187,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HerbalClarity</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -204,7 +202,6 @@
     <defName>MMT_Might_FireSuppressionFlask</defName>
     <label>灭火罐</label>
     <description>扑灭范围内火焰。</description>
-    <level>1</level>
     <iconPath>UI/RoM/fire-suppression</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -239,7 +236,6 @@
     <defName>MMT_Might_ApothecaryGoldenHour</defName>
     <label>黄金急救包</label>
     <description>黄金时间急救：大范围友军获得治疗。</description>
-    <level>1</level>
     <iconPath>UI/RoM/health-capsule</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -276,13 +272,13 @@
     <defName>MMT_Might_HerbalBliss</defName>
     <label>极乐药</label>
     <description>遮蔽疼痛的极乐药剂（有过量风险）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bliss</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>120.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>300</cooldownTicksRange>
     <verbProperties>
@@ -299,6 +295,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HerbalBliss</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>

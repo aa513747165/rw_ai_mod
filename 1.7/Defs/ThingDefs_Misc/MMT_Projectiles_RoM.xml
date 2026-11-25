@@ -34,7 +34,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
     <defName>MMT_Proj_FrostRay</defName>
-    <label>霜冻之寒</label>
+    <label>霜冻之寒（I）</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/FrostRay</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -111,7 +111,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
     <defName>MMT_Proj_MagicMissile</defName>
-    <label>魔法飞弹</label>
+    <label>魔法飞弹（I）</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/MagicMissile</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -126,7 +126,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
     <defName>MMT_Proj_DeathBolt</defName>
-    <label>死亡螺旋</label>
+    <label>死亡螺旋（I）</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/deathbolt</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -152,21 +152,6 @@
       <damageDef>Blunt</damageDef>
       <damageAmountBase>13</damageAmountBase>
       <speed>55</speed>
-    </projectile>
-  </ThingDef>
-  <ThingDef ParentName="BaseBullet">
-    <defName>MMT_Proj_LightLance</defName>
-    <label>光矛</label>
-    <graphicData>
-      <texPath>Things/Projectile/RoM/light_laser</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>Transparent</shaderType>
-    </graphicData>
-    <projectile>
-      <flyOverhead>false</flyOverhead>
-      <damageDef>Burn</damageDef>
-      <damageAmountBase>14</damageAmountBase>
-      <speed>70</speed>
     </projectile>
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
@@ -201,7 +186,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
     <defName>MMT_Proj_Arrow</defName>
-    <label>箭雨风暴</label>
+    <label>箭雨风暴(I)</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/shotlit</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -232,7 +217,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
     <defName>MMT_Proj_DisablingShot</defName>
-    <label>残废射击</label>
+    <label>残废射击（I）</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/shotlit</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -354,7 +339,7 @@
     </projectile>
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
-    <defName>MMT_Proj_Mk203</defName>
+    <defName>MMT_Proj_Mk203Grenade</defName>
     <label>枪挂榴弹</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/rocket_small</texPath>
@@ -387,7 +372,7 @@
     </projectile>
   </ThingDef>
   <ThingDef ParentName="BaseBullet">
-    <defName>MMT_Proj_Mortar60</defName>
+    <defName>MMT_Proj_Mortar60Shell</defName>
     <label>便携迫击炮</label>
     <graphicData>
       <texPath>Things/Projectile/RoM/rocket_small</texPath>

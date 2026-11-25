@@ -28,7 +28,9 @@ import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROM = r"D:/steamcmd/steamapps/workshop/content/294100/3823345404"
+ROM = r"H:/mod/3823345404"
+# RoM 汉化 Mod（简中 DefInjected，补齐 RoM 本体缺失的 label 汉化）
+ROM_ZH = r"H:/mod/1916742986"
 MAPPING_PATH = os.path.join(ROOT, "tools/data/mmt_rom_class_mapping.json")
 OUT_ABILITY_DIR = os.path.join(ROOT, "1.7/Defs/AbilityDefs")
 OUT_HEDIFFS = os.path.join(ROOT, "1.7/Defs/HediffDefs/MMT_Hediffs_RoMClasses.xml")
@@ -212,12 +214,17 @@ def mmt_fleck_name(rom_mote):
 
 
 def parse_rom_zh_labels():
-    """RoM 自带汉化（共享层 + career 层）的 TMAbilityDef .label 条目。"""
+    """RoM 汉化（本体自带 + 汉化 Mod 补充层）的 TMAbilityDef .label 条目。"""
     labels = {}
-    for sub in ("Languages/ChineseSimplified/DefInjected/TorannMagic.TMAbilityDef",
-                "v1.7/Languages/ChineseSimplified/DefInjected/TorannMagic.TMAbilityDef",
-                "v1.7/Languages/ChineseSimplified/DefInjected/AbilityDef"):
-        d = os.path.join(ROM, sub)
+    roots = [os.path.join(ROM, sub) for sub in (
+        "Languages/ChineseSimplified/DefInjected/TorannMagic.TMAbilityDef",
+        "v1.7/Languages/ChineseSimplified/DefInjected/TorannMagic.TMAbilityDef",
+        "v1.7/Languages/ChineseSimplified/DefInjected/AbilityDef")]
+    # 汉化 Mod 的 AROM（主汉化）+ JAROM（扩展）两个子 Mod
+    roots += [os.path.join(ROM_ZH, sub, "Languages/ChineseSimplified/DefInjected", td)
+              for sub in ("AROM", "JAROM")
+              for td in ("TorannMagic.TMAbilityDef", "AbilityDef", "AbilityUser.AbilityDef")]
+    for d in roots:
         if not os.path.isdir(d):
             continue
         for fn in os.listdir(d):
@@ -290,7 +297,7 @@ def comp_xml(ab):
     if comp == "GiveHediff":
         return li("CompProperties_AbilityGiveHediff", {
             "hediffDef": p["hediff"], "psychic": "true", "durationMultiplier": "PsychicSensitivity",
-            "applicableToMechs": "false"})
+            "applicableToMechs": "false"}, comp_class="CompAbilityEffect_GiveHediff")
     if comp == "GiveHediffAoE":
         return li("MyModeTest.CompProperties_MMTGiveHediffAoE", {
             "hediffDef": p["hediff"], "radius": p.get("radius", 6),
@@ -298,6 +305,15 @@ def comp_xml(ab):
             "includeSelf": str(p.get("includeSelf", True)).lower()})
     if comp == "LaunchProjectile":
         return li("CompProperties_AbilityLaunchProjectile", {"projectileDef": p["projectile"]})
+    if comp == "Beam":
+        fields = {"damageDef": p["damageDef"], "damageAmount": p.get("damage", 14)}
+        for opt in ("armorPen", "igniteChance", "beamFleckDefName", "beamWidth",
+                    "impactFleckDefName", "impactFleckScale"):
+            if opt in p:
+                fields[opt] = p[opt]
+        if "friendlyFire" in p:
+            fields["friendlyFire"] = str(p["friendlyFire"]).lower()
+        return li("MyModeTest.CompProperties_MMTBeam", fields)
     if comp == "AoEDamage":
         fields = {"damageDef": p["damageDef"], "damageAmount": p["damage"],
                   "radius": p.get("radius", 3), "armorPen": p.get("armorPen", 0),
@@ -330,7 +346,8 @@ def comp_xml(ab):
         return li("MyModeTest.CompProperties_MMTDashStrike", fields)
     if comp == "MentalState":
         return li("CompProperties_AbilityGiveMentalState", {
-            "stateDef": p["mentalState"], "psychic": "true", "durationMultiplier": "PsychicSensitivity"})
+            "stateDef": p["mentalState"], "psychic": "true", "durationMultiplier": "PsychicSensitivity"},
+            comp_class="CompAbilityEffect_GiveMentalState")
     if comp == "MentalStateAoE":
         fields = {"mentalStateDef": p["mentalState"], "radius": p.get("radius", 6),
                   "targetFriendly": str(p.get("targetFriendly", False)).lower()}
@@ -351,13 +368,18 @@ def comp_xml(ab):
     if comp == "ToggleAura":
         return li("MyModeTest.CompProperties_MMTToggleAura", {"auraHediffDef": p["aura"]})
     if comp == "Teleport":
-        return li("CompProperties_AbilityTeleport")
+        return li("CompProperties_AbilityTeleport", comp_class="CompAbilityEffect_Teleport")
     if comp == "Stun":
-        return li("CompProperties_AbilityStun")
+        # 1.7 无 CompProperties_AbilityStun：用 EffectWithDuration + CompAbilityEffect_Stun，
+        # 眩晕时长取技能 Ability_Duration statBase（ability_xml 里按 stunSeconds 补发）。
+        return li("CompProperties_AbilityEffectWithDuration", comp_class="CompAbilityEffect_Stun")
     if comp == "Smokepop":
         return li("CompProperties_AbilityEffect", comp_class="CompAbilityEffect_Smokepop")
     if comp == "Wallraise":
-        return li("CompProperties_AbilityWallraise", {"thingDef": p.get("wallDef", "RaisedRocks")})
+        # 1.7 的 CompProperties_AbilityWallraise 只剩 pattern 字段，墙体硬编码 ThingDefOf.RaisedRocks。
+        return li("CompProperties_AbilityWallraise",
+                  {"pattern": p.get("pattern", ["(0, 0)", "(1, 0)", "(-1, 0)", "(0, 1)", "(0, -1)"])},
+                  comp_class="CompAbilityEffect_Wallraise")
     if comp == "ResurrectLite":
         fields = {}
         if p.get("revivedHediff"):
@@ -405,19 +427,24 @@ def comp_xml(ab):
 
 
 def fx_comp_xml(ab):
-    """RoM 战斗特效 comp：施法者 + 目标点主题 fleck。"""
+    """RoM 战斗特效 comp：施法者 + 目标点主题 fleck；fleckFx 表可覆盖目标点表现。"""
     fleck = ab.get("_fleck")
     if not fleck:
         return ""
+    fx = ab.get("fleckFx", {})
     lines = ['      <li Class="MyModeTest.CompProperties_MMTFleckFX">',
-             x("casterFleckDefName", fleck, 8)]
+             x("casterFleckDefName", fx.get("casterFleckDefName", fleck), 8)]
     if ab["target"] != "self":
-        lines.append(x("targetFleckDefName", fleck, 8))
+        lines.append(x("targetFleckDefName", fx.get("targetFleckDefName", fleck), 8))
+        for opt in ("scale", "targetScale", "targetBurstCount", "targetBurstRadius",
+                    "targetBurstFleckDefName"):
+            if opt in fx:
+                lines.append(x(opt, fx[opt], 8))
     lines.append("      </li>")
     return "\n".join(lines)
 
 
-def ability_xml(ab, rom_abilities):
+def ability_xml(ab, rom_abilities, hediffs):
     rom = rom_abilities.get(ab["romDef"], {})
     tier = TIERS[ab["tier"]]
     cooldown = ab.get("cooldownSeconds")
@@ -430,8 +457,10 @@ def ability_xml(ab, rom_abilities):
     lines = ['  <AbilityDef ParentName="PsycastBase">',
              x("defName", ab["mmtDef"], 4),
              x("label", ab["label"], 4),
-             x("description", ab.get("description", ab["label"]), 4),
-             x("level", 1, 4)]
+             x("description", ab.get("description", ab["label"]), 4)]
+    # 注意：不写 <level>。1.7 的 Hediff_Psylink.TryGiveAbilityOfLevel 按 level 从全 def 池
+    # 随机授予 Psycast（启灵升级/就职觉醒都会触发），MMT 技能带 level 会污染随机池
+    # （曾致就职随机白送技能）；level 缺省 0 即永不入池，技能解锁只走天赋树。
     if ab.get("iconPath"):
         lines.append(x("iconPath", ab["iconPath"], 4))
     lines.append(x("writeCombatLog", "true" if hostile else "false", 4))
@@ -439,14 +468,28 @@ def ability_xml(ab, rom_abilities):
     lines.append("    <statBases>")
     lines.append(x("Ability_EntropyGain", ab.get("entropy", tier["entropy"]), 6))
     lines.append(x("Ability_PsyfocusCost", ab.get("psyfocus", tier["psyfocus"]), 6))
+    # 1.7 的 CompAbilityEffect_GiveHediff.ApplyInner 用技能 Ability_Duration 覆盖 hediff 的
+    # ticksToDisappear（原版 EntropyLink 等均显式设该 stat）。缺省为 0 → buff 当 tick 被移除，
+    # 故 GiveHediff/Stun 类技能必须按预期时长补发 Ability_Duration。
+    duration_secs = None
+    for c in [ab] + list(ab.get("extraComps", [])):
+        comp_name = c.get("comp")
+        prm = c.get("params", {})
+        if comp_name == "Stun":
+            duration_secs = max(duration_secs or 0, prm.get("stunSeconds", 3))
+        elif comp_name == "GiveHediff":
+            spec = hediffs.get(prm.get("hediff", "")) or {}
+            ticks = spec.get("durationTicks")
+            if ticks:
+                duration_secs = max(duration_secs or 0, ticks / 60.0)
+    if duration_secs:
+        lines.append(x("Ability_Duration", round(duration_secs, 1), 6))
     lines.append("    </statBases>")
     if cooldown:
         lines.append(x("cooldownTicksRange", int(float(cooldown) * 60), 4))
     lines.append("    <verbProperties>")
     lines.append(x("warmupTime", ab.get("warmupSeconds", 0.5), 6))
     lines.append(x("range", 0 if ab["target"] == "self" else ab.get("range", 24.9), 6))
-    if ab["target"] == "self":
-        lines.append(x("targetRequired", "false", 6))
     if ab.get("_sound"):
         lines.append(x("soundCast", ab["_sound"], 6))
     if ab.get("_soundTail"):
@@ -477,12 +520,14 @@ def hediff_xml(def_name, spec):
     lines = ["  <HediffDef>",
              x("defName", def_name, 4),
              x("label", spec["label"], 4)]
-    if spec.get("description"):
-        lines.append(x("description", spec["description"], 4))
+    lines.append(x("description", spec.get("description", spec["label"]), 4))
     lines.append(x("isBad", str(spec.get("isBad", False)).lower(), 4))
     lines.append(x("everCurableByItem", "false", 4))
     if spec.get("hediffClass"):
         lines.append(x("hediffClass", spec["hediffClass"], 4))
+    elif spec.get("aura") or spec.get("alterFate") or spec.get("durationTicks"):
+        # 下方会挂 comps 的 Hediff 必须显式 HediffWithComps，否则 1.7 报 config error
+        lines.append(x("hediffClass", "HediffWithComps", 4))
     duration = spec.get("durationTicks")
     stage_lines = []
     if spec.get("hidden"):
@@ -656,7 +701,6 @@ def conditions_xml(mapping):
         lines.append(x("conditionClass", spec.get("conditionClass", "GameCondition"), 4))
         if spec.get("temperatureOffset") is not None:
             lines.append(x("temperatureOffset", spec["temperatureOffset"], 4))
-        lines.append(x("endWhenSilenced", "false", 4))
         lines.append(x("preventRain", "false", 4))
         lines.append(x("canBePermanent", "false", 4))
         lines.append("  </GameConditionDef>")
@@ -903,7 +947,7 @@ def main():
                  "  <!-- 生成物：tools/build_mmt_rom_classes.py + tools/data/mmt_rom_class_mapping.json，",
                  "       不要手改（改动会在重跑时被覆盖）。" + cls.get("label", cls_key) + " 职业技能 -->"]
         for mmt_def in ordered:
-            lines.append(ability_xml(cls_abs[mmt_def], rom_abilities))
+            lines.append(ability_xml(cls_abs[mmt_def], rom_abilities, hediffs))
         lines.append("</Defs>")
         out_path = os.path.join(OUT_ABILITY_DIR, "MMT_Abilities_RoM_%s.xml" % cls_key)
         with open(out_path, "w", encoding="utf-8", newline="\n") as f:

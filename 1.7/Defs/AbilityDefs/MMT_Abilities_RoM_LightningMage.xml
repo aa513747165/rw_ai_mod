@@ -6,13 +6,13 @@
     <defName>MMT_Magic_LightningBolt</defName>
     <label>电闪雷鸣</label>
     <description>单体雷击，对机械与护盾尤为致命，并眩晕目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/lightningbolt2</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>3</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1200</cooldownTicksRange>
     <verbProperties>
@@ -31,7 +31,8 @@
       <li Class="CompProperties_AbilityLaunchProjectile">
         <projectileDef>MMT_Proj_LightningBolt</projectileDef>
       </li>
-      <li Class="CompProperties_AbilityStun">
+      <li Class="CompProperties_AbilityEffectWithDuration">
+        <compClass>CompAbilityEffect_Stun</compClass>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Bolt</casterFleckDefName>
@@ -41,21 +42,20 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_AMP</defName>
-    <label>AMP</label>
+    <label>安普（I）</label>
     <description>电流强化躯体：操纵、移动、意识大幅提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/amp</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>36000</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -70,6 +70,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_AMP</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -84,7 +85,6 @@
     <defName>MMT_Magic_LightningCloud</defName>
     <label>天丛云雷</label>
     <description>召来雷云，区域内连番落雷并震慑敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/stormcloud</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -128,7 +128,6 @@
     <defName>MMT_Magic_EyeOfTheStorm</defName>
     <label>风暴之眼</label>
     <description>凝聚湮灭电球掷向目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/eyeofthestorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -164,7 +163,6 @@
     <defName>MMT_Magic_LightningStorm</defName>
     <label>闪电风暴</label>
     <description>召唤失控雷暴，大范围持续落雷。</description>
-    <level>1</level>
     <iconPath>UI/RoM/lightningstorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

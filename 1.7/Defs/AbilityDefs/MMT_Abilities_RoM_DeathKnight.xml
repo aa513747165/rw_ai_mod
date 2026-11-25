@@ -6,7 +6,6 @@
     <defName>MMT_Might_Spite</defName>
     <label>怨毒冲击</label>
     <description>怨毒能量冲击（RoM 的憎恨资源灵能化）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spite</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -43,7 +42,6 @@
     <defName>MMT_Might_WaveOfFear</defName>
     <label>恐惧之波</label>
     <description>恐惧之波席卷敌人：溃逃并削弱。</description>
-    <level>1</level>
     <iconPath>UI/RoM/waveoffear</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -85,7 +83,6 @@
     <defName>MMT_Might_GraveBlade</defName>
     <label>墓地灵剑</label>
     <description>灵剑自墓地突起，连斩目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/graveblade</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -127,7 +124,6 @@
     <defName>MMT_Might_Shroud</defName>
     <label>黑暗斗篷</label>
     <description>开启后黑暗斗篷护体：减伤并强化近战（RoM 的憎恨积攒简化为光环）。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shroud</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -138,7 +134,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>

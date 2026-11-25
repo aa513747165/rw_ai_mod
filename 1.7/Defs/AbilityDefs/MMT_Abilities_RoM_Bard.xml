@@ -4,9 +4,8 @@
        不要手改（改动会在重跑时被覆盖）。吟游诗人 职业技能 -->
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Entertain</defName>
-    <label>招待</label>
+    <label>娱乐</label>
     <description>弹唱一曲，抚平目标心中最沉重的一段负面记忆。</description>
-    <level>1</level>
     <iconPath>UI/RoM/entertain</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -41,7 +40,6 @@
     <defName>MMT_Magic_Inspire</defName>
     <label>鼓舞</label>
     <description>开启后维持激励光环：周围友军工效与意志提升。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/inspire</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -53,7 +51,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -77,9 +74,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Lullaby</defName>
-    <label>催眠曲</label>
+    <label>催眠曲（I）</label>
     <description>范围催眠，敌人沉沉睡去（对机械无效）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/lullaby</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -118,7 +114,6 @@
     <defName>MMT_Magic_BattleHymn</defName>
     <label>战斗之曲</label>
     <description>战歌响起，大范围友军战力强化。</description>
-    <level>1</level>
     <iconPath>UI/RoM/anthem</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

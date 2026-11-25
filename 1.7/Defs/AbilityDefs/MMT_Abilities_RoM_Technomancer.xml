@@ -6,19 +6,18 @@
     <defName>MMT_Magic_NanoStimulant</defName>
     <label>纳米强化</label>
     <description>纳米机械强化自身。</description>
-    <level>1</level>
     <iconPath>UI/RoM/nano_stim</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>30.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>18000</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -32,6 +31,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_NanoStimulant</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -46,13 +46,13 @@
     <defName>MMT_Magic_TechnoShield</defName>
     <label>动能护盾</label>
     <description>为目标张开偏转投射物的动能护盾。</description>
-    <level>1</level>
     <iconPath>UI/RoM/technoshield</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>20.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>7200</cooldownTicksRange>
     <verbProperties>
@@ -70,6 +70,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_TechnoShield</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -85,13 +86,13 @@
     <defName>MMT_Magic_Sabotage</defName>
     <label>瘫痪破坏</label>
     <description>瘫痪目标的机械与电子系统。</description>
-    <level>1</level>
     <iconPath>UI/RoM/sabotage</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>30.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1800</cooldownTicksRange>
     <verbProperties>
@@ -110,6 +111,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_Sabotage</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -125,7 +127,6 @@
     <defName>MMT_Magic_TechnoTurret</defName>
     <label>神经炮塔</label>
     <description>召唤限时遥控炮塔。</description>
-    <level>1</level>
     <iconPath>UI/RoM/TechnoTurret</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -159,7 +160,6 @@
     <defName>MMT_Magic_Overdrive</defName>
     <label>超载</label>
     <description>超载强化范围内友军的机体性能。</description>
-    <level>1</level>
     <iconPath>UI/RoM/overdrive</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -198,7 +198,6 @@
     <defName>MMT_Magic_OrbitalStrike</defName>
     <label>轨道打击</label>
     <description>呼叫轨道火力覆盖区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/orbitalstrike</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

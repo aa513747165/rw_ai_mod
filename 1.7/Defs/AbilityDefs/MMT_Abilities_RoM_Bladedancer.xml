@@ -6,7 +6,6 @@
     <defName>MMT_Might_BladeSpin</defName>
     <label>剑刃回旋</label>
     <description>剑刃回旋斩击周身敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bladespin</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -47,9 +45,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_PhaseStrike</defName>
-    <label>次元之刃</label>
+    <label>次元之刃（I）</label>
     <description>相位闪现背刺目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/phased</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -86,7 +83,6 @@
     <defName>MMT_Might_SeismicSlash</defName>
     <label>地裂斩</label>
     <description>裂地斩击一片区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/seismicslash</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -128,7 +124,6 @@
     <defName>MMT_Might_BladePassage</defName>
     <label>穿刃步</label>
     <description>直线突进，斩击沿途敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/phased</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

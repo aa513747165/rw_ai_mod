@@ -6,7 +6,6 @@
     <defName>MMT_Magic_Stoneskin</defName>
     <label>石肤</label>
     <description>开启后石肤护体，大幅减伤（简化：限时减伤，RoM 的层数格挡未移植）。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/stoneskin</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Vibration</soundCast>
       <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
@@ -44,7 +42,6 @@
     <defName>MMT_Magic_Encase</defName>
     <label>石墙禁锢</label>
     <description>目标点石墙隆起封锁。</description>
-    <level>1</level>
     <iconPath>UI/RoM/encase</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -68,7 +65,14 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityWallraise">
-        <thingDef>RaisedRocks</thingDef>
+        <compClass>CompAbilityEffect_Wallraise</compClass>
+        <pattern>
+          <li>(0, 0)</li>
+          <li>(1, 0)</li>
+          <li>(-1, 0)</li>
+          <li>(0, 1)</li>
+          <li>(0, -1)</li>
+        </pattern>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_EarthCrack</casterFleckDefName>
@@ -80,7 +84,6 @@
     <defName>MMT_Magic_Sentinel</defName>
     <label>石哨兵</label>
     <description>召唤石哨兵（巨蜘蛛）守卫，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/gargoyle_south</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -119,7 +122,6 @@
     <defName>MMT_Magic_EarthernHammer</defName>
     <label>大地之锤</label>
     <description>引力抛石砸击区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/earthernhammer</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -161,7 +163,6 @@
     <defName>MMT_Magic_Meteor</defName>
     <label>陨石轰击</label>
     <description>陨石轰击，落点留下矿渣。</description>
-    <level>1</level>
     <iconPath>UI/RoM/meteorite</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

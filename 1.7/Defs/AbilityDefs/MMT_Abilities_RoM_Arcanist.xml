@@ -4,9 +4,8 @@
        不要手改（改动会在重跑时被覆盖）。奥术法师 职业技能 -->
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Blink</defName>
-    <label>闪烁</label>
+    <label>闪烁（I）</label>
     <description>自身瞬移到目标位置。</description>
-    <level>1</level>
     <iconPath>UI/RoM/blink</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -29,6 +28,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityTeleport">
+        <compClass>CompAbilityEffect_Teleport</compClass>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_ArcaneCircle</casterFleckDefName>
@@ -38,9 +38,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_MagicMissile</defName>
-    <label>魔法飞弹</label>
+    <label>魔法飞弹（I）</label>
     <description>奥术飞弹打击目标（RoM 的几率迷惑效果未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/MagicMissile</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -75,9 +74,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Shadow</defName>
-    <label>暗影随形</label>
+    <label>暗影随形（I）</label>
     <description>开启后暗影随形光环强化周围友军的工作与躯体能力。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shadow</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -89,7 +87,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -113,9 +110,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Summon</defName>
-    <label>召唤</label>
+    <label>召唤（I）</label>
     <description>把远处的目标强行拉到身边（简化：仅对生物）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/summon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -151,7 +147,6 @@
     <defName>MMT_Magic_Teleport</defName>
     <label>传送</label>
     <description>将自身与周围友军群体传送到目标位置。</description>
-    <level>1</level>
     <iconPath>UI/RoM/teleport</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

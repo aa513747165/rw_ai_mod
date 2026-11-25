@@ -6,7 +6,6 @@
     <defName>MMT_Magic_RaiseUndead</defName>
     <label>死者苏生</label>
     <description>把一具尸体点化为食尸鬼仆从，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/raiseundead</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -44,15 +43,15 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_DeathMark</defName>
-    <label>死亡印记</label>
+    <label>死亡印记（I）</label>
     <description>烙印死亡印记：目标命中与攻击欲大幅下降。</description>
-    <level>1</level>
     <iconPath>UI/RoM/deathmark</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>30.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>7200</cooldownTicksRange>
     <verbProperties>
@@ -71,6 +70,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_DeathMark</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -84,15 +84,15 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_DeathBolt</defName>
-    <label>死亡螺旋</label>
+    <label>死亡螺旋（I）</label>
     <description>死亡能量螺旋击中目标，造成范围剧痛。</description>
-    <level>1</level>
     <iconPath>UI/RoM/deathbolt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>30.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>900</cooldownTicksRange>
     <verbProperties>
@@ -114,6 +114,7 @@
         <projectileDef>MMT_Proj_DeathBolt</projectileDef>
       </li>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_PainSpike</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -127,9 +128,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_CorpseExplosion</defName>
-    <label>尸爆术</label>
+    <label>尸爆术（I）</label>
     <description>引爆一具尸体，延时后爆炸。</description>
-    <level>1</level>
     <iconPath>UI/RoM/corpseexplosion</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -168,7 +168,6 @@
     <defName>MMT_Magic_FogOfTorment</defName>
     <label>窒息之雾</label>
     <description>毒雾弥漫，雾中活物受折磨。</description>
-    <level>1</level>
     <iconPath>UI/RoM/fogoftorment</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

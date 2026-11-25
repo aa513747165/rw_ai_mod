@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 手写维护（非生成物）：生成器桶之外的自定义 FleckDef。 -->
+  <!-- 光矛光束：FleckMaker.ConnectingLine 按 (长度,1,宽度) 拉伸并旋转到连线方向，
+       贴图为纵向光带，拉伸后呈亮中带两端渐隐的长矛形光束。 -->
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_LightBeam</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.3</solidTime>
+    <fadeOutTime>0.4</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Projectile/RoM/light_laser</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+  </FleckDef>
+</Defs>

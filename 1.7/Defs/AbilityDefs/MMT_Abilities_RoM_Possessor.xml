@@ -6,7 +6,6 @@
     <defName>MMT_Magic_SpiritDrain</defName>
     <label>灵能汲取</label>
     <description>汲取目标精神：目标虚弱一天，自身心灵熵下降。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spiritdrain</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -43,7 +42,6 @@
     <defName>MMT_Magic_DistortSpirit</defName>
     <label>灵体扭曲</label>
     <description>扭曲区域敌人的灵体，受伤加深。</description>
-    <level>1</level>
     <iconPath>UI/RoM/distortspirit</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -81,7 +79,6 @@
     <defName>MMT_Magic_SpiritRally</defName>
     <label>亡魂集结</label>
     <description>新死之魂化为灵狼作战。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spiritcall</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -120,7 +117,6 @@
     <defName>MMT_Magic_SummonSpiritAnimalMass</defName>
     <label>灵兽齐召</label>
     <description>成批召唤灵兽。</description>
-    <level>1</level>
     <iconPath>UI/RoM/summonspiritanimals</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -158,7 +154,6 @@
     <defName>MMT_Magic_SpiritStorm</defName>
     <label>灵能风暴</label>
     <description>定点灵能风暴（简化：RoM 的引导移动未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spiritstorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

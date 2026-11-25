@@ -6,7 +6,6 @@
     <defName>MMT_Magic_ShadowBolt</defName>
     <label>暗影弹</label>
     <description>暗影能量弹。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shadowbolt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -43,7 +42,6 @@
     <defName>MMT_Magic_Repulsion</defName>
     <label>斥力冲击</label>
     <description>斥力震荡，范围内敌人踉跄难行（简化：不做位移）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/repulsion</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -82,7 +80,6 @@
     <defName>MMT_Magic_Dominate</defName>
     <label>恐惧支配</label>
     <description>恐惧支配目标区域，敌人溃逃。</description>
-    <level>1</level>
     <iconPath>UI/RoM/dominate_c</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -120,7 +117,6 @@
     <defName>MMT_Magic_Attraction</defName>
     <label>暗影之井</label>
     <description>暗影之井迟滞敌人脚步（简化：范围减速，不做聚拢）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/repulsion</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -159,7 +155,6 @@
     <defName>MMT_Magic_Scorn</defName>
     <label>魔神飞跃</label>
     <description>恶魔化飞跃砸地。</description>
-    <level>1</level>
     <iconPath>UI/RoM/scorn</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -198,7 +193,6 @@
     <defName>MMT_Magic_PsychicShock</defName>
     <label>灵能巨浪</label>
     <description>范围精神冲击，敌人陷入狂暴错乱。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psychicshock</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -236,7 +230,6 @@
     <defName>MMT_Magic_SummonDemon</defName>
     <label>召唤恶魔</label>
     <description>召唤吞噬魔作战，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/summon_demon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

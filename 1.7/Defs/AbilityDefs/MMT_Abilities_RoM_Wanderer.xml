@@ -6,7 +6,6 @@
     <defName>MMT_Magic_MageLight</defName>
     <label>法师之光</label>
     <description>在目标点生成一盏长明灯火。</description>
-    <level>1</level>
     <iconPath>UI/RoM/magelight</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -42,7 +41,6 @@
     <defName>MMT_Magic_SmokeCloud</defName>
     <label>烟云蔽日</label>
     <description>爆开一团烟幕。</description>
-    <level>1</level>
     <iconPath>UI/RoM/smokecloud</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -78,7 +76,6 @@
     <defName>MMT_Magic_CauterizeWound</defName>
     <label>烧灼伤口</label>
     <description>烧灼伤口止血。</description>
-    <level>1</level>
     <iconPath>UI/RoM/cauterizewound</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -116,7 +113,6 @@
     <defName>MMT_Magic_ArcaneBolt</defName>
     <label>奥术箭</label>
     <description>奥术能量箭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/arcanebolt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -152,7 +148,6 @@
     <defName>MMT_Magic_Extinguish</defName>
     <label>熄灭</label>
     <description>扑灭范围内火焰。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Extinguish</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -188,7 +183,6 @@
     <defName>MMT_Magic_Invisibility</defName>
     <label>隐身</label>
     <description>短暂隐身。</description>
-    <level>1</level>
     <iconPath>UI/RoM/invisibility</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -200,7 +194,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Vibration</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -215,6 +208,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>PsychicInvisibility</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>

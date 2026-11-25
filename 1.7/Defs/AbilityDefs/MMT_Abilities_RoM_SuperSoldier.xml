@@ -6,7 +6,6 @@
     <defName>MMT_Might_FirstAid</defName>
     <label>自我急救</label>
     <description>战场自救，治疗并止血。</description>
-    <level>1</level>
     <iconPath>UI/RoM/firstaid</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -45,7 +43,6 @@
     <defName>MMT_Might_Buckshot</defName>
     <label>散射鹿弹</label>
     <description>鹿弹扇面散射。</description>
-    <level>1</level>
     <iconPath>UI/RoM/buckshot</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -83,7 +80,6 @@
     <defName>MMT_Might_PistolWhip</defName>
     <label>枪托猛击</label>
     <description>枪托猛击，击晕并缴械。</description>
-    <level>1</level>
     <iconPath>UI/RoM/pistolwhip</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -121,7 +117,6 @@
     <defName>MMT_Might_SuppressingFire</defName>
     <label>压制火力</label>
     <description>弹幕压制目标区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/suppressingfire</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -159,7 +154,6 @@
     <defName>MMT_Might_Mk203GL</defName>
     <label>枪挂榴弹</label>
     <description>发射枪挂榴弹。</description>
-    <level>1</level>
     <iconPath>UI/RoM/mk203gl</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -183,7 +177,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
-        <projectileDef>MMT_Proj_Mk203</projectileDef>
+        <projectileDef>MMT_Proj_Mk203Grenade</projectileDef>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>
@@ -195,7 +189,6 @@
     <defName>MMT_Might_BreachingCharge</defName>
     <label>爆破炸药</label>
     <description>对建筑特化的爆破装药。</description>
-    <level>1</level>
     <iconPath>UI/RoM/breachingcharge_exp</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -230,7 +223,6 @@
     <defName>MMT_Might_SuperSoldierFieldDressing</defName>
     <label>战地包扎</label>
     <description>快速战地包扎。</description>
-    <level>1</level>
     <iconPath>UI/RoM/firstaid</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -242,7 +234,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MeleeHit_Metal_Sharp</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -269,7 +260,6 @@
     <defName>MMT_Might_60mmMortar</defName>
     <label>便携迫击炮</label>
     <description>便携迫击炮轰击远处目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/60mmMortar</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -292,7 +282,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityLaunchProjectile">
-        <projectileDef>MMT_Proj_Mortar60</projectileDef>
+        <projectileDef>MMT_Proj_Mortar60Shell</projectileDef>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Strike</casterFleckDefName>

@@ -6,13 +6,13 @@
     <defName>MMT_Magic_Hex</defName>
     <label>咒印</label>
     <description>给目标烙下咒印（简化：RoM 的后续技前提未移植，各咒技独立可用）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/hex</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>300</cooldownTicksRange>
     <verbProperties>
@@ -31,6 +31,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HexMark</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -46,7 +47,6 @@
     <defName>MMT_Magic_ChainLightning</defName>
     <label>连环闪电</label>
     <description>闪电打击目标（简化：单链不跳跃）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/chain_lightning</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -83,13 +83,13 @@
     <defName>MMT_Magic_Hex_Pain</defName>
     <label>咒印·剧痛</label>
     <description>咒印引发持续剧痛。</description>
-    <level>1</level>
     <iconPath>UI/RoM/hex_pain</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>300</cooldownTicksRange>
     <verbProperties>
@@ -108,6 +108,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HexPain</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -123,13 +124,13 @@
     <defName>MMT_Magic_Hex_CriticalFail</defName>
     <label>咒印·厄运</label>
     <description>咒印使目标极度倒霉。</description>
-    <level>1</level>
     <iconPath>UI/RoM/hex_criticalfail</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1800</cooldownTicksRange>
     <verbProperties>
@@ -148,6 +149,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HexCurse</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -163,7 +165,6 @@
     <defName>MMT_Magic_Hex_MentalAssault</defName>
     <label>咒印·精神冲击</label>
     <description>咒印冲垮目标神志。</description>
-    <level>1</level>
     <iconPath>UI/RoM/hex_mentalassault</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -188,6 +189,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveMentalState">
+        <compClass>CompAbilityEffect_GiveMentalState</compClass>
         <stateDef>Wander_Psychotic</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -202,7 +204,6 @@
     <defName>MMT_Magic_SummonTotemLightning</defName>
     <label>闪电图腾</label>
     <description>召唤闪电图腾，周期性电击附近敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/totem_lightning_icon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -237,7 +238,6 @@
     <defName>MMT_Magic_SummonTotemEarth</defName>
     <label>大地图腾</label>
     <description>召唤大地图腾，抛石砸击附近敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/totem_earth_icon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -272,7 +272,6 @@
     <defName>MMT_Magic_SummonTotemHealing</defName>
     <label>治疗图腾</label>
     <description>召唤治疗图腾，周期性治疗周围友军。</description>
-    <level>1</level>
     <iconPath>UI/RoM/totem_heal_icon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -307,7 +306,6 @@
     <defName>MMT_Magic_Enrage</defName>
     <label>狂怒</label>
     <description>使目标陷入狂暴。</description>
-    <level>1</level>
     <iconPath>UI/RoM/enrage</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -332,6 +330,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveMentalState">
+        <compClass>CompAbilityEffect_GiveMentalState</compClass>
         <stateDef>Berserk</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -346,7 +345,6 @@
     <defName>MMT_Magic_SpiritWolves</defName>
     <label>灵狼群</label>
     <description>召唤灵狼群撕咬敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spiritwolf</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -385,7 +383,6 @@
     <defName>MMT_Magic_GuardianSpirit</defName>
     <label>守护灵兽</label>
     <description>召唤强大的守护灵兽（敲击兽）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/spiritanimals</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

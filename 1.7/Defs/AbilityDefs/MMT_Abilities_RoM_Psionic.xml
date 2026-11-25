@@ -6,7 +6,6 @@
     <defName>MMT_Might_PsionicBlast</defName>
     <label>灵能爆弹</label>
     <description>灵能爆弹四连发。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psiblast</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -44,13 +43,13 @@
     <defName>MMT_Might_PsionicBarrier</defName>
     <label>灵能屏障</label>
     <description>为目标张开灵能屏障。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psionicbarrier</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>20.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1200</cooldownTicksRange>
     <verbProperties>
@@ -67,6 +66,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_PsionicBarrier</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -82,7 +82,6 @@
     <defName>MMT_Might_PsionicDash</defName>
     <label>灵能冲刺</label>
     <description>冲刺并放出冲击波。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psionicdash</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -120,7 +119,6 @@
     <defName>MMT_Might_PsionicKineticCrucible</defName>
     <label>动能熔炉</label>
     <description>引导动能脉冲伤害周围敌人，并为周围友军套上屏障。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psionicstorm</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -132,7 +130,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
         <canTargetPawns>false</canTargetPawns>
@@ -168,7 +165,6 @@
     <defName>MMT_Might_PsionicStorm</defName>
     <label>灵能风暴</label>
     <description>掀起灵能风暴（自耗巨大）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/psionicstorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

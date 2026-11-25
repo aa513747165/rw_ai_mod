@@ -6,7 +6,6 @@
     <defName>MMT_Might_PoisonTrap</defName>
     <label>毒素陷阱</label>
     <description>在目标点部署一枚陷阱（简化：借用原版尖刺陷阱）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/trap</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -40,9 +39,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_ArrowStorm</defName>
-    <label>箭雨风暴</label>
+    <label>箭雨风暴(I)</label>
     <description>向目标泼洒 6 连箭雨。</description>
-    <level>1</level>
     <iconPath>UI/RoM/arrowstorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -80,7 +78,6 @@
     <defName>MMT_Might_AnimalFriend</defName>
     <label>动物伙伴</label>
     <description>召唤一只野兽伙伴协战，限时存在（简化：RoM 的永久羁绊未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/animalfriend</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -118,7 +115,6 @@
     <defName>MMT_Might_RangerSafeTrail</defName>
     <label>安全小径</label>
     <description>范围友军行动加速（简化：RoM 的路径标记未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/rangertraining</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

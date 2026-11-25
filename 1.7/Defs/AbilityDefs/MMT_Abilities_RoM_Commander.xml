@@ -6,7 +6,6 @@
     <defName>MMT_Might_ProvisionerAura</defName>
     <label>后勤光环</label>
     <description>开启后维持后勤光环：周围友军休息与饥饿改善。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/provisioner</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -43,7 +41,6 @@
     <defName>MMT_Might_TaskMasterAura</defName>
     <label>监工光环</label>
     <description>开启后维持监工光环：周围友军工作加速、社交下降。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/taskmaster</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -55,7 +52,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -80,7 +76,6 @@
     <defName>MMT_Might_CommanderAura</defName>
     <label>统御光环</label>
     <description>开启后维持统御光环：周围友军心情改善、产能略降。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/commander</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -92,7 +87,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -117,7 +111,6 @@
     <defName>MMT_Might_MoveOut</defName>
     <label>全员推进</label>
     <description>范围友军移速大增。</description>
-    <level>1</level>
     <iconPath>UI/RoM/MoveOut</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -155,7 +148,6 @@
     <defName>MMT_Might_StayAlert</defName>
     <label>保持警戒</label>
     <description>范围友军精神振奋、命中提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/stayalert</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -193,7 +185,6 @@
     <defName>MMT_Might_HoldTheLine</defName>
     <label>坚守阵地</label>
     <description>范围友军减伤、忍痛、射速提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/HoldTheLine</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -231,7 +222,6 @@
     <defName>MMT_Might_CommanderWorkCrew</defName>
     <label>工作队</label>
     <description>范围友军工作速度提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/taskmaster</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -268,7 +258,6 @@
     <defName>MMT_Might_CommanderRally</defName>
     <label>集合点</label>
     <description>范围友军获得防护（简化：RoM 的集合点实体未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/HoldTheLine</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -305,7 +294,6 @@
     <defName>MMT_Might_CommanderOperationEvac</defName>
     <label>全员归队：撤离</label>
     <description>范围友军加速并获得防护。</description>
-    <level>1</level>
     <iconPath>UI/RoM/MoveOut</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

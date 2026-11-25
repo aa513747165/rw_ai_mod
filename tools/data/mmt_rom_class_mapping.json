@@ -3008,19 +3008,21 @@
       "class": "Brightmage",
       "label": "光矛",
       "labelSource": "translated",
-      "description": "光之长矛刺穿目标。",
-      "comp": "LaunchProjectile",
+      "description": "聚光成矛，烧穿施法者与目标连线上的所有敌人。",
+      "comp": "Beam",
       "tier": "small",
       "stage": 1,
       "target": "enemy",
       "params": {
-        "projectile": "MMT_Proj_LightLance",
-        "projectileSpec": {
-          "damageDef": "Burn",
-          "damage": 14,
-          "speed": 70,
-          "tex": "light_laser"
-        }
+        "damageDef": "Burn",
+        "damage": 14,
+        "armorPen": 0.15,
+        "igniteChance": 0.5,
+        "friendlyFire": false,
+        "beamFleckDefName": "MMT_Fleck_LightBeam",
+        "beamWidth": 0.7,
+        "impactFleckDefName": "MMT_Fleck_Holy",
+        "impactFleckScale": 3
       }
     },
     "MMT_Magic_LightBurst": {
@@ -3035,9 +3037,16 @@
       "target": "location",
       "params": {
         "hediff": "MMT_HD_Blind",
-        "radius": 5,
+        "radius": 6,
         "targetFriendly": false,
         "includeSelf": false
+      },
+      "fleckFx": {
+        "targetFleckDefName": "ExplosionFlash",
+        "targetScale": 10,
+        "targetBurstCount": 6,
+        "targetBurstRadius": 5,
+        "targetBurstFleckDefName": "MMT_Fleck_Twinkle"
       }
     },
     "MMT_Magic_LightSkip": {
@@ -4545,7 +4554,7 @@
       "stage": 2,
       "target": "enemy",
       "params": {
-        "projectile": "MMT_Proj_Mk203",
+        "projectile": "MMT_Proj_Mk203Grenade",
         "projectileSpec": {
           "damageDef": "Bomb",
           "damage": 20,
@@ -4605,7 +4614,7 @@
       "target": "location",
       "range": 40,
       "params": {
-        "projectile": "MMT_Proj_Mortar60",
+        "projectile": "MMT_Proj_Mortar60Shell",
         "projectileSpec": {
           "damageDef": "Bomb",
           "damage": 30,

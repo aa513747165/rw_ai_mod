@@ -1653,8 +1653,10 @@
   <HediffDef>
     <defName>MMT_Aura_InnerFire</defName>
     <label>内心之火（维持中）</label>
+    <description>内心之火（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1675,6 +1677,7 @@
     <description>内心之火温暖身心：抗寒、自愈、休息与饥饿消耗改善。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -1696,8 +1699,10 @@
   <HediffDef>
     <defName>MMT_Aura_Soothe</defName>
     <label>抚慰之风（维持中）</label>
+    <description>抚慰之风（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1718,6 +1723,7 @@
     <description>抚慰之风减轻疼痛、平复疲劳。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -1735,8 +1741,10 @@
   <HediffDef>
     <defName>MMT_Aura_Shadow</defName>
     <label>暗影随形（维持中）</label>
+    <description>暗影随形（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1757,6 +1765,7 @@
     <description>暗影之力强化工作与躯体。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -1779,8 +1788,10 @@
   <HediffDef>
     <defName>MMT_Aura_HolyLight</defName>
     <label>希望之光（维持中）</label>
+    <description>希望之光（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1801,6 +1812,7 @@
     <description>圣光庇佑，加速自愈、意志坚定。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -1818,8 +1830,10 @@
   <HediffDef>
     <defName>MMT_Aura_Inspire</defName>
     <label>鼓舞（维持中）</label>
+    <description>鼓舞（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1840,6 +1854,7 @@
     <description>战歌激励，工效与意志提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -1859,8 +1874,10 @@
   <HediffDef>
     <defName>MMT_Aura_Stoneskin</defName>
     <label>石肤（维持中）</label>
+    <description>石肤（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1881,6 +1898,7 @@
     <description>皮肤坚如岩石，大幅减伤。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -1897,8 +1915,10 @@
   <HediffDef>
     <defName>MMT_Aura_Enchanted</defName>
     <label>魅力光环（维持中）</label>
+    <description>魅力光环（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1919,6 +1939,7 @@
     <description>魅力加持，社交能力提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -1936,8 +1957,10 @@
   <HediffDef>
     <defName>MMT_Aura_Nightshade</defName>
     <label>夜影淬毒（维持中）</label>
+    <description>夜影淬毒（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1958,6 +1981,7 @@
     <description>武器淬毒，近战更加致命。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -1974,8 +1998,10 @@
   <HediffDef>
     <defName>MMT_Aura_Suppress</defName>
     <label>情绪压制（维持中）</label>
+    <description>情绪压制（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -1996,6 +2022,7 @@
     <description>情绪被压制，战力与意志下降。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2016,8 +2043,10 @@
   <HediffDef>
     <defName>MMT_Aura_Sprint</defName>
     <label>冲刺（维持中）</label>
+    <description>冲刺（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2038,6 +2067,7 @@
     <description>全速冲刺。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2054,8 +2084,10 @@
   <HediffDef>
     <defName>MMT_Aura_Shroud</defName>
     <label>黑暗斗篷（维持中）</label>
+    <description>黑暗斗篷（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2076,6 +2108,7 @@
     <description>黑暗斗篷护体：减伤并强化近战。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2095,8 +2128,10 @@
   <HediffDef>
     <defName>MMT_Aura_Provisioner</defName>
     <label>后勤光环（维持中）</label>
+    <description>后勤光环（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2117,6 +2152,7 @@
     <description>后勤改善：休息与饥饿消耗下降。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2134,8 +2170,10 @@
   <HediffDef>
     <defName>MMT_Aura_TaskMaster</defName>
     <label>监工光环（维持中）</label>
+    <description>监工光环（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2156,6 +2194,7 @@
     <description>监工督促：工作加速、社交下降。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2173,8 +2212,10 @@
   <HediffDef>
     <defName>MMT_Aura_Commander</defName>
     <label>统御光环（维持中）</label>
+    <description>统御光环（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2195,6 +2236,7 @@
     <description>统御鼓舞：心情改善、产能略降。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2214,8 +2256,10 @@
   <HediffDef>
     <defName>MMT_Aura_ThickSkin</defName>
     <label>石化皮肤（维持中）</label>
+    <description>石化皮肤（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2236,6 +2280,7 @@
     <description>皮肤石化，减伤。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2252,8 +2297,10 @@
   <HediffDef>
     <defName>MMT_Aura_InnerHealing</defName>
     <label>内在治疗（维持中）</label>
+    <description>内在治疗（维持中）</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2274,6 +2321,7 @@
     <description>持续自愈。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <naturalHealingFactor>4</naturalHealingFactor>
@@ -2291,6 +2339,7 @@
     <description>冰霜迟滞了行动。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2310,6 +2359,7 @@
     <description>立足不稳。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2329,6 +2379,7 @@
     <description>暗影迟滞了脚步。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2348,6 +2399,7 @@
     <description>强光眩目，视物不清。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -2370,6 +2422,7 @@
     <description>精神被汲取，虚弱不堪。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2395,6 +2448,7 @@
     <description>灵体被扭曲，受伤加深。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2414,6 +2468,7 @@
     <description>护甲被撕开缺口。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2433,6 +2488,7 @@
     <description>死亡印记削弱了战斗意志与命中。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2455,6 +2511,7 @@
     <description>死亡螺旋带来范围剧痛。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <painOffset>0.3</painOffset>
@@ -2472,6 +2529,7 @@
     <description>血液不断渗出。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <totalBleedFactor>2.0</totalBleedFactor>
@@ -2489,6 +2547,7 @@
     <description>被烙上了萨满咒印。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
       </li>
@@ -2505,6 +2564,7 @@
     <description>咒印引发持续剧痛。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <painOffset>0.25</painOffset>
@@ -2522,6 +2582,7 @@
     <description>极度倒霉。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2545,6 +2606,7 @@
     <description>机械与电子系统被瘫痪。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2565,6 +2627,7 @@
     <description>时间加速流逝：行动迟缓、饥饿加剧。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2585,6 +2648,7 @@
     <description>电流强化躯体。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2618,6 +2682,7 @@
     <description>高速再生。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <naturalHealingFactor>5</naturalHealingFactor>
@@ -2635,6 +2700,7 @@
     <description>圣光护盾吸收伤害。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2654,6 +2720,7 @@
     <description>躯体能力大幅提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -2684,6 +2751,7 @@
     <description>战意高昂，战力强化。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2707,6 +2775,7 @@
     <description>心绪被抚平。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2726,6 +2795,7 @@
     <description>纳米机械强化机体。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -2752,6 +2822,7 @@
     <description>动能护盾偏转攻击。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2771,6 +2842,7 @@
     <description>机体超载运转。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2796,6 +2868,7 @@
     <description>血能护盾护体并加速再生。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2816,6 +2889,7 @@
     <description>附魔强化操纵与攻速。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2841,6 +2915,7 @@
     <description>复活法术耗尽了心神。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -2860,8 +2935,10 @@
   <HediffDef>
     <defName>MMT_HD_AlterFate</defName>
     <label>命运快照</label>
+    <description>命运快照</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <becomeVisible>false</becomeVisible>
@@ -2879,6 +2956,7 @@
     <description>烙印强化体能。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -2905,6 +2983,7 @@
     <description>烙印安定心绪。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -2924,6 +3003,7 @@
     <description>烙印强化健康。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2944,6 +3024,7 @@
     <description>烙印减伤。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2963,6 +3044,7 @@
     <description>烙印强化感知与命中。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -2982,6 +3064,7 @@
     <description>行动迅捷。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3001,6 +3084,7 @@
     <description>反转力场几乎免疫攻击。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3020,6 +3104,7 @@
     <description>灵能屏障吸收伤害。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3039,6 +3124,7 @@
     <description>动能熔炉赋予的屏障。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3058,6 +3144,7 @@
     <description>全速推进。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3077,6 +3164,7 @@
     <description>精神振奋、命中提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3102,6 +3190,7 @@
     <description>减伤、忍痛、射速提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3125,6 +3214,7 @@
     <description>工作速度提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3144,6 +3234,7 @@
     <description>集合点防护。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3163,6 +3254,7 @@
     <description>加速并获得防护。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3185,6 +3277,7 @@
     <description>灵药滋养身心。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3205,6 +3298,7 @@
     <description>心智清明，心灵熵恢复加速。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3224,6 +3318,7 @@
     <description>遮蔽疼痛的极乐体验（有过量风险）。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <capMods>
@@ -3247,6 +3342,7 @@
     <description>缓释凝胶加速愈合。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <naturalHealingFactor>3</naturalHealingFactor>
@@ -3264,6 +3360,7 @@
     <description>移速、医护速度与品质提升。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3287,6 +3384,7 @@
     <description>近战攻击强化。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statOffsets>
@@ -3306,6 +3404,7 @@
     <description>护盾吸收伤害。</description>
     <isBad>false</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>
@@ -3325,6 +3424,7 @@
     <description>被钩爪缠住，动弹不得。</description>
     <isBad>true</isBad>
     <everCurableByItem>false</everCurableByItem>
+    <hediffClass>HediffWithComps</hediffClass>
     <stages>
       <li>
         <statFactors>

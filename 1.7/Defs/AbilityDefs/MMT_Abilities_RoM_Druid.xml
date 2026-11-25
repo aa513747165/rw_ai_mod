@@ -6,7 +6,6 @@
     <defName>MMT_Magic_Poison</defName>
     <label>施毒术</label>
     <description>使目标中毒（毒性积累）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/poison</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -31,6 +30,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>ToxicBuildup</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -46,13 +46,13 @@
     <defName>MMT_Magic_Regenerate</defName>
     <label>再生术</label>
     <description>目标持续高速自愈。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Regen</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>20.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>2400</cooldownTicksRange>
     <verbProperties>
@@ -70,6 +70,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_Regen</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -83,9 +84,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_SootheAnimal</defName>
-    <label>诱惑动物</label>
+    <label>诱惑动物（I）</label>
     <description>激怒区域内动物冲向敌人（简化：RoM 的安抚/激怒双效只保留激怒）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/beguile_animal</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -124,7 +124,6 @@
     <defName>MMT_Magic_CureDisease</defName>
     <label>治愈疾病</label>
     <description>驱除目标的疾病与感染。</description>
-    <level>1</level>
     <iconPath>UI/RoM/curedisease</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>

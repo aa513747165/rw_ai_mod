@@ -6,7 +6,6 @@
     <defName>MMT_Magic_ShadowWalk</defName>
     <label>暗影行走</label>
     <description>瞬移到目标影中。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shadowwalk</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -29,6 +28,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityTeleport">
+        <compClass>CompAbilityEffect_Teleport</compClass>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Shadow</casterFleckDefName>
@@ -40,7 +40,6 @@
     <defName>MMT_Magic_Nightshade</defName>
     <label>夜影淬毒</label>
     <description>开启后武器淬毒，近战更致命（持续型）。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/nightshade</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -52,7 +51,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -77,7 +75,6 @@
     <defName>MMT_Magic_ShadowStrike</defName>
     <label>暗影突袭</label>
     <description>闪现背刺目标并返回原位。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shadowstrike</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -115,7 +112,6 @@
     <defName>MMT_Magic_VeilOfShadows</defName>
     <label>暗影斗篷</label>
     <description>隐身并遁入烟雾。</description>
-    <level>1</level>
     <iconPath>UI/RoM/veilofshadows</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -127,7 +123,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_SoftExplosion</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -141,6 +136,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>PsychicInvisibility</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>

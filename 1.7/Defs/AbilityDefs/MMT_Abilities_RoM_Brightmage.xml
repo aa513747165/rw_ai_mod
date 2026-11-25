@@ -5,8 +5,7 @@
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_LightLance</defName>
     <label>光矛</label>
-    <description>光之长矛刺穿目标。</description>
-    <level>1</level>
+    <description>聚光成矛，烧穿施法者与目标连线上的所有敌人。</description>
     <iconPath>UI/RoM/lightlance</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -30,8 +29,16 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="CompProperties_AbilityLaunchProjectile">
-        <projectileDef>MMT_Proj_LightLance</projectileDef>
+      <li Class="MyModeTest.CompProperties_MMTLightSpear">
+        <damageDef>Burn</damageDef>
+        <damageAmount>14</damageAmount>
+        <armorPen>0.15</armorPen>
+        <igniteChance>0.5</igniteChance>
+        <beamFleckDefName>MMT_Fleck_LightBeam</beamFleckDefName>
+        <beamWidth>0.7</beamWidth>
+        <impactFleckDefName>MMT_Fleck_Holy</impactFleckDefName>
+        <impactFleckScale>3</impactFleckScale>
+        <friendlyFire>false</friendlyFire>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Twinkle</casterFleckDefName>
@@ -43,7 +50,6 @@
     <defName>MMT_Magic_LightBurst</defName>
     <label>闪光爆发</label>
     <description>强光爆发，致盲区域敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/lightburst</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -67,13 +73,17 @@
     <comps>
       <li Class="MyModeTest.CompProperties_MMTGiveHediffAoE">
         <hediffDef>MMT_HD_Blind</hediffDef>
-        <radius>5</radius>
+        <radius>6</radius>
         <targetFriendly>false</targetFriendly>
         <includeSelf>false</includeSelf>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Twinkle</casterFleckDefName>
-        <targetFleckDefName>MMT_Fleck_Twinkle</targetFleckDefName>
+        <targetFleckDefName>ExplosionFlash</targetFleckDefName>
+        <targetScale>10</targetScale>
+        <targetBurstCount>6</targetBurstCount>
+        <targetBurstRadius>5</targetBurstRadius>
+        <targetBurstFleckDefName>MMT_Fleck_Twinkle</targetBurstFleckDefName>
       </li>
     </comps>
   </AbilityDef>
@@ -81,7 +91,6 @@
     <defName>MMT_Magic_LightSkip</defName>
     <label>光行</label>
     <description>化光而行，瞬移到目标位置。</description>
-    <level>1</level>
     <iconPath>UI/RoM/lightskip</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -105,6 +114,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityTeleport">
+        <compClass>CompAbilityEffect_Teleport</compClass>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Twinkle</casterFleckDefName>
@@ -116,7 +126,6 @@
     <defName>MMT_Magic_Refraction</defName>
     <label>光墙折射</label>
     <description>光墙隆起作为掩体（简化：RoM 的弹道偏移未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/refraction</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -140,7 +149,14 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityWallraise">
-        <thingDef>RaisedRocks</thingDef>
+        <compClass>CompAbilityEffect_Wallraise</compClass>
+        <pattern>
+          <li>(0, 0)</li>
+          <li>(1, 0)</li>
+          <li>(-1, 0)</li>
+          <li>(0, 1)</li>
+          <li>(0, -1)</li>
+        </pattern>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Twinkle</casterFleckDefName>
@@ -152,7 +168,6 @@
     <defName>MMT_Magic_Sunfire</defName>
     <label>日焰</label>
     <description>日焰切割区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/sunfire</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -194,7 +209,6 @@
     <defName>MMT_Magic_SpiritOfLight</defName>
     <label>光之精灵</label>
     <description>召唤光之精灵作战，限时存在。</description>
-    <level>1</level>
     <iconPath>UI/RoM/sol</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

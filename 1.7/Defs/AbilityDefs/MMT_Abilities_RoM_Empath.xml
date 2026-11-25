@@ -6,7 +6,6 @@
     <defName>MMT_Magic_SuppressiveAura</defName>
     <label>情绪压制</label>
     <description>开启后维持压制光环：周围敌人情绪与战力受压。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/suppressiveaura</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -43,7 +41,6 @@
     <defName>MMT_Magic_FadeEmotions</defName>
     <label>抚平心绪</label>
     <description>移除目标一段负面记忆并安抚。</description>
-    <level>1</level>
     <iconPath>UI/RoM/emotionfade</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -78,7 +75,6 @@
     <defName>MMT_Magic_MindKiller</defName>
     <label>心灵杀手</label>
     <description>范围情绪洪流冲垮周围敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/MindKiller</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

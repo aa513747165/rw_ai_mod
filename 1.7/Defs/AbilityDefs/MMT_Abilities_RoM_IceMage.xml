@@ -4,15 +4,15 @@
        不要手改（改动会在重跑时被覆盖）。冰系魔法师 职业技能 -->
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_FrostRay</defName>
-    <label>霜冻之寒</label>
+    <label>霜冻之寒（I）</label>
     <description>霜冻射线，命中造成伤害并冻结减速。</description>
-    <level>1</level>
     <iconPath>UI/RoM/FrostRay</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>8.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>720</cooldownTicksRange>
     <verbProperties>
@@ -34,6 +34,7 @@
         <projectileDef>MMT_Proj_FrostRay</projectileDef>
       </li>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_FrostSlow</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -49,7 +50,6 @@
     <defName>MMT_Magic_Icebolt</defName>
     <label>冰箭术</label>
     <description>锐利的冰箭，重创目标。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Icebolt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -85,7 +85,6 @@
     <defName>MMT_Magic_Snowball</defName>
     <label>冰雪术</label>
     <description>雪球爆裂，范围伤害并冻结。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Snowball</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -126,9 +125,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Soothe</defName>
-    <label>抚慰之风</label>
+    <label>抚慰之风（I）</label>
     <description>开启后维持抚慰之风光环：周围友军疼痛减轻、休息效率提升。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/soothe</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -140,7 +138,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -166,7 +163,6 @@
     <defName>MMT_Magic_Rainmaker</defName>
     <label>唤雨者</label>
     <description>召唤降雨。</description>
-    <level>1</level>
     <iconPath>UI/RoM/rain</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -178,7 +174,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -203,7 +198,6 @@
     <defName>MMT_Magic_Blizzard</defName>
     <label>暴风雪</label>
     <description>暴风雪掩埋敌人：大范围持续冰霜伤害与减速。</description>
-    <level>1</level>
     <iconPath>UI/RoM/blizzard</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

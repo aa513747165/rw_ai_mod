@@ -6,19 +6,18 @@
     <defName>MMT_Magic_EnchantedBody</defName>
     <label>附魔之躯</label>
     <description>附魔强化自身操纵与攻速。</description>
-    <level>1</level>
     <iconPath>UI/RoM/enchantedbody</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>3600</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -32,6 +31,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_EnchantedBody</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -46,7 +46,6 @@
     <defName>MMT_Magic_EnchantedAura</defName>
     <label>魅力光环</label>
     <description>开启后维持魅力光环：周围友军社交能力提升。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/enchantedaura</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -58,7 +57,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>

@@ -6,7 +6,6 @@
     <defName>MMT_Magic_Heal</defName>
     <label>圣光术</label>
     <description>圣光治疗目标数处伤口并止血。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Heal</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -41,15 +40,15 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Shield</defName>
-    <label>神佑之盾</label>
+    <label>神佑之盾（I）</label>
     <description>为目标套上吸收伤害的神佑能量盾。</description>
-    <level>1</level>
     <iconPath>UI/RoM/Shield</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>20.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>2100</cooldownTicksRange>
     <verbProperties>
@@ -66,6 +65,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_DivineShield</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -79,9 +79,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_P_RayofHope</defName>
-    <label>希望之光</label>
+    <label>希望之光（I）</label>
     <description>开启后维持希望之光光环：周围友军加速自愈、意志坚定。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/rayofhope</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -93,7 +92,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <soundCastTail>GunTail_Medium</soundCastTail>
       <targetParams>
@@ -119,7 +117,6 @@
     <defName>MMT_Magic_ValiantCharge</defName>
     <label>神圣附体</label>
     <description>飞跃向目标并震击落点周围敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/valiantcharge</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -157,7 +154,6 @@
     <defName>MMT_Magic_Overwhelm</defName>
     <label>圣光压制</label>
     <description>近身圣光震慑一片敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/overwhelm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -195,7 +191,6 @@
     <defName>MMT_Magic_HolyWrath</defName>
     <label>神圣之怒</label>
     <description>天降圣光轰击区域。</description>
-    <level>1</level>
     <iconPath>UI/RoM/rayoflight</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

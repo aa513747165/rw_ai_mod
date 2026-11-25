@@ -6,7 +6,6 @@
     <defName>MMT_Magic_BloodGift</defName>
     <label>鲜血献祭</label>
     <description>自残放血，换取心灵熵下降（RoM 的回蓝灵能化改编）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bloodgift</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -44,13 +42,13 @@
     <defName>MMT_Magic_BloodForBlood</defName>
     <label>鲜血诅咒</label>
     <description>诅咒目标血流不止。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bloodforblood</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>30.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>3600</cooldownTicksRange>
     <verbProperties>
@@ -69,6 +67,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_BloodDoT</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -84,7 +83,6 @@
     <defName>MMT_Magic_IgniteBlood</defName>
     <label>燃血术</label>
     <description>点燃区域内暴露的血液。</description>
-    <level>1</level>
     <iconPath>UI/RoM/igniteblood</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -127,19 +125,18 @@
     <defName>MMT_Magic_BloodShield</defName>
     <label>血能护盾</label>
     <description>血能护盾护体并加速再生。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bloodshield</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>20.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>3600</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Vibration</soundCast>
       <soundCastTail>MMT_VibrationLow</soundCastTail>
       <targetParams>
@@ -154,6 +151,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_BloodShield</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -168,7 +166,6 @@
     <defName>MMT_Magic_Rend</defName>
     <label>血爆</label>
     <description>区域大出血。</description>
-    <level>1</level>
     <iconPath>UI/RoM/rend</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -211,7 +208,6 @@
     <defName>MMT_Magic_BloodMoon</defName>
     <label>血月</label>
     <description>血月降临：区域敌人狂暴，并召唤狂怒恶魔猎杀他们。</description>
-    <level>1</level>
     <iconPath>UI/RoM/BloodMoon</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

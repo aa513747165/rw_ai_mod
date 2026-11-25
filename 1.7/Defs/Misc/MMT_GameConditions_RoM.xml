@@ -7,7 +7,6 @@
     <description>魔法唤来的暖流，全图气温升高。</description>
     <conditionClass>GameCondition</conditionClass>
     <temperatureOffset>8</temperatureOffset>
-    <endWhenSilenced>false</endWhenSilenced>
     <preventRain>false</preventRain>
     <canBePermanent>false</canBePermanent>
   </GameConditionDef>
@@ -17,7 +16,6 @@
     <description>魔法唤来的寒流，全图气温降低。</description>
     <conditionClass>GameCondition</conditionClass>
     <temperatureOffset>-8</temperatureOffset>
-    <endWhenSilenced>false</endWhenSilenced>
     <preventRain>false</preventRain>
     <canBePermanent>false</canBePermanent>
   </GameConditionDef>
@@ -26,7 +24,6 @@
     <label>丰饶之雨</label>
     <description>蕴含自然魔力的雨水，种植区作物加速生长。</description>
     <conditionClass>MyModeTest.GameCondition_MMTFertility</conditionClass>
-    <endWhenSilenced>false</endWhenSilenced>
     <preventRain>false</preventRain>
     <canBePermanent>false</canBePermanent>
   </GameConditionDef>

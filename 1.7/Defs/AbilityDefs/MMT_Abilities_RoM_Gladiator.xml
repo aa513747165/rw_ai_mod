@@ -4,9 +4,8 @@
        不要手改（改动会在重跑时被覆盖）。角斗士 职业技能 -->
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_Sprint</defName>
-    <label>冲刺</label>
+    <label>冲刺（I）</label>
     <description>开启后移速大增（RoM 的疲劳累积简化为心灵熵维持消耗）。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/sprint2</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -43,13 +41,13 @@
     <defName>MMT_Might_Grapple</defName>
     <label>钩爪</label>
     <description>钩爪缠住目标，使其踉跄定身（简化：不做拉拽位移）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/grapplinghook</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>5.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>360</cooldownTicksRange>
     <verbProperties>
@@ -67,6 +65,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_Grapple</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -82,7 +81,6 @@
     <defName>MMT_Might_Cleave</defName>
     <label>顺劈斩</label>
     <description>近战横扫一片敌人（RoM 的自动施放改为手动）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/cleave</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -124,7 +122,6 @@
     <defName>MMT_Might_Whirlwind</defName>
     <label>旋风斩</label>
     <description>旋风般连斩周身敌人。</description>
-    <level>1</level>
     <iconPath>UI/RoM/whirlwind</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -136,7 +133,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>DropPod_Leaving</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -167,19 +163,18 @@
     <defName>MMT_Might_GladiatorManeuver</defName>
     <label>机动</label>
     <description>短时移速提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/sprint2</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>10.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1800</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -193,6 +188,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_SpeedBuff</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -207,7 +203,6 @@
     <defName>MMT_Might_GladiatorSweep</defName>
     <label>横扫</label>
     <description>强力横扫，对周围敌人造成双倍打击。</description>
-    <level>1</level>
     <iconPath>UI/RoM/cleave</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

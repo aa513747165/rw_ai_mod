@@ -6,7 +6,6 @@
     <defName>MMT_Magic_AdvancedHeal</defName>
     <label>强效治疗</label>
     <description>大量治疗并止血。</description>
-    <level>1</level>
     <iconPath>UI/RoM/advancedheal</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -41,15 +40,15 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_BestowMight</defName>
-    <label>激励</label>
+    <label>力量祝福（I）</label>
     <description>祝福目标，躯体能力大幅提升。</description>
-    <level>1</level>
     <iconPath>UI/RoM/bestowmight</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>60.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>3600</cooldownTicksRange>
     <verbProperties>
@@ -67,6 +66,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_BestowMight</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -80,9 +80,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_HealingCircle</defName>
-    <label>治愈之环</label>
+    <label>治愈之环（I）</label>
     <description>治疗场：范围内友军获得治疗。</description>
-    <level>1</level>
     <iconPath>UI/RoM/healingcircle</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -121,7 +120,6 @@
     <defName>MMT_Magic_Purify</defName>
     <label>净化术</label>
     <description>净化身心疤痕。</description>
-    <level>1</level>
     <iconPath>UI/RoM/purify</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -156,9 +154,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Magic_Resurrection</defName>
-    <label>英雄不朽</label>
+    <label>复活术</label>
     <description>复活刚死未腐的死者，双方虚弱数日。</description>
-    <level>1</level>
     <iconPath>UI/RoM/resurrection</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>

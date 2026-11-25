@@ -6,7 +6,6 @@
     <defName>MMT_Might_Taunt</defName>
     <label>嘲讽</label>
     <description>激怒目标冲向自己。</description>
-    <level>1</level>
     <iconPath>UI/RoM/taunt</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -29,6 +28,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveMentalState">
+        <compClass>CompAbilityEffect_GiveMentalState</compClass>
         <stateDef>Berserk</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -43,13 +43,13 @@
     <defName>MMT_Might_ShieldOther</defName>
     <label>援护之盾</label>
     <description>为友军套上护盾。</description>
-    <level>1</level>
     <iconPath>UI/RoM/shieldother</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>15.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>1200</cooldownTicksRange>
     <verbProperties>
@@ -66,6 +66,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_ShieldPhys</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -81,7 +82,6 @@
     <defName>MMT_Might_ThrowingKnife</defName>
     <label>飞刀</label>
     <description>掷出飞刀。</description>
-    <level>1</level>
     <iconPath>UI/RoM/throwingknife</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -118,19 +118,18 @@
     <defName>MMT_Might_HeavyBlow</defName>
     <label>强力打击</label>
     <description>短时强化近战攻击（RoM 的持续型改为一次性）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/heavyblow</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>8</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.01</Ability_PsyfocusCost>
+      <Ability_Duration>15.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>900</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -144,6 +143,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_HeavyBlow</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -158,7 +158,6 @@
     <defName>MMT_Might_ThickSkin</defName>
     <label>石化皮肤</label>
     <description>开启后皮肤石化减伤。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/thickskin</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -170,7 +169,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -193,9 +191,8 @@
   </AbilityDef>
   <AbilityDef ParentName="PsycastBase">
     <defName>MMT_Might_InnerHealing</defName>
-    <label>内在治疗</label>
+    <label>深入治疗</label>
     <description>开启后持续自愈。再次施放关闭。</description>
-    <level>1</level>
     <iconPath>UI/RoM/innerhealing</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -207,7 +204,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>Message_PositiveEvent</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>

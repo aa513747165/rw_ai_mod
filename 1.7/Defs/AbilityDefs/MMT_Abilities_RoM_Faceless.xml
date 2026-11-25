@@ -6,7 +6,6 @@
     <defName>MMT_Might_Disguise</defName>
     <label>认知遮蔽</label>
     <description>遮蔽自身认知，近似隐身。</description>
-    <level>1</level>
     <iconPath>UI/RoM/disguise</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -18,7 +17,6 @@
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_VibrationLow</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -32,6 +30,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>PsychicInvisibility</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -46,19 +45,18 @@
     <defName>MMT_Might_Reversal</defName>
     <label>反转</label>
     <description>短时几乎免疫近战与投射物伤害。</description>
-    <level>1</level>
     <iconPath>UI/RoM/reversal</iconPath>
     <writeCombatLog>false</writeCombatLog>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
     <statBases>
       <Ability_EntropyGain>16</Ability_EntropyGain>
       <Ability_PsyfocusCost>0.02</Ability_PsyfocusCost>
+      <Ability_Duration>8.0</Ability_Duration>
     </statBases>
     <cooldownTicksRange>7200</cooldownTicksRange>
     <verbProperties>
       <warmupTime>0.5</warmupTime>
       <range>0</range>
-      <targetRequired>false</targetRequired>
       <soundCast>MMT_Vibration</soundCast>
       <targetParams>
         <canTargetSelf>true</canTargetSelf>
@@ -72,6 +70,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveHediff">
+        <compClass>CompAbilityEffect_GiveHediff</compClass>
         <hediffDef>MMT_HD_Reversal</hediffDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
@@ -86,7 +85,6 @@
     <defName>MMT_Might_Transpose</defName>
     <label>移形换位</label>
     <description>与目标交换位置，双方眩晕，自获反弹。</description>
-    <level>1</level>
     <iconPath>UI/RoM/transpose</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -123,7 +121,6 @@
     <defName>MMT_Might_Possess</defName>
     <label>精神操控</label>
     <description>使目标狂暴错乱（简化：RoM 的接管控制未移植）。</description>
-    <level>1</level>
     <iconPath>UI/RoM/possess</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
@@ -147,6 +144,7 @@
     </verbProperties>
     <comps>
       <li Class="CompProperties_AbilityGiveMentalState">
+        <compClass>CompAbilityEffect_GiveMentalState</compClass>
         <stateDef>Berserk</stateDef>
         <psychic>true</psychic>
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
