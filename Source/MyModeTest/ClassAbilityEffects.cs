@@ -128,7 +128,7 @@ namespace MyModeTest
     {
         public new CompProperties_MMTAoEDamage Props => (CompProperties_MMTAoEDamage)props;
 
-        /// <summary>预览与 PulseWorker 伤害筛选一致：friendlyFire=false 仅跳过同派系。</summary>
+        /// <summary>预览与 PulseWorker 伤害筛选一致：friendlyFire=false 仅跳过同派系；走每 tick 缓存扫描。</summary>
         public override IEnumerable<Pawn> AffectedPawns(LocalTargetInfo target)
         {
             Pawn caster = parent.pawn;
@@ -137,9 +137,9 @@ namespace MyModeTest
             {
                 yield break;
             }
-            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(target.Cell, map, Props.radius, true))
+            foreach (Pawn p in MMTAoETargetPreview.RawPawnsInRadius(map, target.Cell, Props.radius))
             {
-                if (thing is Pawn p && !p.Dead && (Props.friendlyFire || p.Faction != caster.Faction))
+                if (Props.friendlyFire || p.Faction != caster.Faction)
                 {
                     yield return p;
                 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 持续地面区域（Thing_MMTGroundZone）：Attach 类无碰撞 Thing，
+       由 MMTGroundZoneUtil.FireZone 生成，单实体管整片圆形区域（面积不放大实体数），
+       按脉冲间隔对圆内 pawn 结算伤害/累积 Hediff，自绘三层反向旋转气雾圆盘，
+       持续时间用尽自毁。graphicData 仅为兜底（本体 DrawAt 自绘，不走 Graphic）。
+       不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_GroundZone</defName>
+    <label>技能地面区域</label>
+    <thingClass>MyModeTest.Thing_MMTGroundZone</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_AuraDisc</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

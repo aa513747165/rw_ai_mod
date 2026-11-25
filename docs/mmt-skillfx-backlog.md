@@ -30,7 +30,7 @@
   - 恐惧/狂暴：`MentalStateDef`（如 `PanicFlee`、`Berserk`）挂 `MentalStateHandler`，`ClassAbilityEffects.cs` 的 `CompAbilityEffect_MMTMentalStateAoE` 已有同款可借。
   - 建议做成"CC 工具类 + 参数化 comp"，和新星环一样进通用桶。
 
-### 4. 持续地面区域（通用版）
+### 4. 持续地面区域（通用版）—— ✅ 已完成（第十九步，2026-11-25）
 
 - **表现**：在地面维持一片区域，站在里面的单位持续吃效果：毒云（持续掉血）、烟幕（挡视线/降命中）、减速地带等。
 - **定位**：第 6 步火海是"燃烧"特化；这里要的是通用"区域 comp + 按 tick 给覆盖格上目标挂效果"的底层，火海只是它的一种皮肤。

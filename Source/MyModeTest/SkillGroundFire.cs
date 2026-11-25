@@ -118,6 +118,8 @@ namespace MyModeTest
     /// 火焰柱实体：Attach 类无碰撞 Thing，存活期间自绘贴图火焰（双层四边形闪烁），
     /// 按间隔对影响格内的 pawn/建筑跳 Burn 伤害并可点燃。参数全为运行时传入不进存档；
     /// 读档后参数丢失即自毁（火焰最长数秒，可接受）。
+    /// 性能：火焰材质按贴图全局共享（火海 70 柱不再各自 new Material），
+    /// Graphics.DrawMesh 提交即读当前颜色，逐调用染色互不影响。
     /// </summary>
     public class Thing_MMTGroundFlame : Thing
     {
@@ -131,7 +133,24 @@ namespace MyModeTest
         /// <summary>每柱随机动画相位/朝向，火海成片时避免齐刷刷同步闪烁。</summary>
         private float seed;
         private float baseAngle;
-        private Material flameMat;
+
+        // 火焰材质按贴图全局共享（同一火海全部柱子一个材质实例）
+        private static readonly Dictionary<string, Material> sharedMats = new Dictionary<string, Material>();
+
+        private static Material SharedMat(string texPath)
+        {
+            if (!sharedMats.TryGetValue(texPath, out Material mat) || mat == null)
+            {
+                Texture2D tex = ContentFinder<Texture2D>.Get(texPath, false);
+                if (tex == null)
+                {
+                    return null;
+                }
+                mat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+                sharedMats[texPath] = mat;
+            }
+            return mat;
+        }
 
         public void Setup(Thing caster, MMTGroundFireParams p, int delayTicks)
         {
@@ -229,14 +248,10 @@ namespace MyModeTest
             {
                 return;
             }
+            Material flameMat = SharedMat(flameParams.texPath);
             if (flameMat == null)
             {
-                Texture2D tex = ContentFinder<Texture2D>.Get(flameParams.texPath, false);
-                if (tex == null)
-                {
-                    return;
-                }
-                flameMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+                return;
             }
             int elapsed = durationTotal - ticksLeft;
             float alpha = Mathf.Clamp01(elapsed / 8f) * Mathf.Clamp01(ticksLeft / 30f);
@@ -257,16 +272,6 @@ namespace MyModeTest
             float tipScale = scale * 0.62f * (2f - flicker);
             Graphics.DrawMesh(MeshPool.plane10,
                 Matrix4x4.TRS(tipPos, rot, new Vector3(tipScale, 1f, tipScale)), flameMat, 0);
-        }
-
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {
-            if (flameMat != null)
-            {
-                Object.Destroy(flameMat);
-                flameMat = null;
-            }
-            base.Destroy(mode);
         }
     }
 

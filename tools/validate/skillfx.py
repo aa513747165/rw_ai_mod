@@ -50,6 +50,9 @@ BEAM_CS = "Source/MyModeTest/SkillBeam.cs"
 METEOR_TEX = "1.7/Textures/Things/Mote/MMT_Meteor.png"
 BIGBALL_TEX = "1.7/Textures/Things/Projectile/MMT_BigFireball.png"
 WALL_TEX = "1.7/Textures/Things/Building/MMT_StoneWall.png"
+# —— 第 19 步：持续地面区域（毒气池） ——
+ZONE_XML = "1.7/Defs/ThingDefs_Misc/MMT_GroundZone.xml"
+ZONE_CS = "Source/MyModeTest/SkillGroundZone.cs"
 
 
 def validate_skillfx() -> None:
@@ -60,7 +63,8 @@ def validate_skillfx() -> None:
                    ORB_TEX, HOMING_TEX, PAW_TEX, TURRET_BASE_TEX, TURRET_TOP_TEX,
                    DELAY_XML, CHAIN_XML, BREATH_XML, WALL_XML, PROJ_XML, JOBS_XML,
                    DELAY_CS, KNOCK_CS, CHAIN_CS, BREATH_CS, HEAL_CS, WALL_CS, BEAM_CS,
-                   METEOR_TEX, BIGBALL_TEX, WALL_TEX])
+                   METEOR_TEX, BIGBALL_TEX, WALL_TEX,
+                   ZONE_XML, ZONE_CS])
 
     defs = def_map(parse_xml(FLAME_XML))
     node = defs.get("MMT_GroundFlame")
@@ -197,7 +201,7 @@ def validate_skillfx() -> None:
         if token not in dummy:
             fail(f"假人靶子配置缺少: {token}")
 
-    # —— 演示技能集（34 条，Dev 一键赋予小人的唯一数据源） ——
+    # —— 演示技能集（35 条，Dev 一键赋予小人的唯一数据源） ——
     demoset = Path(DEMOSET_XML).read_text(encoding="utf-8")
     for token in ("MMTSkillDemoSetDef", "MMT_SkillDemoSet",
                   "测试·友方回响", "测试·敌方回响", "测试·单发火球术", "测试·多方位火球术",
@@ -215,7 +219,9 @@ def validate_skillfx() -> None:
                   "delayedStrike", "knockback", "chainLightning", "breathCone", "heal", "wall",
                   "meteorDelaySeconds", "meteorFallTicks", "knockbackCells", "chainBounceCount",
                   "breathRange", "healAmount", "wallDurationSeconds", "ignoreLineOfSight",
-                  "MMT_Proj_BigFireball"):
+                  "MMT_Proj_BigFireball",
+                  "测试·毒气池", "groundZone", "zoneDurationSeconds", "zoneIntervalTicks",
+                  "zoneAffectEveryone", "zoneHediffDefName", "zoneHediffSeverity", "ToxicBuildup"):
         if token not in demoset:
             fail(f"演示技能集缺少: {token}")
 
@@ -330,12 +336,38 @@ def validate_skillfx() -> None:
         if token not in wall_cs:
             fail(f"SkillWall.cs 缺少: {token}")
 
+    # —— 持续地面区域·毒气池（第十九步） ——
+    zone_defs = def_map(parse_xml(ZONE_XML))
+    zone = zone_defs.get("MMT_GroundZone")
+    if zone is None:
+        fail("缺少 MMT_GroundZone 定义")
+        return
+    assert_equal(child_text(zone, "thingClass"), "MyModeTest.Thing_MMTGroundZone", "地面区域 thingClass")
+    zone_cs = Path(ZONE_CS).read_text(encoding="utf-8")
+    for token in ("MMTGroundZoneUtil", "Thing_MMTGroundZone", "CompAbilityEffect_MMTGroundZone",
+                  "MMTZoneAffectMode", "FireZone", "EffectPulse", "hediffSeverityPerPulse",
+                  "sharedMats", "RawPawnsInRadius"):
+        if token not in zone_cs:
+            fail(f"SkillGroundZone.cs 缺少: {token}")
+
     # —— 新演示接入 AbilityTargeting ——
     for token in ("delayedStrike", "knockback", "chainLightning", "breathCone", "heal", "wall",
                   "ignoreLineOfSight", "BreakChannel", "MMTDelayedStrikeUtil", "MMTKnockbackUtil",
-                  "MMTChainLightningUtil", "MMTBreathUtil", "MMTHealUtil", "MMTWallUtil"):
+                  "MMTChainLightningUtil", "MMTBreathUtil", "MMTHealUtil", "MMTWallUtil",
+                  "groundZone", "MMTGroundZoneUtil"):
         if token not in targeting_cs:
             fail(f"AbilityTargeting.cs 缺少新演示接入: {token}")
+
+    # —— 性能：瞄准扫描每 tick 缓存 + 合并双扫描；火海共享材质 ——
+    for token in ("EnsureScan", "RawPawnsInRadius", "PawnsInRadiusCached", "scanPawns", "scanBuildings"):
+        if token not in targeting_cs:
+            fail(f"AbilityTargeting.cs 缺少扫描缓存: {token}")
+    fire_cs = Path(CS).read_text(encoding="utf-8")
+    for token in ("sharedMats", "SharedMat"):
+        if token not in fire_cs:
+            fail(f"SkillGroundFire.cs 缺少共享材质优化: {token}")
+    if "private Material flameMat" in fire_cs or "Object.Destroy(flameMat)" in fire_cs:
+        fail("SkillGroundFire.cs 火焰柱不应再持有每柱独立材质实例")
 
     print("skillfx: OK")
 

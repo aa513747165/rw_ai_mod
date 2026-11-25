@@ -54,22 +54,94 @@ namespace MyModeTest
                 Matrix4x4.TRS(pos, Quaternion.identity, new Vector3(size, 1f, size)), circleMat, 0);
         }
 
+        // —— 每 tick 原始扫描缓存 ——
+        // 瞄准预览每帧会调 2~4 次圈内判定（高亮 + 命中数提示 + 基类预览），原先每次各自
+        // 做 1~2 次径向遍历；pawn 位置只随 tick 变化，故按 (tick, map, center, radius) 缓存
+        // 一次合并扫描（pawn 与带标记建筑同一趟收集），帧内/帧间同 tick 全部复用。
+        private static readonly List<Pawn> scanPawns = new List<Pawn>();
+        private static readonly List<Thing> scanBuildings = new List<Thing>();
+        private static int scanTick = -1;
+        private static Map scanMap;
+        private static IntVec3 scanCenter;
+        private static float scanRadius = -1f;
+
+        private static void EnsureScan(Map map, IntVec3 center, float radius)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (scanTick == tick && scanMap == map && scanCenter == center && scanRadius == radius)
+            {
+                return;
+            }
+            scanTick = tick;
+            scanMap = map;
+            scanCenter = center;
+            scanRadius = radius;
+            scanPawns.Clear();
+            scanBuildings.Clear();
+            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(center, map, radius, true))
+            {
+                if (thing.Destroyed)
+                {
+                    continue;
+                }
+                if (thing is Pawn p)
+                {
+                    if (!p.Dead)
+                    {
+                        scanPawns.Add(p);
+                    }
+                }
+                else if (thing.Faction != null && thing.TryGetComp<CompAoETargetable>() != null)
+                {
+                    scanBuildings.Add(thing);
+                }
+            }
+        }
+
+        /// <summary>原始扫描的 pawn 全集（不过滤敌我）；内部复用列表，勿缓存勿修改，仅供自定义筛选（如 friendlyFire 语义）。</summary>
+        public static IReadOnlyList<Pawn> RawPawnsInRadius(Map map, IntVec3 center, float radius)
+        {
+            EnsureScan(map, center, radius);
+            return scanPawns;
+        }
+
+        /// <summary>圈内 pawn 敌我判定（语义与 MMTAbilityUtil.PawnsInRadius 一致，走每 tick 缓存扫描）。</summary>
+        public static IEnumerable<Pawn> PawnsInRadiusCached(Thing casterCtx, IntVec3 center, Map map, float radius, bool friendly, bool includeSelf)
+        {
+            EnsureScan(map, center, radius);
+            foreach (Pawn p in scanPawns)
+            {
+                if (!includeSelf && p == casterCtx)
+                {
+                    continue;
+                }
+                if (friendly)
+                {
+                    if (p.Faction == casterCtx.Faction || (p.Faction == null && p.RaceProps.Animal && casterCtx.Faction != null && p.HostFaction == null))
+                    {
+                        yield return p;
+                    }
+                }
+                else if (p.Faction != null && p.Faction != casterCtx.Faction && p.HostileTo(casterCtx))
+                {
+                    yield return p;
+                }
+            }
+        }
+
         /// <summary>
-        /// 圈内敌我判定：pawn 走 MMTAbilityUtil.PawnsInRadius 既有逻辑，
+        /// 圈内敌我判定：pawn 判定语义同 MMTAbilityUtil.PawnsInRadius，
         /// 建筑/物品须带 CompAoETargetable 标记才参与判定（按各自派系分敌我）。
         /// </summary>
         public static IEnumerable<Thing> TargetsInRadius(Thing casterCtx, IntVec3 center, Map map, float radius, bool friendly, bool includeSelf)
         {
-            foreach (Pawn p in MMTAbilityUtil.PawnsInRadius(center, map, radius, casterCtx, friendly, includeSelf))
+            foreach (Pawn p in PawnsInRadiusCached(casterCtx, center, map, radius, friendly, includeSelf))
             {
                 yield return p;
             }
-            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(center, map, radius, true))
+            EnsureScan(map, center, radius);
+            foreach (Thing thing in scanBuildings)
             {
-                if (thing is Pawn || thing.Destroyed || thing.Faction == null || thing.TryGetComp<CompAoETargetable>() == null)
-                {
-                    continue;
-                }
                 if (!includeSelf && thing == casterCtx)
                 {
                     continue;
@@ -160,7 +232,7 @@ namespace MyModeTest
             {
                 yield break;
             }
-            foreach (Pawn p in MMTAbilityUtil.PawnsInRadius(target.Cell, map, Props.radius, caster, Props.targetFriendly, Props.includeSelf))
+            foreach (Pawn p in MMTAoETargetPreview.PawnsInRadiusCached(caster, target.Cell, map, Props.radius, Props.targetFriendly, Props.includeSelf))
             {
                 yield return p;
             }
@@ -211,7 +283,7 @@ namespace MyModeTest
         public float range = 24.9f;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -409,6 +481,23 @@ namespace MyModeTest
         // —— 治疗演示（第十七步） ——
         /// <summary>每个目标的治疗量池。</summary>
         public float healAmount = 15f;
+
+        // —— 持续地面区域演示（第十九步：毒气池） ——
+        /// <summary>区域持续秒数（半径用 radius）。</summary>
+        public float zoneDurationSeconds = 20f;
+        /// <summary>效果脉冲间隔 tick。</summary>
+        public int zoneIntervalTicks = 30;
+        /// <summary>true=不分敌我（真实毒气），false=仅敌方。</summary>
+        public bool zoneAffectEveryone = true;
+        /// <summary>每跳直接伤害（0=仅 Hediff 累积）。</summary>
+        public float zoneDamage;
+        public string zoneDamageDefName;
+        /// <summary>每跳累积的 Hediff（默认原版 ToxicBuildup 毒素积累）。</summary>
+        public string zoneHediffDefName = "ToxicBuildup";
+        public float zoneHediffSeverity = 0.04f;
+        /// <summary>区域圆盘贴图与染色。</summary>
+        public string zoneTexPath = "Things/Mote/MMT_AuraDisc";
+        public Color zoneTint = new Color(0.55f, 0.85f, 0.3f);
 
         // —— 造墙演示（第十八步：石墙术） ——
         /// <summary>石墙存续秒数（墙半径用 radius）。</summary>
@@ -614,6 +703,12 @@ namespace MyModeTest
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
                 return "技能框架演示：" + cast + "在圈选范围（半径 " + demo.radius + "）内召唤一片临时石墙（挡路挡视线，"
                     + demo.wallDurationSeconds + "s 后崩解）。";
+            }
+            if (demo.demoType == "groundZone")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标点展开持续 " + demo.zoneDurationSeconds + "s 的毒气池（半径 " + demo.radius
+                    + "，" + (demo.zoneAffectEveryone ? "不分敌我" : "仅敌方") + "，站内持续积累毒素，离区后自然衰减）。";
             }
             return "技能框架演示：范围圈敌我预览，确认后仅提示影响名单，无实际效果。";
         }
@@ -832,7 +927,7 @@ namespace MyModeTest
                 || demo.demoType == "blink" || demo.demoType == "massTeleport" || demo.demoType == "charge" || demo.demoType == "jump"
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
-                || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall")
+                || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone")
             {
                 castingDemo = demo;
                 castingTarget = target;
@@ -1226,6 +1321,28 @@ namespace MyModeTest
                     parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
+            if (demo.demoType == "groundZone")
+            {
+                // 持续地面区域：目标点展开毒气池（站内累积毒素，离区自然衰减）
+                Thing_MMTGroundZone zone = MMTGroundZoneUtil.FireZone(parent, target.Cell, new MMTGroundZoneParams
+                {
+                    radius = demo.radius,
+                    durationTicks = Mathf.Max(1, demo.zoneDurationSeconds.SecondsToTicks()),
+                    intervalTicks = demo.zoneIntervalTicks,
+                    affectMode = demo.zoneAffectEveryone ? MMTZoneAffectMode.Everyone : MMTZoneAffectMode.HostileOnly,
+                    damage = demo.zoneDamage,
+                    damageDef = demo.zoneDamageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(demo.zoneDamageDefName),
+                    hediffDef = demo.zoneHediffDefName.NullOrEmpty() ? null : DefDatabase<HediffDef>.GetNamedSilentFail(demo.zoneHediffDefName),
+                    hediffSeverityPerPulse = demo.zoneHediffSeverity,
+                    texPath = demo.zoneTexPath,
+                    tint = demo.zoneTint,
+                    moteFleckDef = DefDatabase<FleckDef>.GetNamedSilentFail("MMT_Fleck_BuffSpark"),
+                    startSound = sound
+                });
+                Messages.Message(zone != null ? "【" + demo.label + "】毒气池蔓延！" : "【" + demo.label + "】区域展开失败",
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
             ThingDef projectile = DefDatabase<ThingDef>.GetNamedSilentFail(demo.projectileDefName);
             if (projectile == null)
             {
@@ -1291,7 +1408,7 @@ namespace MyModeTest
 
     // ========== Dev 一键赋予小人全部演示技能 ==========
 
-    /// <summary>技能框架演示技能集 Def：27 个演示条目的唯一数据源（1.7/Defs/Misc/MMT_SkillDemoSet.xml）。</summary>
+    /// <summary>技能框架演示技能集 Def：全部演示条目的唯一数据源（1.7/Defs/Misc/MMT_SkillDemoSet.xml）。</summary>
     public class MMTSkillDemoSetDef : Def
     {
         public List<MMTSkillDemoEntry> demos = new List<MMTSkillDemoEntry>();
