@@ -236,6 +236,15 @@ namespace MyModeTest
             {
                 return;
             }
+            // Lord 全灭销毁路径：Notify_PawnLost 内部先 RemovePawn 再 Destroy（RemoveLord 前缀已正常减计数），
+            // 之后我们的 Notify_PawnLost 后缀仍会带着这个已销毁 Lord 进来——此时 ownedPawns 已清空，
+            // IsHostile 退回派系判定会误判为敌对，把它重新加回计数且此后再无事件修正（计数永久泄漏：
+            // 感应开关恒通电、哨戒机械体永不睡眠）。已不在 lordManager.lords 里的 Lord 一律忽略。
+            // 注意 LordMaker.MakeNewLord 是先 AddLord 再 AddPawns，正常 Lord 走 AddPawn 补丁时必在列表中。
+            if (!lord.Map.lordManager.lords.Contains(lord))
+            {
+                return;
+            }
             bool hostile = IsHostile(lord);
             bool counted = countedLords.Contains(lord);
             if (hostile == counted)

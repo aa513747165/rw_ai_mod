@@ -98,6 +98,12 @@ def validate_mechstandby() -> None:
     inc_idx = tracker.find("private static void IncrementAssault")
     if inc_idx == -1 or hook not in tracker[inc_idx:tracker.find("private static void DecrementAssault")]:
         fail("IncrementAssault 必须回调唤醒管理器（新进攻出现即唤醒，不能只在计数 0->1 翻转时唤醒）")
+    # 防计数泄漏：Lord 全灭销毁后 Notify_PawnLost 后缀仍会带着已销毁 Lord 进 SyncLord，
+    # 此时成员已清空、派系兜底判定会把它当敌对重新计入且再无事件修正（感应开关恒通电、哨戒永不睡眠）。
+    # SyncLord 必须用 lordManager.lords.Contains 过滤已移除的 Lord（LordMaker 先 AddLord 再 AddPawns，正常路径不受影响）。
+    sync_idx = tracker.find("public static void SyncLord")
+    if sync_idx == -1 or "lordManager.lords.Contains(lord)" not in tracker[sync_idx:tracker.find("public static void OnLordRemoved")]:
+        fail("SyncLord 必须用 lordManager.lords.Contains(lord) 过滤已从管理器移除的 Lord（否则全灭销毁后会被重新计入，计数永久泄漏）")
 
 
 SUITES = {"mechstandby": validate_mechstandby}
