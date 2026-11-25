@@ -4,7 +4,7 @@
        不进任何建筑/角色 Def；Dev 模式经 Debug「MMT 技能 → 赋予全部演示技能（选中小人）」
        由 MMTSkillDemoGrant 运行时注入 comp 到小人身上实测。
        沙袋人偶（友方/敌方）仅作技能靶子，不再携带技能。 -->
-  <MMTSkillDemoSetDef>
+  <MyModeTest.MMTSkillDemoSetDef>
     <defName>MMT_SkillDemoSet</defName>
     <label>技能框架演示技能集</label>
     <demos>
@@ -397,5 +397,5 @@
         <zoneTint>(0.55,0.85,0.3)</zoneTint>
       </li>
     </demos>
-  </MMTSkillDemoSetDef>
+  </MyModeTest.MMTSkillDemoSetDef>
 </Defs>

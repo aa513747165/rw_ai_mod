@@ -14,7 +14,6 @@
     <passability>Impassable</passability>
     <blockWind>true</blockWind>
     <blockLight>true</blockLight>
-    <castShadow>true</castShadow>
     <fillPercent>1</fillPercent>
     <coversFloor>true</coversFloor>
     <selectable>true</selectable>
