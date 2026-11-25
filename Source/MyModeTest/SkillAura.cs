@@ -144,11 +144,6 @@ namespace MyModeTest
         private int ticksLeft = -1;
         private int ticksUntilPulse;
         private Material discMat;
-        /// <summary>圆盘 alpha 上限（透明度基准，越小越透）。</summary>
-        private const float DiscBaseOpacity = 0.3f;
-        /// <summary>圆盘 RGB 亮度基准（与 alpha 解耦：低透明 + 高亮度 = 发光通透感；
-        /// 等比缩放会随 alpha 一起变暗成泥浆色——TransparentPostLight 是 alpha 混合）。</summary>
-        private const float DiscBaseBrightness = 0.9f;
 
         /// <summary>1.7 AttachableThing 抽象成员；光环不可选，仅调试可见。</summary>
         public override string InspectStringAddon => "技能光环（演示实体）";
@@ -211,9 +206,15 @@ namespace MyModeTest
                 }
                 discMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
             }
-            // 实验：原贴图直显不作任何处理（无染色、无淡入淡出/呼吸、无 RGB/alpha 缩放），
-            // 看贴图在 TransparentPostLight 下的原生观感再决定后续处理方向
-            discMat.color = Color.white;
+            int elapsed = auraParams.durationTicks - ticksLeft;
+            float k = Mathf.Clamp01(elapsed / 15f) * Mathf.Clamp01(ticksLeft / 30f)
+                * (0.75f + 0.25f * Mathf.Sin(elapsed * 0.09f));
+            // 特效原则（截图第 15 轮验证）：原贴图白 RGB 满亮度直显亮度/透明度均正常，
+            // TransparentPostLight 是标准 alpha 混合——染色只乘 tint、淡入淡出/呼吸只调 alpha，
+            // RGB 绝不缩放（压暗 RGB 会把地面混成泥浆色）
+            Color color = auraParams.tint;
+            color.a = k;
+            discMat.color = color;
             // 高度取小人层（身体中心），略高于 Pawn 层避免与本体闪面；DrawPos 平滑跟随移动
             Vector3 pos = follow.DrawPos;
             pos.y = AltitudeLayer.Pawn.AltitudeFor() + 0.1f;

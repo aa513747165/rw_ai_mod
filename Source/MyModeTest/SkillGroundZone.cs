@@ -218,7 +218,8 @@ namespace MyModeTest
         }
 
         /// <summary>自绘气雾：三层贴图圆盘反向慢速旋转 + 呼吸透明度（共享材质，逐次 MaterialPropertyBlock 传色）。
-        /// 贴图已预乘黑底，加法系着色器下按形状衰减；RGB 与 alpha 同步缩放，两种混合模式明暗都受控。</summary>
+        /// 特效原则同光环（截图第 15 轮验证）：TransparentPostLight 是标准 alpha 混合，染色只乘 tint、
+        /// 每层明暗只调 alpha，RGB 绝不缩放（压暗 RGB 会把地面混成泥浆色）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (zoneParams == null || Map != Find.CurrentMap)
@@ -245,10 +246,7 @@ namespace MyModeTest
                 float angle = elapsed * (layer % 2 == 0 ? 0.35f : -0.5f) * (1f + layer * 0.4f);
                 float k = fade * (0.8f + 0.2f * Mathf.Sin(elapsed * 0.07f + layer * 1.9f)) * (0.16f - layer * 0.035f);
                 Color color = zoneParams.tint;
-                color.r *= k;
-                color.g *= k;
-                color.b *= k;
-                color.a *= k;
+                color.a = k;
                 mat.color = color;
                 matProps.SetColor("_Color", color);
                 Graphics.DrawMesh(MeshPool.plane10,
