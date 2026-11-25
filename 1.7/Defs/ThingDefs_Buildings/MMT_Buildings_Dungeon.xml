@@ -23,7 +23,7 @@
     <tickerType>Never</tickerType>
     <designationCategory>MMT_Production</designationCategory>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
-    <minifiedDef>MinifiedThing</minifiedDef>
+    <!-- 1.7 ThingDef 无 minifiable 布尔字段，不设 minifiedDef 即默认不可打包 -->
     <statBases>
       <WorkToBuild>100</WorkToBuild>
       <MaxHitPoints>200</MaxHitPoints>

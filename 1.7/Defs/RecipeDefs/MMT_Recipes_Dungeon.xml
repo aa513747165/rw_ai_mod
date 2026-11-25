@@ -9,7 +9,7 @@
     <jobString>正在装订职业凭证。</jobString>
     <workAmount>4000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <soundWorking>Recipe_Machine</soundWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
     <ingredients>
       <li>
         <filter><thingDefs><li>MMT_ClassTokenFragment</li></thingDefs></filter>

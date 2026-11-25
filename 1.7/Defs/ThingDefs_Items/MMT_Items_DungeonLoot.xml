@@ -21,6 +21,11 @@
       <DeteriorationRate>0</DeteriorationRate>
     </statBases>
     <stackLimit>10</stackLimit>
+    <!-- 1.7 DrugBase 不含 CompProperties_Drug，drugCategory>0 的物品必须自挂，
+         否则药物政策初始化排序时 GetCompProperties<CompProperties_Drug>() NRE -->
+    <comps>
+      <li Class="CompProperties_Drug" />
+    </comps>
     <ingestible>
       <foodType>Processed</foodType>
       <preferability>NeverForNutrition</preferability>
@@ -55,5 +60,8 @@
       <Beauty>2</Beauty>
     </statBases>
     <stackLimit>25</stackLimit>
+    <thingCategories>
+      <li>MMT_ClassItemsCat</li>
+    </thingCategories>
   </ThingDef>
 </Defs>
