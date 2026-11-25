@@ -18,6 +18,7 @@
     <aiCanUse>true</aiCanUse>
     <cooldownTicksRange>2700</cooldownTicksRange>
     <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
       <warmupTime>1.0</warmupTime>
       <range>24.9</range>
       <soundCast>MMT_Powerup</soundCast>
@@ -57,6 +58,7 @@
     <aiCanUse>true</aiCanUse>
     <cooldownTicksRange>3600</cooldownTicksRange>
     <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
       <warmupTime>1.5</warmupTime>
       <range>24.9</range>
       <soundCast>MMT_FireBurn</soundCast>
@@ -101,6 +103,7 @@
     <aiCanUse>true</aiCanUse>
     <cooldownTicksRange>900</cooldownTicksRange>
     <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
       <warmupTime>0.75</warmupTime>
       <range>24.9</range>
       <soundCast>MMT_FireWooshSD</soundCast>
