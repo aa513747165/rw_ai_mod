@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能持续射线实体（Thing_MMTSkillBeam）：Attach 类无碰撞 Thing，
+       由 MMTBeamUtil.FireBeam 生成，存活期间自绘拉伸光柱并按间隔跳伤，
+       到时自毁；不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkillBeam</defName>
+    <label>技能射线</label>
+    <thingClass>MyModeTest.Thing_MMTSkillBeam</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

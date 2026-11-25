@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 位移载体（第九步）：冲锋/跳跃（建筑）的移动实体。运行时由 MMTDisplaceUtil 生成，
+       携带被位移目标（pawn 用 renderer 实绘，建筑用材质实绘）贴地平移或抛物线飞行，
+       到点把目标生成到落点。参数运行时传入不进存档，存档瞬间立即落地防载体丢失。 -->
+  <ThingDef ParentName="EtherealThingBase">
+    <defName>MMT_DisplaceMover</defName>
+    <label>位移中</label>
+    <thingClass>MyModeTest.Thing_MMTDisplaceMover</thingClass>
+    <useHitPoints>false</useHitPoints>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <drawerType>RealtimeOnly</drawerType>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 增益/减益技能 Hediff（第八步演示，SkillBuffFX.cs）：施法完成一次性施加，
+       HediffComp_Disappears 到时自动消退；效果数值全在本文件配。
+       与光环 Hediff（MMT_Hediffs_SkillAura.xml，秒级短续期）不同，本文件为
+       长持续的一次性增益/减益。 -->
+
+  <!-- 迅捷祝福（增益）：移动速度 +50%，持续约 25~35 秒 -->
+  <HediffDef>
+    <defName>MMT_Buff_Swift</defName>
+    <label>迅捷祝福</label>
+    <description>能量流遍全身，肢体反应大幅加快，移动速度提升 50%。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>1500~2100</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.5</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 迟缓诅咒（减益）：移动速度 -50%，持续约 20~30 秒 -->
+  <HediffDef>
+    <defName>MMT_Debuff_Slow</defName>
+    <label>迟缓诅咒</label>
+    <description>迟滞力场缠绕四肢，移动速度降低 50%。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>1200~1800</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.5</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

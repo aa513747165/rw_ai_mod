@@ -49,5 +49,51 @@
     <placeWorkers>
       <li>PlaceWorker_WatchArea</li>
     </placeWorkers>
+    <comps>
+      <!-- 参与技能范围敌我判定（玩家派系 = 判为友方）；技能演示不挂假人，
+           演示条目见 1.7/Defs/Misc/MMT_SkillDemoSet.xml，Dev 一键赋予小人实测 -->
+      <li Class="MyModeTest.CompProperties_MMTAoETargetable" />
+    </comps>
+  </ThingDef>
+
+  <!-- 沙袋人偶（敌方）：Dev 模式建造菜单可见（见 AbilityTargeting.cs 可见性补丁），
+       放下后强制归属远古敌对派系，充当敌方技能演示靶子；造价清零。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_TrainingDummyHostile</defName>
+    <label>沙袋人偶（敌方）</label>
+    <description>敌对派系的练习人偶，用于演示敌方目标的技能范围判定。（开发模式专用测试建筑）</description>
+    <thingClass>MyModeTest.Building_TrainingDummy</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/MMT_TrainingDummy/MMT_TrainingDummy</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(1.6,1.6)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <tickerType>Normal</tickerType>
+    <designationCategory>Joy</designationCategory>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsJoy</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>0</WorkToBuild>
+      <MaxHitPoints>50000</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Mass>15</Mass>
+    </statBases>
+    <building>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <constructEffect>ConstructWood</constructEffect>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTAoETargetable" />
+      <li Class="MyModeTest.CompProperties_MMTForceHostileFaction" />
+    </comps>
   </ThingDef>
 </Defs>

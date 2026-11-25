@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能天降打击调度器（Thing_MMTSkyStorm）：隐形 Attach 类无碰撞 Thing，
+       由 MMTStrikeUtil.FireStorm 生成，按间隔在目标区域随机落点连发原版闪电事件，
+       次数用尽自毁；本体不绘制任何图形。不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkyStorm</defName>
+    <label>技能雷暴</label>
+    <thingClass>MyModeTest.Thing_MMTSkyStorm</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

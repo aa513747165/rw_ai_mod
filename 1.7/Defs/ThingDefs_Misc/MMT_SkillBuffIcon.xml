@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 增益/减益头顶图标实体（Thing_MMTBuffIconFlash，SkillBuffFX.cs）：
+       Attach 到目标跟随移动，头顶画小图标（淡入淡出 + 上浮）并按间隔抛身上粒子；
+       贴图/染色/时长全走运行时参数（graphicData 仅兜底）。时限到自毁。不直接放置。 -->
+  <ThingDef>
+    <defName>MMT_BuffIconFlash</defName>
+    <label>技能增益特效</label>
+    <thingClass>MyModeTest.Thing_MMTBuffIconFlash</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_BuffSpark</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

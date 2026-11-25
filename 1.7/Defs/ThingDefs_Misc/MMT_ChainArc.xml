@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 连锁闪电电弧（Thing_MMTChainArc）：按跳间节奏逐跳结算伤害并自绘抖动折线电弧，
+       全部跳完后驻留片刻自毁；不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_ChainArc</defName>
+    <label>连锁闪电</label>
+    <thingClass>MyModeTest.Thing_MMTChainArc</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

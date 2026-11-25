@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 延时打击调度器（Thing_MMTDelayedStrike）：预警期间自绘脉冲预警圈，
+       延迟结束生成陨石后自毁；不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_DelayedStrike</defName>
+    <label>延时打击预警</label>
+    <thingClass>MyModeTest.Thing_MMTDelayedStrike</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_TargetCircle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+
+  <!-- 陨石（Thing_MMTMeteor）：高空斜向坠落 + 火焰拖尾，落地触发原版爆炸；不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_Meteor</defName>
+    <label>陨石</label>
+    <thingClass>MyModeTest.Thing_MMTMeteor</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_Meteor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

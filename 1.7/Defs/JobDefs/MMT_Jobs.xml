@@ -120,4 +120,12 @@
     <driverClass>MyModeTest.JobDriver_MMTClassAttune</driverClass>
     <reportString>正在接受职业启蒙（TargetA）。</reportString>
   </JobDef>
+
+  <!-- 技能引导作业：持续技能（射线等）占用施法者，原地不动面朝目标，永不自然完成；
+       移动/下令会替换本作业从而打断引导（第十四步，JobDriver_MMTChannel） -->
+  <JobDef>
+    <defName>MMT_ChannelSkill</defName>
+    <driverClass>MyModeTest.JobDriver_MMTChannel</driverClass>
+    <reportString>正在引导技能（TargetA）。</reportString>
+  </JobDef>
 </Defs>

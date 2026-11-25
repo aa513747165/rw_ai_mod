@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能特效框架演示投射物：纯原版素材（LauncherShot 贴图 + 橙色 tint + 原版爆炸/音效），
+       不依赖 RoM。爆炸不撒燃料污物，基地附近演示相对安全（火焰引燃属预期表现）。 -->
+  <ThingDef ParentName="BaseBullet">
+    <defName>MMT_Proj_SkillFireball</defName>
+    <label>火球</label>
+    <graphicData>
+      <texPath>Things/Projectile/LauncherShot</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <color>(255,140,40)</color>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>Flame</damageDef>
+      <damageAmountBase>12</damageAmountBase>
+      <speed>45</speed>
+      <explosionRadius>1.9</explosionRadius>
+    </projectile>
+  </ThingDef>
+
+  <!-- 抛物线大火球（第十六步）：flyOverhead 高空抛物线飞越墙体，落点大爆炸 + 点燃；
+       音效照抄原版迫击炮弹（迫近呼啸 + 爆炸），不依赖 RoM。 -->
+  <ThingDef ParentName="BaseBullet">
+    <defName>MMT_Proj_BigFireball</defName>
+    <label>大火球</label>
+    <graphicData>
+      <texPath>Things/Projectile/MMT_BigFireball</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <color>(255,130,35)</color>
+      <drawSize>(1.2,1.2)</drawSize>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <damageDef>Flame</damageDef>
+      <damageAmountBase>30</damageAmountBase>
+      <speed>28</speed>
+      <explosionRadius>3.5</explosionRadius>
+      <explosionChanceToStartFire>0.5</explosionChanceToStartFire>
+      <flyOverhead>true</flyOverhead>
+      <arcHeightFactor>0.25</arcHeightFactor>
+      <soundExplode>Explosion_Flame</soundExplode>
+      <soundImpactAnticipate>MortarRound_PreImpact</soundImpactAnticipate>
+      <soundAmbient>MortarRound_Ambient</soundAmbient>
+    </projectile>
+  </ThingDef>
+</Defs>

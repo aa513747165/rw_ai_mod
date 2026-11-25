@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 石墙术临时石墙（第十八步）：技能召唤的满填墙体，无主派系，
+       挡路挡视线挡子弹、可托屋顶、不可燃；限时走原版 CompLifespan 到期崩解。
+       不进建筑菜单（不设建筑类目），仅由 MMTWallUtil.RaiseWall 生成。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_MagicStoneWall</defName>
+    <label>魔法石墙</label>
+    <description>法术召唤的厚重石墙，一段时间后会自行崩解。</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <noRightClickDraftAttack>true</noRightClickDraftAttack>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <blockLight>true</blockLight>
+    <castShadow>true</castShadow>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <holdsRoof>true</holdsRoof>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/MMT_StoneWall</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>260</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <building>
+      <claimable>false</claimable>
+    </building>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>1800</lifespanTicks>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

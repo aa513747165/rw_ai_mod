@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能光环增益/减益 Hediff：由光环（Thing_MMTSkillAuraBuff）按脉冲施加/续期，
+       HediffComp_Disappears 保证离开光环后自动消退；效果数值全在本文件配。 -->
+
+  <!-- 迅捷光环（增益）：移动速度 +50% -->
+  <HediffDef>
+    <defName>MMT_AuraBuff_Swift</defName>
+    <label>迅捷光环</label>
+    <description>光环能量流遍全身，肢体反应大幅加快，移动速度提升 50%。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120~180</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>1.5</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- 迟缓光环（减益）：移动速度 -50% -->
+  <HediffDef>
+    <defName>MMT_AuraDebuff_Slow</defName>
+    <label>迟缓光环</label>
+    <description>光环力场迟滞了肌肉动作，移动速度降低 50%。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120~180</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <statFactors>
+          <MoveSpeed>0.5</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

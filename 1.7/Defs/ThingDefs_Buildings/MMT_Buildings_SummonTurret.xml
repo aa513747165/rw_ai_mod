@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 召唤炮塔（第十步）：与原版自动机枪塔同逻辑（Building_TurretGun 自动索敌射击），
+       不带电力/燃料/操作 comp = 无需电力弹药；限时走原版 CompLifespan，
+       运行时由 MMTSummonUtil.SummonTurret 偏移 age 实现技能自定义时长，到期自毁。
+       不进建造菜单（无 designationCategory），仅由技能生成。 -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>MMT_SummonTurret</defName>
+    <label>召唤炮塔</label>
+    <description>由技能临时召唤的自动炮塔，无需电力与弹药，自动索敌射击，持续时间结束后消失。</description>
+    <thingClass>Building_TurretGun</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <drawHighlight>true</drawHighlight>
+    <graphicData>
+      <texPath>Things/Building/MMT_SummonTurret_Base</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+      <shadowData>
+        <volume>(0.27,0.25,0.27)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <stealable>false</stealable>
+    <rotatable>false</rotatable>
+    <tickerType>Normal</tickerType>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <ShootingAccuracyTurret>0.96</ShootingAccuracyTurret>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>2400</lifespanTicks>
+      </li>
+      <!-- 参与技能范围敌我判定（跟随召唤者派系） -->
+      <li Class="MyModeTest.CompProperties_MMTAoETargetable" />
+    </comps>
+    <building>
+      <combatPower>45</combatPower>
+      <ai_combatDangerous>true</ai_combatDangerous>
+      <turretGunDef>MMT_Gun_SummonTurret</turretGunDef>
+      <turretBurstCooldownTime>3.0</turretBurstCooldownTime>
+    </building>
+  </ThingDef>
+
+  <!-- 召唤炮塔的枪管（沿用原版 BaseWeaponTurret 抽象基类；投射物复用原版机枪塔子弹） -->
+  <ThingDef ParentName="BaseWeaponTurret">
+    <defName>MMT_Gun_SummonTurret</defName>
+    <label>召唤炮塔枪管</label>
+    <graphicData>
+      <texPath>Things/Building/MMT_SummonTurret_Top</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <AccuracyTouch>0.77</AccuracyTouch>
+      <AccuracyShort>0.70</AccuracyShort>
+      <AccuracyMedium>0.45</AccuracyMedium>
+      <AccuracyLong>0.24</AccuracyLong>
+      <RangedWeapon_Cooldown>3</RangedWeapon_Cooldown>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Mass>5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <defaultProjectile>Bullet_MiniTurret</defaultProjectile>
+        <warmupTime>0.5</warmupTime>
+        <range>25.9</range>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+        <burstShotCount>3</burstShotCount>
+        <soundCast>GunShotA</soundCast>
+        <soundCastTail>GunTail_Light</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+</Defs>

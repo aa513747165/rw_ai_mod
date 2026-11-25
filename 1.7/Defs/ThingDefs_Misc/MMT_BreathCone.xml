@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 锥形吐息（Thing_MMTBreathCone）：喷口跟随施法者、方向固定，抛火星 + 自绘火舌，
+       按间隔对锥内 pawn 跳伤并点燃格子；不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_BreathCone</defName>
+    <label>龙息</label>
+    <thingClass>MyModeTest.Thing_MMTBreathCone</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

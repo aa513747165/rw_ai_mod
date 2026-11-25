@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 召唤时限（第十步·动物召唤）：挂在临时召唤的驯服动物身上计时，
+       到期原地消散（Vanish 不触发死亡效果）；同时是"不可宰杀/不可放生"
+       设计器补丁（SkillSummon.cs）的识别标记。时长由召唤技能运行时写入 ticksLeft。 -->
+  <HediffDef>
+    <defName>MMT_SummonAnimal</defName>
+    <label>召唤时限</label>
+    <description>由技能召唤的临时生物，持续时间结束后会消失，无法宰杀或放生。</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="MyModeTest.HediffCompProperties_MMTSummonAnimal" />
+    </comps>
+  </HediffDef>
+</Defs>

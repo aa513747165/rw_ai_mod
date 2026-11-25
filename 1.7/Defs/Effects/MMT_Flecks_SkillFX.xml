@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能特效框架 fleck：纯原版贴图。悬浮火球 = 多方位射击的浮游单元图形，
+       运行时经 FleckCreationData 旋转对准目标、instanceColor 调橙、solidTime 覆盖到齐射后淡出。 -->
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_FireballCharge</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.15</fadeInTime>
+    <solidTime>0.5</solidTime>
+    <fadeOutTime>0.25</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Projectile/LauncherShot</texPath>
+    </graphicData>
+  </FleckDef>
+
+  <!-- 增益/减益粒子（第八步）：小光点，投掷基类带速度上飘，
+       运行时 instanceColor 染色（增益绿 / 减益红）。 -->
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_Fleck_BuffSpark</defName>
+    <graphicData>
+      <texPath>Things/Mote/MMT_BuffSpark</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.08</fadeInTime>
+    <solidTime>0.2</solidTime>
+    <fadeOutTime>0.45</fadeOutTime>
+  </FleckDef>
+
+  <!-- 位移闪光（第九步）：折跃/群体传送/冲锋/跳跃的起终点爆闪，静态基类快速淡出。 -->
+  <FleckDef ParentName="FleckBase">
+    <defName>MMT_Fleck_BlinkFlash</defName>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.1</solidTime>
+    <fadeOutTime>0.4</fadeOutTime>
+    <graphicData>
+      <texPath>Things/Mote/MMT_BlinkFlash</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+  </FleckDef>
+
+  <!-- 冲锋拖尾（第九步）：投掷基类，位移途中沿途留下的条状残影。 -->
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_Fleck_DashTrail</defName>
+    <graphicData>
+      <texPath>Things/Mote/MMT_DashTrail</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.1</solidTime>
+    <fadeOutTime>0.3</fadeOutTime>
+  </FleckDef>
+</Defs>

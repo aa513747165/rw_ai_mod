@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能盾类光环（Thing_MMTSkillAuraShield）：复刻 Biotech 临时护盾投影器
+       （MechShield，Data/Biotech/Defs/ThingDefs_Misc/Ethereal_Various.xml），
+       SetTarget 后力场泡跟随目标移动，CompProjectileInterceptor 走原版力场绘制 +
+       投射物拦截 + 命中点/EMP 机制；本类只管激活/命中点覆写/时限自毁。不直接放置。 -->
+  <ThingDef>
+    <defName>MMT_SkillAuraShield</defName>
+    <label>技能范围护盾</label>
+    <thingClass>MyModeTest.Thing_MMTSkillAuraShield</thingClass>
+    <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
+    <drawOffscreen>true</drawOffscreen>
+    <useHitPoints>false</useHitPoints>
+    <comps>
+      <li Class="CompProperties_ProjectileInterceptor">
+        <radius>3</radius>
+        <interceptGroundProjectiles>true</interceptGroundProjectiles>
+        <interceptNonHostileProjectiles>true</interceptNonHostileProjectiles>
+        <interceptOutgoingProjectiles>true</interceptOutgoingProjectiles>
+        <color>(0.4, 0.6, 1)</color>
+        <reactivateEffect>BulletShieldGenerator_Reactivate</reactivateEffect>
+        <activeSound>BulletShield_Ambience</activeSound>
+        <hitPoints>200</hitPoints>
+        <minAlpha>0.5</minAlpha>
+        <disarmedByEmpForTicks>1200</disarmedByEmpForTicks>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- 技能增益/减益光环（Thing_MMTSkillAuraBuff）：Attach 到目标跟随移动，
+       脚下画贴图光圈（半径=技能半径，graphicData 仅兜底，本体 DrawAt 自绘），
+       按脉冲间隔对范围内 pawn 施加/续期 Hediff；时限到自毁。不直接放置。 -->
+  <ThingDef>
+    <defName>MMT_SkillAuraBuff</defName>
+    <label>技能光环</label>
+    <thingClass>MyModeTest.Thing_MMTSkillAuraBuff</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_AuraDisc</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

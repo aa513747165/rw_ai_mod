@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 技能地面火焰柱（Thing_MMTGroundFlame）：Attach 类无碰撞 Thing，
+       由 MMTGroundFireUtil.FireGround/SpawnFlame 生成，存活期间自绘贴图火焰
+       （双层四边形闪烁），按间隔对影响格内 pawn/建筑跳 Burn 伤害并可点燃，
+       持续时间用尽自毁。graphicData 仅为兜底（本体 DrawAt 自绘，不走 Graphic）。
+       不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_GroundFlame</defName>
+    <label>技能火焰</label>
+    <thingClass>MyModeTest.Thing_MMTGroundFlame</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_FlamePillar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

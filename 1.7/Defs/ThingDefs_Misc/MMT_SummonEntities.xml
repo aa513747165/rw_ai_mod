@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 召唤实体（第十步）：雷球/追踪弹。EtherealThingBase + useHitPoints=false
+       = 无敌不可选中；运行时由 MMTSummonUtil 生成，参数运行时传入不进存档，
+       读档后首个 tick 自毁（防无参数空转）。图形由代码 DrawAt 实绘（MoteGlow 染色）。 -->
+  <ThingDef ParentName="EtherealThingBase">
+    <defName>MMT_SummonOrb</defName>
+    <label>雷球</label>
+    <thingClass>MyModeTest.Thing_MMTSummonOrb</thingClass>
+    <useHitPoints>false</useHitPoints>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <drawerType>RealtimeOnly</drawerType>
+  </ThingDef>
+
+  <ThingDef ParentName="EtherealThingBase">
+    <defName>MMT_SummonHoming</defName>
+    <label>追踪弹</label>
+    <thingClass>MyModeTest.Thing_MMTSummonHoming</thingClass>
+    <useHitPoints>false</useHitPoints>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <drawerType>RealtimeOnly</drawerType>
+  </ThingDef>
+</Defs>

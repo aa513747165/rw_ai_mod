@@ -1,0 +1,331 @@
+using System.Collections.Generic;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.Sound;
+
+namespace MyModeTest
+{
+    // ========== 技能地面火焰框架（第六步：单体烈焰喷发 + 范围烈焰火海） ==========
+    // 地面技能：火焰从地面升起，留在原地持续燃烧（不跟随目标移动）。
+    // 视觉：贴图火焰柱（Thing_MMTGroundFlame.DrawAt 自绘双层四边形——底层火身 +
+    //   上移摆动的火舌，随机朝向/相位 + 呼吸闪烁 + 淡入淡出），不走原版 Fire 的
+    //   Graphic_Flicker，贴图可整体染色（groundTint）。
+    // 效果：真实燃烧——按间隔对站上来的 pawn/建筑结算 Burn 伤害，概率点燃小人
+    //   （FireUtility.TryAttachFire 身上挂原版火）与引燃格子（TryStartFireIn，
+    //   引燃后走原版火焰蔓延），烧的是真火，视觉是我们的贴图。
+    // 形态：MMTGroundFireUtil.FireGround 统一入口——areaRadius<=0 在目标点喷一根
+    //   火柱（烈焰喷发）；areaRadius>0 半径内按密度抽格铺火海，自中心向外按距离
+    //   延迟依次点燃（蔓延感），每柱独立存续。
+    // pawn 技能侧出口：CompAbilityEffect_MMTGroundFire（范围预览圈走第一步 AoETarget 框架）；
+    // 建筑演示侧出口：AbilityTargeting.cs 的 CompSkillDemo（demoType="groundFire"）。
+    // 注：火焰柱参数为运行时传入不进存档，读档后自毁（火焰最长数秒，可接受）。
+
+    /// <summary>地面火焰参数包（MMTGroundFireUtil.FireGround / SpawnFlame 的输入）。</summary>
+    public class MMTGroundFireParams
+    {
+        /// <summary>火焰贴图（白图，代码染色；纵轴=火焰向上方向）。</summary>
+        public string texPath = "Things/Mote/MMT_FlamePillar";
+        public Color tint = new Color(1f, 0.62f, 0.2f);
+        /// <summary>单柱贴图尺寸（格）。</summary>
+        public float visualScale = 1.7f;
+        /// <summary>单柱持续 tick 数。</summary>
+        public int durationTicks = 360;
+        /// <summary>伤害类型（null = Burn）。</summary>
+        public DamageDef damageDef;
+        /// <summary>每跳伤害。</summary>
+        public float damage = 3f;
+        /// <summary>跳伤间隔 tick。</summary>
+        public int damageIntervalTicks = 15;
+        public float armorPenetration;
+        /// <summary>每跳点燃烧到的小人的概率（身上挂原版火）。</summary>
+        public float ignitePawnChance = 0.2f;
+        /// <summary>每跳引燃本格的概率（生成原版火焰，可蔓延）。</summary>
+        public float igniteCellChance = 0.04f;
+        /// <summary>单柱伤害半径（格，0 = 仅本格）。</summary>
+        public float effectRadius;
+        /// <summary>火海半径（格，0 = 单柱喷发）。</summary>
+        public float areaRadius;
+        /// <summary>火海覆盖率（每格抽中概率）。</summary>
+        public float density = 0.9f;
+        /// <summary>火海自中心向外铺开的延迟（tick/格）。</summary>
+        public float spreadPerCellTicks = 2f;
+        public SoundDef startSound;
+        public Thing equipment;
+    }
+
+    /// <summary>地面火焰统一入口：单柱喷发 / 范围火海。</summary>
+    public static class MMTGroundFireUtil
+    {
+        public const string FlameDefName = "MMT_GroundFlame";
+
+        /// <summary>在指定格生成一根火焰柱（igniteDelayTicks &gt; 0 时先隐形待命，用于火海铺开）。</summary>
+        public static Thing_MMTGroundFlame SpawnFlame(Thing caster, IntVec3 cell, MMTGroundFireParams p, int igniteDelayTicks = 0)
+        {
+            Map map = caster?.MapHeld;
+            if (map == null || p == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return null;
+            }
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(FlameDefName);
+            if (def == null)
+            {
+                Log.Error("[MMT] 找不到 " + FlameDefName + " 定义，无法发动地面火焰");
+                return null;
+            }
+            Thing_MMTGroundFlame flame = (Thing_MMTGroundFlame)GenSpawn.Spawn(def, cell, map);
+            flame.Setup(caster, p, igniteDelayTicks);
+            return flame;
+        }
+
+        /// <summary>统一入口：areaRadius&lt;=0 单柱喷发；&gt;0 半径内按密度铺火海，自中心向外延迟点燃。</summary>
+        public static void FireGround(Thing caster, IntVec3 center, MMTGroundFireParams p)
+        {
+            Map map = caster?.MapHeld;
+            if (map == null || p == null || !center.IsValid || !center.InBounds(map))
+            {
+                return;
+            }
+            if (p.areaRadius <= 0f)
+            {
+                SpawnFlame(caster, center, p);
+            }
+            else
+            {
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, p.areaRadius, true))
+                {
+                    if (!cell.InBounds(map) || !Rand.Chance(p.density))
+                    {
+                        continue;
+                    }
+                    Building edifice = cell.GetEdifice(map);
+                    if (edifice != null && edifice.def.fillPercent >= 1f)
+                    {
+                        continue;
+                    }
+                    int delay = Mathf.RoundToInt(center.DistanceTo(cell) * p.spreadPerCellTicks) + Rand.RangeInclusive(0, 6);
+                    SpawnFlame(caster, cell, p, delay);
+                }
+            }
+            if (p.startSound != null)
+            {
+                SoundStarter.PlayOneShot(p.startSound, new TargetInfo(center, map));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 火焰柱实体：Attach 类无碰撞 Thing，存活期间自绘贴图火焰（双层四边形闪烁），
+    /// 按间隔对影响格内的 pawn/建筑跳 Burn 伤害并可点燃。参数全为运行时传入不进存档；
+    /// 读档后参数丢失即自毁（火焰最长数秒，可接受）。
+    /// </summary>
+    public class Thing_MMTGroundFlame : Thing
+    {
+        private Thing caster;
+        private MMTGroundFireParams flameParams;
+        /// <summary>铺开延迟：&gt;0 时隐形待命、无伤害（火海自中心向外蔓延用）。</summary>
+        private int igniteDelayTicks;
+        private int durationTotal;
+        private int ticksLeft;
+        private int ticksUntilDamage;
+        /// <summary>每柱随机动画相位/朝向，火海成片时避免齐刷刷同步闪烁。</summary>
+        private float seed;
+        private float baseAngle;
+        private Material flameMat;
+
+        public void Setup(Thing caster, MMTGroundFireParams p, int delayTicks)
+        {
+            this.caster = caster;
+            flameParams = p;
+            igniteDelayTicks = Mathf.Max(0, delayTicks);
+            durationTotal = Mathf.Max(1, p.durationTicks);
+            ticksLeft = durationTotal;
+            ticksUntilDamage = 1;
+            seed = Rand.Value * 20f;
+            baseAngle = Rand.Range(0f, 360f);
+        }
+
+        protected override void Tick()
+        {
+            base.Tick();
+            if (flameParams == null || Map == null)
+            {
+                Destroy();
+                return;
+            }
+            if (igniteDelayTicks > 0)
+            {
+                igniteDelayTicks--;
+                return;
+            }
+            ticksLeft--;
+            if (ticksLeft <= 0)
+            {
+                Destroy();
+                return;
+            }
+            if (--ticksUntilDamage <= 0)
+            {
+                ticksUntilDamage = Mathf.Max(1, flameParams.damageIntervalTicks);
+                DamagePulse();
+            }
+        }
+
+        /// <summary>一跳伤害：本格（或 effectRadius 范围）内的 pawn/建筑吃 Burn，概率点燃。</summary>
+        private void DamagePulse()
+        {
+            Map map = Map;
+            DamageDef damageDef = flameParams.damageDef ?? DamageDefOf.Burn;
+            foreach (Thing t in AffectedThings(map))
+            {
+                t.TakeDamage(new DamageInfo(damageDef, flameParams.damage, flameParams.armorPenetration,
+                    0f, caster, null, flameParams.equipment?.def));
+                if (flameParams.ignitePawnChance > 0f && t is Pawn pawn
+                    && Rand.Chance(flameParams.ignitePawnChance) && FireUtility.CanEverAttachFire(pawn))
+                {
+                    FireUtility.TryAttachFire(pawn, 0.2f, caster);
+                }
+            }
+            if (flameParams.igniteCellChance > 0f && Rand.Chance(flameParams.igniteCellChance))
+            {
+                FireUtility.TryStartFireIn(Position, map, 0.12f, caster);
+            }
+        }
+
+        private IEnumerable<Thing> AffectedThings(Map map)
+        {
+            if (flameParams.effectRadius > 0f)
+            {
+                foreach (Thing t in GenRadial.RadialDistinctThingsAround(Position, map, flameParams.effectRadius, true))
+                {
+                    if (IsBurnableTarget(t))
+                    {
+                        yield return t;
+                    }
+                }
+            }
+            else
+            {
+                List<Thing> things = Position.GetThingList(map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    if (IsBurnableTarget(things[i]))
+                    {
+                        yield return things[i];
+                    }
+                }
+            }
+        }
+
+        private bool IsBurnableTarget(Thing t)
+        {
+            return t != this && t != caster && !t.Destroyed && (t is Pawn || t is Building);
+        }
+
+        /// <summary>自绘火焰：底层火身 + 上移摆动的火舌双层四边形，呼吸闪烁 + 淡入淡出。</summary>
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            if (flameParams == null || igniteDelayTicks > 0)
+            {
+                return;
+            }
+            if (flameMat == null)
+            {
+                Texture2D tex = ContentFinder<Texture2D>.Get(flameParams.texPath, false);
+                if (tex == null)
+                {
+                    return;
+                }
+                flameMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+            }
+            int elapsed = durationTotal - ticksLeft;
+            float alpha = Mathf.Clamp01(elapsed / 8f) * Mathf.Clamp01(ticksLeft / 30f);
+            float flicker = 1f + 0.12f * Mathf.Sin(elapsed * 0.65f + seed) + 0.06f * Mathf.Sin(elapsed * 1.73f + seed * 1.7f);
+            Color color = flameParams.tint;
+            color.a *= alpha;
+            flameMat.color = color;
+            float alt = AltitudeLayer.MoteOverhead.AltitudeFor();
+            float scale = flameParams.visualScale;
+            Quaternion rot = Quaternion.AngleAxis(baseAngle, Vector3.up);
+            Vector3 basePos = Position.ToVector3Shifted();
+            basePos.y = alt;
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(basePos, rot, new Vector3(scale * flicker, 1f, scale * flicker)), flameMat, 0);
+            // 上层火舌：向屏幕上方向偏移 + 横向摆动，营造火焰向上窜的立体感
+            float sway = 0.1f * Mathf.Sin(elapsed * 0.5f + seed * 2.3f);
+            Vector3 tipPos = basePos + new Vector3(sway, 0.01f, 0.42f * scale);
+            float tipScale = scale * 0.62f * (2f - flicker);
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(tipPos, rot, new Vector3(tipScale, 1f, tipScale)), flameMat, 0);
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (flameMat != null)
+            {
+                Object.Destroy(flameMat);
+                flameMat = null;
+            }
+            base.Destroy(mode);
+        }
+    }
+
+    // ========== pawn 技能出口：地面火焰 ==========
+
+    public class CompProperties_MMTGroundFire : CompProperties_MMTAoETargetBase
+    {
+        public string texPath = "Things/Mote/MMT_FlamePillar";
+        public Color tint = new Color(1f, 0.62f, 0.2f);
+        public float visualScale = 1.7f;
+        public int durationTicks = 360;
+        public string damageDefName = "Burn";
+        public float damage = 3f;
+        public int damageIntervalTicks = 15;
+        public float armorPenetration;
+        public float ignitePawnChance = 0.2f;
+        public float igniteCellChance = 0.04f;
+        /// <summary>单柱伤害半径（0 = 仅本格）。</summary>
+        public float effectRadius;
+        /// <summary>火海半径（0 = 单柱喷发；缺省用预览圈半径 radius）。</summary>
+        public float areaRadius;
+        public float density = 0.9f;
+        public float spreadPerCellTicks = 2f;
+        public string soundDefName;
+
+        public CompProperties_MMTGroundFire()
+        {
+            compClass = typeof(CompAbilityEffect_MMTGroundFire);
+        }
+    }
+
+    /// <summary>地面火焰技能：确认目标后喷发火柱/铺开火海（radius&gt;0 时瞄准预览圈走 AoETarget 基类）。</summary>
+    public class CompAbilityEffect_MMTGroundFire : CompAbilityEffect_MMTAoETargetBase
+    {
+        public new CompProperties_MMTGroundFire Props => (CompProperties_MMTGroundFire)props;
+
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            base.Apply(target, dest);
+            Pawn caster = parent.pawn;
+            MMTGroundFireUtil.FireGround(caster, target.Cell, new MMTGroundFireParams
+            {
+                texPath = Props.texPath,
+                tint = Props.tint,
+                visualScale = Props.visualScale,
+                durationTicks = Props.durationTicks,
+                damageDef = Props.damageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(Props.damageDefName),
+                damage = Props.damage,
+                damageIntervalTicks = Props.damageIntervalTicks,
+                armorPenetration = Props.armorPenetration,
+                ignitePawnChance = Props.ignitePawnChance,
+                igniteCellChance = Props.igniteCellChance,
+                effectRadius = Props.effectRadius,
+                areaRadius = Props.areaRadius > 0f ? Props.areaRadius : Props.radius,
+                density = Props.density,
+                spreadPerCellTicks = Props.spreadPerCellTicks,
+                startSound = Props.soundDefName.NullOrEmpty() ? null : DefDatabase<SoundDef>.GetNamedSilentFail(Props.soundDefName),
+                equipment = caster.equipment?.Primary
+            });
+        }
+    }
+}
