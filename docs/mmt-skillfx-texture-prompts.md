@@ -89,11 +89,12 @@ no embers outside the flame silhouette
 
 ---
 
-## 三、光环圆盘 `MMT_AuraDisc`（1 张，128×128）【已替换为程序生成版】
+## 三、光环圆盘 `MMT_AuraDisc`（1 张，128×128）【AI 符文版在用，低透明度衬底】
 
-> **2026-11-26 替换**：AI 符文阵版本外圈是 alpha≈255 的硬环 + 符文刻线疙瘩，提亮后游戏内呈"齿轮硬环"观感差。
-> 现用 `docs/temp/gen_aura_soft.py` 生成的 256×256 柔和贴图（中心柔光填充 + 0.8 半径宽柔光环带 + 低频噪声，
-> 无符文无硬边，RGB=alpha 预乘黑底）。下方 AI 提示词仅留档；若要 AI 返工，须去掉符文/刻线并要求"宽柔光带、无硬边"。
+> **2026-11-26 两轮迭代结论**：① AI 符文阵版外圈 alpha≈255 硬环，高透明度（0.9）下呈"齿轮硬环"；
+> ② 程序柔光版（`docs/temp/gen_aura_soft.py`）预乘暗 RGB 的内部填充在 TransparentPostLight 半透明混合下把地面压暗成泥浆色，弃用。
+> **现用方案**：AI 符文版（预乘黑底）+ 代码透明度压到 0.5，符文盘只作柔和衬底。
+> 教训：TransparentPostLight 是 alpha 混合而非纯加法——贴图内部填充的暗 RGB 会压暗地面，柔光类填充贴图慎用预乘。
 
 - **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_AuraDisc.png`（texPath `Things/Mote/MMT_AuraDisc`，ThingDef `MMT_SkillAuraBuff` 与 `MMTAuraParams.discTexPath` 默认值均指向它，覆盖即用）。
 - **功能**：增益/减益光环（demoType="aura"，假人「测试·迅捷光环/迟缓光环」）铺在目标脚下的地面光圈；代码按敌我配色染色（友方绿/减益红），呼吸脉冲 + 淡入淡出，另有 GenDraw 描边圈。

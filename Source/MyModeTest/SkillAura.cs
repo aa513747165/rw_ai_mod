@@ -145,9 +145,9 @@ namespace MyModeTest
         private int ticksUntilPulse;
         private Material discMat;
         /// <summary>圆盘整体不透明度上限（淡入淡出/呼吸脉冲之前的基准）。贴图透明区已预乘黑底，
-        /// 加法系着色器不会泛光，取 0.9 接近最初观感；旧值 0.28 是材质颜色互覆 bug 期间的无效调参
-        /// 遗留，与 RGB 同步缩放叠加后双重变暗、光环几乎隐形。</summary>
-        private const float DiscBaseOpacity = 0.9f;
+        /// 加法系着色器不会泛光。取值历程：0.28（材质 bug 期间遗留，隐形）→ 0.9（符文硬环太扎眼）
+        /// → 0.5（低层光盘只作柔和衬底，不抢小人本体）。</summary>
+        private const float DiscBaseOpacity = 0.5f;
 
         /// <summary>1.7 AttachableThing 抽象成员；光环不可选，仅调试可见。</summary>
         public override string InspectStringAddon => "技能光环（演示实体）";
