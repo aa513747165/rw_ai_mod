@@ -1,6 +1,7 @@
 # MMT 技能特效框架 — AI 出图提示词集（喂图模型用）
 
-> **状态**：§一 技能光柱、§二 火焰柱、§三 光环圆盘、§四 增益粒子、§五 位移特效、§六 范围选择圆、§七 召唤特效 **均已出图完成**（2026-11-25，AI 终稿覆盖占位图，Def/代码零改动）。本文档保留作风格基准与后续返工依据。
+> **状态**：§一 技能光柱、§二 火焰柱、§三 光环圆盘、§四 增益粒子、§五 位移特效、§六 范围选择圆、§七 召唤特效 **均已出图完成**（2026-11-25，AI 终稿覆盖占位图，Def/代码零改动）。
+> §九 瞄准预览圆环 `MMT_TargetRing` **待出图**（现用 §六 旧图副本占位，出图后直接覆盖同名文件，代码零改动）。
 
 > 与 `mmt-dungeon-texture-prompts.md`、`mmt-fireboss-texture-prompts.md` 同格式。
 > 用法：**完整提示词 = 全局风格前缀 + 条目提示词 + 负面词**。
@@ -382,3 +383,33 @@ granite grays, matches vanilla granite wall style, pure black background
 1. RGBA 128×128，墙体内 alpha=255，四边外 alpha=0；
 2. 灰阶 RGB（无彩色偏移），砖缝与描边对比清晰；
 3. 游戏内验证：「测试·石墙术」召唤出的墙占满一格、观感与原版墙一致。
+
+---
+
+## 九、瞄准预览圆环 `MMT_TargetRing`（1 张，1024×1024）【待出图】
+
+> 现为 §六 `MMT_TargetCircle` 的副本占位（2026-11-26 起瞄准预览圆环从程序网格改为贴图方案，
+> 解决程序网格硬边锯齿）。AI 终稿直接覆盖同名文件即可，代码零改动。
+
+- **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_TargetRing.png`（texPath `Things/Mote/MMT_TargetRing`，范围瞄准框架 `MMTAoETargetPreview.DrawRing` / `RingTexPath` 常量指向它；同步游戏目录时一并复制）。
+- **功能**：技能范围瞄准时的鼠标跟随圆形描边（敌我配色：友方绿/敌方红/最大射程白），代码将整张 quad 缩放到 `半径×2` 格，`ShaderDatabase.Transparent` 按贴图 alpha 混合 + 双线性过滤（高分辨率 + alpha 渐变边缘 = 抗锯齿的来源）。与 §六 的区别：§六 仅延时打击警示圈在用（TransparentPostLight），本节专供瞄准预览。
+- **构图**：**完美的闭合细圆环**，亮环峰值位于**半径 94%~96%** 处（贴近画布外缘，给缩放留出血）；环核心细亮线 + 两侧柔和辉光衰减；圆内可有 ≤8% 的极微弱均匀填充（代码另有程序填充盘，贴图填充只是点缀，宁可没有）；圆外（环到图边之间）必须纯黑全透明；径向绝对对称、360° 闭合无缺口无接缝。
+
+```
+FX_STYLE + a perfectly circular thin targeting reticle ring seen from
+directly above: one crisp closed bright hairline circle at 95% radius
+as the only main visual, with a smooth soft glow falling off on both
+sides of the hairline, an extremely faint uniform luminescence inside
+the disc, pure black and fully transparent everywhere outside the ring,
+perfectly centered, radially symmetric, seamless all around
+```
+
+**后处理与验收清单**：
+
+1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **1024×1024**（最低 512×512；2 的幂，mipmap 保证小圈缩小时依旧平滑）；
+2. 环带峰值位于 94%~96% 半径，360° 闭合无缺口，最亮处 alpha ≥ 0.9；
+3. **环总宽度（含辉光）≤ 半径的 3~4%，亮线核心 ≤ 半径的 1.5%**——贴图环宽随绘制半径等比缩放（半径 25 格的最大射程圈也会用到它），环做太粗大圈会变成粗带；宁可偏细，双线性过滤会保它平滑可见；
+4. 圆内填充 alpha ≤ 0.08（与代码填充盘叠加后不喧宾夺主），圆外到四边 2px 全为 0（四角不得有任何亮斑/杂点）；
+5. 径向对称：任意角度的亮度剖面一致，无偏心、无局部增亮（否则染色后像"环上有个瘤"）；
+6. 灰度：RGB 三通道一致（无彩色倾向），染色交给代码；
+7. 游戏内验证：Dev 模式假人任意范围技能瞄准——鼠标处圆环平滑无锯齿、闭合无缺口；敌我配色正确；最大射程圈（白环）宽度可接受。
