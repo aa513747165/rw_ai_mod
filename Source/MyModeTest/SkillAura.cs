@@ -188,7 +188,8 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>画光环：贴图圆盘浮在小人身体中心高度（DrawPos 平滑跟随，呼吸脉冲 + 淡入淡出）+ GenDraw 地面描边圈。</summary>
+        /// <summary>画光环：贴图圆盘浮在小人身体中心高度（DrawPos 平滑跟随，呼吸脉冲 + 淡入淡出）。
+        /// 不再叠瞄准风格的描边圈：贴图盘自带发光边缘，两个圆心/半径来源不同会看出"双环分离"。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (auraParams == null || follow == null || Map != Find.CurrentMap)
@@ -216,7 +217,6 @@ namespace MyModeTest
             float size = auraParams.radius * 2f;
             Graphics.DrawMesh(MeshPool.plane10,
                 Matrix4x4.TRS(pos, Quaternion.identity, new Vector3(size, 1f, size)), discMat, 0);
-            MMTAoETargetPreview.DrawCircle(follow.Position, auraParams.radius, MMTAoETargetPreview.RingColor(auraParams.targetFriendly));
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
