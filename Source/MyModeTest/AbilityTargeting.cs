@@ -17,8 +17,10 @@ namespace MyModeTest
     /// <summary>敌我配色：绿=友方/治疗，红=敌方/输出。</summary>
     public static class MMTAoETargetPreview
     {
-        public static readonly Color FriendlyRingColor = new Color(0.3f, 1f, 0.3f);
-        public static readonly Color HostileRingColor = new Color(1f, 0.3f, 0.3f);
+        // 单通道亮度压到 0.6 档：满亮度（1.0）纯色细环会触发 RimIris 泛光（bloom ×3 + mip 金字塔 ×12），
+        // 被大范围模糊核晕成整屏绿/红色雾——此前只降 alpha 无效就是因为泛光种子是 alpha=1 的描边环本身。
+        public static readonly Color FriendlyRingColor = new Color(0.22f, 0.62f, 0.22f);
+        public static readonly Color HostileRingColor = new Color(0.62f, 0.22f, 0.22f);
         /// <summary>最大射程环配色：中性白、低透明度（只是距离参考，不应抢范围圈的视觉焦点）。</summary>
         public static readonly Color MaxRangeRingColor = new Color(1f, 1f, 1f, 0.3f);
 
