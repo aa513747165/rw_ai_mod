@@ -20,7 +20,7 @@ namespace MyModeTest
         public const float PieScale = 0.55f;
 
         /// <summary>头顶偏移（世界北向格数）。</summary>
-        public const float HeadOffset = 0.6f;
+        public const float HeadOffset = 0.8f;
 
         // 扇形网格旋转恒为 270° 时，张角 k 恰好覆盖 [360-k, 360]（缺口从正北顺时针扩大），见补丁注释。
         private const float PieRotation = 270f;
