@@ -3,7 +3,8 @@
   <!-- 熔火元素 ThinkTree（对照 Anomaly Devourer/Gorehulk 模式）：
        三个技能各挂一个 JobGiver_AIAbilityFight，按优先级排序——节点按序尝试，
        技能在冷却中则跳过落到下一节点；全部在冷却则退回近战普攻。
-       Boss 在据点/袭击中始终处于敌对派系（虫巢派系，fleshType Insectoid 经 BossPool 解析），
+       Boss 在据点/袭击中始终处于敌对派系（MMT_Monster 魔物派系，PawnKindDef 挂
+       DefModExtension_MMTMonsterFaction 经 BossPool 解析），
        无需 ManhunterPermanent，因此技能 JobGiver 不会被精神状态树覆盖。
        优先级：火雨（长 CD 大杀器）> 召唤（维持炮灰数量）> 火柱（短 CD 主力输出）。 -->
 
@@ -54,7 +55,8 @@
     </thinkRoot>
   </ThinkTreeDef>
 
-  <!-- 小火元素：无技能，纯近战炮灰（限时召唤物，到期由 MMT_SummonTimer 移除）。 -->
+  <!-- 小火元素：火焰弹 + 近战炮灰（限时召唤物，到期由 MMT_SummonTimer 移除）。
+       技能节点置于近战反应之前：CD 转好先放火球，冷却期间退回近战。 -->
   <ThinkTreeDef>
     <defName>MMT_FireElementalLesser</defName>
     <thinkRoot Class="ThinkNode_Priority">
@@ -67,6 +69,12 @@
         </li>
         <li Class="ThinkNode_Subtree">
           <treeDef>LordDuty</treeDef>
+        </li>
+        <!-- 火焰弹：远程骚扰 -->
+        <li Class="JobGiver_AIAbilityFight">
+          <targetAcquireRadius>65</targetAcquireRadius>
+          <targetKeepRadius>72</targetKeepRadius>
+          <ability>MMT_SummonFire_FlameBolt</ability>
         </li>
         <li Class="JobGiver_ReactToCloseMeleeThreat">
           <maxDistance>2.9</maxDistance>

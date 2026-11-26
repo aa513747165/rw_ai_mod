@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using HarmonyLib;
+using LudeonTK;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.AI.Group;
 
@@ -155,6 +157,51 @@ namespace MyModeTest
             if (__result && !Prefs.DevMode
                 && __instance.PlacingDef is ThingDef td && td.defName == "MMT_BossSummoner")
                 __result = false;
+        }
+    }
+
+    /// <summary>
+    /// DEV 操控 Boss/召唤物放技能（测试工具）：Debug 菜单「MMT Boss → 操控放技能」对地图上任一
+    /// 带技能的单位使用（Boss、召唤物、玩家小人均通用，覆盖后续"Boss 当召唤物"的手动施放测试）。
+    /// 列出全部技能（含剩余冷却），选中后按技能 verb.targetParams 进原版瞄准，确认后排入施法 job；
+    /// 无目标参数的技能直接激活。不打断派系/lord，仅插一个施法 job，施放完由原 ThinkTree 接管。
+    /// DebugAction 本身仅 Dev 模式可见，无需额外门控。
+    /// </summary>
+    public static class DevBossControl
+    {
+        [DebugAction("MMT Boss", "操控放技能（选中有技能的单位）", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ControlCast(Pawn pawn)
+        {
+            if (pawn?.abilities == null || pawn.abilities.abilities.Count == 0)
+            {
+                Messages.Message("【MMT】" + (pawn?.LabelShortCap ?? "目标") + " 没有任何技能",
+                    pawn, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            foreach (Ability ability in pawn.abilities.abilities)
+            {
+                Ability ab = ability;
+                string cd = ab.OnCooldown
+                    ? "（冷却中 " + (ab.CooldownTicksRemaining / 60f).ToString("F1") + " 秒）"
+                    : "";
+                options.Add(new FloatMenuOption(ab.def.LabelCap + cd,
+                    delegate { BeginAbilityTargeting(ab); }));
+            }
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        /// <summary>有目标参数进原版瞄准，确认后 QueueCastingJob；无目标参数原地直接激活。</summary>
+        private static void BeginAbilityTargeting(Ability ability)
+        {
+            TargetingParameters tp = ability.verb?.targetParams;
+            if (tp == null)
+            {
+                ability.Activate(new GlobalTargetInfo(ability.pawn));
+                return;
+            }
+            Find.Targeter.BeginTargeting(tp,
+                delegate (LocalTargetInfo t) { ability.QueueCastingJob(t, t); });
         }
     }
 }

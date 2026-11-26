@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import os
+import xml.etree.ElementTree as ET
 
 from validate_mod import (
     assert_equal,
@@ -54,7 +55,7 @@ def validate_fireboss() -> None:
         if child_text(stats, "Flammability") != "0":
             fail(f"{name} 必须免疫点燃（Flammability 0）")
         assert_equal(child_text(race_node, "fleshType"), "Insectoid",
-                     f"{name} fleshType（Insectoid=BossPool 派系解析关键，勿改）")
+                     f"{name} fleshType（Insectoid 仅留伤害类型风味；派系路由改由 PawnKindDef 的 modExtension 负责）")
         assert_equal(child_text(race_node, "renderTree"), "Animal", f"{name} 渲染树")
         assert_equal(child_text(race_node, "thinkTreeMain"), "MMT_" + name.split("_", 1)[1],
                      f"{name} 主 ThinkTree")
@@ -97,7 +98,12 @@ def validate_fireboss() -> None:
             if not os.path.isfile(path):
                 fail(f"缺少贴图 {path}")
 
-    # ---- 技能：纯 CD（无 PsycastBase 父类、无灵能熵耗）、AI 可用、效果桶接线 ----
+    # ---- 技能：纯 CD（无 PsycastBase 父类、无灵能熵耗）、AI 可用、SkillFX 效果桶接线 ----
+    EXPECTED_COMPS = {
+        "MMT_BossFire_SummonLesser": "MyModeTest.CompProperties_MMTSkillSummon",
+        "MMT_BossFire_FireRain": "MyModeTest.CompProperties_MMTStrike",
+        "MMT_BossFire_FlamePillar": "MyModeTest.CompProperties_MMTGroundFire",
+    }
     abilities = def_map(parse_xml(ABILITIES_XML))
     for ab in ABILITIES:
         if ab not in abilities:
@@ -113,21 +119,26 @@ def validate_fireboss() -> None:
         if verb is None or child_text(verb, "soundCast") is None:
             fail(f"{ab} 缺少 verbProperties.soundCast")
         comps = node.find("comps")
-        if comps is None or "MyModeTest.CompProperties_MMT" not in "".join(
+        if comps is None or EXPECTED_COMPS[ab] not in "".join(
                 c.get("Class") or "" for c in comps):
-            fail(f"{ab} 未接 MMT 效果桶")
-    summon = abilities["MMT_BossFire_SummonLesser"]
+            fail(f"{ab} 未接 SkillFX 效果桶 {EXPECTED_COMPS[ab]}")
     summon_text = read_text(ABILITIES_XML)
-    if f"<pawnKindDef>{LESSER_KIND}</pawnKindDef>" not in summon_text:
-        fail("召唤技能 pawnKindDef 必须指向 MMT_FireElementalLesser")
+    if f"<animalKindDefName>{LESSER_KIND}</animalKindDefName>" not in summon_text:
+        fail("召唤技能 animalKindDefName 必须指向 MMT_FireElementalLesser")
 
-    # ---- ThinkTree：三个技能各挂一个 JobGiver_AIAbilityFight ----
-    trees = read_text(TREES_XML)
+    # ---- ThinkTree：Boss 三技能各挂一个 JobGiver_AIAbilityFight；小火元素火焰弹一个节点 ----
+    trees_root = def_map(parse_xml(TREES_XML))
+    boss_tree = ET.tostring(trees_root["MMT_FireElementalLord"], encoding="unicode")
+    lesser_tree = ET.tostring(trees_root["MMT_FireElementalLesser"], encoding="unicode")
     for ab in ABILITIES:
-        if f"<ability>{ab}</ability>" not in trees:
-            fail(f"ThinkTree 缺少 {ab} 的 JobGiver_AIAbilityFight 节点")
-    if trees.count('<li Class="JobGiver_AIAbilityFight">') != 3:
+        if f"<ability>{ab}</ability>" not in boss_tree:
+            fail(f"Boss ThinkTree 缺少 {ab} 的 JobGiver_AIAbilityFight 节点")
+    if boss_tree.count('Class="JobGiver_AIAbilityFight"') != 3:
         fail("Boss ThinkTree 应恰好 3 个 JobGiver_AIAbilityFight（一技一节点）")
+    if "<ability>MMT_SummonFire_FlameBolt</ability>" not in lesser_tree:
+        fail("小火元素 ThinkTree 缺少火焰弹的 JobGiver_AIAbilityFight 节点")
+    if lesser_tree.count('Class="JobGiver_AIAbilityFight"') != 1:
+        fail("小火元素 ThinkTree 应恰好 1 个 JobGiver_AIAbilityFight（火焰弹）")
 
     # ---- 白名单：BossLair 据点 + Boss 召唤器双登记 ----
     for path in (DUNGEONS_XML, SUMMONER_XML):

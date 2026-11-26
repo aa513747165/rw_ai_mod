@@ -205,7 +205,7 @@ Boss 不再绑定单一 MMT 独占单位，改为从**原版 + Mod 全库 Boss �
 - **候选池**（`BossPool.cs`）：XML 白名单（各 SitePartDef `DungeonLayoutExtension.bossPawnKindDefNames`，惰性解析、缺失静默跳过，其它 mod 可 XPath 追加）∪ 全库自动扫描（`isFighter` 且 combatPower ≥ 150，原版/Mod Boss 通吃，零 mod 感知代码，缓存只扫一次）。Boss 召唤器（§7）与本池共用候选源。
 - **预算**：Boss 预算 = 据点威胁点 × `bossBudgetFraction`（巢穴定稿 0.5；威胁点已由财富公式 §1.2 推导，即"根据财富选 Boss"）。`bossBudgetFraction > 0` 即视为有 Boss 巢位（库房偏移、中央留开阔巢区）。
 - **选取**（`BossPool.PickBosses`）：逐只抽选，单只 combatPower ≤ 剩余预算；数量上限 `bossCountRange`（巢穴定稿 1~3，实际只数受预算约束）；权重偏向战力贴近剩余预算者（财富越高越容易出强 Boss），已选种类不重复。低财富兜底：池内最弱 Boss 不超预算 ×1.5 仍出 1 只；再抽不出则静默退化为大型守卫据点。
-- **派系**（`BossPool.ResolveBossFaction`）：类人 → 据点宿主派系（入守卫 lord，装备稀有度掷点由 LootRoll 生成钩子自动结算）；机械族/虫族/异常实体 → 各自原版派系（原生敌对）；动物等 → 无派系 + 强制永久狂暴。全程不自写判敌逻辑。
+- **派系**（`BossPool.ResolveBossFaction`，按优先级）：挂 `DefModExtension_MMTMonsterFaction` 的 PawnKindDef → **MMT_Monster 魔物派系**（MMT 自产 Boss 统一入口，隐藏派系，只对玩家永久敌对、与其它 NPC 派系天然中立，Boss 在巢位不与守卫互殴；见 `mmt-boss-framework.md`）；类人 → 据点宿主派系（入守卫 lord，装备稀有度掷点由 LootRoll 生成钩子自动结算）；机械族/虫族/异常实体 → 各自原版派系（原生敌对）；动物等 → 无派系 + 强制永久狂暴。全程不自写判敌逻辑。
 - **后继新增 Boss**（含 MMT 自建的远古守卫者 `MMT_BossAncientGuardian`）：定义 PawnKindDef 后把 defName 登记进巢穴白名单即入池按预算参选，代码零改动——新 Boss 一律走本池化设计，不再单写挂载逻辑。
 
 
@@ -269,6 +269,10 @@ Boss 不再绑定单一 MMT 独占单位，改为从**原版 + Mod 全库 Boss �
   仅 Dev 模式在建造菜单可见（`Designator_Build.Visible` postfix 强制隐藏）；
   gizmo 菜单候选复用 Boss 池（§4.7：XML 白名单 ∪ 全库自动扫描，原版与 Mod Boss 通吃，
   菜单标注战力与来源包，候选缓存只扫一次），目标选格生成；
-  派系走 BossPool.ResolveBossFaction（类人走副本宿主派系 + `LordJob_AssaultColony` 立即进攻，
+  派系走 BossPool.ResolveBossFaction（带魔物派系标记的 MMT 自产 Boss → MMT_Monster 魔物派系，
+  类人走副本宿主派系 + `LordJob_AssaultColony` 立即进攻，
   机械/虫/异常实体挂各自派系，动物无派系强制永久狂暴兜底）；
+  DEV 操控放技能：Debug「MMT Boss → 操控放技能（选中有技能的单位）」（`DevBossControl`，
+  BossSummoner.cs）列出目标全部技能（含剩余冷却）→ 原版瞄准 → `QueueCastingJob` 排入施法 job，
+  无目标技能直接激活，Boss/召唤物/任意带技能单位通用；
   白名单默认预留 `MMT_BossAncientGuardian`（与巢穴白名单同名，自建 Boss 一处定义两处生效）。

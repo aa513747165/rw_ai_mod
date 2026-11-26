@@ -14,8 +14,9 @@ namespace MyModeTest
     // 二、追踪弹 SummonHoming：同样无敌不可选中，持续时间内每 tick 朝选中目标的
     //    当前位置修正航向，进入命中半径即造成伤害并消失，续航超时也消失，
     //    目标提前死亡/消失则直接消散；
-    // 三、动物召唤 SummonAnimal：临时生成驯服动物（玩家派系，与原版动物一致），
-    //    挂 MMT_SummonAnimal Hediff 计时到期消失；Harmony 补丁禁止宰杀/放生；
+    // 三、生物召唤 SummonAnimal：临时生成 count 只生物（派系随施法者，缺省玩家），
+    //    动物/元素等非人形 PawnKind 均可；挂 MMT_SummonAnimal Hediff 计时到期消失；
+    //    Harmony 补丁禁止宰杀/放生；
     // 四、炮塔召唤 SummonTurret：生成与原版自动机枪塔同逻辑的 Building_TurretGun
     //    （不带电力/燃料/操作 comp，自动索敌射击），限时走原版 CompLifespan
     //    （公开字段 age 偏移实现运行时自定义时长），到期自毁。
@@ -64,8 +65,10 @@ namespace MyModeTest
         public float hitRadius = 0.7f;
         /// <summary>追踪弹：命中爆炸半径（0=单体直击）。</summary>
         public float explosionRadius;
-        /// <summary>动物召唤：动物种类。</summary>
+        /// <summary>生物召唤：生物种类（动物/元素等非人形 PawnKind 均可）。</summary>
         public PawnKindDef animalKind;
+        /// <summary>生物召唤：一次召唤数量（在目标格附近找可站立格散开）。</summary>
+        public int count = 1;
         /// <summary>炮塔召唤：炮塔建筑 Def。</summary>
         public ThingDef turretDef;
         /// <summary>移动拖尾 fleck。</summary>
@@ -136,7 +139,7 @@ namespace MyModeTest
             return homing;
         }
 
-        /// <summary>动物召唤：在目标格附近生成驯服动物（挂召唤时限 Hediff，到期消失）。</summary>
+        /// <summary>生物召唤：在目标格附近生成 count 只临时生物（派系随施法者，挂召唤时限 Hediff，到期消失）。</summary>
         public static Pawn SummonAnimal(Thing caster, IntVec3 cell, MMTSummonParams p)
         {
             Map map = caster?.Map;
@@ -144,34 +147,44 @@ namespace MyModeTest
             {
                 return null;
             }
-            if (p?.animalKind == null || p.animalKind.RaceProps?.Animal != true)
+            if (p?.animalKind == null)
             {
-                Log.Error("[MMT] 动物召唤缺少有效动物种类（" + (p?.animalKind?.defName ?? "空") + "）");
+                Log.Error("[MMT] 生物召唤缺少有效生物种类（空）");
                 return null;
             }
             if (SummonAnimalHediff == null)
             {
-                Log.Error("[MMT] 找不到 " + SummonAnimalHediffDefName + " 定义，无法动物召唤");
+                Log.Error("[MMT] 找不到 " + SummonAnimalHediffDefName + " 定义，无法生物召唤");
                 return null;
             }
-            if (!cell.Standable(map)
-                && !CellFinder.TryFindRandomCellNear(cell, map, 6, c => c.Standable(map), out cell))
+            Pawn first = null;
+            int count = Mathf.Max(1, p.count);
+            for (int i = 0; i < count; i++)
             {
-                return null;
+                IntVec3 spawnCell = cell;
+                if (!spawnCell.Standable(map)
+                    && !CellFinder.TryFindRandomCellNear(cell, map, 6, c => c.Standable(map), out spawnCell))
+                {
+                    break;
+                }
+                Pawn pawn = PawnGenerator.GeneratePawn(p.animalKind, caster.Faction ?? Faction.OfPlayer);
+                GenSpawn.Spawn(pawn, spawnCell, map);
+                Hediff hediff = HediffMaker.MakeHediff(SummonAnimalHediff, pawn);
+                HediffComp_MMTSummonAnimal comp = hediff.TryGetComp<HediffComp_MMTSummonAnimal>();
+                if (comp != null)
+                {
+                    comp.ticksLeft = Mathf.Max(1, p.durationTicks);
+                    comp.vanishFleck = p.vanishFleckDef;
+                }
+                pawn.health.AddHediff(hediff);
+                PlayFleck(map, spawnCell, p?.vanishFleckDef);
+                if (first == null)
+                {
+                    first = pawn;
+                }
             }
-            Pawn pawn = PawnGenerator.GeneratePawn(p.animalKind, caster.Faction ?? Faction.OfPlayer);
-            GenSpawn.Spawn(pawn, cell, map);
-            Hediff hediff = HediffMaker.MakeHediff(SummonAnimalHediff, pawn);
-            HediffComp_MMTSummonAnimal comp = hediff.TryGetComp<HediffComp_MMTSummonAnimal>();
-            if (comp != null)
-            {
-                comp.ticksLeft = Mathf.Max(1, p.durationTicks);
-                comp.vanishFleck = p.vanishFleckDef;
-            }
-            pawn.health.AddHediff(hediff);
-            PlayFleck(map, cell, p?.vanishFleckDef);
             PlaySound(p, cell, map);
-            return pawn;
+            return first;
         }
 
         /// <summary>炮塔召唤：生成原版逻辑的自动炮塔（无电力/弹药），CompLifespan 到期自毁。</summary>
@@ -557,6 +570,8 @@ namespace MyModeTest
         public float hitRadius = 0.7f;
         public float explosionRadius;
         public string animalKindDefName;
+        /// <summary>生物召唤：一次召唤数量。</summary>
+        public int count = 1;
         public string turretDefName;
         public string trailFleckDefName;
         public string vanishFleckDefName;
@@ -594,6 +609,7 @@ namespace MyModeTest
                 hitRadius = Props.hitRadius,
                 explosionRadius = Props.explosionRadius,
                 animalKind = Props.animalKindDefName.NullOrEmpty() ? null : DefDatabase<PawnKindDef>.GetNamedSilentFail(Props.animalKindDefName),
+                count = Props.count,
                 turretDef = Props.turretDefName.NullOrEmpty() ? null : DefDatabase<ThingDef>.GetNamedSilentFail(Props.turretDefName),
                 trailFleckDef = Props.trailFleckDefName.NullOrEmpty() ? null : DefDatabase<FleckDef>.GetNamedSilentFail(Props.trailFleckDefName),
                 vanishFleckDef = Props.vanishFleckDefName.NullOrEmpty() ? null : DefDatabase<FleckDef>.GetNamedSilentFail(Props.vanishFleckDefName),

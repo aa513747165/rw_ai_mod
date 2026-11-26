@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <!-- 熔火元素种族（魔兽火元素风格 Boss + 召唤物）：
-       fleshType Insectoid 是纯 XML 下让 Boss 获得常驻敌对派系的关键——BossPool.ResolveBossFaction
-       对虫族返回虫巢派系（Core 原生，无 DLC 门槛），Boss 因此不经 ManhunterPermanent（精神崩溃
-       会覆盖 ThinkTree 导致技能放不出），自定义 ThinkTree 中的 JobGiver_AIAbilityFight 得以驱动
-       三个技能。Flammability 0 免疫点燃 + ArmorRating_Heat 1.0 耐火，火元素招牌特性。 -->
+       派系路由改由 PawnKindDef 的 DefModExtension_MMTMonsterFaction 负责（MMT_Monster 魔物派系），
+       fleshType Insectoid 仅留伤害类型风味（虫族血肉），不再承担派系解析——Boss 因此不经
+       ManhunterPermanent（精神崩溃会覆盖 ThinkTree 导致技能放不出），自定义 ThinkTree 中的
+       JobGiver_AIAbilityFight 得以驱动技能。Flammability 0 免疫点燃 + ArmorRating_Heat 1.0
+       耐火，火元素招牌特性。 -->
 
   <!-- ========== 熔火元素领主（Boss 本体） ========== -->
   <ThingDef ParentName="BasePawn">

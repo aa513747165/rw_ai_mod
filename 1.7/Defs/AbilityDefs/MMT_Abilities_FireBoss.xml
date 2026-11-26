@@ -4,9 +4,11 @@
        不挂 PsycastBase 父类——无灵能熵/精神力消耗，showPsycastEffects 关闭，
        节奏完全由 cooldownTicksRange 控制（对照 Anomaly 实体技能 Heatspikes/ConsumeLeap 写法）；
        aiCanUse + ai_IsOffensive 开启，由 ThinkTree 的 JobGiver_AIAbilityFight 驱动施放。
-       效果全部复用 ClassAbilityEffects.cs 现有桶，零新增 C#。 -->
+       效果桶全部走 MMT 技能特效框架（SkillFX 系列 pawn 侧 CompProperties_MMT*，
+       视觉/伤害参数全部 XML 透传，C# 零新增特例逻辑）。 -->
 
-  <!-- ① 召唤小火元素：限时炮灰（到期自动消失），场上同时最多 6 只。 -->
+  <!-- ① 召唤小火元素：限时炮灰（SkillFX 生物召唤桶，派系随施法者进魔物派系）。
+       一次 2 只、存活 60s、CD 45s——场上自然维持 4 只上下，峰值 ≤6 只，与旧版上限等效。 -->
   <AbilityDef>
     <defName>MMT_BossFire_SummonLesser</defName>
     <label>召唤火元素</label>
@@ -33,24 +35,23 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MyModeTest.CompProperties_MMTSummon">
-        <pawnKindDef>MMT_FireElementalLesser</pawnKindDef>
+      <li Class="MyModeTest.CompProperties_MMTSkillSummon">
+        <mode>Animal</mode>
+        <animalKindDefName>MMT_FireElementalLesser</animalKindDefName>
         <count>2</count>
-        <durationTicks>3600</durationTicks>
-        <maxActive>6</maxActive>
-      </li>
-      <li Class="MyModeTest.CompProperties_MMTFleckFX">
-        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
-        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
+        <durationSeconds>60</durationSeconds>
+        <vanishFleckDefName>MMT_Fleck_Flame</vanishFleckDefName>
+        <soundDefName>MMT_Powerup</soundDefName>
       </li>
     </comps>
   </AbilityDef>
 
-  <!-- ② 火雨：大范围随机落点持续轰击（火焰风暴模式，复用 AoEDamage 脉冲区 + randomStrikes）。 -->
+  <!-- ② 流星火雨：大范围随机落点持续轰击（SkillFX 天降打击桶——原版闪电事件
+       视觉（闪电+天空闪光+雷声）叠加自定义 Flame 爆炸伤害层；12 连发绕目标半径 6 格随机落点）。 -->
   <AbilityDef>
     <defName>MMT_BossFire_FireRain</defName>
     <label>流星火雨</label>
-    <description>召唤漫天火雨，对目标区域进行 12 轮随机落点轰击，点燃范围内的一切。</description>
+    <description>引动元素位面的流火，对目标区域进行 12 轮随机落点轰击，点燃范围内的一切。</description>
     <iconPath>UI/RoM/firestorm</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <showPsycastEffects>false</showPsycastEffects>
@@ -73,29 +74,27 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
-        <damageDef>Flame</damageDef>
-        <damageAmount>18</damageAmount>
-        <armorPen>0</armorPen>
+      <li Class="MyModeTest.CompProperties_MMTStrike">
         <radius>6</radius>
-        <pulses>12</pulses>
-        <pulseIntervalTicks>75</pulseIntervalTicks>
-        <randomStrikes>true</randomStrikes>
-        <startFireChance>0.5</startFireChance>
-        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
-      </li>
-      <li Class="MyModeTest.CompProperties_MMTFleckFX">
-        <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>
-        <targetFleckDefName>MMT_Fleck_Flame</targetFleckDefName>
+        <targetFriendly>false</targetFriendly>
+        <strikeCount>12</strikeCount>
+        <strikeIntervalTicks>45</strikeIntervalTicks>
+        <damageDefName>Flame</damageDefName>
+        <damage>18</damage>
+        <armorPenetration>0</armorPenetration>
+        <explosionRadius>1.9</explosionRadius>
+        <chanceToStartFire>0.5</chanceToStartFire>
       </li>
     </comps>
   </AbilityDef>
 
-  <!-- ③ 火柱：窄范围定点三连喷，高伤高穿甲，必点燃。 -->
+  <!-- ③ 熔岩火柱：窄范围定点喷发（SkillFX 地面火焰桶单柱模式——贴地火盘+水平碟堆叠
+       火柱贴图自绘，站上来的目标按跳吃高伤高穿甲 Burn 并被点燃，引燃地面走原版火蔓延）。
+       效果设计卡沿用框架烈焰喷发：火盘 2.2 格、7 层堆叠 1.4 高、顶端收至 0.4 倍、摆动 0.35。 -->
   <AbilityDef>
     <defName>MMT_BossFire_FlamePillar</defName>
     <label>熔岩火柱</label>
-    <description>在目标脚下喷起一道熔岩火柱，连续喷发三次，小范围内造成高额火焰伤害并必定点燃地面。</description>
+    <description>在目标脚下喷起一道熔岩火柱，小范围内持续造成高额火焰伤害并点燃地面。</description>
     <iconPath>UI/RoM/sunfire</iconPath>
     <writeCombatLog>true</writeCombatLog>
     <showPsycastEffects>false</showPsycastEffects>
@@ -118,16 +117,59 @@
       </targetParams>
     </verbProperties>
     <comps>
-      <li Class="MyModeTest.CompProperties_MMTAoEDamage">
-        <damageDef>Flame</damageDef>
-        <damageAmount>30</damageAmount>
-        <armorPen>0.35</armorPen>
-        <radius>1.5</radius>
-        <pulses>3</pulses>
-        <pulseIntervalTicks>30</pulseIntervalTicks>
-        <randomStrikes>false</randomStrikes>
-        <startFireChance>0.9</startFireChance>
-        <fleckDefName>MMT_Fleck_Flame</fleckDefName>
+      <li Class="MyModeTest.CompProperties_MMTGroundFire">
+        <radius>0</radius>
+        <targetFriendly>false</targetFriendly>
+        <texPath>Things/Mote/MMT_FlamePillar</texPath>
+        <tint>(1,0.62,0.2)</tint>
+        <visualScale>2.2</visualScale>
+        <pillarHeight>1.4</pillarHeight>
+        <pillarLayers>7</pillarLayers>
+        <pillarTopScale>0.4</pillarTopScale>
+        <pillarSway>0.35</pillarSway>
+        <durationTicks>180</durationTicks>
+        <damageDefName>Burn</damageDefName>
+        <damage>10</damage>
+        <damageIntervalTicks>15</damageIntervalTicks>
+        <armorPenetration>0.35</armorPenetration>
+        <ignitePawnChance>0.4</ignitePawnChance>
+        <igniteCellChance>0.15</igniteCellChance>
+        <effectRadius>1.5</effectRadius>
+        <soundDefName>FireSpew_Resolve</soundDefName>
+      </li>
+    </comps>
+  </AbilityDef>
+  <!-- ④ 小火元素召唤物技能：火焰弹（单发火球，验证召唤物技能链路——
+       复用 SkillShooting.cs 的 MMTSingleShot 投射物桶，小怪级数值，短 CD 高频骚扰）。 -->
+  <AbilityDef>
+    <defName>MMT_SummonFire_FlameBolt</defName>
+    <label>火焰弹</label>
+    <description>向目标喷射一枚不稳定的火球，命中后爆裂并点燃周围。</description>
+    <iconPath>Things/Projectile/LauncherShot</iconPath>
+    <writeCombatLog>true</writeCombatLog>
+    <showPsycastEffects>false</showPsycastEffects>
+    <ai_IsOffensive>true</ai_IsOffensive>
+    <aiCanUse>true</aiCanUse>
+    <cooldownTicksRange>600</cooldownTicksRange>
+    <verbProperties>
+      <verbClass>Verb_CastAbility</verbClass>
+      <warmupTime>1.0</warmupTime>
+      <range>24.9</range>
+      <soundCast>MMT_FireWooshSD</soundCast>
+      <targetParams>
+        <canTargetPawns>true</canTargetPawns>
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetAnimals>true</canTargetAnimals>
+        <canTargetMechs>true</canTargetMechs>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetBuildings>false</canTargetBuildings>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </targetParams>
+    </verbProperties>
+    <comps>
+      <li Class="MyModeTest.CompProperties_MMTSingleShot">
+        <projectileDef>MMT_Proj_SkillFireball</projectileDef>
+        <soundDefName>Shot_IncendiaryLauncher</soundDefName>
       </li>
       <li Class="MyModeTest.CompProperties_MMTFleckFX">
         <casterFleckDefName>MMT_Fleck_Flame</casterFleckDefName>

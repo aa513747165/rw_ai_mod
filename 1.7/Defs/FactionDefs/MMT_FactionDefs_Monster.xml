@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- MMT 魔物派系：统一放置 MMT 自产 Boss 与敌对召唤物。
+       对照 Core Mechanoid / Anomaly Entities 写法：permanentEnemy=true 只对玩家永久敌对，
+       与其它 NPC 派系（副本守卫宿主、虫巢、机械族）天然中立——Boss 在巢位不与守卫互殴。
+       永不主动袭击（raidCommonalityFromPointsCurve 恒 0）、无 pawnGroupMakers、世界生成必有 1 个
+       （requiredCountAtGameStart=1，保证 BossPool.ResolveBossFaction 的 FirstFactionOfDef 可取到）。
+       单位归派系不靠 fleshType hack：PawnKindDef 挂 MyModeTest.DefModExtension_MMTMonsterFaction
+       即由 BossPool.ResolveBossFaction 路由进本派系（四型 Boss 通用：元素/类人/机械/建筑类）。 -->
+
+  <FactionDef ParentName="FactionBase">
+    <defName>MMT_Monster</defName>
+    <label>魔物</label>
+    <description>蛰伏在荒野与遗迹深处的魔物族群。它们不属于任何文明，只遵循最原始的本能——猎杀一切闯入领地的生者。</description>
+    <fixedName>荒野魔物</fixedName>
+    <pawnSingular>魔物</pawnSingular>
+    <pawnsPlural>魔物</pawnsPlural>
+    <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <maxConfigurableAtWorldCreation>1</maxConfigurableAtWorldCreation>
+    <configurationListOrderPriority>1000</configurationListOrderPriority>
+    <hidden>true</hidden>
+    <displayInFactionSelection>false</displayInFactionSelection>
+    <humanlikeFaction>false</humanlikeFaction>
+    <autoFlee>false</autoFlee>
+    <canUseAvoidGrid>false</canUseAvoidGrid>
+    <techLevel>Animal</techLevel>
+    <permanentEnemy>true</permanentEnemy>
+    <hostileToFactionlessHumanlikes>true</hostileToFactionlessHumanlikes>
+    <raidCommonalityFromPointsCurve>
+      <points>
+        <li>(0, 0)</li>
+      </points>
+    </raidCommonalityFromPointsCurve>
+    <maxPawnCostPerTotalPointsCurve>
+      <points>
+        <li>(400,200)</li>
+        <li>(900,300)</li>
+        <li>(100000,10000)</li>
+      </points>
+    </maxPawnCostPerTotalPointsCurve>
+    <pawnGroupMakers Inherit="False" />
+    <settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
+  </FactionDef>
+</Defs>

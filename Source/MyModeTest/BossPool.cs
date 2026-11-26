@@ -117,13 +117,21 @@ namespace MyModeTest
         }
 
         /// <summary>
-        /// Boss 派系解析：类人 → 据点宿主派系（随守卫 lord 行动）；机械族/虫族/异常实体挂各自原版派系
+        /// Boss 派系解析（按优先级）：带 DefModExtension_MMTMonsterFaction 的 PawnKindDef →
+        /// MMT_Monster 魔物派系（MMT 自产 Boss 统一入口，对玩家永久敌对、与其它 NPC 派系中立）；
+        /// 类人 → 据点宿主派系（随守卫 lord 行动）；机械族/虫族/异常实体挂各自原版派系
         /// （原生对玩家敌对）；动物等返回 null（调用方强制永久狂暴兜底）。全程不自写判敌逻辑。
         /// </summary>
         public static Faction ResolveBossFaction(PawnKindDef kind, Faction siteFaction)
         {
             if (kind?.RaceProps == null)
                 return null;
+            if (kind.HasModExtension<DefModExtension_MMTMonsterFaction>())
+            {
+                Faction monster = MMTMonsterFaction.Get;
+                if (monster != null)
+                    return monster;
+            }
             if (kind.RaceProps.Humanlike)
                 return siteFaction;
             if (kind.RaceProps.IsMechanoid)
