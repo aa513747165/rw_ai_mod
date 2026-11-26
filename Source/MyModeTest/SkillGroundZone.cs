@@ -8,8 +8,9 @@ namespace MyModeTest
 {
     // ========== 持续地面区域框架（第十九步：通用版 + 毒气池演示） ==========
     // 在地面上维持一片圆形区域，站在里面的 pawn 按脉冲间隔持续吃效果
-    // （伤害和/或 Hediff 严重度累积），区域到时自毁。这是"站里面持续吃效果"的
-    // 通用底层：毒云（ToxicBuildup 累积）/ 减速地带 / 腐蚀酸池等都只是参数皮肤。
+    // （伤害和/或 Hediff 严重度累积，和/或踉跄定身），区域到时自毁。这是
+    // "站里面持续吃效果"的通用底层：毒云（ToxicBuildup 累积）/ 寒风领域
+    // （StaggerFor 冰冻硬控）/ 减速地带 / 腐蚀酸池等都只是参数皮肤。
     // 与第六步地面火焰的区别：火焰是"每格一个实体"（真实燃烧可蔓延），
     // 区域是"单实体管整片圆"（N 格只 1 个 Thing、3 个 quad，实体数量不随面积放大）。
     // 视觉：三层贴图圆盘（共享材质、慢速反向旋转 + 呼吸透明度）模拟气雾翻卷，
@@ -49,6 +50,11 @@ namespace MyModeTest
         public HediffDef hediffDef;
         /// <summary>每跳 Hediff 严重度增量。</summary>
         public float hediffSeverityPerPulse = 0.04f;
+        /// <summary>每跳踉跄定身 tick（0 = 不定身；寒风领域等冰冻硬控用，
+        /// 取值略大于脉冲间隔即可保持连续冻结，离区后定身自然结束）。</summary>
+        public int staggerTicksPerPulse;
+        /// <summary>冰块覆盖物贴图尺寸（格，略大于 pawn 身位即罩住全身）。</summary>
+        public float iceScale = 1.7f;
         /// <summary>圆盘贴图（白图，代码染色；默认复用光环圆盘）。</summary>
         public string texPath = "Things/Mote/MMT_AuraDisc";
         /// <summary>区域染色（默认毒气黄绿）。</summary>
@@ -101,6 +107,8 @@ namespace MyModeTest
         private int ticksLeft = -1;
         private int ticksUntilPulse;
         private bool loadedFromSave;
+        /// <summary>冰冻皮肤：被冻 pawn → 其身上冰块覆盖物（区域短寿，字典只增不清）。</summary>
+        private readonly Dictionary<Pawn, Thing_MMTIceBlock> iceBlocks = new Dictionary<Pawn, Thing_MMTIceBlock>();
 
         // 圆盘材质按贴图全局共享；同帧多次 DrawMesh 共材质时颜色是引用语义（全部按最后一次
         // 设置渲染——三层旋转盘同帧三色会被压成同一色），必须逐次走 MaterialPropertyBlock 传色
@@ -189,7 +197,32 @@ namespace MyModeTest
                     }
                     hediff.Severity += zoneParams.hediffSeverityPerPulse;
                 }
+                // 冰冻硬控：每跳续一段踉跄定身（略大于脉冲间隔 = 站内持续冻结，离区自然恢复）
+                if (zoneParams.staggerTicksPerPulse > 0 && !p.Downed)
+                {
+                    p.stances.stagger.StaggerFor(zoneParams.staggerTicksPerPulse);
+                    ApplyIceBlock(p);
+                }
             }
+        }
+
+        /// <summary>给被冻 pawn 罩/续冰块贴图（存续略长于定身，覆盖解冻瞬间；离区不再续期自然融化）。</summary>
+        private void ApplyIceBlock(Pawn p)
+        {
+            int life = zoneParams.staggerTicksPerPulse + zoneParams.intervalTicks;
+            if (iceBlocks.TryGetValue(p, out Thing_MMTIceBlock ice) && ice != null && !ice.Destroyed)
+            {
+                ice.Refresh(life);
+                return;
+            }
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("MMT_IceBlock");
+            if (def == null)
+            {
+                return;
+            }
+            Thing_MMTIceBlock block = (Thing_MMTIceBlock)GenSpawn.Spawn(def, p.Position, p.Map);
+            block.Setup(p, life, zoneParams.iceScale);
+            iceBlocks[p] = block;
         }
 
         private bool Affects(Pawn p)
@@ -255,6 +288,116 @@ namespace MyModeTest
         }
     }
 
+    /// <summary>
+    /// 冰块覆盖物（冰冻皮肤视觉）：Attach 到被冻 pawn 跟随移动，半透明冰块贴图罩住全身
+    /// （淡入 + 微呼吸，尾段淡出模拟融化）。存续由寒风领域每跳续期；目标离区/死亡或
+    /// 存续耗尽即自毁。参数运行时传入不进存档，读档后首 tick 自毁。
+    /// </summary>
+    public class Thing_MMTIceBlock : AttachableThing
+    {
+        public const string TexPath = "Things/Mote/MMT_IceBlock";
+
+        private Thing follow;
+        private int ticksTotal = -1;
+        private int ticksLeft = -1;
+        private float drawAngle;
+        private float iceScale = 1.7f;
+        private bool loadedFromSave;
+
+        // 全部冰块共享一张贴图材质；同帧多块冰的颜色/透明度必须逐次 MaterialPropertyBlock 传
+        // （共享材质颜色是引用语义，见 Thing_MMTGroundZone 注释）
+        private static Material sharedMat;
+        private static MaterialPropertyBlock matProps;
+
+        /// <summary>1.7 AttachableThing 抽象成员；冰块不可选，仅调试可见。</summary>
+        public override string InspectStringAddon => "冰冻覆盖物（演示实体）";
+
+        public void Setup(Thing followTarget, int durationTicks, float scale)
+        {
+            follow = followTarget;
+            ticksTotal = ticksLeft = Mathf.Max(1, durationTicks);
+            iceScale = scale > 0f ? scale : 1.7f;
+            drawAngle = Rand.Range(0f, 360f);
+            // 无 CompAttachBase 的目标不能 Attach（AttachTo 报红字且 parent 留空，之后基类 Tick NRE）
+            if (followTarget.TryGetComp<CompAttachBase>() != null)
+            {
+                AttachTo(followTarget);
+            }
+        }
+
+        /// <summary>续期：只延长不缩短（区域每跳续一段）。</summary>
+        public void Refresh(int durationTicks)
+        {
+            int life = Mathf.Max(1, durationTicks);
+            if (ticksLeft < life)
+            {
+                ticksLeft = life;
+            }
+            if (ticksTotal < ticksLeft)
+            {
+                ticksTotal = ticksLeft;
+            }
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            loadedFromSave = respawningAfterLoad;
+        }
+
+        protected override void Tick()
+        {
+            // 未 Attach 时 parent 为空，AttachableThing.Tick 会 NRE，跳过基类
+            if (parent != null)
+            {
+                base.Tick();
+            }
+            if (loadedFromSave || ticksLeft < 0 || follow == null || follow.Destroyed || follow.MapHeld != Map)
+            {
+                Destroy();
+                return;
+            }
+            if (--ticksLeft <= 0)
+            {
+                Destroy();
+            }
+        }
+
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            if (follow == null || Map != Find.CurrentMap || ticksTotal <= 0)
+            {
+                return;
+            }
+            if (sharedMat == null)
+            {
+                Texture2D tex = ContentFinder<Texture2D>.Get(TexPath, false);
+                if (tex == null)
+                {
+                    return;
+                }
+                sharedMat = new Material(ShaderDatabase.TransparentPostLight) { mainTexture = tex };
+            }
+            if (matProps == null)
+            {
+                matProps = new MaterialPropertyBlock();
+            }
+            int elapsed = ticksTotal - ticksLeft;
+            // 快速凝冰淡入 + 微呼吸 + 尾段淡出（融化）
+            float alpha = Mathf.Clamp01(elapsed / 8f) * Mathf.Clamp01(ticksLeft / 15f);
+            alpha *= 0.85f + 0.1f * Mathf.Sin(elapsed * 0.08f);
+            Vector3 pos = follow.DrawPos;
+            pos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            Color color = Color.white;
+            color.a = alpha;
+            sharedMat.color = color;
+            matProps.SetColor("_Color", color);
+            Graphics.DrawMesh(MeshPool.plane10,
+                Matrix4x4.TRS(pos, Quaternion.AngleAxis(drawAngle, Vector3.up), new Vector3(iceScale, 1f, iceScale)),
+                sharedMat, 0, null, 0, matProps);
+        }
+    }
+
     // ========== pawn 技能出口：持续地面区域 ==========
 
     public class CompProperties_MMTGroundZone : CompProperties_MMTAoETargetBase
@@ -267,6 +410,10 @@ namespace MyModeTest
         public float armorPenetration;
         public string hediffDefName;
         public float hediffSeverityPerPulse = 0.04f;
+        /// <summary>每跳踉跄定身 tick（0 = 不定身；冰冻硬控用）。</summary>
+        public int staggerTicksPerPulse;
+        /// <summary>冰块覆盖物贴图尺寸（格）。</summary>
+        public float iceScale = 1.7f;
         public string texPath = "Things/Mote/MMT_AuraDisc";
         public Color tint = new Color(0.55f, 0.85f, 0.3f);
         public string moteFleckDefName;
@@ -298,6 +445,8 @@ namespace MyModeTest
                 armorPenetration = Props.armorPenetration,
                 hediffDef = Props.hediffDefName.NullOrEmpty() ? null : DefDatabase<HediffDef>.GetNamedSilentFail(Props.hediffDefName),
                 hediffSeverityPerPulse = Props.hediffSeverityPerPulse,
+                staggerTicksPerPulse = Props.staggerTicksPerPulse,
+                iceScale = Props.iceScale,
                 texPath = Props.texPath,
                 tint = Props.tint,
                 moteFleckDef = Props.moteFleckDefName.NullOrEmpty() ? null : DefDatabase<FleckDef>.GetNamedSilentFail(Props.moteFleckDefName),

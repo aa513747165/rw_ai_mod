@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 新星环（Thing_MMTNovaRing）：Attach 类无碰撞 Thing，
+       由 MMTNovaUtil.FireNova 生成，圆心固定在施放点，半径匀速增大，
+       每 tick 判定当前环带内 pawn（敌伤友疗，默认命中一次去重），
+       自绘波峰环 + 短拖尾，到达最大半径后整体淡出自毁。
+       graphicData 仅为兜底（本体 DrawAt 自绘，不走 Graphic）。
+       不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_NovaRing</defName>
+    <label>技能新星环</label>
+    <thingClass>MyModeTest.Thing_MMTNovaRing</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_NovaRing</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

@@ -6,29 +6,23 @@
 
 ## 一、建议优先补的核心原型（1~5）
 
-### 1. 新星环（360° 扩散冲击波）
+### 1. 新星环（360° 扩散冲击波）—— ✅ 已完成（第二十二步，2026-11-26）
 
 - **表现**：以施法者为中心，一个圆环向外扩散，命中扩散路径上的所有目标（敌我按技能过滤）。
-- **定位**：现有方向类打击只有锥形（龙息·15）、圆形区域（落雷·5）、多方位射线（3），缺"全向扩散环"这一经典形态。
-- **实现要点**：自绘环状 Thing（贴图环 + 半径插值增大），每 tick 检测当前环带（半径±0.5 格）内的 Pawn，已命中集合去重；可参数化扩散速度/最大半径/每目标只命中一次 vs 持续判定。
-- **参考机制**：`SkillBreath.cs` 的 `InCone` 几何判定可平移为环带判定。
+- **落地**：`SkillNova.cs`（`MMTNovaUtil.FireNova` + `Thing_MMTNovaRing` + `CompAbilityEffect_MMTNova`），Attach 类无碰撞实体，圆心固定在施放点，半径匀速增大；每 tick 判定当前环带（|距离-当前半径| ≤ 带宽/2）内 pawn，已命中集合去重（`hitOnce=false` 可改持续判定）；命中双效——敌方吃伤害、友方吃治疗池（复用 `MMTHealUtil`）。视觉：贴图圆环代码染色（白图 `MMT_NovaRing`），波峰最亮 + 通过后 0.3s 拖尾淡出，到达最大半径后整体淡出自毁；参数化扩散速度/最大半径/带宽/伤害/治疗量。演示「测试·神圣新星」（demoType="nova"，自身中心免瞄准；牧师 III 阶神圣新星的框架皮肤，参数见 `docs/mmt-class-priest.md` §3.11）。
+- **后续可选扩展**：命中挂 Hediff 的非伤害皮肤（如击退环 `StaggerFor`）、环心跟随施法者模式、多波次连环新星。
 
-### 2. 触发式陷阱/地雷
+### 2. 触发式陷阱/地雷 —— ✅ 已完成（第二十步，2026-11-26）
 
 - **表现**：在地面放置一个装置，敌人进入触发半径才引爆/触发效果；可带短暂武装时间。
-- **定位**：与延时打击（11，纯时间轴）互补——这是"空间触发"轴。埋伏、区域拒止类技能的基础。
-- **实现要点**：自定义建筑（不可选中/可隐藏图形），comp 每 N tick 扫描触发半径内敌对目标，触发后执行效果（爆炸/挂 hediff）并销毁；可复用 `GenExplosion` 与 `StockpileRewardExtension` 式的分档配置思路。
-- **注意**：原版陷阱是"踩格触发"，技能版应改为"半径触发 + 对敌可见性可选"。
+- **落地**：`SkillTrap.cs`（`MMTMineUtil.PlaceMine` + `Thing_MMTMine` + `CompAbilityEffect_MMTMine`），Attach 类无碰撞实体（不可选中），武装 1s 后每 10 tick 扫描触发半径 2 格内敌对 pawn，触发即 `GenExplosion` 爆炸（伤害半径 3 格）并自毁；120s 未触发静默失效；武装后红色微光提示。演示「测试·爆炸陷阱」（demoType="mine"），贴图 `MMT_SkillMine`（占位图，提示词见 §十）。
+- **后续可选扩展**：触发后挂 hediff 的非爆炸皮肤、对敌可见性开关、多块布设。
 
-### 3. 硬控类出口（CC）
+### 3. 硬控类出口（CC）—— ✅ 冰冻定身已完成（第二十一步，2026-11-26）
 
 - **表现**：眩晕 / 冰冻定身 / 恐惧逃跑 / 睡眠等"剥夺行动权"的效果出口。
-- **定位**：框架目前只有伤害、治疗、数值增益减益，缺控制类。技能池中控制占一大类。
-- **实现要点**：
-  - 眩晕：`pawn.stances.StaggerFor(ticks, 0f)`（12 步击退已用同 API）。
-  - 冰冻：定身（`StaggerFor` 或 hediff 禁移动）+ 目标身上罩冰块贴图 mote，命中破冰。
-  - 恐惧/狂暴：`MentalStateDef`（如 `PanicFlee`、`Berserk`）挂 `MentalStateHandler`，`ClassAbilityEffects.cs` 的 `CompAbilityEffect_MMTMentalStateAoE` 已有同款可借。
-  - 建议做成"CC 工具类 + 参数化 comp"，和新星环一样进通用桶。
+- **落地（冰冻）**：基于持续地面区域框架加 `staggerTicksPerPulse` 参数——每跳对站内目标 `StaggerFor` 续定身（45 tick > 脉冲间隔 30 tick 保持连续冻结，离区自然恢复，不挂 Hediff）；被冻目标身上罩冰块贴图（`Thing_MMTIceBlock` Attach 跟随，凝冰淡入/离区融化）。演示「测试·寒风领域」（demoType="groundZone" 的冰冻皮肤，冰蓝染色、仅敌方）。
+- **后续可选扩展**：眩晕（单次 `StaggerFor`，12 步击退已用同 API）、命中破冰（受击碎冰特效+提前解冻）、恐惧/狂暴（`MentalStateDef` + `MentalStateHandler`，`ClassAbilityEffects.cs` 的 `CompAbilityEffect_MMTMentalStateAoE` 可借）、睡眠。
 
 ### 4. 持续地面区域（通用版）—— ✅ 已完成（第十九步，2026-11-25）
 
@@ -37,11 +31,11 @@
 - **实现要点**：区域 Thing 持有半径/剩余时间/效果参数（hediff 或伤害），每 N tick 遍历覆盖格上 Pawn 挂效果；可选视觉：多层半透明 mote 或气体（原版 `Gas` 类如 deadlife 毒气可参考，但自定 Thing 更可控）。
 - **衍生**：烟幕挡视线可给区域内单位挂"遮蔽"hediff（命中率修正），不真改 LOS 计算。
 
-### 5. 驱散/净化
+### 5. 驱散/净化 —— ✅ 已完成（第二十三步，2026-11-26）
 
 - **表现**：移除友方身上的减益 / 移除敌方身上的增益（可指定数量或类别）。
-- **定位**：增益减益框架（8）的逆操作，实现量小但技能池必备（牧师驱散、净化药水）。
-- **实现要点**：遍历目标 `health.hediffSet.hediffs`，按标签/白名单（如 hediff 的 `tags` 或自定义 `HediffDef` 分类）移除；配驱散粒子（复用 `Thing_MMTBuffIconFlash` 图标闪光桶）。
+- **落地**：`SkillDispel.cs`（`MMTDispelUtil.DispelOne/Apply` + `CompAbilityEffect_MMTDispel`），纯代码框架（复用 `Thing_MMTBuffIconFlash` 图标桶 + 原版 `ThrowMicroSparks`，无新增 Def/贴图）。**只移除有持续时间的状态**（带 `HediffComp_Disappears` 的限时 Hediff；永久/无时限状态如伤疤、植入体、成瘾不可驱散）；敌我自动分流——友方移除减益（`isBad=true`）、敌方移除增益（`isBad=false`），至多 N 个、Severity 高者优先；视觉：目标头顶白色图标闪光 0.5s 淡出 + 每驱散 1 个爆 1 次白色微光点。演示「测试·驱散魔法」（友方）与「测试·驱散魔法·敌」（敌方），单体锁定（demoType="dispel"；牧师 II 阶驱散魔法的框架皮肤，参数见 `docs/mmt-class-priest.md` §3.8）。
+- **后续可选扩展**：范围驱散皮肤（CompAbilityEffect 已支持 radius>0 圈选）、按 hediff 标签白名单过滤类别、驱散成功时反制回敬（如每驱散 1 个回血）。
 
 ## 二、可选原型（6~12），按需挑选
 
@@ -89,4 +83,4 @@
 ## 三、备注
 
 - 每个原型落地时的固定动作：C# 效果类 + XML Def + `AbilityTargeting.cs` 新 demoType + `MMT_SkillDemoSet.xml` 演示条目 + 贴图占位（提示词进 `docs/mmt-skillfx-texture-prompts.md`）+ `tools/validate/skillfx.py` 校验段 + `docs/mmt-skillfx-manual-test.md` 测试章节 + AGENTS.md 条目。
-- 编号延续现有步骤：下一批从第 19 步起排。
+- 编号延续现有步骤：下一批从第 24 步起排（19=毒气池、20=爆炸陷阱、21=寒风领域、22=神圣新星、23=驱散魔法 已落地）。

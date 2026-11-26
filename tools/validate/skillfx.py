@@ -48,11 +48,24 @@ HEAL_CS = "Source/MyModeTest/SkillHeal.cs"
 WALL_CS = "Source/MyModeTest/SkillWall.cs"
 BEAM_CS = "Source/MyModeTest/SkillBeam.cs"
 METEOR_TEX = "1.7/Textures/Things/Mote/MMT_Meteor.png"
+BEAM_HEAD_TEX = "1.7/Textures/Things/Mote/MMT_SkillBeam_Head.png"
+BEAM_TAIL_TEX = "1.7/Textures/Things/Mote/MMT_SkillBeam_Tail.png"
 BIGBALL_TEX = "1.7/Textures/Things/Projectile/MMT_BigFireball.png"
 WALL_TEX = "1.7/Textures/Things/Building/MMT_StoneWall.png"
 # —— 第 19 步：持续地面区域（毒气池） ——
 ZONE_XML = "1.7/Defs/ThingDefs_Misc/MMT_GroundZone.xml"
 ZONE_CS = "Source/MyModeTest/SkillGroundZone.cs"
+# —— 第 20 步：触发式爆炸陷阱；第 21 步：寒风领域（地面区域冰冻皮肤） ——
+MINE_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillMine.xml"
+TRAP_CS = "Source/MyModeTest/SkillTrap.cs"
+MINE_TEX = "1.7/Textures/Things/Mote/MMT_SkillMine.png"
+ICE_TEX = "1.7/Textures/Things/Mote/MMT_IceBlock.png"
+# —— 第 22 步：新星环（360° 扩散冲击波，神圣新星） ——
+NOVA_XML = "1.7/Defs/ThingDefs_Misc/MMT_NovaRing.xml"
+NOVA_CS = "Source/MyModeTest/SkillNova.cs"
+NOVA_TEX = "1.7/Textures/Things/Mote/MMT_NovaRing.png"
+# —— 第 23 步：驱散/净化（纯代码框架，复用 BuffIconFlash/微光点，无新增 Def/贴图） ——
+DISPEL_CS = "Source/MyModeTest/SkillDispel.cs"
 
 
 def validate_skillfx() -> None:
@@ -64,7 +77,8 @@ def validate_skillfx() -> None:
                    DELAY_XML, CHAIN_XML, BREATH_XML, WALL_XML, PROJ_XML, JOBS_XML,
                    DELAY_CS, KNOCK_CS, CHAIN_CS, BREATH_CS, HEAL_CS, WALL_CS, BEAM_CS,
                    METEOR_TEX, BIGBALL_TEX, WALL_TEX,
-                   ZONE_XML, ZONE_CS])
+                   ZONE_XML, ZONE_CS, MINE_XML, TRAP_CS, MINE_TEX, ICE_TEX,
+                   BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS])
 
     defs = def_map(parse_xml(FLAME_XML))
     node = defs.get("MMT_GroundFlame")
@@ -201,12 +215,14 @@ def validate_skillfx() -> None:
         if token not in dummy:
             fail(f"假人靶子配置缺少: {token}")
 
-    # —— 演示技能集（35 条，Dev 一键赋予小人的唯一数据源） ——
+    # —— 演示技能集（37 条，Dev 一键赋予小人的唯一数据源） ——
     demoset = Path(DEMOSET_XML).read_text(encoding="utf-8")
     for token in ("MMTSkillDemoSetDef", "MMT_SkillDemoSet",
                   "测试·友方回响", "测试·敌方回响", "测试·单发火球术", "测试·多方位火球术",
                   "测试·烈焰射线", "测试·落雷", "测试·雷暴",
+                  "beamMuzzleOffset", "beamHeadTexPath", "beamTailTexPath", "beamHeadSize", "beamTailSize",
                   "测试·烈焰喷发", "测试·烈焰火海", "groundFire", "groundRequireTarget",
+                  "groundPillarHeight", "groundPillarLayers", "groundPillarTopScale", "groundPillarSway",
                   "测试·守护光环", "测试·迅捷光环", "测试·迟缓光环", "auraShieldMode", "auraBuffDefName",
                   "测试·迅捷祝福", "测试·群体迅捷", "测试·迟缓诅咒", "测试·群体迟缓",
                   "bufffx", "buffRequireTarget", "buffHediffDefName", "MMT_Buff_Swift", "MMT_Debuff_Slow",
@@ -221,13 +237,23 @@ def validate_skillfx() -> None:
                   "breathRange", "healAmount", "wallDurationSeconds", "ignoreLineOfSight",
                   "MMT_Proj_BigFireball",
                   "测试·毒气池", "groundZone", "zoneDurationSeconds", "zoneIntervalTicks",
-                  "zoneAffectEveryone", "zoneHediffDefName", "zoneHediffSeverity", "ToxicBuildup"):
+                  "zoneAffectEveryone", "zoneHediffDefName", "zoneHediffSeverity", "ToxicBuildup",
+                  "测试·爆炸陷阱", "mine", "mineArmSeconds", "mineTriggerRadius",
+                  "mineExplosionRadius", "mineDamage", "mineDurationSeconds",
+                  "测试·寒风领域", "zoneStaggerTicks", "zoneIceScale",
+                  "测试·神圣新星", "nova", "novaCellsPerSecond", "novaBandWidth",
+                  "novaDamage", "novaHealAmount", "novaHitOnce", "novaFadeOutTicks",
+                  "novaTexPath", "novaTint", "MMT_NovaRing", "MMT_Gong",
+                  "测试·驱散魔法", "测试·驱散魔法·敌", "dispel", "dispelCount",
+                  "dispelIconTexPath", "dispelIconSeconds", "MMT_FastReleaseSD", "UI/RoM/purify"):
         if token not in demoset:
             fail(f"演示技能集缺少: {token}")
 
     cs = Path(CS).read_text(encoding="utf-8")
     for token in ("MMTGroundFireUtil", "Thing_MMTGroundFlame", "CompAbilityEffect_MMTGroundFire",
-                  "TryAttachFire", "TryStartFireIn", "FireGround"):
+                  "TryAttachFire", "TryStartFireIn", "FireGround",
+                  "pillarHeight", "pillarLayers", "pillarTopScale", "pillarSway",
+                  "DrawDisc", "PerspectiveCompensate", "ShadowCastingMode.Off"):
         if token not in cs:
             fail(f"SkillGroundFire.cs 缺少: {token}")
 
@@ -277,11 +303,14 @@ def validate_skillfx() -> None:
         if token not in chain_cs:
             fail(f"SkillChainLightning.cs 缺少: {token}")
 
-    # —— 持续射线引导占用（第十四步） ——
+    # —— 持续射线引导占用（第十四步）+ 三段式端头（发射头/命中端，贴图已出图并入 require_files） ——
     beam_cs = Path(BEAM_CS).read_text(encoding="utf-8")
     for token in ("occupyCaster", "StartChannel", "ChannelBroken", "EndChannel", "BreakChannel",
                   "JobDriver_MMTChannel", "Stance_MMTChannel", "MMT_ChannelSkill",
-                  "AttachChannel", "ToilCompleteMode.Never"):
+                  "AttachChannel", "ToilCompleteMode.Never",
+                  "muzzleOffset", "headTexPath", "tailTexPath", "LoadCapMat", "DrawPreviewCap",
+                  "headVertical", "headPillarHeight", "headPillarLayers", "headPillarTopScale",
+                  "DrawPillarStack"):
         if token not in beam_cs:
             fail(f"SkillBeam.cs 缺少: {token}")
     jobs_xml = Path(JOBS_XML).read_text(encoding="utf-8")
@@ -350,11 +379,67 @@ def validate_skillfx() -> None:
         if token not in zone_cs:
             fail(f"SkillGroundZone.cs 缺少: {token}")
 
+    # —— 寒风领域：地面区域冰冻硬控皮肤（第二十一步） ——
+    for token in ("staggerTicksPerPulse", "StaggerFor", "Thing_MMTIceBlock", "ApplyIceBlock",
+                  "iceBlocks", "AttachableThing", "iceScale"):
+        if token not in zone_cs:
+            fail(f"SkillGroundZone.cs 缺少冰冻定身: {token}")
+    ice = zone_defs.get("MMT_IceBlock")
+    if ice is None:
+        fail("缺少 MMT_IceBlock 定义")
+        return
+    assert_equal(child_text(ice, "thingClass"), "MyModeTest.Thing_MMTIceBlock", "冰块覆盖物 thingClass")
+    assert_equal(child_text(ice, "graphicData/texPath"), "Things/Mote/MMT_IceBlock", "冰块覆盖物 texPath")
+
+    # —— 触发式爆炸陷阱（第二十步） ——
+    mine_defs = def_map(parse_xml(MINE_XML))
+    mine = mine_defs.get("MMT_SkillMine")
+    if mine is None:
+        fail("缺少 MMT_SkillMine 定义")
+        return
+    assert_equal(child_text(mine, "thingClass"), "MyModeTest.Thing_MMTMine", "地雷 thingClass")
+    assert_equal(child_text(mine, "category"), "Attachment", "地雷 category")
+    assert_equal(child_text(mine, "selectable"), "false", "地雷不可选中")
+    assert_equal(child_text(mine, "graphicData/texPath"), "Things/Mote/MMT_SkillMine", "地雷 texPath")
+    trap_cs = Path(TRAP_CS).read_text(encoding="utf-8")
+    for token in ("MMTMineUtil", "Thing_MMTMine", "CompAbilityEffect_MMTMine",
+                  "PlaceMine", "Detonate", "DoExplosion", "triggerRadius", "armTicks",
+                  "RawPawnsInRadius"):
+        if token not in trap_cs:
+            fail(f"SkillTrap.cs 缺少: {token}")
+
+    # —— 新星环·神圣新星（第二十二步） ——
+    nova_defs = def_map(parse_xml(NOVA_XML))
+    nova = nova_defs.get("MMT_NovaRing")
+    if nova is None:
+        fail("缺少 MMT_NovaRing 定义")
+        return
+    assert_equal(child_text(nova, "thingClass"), "MyModeTest.Thing_MMTNovaRing", "新星环 thingClass")
+    assert_equal(child_text(nova, "category"), "Attachment", "新星环 category")
+    assert_equal(child_text(nova, "graphicData/texPath"), "Things/Mote/MMT_NovaRing", "新星环 texPath")
+    nova_cs = Path(NOVA_CS).read_text(encoding="utf-8")
+    for token in ("MMTNovaUtil", "Thing_MMTNovaRing", "CompAbilityEffect_MMTNova",
+                  "FireNova", "HitBand", "hitPawns", "bandWidth", "cellsPerSecond",
+                  "hitOnce", "fadeOutTicks", "MMTHealUtil", "sharedMats"):
+        if token not in nova_cs:
+            fail(f"SkillNova.cs 缺少: {token}")
+
+    # —— 驱散/净化·驱散魔法（第二十三步） ——
+    dispel_cs = Path(DISPEL_CS).read_text(encoding="utf-8")
+    for token in ("MMTDispelUtil", "MMTDispelParams", "CompAbilityEffect_MMTDispel",
+                  "DispelOne", "FindDispellable", "IsDispellable", "HediffComp_Disappears",
+                  "IsPermanent", "RemoveHediff", "maxRemove", "MMTBuffFXUtil", "ThrowMicroSparks"):
+        if token not in dispel_cs:
+            fail(f"SkillDispel.cs 缺少: {token}")
+
     # —— 新演示接入 AbilityTargeting ——
     for token in ("delayedStrike", "knockback", "chainLightning", "breathCone", "heal", "wall",
                   "ignoreLineOfSight", "BreakChannel", "MMTDelayedStrikeUtil", "MMTKnockbackUtil",
                   "MMTChainLightningUtil", "MMTBreathUtil", "MMTHealUtil", "MMTWallUtil",
-                  "groundZone", "MMTGroundZoneUtil"):
+                  "groundZone", "MMTGroundZoneUtil", "mine", "MMTMineUtil", "zoneStaggerTicks",
+                  "寒风领域", "nova", "MMTNovaUtil", "神圣新星", "novaCellsPerSecond",
+                  "novaHitOnce", "novaTexPath", "novaTint",
+                  "dispel", "MMTDispelUtil", "dispelCount", "dispelIconTexPath"):
         if token not in targeting_cs:
             fail(f"AbilityTargeting.cs 缺少新演示接入: {token}")
 

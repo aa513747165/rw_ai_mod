@@ -8,9 +8,9 @@ namespace MyModeTest
 {
     // ========== 技能地面火焰框架（第六步：单体烈焰喷发 + 范围烈焰火海） ==========
     // 地面技能：火焰从地面升起，留在原地持续燃烧（不跟随目标移动）。
-    // 视觉：贴图火焰柱（Thing_MMTGroundFlame.DrawAt 自绘双层四边形——底层火身 +
-    //   上移摆动的火舌，随机朝向/相位 + 呼吸闪烁 + 淡入淡出），不走原版 Fire 的
-    //   Graphic_Flicker，贴图可整体染色（groundTint）。
+    // 视觉：贴图火焰柱（Thing_MMTGroundFlame.DrawAt 自绘"贴地火盘 + 多层水平碟堆叠"——
+    //   1.7 竖直 quad 不渲染，垂直火柱靠水平碟堆叠投影而成，随机朝向/相位 + 呼吸闪烁 +
+    //   淡入淡出），不走原版 Fire 的 Graphic_Flicker，贴图可整体染色（groundTint）。
     // 效果：真实燃烧——按间隔对站上来的 pawn/建筑结算 Burn 伤害，概率点燃小人
     //   （FireUtility.TryAttachFire 身上挂原版火）与引燃格子（TryStartFireIn，
     //   引燃后走原版火焰蔓延），烧的是真火，视觉是我们的贴图。
@@ -27,8 +27,17 @@ namespace MyModeTest
         /// <summary>火焰贴图（白图，代码染色；纵轴=火焰向上方向）。</summary>
         public string texPath = "Things/Mote/MMT_FlamePillar";
         public Color tint = new Color(1f, 0.62f, 0.2f);
-        /// <summary>单柱贴图尺寸（格）。</summary>
+        /// <summary>单柱贴图尺寸（格，贴地火盘直径；堆叠层以此为基准收小）。</summary>
         public float visualScale = 1.7f;
+        /// <summary>火柱高度（世界单位，水平碟堆叠总高——1.7 竖直 quad 不渲染，
+        /// 严禁立起 plane10，垂直火柱只能靠水平碟堆叠，见 ChargingStation.DrawBeam 对照实验）。</summary>
+        public float pillarHeight = 1.4f;
+        /// <summary>火柱堆叠层数（≥2）。</summary>
+        public int pillarLayers = 7;
+        /// <summary>火柱顶端缩放系数（相对火盘，&lt;1 呈锥形收口）。</summary>
+        public float pillarTopScale = 0.4f;
+        /// <summary>火柱顶端横向摆动幅度（世界单位，底层不摆、越高摆越大）。</summary>
+        public float pillarSway = 0.35f;
         /// <summary>单柱持续 tick 数。</summary>
         public int durationTicks = 360;
         /// <summary>伤害类型（null = Burn）。</summary>
@@ -241,7 +250,11 @@ namespace MyModeTest
             return t != this && t != caster && !t.Destroyed && (t is Pawn || t is Building);
         }
 
-        /// <summary>自绘火焰：底层火身 + 上移摆动的火舌双层四边形，呼吸闪烁 + 淡入淡出。</summary>
+        /// <summary>自绘火焰：贴地火盘 + 多层水平碟堆叠成垂直火柱（贴地面、垂直向上喷发）。
+        /// 1.7 竖直 quad 不渲染、严禁立起 plane10（ChargingStation.DrawBeam 对照实验），
+        /// 故火柱 = 水平碟自地面逐层升高收小，俯视相机下高度差投成纵向；
+        /// 抬高面片必须做透视补偿并关实时阴影（Building_Singularity.DrawPlane 封过的两个坑）。
+        /// 逐层相位错开呼吸 + 顶部横向摆动 + 整体淡入淡出。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (flameParams == null || igniteDelayTicks > 0)
@@ -259,19 +272,34 @@ namespace MyModeTest
             Color color = flameParams.tint;
             color.a *= alpha;
             flameMat.color = color;
-            float alt = AltitudeLayer.MoteOverhead.AltitudeFor();
+            float baseY = AltitudeLayer.Item.AltitudeFor() + 0.02f;
             float scale = flameParams.visualScale;
-            Quaternion rot = Quaternion.AngleAxis(baseAngle, Vector3.up);
             Vector3 basePos = Position.ToVector3Shifted();
-            basePos.y = alt;
+            Quaternion rot = Quaternion.AngleAxis(baseAngle, Vector3.up);
+            Camera cam = Camera.main;
+            Vector3 camForward = cam != null ? cam.transform.forward : new Vector3(0f, -1f, 0f);
+            // 贴地火盘（喷发口，平躺、比柱身略大）
+            DrawDisc(basePos, baseY, scale * 1.05f * flicker, rot, flameMat, camForward);
+            // 堆叠火柱：自火盘之上逐层升高收小，越高摆动越大
+            int layers = Mathf.Max(2, flameParams.pillarLayers);
+            for (int i = 0; i < layers; i++)
+            {
+                float t = (i + 1) / (float)layers;
+                float y = baseY + 0.05f + t * flameParams.pillarHeight;
+                float s = Mathf.Lerp(scale * 0.85f, scale * flameParams.pillarTopScale, t)
+                    * (1f + 0.15f * Mathf.Sin(elapsed * 0.9f + seed + i * 1.1f));
+                Vector3 p = basePos;
+                p.x += flameParams.pillarSway * t * Mathf.Sin(elapsed * 0.5f + seed * 2.3f);
+                DrawDisc(p, y, s, rot, flameMat, camForward);
+            }
+        }
+
+        /// <summary>画一片水平火焰碟：透视补偿 + 关阴影（抬高面片不投影、不出大黑影）。</summary>
+        private static void DrawDisc(Vector3 center, float y, float size, Quaternion rot, Material mat, Vector3 camForward)
+        {
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(basePos, rot, new Vector3(scale * flicker, 1f, scale * flicker)), flameMat, 0);
-            // 上层火舌：向屏幕上方向偏移 + 横向摆动，营造火焰向上窜的立体感
-            float sway = 0.1f * Mathf.Sin(elapsed * 0.5f + seed * 2.3f);
-            Vector3 tipPos = basePos + new Vector3(sway, 0.01f, 0.42f * scale);
-            float tipScale = scale * 0.62f * (2f - flicker);
-            Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(tipPos, rot, new Vector3(tipScale, 1f, tipScale)), flameMat, 0);
+                Matrix4x4.TRS(MMTBeamUtil.PerspectiveCompensate(center, y, camForward), rot, new Vector3(size, 1f, size)),
+                mat, 0, null, 0, null, UnityEngine.Rendering.ShadowCastingMode.Off, false);
         }
     }
 
@@ -282,6 +310,11 @@ namespace MyModeTest
         public string texPath = "Things/Mote/MMT_FlamePillar";
         public Color tint = new Color(1f, 0.62f, 0.2f);
         public float visualScale = 1.7f;
+        /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
+        public float pillarHeight = 1.4f;
+        public int pillarLayers = 7;
+        public float pillarTopScale = 0.4f;
+        public float pillarSway = 0.35f;
         public int durationTicks = 360;
         public string damageDefName = "Burn";
         public float damage = 3f;
@@ -317,6 +350,10 @@ namespace MyModeTest
                 texPath = Props.texPath,
                 tint = Props.tint,
                 visualScale = Props.visualScale,
+                pillarHeight = Props.pillarHeight,
+                pillarLayers = Props.pillarLayers,
+                pillarTopScale = Props.pillarTopScale,
+                pillarSway = Props.pillarSway,
                 durationTicks = Props.durationTicks,
                 damageDef = Props.damageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(Props.damageDefName),
                 damage = Props.damage,

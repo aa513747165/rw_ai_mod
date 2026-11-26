@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 触发式爆炸陷阱（Thing_MMTMine）：Attach 类无碰撞 Thing，
+       由 MMTMineUtil.PlaceMine 生成，武装后按扫描间隔检查触发半径内敌对 pawn，
+       发现即引爆（GenExplosion）并自毁，超过存在上限未触发静默失效。
+       不可选中、不可拆除（区别于原版踩格触发的陷阱建筑）。
+       graphicData 为地雷本体贴图（默认 Graphic 绘制，本体不自绘）。
+       不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkillMine</defName>
+    <label>技能地雷</label>
+    <thingClass>MyModeTest.Thing_MMTMine</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillMine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+</Defs>

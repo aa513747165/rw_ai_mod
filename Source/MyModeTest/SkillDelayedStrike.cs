@@ -31,6 +31,11 @@ namespace MyModeTest
         public Color meteorTint = new Color(1f, 0.7f, 0.35f);
         /// <summary>陨石绘制尺寸（格）。</summary>
         public float meteorDrawSize = 1.6f;
+        /// <summary>陨石自旋速度（度/tick，0 = 坠落不旋转）。</summary>
+        public float meteorSpinDegPerTick;
+        /// <summary>坠落途中缩放区间：从 growFrom 线性放大到 growTo（1→1 = 恒定大小）。</summary>
+        public float meteorGrowFrom = 0.7f;
+        public float meteorGrowTo = 1.15f;
         /// <summary>陨石坠落耗时 tick。</summary>
         public int fallTicks = 25;
         /// <summary>坠落起点相对撞击点的水平偏移（格，斜向砸落）。</summary>
@@ -271,7 +276,7 @@ namespace MyModeTest
             Destroy();
         }
 
-        /// <summary>自绘陨石：拖尾焰球，接近地面时逐渐放大。</summary>
+        /// <summary>自绘陨石：拖尾焰球，尺寸/缩放/自旋全部由参数控制（0 自旋 = 坠落不旋转）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (mat == null || Map != Find.CurrentMap)
@@ -279,10 +284,13 @@ namespace MyModeTest
                 return;
             }
             float t = Mathf.Clamp01(age / (float)ticksTotal);
-            float size = meteorParams.meteorDrawSize * Mathf.Lerp(0.7f, 1.15f, t);
+            float size = meteorParams.meteorDrawSize * Mathf.Lerp(meteorParams.meteorGrowFrom, meteorParams.meteorGrowTo, t);
             Vector3 pos = CurPos();
+            Quaternion rot = meteorParams.meteorSpinDegPerTick != 0f
+                ? Quaternion.AngleAxis(age * meteorParams.meteorSpinDegPerTick, Vector3.up)
+                : Quaternion.identity;
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(pos, Quaternion.AngleAxis(age * 9f, Vector3.up), new Vector3(size, 1f, size)), mat, 0);
+                Matrix4x4.TRS(pos, rot, new Vector3(size, 1f, size)), mat, 0);
         }
     }
 
@@ -300,6 +308,13 @@ namespace MyModeTest
         public float chanceToStartFire = 0.3f;
         public string meteorTexPath = "Things/Mote/MMT_Meteor";
         public Color meteorTint = new Color(1f, 0.7f, 0.35f);
+        /// <summary>陨石绘制尺寸（格，建议 ≈ 爆炸半径 × 1.2~1.5）。</summary>
+        public float meteorDrawSize = 4f;
+        /// <summary>陨石自旋速度（度/tick，0 = 坠落不旋转）。</summary>
+        public float meteorSpinDegPerTick;
+        /// <summary>坠落缩放区间（1→1 = 恒定大小）。</summary>
+        public float meteorGrowFrom = 1f;
+        public float meteorGrowTo = 1f;
         public string anticipateSoundDefName;
 
         public CompProperties_MMTDelayedStrike()
@@ -330,6 +345,10 @@ namespace MyModeTest
                 chanceToStartFire = Props.chanceToStartFire,
                 meteorTexPath = Props.meteorTexPath,
                 meteorTint = Props.meteorTint,
+                meteorDrawSize = Props.meteorDrawSize,
+                meteorSpinDegPerTick = Props.meteorSpinDegPerTick,
+                meteorGrowFrom = Props.meteorGrowFrom,
+                meteorGrowTo = Props.meteorGrowTo,
                 anticipateSound = Props.anticipateSoundDefName.NullOrEmpty() ? null : DefDatabase<SoundDef>.GetNamedSilentFail(Props.anticipateSoundDefName),
                 equipment = caster.equipment?.Primary
             });

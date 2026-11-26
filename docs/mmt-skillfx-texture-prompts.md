@@ -1,7 +1,10 @@
 # MMT 技能特效框架 — AI 出图提示词集（喂图模型用）
 
 > **状态**：§一 技能光柱、§二 火焰柱、§三 光环圆盘、§四 增益粒子、§五 位移特效、§六 范围选择圆、§七 召唤特效 **均已出图完成**（2026-11-25，AI 终稿覆盖占位图，Def/代码零改动）。
-> §九 瞄准预览圆环 `MMT_TargetRing` **待出图**（现用 §六 旧图副本占位，出图后直接覆盖同名文件，代码零改动）。
+> §九 瞄准预览圆环 `MMT_TargetRing` **已由程序生成终稿**（2026-11-26，`docs/temp/gen_target_ring.py`，2048² 按最大 45 格射程设计；AI 不适合绝对几何对称图形，程序生成即终稿，不再走 AI 出图）。
+> §十 技能地雷、§十一 冰块覆盖物 **均已出图完成**（2026-11-26，AI 终稿覆盖占位图，Def/代码零改动）。
+> §十二 射线端头（发射头/命中端）**已出图完成**（2026-11-26，用户生成：RGBA 128²、RGB 全白、中心 alpha 255、四角 alpha 0，验收通过，Def/代码零改动）。
+> §十三 新星环 `MMT_NovaRing` **已出图完成**（2026-11-26，AI 终稿覆盖占位图，Def/代码零改动）。
 
 > 与 `mmt-dungeon-texture-prompts.md`、`mmt-fireboss-texture-prompts.md` 同格式。
 > 用法：**完整提示词 = 全局风格前缀 + 条目提示词 + 负面词**。
@@ -63,29 +66,33 @@ brightness uniform from top to bottom, no tapering at the ends
 
 ---
 
-## 二、火焰柱 `MMT_FlamePillar`（1 张，128×128）【已出图完成】
+## 二、火焰柱 `MMT_FlamePillar`（1 张，128×128）【已出图完成（2026-11-26 用户生成，俯视径向火焰团版）】
+
+> **2026-11-26 绘制改版**：1.7 竖直 quad 不渲染（严禁立起 plane10），火柱绘制从
+> "平躺双层四边形"改为「贴地火盘 + 多层水平碟堆叠」（SkillGroundFire.cs `Thing_MMTGroundFlame.DrawAt`，
+> 参数 `groundPillarHeight/groundPillarLayers/groundPillarTopScale/groundPillarSway`）。
+> 每层贴图都是**俯视可见**的，旧"侧视火舌"图叠出来方向不对——需按下方新提示词重出图，覆盖同名文件即用。
 
 - **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_FlamePillar.png`（texPath `Things/Mote/MMT_FlamePillar`，ThingDef `MMT_GroundFlame` 与 `MMTGroundFireParams.texPath` 默认值均指向它，覆盖即用）。
-- **功能**：地面技能（demoType="groundFire"，假人「测试·烈焰喷发」单柱 /「测试·烈焰火海」成片）的火焰本体；代码按 `groundTint` 染色（演示为橙黄烈焰色），双层四边形叠绘（底层火身 + 上移摆动的火舌）+ 呼吸闪烁 + 淡入淡出。
-- **构图**：单根**竖直火焰舌**，纵轴（图片高度方向）= 火焰向上方向：底部为宽圆火根（宽约图幅 40%），向上收窄成摆动火尖，顶尖在图幅顶部附近收束；左右对称度不要求（自然火焰允许轻微偏向），但横向重心须在中心轴附近。
+- **功能**：地面技能（demoType="groundFire"，假人「测试·烈焰喷发」单柱 /「测试·烈焰火海」成片）的火焰本体；代码按 `groundTint` 染色（演示为橙黄烈焰色），贴地火盘 + 7 层水平碟堆叠成垂直火柱（逐层收小、相位呼吸、顶部摆动）+ 淡入淡出。
+- **构图**：**俯视正圆形火焰团**：中心高亮实心核（约占图幅 30%），向外辐射翻卷火舌，亮度从核到透明边缘平滑衰减；整体近似圆对称（堆叠层随机旋转后不能看出方向性）。
 
 ```
-FX_STYLE + a single vertical flame tongue rising from a wide rounded base
-at the bottom of the image: an intense pure-white hot core at the center
-of the base, soft glowing body tapering upward into a gently wavering
-pointed tip near the top edge, smooth brightness falloff from core to
-transparent edges, a few faint inner filaments curling upward, the flame
-occupies the lower two-thirds firmly and thins toward the tip, no ground
-no embers outside the flame silhouette
+FX_STYLE + a single radial burst of flame viewed from directly above:
+an intense pure-white hot core at the exact center of the image, soft
+glowing flame tongues curling outward in all directions, smooth
+brightness falloff from the core to fully transparent edges, roughly
+circular silhouette filling about 70% of the image, no ground no embers
+outside the burst
 ```
 
 **后处理与验收清单**：
 
 1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **128×128**；
-2. 底部火根中心 alpha ≥ 0.9（火身要实心），火尖与四边 2px alpha = 0；
+2. 中心核 alpha ≥ 0.9（要实心），四边 2px alpha = 0；
 3. 灰度：RGB 三通道一致（无彩色倾向），染色交给 `groundTint`；
-4. 火焰剪影重心在横向中心 ±8px 内（成片火海时不会集体偏向一边）；
-5. 游戏内验证：Dev 模式对假人用「测试·烈焰喷发」（单柱高大火柱）与「测试·烈焰火海」（成片自中心向外蔓延），火焰应为橙黄贴图火而非原版火焰闪烁图。
+4. 剪影近似圆形、重心在图幅中心 ±6px 内（堆叠层随机旋转/成片火海不偏向）；
+5. 游戏内验证：Dev 模式对假人用「测试·烈焰喷发」应为**贴地面、垂直向上**喷发的火柱（底大顶小、顶部摆动），「测试·烈焰火海」成片自中心向外蔓延、不集体偏向一边。
 
 ---
 
@@ -391,30 +398,158 @@ granite grays, matches vanilla granite wall style, pure black background
 
 ---
 
-## 九、瞄准预览圆环 `MMT_TargetRing`（1 张，1024×1024）【待出图】
+## 九、瞄准预览圆环 `MMT_TargetRing`（1 张，2048×2048）【程序生成终稿】
 
-> 现为 §六 `MMT_TargetCircle` 的副本占位（2026-11-26 起瞄准预览圆环从程序网格改为贴图方案，
-> 解决程序网格硬边锯齿）。AI 终稿直接覆盖同名文件即可，代码零改动。
+> **2026-11-26 结论：本贴图不走 AI 出图**。验收要求"完美闭合、径向绝对对称、峰值精确落在指定半径"，
+> AI 图必然带偏心/不对称（染色后像"环上有个瘤"），程序生成（`docs/temp/gen_target_ring.py`，Pillow）直接就是终稿。
+> 如需调参（环位/线宽/辉光/填充）改脚本重跑即可，Def/代码零改动。
+>
+> **按最大 45 格射程设计**：代码侧 `MMTAoETargetPreview.MaxRangeRingRadius = 45f`，
+> 射程超过 45 格的技能**不再绘制射程环**（贴图被等比拉成粗带只剩劣化观感；范围圈 radius 不受影响，AoE 圈都很小）。
+> 自检指标（脚本运行即打印）：峰值半径 94.1%（目标 94.5%）、核心线宽 5px（45 格时 ≈0.22 格）、
+> 辉光总宽 21px（≈0.92 格）、360° 闭合最低 alpha 254、环内填充 16/255、环外与四边全 0、RGB 全白。
 
-- **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_TargetRing.png`（texPath `Things/Mote/MMT_TargetRing`，范围瞄准框架 `MMTAoETargetPreview.DrawRing` / `RingTexPath` 常量指向它；同步游戏目录时一并复制）。
+- **落盘**：`1.7/Textures/Things/Mote/MMT_TargetRing.png`（texPath `Things/Mote/MMT_TargetRing`，范围瞄准框架 `MMTAoETargetPreview.DrawRing` / `RingTexPath` 常量指向它；同步游戏目录时一并复制）。
 - **功能**：技能范围瞄准时的鼠标跟随圆形描边（敌我配色：友方绿/敌方红/最大射程白），代码将整张 quad 缩放到 `半径×2` 格，`ShaderDatabase.Transparent` 按贴图 alpha 混合 + 双线性过滤（高分辨率 + alpha 渐变边缘 = 抗锯齿的来源）。与 §六 的区别：§六 仅延时打击警示圈在用（TransparentPostLight），本节专供瞄准预览。
-- **构图**：**完美的闭合细圆环**，亮环峰值位于**半径 94%~96%** 处（贴近画布外缘，给缩放留出血）；环核心细亮线 + 两侧柔和辉光衰减；圆内可有 ≤8% 的极微弱均匀填充（代码另有程序填充盘，贴图填充只是点缀，宁可没有）；圆外（环到图边之间）必须纯黑全透明；径向绝对对称、360° 闭合无缺口无接缝。
+- **生成参数**（脚本常量）：2048² 终稿（4096² 超采样 2× 抗锯齿）、环峰值 94.5% 半径、核心亮线 10px@SS（终稿 5px）、辉光高斯 10px@SS 峰值 0.3、环内微填充 16/255。
+- **设计容量换算**：45 格半径时整图缩到 90 格宽，1 格 ≈ 22.8 tex px → 核心 ≈0.22 格细线 + 辉光 ≈0.9 格柔边；小圈（半径几格）经 mipmap 缩小仍保持闭合细环。
+
+**验收清单**（脚本 `verify()` 自动打印，人工复核游戏内观感）：
+
+1. 环带峰值位于 94%~96% 半径，360° 闭合最低 alpha ≥ 230；
+2. 核心线宽 ≤ 半径 0.5%、辉光总宽（a≥20）≤ 半径 3%（45 格时分别 ≈0.22/0.9 格）；
+3. 环内填充 alpha ≤ 0.08，环外到四边全为 0（四角无亮斑）；
+4. 灰度：RGB 三通道一致（全白），染色交给代码；
+5. 游戏内验证：Dev 模式假人任意范围技能瞄准——鼠标处圆环平滑无锯齿、闭合无缺口；敌我配色正确；45 格射程的白环仍是细环；射程 >45 的技能不再出现射程环。
+
+---
+
+## 十、技能地雷 `MMT_SkillMine`（1 张，128×128）【已出图完成】
+
+> 2026-11-26 AI 终稿已覆盖占位图（黄铜军绿俯视地雷：边圈铆钉 + 中央压力盖，四角 alpha=0、盘体 alpha=255，验收通过），Def/代码零改动。
+
+- **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_SkillMine.png`（texPath `Things/Mote/MMT_SkillMine`，ThingDef `MMT_SkillMine` 地雷本体（Cutout 0.8 格）+ gizmo 图标）。
+- **功能**：触发式爆炸陷阱（demoType="mine"，「测试·爆炸陷阱」）布设在地面上的地雷本体。**实物贴图（需要真实 RGB 而非白图）**，风格对齐原版陷阱/建筑手绘。
+- **构图**：**俯视一枚反步兵地雷**：低矮圆形金属盘（军绿/暗钢灰），外圈略深的埋土边环，盘面中央一颗凸起的压力引信盖，盘缘 6~8 颗铆钉，左上受光的轻微金属高光，底部一点贴地阴影，风格对齐原版花岗岩墙/陷阱的手绘灰阶金属感。
 
 ```
-FX_STYLE + a perfectly circular thin targeting reticle ring seen from
-directly above: one crisp closed bright hairline circle at 95% radius
-as the only main visual, with a smooth soft glow falling off on both
-sides of the hairline, an extremely faint uniform luminescence inside
-the disc, pure black and fully transparent everywhere outside the ring,
-perfectly centered, radially symmetric, seamless all around
+RimWorld video game sprite, top-down view of a single anti-personnel
+landmine: a low circular metal disc in muted olive-drab and dark steel
+gray, slightly darker soil-blended outer rim, a raised pressure-fuze cap
+at the center, 6-8 rivets around the rim, subtle metallic highlight from
+the upper-left, faint contact shadow underneath, hand-painted stylized
+grays, matches vanilla trap and granite wall style, pure black background
 ```
 
 **后处理与验收清单**：
 
-1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **1024×1024**（最低 512×512；2 的幂，mipmap 保证小圈缩小时依旧平滑）；
-2. 环带峰值位于 94%~96% 半径，360° 闭合无缺口，最亮处 alpha ≥ 0.9；
-3. **环总宽度（含辉光）≤ 半径的 3~4%，亮线核心 ≤ 半径的 1.5%**——贴图环宽随绘制半径等比缩放（半径 25 格的最大射程圈也会用到它），环做太粗大圈会变成粗带；宁可偏细，双线性过滤会保它平滑可见；
-4. 圆内填充 alpha ≤ 0.08（与代码填充盘叠加后不喧宾夺主），圆外到四边 2px 全为 0（四角不得有任何亮斑/杂点）；
-5. 径向对称：任意角度的亮度剖面一致，无偏心、无局部增亮（否则染色后像"环上有个瘤"）；
-6. 灰度：RGB 三通道一致（无彩色倾向），染色交给代码；
-7. 游戏内验证：Dev 模式假人任意范围技能瞄准——鼠标处圆环平滑无锯齿、闭合无缺口；敌我配色正确；最大射程圈（白环）宽度可接受。
+1. RGBA 128×128，盘体 alpha=255，四边外 alpha=0（Cutout 着色器）；
+2. 灰阶军绿 RGB，无彩色偏移；铆钉与压力盖对比清晰；
+3. 游戏内验证：「测试·爆炸陷阱」布设后地面上为清晰可辨的小圆盘（0.8 格），不突兀不发光。
+
+---
+
+## 十一、冰块覆盖物 `MMT_IceBlock`（1 张，128×128）【已出图完成】
+
+> 2026-11-26 AI 终稿已覆盖占位图（浅蓝半透明冰晶块：52% 像素 alpha 落在 100~249 半透明区间、无全不透明点、四角 alpha=0，冰下目标隐约可见，验收通过），Def/代码零改动。
+
+- **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_IceBlock.png`（texPath `Things/Mote/MMT_IceBlock`，ThingDef `MMT_IceBlock` 冰冻覆盖物，`Thing_MMTIceBlock.TexPath` 常量亦指向它）。
+- **功能**：寒风领域（demoType="groundZone" 冰冻皮肤，「测试·寒风领域」）冻结目标时罩在 pawn 身上的冰块（代码按 alpha 做凝冰淡入/微呼吸/融化淡出，**贴图自带冰蓝色**，代码只调透明度不染 RGB）。
+- **构图**：**俯视一块罩住人形的不规则冰晶**：浅蓝半透明冰体（alpha ≈ 0.6~0.8，要能隐约看到冰下目标），多边形外轮廓带亮边，内部几道晶面棱线与细裂纹，左上受光一片柔和高光，四边渐隐。
+
+```
+RimWorld video game VFX sprite, top-down view of a jagged ice crystal
+block covering a humanoid silhouette: pale blue translucent ice body
+(semi-transparent, the figure beneath faintly visible), irregular
+polygonal outline with a bright frosted rim, a few crystalline facet
+lines and thin cracks inside, a soft white specular highlight in the
+upper-left, edges fading out smoothly, pure black background
+```
+
+**后处理与验收清单**：
+
+1. RGBA 128×128：冰体 alpha ≈ 150~210（**不要全 255**，冰下目标须隐约可见），四边 2px alpha=0；
+2. 冰蓝 RGB（无彩色溢出到纯蓝），裂纹/棱线为更亮的浅蓝白；
+3. 游戏内验证：「测试·寒风领域」冻结的敌人全身罩冰、快速凝冰出现、离区后冰块淡出融化。
+
+---
+
+## 十二、射线端头 `MMT_SkillBeam_Head` + `MMT_SkillBeam_Tail`（2 张，128×128）【已出图完成】
+
+> **状态**：已出图（2026-11-26 用户生成，验收：RGBA 128²、RGB 全白、中心 alpha 255、四角 alpha 0、纯灰度无彩色）。
+> 风格基准：`1.7/Textures/Things/Projectile/RoM/FrostRay.png`（末端大爆点 + 飞溅碎屑的手绘能量质感）。
+
+> 持续射线三段式（`SkillBeam.cs`，demoType="beam"，「测试·烈焰射线」）：
+> **中段**（§一 `MMT_SkillBeam`，已有）+ **发射头**（本节 Head，出膛点光球）+ **命中端**（本节 Tail，终点爆点）。
+> 头尾均为代码按 `beamTint` 染色的白/灰度图（TransparentPostLight），以 quad 平铺绘制、随光束方向旋转，
+> 尺寸由 XML 配置（演示：Head 1.4 格 / Tail 1.6 格），命中端另有独立脉冲缩放。
+
+### 12.1 发射头 `MMT_SkillBeam_Head`
+
+- **落盘**：`1.7/Textures/Things/Mote/MMT_SkillBeam_Head.png`（texPath `Things/Mote/MMT_SkillBeam_Head`）。
+- **功能**：画在光柱起点（施法者身前 0.9 格出膛点）的"聚能喷口"光球，与中段同步呼吸。
+- **贴图元素详述**：**径向对称的能量光球**——① 中心一枚极亮的实心核心（约占图幅 15~20%，纯白）；② 核心外一层饱满的球形光晕，向外柔和渐隐；③ 可带轻微的十字/四芒星辉光（短而细，末端渐隐）；④ **不要**飞溅碎屑、不要方向性拖尾（它是稳定的聚能出口，不是爆炸）；整体像一颗被压缩的能量球。
+
+```
+FX_STYLE + a compact radiant energy muzzle orb seen head-on: an intensely
+bright solid core, wrapped in a plump spherical glow halo fading smoothly
+outward, with a faint short four-pointed star flare, perfectly centered
+and radially symmetric, calm and stable (no explosion, no flying debris,
+no directional trail), edges falling to pure black
+```
+
+**后处理与验收清单**：
+
+1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **128×128**；
+2. 中心 15% 半径内 alpha ≥ 0.95（核心实心），辉光到 70% 半径处衰减至 ≈ 0，四边 2px alpha = 0；
+3. 径向对称：四个方向亮度剖面基本一致；灰度无彩色倾向（染色交给 `beamTint`）；
+4. 游戏内验证：「测试·烈焰射线」光柱起点为一颗稳定的橙红光球，不盖住施法者（出膛点已前移 0.9 格）。
+
+### 12.2 命中端 `MMT_SkillBeam_Tail`
+
+- **落盘**：`1.7/Textures/Things/Mote/MMT_SkillBeam_Tail.png`（texPath `Things/Mote/MMT_SkillBeam_Tail`）。
+- **功能**：画在光柱终点（撞墙/最大射程处）的"灼烧爆点"，独立快速脉冲缩放，营造持续溅射灼烧感。
+- **贴图元素详述**：**参考 FrostRay 末端的爆发球**——① 中心一大片不规则的高亮爆斑（约占图幅 30~40%，最亮，边缘不是正圆、带火焰状凹凸）；② 爆斑外围一圈半透明光晕；③ 从爆斑向外飞出 8~15 颗大小不一的能量碎屑/液滴（上、左、右三个方向为主，下方可略少——爆点是光束从上方/侧向注入的落点），碎屑越往外越小越暗；④ 允许自然随机感（不要求严格对称），但整体重心须在图幅中心 ±10% 内；整体像能量持续砸在一点上溅开的熔融爆斑。
+
+```
+FX_STYLE + an intense energy impact burst seen from above: a large
+irregular white-hot splash core with flame-like ragged edges at the
+center, a soft surrounding glow, and 8-15 flying energy droplets and
+debris sparks of varying size scattering outward (mostly upward and
+sideways), droplets shrinking and dimming with distance, natural random
+splash feel like the end burst of a frost/flame ray, roughly centered,
+edges falling to pure black
+```
+
+**后处理与验收清单**：
+
+1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **128×128**；
+2. 爆斑核心 alpha ≥ 0.95，碎屑末端渐隐至 0，四边 2px alpha = 0；
+3. 灰度无彩色倾向（染色交给 `beamTint`）；重心偏移 ≤ 图幅 10%（避免脉冲时爆点"绕圈"）；
+4. 游戏内验证：「测试·烈焰射线」光柱终点为不断脉动的橙红爆点，撞墙时爆点贴在墙面格。
+
+---
+
+## 十三、新星环 `MMT_NovaRing`（1 张，256×256）【已出图完成】
+
+> 2026-11-26 AI 终稿已覆盖占位图（白图正圆环：RGBA 256²、RGB 全白无彩色、环带外沿 alpha 255、圆心 60% 半径内与四边 alpha=0，验收通过），Def/代码零改动。
+
+- **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_NovaRing.png`（texPath `Things/Mote/MMT_NovaRing`，ThingDef `MMT_NovaRing` 与 `MMTNovaParams.texPath` 默认值均指向它，覆盖即用）。
+- **功能**：新星环（demoType="nova"，「测试·神圣新星」，牧师 III 阶神圣新星）的冲击波环本体；代码按 `novaTint` 染色（演示为圣光金 `(1,0.85,0.4)`），quad 从 0 线性放大到直径 12 格（径向扩散、不旋转），波峰环最亮、通过后拖尾淡出。
+- **贴图元素详述**：**正圆冲击波环**——① 一整圈粗细均匀的圆环，环带占图幅半径约 13%（内缘 ≈0.84R，外沿贴到 0.99R）；② 外沿最亮（波峰），向内缘柔和渐隐，外缘 1~2px 急收（扩散到最大半径时环外不能有溢出亮边）；③ 环带内可有细密的能量流动纹理（沿切线方向的流光/细波纹），但任意角度的环带不能断流；④ 严格径向对称（代码不旋转，任何不对称都会被等比放大成"偏心波"）；⑤ 圆心区域全透明（不能有中心光点，中心闪光由代码另放）。
+
+```
+FX_STYLE + a perfect circular shockwave ring seen from directly above:
+a uniform-width glowing annulus band occupying the outer 13% of the
+radius, brightest at its crisp outer rim and fading smoothly inward,
+with fine tangential energy streaks flowing along the band (continuous,
+never broken at any angle), perfectly radially symmetric, fully
+transparent center and corners, edges falling to pure black
+```
+
+**后处理与验收清单**：
+
+1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **256×256**；
+2. 环带外沿 alpha ≥ 0.95（波峰实心），内缘渐隐至 0，图幅四边 2px alpha = 0，圆心 60% 半径内 alpha = 0；
+3. 径向对称：任取 8 个方向的环带亮度剖面一致（重心偏移 ≤ 图幅 2%）；灰度无彩色倾向（染色交给 `novaTint`）；
+4. 游戏内验证：「测试·神圣新星」金色光环从脚下匀速扩散到直径 12 格，波峰清晰、拖尾自然，不偏心、无接缝亮边。

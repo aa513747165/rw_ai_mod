@@ -22,4 +22,26 @@
       <shaderType>TransparentPostLight</shaderType>
     </graphicData>
   </ThingDef>
+
+  <!-- 冰块覆盖物（Thing_MMTIceBlock）：Attach 到被寒风领域冻结的 pawn 跟随移动，
+       自绘半透明冰块贴图罩住全身（淡入 + 微呼吸 + 尾段融化淡出），
+       存续由区域每跳续期，目标离区/死亡或存续耗尽自毁。graphicData 仅为兜底
+       （本体 DrawAt 自绘，不走 Graphic）。不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_IceBlock</defName>
+    <label>冰冻覆盖物</label>
+    <thingClass>MyModeTest.Thing_MMTIceBlock</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_IceBlock</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
 </Defs>

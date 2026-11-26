@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 技能框架演示技能集：第一~十九步全部 35 个演示条目（唯一数据源）。
+  <!-- 技能框架演示技能集：第一~二十三步全部 37 个演示条目（唯一数据源）。
        不进任何建筑/角色 Def；Dev 模式经 Debug「MMT 技能 → 赋予全部演示技能（选中小人）」
        由 MMTSkillDemoGrant 运行时注入 comp 到小人身上实测。
        沙袋人偶（友方/敌方）仅作技能靶子，不再携带技能。 -->
@@ -43,11 +43,17 @@
         <ringRadius>1.8</ringRadius>
         <aimTicks>15</aimTicks>
       </li>
+      <!-- 第四步：持续射线·烈焰射线（三段式：发射头光球 + 中段光柱 + 命中端爆点）
+           效果设计卡：出膛偏移 0.9 格（光柱起点在小人身前，不压人），光柱宽 0.7，
+           发射头 1.4 格（出膛点光球；beamHeadVertical 可改画地面喷发火柱，本技能不用），
+           命中端 1.6 格（终点爆点、独立脉冲），
+           头尾贴图风格参考 RoM FrostRay（末端大爆点），见 docs/mmt-skillfx-texture-prompts.md §十二 -->
       <li>
         <label>测试·烈焰射线</label>
         <iconPath>Things/Projectile/ChargeLanceShot</iconPath>
         <radius>0</radius>
         <demoType>beam</demoType>
+        <showRangeRing>false</showRangeRing>
         <castSeconds>2</castSeconds>
         <soundDefName>ChargeLance_Fire</soundDefName>
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
@@ -55,6 +61,11 @@
         <beamRange>20</beamRange>
         <beamWidth>0.7</beamWidth>
         <beamTint>(1,0.55,0.15)</beamTint>
+        <beamMuzzleOffset>0.9</beamMuzzleOffset>
+        <beamHeadTexPath>Things/Mote/MMT_SkillBeam_Head</beamHeadTexPath>
+        <beamTailTexPath>Things/Mote/MMT_SkillBeam_Tail</beamTailTexPath>
+        <beamHeadSize>1.4</beamHeadSize>
+        <beamTailSize>1.6</beamTailSize>
         <beamDamage>4</beamDamage>
         <beamDamageIntervalTicks>10</beamDamageIntervalTicks>
         <beamIgniteChance>0.1</beamIgniteChance>
@@ -82,6 +93,10 @@
         <strikeIntervalTicks>12</strikeIntervalTicks>
         <strikeDamage>10</strikeDamage>
       </li>
+      <!-- 第六步：地面火焰·烈焰喷发（单体火柱）
+           效果设计卡：火柱 = 贴地火盘（2.2 格，比柱身略大）+ 7 层水平碟堆叠 1.4 高、
+           顶端收至 0.4 倍、顶端摆动 0.35（贴地面、垂直向上喷发；1.7 竖直 quad 不渲染，
+           垂直火柱只能靠水平碟堆叠投影）。火海（下条）同参数、不另写 -->
       <li>
         <label>测试·烈焰喷发</label>
         <iconPath>Things/Mote/BlastFlame</iconPath>
@@ -94,6 +109,10 @@
         <groundRequireTarget>true</groundRequireTarget>
         <groundDurationSeconds>6</groundDurationSeconds>
         <groundVisualScale>2.2</groundVisualScale>
+        <groundPillarHeight>1.4</groundPillarHeight>
+        <groundPillarLayers>7</groundPillarLayers>
+        <groundPillarTopScale>0.4</groundPillarTopScale>
+        <groundPillarSway>0.35</groundPillarSway>
         <groundDamage>6</groundDamage>
         <groundDamageIntervalTicks>10</groundDamageIntervalTicks>
         <groundIgnitePawnChance>0.3</groundIgnitePawnChance>
@@ -253,7 +272,7 @@
         <demoType>summonHoming</demoType>
         <castSeconds>1</castSeconds>
         <castBarColor>(0.55,0.75,1,0.5)</castBarColor>
-        <range>20</range>
+        <range>45</range>
         <summonDamage>20</summonDamage>
         <summonHomingExplosionRadius>1.5</summonHomingExplosionRadius>
         <summonHomingDurationSeconds>8</summonHomingDurationSeconds>
@@ -279,7 +298,9 @@
         <range>12</range>
         <summonTurretDurationSeconds>40</summonTurretDurationSeconds>
       </li>
-      <!-- 第十一步：延时打击·陨石（预警圈 → 延迟 → 陨石轰击） -->
+      <!-- 第十一步：延时打击·陨石（预警圈 → 延迟 → 陨石轰击）
+           效果设计卡：陨石直径 4 格（≈爆炸半径 3 × 1.3），坠落不旋转（spin=0），
+           大小恒定不缩放（grow 1→1），参考：炼狱魔王火炮落弹 -->
       <li>
         <label>测试·陨石术</label>
         <iconPath>Things/Mote/MMT_Meteor</iconPath>
@@ -293,6 +314,10 @@
         <meteorDamage>40</meteorDamage>
         <meteorExplosionRadius>3</meteorExplosionRadius>
         <meteorIgniteChance>0.3</meteorIgniteChance>
+        <meteorDrawSize>4</meteorDrawSize>
+        <meteorSpinDegPerTick>0</meteorSpinDegPerTick>
+        <meteorGrowFrom>1</meteorGrowFrom>
+        <meteorGrowTo>1</meteorGrowTo>
       </li>
       <!-- 第十二步：近战击退（锁定近身目标猛击并击飞） -->
       <li>
@@ -334,6 +359,7 @@
         <castSeconds>1</castSeconds>
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
         <range>12</range>
+        <showRangeRing>false</showRangeRing>
         <soundDefName>FireSpew_Resolve</soundDefName>
         <breathRange>8</breathRange>
         <breathHalfAngleDegrees>30</breathHalfAngleDegrees>
@@ -395,6 +421,99 @@
         <zoneHediffDefName>ToxicBuildup</zoneHediffDefName>
         <zoneHediffSeverity>0.04</zoneHediffSeverity>
         <zoneTint>(0.55,0.85,0.3)</zoneTint>
+      </li>
+      <!-- 第二十步：触发式爆炸陷阱（布设地雷，武装后敌人进入触发半径 2 格引爆，伤害半径 3 格） -->
+      <li>
+        <label>测试·爆炸陷阱</label>
+        <iconPath>Things/Mote/MMT_SkillMine</iconPath>
+        <radius>3</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>mine</demoType>
+        <castSeconds>1</castSeconds>
+        <castBarColor>(1,0.55,0.2,0.5)</castBarColor>
+        <range>15</range>
+        <mineArmSeconds>1</mineArmSeconds>
+        <mineTriggerRadius>2</mineTriggerRadius>
+        <mineExplosionRadius>3</mineExplosionRadius>
+        <mineDamage>30</mineDamage>
+        <mineDurationSeconds>120</mineDurationSeconds>
+      </li>
+      <!-- 第二十一步：寒风领域（持续地面区域的冰冻硬控皮肤：站内敌人被冻结定身，离区即恢复）
+           效果设计卡：区域半径 4 格冰蓝雾盘（三层旋转）；被冻目标罩冰块贴图，
+           冰块尺寸 1.7 格（略大于 pawn 身位 1.0，罩住全身）、不旋转（生成时随机朝向）、
+           半透明（贴图自带 alpha，代码只做凝冰淡入/融化淡出）。 -->
+      <li>
+        <label>测试·寒风领域</label>
+        <iconPath>Things/Mote/MMT_AuraDisc</iconPath>
+        <radius>4</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>groundZone</demoType>
+        <castSeconds>1.5</castSeconds>
+        <castBarColor>(0.6,0.85,1,0.5)</castBarColor>
+        <zoneDurationSeconds>12</zoneDurationSeconds>
+        <zoneIntervalTicks>30</zoneIntervalTicks>
+        <zoneAffectEveryone>false</zoneAffectEveryone>
+        <zoneHediffDefName></zoneHediffDefName>
+        <zoneStaggerTicks>45</zoneStaggerTicks>
+        <zoneIceScale>1.7</zoneIceScale>
+        <zoneTint>(0.6,0.85,1)</zoneTint>
+      </li>
+      <!-- 第二十二步：新星环·神圣新星（牧师 III 阶，自身中心 360° 扩散冲击波，伤敌+疗友）
+           效果设计卡：金色光环自脚下扩散至直径 12 格（radius=6），扩散速度 3 格/s（匀速，不加速），
+           不旋转（径向扩散）；波峰最亮，通过后 0.9 格拖尾淡出（= 速度 × 0.3s），
+           到达最大半径后 0.3s（18 tick）整体淡出自毁；命中判定带 ±0.5 格（novaBandWidth=1），
+           每目标只命中一次；敌方 15 点 Burn，友方 8 点治疗池。
+           贴图 MMT_NovaRing（白图圆环代码染金 (1,0.85,0.4)，提示词见 docs/mmt-skillfx-texture-prompts.md §十三） -->
+      <li>
+        <label>测试·神圣新星</label>
+        <iconPath>UI/RoM/lightburst</iconPath>
+        <radius>6</radius>
+        <demoType>nova</demoType>
+        <castSeconds>2</castSeconds>
+        <castBarColor>(1,0.9,0.55,0.5)</castBarColor>
+        <soundDefName>MMT_Gong</soundDefName>
+        <novaCellsPerSecond>3</novaCellsPerSecond>
+        <novaBandWidth>1</novaBandWidth>
+        <novaDamage>15</novaDamage>
+        <novaHealAmount>8</novaHealAmount>
+        <novaHitOnce>true</novaHitOnce>
+        <novaFadeOutTicks>18</novaFadeOutTicks>
+        <novaTexPath>Things/Mote/MMT_NovaRing</novaTexPath>
+        <novaTint>(1,0.85,0.4)</novaTint>
+      </li>
+      <!-- 第二十三步：驱散/净化·驱散魔法（牧师 II 阶，单体锁定移除限时状态）
+           效果设计卡：目标头顶爆出白色 (1,1,1) 净化图标闪光（尺寸 0.5 格，无旋转，0.5s 淡出），
+           每驱散 1 个状态再爆 1 次白色微光点（原版 ThrowMicroSparks）；只移除"有持续时间"的状态
+           （HediffComp_Disappears，如第八步的迅捷祝福/迟缓诅咒），永久/无时限状态不可驱散；
+           敌我分流——友方移除减益、敌方移除增益，至多 3 个、Severity 高者优先。
+           测试路径：先对友方放「测试·迅捷祝福」→ 再对同目标放本技能即被移除。 -->
+      <li>
+        <label>测试·驱散魔法</label>
+        <iconPath>UI/RoM/purify</iconPath>
+        <radius>0</radius>
+        <targetFriendly>true</targetFriendly>
+        <demoType>dispel</demoType>
+        <castSeconds>1</castSeconds>
+        <castBarColor>(1,1,1,0.5)</castBarColor>
+        <range>20</range>
+        <soundDefName>MMT_FastReleaseSD</soundDefName>
+        <dispelCount>3</dispelCount>
+        <dispelIconTexPath>UI/RoM/purify</dispelIconTexPath>
+        <dispelIconSeconds>0.5</dispelIconSeconds>
+      </li>
+      <li>
+        <label>测试·驱散魔法·敌</label>
+        <iconPath>UI/RoM/purify</iconPath>
+        <radius>0</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>dispel</demoType>
+        <castSeconds>1</castSeconds>
+        <castBarColor>(1,1,1,0.5)</castBarColor>
+        <range>20</range>
+        <soundDefName>MMT_FastReleaseSD</soundDefName>
+        <dispelCount>3</dispelCount>
+        <dispelIconTexPath>UI/RoM/purify</dispelIconTexPath>
+        <dispelIconSeconds>0.5</dispelIconSeconds>
       </li>
     </demos>
   </MyModeTest.MMTSkillDemoSetDef>

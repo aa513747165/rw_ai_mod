@@ -24,6 +24,10 @@ namespace MyModeTest
         /// <summary>最大射程环配色：中性白、低透明度（只是距离参考，不应抢范围圈的视觉焦点）。</summary>
         public static readonly Color MaxRangeRingColor = new Color(1f, 1f, 1f, 0.3f);
 
+        /// <summary>射程环显示上限（格）：超出该距离的技能不再画射程环。
+        /// 圆环贴图（RingTexPath，2048²）按 ≤45 格设计，再大的圈贴图被等比拉伸成粗带、只剩劣化观感。</summary>
+        public const float MaxRangeRingRadius = 45f;
+
         /// <summary>圆形选择框贴图（白图，代码按敌我染色）。仅 SkillDelayedStrike 地面警示圈仍在用。</summary>
         public const string CircleTexPath = "Things/Mote/MMT_TargetCircle";
 
@@ -364,9 +368,11 @@ namespace MyModeTest
         public bool targetFriendly;
         public bool includeSelf = true;
         public float range = 24.9f;
+        /// <summary>false = 瞄准时不画技能距离白环（以自身为起点、只需选方向的技能，如龙息，白环无参考意义）。</summary>
+        public bool showRangeRing = true;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -394,6 +400,19 @@ namespace MyModeTest
         /// <summary>光柱染色。</summary>
         public Color beamTint = new Color(1f, 0.55f, 0.15f);
         /// <summary>每跳伤害（默认 Burn）。</summary>
+        /// <summary>射线出膛偏移（格，避免光柱起点与施法者重叠）。</summary>
+        public float beamMuzzleOffset = 0.9f;
+        /// <summary>射线发射头/命中端贴图（空 = 不画）与绘制尺寸（格）。</summary>
+        public string beamHeadTexPath = "Things/Mote/MMT_SkillBeam_Head";
+        public string beamTailTexPath = "Things/Mote/MMT_SkillBeam_Tail";
+        public float beamHeadSize = 1.4f;
+        /// <summary>true = 发射头画成地面喷发火柱（多层水平碟堆叠，贴地、垂直向上）；false = 平躺光球。</summary>
+        public bool beamHeadVertical;
+        /// <summary>火柱高度（世界单位）/碟片层数/顶端缩放系数（相对底部）。</summary>
+        public float beamHeadPillarHeight = 1.1f;
+        public int beamHeadPillarLayers = 6;
+        public float beamHeadPillarTopScale = 0.55f;
+        public float beamTailSize = 1.6f;
         public float beamDamage = 4f;
         /// <summary>跳伤间隔 tick。</summary>
         public int beamDamageIntervalTicks = 10;
@@ -421,8 +440,13 @@ namespace MyModeTest
         /// <summary>火焰贴图（白图，代码染色）。</summary>
         public string groundTexPath = "Things/Mote/MMT_FlamePillar";
         public Color groundTint = new Color(1f, 0.62f, 0.2f);
-        /// <summary>单柱贴图尺寸（格）。</summary>
+        /// <summary>单柱贴图尺寸（格，贴地火盘直径）。</summary>
         public float groundVisualScale = 1.7f;
+        /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
+        public float groundPillarHeight = 1.4f;
+        public int groundPillarLayers = 7;
+        public float groundPillarTopScale = 0.4f;
+        public float groundPillarSway = 0.35f;
         /// <summary>单柱持续秒数。</summary>
         public float groundDurationSeconds = 6f;
         public float groundDamage = 3f;
@@ -534,6 +558,13 @@ namespace MyModeTest
         /// <summary>陨石爆炸半径。</summary>
         public float meteorExplosionRadius = 3f;
         public float meteorIgniteChance = 0.3f;
+        /// <summary>陨石绘制尺寸（格，建议 ≈ 爆炸半径 × 1.2~1.5）。</summary>
+        public float meteorDrawSize = 4f;
+        /// <summary>陨石自旋速度（度/tick，0 = 坠落不旋转）。</summary>
+        public float meteorSpinDegPerTick;
+        /// <summary>坠落缩放区间（1→1 = 恒定大小）。</summary>
+        public float meteorGrowFrom = 1f;
+        public float meteorGrowTo = 1f;
 
         // —— 近战击退演示（第十二步） ——
         public float knockbackDamage = 12f;
@@ -575,12 +606,53 @@ namespace MyModeTest
         /// <summary>每跳直接伤害（0=仅 Hediff 累积）。</summary>
         public float zoneDamage;
         public string zoneDamageDefName;
-        /// <summary>每跳累积的 Hediff（默认原版 ToxicBuildup 毒素积累）。</summary>
+        /// <summary>每跳累积的 Hediff（默认原版 ToxicBuildup 毒素积累；寒风领域等纯定身皮肤显式置空）。</summary>
         public string zoneHediffDefName = "ToxicBuildup";
         public float zoneHediffSeverity = 0.04f;
+        /// <summary>每跳踉跄定身 tick（0=不定身；寒风领域冰冻硬控用，略大于脉冲间隔保持连续冻结）。</summary>
+        public int zoneStaggerTicks;
+        /// <summary>冰冻皮肤：冰块覆盖物贴图尺寸（格，略大于 pawn 身位即罩住全身）。</summary>
+        public float zoneIceScale = 1.7f;
         /// <summary>区域圆盘贴图与染色。</summary>
         public string zoneTexPath = "Things/Mote/MMT_AuraDisc";
         public Color zoneTint = new Color(0.55f, 0.85f, 0.3f);
+
+        // —— 触发式陷阱演示（第二十步：爆炸地雷） ——
+        /// <summary>布设后的武装时间秒数（期间不触发）。</summary>
+        public float mineArmSeconds = 1f;
+        /// <summary>触发半径（格，敌人进入即引爆）。</summary>
+        public float mineTriggerRadius = 2f;
+        /// <summary>爆炸半径（格；预览圈用 radius，演示中两者设为一致）。</summary>
+        public float mineExplosionRadius = 3f;
+        public float mineDamage = 30f;
+        /// <summary>存在上限秒数（超时未触发自动失效）。</summary>
+        public float mineDurationSeconds = 120f;
+
+        // —— 新星环演示（第二十二步：神圣新星） ——
+        /// <summary>扩散速度（格/秒，匀速；最大半径用 radius）。</summary>
+        public float novaCellsPerSecond = 3f;
+        /// <summary>命中环带宽度（格，判定 |距离-当前半径| ≤ 带宽/2）。</summary>
+        public float novaBandWidth = 1f;
+        /// <summary>敌方命中伤害（0=不伤敌）。</summary>
+        public float novaDamage = 15f;
+        public string novaDamageDefName;
+        public float novaArmorPenetration;
+        /// <summary>友方命中治疗池（0=不治友）。</summary>
+        public float novaHealAmount = 8f;
+        /// <summary>true=每目标只命中一次；false=环带内持续判定。</summary>
+        public bool novaHitOnce = true;
+        /// <summary>到达最大半径后的整体淡出 tick。</summary>
+        public int novaFadeOutTicks = 18;
+        /// <summary>环贴图（白图圆环，代码染色）与染色。</summary>
+        public string novaTexPath = "Things/Mote/MMT_NovaRing";
+        public Color novaTint = new Color(1f, 0.85f, 0.4f);
+
+        // —— 驱散/净化演示（第二十三步：驱散魔法） ——
+        /// <summary>单目标最多移除的限时状态数（友方移除减益、敌方移除增益，Severity 高者优先）。</summary>
+        public int dispelCount = 3;
+        /// <summary>驱散闪光图标贴图与显示秒数。</summary>
+        public string dispelIconTexPath = "UI/RoM/purify";
+        public float dispelIconSeconds = 0.5f;
 
         // —— 造墙演示（第十八步：石墙术） ——
         /// <summary>石墙存续秒数（墙半径用 radius）。</summary>
@@ -641,8 +713,8 @@ namespace MyModeTest
                     icon = ContentFinder<Texture2D>.Get(demo.iconPath, false) ?? BaseContent.BadTex,
                     action = delegate
                     {
-                        // 光环类以自身为中心，免瞄准直接进入读条
-                        if (captured.demoType == "aura")
+                        // 光环/新星环类以自身为中心，免瞄准直接进入读条
+                        if (captured.demoType == "aura" || captured.demoType == "nova")
                         {
                             FireDemo(captured, new LocalTargetInfo(parent));
                         }
@@ -738,8 +810,8 @@ namespace MyModeTest
             if (demo.demoType == "summonHoming")
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
-                return "技能框架演示：" + cast + "发射追踪弹锁定一名" + (demo.targetFriendly ? "友方" : "敌方")
-                    + "目标（无敌不可选中），持续 " + demo.summonHomingDurationSeconds + "s 追踪，命中造成伤害并消失，超时自动消散。";
+                return "技能框架演示：" + cast + "发射追踪弹锁定一个" + (demo.targetFriendly ? "友方" : "敌方")
+                    + " pawn/建筑（弹体无敌不可选中），持续 " + demo.summonHomingDurationSeconds + "s 追踪，命中造成伤害并消失，超时自动消散。";
             }
             if (demo.demoType == "summonAnimal")
             {
@@ -792,8 +864,32 @@ namespace MyModeTest
             if (demo.demoType == "groundZone")
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                if (demo.zoneStaggerTicks > 0)
+                {
+                    return "技能框架演示：" + cast + "在目标点展开持续 " + demo.zoneDurationSeconds + "s 的寒风领域（半径 " + demo.radius
+                        + "，" + (demo.zoneAffectEveryone ? "不分敌我" : "仅敌方") + "，站内被冰冻定身，离开即恢复行动）。";
+                }
                 return "技能框架演示：" + cast + "在目标点展开持续 " + demo.zoneDurationSeconds + "s 的毒气池（半径 " + demo.radius
                     + "，" + (demo.zoneAffectEveryone ? "不分敌我" : "仅敌方") + "，站内持续积累毒素，离区后自然衰减）。";
+            }
+            if (demo.demoType == "mine")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标格布设一枚爆炸地雷（" + demo.mineArmSeconds + "s 后武装，敌人进入 "
+                    + demo.mineTriggerRadius + " 格触发，爆炸半径 " + demo.mineExplosionRadius + "，" + demo.mineDurationSeconds + "s 未触发自动失效）。";
+            }
+            if (demo.demoType == "nova")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "以自身为中心爆发新星环（半径 0→" + demo.radius + " 匀速扩散，速度 "
+                    + demo.novaCellsPerSecond + " 格/s），环带扫过敌人造成 " + demo.novaDamage + " 点伤害、扫过友方治疗 "
+                    + demo.novaHealAmount + " 点" + (demo.novaHitOnce ? "（每目标只命中一次）" : "（环带内持续判定）") + "。";
+            }
+            if (demo.demoType == "dispel")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "驱散锁定" + (demo.targetFriendly ? "友方" : "敌方") + "目标身上至多 " + demo.dispelCount
+                    + " 个限时" + (demo.targetFriendly ? "减益" : "增益") + "（Severity 高者优先，永久/无时限状态不可驱散；白色图标闪光）。";
             }
             return "技能框架演示：范围圈敌我预览，确认后仅提示影响名单，无实际效果。";
         }
@@ -865,13 +961,14 @@ namespace MyModeTest
                 },
                 highlightAction: delegate(LocalTargetInfo t)
                 {
-                    // 落点最大距离环（以自身为中心）
-                    if (demo.range > 0f)
+                    // 落点最大距离环（以自身为中心；超出贴图设计上限或条目关闭时不画）
+                    if (demo.showRangeRing && demo.range > 0f && demo.range <= MMTAoETargetPreview.MaxRangeRingRadius)
                     {
                         MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, MMTAoETargetPreview.MaxRangeRingColor);
                     }
                     MMTAoETargetPreview.DrawCircle(fromCenter, demo.radius, MMTAoETargetPreview.RingColor(demo.targetFriendly));
-                    if (t.IsValid)
+                    // 超出技能距离：不画落点选择框
+                    if (t.IsValid && t.Cell.DistanceTo(parent.Position) <= demo.range)
                     {
                         GenDraw.DrawTargetHighlightWithLayer(t.Cell.ToVector3Shifted(), AltitudeLayer.MetaOverlays);
                     }
@@ -888,11 +985,12 @@ namespace MyModeTest
             pendingTeleportDemo = null;
             TargetingParameters parms = new TargetingParameters
             {
-                // 锁定目标类技能（单体落雷/烈焰喷发/单体增益减益/追踪弹/击退/连锁闪电）不允许点地板，必须点在 pawn/建筑上
+                // 锁定目标类技能（单体落雷/烈焰喷发/单体增益减益/追踪弹/击退/连锁闪电/驱散）不允许点地板，必须点在 pawn/建筑上
                 canTargetLocations = !demo.strikeRequireTarget && !demo.groundRequireTarget && !demo.buffRequireTarget
-                    && demo.demoType != "summonHoming" && demo.demoType != "knockback" && demo.demoType != "chainLightning",
+                    && demo.demoType != "summonHoming" && demo.demoType != "knockback" && demo.demoType != "chainLightning"
+                    && demo.demoType != "dispel",
                 canTargetPawns = true,
-                canTargetBuildings = demo.radius <= 0f && demo.demoType != "knockback",
+                canTargetBuildings = demo.radius <= 0f && demo.demoType != "knockback" && demo.demoType != "dispel",
                 canTargetItems = false,
                 canTargetSelf = false
             };
@@ -900,12 +998,14 @@ namespace MyModeTest
                 delegate(LocalTargetInfo t) { FireDemo(demo, t); },
                 highlightAction: delegate(LocalTargetInfo t)
                 {
-                    // 自定义瞄准没有 verb 作 targetingSource，原版最大射程环不会画，这里手画（中性白）
-                    if (demo.range > 0f)
+                    // 自定义瞄准没有 verb 作 targetingSource，原版最大射程环不会画，这里手画（中性白；
+                    // 超出贴图设计上限 MaxRangeRingRadius 的远程技能、或条目关闭时不画）
+                    if (demo.showRangeRing && demo.range > 0f && demo.range <= MMTAoETargetPreview.MaxRangeRingRadius)
                     {
                         MMTAoETargetPreview.DrawCircle(parent.Position, demo.range, MMTAoETargetPreview.MaxRangeRingColor);
                     }
-                    if (!t.IsValid)
+                    // 超出技能距离：不画任何选择框/落点标记/路径预览（射程白环仍画，作为距离参考）
+                    if (!t.IsValid || t.Cell.DistanceTo(parent.Position) > demo.range)
                     {
                         return;
                     }
@@ -915,8 +1015,10 @@ namespace MyModeTest
                         Vector3 dir = MMTBeamUtil.BeamDirection(parent, t.Cell);
                         Color preview = demo.beamTint;
                         preview.a = 0.3f;
-                        MMTBeamUtil.DrawBeamPreview(parent.Map, MMTBeamUtil.MuzzleOrigin(parent, dir), dir,
-                            demo.beamRange, demo.beamWidth, demo.beamTexPath, preview);
+                        MMTBeamUtil.DrawBeamPreview(parent.Map, MMTBeamUtil.MuzzleOrigin(parent, dir, demo.beamMuzzleOffset), dir,
+                            demo.beamRange, demo.beamWidth, demo.beamTexPath, preview,
+                            demo.beamHeadTexPath, demo.beamTailTexPath, demo.beamHeadSize, demo.beamTailSize,
+                            demo.beamHeadVertical, demo.beamHeadPillarHeight, demo.beamHeadPillarLayers, demo.beamHeadPillarTopScale);
                     }
                     else if (demo.demoType == "breathCone")
                     {
@@ -933,12 +1035,13 @@ namespace MyModeTest
                     }
                     else
                     {
-                        // 单体落雷/烈焰喷发/单体增益减益/折跃/冲锋/跳跃/召唤/击退/连锁闪电类：鼠标格画落点标记；雷暴/火海/范围增益/群体传送/陨石/治疗走下方范围圈
+                        // 单体落雷/烈焰喷发/单体增益减益/折跃/冲锋/跳跃/召唤/击退/连锁闪电/驱散类：鼠标格画落点标记；雷暴/火海/范围增益/群体传送/陨石/治疗走下方范围圈
                         if ((demo.demoType == "strike" || demo.demoType == "groundFire" || demo.demoType == "bufffx"
                             || demo.demoType == "blink" || demo.demoType == "charge" || demo.demoType == "jump"
                             || demo.demoType == "summonOrb" || demo.demoType == "summonHoming"
                             || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
-                            || demo.demoType == "knockback" || demo.demoType == "chainLightning") && demo.radius <= 0f)
+                            || demo.demoType == "knockback" || demo.demoType == "chainLightning"
+                            || demo.demoType == "dispel") && demo.radius <= 0f)
                         {
                             GenDraw.DrawTargetHighlightWithLayer(t.Cell.ToVector3Shifted(), AltitudeLayer.MetaOverlays);
                         }
@@ -981,8 +1084,8 @@ namespace MyModeTest
                     }
                     if (demo.demoType == "summonHoming")
                     {
-                        // 追踪弹：必须锁定 pawn，且按 targetFriendly 限定敌我
-                        if (!t.HasThing || !(t.Thing is Pawn) || t.Thing == parent)
+                        // 追踪弹：必须锁定 pawn/建筑（敌对人偶是建筑），且按 targetFriendly 限定敌我
+                        if (!t.HasThing || t.Thing == parent || (!(t.Thing is Pawn) && !(t.Thing is Building)))
                         {
                             return false;
                         }
@@ -997,6 +1100,15 @@ namespace MyModeTest
                     {
                         // 炮塔召唤：落点可站立且无既有建筑
                         return t.Cell.Standable(parent.Map) && t.Cell.GetEdifice(parent.Map) == null;
+                    }
+                    if (demo.demoType == "dispel")
+                    {
+                        // 驱散/净化：必须锁定 pawn（Hediff 只长在 pawn 身上），且按 targetFriendly 限定敌我
+                        if (!t.HasThing || !(t.Thing is Pawn) || t.Thing == parent)
+                        {
+                            return false;
+                        }
+                        return demo.targetFriendly ? t.Thing.Faction == parent.Faction : t.Thing.HostileTo(parent);
                     }
                     if ((demo.demoType == "strike" && demo.strikeRequireTarget)
                         || (demo.demoType == "groundFire" && demo.groundRequireTarget)
@@ -1022,7 +1134,8 @@ namespace MyModeTest
                 || demo.demoType == "blink" || demo.demoType == "massTeleport" || demo.demoType == "charge" || demo.demoType == "jump"
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
-                || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone")
+                || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone"
+                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel")
             {
                 castingDemo = demo;
                 castingTarget = target;
@@ -1096,7 +1209,7 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>读条结束：经 MMTShootUtil / MMTBeamUtil / MMTStrikeUtil / MMTGroundFireUtil / MMTAuraUtil / MMTBuffFXUtil / MMTDisplaceUtil / MMTSummonUtil / MMTDelayedStrikeUtil / MMTKnockbackUtil / MMTChainLightningUtil / MMTBreathUtil / MMTHealUtil / MMTWallUtil 真实执行。</summary>
+        /// <summary>读条结束：经 MMTShootUtil / MMTBeamUtil / MMTStrikeUtil / MMTGroundFireUtil / MMTAuraUtil / MMTBuffFXUtil / MMTDisplaceUtil / MMTSummonUtil / MMTDelayedStrikeUtil / MMTKnockbackUtil / MMTChainLightningUtil / MMTBreathUtil / MMTHealUtil / MMTWallUtil / MMTGroundZoneUtil / MMTMineUtil / MMTNovaUtil / MMTDispelUtil 真实执行。</summary>
         private void ExecuteShot()
         {
             MMTSkillDemoEntry demo = castingDemo;
@@ -1120,6 +1233,15 @@ namespace MyModeTest
                     texPath = demo.beamTexPath,
                     tint = demo.beamTint,
                     width = demo.beamWidth,
+                    muzzleOffset = demo.beamMuzzleOffset,
+                    headTexPath = demo.beamHeadTexPath,
+                    tailTexPath = demo.beamTailTexPath,
+                    headSize = demo.beamHeadSize,
+                    headVertical = demo.beamHeadVertical,
+                    headPillarHeight = demo.beamHeadPillarHeight,
+                    headPillarLayers = demo.beamHeadPillarLayers,
+                    headPillarTopScale = demo.beamHeadPillarTopScale,
+                    tailSize = demo.beamTailSize,
                     range = demo.beamRange,
                     durationTicks = Mathf.Max(1, demo.beamDurationSeconds.SecondsToTicks()),
                     damage = demo.beamDamage,
@@ -1167,6 +1289,10 @@ namespace MyModeTest
                     texPath = demo.groundTexPath,
                     tint = demo.groundTint,
                     visualScale = demo.groundVisualScale,
+                    pillarHeight = demo.groundPillarHeight,
+                    pillarLayers = demo.groundPillarLayers,
+                    pillarTopScale = demo.groundPillarTopScale,
+                    pillarSway = demo.groundPillarSway,
                     durationTicks = Mathf.Max(1, demo.groundDurationSeconds.SecondsToTicks()),
                     damage = demo.groundDamage,
                     damageIntervalTicks = demo.groundDamageIntervalTicks,
@@ -1347,7 +1473,11 @@ namespace MyModeTest
                     damage = demo.meteorDamage,
                     armorPenetration = demo.meteorArmorPenetration,
                     explosionRadius = demo.meteorExplosionRadius,
-                    chanceToStartFire = demo.meteorIgniteChance
+                    chanceToStartFire = demo.meteorIgniteChance,
+                    meteorDrawSize = demo.meteorDrawSize,
+                    meteorSpinDegPerTick = demo.meteorSpinDegPerTick,
+                    meteorGrowFrom = demo.meteorGrowFrom,
+                    meteorGrowTo = demo.meteorGrowTo
                 });
                 Messages.Message("【" + demo.label + "】陨石即将坠落！", parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
@@ -1437,7 +1567,7 @@ namespace MyModeTest
             }
             if (demo.demoType == "groundZone")
             {
-                // 持续地面区域：目标点展开毒气池（站内累积毒素，离区自然衰减）
+                // 持续地面区域：目标点展开毒气池（站内累积毒素）/ 寒风领域（站内冰冻定身）
                 Thing_MMTGroundZone zone = MMTGroundZoneUtil.FireZone(parent, target.Cell, new MMTGroundZoneParams
                 {
                     radius = demo.radius,
@@ -1448,12 +1578,77 @@ namespace MyModeTest
                     damageDef = demo.zoneDamageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(demo.zoneDamageDefName),
                     hediffDef = demo.zoneHediffDefName.NullOrEmpty() ? null : DefDatabase<HediffDef>.GetNamedSilentFail(demo.zoneHediffDefName),
                     hediffSeverityPerPulse = demo.zoneHediffSeverity,
+                    staggerTicksPerPulse = demo.zoneStaggerTicks,
+                    iceScale = demo.zoneIceScale,
                     texPath = demo.zoneTexPath,
                     tint = demo.zoneTint,
                     moteFleckDef = DefDatabase<FleckDef>.GetNamedSilentFail("MMT_Fleck_BuffSpark"),
                     startSound = sound
                 });
-                Messages.Message(zone != null ? "【" + demo.label + "】毒气池蔓延！" : "【" + demo.label + "】区域展开失败",
+                string zoneName = demo.zoneStaggerTicks > 0 ? "寒风领域展开！" : "毒气池蔓延！";
+                Messages.Message(zone != null ? "【" + demo.label + "】" + zoneName : "【" + demo.label + "】区域展开失败",
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
+            if (demo.demoType == "mine")
+            {
+                // 触发式爆炸陷阱：目标格布设地雷（武装后敌人进入触发半径引爆，超时失效）
+                Thing_MMTMine mine = MMTMineUtil.PlaceMine(parent, target.Cell, new MMTMineParams
+                {
+                    armTicks = Mathf.Max(1, demo.mineArmSeconds.SecondsToTicks()),
+                    triggerRadius = demo.mineTriggerRadius,
+                    explosionRadius = demo.mineExplosionRadius,
+                    damage = demo.mineDamage,
+                    durationTicks = Mathf.Max(1, demo.mineDurationSeconds.SecondsToTicks()),
+                    startSound = sound,
+                    equipment = (parent as Pawn)?.equipment?.Primary
+                });
+                Messages.Message(mine != null ? "【" + demo.label + "】地雷已布设！" : "【" + demo.label + "】该位置无法布设地雷",
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
+            if (demo.demoType == "nova")
+            {
+                // 新星环：以自身当前位置为圆心爆发扩散冲击波（环带扫过：敌伤友疗）
+                Thing_MMTNovaRing nova = MMTNovaUtil.FireNova(parent, parent.Position, new MMTNovaParams
+                {
+                    maxRadius = demo.radius,
+                    cellsPerSecond = demo.novaCellsPerSecond,
+                    bandWidth = demo.novaBandWidth,
+                    damageDef = demo.novaDamageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(demo.novaDamageDefName),
+                    damage = demo.novaDamage,
+                    armorPenetration = demo.novaArmorPenetration,
+                    healAmount = demo.novaHealAmount,
+                    hitOnce = demo.novaHitOnce,
+                    fadeOutTicks = demo.novaFadeOutTicks,
+                    texPath = demo.novaTexPath,
+                    tint = demo.novaTint,
+                    startSound = sound,
+                    equipment = (parent as Pawn)?.equipment?.Primary
+                });
+                Messages.Message(nova != null ? "【" + demo.label + "】新星爆发！" : "【" + demo.label + "】新星未能爆发",
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
+            if (demo.demoType == "dispel")
+            {
+                // 驱散/净化：移除锁定 pawn 身上至多 N 个限时状态（友方减益/敌方增益，Severity 高者优先）
+                if (!target.HasThing || !(target.Thing is Pawn dispelTarget) || dispelTarget.Destroyed || !dispelTarget.Spawned)
+                {
+                    Messages.Message("【" + demo.label + "】目标已失效", parent, MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+                List<string> removed = MMTDispelUtil.DispelOne(parent, dispelTarget, new MMTDispelParams
+                {
+                    maxRemove = demo.dispelCount,
+                    iconTexPath = demo.dispelIconTexPath,
+                    iconDurationTicks = Mathf.Max(1, demo.dispelIconSeconds.SecondsToTicks()),
+                    particleFleckDef = DefDatabase<FleckDef>.GetNamedSilentFail("MMT_Fleck_BuffSpark"),
+                    sound = sound
+                });
+                Messages.Message(removed.Count > 0
+                        ? "【" + demo.label + "】驱散了 " + dispelTarget.LabelShortCap + " 的 " + removed.Count + " 个状态：" + string.Join("、", removed)
+                        : "【" + demo.label + "】" + dispelTarget.LabelShortCap + " 身上没有可驱散的限时状态！",
                     parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
