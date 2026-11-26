@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）Def/贴图/假人演示条目/C# 核心。"""
+"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）Def/贴图/假人演示条目/C# 核心。"""
 from pathlib import Path
 
 from validate_mod import assert_equal, child_text, def_map, fail, parse_xml, require_files
@@ -17,11 +17,11 @@ SUMMON_XML = "1.7/Defs/ThingDefs_Misc/MMT_SummonEntities.xml"
 TURRET_XML = "1.7/Defs/ThingDefs_Buildings/MMT_Buildings_SummonTurret.xml"
 SUMMON_HEDIFF_XML = "1.7/Defs/HediffDefs/MMT_Hediffs_Summon.xml"
 FLECK_XML = "1.7/Defs/Effects/MMT_Flecks_SkillFX.xml"
-CS = "Source/MyModeTest/SkillGroundFire.cs"
-AURA_CS = "Source/MyModeTest/SkillAura.cs"
-BUFF_CS = "Source/MyModeTest/SkillBuffFX.cs"
-DISPLACE_CS = "Source/MyModeTest/SkillDisplace.cs"
-SUMMON_CS = "Source/MyModeTest/SkillSummon.cs"
+CS = "Source/MyModeTest/SkillFX/SkillGroundFire.cs"
+AURA_CS = "Source/MyModeTest/SkillFX/SkillAura.cs"
+BUFF_CS = "Source/MyModeTest/SkillFX/SkillBuffFX.cs"
+DISPLACE_CS = "Source/MyModeTest/SkillFX/SkillDisplace.cs"
+SUMMON_CS = "Source/MyModeTest/SkillFX/SkillSummon.cs"
 TEX = "1.7/Textures/Things/Mote/MMT_FlamePillar.png"
 AURA_TEX = "1.7/Textures/Things/Mote/MMT_AuraDisc.png"
 BUFF_TEX = "1.7/Textures/Things/Mote/MMT_BuffSpark.png"
@@ -40,13 +40,13 @@ BREATH_XML = "1.7/Defs/ThingDefs_Misc/MMT_BreathCone.xml"
 WALL_XML = "1.7/Defs/ThingDefs_Buildings/MMT_MagicStoneWall.xml"
 PROJ_XML = "1.7/Defs/ThingDefs_Misc/MMT_Projectiles_SkillDemo.xml"
 JOBS_XML = "1.7/Defs/JobDefs/MMT_Jobs.xml"
-DELAY_CS = "Source/MyModeTest/SkillDelayedStrike.cs"
-KNOCK_CS = "Source/MyModeTest/SkillKnockback.cs"
-CHAIN_CS = "Source/MyModeTest/SkillChainLightning.cs"
-BREATH_CS = "Source/MyModeTest/SkillBreath.cs"
-HEAL_CS = "Source/MyModeTest/SkillHeal.cs"
-WALL_CS = "Source/MyModeTest/SkillWall.cs"
-BEAM_CS = "Source/MyModeTest/SkillBeam.cs"
+DELAY_CS = "Source/MyModeTest/SkillFX/SkillDelayedStrike.cs"
+KNOCK_CS = "Source/MyModeTest/SkillFX/SkillKnockback.cs"
+CHAIN_CS = "Source/MyModeTest/SkillFX/SkillChainLightning.cs"
+BREATH_CS = "Source/MyModeTest/SkillFX/SkillBreath.cs"
+HEAL_CS = "Source/MyModeTest/SkillFX/SkillHeal.cs"
+WALL_CS = "Source/MyModeTest/SkillFX/SkillWall.cs"
+BEAM_CS = "Source/MyModeTest/SkillFX/SkillBeam.cs"
 METEOR_TEX = "1.7/Textures/Things/Mote/MMT_Meteor.png"
 BEAM_HEAD_TEX = "1.7/Textures/Things/Mote/MMT_SkillBeam_Head.png"
 BEAM_TAIL_TEX = "1.7/Textures/Things/Mote/MMT_SkillBeam_Tail.png"
@@ -54,18 +54,20 @@ BIGBALL_TEX = "1.7/Textures/Things/Projectile/MMT_BigFireball.png"
 WALL_TEX = "1.7/Textures/Things/Building/MMT_StoneWall.png"
 # —— 第 19 步：持续地面区域（毒气池） ——
 ZONE_XML = "1.7/Defs/ThingDefs_Misc/MMT_GroundZone.xml"
-ZONE_CS = "Source/MyModeTest/SkillGroundZone.cs"
+ZONE_CS = "Source/MyModeTest/SkillFX/SkillGroundZone.cs"
 # —— 第 20 步：触发式爆炸陷阱；第 21 步：寒风领域（地面区域冰冻皮肤） ——
 MINE_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillMine.xml"
-TRAP_CS = "Source/MyModeTest/SkillTrap.cs"
+TRAP_CS = "Source/MyModeTest/SkillFX/SkillTrap.cs"
 MINE_TEX = "1.7/Textures/Things/Mote/MMT_SkillMine.png"
 ICE_TEX = "1.7/Textures/Things/Mote/MMT_IceBlock.png"
 # —— 第 22 步：新星环（360° 扩散冲击波，神圣新星） ——
 NOVA_XML = "1.7/Defs/ThingDefs_Misc/MMT_NovaRing.xml"
-NOVA_CS = "Source/MyModeTest/SkillNova.cs"
+NOVA_CS = "Source/MyModeTest/SkillFX/SkillNova.cs"
 NOVA_TEX = "1.7/Textures/Things/Mote/MMT_NovaRing.png"
 # —— 第 23 步：驱散/净化（纯代码框架，复用 BuffIconFlash/微光点，无新增 Def/贴图） ——
-DISPEL_CS = "Source/MyModeTest/SkillDispel.cs"
+DISPEL_CS = "Source/MyModeTest/SkillFX/SkillDispel.cs"
+# —— 第 24 步：余烬爆发（爆发 + 短余烬 hybrid，复用 BuffSpark/BlinkFlash/FlamePillar 贴图） ——
+EMBER_CS = "Source/MyModeTest/SkillFX/SkillEmberBurst.cs"
 
 
 def validate_skillfx() -> None:
@@ -78,7 +80,7 @@ def validate_skillfx() -> None:
                    DELAY_CS, KNOCK_CS, CHAIN_CS, BREATH_CS, HEAL_CS, WALL_CS, BEAM_CS,
                    METEOR_TEX, BIGBALL_TEX, WALL_TEX,
                    ZONE_XML, ZONE_CS, MINE_XML, TRAP_CS, MINE_TEX, ICE_TEX,
-                   BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS])
+                   BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS, EMBER_CS])
 
     defs = def_map(parse_xml(FLAME_XML))
     node = defs.get("MMT_GroundFlame")
@@ -141,7 +143,8 @@ def validate_skillfx() -> None:
     assert_equal(child_text(mover, "drawerType"), "RealtimeOnly", "位移载体 drawerType")
     assert_equal(child_text(mover, "altitudeLayer"), "Skyfaller", "位移载体 altitudeLayer")
 
-    for token in ("MMT_Fleck_BlinkFlash", "MMT_BlinkFlash", "MMT_Fleck_DashTrail", "MMT_DashTrail"):
+    for token in ("MMT_Fleck_BlinkFlash", "MMT_BlinkFlash", "MMT_Fleck_DashTrail", "MMT_DashTrail",
+                  "MMT_Fleck_Ember"):
         if token not in flecks:
             fail(f"MMT_Flecks_SkillFX.xml 缺少: {token}")
 
@@ -152,7 +155,7 @@ def validate_skillfx() -> None:
             fail(f"SkillDisplace.cs 缺少: {token}")
 
     # —— 圆形选择框（第一步改圆）：瞄准框架统一走 DrawCircle 贴图圆 ——
-    targeting_cs = Path("Source/MyModeTest/AbilityTargeting.cs").read_text(encoding="utf-8")
+    targeting_cs = Path("Source/MyModeTest/SkillFX/AbilityTargeting.cs").read_text(encoding="utf-8")
     for token in ("DrawCircle", "MMT_TargetCircle", "MMTSkillDemoSetDef", "MMTSkillDemoGrant",
                   "MMT_SkillDemoSet"):
         if token not in targeting_cs:
@@ -223,6 +226,9 @@ def validate_skillfx() -> None:
                   "beamMuzzleOffset", "beamHeadTexPath", "beamTailTexPath", "beamHeadSize", "beamTailSize",
                   "测试·烈焰喷发", "测试·烈焰火海", "groundFire", "groundRequireTarget",
                   "groundPillarHeight", "groundPillarLayers", "groundPillarTopScale", "groundPillarSway",
+                  "groundFrameTexPaths", "groundFrameTicks", "MMT_FlameErupt",
+                  "emberBurst", "emberCount", "emberBurstDamage", "emberResidDurationSeconds",
+                  "emberResidDamage", "emberResidDensity", "emberSparkSpeedMin", "emberSparkSpeedMax",
                   "测试·守护光环", "测试·迅捷光环", "测试·迟缓光环", "auraShieldMode", "auraBuffDefName",
                   "测试·迅捷祝福", "测试·群体迅捷", "测试·迟缓诅咒", "测试·群体迟缓",
                   "bufffx", "buffRequireTarget", "buffHediffDefName", "MMT_Buff_Swift", "MMT_Debuff_Slow",
@@ -253,9 +259,17 @@ def validate_skillfx() -> None:
     for token in ("MMTGroundFireUtil", "Thing_MMTGroundFlame", "CompAbilityEffect_MMTGroundFire",
                   "TryAttachFire", "TryStartFireIn", "FireGround",
                   "pillarHeight", "pillarLayers", "pillarTopScale", "pillarSway",
+                  "frameTexPaths", "frameTicks", "DrawFrameSequence", "MaterialPropertyBlock",
                   "DrawDisc", "PerspectiveCompensate", "ShadowCastingMode.Off"):
         if token not in cs:
             fail(f"SkillGroundFire.cs 缺少: {token}")
+
+    # —— 烈焰喷发序列帧贴图（5 帧：起燃→峰值→旋卷→余烬） ——
+    require_files([f"1.7/Textures/Things/Mote/MMT_FlameErupt/MMT_FlameErupt_{i}.png" for i in range(5)])
+    boss_xml = Path("1.7/Defs/AbilityDefs/MMT_Abilities_FireBoss.xml").read_text(encoding="utf-8")
+    for token in ("MMT_BossFire_FlamePillar", "frameTexPaths", "MMT_FlameErupt"):
+        if token not in boss_xml:
+            fail(f"MMT_Abilities_FireBoss.xml 缺少: {token}")
 
     aura_cs = Path(AURA_CS).read_text(encoding="utf-8")
     for token in ("MMTAuraUtil", "Thing_MMTSkillAuraShield", "Thing_MMTSkillAuraBuff",
@@ -432,6 +446,15 @@ def validate_skillfx() -> None:
         if token not in dispel_cs:
             fail(f"SkillDispel.cs 缺少: {token}")
 
+    # —— 余烬爆发·烈焰火海改版（第二十四步） ——
+    ember_cs = Path(EMBER_CS).read_text(encoding="utf-8")
+    for token in ("MMTEmberBurstUtil", "MMTEmberBurstParams", "FireBurst",
+                  "SpawnFlash", "SpawnSparks", "BurstDamage", "ScatterEmbers",
+                  "MMT_Fleck_Ember", "MMT_Fleck_BlinkFlash", "SpawnFlame",
+                  "airTimeLeft", "instanceColor", "velocity", "SecondsToTicks"):
+        if token not in ember_cs:
+            fail(f"SkillEmberBurst.cs 缺少: {token}")
+
     # —— 新演示接入 AbilityTargeting ——
     for token in ("delayedStrike", "knockback", "chainLightning", "breathCone", "heal", "wall",
                   "ignoreLineOfSight", "BreakChannel", "MMTDelayedStrikeUtil", "MMTKnockbackUtil",
@@ -439,7 +462,8 @@ def validate_skillfx() -> None:
                   "groundZone", "MMTGroundZoneUtil", "mine", "MMTMineUtil", "zoneStaggerTicks",
                   "寒风领域", "nova", "MMTNovaUtil", "神圣新星", "novaCellsPerSecond",
                   "novaHitOnce", "novaTexPath", "novaTint",
-                  "dispel", "MMTDispelUtil", "dispelCount", "dispelIconTexPath"):
+                  "dispel", "MMTDispelUtil", "dispelCount", "dispelIconTexPath",
+                  "emberBurst", "MMTEmberBurstUtil", "emberCount", "emberResidDurationSeconds"):
         if token not in targeting_cs:
             fail(f"AbilityTargeting.cs 缺少新演示接入: {token}")
 

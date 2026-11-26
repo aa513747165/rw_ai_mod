@@ -27,6 +27,12 @@ namespace MyModeTest
         /// <summary>火焰贴图（白图，代码染色；纵轴=火焰向上方向）。</summary>
         public string texPath = "Things/Mote/MMT_FlamePillar";
         public Color tint = new Color(1f, 0.62f, 0.2f);
+        /// <summary>序列帧贴图列表（非空时走序列帧模式：火焰按帧序列循环播放——
+        /// 起燃→喷发峰值→旋卷→余烬消散，帧图本身已带颜色，tint 应传白色；
+        /// 每柱帧相位按 seed 错开，火海成片时不同步）。</summary>
+        public List<string> frameTexPaths;
+        /// <summary>序列帧每帧停留 tick 数。</summary>
+        public int frameTicks = 7;
         /// <summary>单柱贴图尺寸（格，贴地火盘直径；堆叠层以此为基准收小）。</summary>
         public float visualScale = 1.7f;
         /// <summary>火柱高度（世界单位，水平碟堆叠总高——1.7 竖直 quad 不渲染，
@@ -127,8 +133,8 @@ namespace MyModeTest
     /// 火焰柱实体：Attach 类无碰撞 Thing，存活期间自绘贴图火焰（双层四边形闪烁），
     /// 按间隔对影响格内的 pawn/建筑跳 Burn 伤害并可点燃。参数全为运行时传入不进存档；
     /// 读档后参数丢失即自毁（火焰最长数秒，可接受）。
-    /// 性能：火焰材质按贴图全局共享（火海 70 柱不再各自 new Material），
-    /// Graphics.DrawMesh 提交即读当前颜色，逐调用染色互不影响。
+    /// 性能：火焰材质按贴图全局共享（火海 70 柱不再各自 new Material）；
+    /// 逐碟染色走 MaterialPropertyBlock 传入，不改共享材质的 color（同帧互覆坑）。
     /// </summary>
     public class Thing_MMTGroundFlame : Thing
     {
@@ -254,15 +260,11 @@ namespace MyModeTest
         /// 1.7 竖直 quad 不渲染、严禁立起 plane10（ChargingStation.DrawBeam 对照实验），
         /// 故火柱 = 水平碟自地面逐层升高收小，俯视相机下高度差投成纵向；
         /// 抬高面片必须做透视补偿并关实时阴影（Building_Singularity.DrawPlane 封过的两个坑）。
-        /// 逐层相位错开呼吸 + 顶部横向摆动 + 整体淡入淡出。</summary>
+        /// 逐层相位错开呼吸 + 顶部横向摆动 + 整体淡入淡出。
+        /// frameTexPaths 非空时改走序列帧模式（见 DrawFrameSequence）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (flameParams == null || igniteDelayTicks > 0)
-            {
-                return;
-            }
-            Material flameMat = SharedMat(flameParams.texPath);
-            if (flameMat == null)
             {
                 return;
             }
@@ -271,15 +273,24 @@ namespace MyModeTest
             float flicker = 1f + 0.12f * Mathf.Sin(elapsed * 0.65f + seed) + 0.06f * Mathf.Sin(elapsed * 1.73f + seed * 1.7f);
             Color color = flameParams.tint;
             color.a *= alpha;
-            flameMat.color = color;
             float baseY = AltitudeLayer.Item.AltitudeFor() + 0.02f;
             float scale = flameParams.visualScale;
             Vector3 basePos = Position.ToVector3Shifted();
             Quaternion rot = Quaternion.AngleAxis(baseAngle, Vector3.up);
             Camera cam = Camera.main;
             Vector3 camForward = cam != null ? cam.transform.forward : new Vector3(0f, -1f, 0f);
+            if (flameParams.frameTexPaths != null && flameParams.frameTexPaths.Count > 0)
+            {
+                DrawFrameSequence(elapsed, basePos, baseY, scale, flicker, color, rot, camForward);
+                return;
+            }
+            Material flameMat = SharedMat(flameParams.texPath);
+            if (flameMat == null)
+            {
+                return;
+            }
             // 贴地火盘（喷发口，平躺、比柱身略大）
-            DrawDisc(basePos, baseY, scale * 1.05f * flicker, rot, flameMat, camForward);
+            DrawDisc(basePos, baseY, scale * 1.05f * flicker, 1f, rot, flameMat, camForward, color);
             // 堆叠火柱：自火盘之上逐层升高收小，越高摆动越大
             int layers = Mathf.Max(2, flameParams.pillarLayers);
             for (int i = 0; i < layers; i++)
@@ -290,16 +301,41 @@ namespace MyModeTest
                     * (1f + 0.15f * Mathf.Sin(elapsed * 0.9f + seed + i * 1.1f));
                 Vector3 p = basePos;
                 p.x += flameParams.pillarSway * t * Mathf.Sin(elapsed * 0.5f + seed * 2.3f);
-                DrawDisc(p, y, s, rot, flameMat, camForward);
+                DrawDisc(p, y, s, 1f, rot, flameMat, camForward, color);
             }
         }
 
-        /// <summary>画一片水平火焰碟：透视补偿 + 关阴影（抬高面片不投影、不出大黑影）。</summary>
-        private static void DrawDisc(Vector3 center, float y, float size, Quaternion rot, Material mat, Vector3 camForward)
+        /// <summary>序列帧模式：帧图必须是**俯视**（正上方视角）的径向喷发贴图，
+        /// 与原版火焰同思路——整帧平铺在目标格地面上（plane10 + Quaternion.identity），
+        /// 按 frameTicks 循环播放、帧相位按 seed 错开（火海成片不同步）。
+        /// 侧视素材在 1.7/Waylith 下没有可靠的竖直呈现手段：竖直 quad 完全不渲染，
+        /// 水平切片堆叠按真实高度画也在屏幕上塌成一条带（2026-11-27 四轮实验定论，
+        /// 疑似 Waylith 对抬高面片的高度处理与预期不符）——故本模式只接受俯视帧图。
+        /// 沿 DrawDisc 走 PerspectiveCompensate 贴地即可（贴地高度补偿近似恒等）。</summary>
+        private void DrawFrameSequence(int elapsed, Vector3 basePos, float baseY, float scale, float flicker, Color color, Quaternion rot, Vector3 camForward)
         {
+            List<string> frames = flameParams.frameTexPaths;
+            int ft = Mathf.Max(1, flameParams.frameTicks);
+            int idx = ((elapsed / ft) + Mathf.RoundToInt(seed * 3.7f)) % frames.Count;
+            Material frameMat = SharedMat(frames[idx]);
+            if (frameMat == null)
+            {
+                return;
+            }
+            DrawDisc(basePos, baseY + 0.05f, scale * flicker, 1f, rot, frameMat, camForward, color);
+        }
+
+        // 颜色走 MaterialPropertyBlock 逐次传入：共享材质下同帧多次 Graphics.DrawMesh
+        // 直接改 mat.color 会互相覆盖（整屏色雾坑，见 AuraDisc/GroundZone 的处理）
+        private static readonly MaterialPropertyBlock flameMpb = new MaterialPropertyBlock();
+
+        /// <summary>画一片水平火焰碟：透视补偿 + 关阴影（抬高面片不投影、不出大黑影）。</summary>
+        private static void DrawDisc(Vector3 center, float y, float size, float stretchZ, Quaternion rot, Material mat, Vector3 camForward, Color color)
+        {
+            flameMpb.SetColor(ShaderPropertyIDs.Color, color);
             Graphics.DrawMesh(MeshPool.plane10,
-                Matrix4x4.TRS(MMTBeamUtil.PerspectiveCompensate(center, y, camForward), rot, new Vector3(size, 1f, size)),
-                mat, 0, null, 0, null, UnityEngine.Rendering.ShadowCastingMode.Off, false);
+                Matrix4x4.TRS(MMTBeamUtil.PerspectiveCompensate(center, y, camForward), rot, new Vector3(size, 1f, size * stretchZ)),
+                mat, 0, null, 0, flameMpb, UnityEngine.Rendering.ShadowCastingMode.Off, false);
         }
     }
 
@@ -309,6 +345,10 @@ namespace MyModeTest
     {
         public string texPath = "Things/Mote/MMT_FlamePillar";
         public Color tint = new Color(1f, 0.62f, 0.2f);
+        /// <summary>序列帧贴图列表（非空时走序列帧模式，帧图已带颜色、tint 传白色）。</summary>
+        public List<string> frameTexPaths;
+        /// <summary>序列帧每帧停留 tick 数。</summary>
+        public int frameTicks = 7;
         public float visualScale = 1.7f;
         /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
         public float pillarHeight = 1.4f;
@@ -349,6 +389,8 @@ namespace MyModeTest
             {
                 texPath = Props.texPath,
                 tint = Props.tint,
+                frameTexPaths = Props.frameTexPaths,
+                frameTicks = Props.frameTicks,
                 visualScale = Props.visualScale,
                 pillarHeight = Props.pillarHeight,
                 pillarLayers = Props.pillarLayers,

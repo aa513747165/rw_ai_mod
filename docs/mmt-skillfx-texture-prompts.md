@@ -553,3 +553,43 @@ transparent center and corners, edges falling to pure black
 2. 环带外沿 alpha ≥ 0.95（波峰实心），内缘渐隐至 0，图幅四边 2px alpha = 0，圆心 60% 半径内 alpha = 0；
 3. 径向对称：任取 8 个方向的环带亮度剖面一致（重心偏移 ≤ 图幅 2%）；灰度无彩色倾向（染色交给 `novaTint`）；
 4. 游戏内验证：「测试·神圣新星」金色光环从脚下匀速扩散到直径 12 格，波峰清晰、拖尾自然，不偏心、无接缝亮边。
+
+---
+
+## 十四、烈焰喷发序列帧 `MMT_FlameErupt_0~4`（5 张，256×256）【占位图已落盘，待 AI 俯视终稿】
+
+> 2026-11-27 转向：原侧视素材（爱给网 234 序列帧，110×128）在 1.7/Waylith 下无可靠竖直呈现手段
+> （竖直 quad 不渲染；水平切片堆叠按真实高度画仍在屏幕上塌成一条带），四版实验后弃用侧视方案。
+> 现按**俯视径向爆燃**重新出图——与原版火焰同思路，整帧平铺地面即正确。
+> 当前为 Pillow 程序占位图（径向火舌 + 白黄高温芯），AI 终稿回来后**覆盖同名文件即可，Def 零改动**。
+
+- **落盘**：`1.7/Textures/Things/Mote/MMT_FlameErupt/MMT_FlameErupt_0.png` … `_4.png`（texPath `Things/Mote/MMT_FlameErupt/MMT_FlameErupt_<i>`，`MMTGroundFireParams.frameTexPaths` / `CompProperties_MMTGroundFire.frameTexPaths` / 演示 `groundFrameTexPaths` 指向它们）。
+- **功能**：烈焰喷发（`MMT_BossFire_FlamePillar` 熔岩火柱 / 假人「测试·烈焰喷发」）的火焰本体。`frameTexPaths` 非空时 `Thing_MMTGroundFlame` 走序列帧模式：5 帧（0 起燃 → 1/2 喷发峰值 → 3 旋卷 → 4 余烬消散）按 `frameTicks`（7 tick/帧）循环播放，帧相位按 seed 错开（火海成片不同步）。
+- **绘制**：整帧平铺目标格地面（plane10 + Quaternion.identity，沿 `DrawDisc` 走 PerspectiveCompensate，贴地高度补偿近似恒等），颜色走 MaterialPropertyBlock 逐次传入，不改共享材质 color。**帧图必须是俯视构图**，侧视帧平铺会"躺倒"。
+
+### AI 出图提示词（终稿用，每帧一张或出 5 帧序列图后等宽切片）
+
+全局前缀：
+
+```text
+game VFX sprite, top-down view (viewed from directly above), radial flame eruption
+on transparent background, vivid orange-red fire with white-hot core, hand-painted
+fantasy game style, symmetrical radial composition centered in frame, no ground,
+no smoke plume upward, PNG with alpha channel
+```
+
+逐帧差异（negative 通用：`side view, vertical flame, smoke column, ground, text, watermark`）：
+
+1. `_0` 起燃：`small ignition burst, short flame tongues, dim embers gathering`
+2. `_1` 喷发：`expanding radial fire burst, medium flame tongues spreading outward`
+3. `_2` 峰值：`full eruption peak, large radial flame star, brightest white-hot core`
+4. `_3` 旋卷：`swirling flame tongues curling clockwise, slightly dimmer`
+5. `_4` 余烬：`dying embers, sparse fading sparks, low intensity`
+
+**验收清单**：
+
+1. 5 帧均为 256×256（或同尺寸正方形）RGBA、**透明底**、构图居中、径向对称；
+2. alpha 通道充足：峰值帧 alpha max ≥ 230，透明区 RGB 预乘为黑（防白边）；
+3. 游戏内验证：「测试·烈焰喷发」为连贯的径向爆燃循环（约 0.58s/循环），无帧间跳动错位、无集体同步闪烁（火海场景）；
+4. AI 终稿直接覆盖 `MMT_FlameErupt_<i>.png` 同名文件即可，帧数可变（改 XML 列表即可）。
+

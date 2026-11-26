@@ -63,7 +63,7 @@ python tools/validate_new.py <链名>                       # 新链单套件
 - `Progression/`（历练/职业/天赋）：`PawnProgress.cs`（XP/等级/天赋点 Comp）、`TalentXPPatches.cs`（全源 XP 钩子）、`TalentTreeDef.cs`+`TalentTreeWindow.cs`（天赋树数据+窗口）、`PawnClass.cs`（37 职业就职/升阶）、`ClassAbilityEffects.cs`（职业技能效果库）、`SummonTurret.cs`（召唤建筑 comp）。
 - `Quests/`（任务/据点）：`GuildQuest.cs`（公会狩猎委托）、`Exploration.cs`（深空扫描仪+据点）、`RpgQuestChain.cs`（远古军械库任务链）、`Dungeon.cs`（副本程序化生成）、`BossPool.cs`（Boss 池）、`MonsterFaction.cs`（魔物派系标记+解析）、`BossSummoner.cs`（Dev Boss 召唤器+操控放技能）、`DungeonBlueprint.cs`（玩家副本蓝图）。
 - `Patches/`（杂项补丁）：`FireElemental.cs`（火元素死亡爆燃）、`Storm.cs`、`LilyMeme.cs`、`FreeWillMemePatch.cs`、`IngestionOutcomeDoer_RemoveAddictions.cs`、`ResearchScrollPatch.cs`。
-- `SkillFX/`（技能特效框架，演示数据源 `1.7/Defs/Misc/MMT_SkillDemoSet.xml`，待补规划见 `docs/mmt-skillfx-backlog.md`）：`AbilityTargeting.cs`（第一步，范围瞄准+演示注入+圈内每 tick 缓存扫描）、`CastBar.cs`（第二步，读条）、`SkillShooting.cs`（单发/浮游齐射）、`SkillBeam.cs`（持续射线+引导）、`SkillStrike.cs`（天降打击）、`SkillGroundFire.cs`（地面火焰）、`SkillAura.cs`（跟随光环）、`SkillBuffFX.cs`（增益/减益图标特效）、`SkillDisplace.cs`（折跃/传送/冲锋/跳跃）、`SkillSummon.cs`（雷球/追踪弹/生物（含非 Animal 种族，支持 count 多只）/炮塔召唤）、`SkillDelayedStrike.cs`（延时陨石）、`SkillKnockback.cs`（近战击退）、`SkillChainLightning.cs`（连锁闪电）、`SkillBreath.cs`（锥形喷吐）、`SkillHeal.cs`（范围回血）、`SkillWall.cs`（石墙术）、`SkillGroundZone.cs`（持续地面区域，含冰冻定身硬控）、`SkillTrap.cs`（触发式爆炸陷阱）、`SkillNova.cs`（新星环 360° 扩散冲击波，敌伤友疗双效）、`SkillDispel.cs`（驱散/净化，仅移除带时限的状态，友方减益/敌方增益）。
+- `SkillFX/`（技能特效框架，演示数据源 `1.7/Defs/Misc/MMT_SkillDemoSet.xml`，待补规划见 `docs/mmt-skillfx-backlog.md`）：`AbilityTargeting.cs`（第一步，范围瞄准+演示注入+圈内每 tick 缓存扫描）、`CastBar.cs`（第二步，读条）、`SkillShooting.cs`（单发/浮游齐射）、`SkillBeam.cs`（持续射线+引导）、`SkillStrike.cs`（天降打击）、`SkillGroundFire.cs`（地面火焰）、`SkillAura.cs`（跟随光环）、`SkillBuffFX.cs`（增益/减益图标特效）、`SkillDisplace.cs`（折跃/传送/冲锋/跳跃）、`SkillSummon.cs`（雷球/追踪弹/生物（含非 Animal 种族，支持 count 多只）/炮塔召唤）、`SkillDelayedStrike.cs`（延时陨石）、`SkillKnockback.cs`（近战击退）、`SkillChainLightning.cs`（连锁闪电）、`SkillBreath.cs`（锥形喷吐）、`SkillHeal.cs`（范围回血）、`SkillWall.cs`（石墙术）、`SkillGroundZone.cs`（持续地面区域，含冰冻定身硬控）、`SkillTrap.cs`（触发式爆炸陷阱）、`SkillNova.cs`（新星环 360° 扩散冲击波，敌伤友疗双效）、`SkillDispel.cs`（驱散/净化，仅移除带时限的状态，友方减益/敌方增益）、`SkillEmberBurst.cs`（余烬爆发，暗红爆裂+火星四溅即时伤害+溅落短余烬，复用地面火焰 SpawnFlame 的余烬形态）。
 
 ## 代码与命名约定
 
@@ -72,6 +72,7 @@ python tools/validate_new.py <链名>                       # 新链单套件
 - 贴图工作流：先 Pillow 占位图落盘让 Def/校验通过，同批写 `docs/mmt-<主题>-texture-prompts.md` AI 提示词文档；终稿直接覆盖同名占位图（零改动），并在提示词文档标注已出图。
 - MMT↔HSK defName 映射在 `tools/data/mmt_hsk_alias.json`，新增对应物时同步更新。
 - SkillFX 视觉参数（尺寸/旋转/缩放/速度/颜色）一律从 Def XML 读取（CompProperties / MMTSkillDemoEntry 加字段透传），C# 只保留兜底默认值，禁止在 C# 里硬编码这些量；新技能落地前先在 XML 条目注释写"效果设计卡"（尺寸格数、是否旋转、缩放区间、参考物），实现逐项对照，数值锚点如陨石直径 ≈ 爆炸半径 × 1.2~1.5，如果用户没有说明应主动询问用户并提供参考。
+- 1.7/Waylith 特效渲染硬约束（烈焰喷发四版实验定论，2026-11-27）：**竖直 quad（plane10 ±90°）完全不渲染**，只有水平 quad（Quaternion.identity）可用；抬高面片须沿相机前向做 PerspectiveCompensate 且 ShadowCastingMode.Off；**侧视序列帧素材无可靠竖直呈现手段**——水平切片堆叠（采样条带+真实高度）实测仍塌扁，勿再尝试；序列帧特效贴图一律做成**俯视径向构图整帧平铺地面**（与原版火焰 Graphic_Flicker 同思路），AI 出图提示词见 docs/mmt-skillfx-texture-prompts.md 第十四节。
 - 提交信息用中文 conventional commits（如 `feat: 添加零件链研究与配方`）。
 - 整体代码审查只在用户主动要求时执行。
 

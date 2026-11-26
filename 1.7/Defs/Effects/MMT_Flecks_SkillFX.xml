@@ -52,4 +52,18 @@
     <solidTime>0.1</solidTime>
     <fadeOutTime>0.3</fadeOutTime>
   </FleckDef>
+
+  <!-- 余烬火星（第二十四步：烈焰火海改暗红爆发）：投掷基类，复用 BuffSpark 白光点贴图，
+       运行时随机径向速度 + airTimeLeft 各自寿命 + instanceColor 两档红色染色。 -->
+  <FleckDef ParentName="FleckBase_Thrown">
+    <defName>MMT_Fleck_Ember</defName>
+    <graphicData>
+      <texPath>Things/Mote/MMT_BuffSpark</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.02</fadeInTime>
+    <solidTime>0.15</solidTime>
+    <fadeOutTime>0.5</fadeOutTime>
+  </FleckDef>
 </Defs>

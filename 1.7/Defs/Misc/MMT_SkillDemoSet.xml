@@ -93,10 +93,11 @@
         <strikeIntervalTicks>12</strikeIntervalTicks>
         <strikeDamage>10</strikeDamage>
       </li>
-      <!-- 第六步：地面火焰·烈焰喷发（单体火柱）
-           效果设计卡：火柱 = 贴地火盘（2.2 格，比柱身略大）+ 7 层水平碟堆叠 1.4 高、
-           顶端收至 0.4 倍、顶端摆动 0.35（贴地面、垂直向上喷发；1.7 竖直 quad 不渲染，
-           垂直火柱只能靠水平碟堆叠投影）。火海（下条）同参数、不另写 -->
+      <!-- 第六步：地面火焰·烈焰喷发（单体火柱，俯视序列帧模式）
+           效果设计卡：5 帧径向爆燃序列（起燃→峰值→旋卷→余烬）按 groundFrameTicks 循环播放、
+           整帧平铺目标格地面（1.7 竖直 quad 不渲染、水平切片堆叠已证伪塌扁，
+           序列帧只做俯视径向构图），帧图自带颜色故 groundTint 纯白。
+           火海（下条）另走余烬桶、不另写 -->
       <li>
         <label>测试·烈焰喷发</label>
         <iconPath>Things/Mote/BlastFlame</iconPath>
@@ -108,8 +109,17 @@
         <soundDefName>FireSpew_Resolve</soundDefName>
         <groundRequireTarget>true</groundRequireTarget>
         <groundDurationSeconds>6</groundDurationSeconds>
+        <groundTint>(1,1,1)</groundTint>
+        <groundFrameTexPaths>
+          <li>Things/Mote/MMT_FlameErupt/MMT_FlameErupt_0</li>
+          <li>Things/Mote/MMT_FlameErupt/MMT_FlameErupt_1</li>
+          <li>Things/Mote/MMT_FlameErupt/MMT_FlameErupt_2</li>
+          <li>Things/Mote/MMT_FlameErupt/MMT_FlameErupt_3</li>
+          <li>Things/Mote/MMT_FlameErupt/MMT_FlameErupt_4</li>
+        </groundFrameTexPaths>
+        <groundFrameTicks>7</groundFrameTicks>
         <groundVisualScale>2.2</groundVisualScale>
-        <groundPillarHeight>1.4</groundPillarHeight>
+        <groundPillarHeight>3.2</groundPillarHeight>
         <groundPillarLayers>7</groundPillarLayers>
         <groundPillarTopScale>0.4</groundPillarTopScale>
         <groundPillarSway>0.35</groundPillarSway>
@@ -123,17 +133,19 @@
         <iconPath>Things/Mote/FireGlow</iconPath>
         <radius>5</radius>
         <targetFriendly>false</targetFriendly>
-        <demoType>groundFire</demoType>
+        <demoType>emberBurst</demoType>
         <castSeconds>3</castSeconds>
-        <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
+        <castBarColor>(0.8,0.15,0.05,0.5)</castBarColor>
         <soundDefName>Explosion_Flame</soundDefName>
-        <groundDurationSeconds>5</groundDurationSeconds>
-        <groundVisualScale>1.6</groundVisualScale>
-        <groundDamage>2</groundDamage>
-        <groundDamageIntervalTicks>15</groundDamageIntervalTicks>
-        <groundDensity>0.85</groundDensity>
-        <groundIgnitePawnChance>0.15</groundIgnitePawnChance>
-        <groundIgniteCellChance>0.03</groundIgniteCellChance>
+        <emberCount>48</emberCount>
+        <emberBurstDamage>8</emberBurstDamage>
+        <emberBurstIgnitePawnChance>0.25</emberBurstIgnitePawnChance>
+        <emberSparkSpeedMin>2</emberSparkSpeedMin>
+        <emberSparkSpeedMax>6</emberSparkSpeedMax>
+        <emberResidDurationSeconds>2.5</emberResidDurationSeconds>
+        <emberResidDamage>2</emberResidDamage>
+        <emberResidDamageIntervalTicks>15</emberResidDamageIntervalTicks>
+        <emberResidDensity>0.7</emberResidDensity>
       </li>
       <li>
         <label>测试·守护光环</label>

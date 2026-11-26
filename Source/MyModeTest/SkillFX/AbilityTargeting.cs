@@ -440,6 +440,10 @@ namespace MyModeTest
         /// <summary>火焰贴图（白图，代码染色）。</summary>
         public string groundTexPath = "Things/Mote/MMT_FlamePillar";
         public Color groundTint = new Color(1f, 0.62f, 0.2f);
+        /// <summary>序列帧贴图列表（非空时火焰柱走序列帧模式，帧图已带颜色、groundTint 传白色）。</summary>
+        public List<string> groundFrameTexPaths;
+        /// <summary>序列帧每帧停留 tick 数。</summary>
+        public int groundFrameTicks = 7;
         /// <summary>单柱贴图尺寸（格，贴地火盘直径）。</summary>
         public float groundVisualScale = 1.7f;
         /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
@@ -466,6 +470,32 @@ namespace MyModeTest
         public float groundSpreadPerCellTicks = 2f;
         /// <summary>true=必须点选目标（pawn/建筑），火柱从目标脚下喷起；敌我限定走 targetFriendly。</summary>
         public bool groundRequireTarget;
+
+        // —— 余烬爆发演示（第二十四步：爆发 + 短余烬 hybrid，半径用 radius） ——
+        /// <summary>火星粒子数量。</summary>
+        public int emberCount = 48;
+        /// <summary>火星初速范围（格/秒）。</summary>
+        public float emberSparkSpeedMin = 2f;
+        public float emberSparkSpeedMax = 6f;
+        /// <summary>火星染色两档（亮红橙 / 暗红）。</summary>
+        public Color emberSparkTint = new Color(1f, 0.25f, 0.08f);
+        public Color emberSparkTintDark = new Color(0.55f, 0.05f, 0.02f);
+        /// <summary>爆发瞬间即时伤害与穿甲。</summary>
+        public float emberBurstDamage = 8f;
+        public float emberBurstArmorPenetration;
+        /// <summary>爆发瞬间点燃 pawn 概率。</summary>
+        public float emberBurstIgnitePawnChance = 0.25f;
+        /// <summary>余烬持续秒数（0=纯爆发不留余烬）。</summary>
+        public float emberResidDurationSeconds = 2.5f;
+        /// <summary>余烬每跳伤害与跳伤间隔 tick。</summary>
+        public float emberResidDamage = 2f;
+        public int emberResidDamageIntervalTicks = 15;
+        /// <summary>余烬溅落密度（每格抽中概率）。</summary>
+        public float emberResidDensity = 0.7f;
+        /// <summary>余烬染色（默认暗红）。</summary>
+        public Color emberResidTint = new Color(0.85f, 0.15f, 0.05f);
+        /// <summary>余烬每跳引燃格子概率（原版火焰，可蔓延）。</summary>
+        public float emberResidIgniteCellChance = 0.02f;
 
         // —— 光环演示（第七步） ——
         /// <summary>true=原版范围护盾（临时护盾投影器），false=增益/减益光圈；半径用 radius。</summary>
@@ -761,6 +791,14 @@ namespace MyModeTest
                 return "技能框架演示：" + cast + (demo.groundRequireTarget
                     ? "锁定一名" + (demo.targetFriendly ? "友方" : "敌方") + "目标，从其脚下喷起持续 " + demo.groundDurationSeconds + "s 的烈焰火柱（贴图火焰，可点燃）。"
                     : "在目标点喷起持续 " + demo.groundDurationSeconds + "s 的烈焰火柱（贴图火焰，可点燃）。");
+            }
+            if (demo.demoType == "emberBurst")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标区域（半径 " + demo.radius + "）引发暗红爆裂，火星四溅造成即时伤害并点燃敌人，"
+                    + (demo.emberResidDurationSeconds > 0f
+                        ? "溅落处留下持续约 " + demo.emberResidDurationSeconds + "s 的暗红余烬继续灼烧。"
+                        : "不留余烬。");
             }
             if (demo.demoType == "aura")
             {
@@ -1130,7 +1168,7 @@ namespace MyModeTest
         {
             // 新技能起手即打断进行中的持续引导（第十四步：引导中做其它事会断线）
             MMTBeamUtil.BreakChannel(parent);
-            if (demo.demoType == "singleShot" || demo.demoType == "funnelShot" || demo.demoType == "beam" || demo.demoType == "strike" || demo.demoType == "groundFire" || demo.demoType == "aura" || demo.demoType == "bufffx"
+            if (demo.demoType == "singleShot" || demo.demoType == "funnelShot" || demo.demoType == "beam" || demo.demoType == "strike" || demo.demoType == "groundFire" || demo.demoType == "emberBurst" || demo.demoType == "aura" || demo.demoType == "bufffx"
                 || demo.demoType == "blink" || demo.demoType == "massTeleport" || demo.demoType == "charge" || demo.demoType == "jump"
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
@@ -1288,6 +1326,8 @@ namespace MyModeTest
                 {
                     texPath = demo.groundTexPath,
                     tint = demo.groundTint,
+                    frameTexPaths = demo.groundFrameTexPaths,
+                    frameTicks = demo.groundFrameTicks,
                     visualScale = demo.groundVisualScale,
                     pillarHeight = demo.groundPillarHeight,
                     pillarLayers = demo.groundPillarLayers,
@@ -1307,6 +1347,33 @@ namespace MyModeTest
                 });
                 Messages.Message("【" + demo.label + "】" + (isSea ? "烈焰火海蔓延！"
                         : victim != null ? "烈焰吞没 " + victim.LabelShortCap + "！" : "烈焰喷发！"),
+                    parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
+            if (demo.demoType == "emberBurst")
+            {
+                // 余烬爆发：暗红爆裂 + 火星四溅 + 即时伤害 + 溅落短余烬（第二十四步）
+                MMTEmberBurstUtil.FireBurst(parent, target.Cell, new MMTEmberBurstParams
+                {
+                    radius = demo.radius,
+                    emberCount = demo.emberCount,
+                    speedMin = demo.emberSparkSpeedMin,
+                    speedMax = demo.emberSparkSpeedMax,
+                    sparkTint = demo.emberSparkTint,
+                    sparkTintDark = demo.emberSparkTintDark,
+                    burstDamage = demo.emberBurstDamage,
+                    burstArmorPenetration = demo.emberBurstArmorPenetration,
+                    burstIgnitePawnChance = demo.emberBurstIgnitePawnChance,
+                    residDurationSeconds = demo.emberResidDurationSeconds,
+                    residDamage = demo.emberResidDamage,
+                    residDamageIntervalTicks = demo.emberResidDamageIntervalTicks,
+                    residDensity = demo.emberResidDensity,
+                    residTint = demo.emberResidTint,
+                    residIgniteCellChance = demo.emberResidIgniteCellChance,
+                    startSound = sound,
+                    equipment = (parent as Pawn)?.equipment?.Primary
+                });
+                Messages.Message("【" + demo.label + "】暗红爆裂，余烬四溅！",
                     parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
