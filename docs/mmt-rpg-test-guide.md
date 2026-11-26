@@ -38,7 +38,7 @@ python tools/validate_mod.py all   # 旧链回归
 
 ## 1. 历练系统（CompPawnProgress）
 
-依据：`mmt-rpg-design.md` §2.1 + `mmt-class-design.md` §9.3；代码 `Source/MyModeTest/PawnProgress.cs`、`TalentXPPatches.cs`。
+依据：`mmt-rpg-design.md` §2.1 + `mmt-class-design.md` §9.3；代码 `Source/MyModeTest/Progression/PawnProgress.cs`、`TalentXPPatches.cs`。
 
 ### 1.1 XP 来源逐项验证
 

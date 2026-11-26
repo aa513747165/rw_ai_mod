@@ -7,7 +7,7 @@
 
 MMT 现有 RPG 相邻基础已相当完整，但互不成体系：
 
-- **词条框架现成**：`ModuleEffectKeys`（`Source/MyModeTest/ModuleSystem.cs`）已有 40+ 武器/防具效果键，全部在伤害补丁中实现结算；`CompWeaponEnhancement`/`CompApparelEnhancement`（IEnchantable）通过 XPath 补丁（`1.7/Patches/MMT_Patch_WeaponEnhancement.xml`、`MMT_Patch_ApparelEnhancement.xml`）挂到**全体武器/防具**（含其它 mod），手工附魔 1–3 槽、100% 成功、材料驱动。
+- **词条框架现成**：`ModuleEffectKeys`（`Source/MyModeTest/Rpg/ModuleSystem.cs`）已有 40+ 武器/防具效果键，全部在伤害补丁中实现结算；`CompWeaponEnhancement`/`CompApparelEnhancement`（IEnchantable）通过 XPath 补丁（`1.7/Patches/MMT_Patch_WeaponEnhancement.xml`、`MMT_Patch_ApparelEnhancement.xml`）挂到**全体武器/防具**（含其它 mod），手工附魔 1–3 槽、100% 成功、材料驱动。
 - **装备生成钩子现成**：`PawnWeaponBudgetPatch.cs` 已 patch `PawnWeaponGenerator.TryGenerateWeaponFor`。
 - **据点/世界框架现成**：`Exploration.cs`（深空扫描 `MMT_DeepSpaceScanner` → Site + SitePart + `StockpileRewardExtension` 奖励堆，传送台折跃进入，30 天过期）。
 - **能力/Hediff 先例现成**：`StateBackup.cs`（Royalty AbilityDef + HediffComp + Harmony 拦截死亡）；`BionicsComps.cs`（狂暴 gizmo 等）。
@@ -88,7 +88,7 @@ MMT 现有 RPG 相邻基础已相当完整，但互不成体系：
 | 副本/据点奖励 | 自有生成代码（`SitePartWorker_MMT_Stockpile` 扩展、Boss 掉落）直接调 `LootRoll.Roll(gear, tier)` | 据点档位（§3.1） |
 | 任务奖励 | QuestScriptDef 奖励生成走同一 `Roll` | 任务节点配置 |
 
-### 1.5 C# 设计（`Source/MyModeTest/LootRoll.cs`，新增）
+### 1.5 C# 设计（`Source/MyModeTest/Rpg/LootRoll.cs`，新增）
 
 - 静态类 `LootRoll`：`RollForPoints(ThingWithComps gear, float points)`（袭击者入口）与 `Roll(ThingWithComps gear, int tier)`（据点/任务入口）；内部按 §1.2 表掷强化等级写入 comp，按 §1.3 表掷附魔逐条 `AddEnchant`。
 - 池表：静态只读分组（低/中/高/极品 × 武器/防具），近战/远程限定与危险特效清单内嵌；抽取前按 `gear.def.IsRangedWeapon` 过滤限定词条。
@@ -243,7 +243,7 @@ Perk = HediffDef（单 stage + statOffsets/statFactors），选择 UI：有可�
 
 </details>
 
-### 3.3 任务链「远古军械库」（已实现，`Source/MyModeTest/RpgQuestChain.cs`）
+### 3.3 任务链「远古军械库」（已实现，`Source/MyModeTest/Quests/RpgQuestChain.cs`）
 
 QuestScriptDef `MMT_Quest_AncientArmory`（`1.7/Defs/QuestScriptDefs/MMT_Quests_RpgChain.xml`，autoAccept、rootSelectionWeight=0 不走随机任务池）+ 自定义根节点挂 `QuestPart_MMTAncientArmory` 阶段机（1.7 QuestPart 无 tick 虚方法，由 `GameComponent_RpgQuestChain` 250 tick 节流驱动），三幕：
 

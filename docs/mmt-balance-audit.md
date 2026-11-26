@@ -11,11 +11,11 @@
 ## 1. 硬伤
 
 ### 1.1 "精英爆破手"设置无任何实现（死设置）——【已解决】
-- 证据（当时）：`Source/MyModeTest/MMTSettings.cs` 声明 `eliteBreacherEnabled`（含存档 Scribe 与默认值），设置 UI 有勾选框，但全 `Source/` 无任何代码读取该字段。
-- 解决：已按 `docs/mmt-endgame-design.md` §10.5 候选实装——`Source/MyModeTest/EliteBreacher.cs`（袭击生成注入 + 点数预扣 + 财富名额曲线）+ `MMT_EliteBreacher` PawnKindDef + `BreachCharge.cs` 精英分支（100% 主动、直奔墙体、炸弹消耗语义）。设置项现在有真实效果。
+- 证据（当时）：`Source/MyModeTest/Core/MMTSettings.cs` 声明 `eliteBreacherEnabled`（含存档 Scribe 与默认值），设置 UI 有勾选框，但全 `Source/` 无任何代码读取该字段。
+- 解决：已按 `docs/mmt-endgame-design.md` §10.5 候选实装——`Source/MyModeTest/Raid/EliteBreacher.cs`（袭击生成注入 + 点数预扣 + 财富名额曲线）+ `MMT_EliteBreacher` PawnKindDef + `BreachCharge.cs` 精英分支（100% 主动、直奔墙体、炸弹消耗语义）。设置项现在有真实效果。
 
 ### 1.2 敌人武器预算动态缩放被整体禁用（死功能）
-- 证据：`Source/MyModeTest/PawnWeaponBudgetPatch.cs:19` `private const bool Enabled = false;`，注释自述"禁用原因：待补充 tick 级缓存以兼容解除袭击上限的 mod"。补丁已注册但 Prefix 第一行直接放行。
+- 证据：`Source/MyModeTest/Raid/PawnWeaponBudgetPatch.cs:19` `private const bool Enabled = false;`，注释自述"禁用原因：待补充 tick 级缓存以兼容解除袭击上限的 mod"。补丁已注册但 Prefix 第一行直接放行。
 - 影响：设计意图是"威胁点越高敌人武器越贵（×1.0~2.0 平方根曲线）"，禁用后敌人武器档次完全静止在原版 `weaponMoney` 地板。叠加 MMT 把全体枪价抬到 HSK 价位（如原版 AR 355→1450），**中后期敌人相对强度比 MMT 设计预期更低**——同威胁点下敌人只能买得起低价池的枪。
 - 建议：修掉注释所述的缓存兼容问题后启用；或删除该补丁并把"敌人武器档次跟随威胁点"的意图转交其它机制（如按威胁点加权 weaponTags 池）。保留尸体代码 + 禁用常量是最差选项。
 

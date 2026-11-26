@@ -23,7 +23,7 @@ MMT 现有生产链已铺全（108 项研究、电力阶梯 原煤2500W → 聚�
 ModSettings 全局调参(产率/研究成本/传送次数/强化成功率/爆墙/风暴)
 ```
 
-**现状核实**：AI 爆墙炸弹已实现（`Source/MyModeTest/BreachCharge.cs`，财富门槛 10 万、封顶 100 万、携带概率 5%→50%、进攻概率 2%→20%，均为常量），本设计仅做设置化接入。传送台 `CompTeleportPad` 已支持任意 `MapParent` 折跃目标，新探索据点做成 `Site` + `SitePart` 即可零改动接入传送链路。
+**现状核实**：AI 爆墙炸弹已实现（`Source/MyModeTest/Raid/BreachCharge.cs`，财富门槛 10 万、封顶 100 万、携带概率 5%→50%、进攻概率 2%→20%，均为常量），本设计仅做设置化接入。传送台 `CompTeleportPad` 已支持任意 `MapParent` 折跃目标，新探索据点做成 `Site` + `SitePart` 即可零改动接入传送链路。
 
 ---
 
@@ -31,8 +31,8 @@ ModSettings 全局调参(产率/研究成本/传送次数/强化成功率/爆墙
 
 MMT 目前无任何 ModSettings。新增：
 
-- `Source/MyModeTest/MMTSettings.cs`：`MMTSettings : ModSettings`（字段 + `ExposeData`，新字段带默认值，旧存档安全）。
-- `Source/MyModeTest/MyModeTestMod.cs` 改造：`GetSettings<MMTSettings>()`、`DoSettingsWindowContents(Rect)`（单页滚动）、`SettingsCategory() => "MMT 资源生产"`。
+- `Source/MyModeTest/Core/MMTSettings.cs`：`MMTSettings : ModSettings`（字段 + `ExposeData`，新字段带默认值，旧存档安全）。
+- `Source/MyModeTest/Core/MyModeTestMod.cs` 改造：`GetSettings<MMTSettings>()`、`DoSettingsWindowContents(Rect)`（单页滚动）、`SettingsCategory() => "MMT 资源生产"`。
 
 | 设置项 | 字段 | 默认 | 范围 | 消费端 |
 |---|---|---|---|---|
@@ -74,7 +74,7 @@ MMT 目前无任何 ModSettings。新增：
 `MMT_WeaponEnhanceBench` 武器强化台（2×2）：强化玻璃×80、机器人部件×20、碳合金×40、微芯片×4；WorkToBuild 6000；1500W。
 文件：`1.7/Defs/ThingDefs_Buildings/MMT_Buildings_WeaponEnhance.xml`。
 
-### C#（`Source/MyModeTest/WeaponEnhance.cs`）
+### C#（`Source/MyModeTest/Rpg/WeaponEnhance.cs`）
 
 - `CompProperties_WeaponEnhancement` / `CompWeaponEnhancement`：等级 + 附魔词条，label 追加 "+N"。经 XPath PatchOperation 批量挂到全部 `ThingDef[weaponTags]`（已有 comps 的用 `PatchOperationSequence`）。
 - `CompProperties_WeaponEnhanceBench` / `CompWeaponEnhanceBench`：IThingHolder 容器持 1 件武器，右键"装载武器/取出/强化/附魔"。结构照搬 `ChargingStation.cs` 的 `CompChargingStation`（注意：1.7 ThingComp 不再自带 IThingHolder，需显式实现）。
@@ -142,7 +142,7 @@ MMT 目前无任何 ModSettings。新增：
 comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFactor` 上限 5，缩短扫描冷却）+ 自定义扫描 comp。
 文件：`1.7/Defs/ThingDefs_Buildings/MMT_Buildings_Exploration.xml`。
 
-### C#（`Source/MyModeTest/Exploration.cs`）
+### C#（`Source/MyModeTest/Quests/Exploration.cs`）
 
 - `CompDeepSpaceScanner`：gizmo"启动深空扫描"（蓄电满 `TryDrain` + 消耗声纳模块×1）→ 扫描中（默认 1 天，SpeedFactor 加速，周期逻辑用 `CompTickInterval(delta)`——1.7 Normal 建筑收不到 `CompTickRare`）→ 完成时随机选非水非占领格（半径 30 内）`SiteMaker.MakeSite` 生成据点 → 发信（PositiveEvent，SitePart `expirationDays` 30 天过期）。
 - `SitePartWorker_MMT_Stockpile : SitePartWorker`：`PostMapGenerate` 在图上生成护栏围起的奖励堆（独占资源×N + 随机太空零件）。一个类三个参数化 def 复用。
@@ -194,7 +194,7 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 | MMT_WonderCore | 奇点核心 | 反物质×10、α聚合物×100、机器人部件×60、远古合金×80、太空零件×20 | 30000 |
 | MMT_Singularity | 纪元奇点（终态） | 氧化化合燃料×400、远古碎晶×30、绘画用品×50、铀×100 | 20000 |
 
-### C#（`Source/MyModeTest/Wonder.cs`）
+### C#（`Source/MyModeTest/Production/Wonder.cs`）
 
 - `CompWonderStage`（前 3 阶段通用）：gizmo"开始下一阶段建设" → despawn 自身 + `GenConstruct.PlaceBlueprintForBuild` 放下一阶段蓝图（造价逐阶段另付）。
 - `CompWonderActivation`（终态）：激活条件 = 反物质燃料满（`CompProperties_Refuelable`，容量 5，激活后不再消耗；**反物质自带 CompExplosive，搬运/存储爆炸风险是特性，描述中警告玩家**）+ 蓄电 50000 Wd（`CompBuildingBattery`，chargeRate 5000/天）→ gizmo"启动奇点" → 点火进度动画（特效结构仿能量聚能点火；光柱用**水平碟片堆叠**，1.7 竖直 quad 不渲染）→ 三选一弹窗（`Dialog_MessageBox` 三按钮）→ 生成对应永久 GameCondition 落到**本地图**（`durationTicks=-1`，GameConditionManager 自动持久化；跨图不共享——每张图各建各的奇观）。
@@ -217,7 +217,7 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 
 ### 能量风暴
 
-- C#：`Source/MyModeTest/Storm.cs`；Def：`1.7/Defs/GameConditionDefs/MMT_GameConditions.xml`。
+- C#：`Source/MyModeTest/Patches/Storm.cs`；Def：`1.7/Defs/GameConditionDefs/MMT_GameConditions.xml`。
 - `MMT_EnergyStorm` GameCondition（持续 1–2 天）：
   1. 太阳/风能输出 ×0（条件在图时 postfix 对应 CompPowerPlant）；
   2. 每 2500 tick 随机点名 1–3 个未防护电子设备触发 `CompBreakdownable` 故障 + 蓄电建筑 `TryDrain` 部分电量（短路火花）；
@@ -231,7 +231,7 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 
 ### 精英爆破手（财富 50 万+ 专职爆破单位，已实装）
 
-- C#：`Source/MyModeTest/EliteBreacher.cs`；Def：`1.7/Defs/PawnKindDefs/MMT_PawnKinds_EliteBreacher.xml`；校验套件：`tools/validate/elitebreacher.py`。
+- C#：`Source/MyModeTest/Raid/EliteBreacher.cs`；Def：`1.7/Defs/PawnKindDefs/MMT_PawnKinds_EliteBreacher.xml`；校验套件：`tools/validate/elitebreacher.py`。
 - 注入：`PawnGroupMakerUtility.GeneratePawns(PawnGroupMakerParms, bool)` 补丁（1.7 袭击小兵生成总出口，`raidStrategy` 非空即袭击；商队/定居点/副本守卫不受影响）——前缀按财富算名额并从袭击点数预扣（每名预扣 = `MMT_EliteBreacher.combatPower` 180，预扣后至少保留 200 点），后缀生成精英追加进袭击名单并发警告消息。名额：财富 50 万起 1 名，每 +50 万 +1，封顶 3。
 - 单位：`MMT_EliteBreacher`（isGoodBreacher + 高预算军用装备/护盾腰带/战斗药剂，combatPower 180），不登记任何派系 PawnGroupMaker，仅由补丁注入。
 - 行为（`BreachCharge.cs` 精英分支）：100% 主动出击、直奔墙体（满格且不可通行的玩家建筑），无墙可炸时退化为最近玩家建筑；标配 5 枚爆墙炸弹。
@@ -280,11 +280,11 @@ comps：`CompBuildingBattery`（30000 Wd / 3000 每天）+ 模块槽（`SpeedFac
 
 | 复用对象 | 用途 |
 |---|---|
-| `Source/MyModeTest/ChargingStation.cs` | 强化台容器/右键装卸/JobDriver 的复制模板 |
-| `Source/MyModeTest/BuildingBattery.cs` | 扫描仪/奇观蓄电一行 comps（同建筑不得重复挂载） |
-| `Source/MyModeTest/ModuleSystem.cs` | 武器词条 = 新效果键常量 + 消费端 `GetEffectSum(key)` |
-| `Source/MyModeTest/TeleportPad.cs` | 探索折跃链路（零改动，Site 即 MapParent） |
-| `Source/MyModeTest/BreachCharge.cs` | 仅常量改读设置 |
+| `Source/MyModeTest/Production/ChargingStation.cs` | 强化台容器/右键装卸/JobDriver 的复制模板 |
+| `Source/MyModeTest/Production/BuildingBattery.cs` | 扫描仪/奇观蓄电一行 comps（同建筑不得重复挂载） |
+| `Source/MyModeTest/Rpg/ModuleSystem.cs` | 武器词条 = 新效果键常量 + 消费端 `GetEffectSum(key)` |
+| `Source/MyModeTest/Rpg/TeleportPad.cs` | 探索折跃链路（零改动，Site 即 MapParent） |
+| `Source/MyModeTest/Raid/BreachCharge.cs` | 仅常量改读设置 |
 | `tools/temp/ildump` | 阶段 B 签名核实 |
 | `tools/validate_mod.py` helper | 新套件 `from validate_mod import fail, require_files, parse_xml, ...` |
 

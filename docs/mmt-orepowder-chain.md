@@ -1,6 +1,6 @@
 # MMT 无中生有链（研磨 + 筛选）链路图
 
-- 数据源：`1.7/Defs`（`MMT_Recipes_OrePowder.xml`、`MMT_Recipes_SieveMeshes.xml`、`MMT_Buildings_Grinder.xml`、`MMT_Buildings_Sieve.xml`、`MMT_Buildings_AutoProcessor.xml`、`MMT_Items_SieveMeshes.xml`）与 `Source/MyModeTest/OreSiftPool.cs`、`AutoProcessor.cs`、`SieveMesh.cs`。
+- 数据源：`1.7/Defs`（`MMT_Recipes_OrePowder.xml`、`MMT_Recipes_SieveMeshes.xml`、`MMT_Buildings_Grinder.xml`、`MMT_Buildings_Sieve.xml`、`MMT_Buildings_AutoProcessor.xml`、`MMT_Items_SieveMeshes.xml`）与 `Source/MyModeTest/Production/OreSiftPool.cs`、`AutoProcessor.cs`、`SieveMesh.cs`。
 - 链路格式：`输入(数量) -> 产出(数量) @ 建筑 ｜ 处理时间 ｜ 备注`。
 
 ## 1. 总览

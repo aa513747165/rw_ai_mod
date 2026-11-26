@@ -2,7 +2,7 @@
 
 面向游戏内实测，覆盖框架第一~二十三步全部功能。37 个演示技能集中在**演示技能集**（`MMT_SkillDemoSet`），经 Dev Debug 一键赋予任意小人后实测；**沙袋人偶（友方/敌方）只作敌我靶子，不再携带技能**。演示 gizmo **仅在开发者模式（Dev Mode）下显示**。
 
-- 代码：`Source/MyModeTest/AbilityTargeting.cs`、`CastBar.cs`、`SkillShooting.cs`、`SkillBeam.cs`（含引导占用）、`SkillStrike.cs`、`SkillGroundFire.cs`、`SkillAura.cs`、`SkillBuffFX.cs`、`SkillDisplace.cs`、`SkillSummon.cs`、`SkillDelayedStrike.cs`、`SkillKnockback.cs`、`SkillChainLightning.cs`、`SkillBreath.cs`、`SkillHeal.cs`、`SkillWall.cs`、`SkillGroundZone.cs`、`SkillTrap.cs`
+- 代码：`Source/MyModeTest/SkillFX/AbilityTargeting.cs`、`CastBar.cs`、`SkillShooting.cs`、`SkillBeam.cs`（含引导占用）、`SkillStrike.cs`、`SkillGroundFire.cs`、`SkillAura.cs`、`SkillBuffFX.cs`、`SkillDisplace.cs`、`SkillSummon.cs`、`SkillDelayedStrike.cs`、`SkillKnockback.cs`、`SkillChainLightning.cs`、`SkillBreath.cs`、`SkillHeal.cs`、`SkillWall.cs`、`SkillGroundZone.cs`、`SkillTrap.cs`
 - Def：`1.7/Defs/Misc/MMT_SkillDemoSet.xml`（37 条演示唯一数据源）、`1.7/Defs/ThingDefs_Buildings/MMT_Buildings_TrainingDummy.xml`（敌我靶子）、`MMT_SummonEntities.xml`、`MMT_Buildings_SummonTurret.xml`、`MMT_Hediffs_Summon.xml`、`MMT_DelayedStrike.xml`、`MMT_ChainArc.xml`、`MMT_BreathCone.xml`、`MMT_MagicStoneWall.xml`、`MMT_Projectiles_SkillDemo.xml`（大火球）、`MMT_Jobs.xml`（引导作业）、`MMT_GroundZone.xml`（持续地面区域）、`MMT_SkillMine.xml`（爆炸陷阱）、`MMT_NovaRing.xml`（新星环）等
 
 ---

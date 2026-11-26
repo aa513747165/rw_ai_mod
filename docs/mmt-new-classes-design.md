@@ -73,7 +73,7 @@
 
 ## 5. SkillFX 框架速查（18 种 demoType）
 
-参数字段名全部对齐 `Source/MyModeTest/AbilityTargeting.cs` 的 `MMTSkillDemoEntry`（行内注释即文档）。通用字段：`label / iconPath / radius（预览圈半径）/ targetFriendly / includeSelf / range（射程，默认 24.9）/ showRangeRing / castSeconds / soundDefName / castBarColor / ignoreLineOfSight`。
+参数字段名全部对齐 `Source/MyModeTest/SkillFX/AbilityTargeting.cs` 的 `MMTSkillDemoEntry`（行内注释即文档）。通用字段：`label / iconPath / radius（预览圈半径）/ targetFriendly / includeSelf / range（射程，默认 24.9）/ showRangeRing / castSeconds / soundDefName / castBarColor / ignoreLineOfSight`。
 
 | demoType | 用途 | 关键参数 |
 |---|---|---|

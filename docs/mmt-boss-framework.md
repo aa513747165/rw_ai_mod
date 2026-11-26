@@ -19,7 +19,7 @@
 
 ## 2. 单位归派系：XML 标记路由
 
-- `Source/MyModeTest/MonsterFaction.cs`：
+- `Source/MyModeTest/Quests/MonsterFaction.cs`：
   - `DefModExtension_MMTMonsterFaction`：空标记类，PawnKindDef 挂
     `<modExtensions><li Class="MyModeTest.DefModExtension_MMTMonsterFaction" /></modExtensions>`
     即声明"我是魔物"。其它 mod 可 XPath 复用。

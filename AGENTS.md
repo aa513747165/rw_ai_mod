@@ -23,7 +23,7 @@
 - `1.7/Textures/`、`1.7/Sounds/`：已授权贴图与音效。
 - `1.7/Languages/ChineseSimplified/Keyed/`：少量 Keyed 翻译；label/description 大多中文写死在 Def 里。
 - `1.7/Assemblies/`：C# 输出目录（dll/pdb 已 gitignore）。
-- `Source/MyModeTest/`：C# 工程；`tools/`：构建与文档脚本；`docs/`：链路文档（多为**生成物**，改 Def 后需重跑脚本）；`docs/temp/`：临时产物，勿在正式文档引用。
+- `Source/MyModeTest/`：C# 工程，源文件按功能分文件夹（`Core/`、`Production/`、`Rpg/`、`Raid/`、`Progression/`、`Quests/`、`SkillFX/`、`Patches/`，命名空间统一为 `MyModeTest`）；`tools/`：构建与文档脚本；`docs/`：链路文档（多为**生成物**，改 Def 后需重跑脚本）；`docs/temp/`：临时产物，勿在正式文档引用。
 - `.superpowers/`：历史任务工作区；`data/`、`后继更新一.txt`：待办记录。
 
 ## 构建与测试命令
@@ -54,13 +54,16 @@ python tools/validate_new.py <链名>                       # 新链单套件
 
 单工程 `Source/MyModeTest/MyModeTest.csproj`（net10.0，Nullable/ImplicitUsings disable），输出直落 `1.7/Assemblies/`。经 `RimWorldPath` 引用游戏 `Assembly-CSharp.dll`、`UnityStubs.dll`、`Waylith.dll`（均不复制）。Harmony 用 NuGet `Lib.Harmony 2.3.6`（仅编译期）。**C# 注释与日志用中文。**
 
-源文件一览（详细设计见对应 docs/ 文档）：
+源文件一览（按功能分文件夹，命名空间统一 `MyModeTest`；详细设计见对应 docs/ 文档）：
 
-- 基础：`MyModeTestMod.cs`（入口+PatchAll）、`OreSiftPool.cs`（筛矿随机池）、`AutoProcessor.cs`（自动处理机）、`ChunkDrill.cs`（手动采石机）、`BionicsComps.cs`（仿生 CONN 效果）、`Rechargeable.cs`+`ChargingStation.cs`（可充能 Comp+充能台）、`ShieldPack.cs`（充能护盾腰带）、`AutoFarm.cs`（5x5 自动种植机）、`FireElemental.cs`（火元素死亡爆燃）。
-- RPG/袭击：`LootRoll.cs`（装备强化/附魔掷点）、`MechStandby.cs`（机械体哨戒待机）、`BreachCharge.cs`（袭击者爆墙炸弹）、`EliteBreacher.cs`（精英爆破手）、`TradeOrder.cs`（商队订单）、`Reforge.cs`（装备品质重铸）。
-- 历练/职业/天赋：`PawnProgress.cs`（XP/等级/天赋点 Comp）、`TalentXPPatches.cs`（全源 XP 钩子）、`TalentTreeDef.cs`+`TalentTreeWindow.cs`（天赋树数据+窗口）、`PawnClass.cs`（37 职业就职/升阶）、`ClassAbilityEffects.cs`（职业技能效果库）、`SummonTurret.cs`（召唤建筑 comp）。
-- 任务/据点：`GuildQuest.cs`（公会狩猎委托）、`Exploration.cs`（深空扫描仪+据点）、`RpgQuestChain.cs`（远古军械库任务链）、`Dungeon.cs`（副本程序化生成）、`BossPool.cs`（Boss 池）、`MonsterFaction.cs`（魔物派系标记+解析）、`BossSummoner.cs`（Dev Boss 召唤器+操控放技能）、`DungeonBlueprint.cs`（玩家副本蓝图）。
-- 技能特效框架（SkillFX 系列，演示数据源 `1.7/Defs/Misc/MMT_SkillDemoSet.xml`，待补规划见 `docs/mmt-skillfx-backlog.md`）：`AbilityTargeting.cs`（第一步，范围瞄准+演示注入+圈内每 tick 缓存扫描）、`CastBar.cs`（第二步，读条）、`SkillShooting.cs`（单发/浮游齐射）、`SkillBeam.cs`（持续射线+引导）、`SkillStrike.cs`（天降打击）、`SkillGroundFire.cs`（地面火焰）、`SkillAura.cs`（跟随光环）、`SkillBuffFX.cs`（增益/减益图标特效）、`SkillDisplace.cs`（折跃/传送/冲锋/跳跃）、`SkillSummon.cs`（雷球/追踪弹/生物（含非 Animal 种族，支持 count 多只）/炮塔召唤）、`SkillDelayedStrike.cs`（延时陨石）、`SkillKnockback.cs`（近战击退）、`SkillChainLightning.cs`（连锁闪电）、`SkillBreath.cs`（锥形喷吐）、`SkillHeal.cs`（范围回血）、`SkillWall.cs`（石墙术）、`SkillGroundZone.cs`（持续地面区域，含冰冻定身硬控）、`SkillTrap.cs`（触发式爆炸陷阱）、`SkillNova.cs`（新星环 360° 扩散冲击波，敌伤友疗双效）、`SkillDispel.cs`（驱散/净化，仅移除带时限的状态，友方减益/敌方增益）。
+- `Core/`（基础）：`MyModeTestMod.cs`（入口+PatchAll）、`MMTSettings.cs`+`SettingsPatches.cs`（Mod 设置）、`StateBackup.cs`、`EquipmentInterfaces.cs`、`EnhanceCommon.cs`。
+- `Production/`（生产建筑/Comp）：`AutoProcessor.cs`（自动处理机）、`AutoFarm.cs`（5x5 自动种植机）、`OreSiftPool.cs`（筛矿随机池）、`ChunkDrill.cs`（手动采石机）、`BionicsComps.cs`（仿生 CONN 效果）、`Rechargeable.cs`+`ChargingStation.cs`（可充能 Comp+充能台）、`BuildingBattery.cs`、`GreenhouseRoof.cs`、`LivestockMachine.cs`、`OrganVat.cs`、`Medical.cs`、`MedicalTurret.cs`、`SieveMesh.cs`、`SlotInstall.cs`、`Wonder.cs`、`EnergyConvergence.cs`。
+- `Rpg/`（装备强化/护盾/传送）：`LootRoll.cs`（装备强化/附魔掷点）、`Reforge.cs`（装备品质重铸）、`WeaponEnhance.cs`、`ApparelEnhance.cs`、`ShieldEnhance.cs`、`ShieldPack.cs`（充能护盾腰带）、`ShieldBeltPsychic.cs`、`ShieldTalisman.cs`、`ShieldDeployer.cs`、`ModuleSystem.cs`、`TeleportPad.cs`/`TeleportShuttle.cs`/`TeleportCaravanReturn.cs`/`TeleportTempSite.cs`。
+- `Raid/`（袭击/机械体）：`MechStandby.cs`（机械体哨戒待机）、`MechControlHub.cs`、`BreachCharge.cs`（袭击者爆墙炸弹）、`EliteBreacher.cs`（精英爆破手）、`EnemyDetectorSwitch.cs`、`TradeOrder.cs`（商队订单）、`TrainingDummy.cs`、`PawnWeaponBudgetPatch.cs`。
+- `Progression/`（历练/职业/天赋）：`PawnProgress.cs`（XP/等级/天赋点 Comp）、`TalentXPPatches.cs`（全源 XP 钩子）、`TalentTreeDef.cs`+`TalentTreeWindow.cs`（天赋树数据+窗口）、`PawnClass.cs`（37 职业就职/升阶）、`ClassAbilityEffects.cs`（职业技能效果库）、`SummonTurret.cs`（召唤建筑 comp）。
+- `Quests/`（任务/据点）：`GuildQuest.cs`（公会狩猎委托）、`Exploration.cs`（深空扫描仪+据点）、`RpgQuestChain.cs`（远古军械库任务链）、`Dungeon.cs`（副本程序化生成）、`BossPool.cs`（Boss 池）、`MonsterFaction.cs`（魔物派系标记+解析）、`BossSummoner.cs`（Dev Boss 召唤器+操控放技能）、`DungeonBlueprint.cs`（玩家副本蓝图）。
+- `Patches/`（杂项补丁）：`FireElemental.cs`（火元素死亡爆燃）、`Storm.cs`、`LilyMeme.cs`、`FreeWillMemePatch.cs`、`IngestionOutcomeDoer_RemoveAddictions.cs`、`ResearchScrollPatch.cs`。
+- `SkillFX/`（技能特效框架，演示数据源 `1.7/Defs/Misc/MMT_SkillDemoSet.xml`，待补规划见 `docs/mmt-skillfx-backlog.md`）：`AbilityTargeting.cs`（第一步，范围瞄准+演示注入+圈内每 tick 缓存扫描）、`CastBar.cs`（第二步，读条）、`SkillShooting.cs`（单发/浮游齐射）、`SkillBeam.cs`（持续射线+引导）、`SkillStrike.cs`（天降打击）、`SkillGroundFire.cs`（地面火焰）、`SkillAura.cs`（跟随光环）、`SkillBuffFX.cs`（增益/减益图标特效）、`SkillDisplace.cs`（折跃/传送/冲锋/跳跃）、`SkillSummon.cs`（雷球/追踪弹/生物（含非 Animal 种族，支持 count 多只）/炮塔召唤）、`SkillDelayedStrike.cs`（延时陨石）、`SkillKnockback.cs`（近战击退）、`SkillChainLightning.cs`（连锁闪电）、`SkillBreath.cs`（锥形喷吐）、`SkillHeal.cs`（范围回血）、`SkillWall.cs`（石墙术）、`SkillGroundZone.cs`（持续地面区域，含冰冻定身硬控）、`SkillTrap.cs`（触发式爆炸陷阱）、`SkillNova.cs`（新星环 360° 扩散冲击波，敌伤友疗双效）、`SkillDispel.cs`（驱散/净化，仅移除带时限的状态，友方减益/敌方增益）。
 
 ## 代码与命名约定
 
