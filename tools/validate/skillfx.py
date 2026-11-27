@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）+ 侧视平躺/坡道序列帧（第二十六/二十七步）Def/贴图/假人演示条目/C# 核心。"""
+"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）+ 侧视平躺/坡道序列帧（第二十六/二十七步）+ 近战旋风斩（第二十八步）Def/贴图/假人演示条目/C# 核心。"""
 from pathlib import Path
 
 from validate_mod import assert_equal, child_text, def_map, fail, parse_xml, require_files
@@ -78,6 +78,11 @@ SIDEFLAT_CS = "Source/MyModeTest/SkillFX/SkillSideFlat.cs"
 # —— 第 27 步：多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，龙卷风式） ——
 RAMP_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillSideRamp.xml"
 RAMP_CS = "Source/MyModeTest/SkillFX/SkillSideRamp.cs"
+# —— 第 28 步：近战旋风斩（俯视旋涡序列帧平铺地面+自转，峰值帧一次结算） ——
+WHIRL_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillWhirlwind.xml"
+WHIRL_CS = "Source/MyModeTest/SkillFX/SkillWhirlwind.cs"
+WHIRL_TEX = "1.7/Textures/Things/Mote/MMT_SkillWhirlwind.png"
+WHIRL_ICON_TEX = "1.7/Textures/Things/Mote/MMT_SkillWhirlwind_Icon.png"
 
 
 def validate_skillfx() -> None:
@@ -229,7 +234,7 @@ def validate_skillfx() -> None:
         if token not in dummy:
             fail(f"假人靶子配置缺少: {token}")
 
-    # —— 演示技能集（40 条，Dev 一键赋予小人的唯一数据源） ——
+    # —— 演示技能集（41 条，Dev 一键赋予小人的唯一数据源） ——
     demoset = Path(DEMOSET_XML).read_text(encoding="utf-8")
     for token in ("MMTSkillDemoSetDef", "MMT_SkillDemoSet",
                   "测试·友方回响", "测试·敌方回响", "测试·单发火球术", "测试·多方位火球术",
@@ -272,7 +277,13 @@ def validate_skillfx() -> None:
                   "测试·地心火柱·坡道", "sideRamp", "sideRampTexPath", "sideRampSlices",
                   "sideRampSway", "sideRampSwayPeriodTicks", "sideRampTopScale",
                   "sideRampTopAlpha", "sideRampPulseAmp", "sideRampWidthCells",
-                  "sideRampHeightCells", "sideRampDriftCells"):
+                  "sideRampHeightCells", "sideRampDriftCells",
+                  "测试·苍蓝旋斩", "whirlwind", "whirlTexPath", "whirlFrameCount",
+                  "whirlFrameTicks", "whirlDurationSeconds", "whirlWidthCells",
+                  "whirlHeightCells", "whirlSpinDegrees", "whirlDamageRadius",
+                  "whirlDamage", "whirlDamageDefName", "whirlArmorPenetration",
+                  "whirlHitFraction", "whirlFadeInSeconds", "whirlFadeOutSeconds",
+                  "MMT_SkillWhirlwind", "Pawn_Melee_MechanoidSlash_Miss"):
         if token not in demoset:
             fail(f"演示技能集缺少: {token}")
 
@@ -329,6 +340,26 @@ def validate_skillfx() -> None:
                   "MMT_SkillSideRamp", "MaterialPropertyBlock", "SharedBandMat"):
         if token not in ramp_cs:
             fail(f"SkillSideRamp.cs 缺少: {token}")
+
+    # —— 近战旋风斩（第二十八步） ——
+    whirl_defs = def_map(parse_xml(WHIRL_XML))
+    whirl = whirl_defs.get("MMT_SkillWhirlwind")
+    if whirl is None:
+        fail("缺少 MMT_SkillWhirlwind 定义")
+        return
+    assert_equal(child_text(whirl, "thingClass"), "MyModeTest.Thing_MMTSkillWhirlwind", "旋风斩特效 thingClass")
+    assert_equal(child_text(whirl, "category"), "Attachment", "旋风斩特效 category")
+    assert_equal(child_text(whirl, "drawerType"), "RealtimeOnly", "旋风斩特效 drawerType")
+
+    whirl_cs = Path(WHIRL_CS).read_text(encoding="utf-8")
+    for token in ("MMTSkillWhirlwindParams", "Thing_MMTSkillWhirlwind", "MMTSkillWhirlwindUtil",
+                  "mainTextureScale", "mainTextureOffset", "AngleAxis",
+                  "PerspectiveCompensate", "ShadowCastingMode.Off", "MoteOverhead",
+                  "hitFraction", "damageRadius", "HitAround", "TakeDamage",
+                  "MMT_SkillWhirlwind", "MaterialPropertyBlock"):
+        if token not in whirl_cs:
+            fail(f"SkillWhirlwind.cs 缺少: {token}")
+    require_files([WHIRL_TEX, WHIRL_ICON_TEX])
 
     cs = Path(CS).read_text(encoding="utf-8")
     for token in ("MMTGroundFireUtil", "Thing_MMTGroundFlame", "CompAbilityEffect_MMTGroundFire",

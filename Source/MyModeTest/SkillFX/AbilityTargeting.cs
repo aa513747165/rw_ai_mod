@@ -379,7 +379,7 @@ namespace MyModeTest
         public bool showRangeRing = true;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）；"sideRamp"=多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式，纯视觉演示）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）；"sideRamp"=多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式，纯视觉演示）；"whirlwind"=近战旋风斩（自身中心免瞄准，俯视旋涡序列帧整帧平铺地面+绕竖直轴自转，峰值帧对周围敌人结算一次伤害）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -772,6 +772,33 @@ namespace MyModeTest
         /// <summary>首/尾淡入淡出秒数。</summary>
         public float sideRampFadeInSeconds = 0.15f;
         public float sideRampFadeOutSeconds = 0.4f;
+
+        // —— 近战旋风斩演示（第二十八步：俯视旋涡序列帧平铺地面，自身中心免瞄准） ——
+        /// <summary>序列帧图集贴图（横向等宽排布，俯视旋涡构图，DNF 蓝旋风 7 帧）。</summary>
+        public string whirlTexPath = "Things/Mote/MMT_SkillWhirlwind";
+        public int whirlFrameCount = 7;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int whirlFrameTicks = 9;
+        /// <summary>特效总时长秒数（缺省与 帧数×每帧tick 一致，播一轮收尾）。</summary>
+        public float whirlDurationSeconds = 1.05f;
+        /// <summary>绘制宽/高（格；按单帧宽高比 252:191，宽 3.2 → 高 ≈2.43）。</summary>
+        public float whirlWidthCells = 3.2f;
+        public float whirlHeightCells = 2.43f;
+        /// <summary>生命周期内绕竖直轴总自转角度（度，0=不转；俯视旋涡构图旋转不穿帮）。</summary>
+        public float whirlSpinDegrees = 120f;
+        /// <summary>伤害半径（格，以施法者为中心）。</summary>
+        public float whirlDamageRadius = 1.5f;
+        /// <summary>单次挥斩伤害（默认 Cut，峰值帧一次性结算）。</summary>
+        public float whirlDamage = 18f;
+        public string whirlDamageDefName;
+        public float whirlArmorPenetration;
+        /// <summary>伤害结算时机（时长进度 0~1，峰值帧附近）。</summary>
+        public float whirlHitFraction = 0.45f;
+        /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
+        public Color whirlTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数（末两帧自带消散，fadeOut 给小值即可）。</summary>
+        public float whirlFadeInSeconds = 0.05f;
+        public float whirlFadeOutSeconds = 0.15f;
     }
 
     public class CompProperties_MMTSkillDemo : CompProperties
@@ -828,8 +855,8 @@ namespace MyModeTest
                     icon = ContentFinder<Texture2D>.Get(demo.iconPath, false) ?? BaseContent.BadTex,
                     action = delegate
                     {
-                        // 光环/新星环类以自身为中心，免瞄准直接进入读条
-                        if (captured.demoType == "aura" || captured.demoType == "nova")
+                        // 光环/新星环/旋风斩类以自身为中心，免瞄准直接进入读条
+                        if (captured.demoType == "aura" || captured.demoType == "nova" || captured.demoType == "whirlwind")
                         {
                             FireDemo(captured, new LocalTargetInfo(parent));
                         }
@@ -1038,6 +1065,12 @@ namespace MyModeTest
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
                 return "技能框架演示：" + cast + "在目标点堆叠一段侧视序列帧火柱（" + demo.sideRampSlices
                     + " 片坡道带，锥形收放+摆动+脉冲，持续 " + demo.sideRampDurationSeconds + "s，纯视觉无伤害）。";
+            }
+            if (demo.demoType == "whirlwind")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "抡起武器旋斩一周（蓝色旋风跟随自身，持续 " + demo.whirlDurationSeconds
+                    + "s），峰值帧对周围 " + demo.whirlDamageRadius + " 格内敌人造成 " + demo.whirlDamage + " 点切割伤害。";
             }
             return "技能框架演示：范围圈敌我预览，确认后仅提示影响名单，无实际效果。";
         }
@@ -1283,7 +1316,8 @@ namespace MyModeTest
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
                 || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone"
-                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat" || demo.demoType == "sideRamp")
+                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat" || demo.demoType == "sideRamp"
+                || demo.demoType == "whirlwind")
             {
                 castingDemo = demo;
                 castingTarget = target;
@@ -1925,6 +1959,33 @@ namespace MyModeTest
                 });
                 Messages.Message(rampFx != null ? "【" + demo.label + "】地心火柱喷发！" : "【" + demo.label + "】特效生成失败",
                     parent, rampFx != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            if (demo.demoType == "whirlwind")
+            {
+                // 近战旋风斩：俯视旋涡序列帧平铺脚下+自转，峰值帧对周围敌人结算一次伤害
+                Thing_MMTSkillWhirlwind whirlFx = MMTSkillWhirlwindUtil.Fire(parent, new MMTSkillWhirlwindParams
+                {
+                    texPath = demo.whirlTexPath,
+                    frameCount = demo.whirlFrameCount,
+                    frameTicks = demo.whirlFrameTicks,
+                    durationSeconds = demo.whirlDurationSeconds,
+                    widthCells = demo.whirlWidthCells,
+                    heightCells = demo.whirlHeightCells,
+                    spinDegrees = demo.whirlSpinDegrees,
+                    damageRadius = demo.whirlDamageRadius,
+                    damage = demo.whirlDamage,
+                    damageDef = demo.whirlDamageDefName.NullOrEmpty() ? null : DefDatabase<DamageDef>.GetNamedSilentFail(demo.whirlDamageDefName),
+                    armorPenetration = demo.whirlArmorPenetration,
+                    hitFraction = demo.whirlHitFraction,
+                    tint = demo.whirlTint,
+                    fadeInSeconds = demo.whirlFadeInSeconds,
+                    fadeOutSeconds = demo.whirlFadeOutSeconds,
+                    startSound = sound,
+                    equipment = (parent as Pawn)?.equipment?.Primary
+                });
+                Messages.Message(whirlFx != null ? "【" + demo.label + "】旋风斩！" : "【" + demo.label + "】特效生成失败",
+                    parent, whirlFx != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
                 return;
             }
             ThingDef projectile = DefDatabase<ThingDef>.GetNamedSilentFail(demo.projectileDefName);

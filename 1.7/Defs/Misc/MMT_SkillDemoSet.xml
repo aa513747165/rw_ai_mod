@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 技能框架演示技能集：第一~二十七步全部 40 个演示条目（唯一数据源）。
+  <!-- 技能框架演示技能集：第一~二十八步全部 41 个演示条目（唯一数据源）。
        不进任何建筑/角色 Def；Dev 模式经 Debug「MMT 技能 → 赋予全部演示技能（选中小人）」
        由 MMTSkillDemoGrant 运行时注入 comp 到小人身上实测。
        沙袋人偶（友方/敌方）仅作技能靶子，不再携带技能。 -->
@@ -665,6 +665,39 @@
         <sideRampPulseAmp>0.06</sideRampPulseAmp>
         <sideRampFadeInSeconds>0.15</sideRampFadeInSeconds>
         <sideRampFadeOutSeconds>0.4</sideRampFadeOutSeconds>
+      </li>
+      <!-- 第二十八步：近战旋风斩·苍蓝旋斩（自身中心免瞄准，一次性挥斩）
+           效果设计卡：DNF 蓝旋风 7 帧（近俯视水平椭圆构图，源素材 legrollbluedodge.img，
+           已按 alpha 包围盒居中归一化拼横向图集 MMT_SkillWhirlwind，单帧 252×191），
+           整帧平铺脚下水平 quad，宽 3.2 格 × 高 2.43 格（按帧宽高比），
+           生命周期 1.05s（7 帧 × 9 tick）内绕竖直轴自转 120° 增强"旋"感；
+           峰值帧（进度 45%，约第 3 帧）对周围 1.5 格内敌人一次性结算 18 点切割
+           （中档 AoE：参考原版长剑一击 15-20，AP 0.15）；末两帧自带消散，淡出仅 0.15s。
+           渲染路线同第二十六步 SkillSideFlat（水平 quad + UV 切帧），
+           区别于 sideFlat 锁 0°：俯视旋涡构图绕 Y 自转不穿帮。 -->
+      <li>
+        <label>测试·苍蓝旋斩</label>
+        <iconPath>Things/Mote/MMT_SkillWhirlwind_Icon</iconPath>
+        <radius>0</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>whirlwind</demoType>
+        <castSeconds>0.5</castSeconds>
+        <castBarColor>(0.35,0.65,1,0.5)</castBarColor>
+        <soundDefName>Pawn_Melee_MechanoidSlash_Miss</soundDefName>
+        <whirlTexPath>Things/Mote/MMT_SkillWhirlwind</whirlTexPath>
+        <whirlFrameCount>7</whirlFrameCount>
+        <whirlFrameTicks>9</whirlFrameTicks>
+        <whirlDurationSeconds>1.05</whirlDurationSeconds>
+        <whirlWidthCells>3.2</whirlWidthCells>
+        <whirlHeightCells>2.43</whirlHeightCells>
+        <whirlSpinDegrees>120</whirlSpinDegrees>
+        <whirlDamageRadius>1.5</whirlDamageRadius>
+        <whirlDamage>18</whirlDamage>
+        <whirlDamageDefName>Cut</whirlDamageDefName>
+        <whirlArmorPenetration>0.15</whirlArmorPenetration>
+        <whirlHitFraction>0.45</whirlHitFraction>
+        <whirlFadeInSeconds>0.05</whirlFadeInSeconds>
+        <whirlFadeOutSeconds>0.15</whirlFadeOutSeconds>
       </li>
     </demos>
   </MyModeTest.MMTSkillDemoSetDef>

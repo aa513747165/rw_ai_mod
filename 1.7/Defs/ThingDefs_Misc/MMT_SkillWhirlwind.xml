@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 近战旋风斩特效载体（第二十八步）：俯视旋涡序列帧整帧平铺水平 quad
+       （渲染路线同第二十六步 SkillSideFlat，但允许绕竖直轴自转——
+       俯视旋涡构图旋转不穿帮，侧视素材才必须锁 0°），跟随施法者，
+       峰值帧对周围敌对 pawn 结算一次切割伤害。
+       本体 DrawAt 自绘（按帧用 mainTextureOffset 切图集），graphicData 仅为兜底。
+       参数运行时注入不进存档，读档后自毁。不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkillWhirlwind</defName>
+    <label>技能旋风斩特效</label>
+    <thingClass>MyModeTest.Thing_MMTSkillWhirlwind</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillWhirlwind</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>
