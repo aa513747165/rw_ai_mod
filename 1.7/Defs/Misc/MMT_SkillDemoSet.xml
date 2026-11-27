@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <!-- 技能框架演示技能集：第一~二十三步全部 37 个演示条目（唯一数据源）。
+  <!-- 技能框架演示技能集：第一~二十六步全部 39 个演示条目（唯一数据源）。
        不进任何建筑/角色 Def；Dev 模式经 Debug「MMT 技能 → 赋予全部演示技能（选中小人）」
        由 MMTSkillDemoGrant 运行时注入 comp 到小人身上实测。
        沙袋人偶（友方/敌方）仅作技能靶子，不再携带技能。 -->
@@ -526,6 +526,60 @@
         <dispelCount>3</dispelCount>
         <dispelIconTexPath>UI/RoM/purify</dispelIconTexPath>
         <dispelIconSeconds>0.5</dispelIconSeconds>
+      </li>
+      <!-- 第二十五步：屏幕空间升起序列帧·地心火柱（侧视素材原型，纯视觉无伤害）
+           效果设计卡：侧视 5 帧图集（爱给网 234 序列帧，单帧 110×128，宽高比 0.86）走
+           DrawGUIOverlay 屏幕空间贴图（1.7 竖直 quad 不渲染的绕行路线；画在世界物体之上、
+           不吃光照，迷雾格手动跳过）。贴图底边中点锚在目标格中心，宽 2.2 格 / 高 2.6 格，
+           7 tick/帧循环播放，总时长 2.2s，整体上升 0.6 格模拟喷发感，首尾 0.15s/0.4s
+           淡入淡出。帧图自带颜色故 riseTint 缺省（=纯白）。 -->
+      <li>
+        <label>测试·地心火柱</label>
+        <iconPath>Things/Mote/BlastFlame</iconPath>
+        <radius>0</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>riseFX</demoType>
+        <castSeconds>1</castSeconds>
+        <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
+        <soundDefName>FireSpew_Resolve</soundDefName>
+        <riseTexPath>Things/Mote/MMT_SkillRiseFX_FlamePillar</riseTexPath>
+        <riseFrameCount>5</riseFrameCount>
+        <riseFrameTicks>7</riseFrameTicks>
+        <riseLoop>true</riseLoop>
+        <riseDurationSeconds>2.2</riseDurationSeconds>
+        <riseWidthCells>2.2</riseWidthCells>
+        <riseHeightCells>2.6</riseHeightCells>
+        <riseCells>0.6</riseCells>
+        <riseFadeInSeconds>0.15</riseFadeInSeconds>
+        <riseFadeOutSeconds>0.4</riseFadeOutSeconds>
+      </li>
+      <!-- 第二十六步：侧视平躺序列帧·地心火柱（平躺原型，纯视觉无伤害）
+           效果设计卡：复用第二十五步同款侧视 5 帧图集（550×128，单帧 110×128，宽高比 0.86），
+           整帧平铺水平 quad（plane10 + Quaternion.identity，旋转锁 0°——贴图"上"边朝世界 +Z 北
+           = 屏幕上；1.7 主相机为 90° 正上方正交相机，地面与屏幕 1:1 无失真映射，无需预拉伸）。
+           贴图底边中点锚在目标格中心，宽 2.2 格（世界 X）/ 高 2.6 格（朝北延伸），
+           7 tick/帧循环播放，总时长 2.2s，整体向北漂移 0.6 格模拟喷发上升感，
+           首尾 0.15s/0.4s 淡入淡出。画在 MoteOverhead 层（高于 pawn，遮挡按 Altitude 判定）。
+           已知代价：朝向锁死屏幕北（绕 Y 旋转即穿帮）；与第二十五步屏幕空间版对照验证。 -->
+      <li>
+        <label>测试·地心火柱·平躺</label>
+        <iconPath>Things/Mote/BlastFlame</iconPath>
+        <radius>0</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>sideFlat</demoType>
+        <castSeconds>1</castSeconds>
+        <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
+        <soundDefName>FireSpew_Resolve</soundDefName>
+        <sideFlatTexPath>Things/Mote/MMT_SkillRiseFX_FlamePillar</sideFlatTexPath>
+        <sideFlatFrameCount>5</sideFlatFrameCount>
+        <sideFlatFrameTicks>7</sideFlatFrameTicks>
+        <sideFlatLoop>true</sideFlatLoop>
+        <sideFlatDurationSeconds>2.2</sideFlatDurationSeconds>
+        <sideFlatWidthCells>2.2</sideFlatWidthCells>
+        <sideFlatHeightCells>2.6</sideFlatHeightCells>
+        <sideFlatDriftCells>0.6</sideFlatDriftCells>
+        <sideFlatFadeInSeconds>0.15</sideFlatFadeInSeconds>
+        <sideFlatFadeOutSeconds>0.4</sideFlatFadeOutSeconds>
       </li>
     </demos>
   </MyModeTest.MMTSkillDemoSetDef>

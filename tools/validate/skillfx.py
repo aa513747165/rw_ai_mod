@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）Def/贴图/假人演示条目/C# 核心。"""
+"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）+ 侧视平躺序列帧（第二十六步）Def/贴图/假人演示条目/C# 核心。"""
 from pathlib import Path
 
 from validate_mod import assert_equal, child_text, def_map, fail, parse_xml, require_files
@@ -68,6 +68,13 @@ NOVA_TEX = "1.7/Textures/Things/Mote/MMT_NovaRing.png"
 DISPEL_CS = "Source/MyModeTest/SkillFX/SkillDispel.cs"
 # —— 第 24 步：余烬爆发（爆发 + 短余烬 hybrid，复用 BuffSpark/BlinkFlash/FlamePillar 贴图） ——
 EMBER_CS = "Source/MyModeTest/SkillFX/SkillEmberBurst.cs"
+# —— 第 25 步：屏幕空间升起序列帧（侧视素材走 DrawGUIOverlay UI 层贴图，绕开竖直 quad 不渲染） ——
+RISE_XML = "1.7/Defs/Effects/MMT_Mote_SkillRiseFX.xml"
+RISE_CS = "Source/MyModeTest/SkillFX/SkillRiseFX.cs"
+RISE_TEX = "1.7/Textures/Things/Mote/MMT_SkillRiseFX_FlamePillar.png"
+# —— 第 26 步：侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上） ——
+SIDEFLAT_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillSideFlat.xml"
+SIDEFLAT_CS = "Source/MyModeTest/SkillFX/SkillSideFlat.cs"
 
 
 def validate_skillfx() -> None:
@@ -80,7 +87,8 @@ def validate_skillfx() -> None:
                    DELAY_CS, KNOCK_CS, CHAIN_CS, BREATH_CS, HEAL_CS, WALL_CS, BEAM_CS,
                    METEOR_TEX, BIGBALL_TEX, WALL_TEX,
                    ZONE_XML, ZONE_CS, MINE_XML, TRAP_CS, MINE_TEX, ICE_TEX,
-                   BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS, EMBER_CS])
+                   BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS, EMBER_CS,
+                   RISE_XML, RISE_CS, RISE_TEX, SIDEFLAT_XML, SIDEFLAT_CS])
 
     defs = def_map(parse_xml(FLAME_XML))
     node = defs.get("MMT_GroundFlame")
@@ -218,7 +226,7 @@ def validate_skillfx() -> None:
         if token not in dummy:
             fail(f"假人靶子配置缺少: {token}")
 
-    # —— 演示技能集（37 条，Dev 一键赋予小人的唯一数据源） ——
+    # —— 演示技能集（39 条，Dev 一键赋予小人的唯一数据源） ——
     demoset = Path(DEMOSET_XML).read_text(encoding="utf-8")
     for token in ("MMTSkillDemoSetDef", "MMT_SkillDemoSet",
                   "测试·友方回响", "测试·敌方回响", "测试·单发火球术", "测试·多方位火球术",
@@ -251,9 +259,51 @@ def validate_skillfx() -> None:
                   "novaDamage", "novaHealAmount", "novaHitOnce", "novaFadeOutTicks",
                   "novaTexPath", "novaTint", "MMT_NovaRing", "MMT_Gong",
                   "测试·驱散魔法", "测试·驱散魔法·敌", "dispel", "dispelCount",
-                  "dispelIconTexPath", "dispelIconSeconds", "MMT_FastReleaseSD", "UI/RoM/purify"):
+                  "dispelIconTexPath", "dispelIconSeconds", "MMT_FastReleaseSD", "UI/RoM/purify",
+                  "测试·地心火柱", "riseFX", "riseTexPath", "riseFrameCount", "riseFrameTicks",
+                  "riseLoop", "riseDurationSeconds", "riseWidthCells", "riseHeightCells",
+                  "riseCells", "riseFadeInSeconds", "riseFadeOutSeconds", "MMT_SkillRiseFX_FlamePillar",
+                  "测试·地心火柱·平躺", "sideFlat", "sideFlatTexPath", "sideFlatFrameCount",
+                  "sideFlatFrameTicks", "sideFlatLoop", "sideFlatDurationSeconds",
+                  "sideFlatWidthCells", "sideFlatHeightCells", "sideFlatDriftCells",
+                  "sideFlatFadeInSeconds", "sideFlatFadeOutSeconds"):
         if token not in demoset:
             fail(f"演示技能集缺少: {token}")
+
+    # —— 屏幕空间升起序列帧（第二十五步） ——
+    rise_defs = def_map(parse_xml(RISE_XML))
+    rise = rise_defs.get("MMT_Mote_SkillRiseFX")
+    if rise is None:
+        fail("缺少 MMT_Mote_SkillRiseFX 定义")
+        return
+    assert_equal(child_text(rise, "thingClass"), "MyModeTest.MoteMMTSkillRiseFX", "升起特效 mote thingClass")
+    assert_equal(child_text(rise, "category"), "Mote", "升起特效 mote category")
+    assert_equal(child_text(rise, "drawGUIOverlay"), "true", "升起特效 mote drawGUIOverlay")
+
+    rise_cs = Path(RISE_CS).read_text(encoding="utf-8")
+    for token in ("MoteMMTSkillRiseFX", "MMTSkillRiseFXUtil", "DrawGUIOverlay",
+                  "DrawTextureWithTexCoords", "WorldToScreenPoint", "solidTimeOverride",
+                  "MMT_Mote_SkillRiseFX"):
+        if token not in rise_cs:
+            fail(f"SkillRiseFX.cs 缺少: {token}")
+
+    # —— 侧视平躺序列帧（第二十六步） ——
+    flat_defs = def_map(parse_xml(SIDEFLAT_XML))
+    flat = flat_defs.get("MMT_SkillSideFlat")
+    if flat is None:
+        fail("缺少 MMT_SkillSideFlat 定义")
+        return
+    assert_equal(child_text(flat, "thingClass"), "MyModeTest.Thing_MMTSkillSideFlat", "平躺特效 thingClass")
+    assert_equal(child_text(flat, "category"), "Attachment", "平躺特效 category")
+    assert_equal(child_text(flat, "drawerType"), "RealtimeOnly", "平躺特效 drawerType")
+
+    flat_cs = Path(SIDEFLAT_CS).read_text(encoding="utf-8")
+    for token in ("MMTSkillSideFlatParams", "Thing_MMTSkillSideFlat", "MMTSkillSideFlatUtil",
+                  "mainTextureScale", "mainTextureOffset", "Quaternion.identity",
+                  "PerspectiveCompensate", "ShadowCastingMode.Off", "MoteOverhead",
+                  "MMT_SkillSideFlat", "MaterialPropertyBlock"):
+        if token not in flat_cs:
+            fail(f"SkillSideFlat.cs 缺少: {token}")
 
     cs = Path(CS).read_text(encoding="utf-8")
     for token in ("MMTGroundFireUtil", "Thing_MMTGroundFlame", "CompAbilityEffect_MMTGroundFire",
@@ -463,7 +513,8 @@ def validate_skillfx() -> None:
                   "寒风领域", "nova", "MMTNovaUtil", "神圣新星", "novaCellsPerSecond",
                   "novaHitOnce", "novaTexPath", "novaTint",
                   "dispel", "MMTDispelUtil", "dispelCount", "dispelIconTexPath",
-                  "emberBurst", "MMTEmberBurstUtil", "emberCount", "emberResidDurationSeconds"):
+                  "emberBurst", "MMTEmberBurstUtil", "emberCount", "emberResidDurationSeconds",
+                  "sideFlat", "MMTSkillSideFlatUtil", "sideFlatTexPath", "sideFlatDriftCells"):
         if token not in targeting_cs:
             fail(f"AbilityTargeting.cs 缺少新演示接入: {token}")
 

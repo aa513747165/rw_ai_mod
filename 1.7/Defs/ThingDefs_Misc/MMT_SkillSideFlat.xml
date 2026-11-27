@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 侧视平躺序列帧特效载体（第二十六步）：整帧平铺水平 quad
+       （plane10 + Quaternion.identity，贴图"上"边朝世界 +Z 北 = 屏幕上，
+       90° 正交俯视相机下地面与屏幕 1:1 映射），吃地图光照、遮挡按
+       AltitudeLayer 判定，朝向锁死屏幕北。与第二十五步屏幕空间版对照原型。
+       本体 DrawAt 自绘（按帧用 mainTextureOffset 切图集），graphicData 仅为兜底。
+       参数运行时注入不进存档，读档后自毁。不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkillSideFlat</defName>
+    <label>技能平躺特效</label>
+    <thingClass>MyModeTest.Thing_MMTSkillSideFlat</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillRiseFX_FlamePillar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

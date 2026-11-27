@@ -372,7 +372,7 @@ namespace MyModeTest
         public bool showRangeRing = true;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -687,6 +687,46 @@ namespace MyModeTest
         // —— 造墙演示（第十八步：石墙术） ——
         /// <summary>石墙存续秒数（墙半径用 radius）。</summary>
         public float wallDurationSeconds = 30f;
+
+        // —— 屏幕空间升起特效演示（第二十五步：侧视序列帧火柱，绕开竖直 quad 不渲染） ——
+        /// <summary>序列帧图集贴图（横向等宽排布）。</summary>
+        public string riseTexPath = "Things/Mote/MMT_SkillRiseFX_FlamePillar";
+        public int riseFrameCount = 5;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int riseFrameTicks = 7;
+        /// <summary>true=帧序列循环播放到时长结束；false=播完一轮停在末帧。</summary>
+        public bool riseLoop = true;
+        public float riseDurationSeconds = 2.2f;
+        /// <summary>绘制宽/高（格，贴图底边中点锚在目标格中心）。</summary>
+        public float riseWidthCells = 2.2f;
+        public float riseHeightCells = 2.6f;
+        /// <summary>生命周期内整体上升距离（格，0=钉在原地）。</summary>
+        public float riseCells = 0.6f;
+        /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
+        public Color riseTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数。</summary>
+        public float riseFadeInSeconds = 0.15f;
+        public float riseFadeOutSeconds = 0.4f;
+
+        // —— 侧视平躺序列帧演示（第二十六步：整帧平铺水平 quad，贴图上边朝北=屏幕上） ——
+        /// <summary>序列帧图集贴图（横向等宽排布，侧视构图：底部贴地、顶部朝北）。</summary>
+        public string sideFlatTexPath = "Things/Mote/MMT_SkillRiseFX_FlamePillar";
+        public int sideFlatFrameCount = 5;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int sideFlatFrameTicks = 7;
+        /// <summary>true=帧序列循环播放到时长结束；false=播完一轮停在末帧。</summary>
+        public bool sideFlatLoop = true;
+        public float sideFlatDurationSeconds = 2.2f;
+        /// <summary>绘制宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
+        public float sideFlatWidthCells = 2.2f;
+        public float sideFlatHeightCells = 2.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地）。</summary>
+        public float sideFlatDriftCells = 0.6f;
+        /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
+        public Color sideFlatTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数。</summary>
+        public float sideFlatFadeInSeconds = 0.15f;
+        public float sideFlatFadeOutSeconds = 0.4f;
     }
 
     public class CompProperties_MMTSkillDemo : CompProperties
@@ -929,6 +969,18 @@ namespace MyModeTest
                 return "技能框架演示：" + cast + "驱散锁定" + (demo.targetFriendly ? "友方" : "敌方") + "目标身上至多 " + demo.dispelCount
                     + " 个限时" + (demo.targetFriendly ? "减益" : "增益") + "（Severity 高者优先，永久/无时限状态不可驱散；白色图标闪光）。";
             }
+            if (demo.demoType == "riseFX")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标点从地面升起一段侧视序列帧火柱（屏幕空间贴图路线，持续 "
+                    + demo.riseDurationSeconds + "s，纯视觉无伤害）。";
+            }
+            if (demo.demoType == "sideFlat")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标点平铺一段侧视序列帧火柱（平躺水平 quad 路线，贴图上边朝北=屏幕上，持续 "
+                    + demo.sideFlatDurationSeconds + "s，纯视觉无伤害）。";
+            }
             return "技能框架演示：范围圈敌我预览，确认后仅提示影响名单，无实际效果。";
         }
 
@@ -1079,7 +1131,7 @@ namespace MyModeTest
                             || demo.demoType == "summonOrb" || demo.demoType == "summonHoming"
                             || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                             || demo.demoType == "knockback" || demo.demoType == "chainLightning"
-                            || demo.demoType == "dispel") && demo.radius <= 0f)
+                            || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat") && demo.radius <= 0f)
                         {
                             GenDraw.DrawTargetHighlightWithLayer(t.Cell.ToVector3Shifted(), AltitudeLayer.MetaOverlays);
                         }
@@ -1173,7 +1225,7 @@ namespace MyModeTest
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
                 || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone"
-                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel")
+                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat")
             {
                 castingDemo = demo;
                 castingTarget = target;
@@ -1717,6 +1769,50 @@ namespace MyModeTest
                         ? "【" + demo.label + "】驱散了 " + dispelTarget.LabelShortCap + " 的 " + removed.Count + " 个状态：" + string.Join("、", removed)
                         : "【" + demo.label + "】" + dispelTarget.LabelShortCap + " 身上没有可驱散的限时状态！",
                     parent, MessageTypeDefOf.NeutralEvent, false);
+                return;
+            }
+            if (demo.demoType == "riseFX")
+            {
+                // 屏幕空间升起序列帧：纯视觉演示（侧视素材走 UI 层贴图，绕开竖直 quad 不渲染）
+                MoteMMTSkillRiseFX fxMote = MMTSkillRiseFXUtil.Fire(parent.Map, target.Cell, new MMTSkillRiseFXParams
+                {
+                    texPath = demo.riseTexPath,
+                    frameCount = demo.riseFrameCount,
+                    frameTicks = demo.riseFrameTicks,
+                    loop = demo.riseLoop,
+                    durationSeconds = demo.riseDurationSeconds,
+                    widthCells = demo.riseWidthCells,
+                    heightCells = demo.riseHeightCells,
+                    riseCells = demo.riseCells,
+                    tint = demo.riseTint,
+                    fadeInSeconds = demo.riseFadeInSeconds,
+                    fadeOutSeconds = demo.riseFadeOutSeconds,
+                    startSound = sound
+                });
+                Messages.Message(fxMote != null ? "【" + demo.label + "】地心火柱喷发！" : "【" + demo.label + "】特效生成失败",
+                    parent, fxMote != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            if (demo.demoType == "sideFlat")
+            {
+                // 侧视平躺序列帧：纯视觉演示（整帧平铺水平 quad，贴图上边朝北=屏幕上）
+                Thing_MMTSkillSideFlat flatFx = MMTSkillSideFlatUtil.Fire(parent.Map, target.Cell, new MMTSkillSideFlatParams
+                {
+                    texPath = demo.sideFlatTexPath,
+                    frameCount = demo.sideFlatFrameCount,
+                    frameTicks = demo.sideFlatFrameTicks,
+                    loop = demo.sideFlatLoop,
+                    durationSeconds = demo.sideFlatDurationSeconds,
+                    widthCells = demo.sideFlatWidthCells,
+                    heightCells = demo.sideFlatHeightCells,
+                    driftCells = demo.sideFlatDriftCells,
+                    tint = demo.sideFlatTint,
+                    fadeInSeconds = demo.sideFlatFadeInSeconds,
+                    fadeOutSeconds = demo.sideFlatFadeOutSeconds,
+                    startSound = sound
+                });
+                Messages.Message(flatFx != null ? "【" + demo.label + "】地心火柱喷发！" : "【" + demo.label + "】特效生成失败",
+                    parent, flatFx != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
                 return;
             }
             ThingDef projectile = DefDatabase<ThingDef>.GetNamedSilentFail(demo.projectileDefName);

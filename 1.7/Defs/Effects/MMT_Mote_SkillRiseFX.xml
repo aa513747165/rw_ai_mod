@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 屏幕空间升起序列帧特效载体（第二十五步）：世界空间不画任何东西，
+       全部走 DrawGUIOverlay 屏幕空间贴图（MoteText 同款通道），
+       绕开 1.7/Waylith 竖直 quad 不渲染的硬约束。寿命由 mote solidTime 管理，
+       每实例时长经 solidTimeOverride 注入。参照 Core TextMote 的最小字段集。 -->
+  <ThingDef>
+    <defName>MMT_Mote_SkillRiseFX</defName>
+    <label>技能升起特效</label>
+    <thingClass>MyModeTest.MoteMMTSkillRiseFX</thingClass>
+    <category>Mote</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <isSaveable>false</isSaveable>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <mote>
+      <solidTime>2.2</solidTime>
+    </mote>
+  </ThingDef>
+</Defs>

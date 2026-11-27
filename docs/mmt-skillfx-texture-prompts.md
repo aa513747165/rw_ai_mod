@@ -4,7 +4,7 @@
 > §九 瞄准预览圆环 `MMT_TargetRing` **已由程序生成终稿**（2026-11-26，`docs/temp/gen_target_ring.py`，2048² 按最大 45 格射程设计；AI 不适合绝对几何对称图形，程序生成即终稿，不再走 AI 出图）。
 > §十 技能地雷、§十一 冰块覆盖物 **均已出图完成**（2026-11-26，AI 终稿覆盖占位图，Def/代码零改动）。
 > §十二 射线端头（发射头/命中端）**已出图完成**（2026-11-26，用户生成：RGBA 128²、RGB 全白、中心 alpha 255、四角 alpha 0，验收通过，Def/代码零改动）。
-> §十三 新星环 `MMT_NovaRing` **已出图完成**（2026-11-26，AI 终稿覆盖占位图，Def/代码零改动）。
+> §十三 新星环 `MMT_NovaRing` **已出图完成**（2026-11-26，AI 终稿覆盖占位图，Def/代码零改动）；**2026-11-27 叠加贴地光幕版**（`docs/temp/add_nova_veil.py` 程序合成，环内径向渐亮柔光填充，底图备份 `docs/temp/MMT_NovaRing_base.png`）。
 
 > 与 `mmt-dungeon-texture-prompts.md`、`mmt-fireboss-texture-prompts.md` 同格式。
 > 用法：**完整提示词 = 全局风格前缀 + 条目提示词 + 负面词**。
@@ -530,29 +530,36 @@ edges falling to pure black
 
 ---
 
-## 十三、新星环 `MMT_NovaRing`（1 张，256×256）【已出图完成】
+## 十三、新星环 `MMT_NovaRing`（1 张，256×256）【已出图完成，含贴地光幕】
 
 > 2026-11-26 AI 终稿已覆盖占位图（白图正圆环：RGBA 256²、RGB 全白无彩色、环带外沿 alpha 255、圆心 60% 半径内与四边 alpha=0，验收通过），Def/代码零改动。
+> 2026-11-27 光幕版：在 AI 圆环底图上程序合成环内柔光填充（`docs/temp/add_nova_veil.py`，幂等，底图备份 `docs/temp/MMT_NovaRing_base.png`）——
+> 环内一层中心 0、向环带内缘渐亮的柔光盘（单层峰值 40/255 ≈ 16%，4 层拖尾叠加有效 ≈ 24%），环扩散时波后留下渐隐光纱。
+> 注意：代码同图叠画 4 层（波峰 + 3 层拖尾，SkillNova.cs DrawAt），环内填充会叠加，单层 alpha 务必 ≤ 16%；
+> RGB 必须全白（TransparentPostLight 是 alpha 混合，暗 RGB 压暗地面，见 §三教训）。
 
 - **落盘**：覆盖 `1.7/Textures/Things/Mote/MMT_NovaRing.png`（texPath `Things/Mote/MMT_NovaRing`，ThingDef `MMT_NovaRing` 与 `MMTNovaParams.texPath` 默认值均指向它，覆盖即用）。
 - **功能**：新星环（demoType="nova"，「测试·神圣新星」，牧师 III 阶神圣新星）的冲击波环本体；代码按 `novaTint` 染色（演示为圣光金 `(1,0.85,0.4)`），quad 从 0 线性放大到直径 12 格（径向扩散、不旋转），波峰环最亮、通过后拖尾淡出。
-- **贴图元素详述**：**正圆冲击波环**——① 一整圈粗细均匀的圆环，环带占图幅半径约 13%（内缘 ≈0.84R，外沿贴到 0.99R）；② 外沿最亮（波峰），向内缘柔和渐隐，外缘 1~2px 急收（扩散到最大半径时环外不能有溢出亮边）；③ 环带内可有细密的能量流动纹理（沿切线方向的流光/细波纹），但任意角度的环带不能断流；④ 严格径向对称（代码不旋转，任何不对称都会被等比放大成"偏心波"）；⑤ 圆心区域全透明（不能有中心光点，中心闪光由代码另放）。
+- **贴图元素详述**：**正圆冲击波环**——① 一整圈粗细均匀的圆环，环带占图幅半径约 13%（内缘 ≈0.84R，外沿贴到 0.99R）；② 外沿最亮（波峰），向内缘柔和渐隐，外缘 1~2px 急收（扩散到最大半径时环外不能有溢出亮边）；③ 环带内可有细密的能量流动纹理（沿切线方向的流光/细波纹），但任意角度的环带不能断流；④ 严格径向对称（代码不旋转，任何不对称都会被等比放大成"偏心波"）；⑤ 圆心区域为**极淡的贴地光幕**：一层从中心 0 向环带内缘渐亮的柔光填充（单层峰值 ≤ 16% alpha），像冲击波扫过后地面残留的渐隐光纱，不能盖过环带本体、不能有中心光点（中心闪光由代码另放）。
 
 ```
 FX_STYLE + a perfect circular shockwave ring seen from directly above:
 a uniform-width glowing annulus band occupying the outer 13% of the
 radius, brightest at its crisp outer rim and fading smoothly inward,
 with fine tangential energy streaks flowing along the band (continuous,
-never broken at any angle), perfectly radially symmetric, fully
-transparent center and corners, edges falling to pure black
+never broken at any angle), a very faint translucent veil of light
+filling the ring interior (brightest just inside the band, dimming to
+zero at the center, like a fading afterglow left on the ground),
+perfectly radially symmetric, transparent outside the ring and at the
+corners, edges falling to pure black
 ```
 
 **后处理与验收清单**：
 
 1. 黑底白图 → RGBA：alpha = 亮度，RGB = 全白，尺寸 **256×256**；
-2. 环带外沿 alpha ≥ 0.95（波峰实心），内缘渐隐至 0，图幅四边 2px alpha = 0，圆心 60% 半径内 alpha = 0；
+2. 环带外沿 alpha ≥ 0.95（波峰实心），内缘渐隐，图幅四边 2px alpha = 0，环外无溢出亮边；环内光幕填充单层 alpha ≤ 0.16、中心处 = 0（代码 4 层叠画会放大填充）；
 3. 径向对称：任取 8 个方向的环带亮度剖面一致（重心偏移 ≤ 图幅 2%）；灰度无彩色倾向（染色交给 `novaTint`）；
-4. 游戏内验证：「测试·神圣新星」金色光环从脚下匀速扩散到直径 12 格，波峰清晰、拖尾自然，不偏心、无接缝亮边。
+4. 游戏内验证：「测试·神圣新星」金色光环从脚下匀速扩散到直径 12 格，波峰清晰、波后留下一层向中心渐隐的柔光纱，拖尾自然，不偏心、无接缝亮边、地面不被压暗。
 
 ---
 
@@ -562,6 +569,10 @@ transparent center and corners, edges falling to pure black
 > （竖直 quad 不渲染；水平切片堆叠按真实高度画仍在屏幕上塌成一条带），四版实验后弃用侧视方案。
 > 现按**俯视径向爆燃**重新出图——与原版火焰同思路，整帧平铺地面即正确。
 > 当前为 Pillow 程序占位图（径向火舌 + 白黄高温芯），AI 终稿回来后**覆盖同名文件即可，Def 零改动**。
+> 同日晚些补充：侧视素材另有出路——**屏幕空间 UI 层贴图**（Mote.DrawGUIOverlay 通道，
+> 见 `Source/MyModeTest/SkillFX/SkillRiseFX.cs` 与演示条目「测试·地心火柱」，
+> 素材已拷至 `1.7/Textures/Things/Mote/MMT_SkillRiseFX_FlamePillar.png`）；
+> 代价是画在世界物体之上（无遮挡关系）、不吃光照，适合单点爆发特效，不适合火海密度。
 
 - **落盘**：`1.7/Textures/Things/Mote/MMT_FlameErupt/MMT_FlameErupt_0.png` … `_4.png`（texPath `Things/Mote/MMT_FlameErupt/MMT_FlameErupt_<i>`，`MMTGroundFireParams.frameTexPaths` / `CompProperties_MMTGroundFire.frameTexPaths` / 演示 `groundFrameTexPaths` 指向它们）。
 - **功能**：烈焰喷发（`MMT_BossFire_FlamePillar` 熔岩火柱 / 假人「测试·烈焰喷发」）的火焰本体。`frameTexPaths` 非空时 `Thing_MMTGroundFlame` 走序列帧模式：5 帧（0 起燃 → 1/2 喷发峰值 → 3 旋卷 → 4 余烬消散）按 `frameTicks`（7 tick/帧）循环播放，帧相位按 seed 错开（火海成片不同步）。
@@ -593,3 +604,46 @@ no smoke plume upward, PNG with alpha channel
 3. 游戏内验证：「测试·烈焰喷发」为连贯的径向爆燃循环（约 0.58s/循环），无帧间跳动错位、无集体同步闪烁（火海场景）；
 4. AI 终稿直接覆盖 `MMT_FlameErupt_<i>.png` 同名文件即可，帧数可变（改 XML 列表即可）。
 
+
+## 十五、侧视平躺序列帧 `MMT_SkillSideFlat` 用素材（原型复用第二十五步图集，已出图）
+
+> 2026-11-27 第三条出路：侧视素材**整帧平铺水平 quad**（plane10 + Quaternion.identity）。
+> 逆向 Waylith 确认 1.7 主相机为 90° 正上方正交相机、DrawMesh 链路无任何逐 draw 剔除
+> （竖直 quad 是投影退化为零面积线段，非被剔除），地面与屏幕 1:1 无失真映射，
+> 故贴图"上"边朝世界 +Z（北）即屏幕上——侧视构图平躺即呈现竖立侧视效果，无需预拉伸。
+> 实现见 `Source/MyModeTest/SkillFX/SkillSideFlat.cs` 与演示条目「测试·地心火柱·平躺」。
+> 原型直接复用第二十五步图集 `MMT_SkillRiseFX_FlamePillar.png`（550×128，5 帧侧视火焰，
+> 已是终稿），无需占位图；本节留给后续专用侧视平躺素材的出图规范。
+
+- **构图硬约束**（与屏幕空间版不同，平躺版贴图方向即世界方向）：
+  1. 侧视构图：底部贴地（贴图底边 = 地面/锚点）、顶部朝上——平躺后顶部朝世界北 = 屏幕上，**出图时"上"就是图的上边，不做任何旋转**；
+  2. 帧图底边中点对齐：特效锚点是贴图**底边中点**（钉在目标格中心），主体须底边居中，左右对称最佳；
+  3. 透明底 RGBA，alpha 充足；additive 友好——亮色主体配纯黑透明区（黑底可程序转 alpha）；
+  4. 朝向锁死屏幕北：素材里不要画"朝南看的背面"，永远是屏幕正视；
+  5. 高度建议 ≤ 4 格：遮挡按地面 AltitudeLayer 判定（画在 MoteOverhead 层，高于 pawn），过高的图会把北面数格内的小人整片盖住。
+- **绘制参数对应**：宽（世界 X）↔ 贴图横向、高（世界 +Z 北）↔ 贴图纵向，XML `sideFlatWidthCells` / `sideFlatHeightCells` 分别控制，非方帧（如 110×128）按宽高比给格数即可，引擎端不二次拉伸。
+- **序列帧排布**：横向等宽图集（同第二十五步），帧数写 XML `sideFlatFrameCount`，C# 用 `mainTextureOffset` 等宽切片；也可按 `MMT_FlameErupt` 惯例拆单帧文件（需改 C# 为逐帧贴图列表，目前仅支持图集）。
+
+### AI 出图提示词（终稿用，每帧一张或出序列图后等宽切片）
+
+全局前缀：
+
+```text
+game VFX sprite, SIDE view vertical flame pillar eruption on transparent background,
+vivid orange-red fire with white-hot core, hand-painted fantasy game style,
+base of the flame anchored at the bottom edge center of the frame, flame rises
+toward the top edge, no ground plane, no perspective tilt, PNG with alpha channel
+```
+
+negative 通用：`top-down view, radial composition, ground, text, watermark, cropped base`
+
+逐帧差异可参考第十四节的起燃→峰值→旋卷→余烬节奏（侧视版：底部始终贴底边，顶部火焰高度逐帧起伏）。
+
+**验收清单**：
+
+1. 图集 RGBA、透明底，单帧等宽（如 110×128 × N），底边中点锚定、顶部留白 ≤ 5%；
+2. 透明区 RGB 预乘为黑（防白边），峰值帧 alpha max ≥ 230；
+3. 游戏内验证：「测试·地心火柱·平躺」目标格上呈现竖立侧视火柱（顶部朝屏幕上），
+   序列连贯、淡入淡出无跳变；与「测试·地心火柱」（屏幕空间版）同格对照，确认
+   吃地图光照与 Altitude 遮挡差异符合预期；
+4. 终稿覆盖同名文件即生效，Def 零改动（宽高比变化时同步调 XML 宽/高格数）。
