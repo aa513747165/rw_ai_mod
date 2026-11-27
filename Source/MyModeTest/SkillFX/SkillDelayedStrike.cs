@@ -63,6 +63,11 @@ namespace MyModeTest
         /// （durationSeconds 会被强制对齐 fallTicks），陨石实体只保留坠落计时与撞击爆炸，
         /// 不再自绘也不喷火焰拖尾。</summary>
         public MMTSkillSideRampParams pillarRamp;
+        /// <summary>撞击帧序列皮肤（null = 无）。配了则坠落物视觉同样隐去（不再自绘/拖尾，
+        /// 可与 pillarRamp 叠加：天上光柱 + 落地爆发），撞击瞬间在落点平铺一段侧视平躺序列帧
+        /// （第二十六步 sideFlat 路线，如圣光审判II 的金色爆发冲击环），时长/尺寸由参数自带，
+        /// 不对齐 fallTicks。爆炸伤害/音效仍走 GenExplosion。</summary>
+        public MMTSkillSideFlatParams impactSideFlat;
         public Thing equipment;
     }
 
@@ -204,6 +209,7 @@ namespace MyModeTest
         private int age;
         private Material mat;
         private bool pillarMode;
+        private bool impactFxMode;
         private bool loadedFromSave;
 
         public void Setup(Thing caster, MMTDelayedStrikeParams p)
@@ -211,6 +217,8 @@ namespace MyModeTest
             this.caster = caster;
             meteorParams = p;
             ticksTotal = Mathf.Max(1, p.fallTicks);
+            // 撞击帧序列皮肤：坠落物视觉隐去（同 pillarMode），落地爆发由 Impact 时生成
+            impactFxMode = p.impactSideFlat != null;
             if (p.pillarRamp != null)
             {
                 // 坡道光柱皮肤：光柱寿命强制对齐坠落耗时（落地即爆，爆炸闪光盖住收尾淡出）
@@ -268,7 +276,7 @@ namespace MyModeTest
                 return;
             }
             age++;
-            if (Map == Find.CurrentMap && !pillarMode)
+            if (Map == Find.CurrentMap && !pillarMode && !impactFxMode)
             {
                 SpawnTrail();
             }
@@ -294,12 +302,17 @@ namespace MyModeTest
             map.flecks.CreateFleck(data);
         }
 
-        /// <summary>撞击：原版爆炸（画面/音效全套），可点燃。</summary>
+        /// <summary>撞击：原版爆炸（画面/音效全套），可点燃；配了撞击帧序列皮肤则
+        /// 同 tick 在落点平铺落地爆发序列帧（视觉盖在爆炸闪光上，闪光作高光打底）。</summary>
         private void Impact()
         {
             Map map = Map;
             if (map != null)
             {
+                if (meteorParams.impactSideFlat != null)
+                {
+                    MMTSkillSideFlatUtil.Fire(map, Position, meteorParams.impactSideFlat);
+                }
                 GenExplosion.DoExplosion(Position, map, meteorParams.explosionRadius,
                     meteorParams.damageDef ?? DamageDefOf.Bomb, caster,
                     damAmount: Mathf.RoundToInt(meteorParams.damage),
@@ -314,7 +327,7 @@ namespace MyModeTest
         /// （北偏高度），尺寸/缩放/自旋全部由参数控制（0 自旋 = 坠落不旋转）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            if (pillarMode || mat == null || Map != Find.CurrentMap)
+            if (pillarMode || impactFxMode || mat == null || Map != Find.CurrentMap)
             {
                 return;
             }
@@ -389,6 +402,26 @@ namespace MyModeTest
         public float pillarRampFadeInSeconds = 0.08f;
         public float pillarRampFadeOutSeconds = 0.15f;
 
+        // —— 撞击帧序列皮肤（配了 impactBurstTexPath 即隐去坠落物视觉，落地瞬间在落点平铺爆发序列帧；可与 pillarRamp 叠加） ——
+        /// <summary>落地爆发序列帧图集贴图（横向等宽排布，侧视构图：底部贴地、顶部朝北）。</summary>
+        public string impactBurstTexPath;
+        /// <summary>图集帧数（等宽切片）。</summary>
+        public int impactBurstFrameCount = 1;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int impactBurstFrameTicks = 3;
+        /// <summary>特效总时长秒数（≤0 = 自动按 帧数×每帧tick 播完一轮）。</summary>
+        public float impactBurstDurationSeconds;
+        /// <summary>绘制宽/高（格，正方形帧两者取同值；建议 ≈ 爆炸半径 × 2 ÷ 环带占帧宽比例）。</summary>
+        public float impactBurstWidthCells = 5f;
+        public float impactBurstHeightCells = 5f;
+        /// <summary>锚点沿世界 Z 平移（格，负值=向南压：帧图爆发中心在底边上方 f 处时取 -f × 高，把环心拉回撞击点）。</summary>
+        public float impactBurstOffsetZCells;
+        /// <summary>染色（alpha=0 视为纯白，帧图自带颜色时保持默认）。</summary>
+        public Color impactBurstTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数。</summary>
+        public float impactBurstFadeInSeconds;
+        public float impactBurstFadeOutSeconds = 0.1f;
+
         public CompProperties_MMTDelayedStrike()
         {
             compClass = typeof(CompAbilityEffect_MMTDelayedStrike);
@@ -443,6 +476,27 @@ namespace MyModeTest
                     tint = Props.pillarRampTint,
                     fadeInSeconds = Props.pillarRampFadeInSeconds,
                     fadeOutSeconds = Props.pillarRampFadeOutSeconds
+                };
+            }
+            if (!Props.impactBurstTexPath.NullOrEmpty())
+            {
+                int burstFrames = Mathf.Max(1, Props.impactBurstFrameCount);
+                int burstFrameTicks = Mathf.Max(1, Props.impactBurstFrameTicks);
+                p.impactSideFlat = new MMTSkillSideFlatParams
+                {
+                    texPath = Props.impactBurstTexPath,
+                    frameCount = burstFrames,
+                    frameTicks = burstFrameTicks,
+                    loop = false,
+                    durationSeconds = Props.impactBurstDurationSeconds > 0f
+                        ? Props.impactBurstDurationSeconds
+                        : burstFrames * burstFrameTicks / 60f,
+                    widthCells = Props.impactBurstWidthCells,
+                    heightCells = Props.impactBurstHeightCells,
+                    offsetZCells = Props.impactBurstOffsetZCells,
+                    tint = Props.impactBurstTint,
+                    fadeInSeconds = Props.impactBurstFadeInSeconds,
+                    fadeOutSeconds = Props.impactBurstFadeOutSeconds
                 };
             }
             MMTDelayedStrikeUtil.FireDelayedStrike(caster, target.Cell, p);

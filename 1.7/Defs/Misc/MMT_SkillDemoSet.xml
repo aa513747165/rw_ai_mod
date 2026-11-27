@@ -382,6 +382,37 @@
         <sideRampFadeInSeconds>0.08</sideRampFadeInSeconds>
         <sideRampFadeOutSeconds>0.15</sideRampFadeOutSeconds>
       </li>
+      <!-- 第十一步·皮肤II：圣光审判II（野蛮咆哮被击帧序列版，与旧版并存互不影响）
+           效果设计卡：坠落物视觉隐去（无光柱无陨石），落地瞬间在撞击点平铺 14 帧金色爆发序列
+           （素材 256×256 侧视构图：帧1-3 下砸光束+地面金爆，帧4-14 环形冲击波余烬消散；
+           走第二十六步 sideFlat 平躺水平 quad 路线，旋转锁 0° 贴图上边朝北=光束朝上）。
+           冲击环直径 ≈ 5 格 = 爆炸半径 2.5 × 2（实测环带占帧宽 0.79 → 绘制宽 6.4 格，正方形帧高同宽）；
+           爆发中心实测在帧底边上方 0.37 → offsetZ -2.37 格把环心压回撞击点（光束顶伸出落点以北约 4 格）；
+           3 tick/帧共 0.7s 播完一轮不循环，尾淡出 0.1s；落点原版爆炸半径 2.5 不点燃（闪光作高光打底），
+           迫近音效 MMT_Gong（圣钟）。参考：DNF 被击金爆/FF 系圣光审判落地段 -->
+      <li>
+        <label>测试·圣光审判II</label>
+        <iconPath>Things/Mote/MMT_HolyJudgment2_Icon</iconPath>
+        <radius>2.5</radius>
+        <targetFriendly>false</targetFriendly>
+        <demoType>delayedStrike</demoType>
+        <castSeconds>2.5</castSeconds>
+        <castBarColor>(1,0.9,0.55,0.5)</castBarColor>
+        <soundDefName>MMT_Gong</soundDefName>
+        <meteorDelaySeconds>1.5</meteorDelaySeconds>
+        <meteorFallTicks>6</meteorFallTicks>
+        <meteorDamage>45</meteorDamage>
+        <meteorExplosionRadius>2.5</meteorExplosionRadius>
+        <meteorIgniteChance>0</meteorIgniteChance>
+        <impactBurstTexPath>Things/Mote/MMT_HolyJudgment2_Burst</impactBurstTexPath>
+        <impactBurstFrameCount>14</impactBurstFrameCount>
+        <impactBurstFrameTicks>3</impactBurstFrameTicks>
+        <impactBurstWidthCells>6.4</impactBurstWidthCells>
+        <impactBurstHeightCells>6.4</impactBurstHeightCells>
+        <impactBurstOffsetZCells>-2.37</impactBurstOffsetZCells>
+        <impactBurstFadeInSeconds>0</impactBurstFadeInSeconds>
+        <impactBurstFadeOutSeconds>0.1</impactBurstFadeOutSeconds>
+      </li>
       <!-- 第十二步：近战击退（锁定近身目标猛击并击飞） -->
       <li>
         <label>测试·猛击击退</label>

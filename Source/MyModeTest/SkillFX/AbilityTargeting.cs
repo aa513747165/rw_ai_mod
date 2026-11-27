@@ -608,6 +608,26 @@ namespace MyModeTest
         /// <summary>true = 坠落物换成多片坡道光柱皮肤（参数复用下方 sideRamp* 字段；
         /// 光柱顶部朝屏幕北=朝天，负漂移=向南压落，如圣光审判）。</summary>
         public bool meteorUsePillarRamp;
+        /// <summary>撞击帧序列皮肤图集贴图（横向等宽排布，侧视构图：底部贴地、顶部朝北）；
+        /// 非空 = 隐去坠落物视觉，落地瞬间在落点平铺爆发序列帧（如圣光审判II 的金色冲击环），
+        /// 可与 meteorUsePillarRamp 叠加（天上光柱 + 落地爆发）。</summary>
+        public string impactBurstTexPath;
+        /// <summary>图集帧数（等宽切片）。</summary>
+        public int impactBurstFrameCount = 1;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int impactBurstFrameTicks = 3;
+        /// <summary>特效总时长秒数（≤0 = 自动按 帧数×每帧tick 播完一轮）。</summary>
+        public float impactBurstDurationSeconds;
+        /// <summary>绘制宽/高（格，正方形帧两者取同值；建议 ≈ 爆炸半径 × 2 ÷ 环带占帧宽比例）。</summary>
+        public float impactBurstWidthCells = 5f;
+        public float impactBurstHeightCells = 5f;
+        /// <summary>锚点沿世界 Z 平移（格，负值=向南压：帧图爆发中心在底边上方 f 处时取 -f × 高，把环心拉回撞击点）。</summary>
+        public float impactBurstOffsetZCells;
+        /// <summary>染色（alpha=0 视为纯白，帧图自带颜色时保持默认）。</summary>
+        public Color impactBurstTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数。</summary>
+        public float impactBurstFadeInSeconds;
+        public float impactBurstFadeOutSeconds = 0.1f;
 
         // —— 近战击退演示（第十二步） ——
         public float knockbackDamage = 12f;
@@ -986,7 +1006,9 @@ namespace MyModeTest
                 return "技能框架演示：" + cast + "在目标区域亮出预警圈（半径 " + demo.radius + "），" + demo.meteorDelaySeconds
                     + "s 后" + (demo.meteorUsePillarRamp
                         ? "降下圣光柱轰击（多片坡道光柱皮肤，爆炸半径 " + demo.meteorExplosionRadius + "）。"
-                        : "坠下陨石轰击（爆炸半径 " + demo.meteorExplosionRadius + "，可点燃）。");
+                        : !demo.impactBurstTexPath.NullOrEmpty()
+                            ? "落点爆发金色冲击环轰击（撞击帧序列皮肤 " + demo.impactBurstFrameCount + " 帧，爆炸半径 " + demo.meteorExplosionRadius + "）。"
+                            : "坠下陨石轰击（爆炸半径 " + demo.meteorExplosionRadius + "，可点燃）。");
             }
             if (demo.demoType == "knockback")
             {
@@ -1714,8 +1736,29 @@ namespace MyModeTest
                         fadeOutSeconds = demo.sideRampFadeOutSeconds
                     };
                 }
+                if (!demo.impactBurstTexPath.NullOrEmpty())
+                {
+                    int burstFrames = Mathf.Max(1, demo.impactBurstFrameCount);
+                    int burstFrameTicks = Mathf.Max(1, demo.impactBurstFrameTicks);
+                    dsp.impactSideFlat = new MMTSkillSideFlatParams
+                    {
+                        texPath = demo.impactBurstTexPath,
+                        frameCount = burstFrames,
+                        frameTicks = burstFrameTicks,
+                        loop = false,
+                        durationSeconds = demo.impactBurstDurationSeconds > 0f
+                            ? demo.impactBurstDurationSeconds
+                            : burstFrames * burstFrameTicks / 60f,
+                        widthCells = demo.impactBurstWidthCells,
+                        heightCells = demo.impactBurstHeightCells,
+                        offsetZCells = demo.impactBurstOffsetZCells,
+                        tint = demo.impactBurstTint,
+                        fadeInSeconds = demo.impactBurstFadeInSeconds,
+                        fadeOutSeconds = demo.impactBurstFadeOutSeconds
+                    };
+                }
                 MMTDelayedStrikeUtil.FireDelayedStrike(parent, target.Cell, dsp);
-                Messages.Message("【" + demo.label + "】" + (demo.meteorUsePillarRamp ? "圣光即将降临！" : "陨石即将坠落！"),
+                Messages.Message("【" + demo.label + "】" + (demo.meteorUsePillarRamp || !demo.impactBurstTexPath.NullOrEmpty() ? "圣光即将降临！" : "陨石即将坠落！"),
                     parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
             }

@@ -29,9 +29,12 @@ namespace MyModeTest
         public bool loop = true;
         /// <summary>特效总时长秒数（到期自毁）。</summary>
         public float durationSeconds = 2.2f;
-        /// <summary>绘制宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
+        /// <summary>绘制宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心，可再由 offsetZCells 平移）。</summary>
         public float widthCells = 2.2f;
         public float heightCells = 2.6f;
+        /// <summary>锚点沿世界 Z 的额外平移（格，负值=整体向南/屏幕下压）：帧图爆发中心不在底边时
+        /// 用它把视觉中心拉回目标格（如金爆冲击环中心在帧底边上方 0.37 × 高 → offsetZ = -0.37 × 高）。</summary>
+        public float offsetZCells;
         /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，模拟上升感，0=钉在原地）。</summary>
         public float driftCells = 0.6f;
         /// <summary>染色（帧图自带颜色时保持纯白；alpha=0 视为未设置按纯白处理）。</summary>
@@ -136,9 +139,9 @@ namespace MyModeTest
             {
                 color.a *= Mathf.Clamp01(remain / fx.fadeOutSeconds);
             }
-            // 锚点：贴图底边中点钉在目标格中心 → quad 中心沿 +Z（北）偏 height/2，再叠加漂移
+            // 锚点：贴图底边中点钉在目标格中心 → quad 中心沿 +Z（北）偏 height/2，再叠加锚点平移与漂移
             Vector3 pos = Position.ToVector3Shifted();
-            pos.z += fx.heightCells * 0.5f + fx.driftCells * progress;
+            pos.z += fx.heightCells * 0.5f + fx.offsetZCells + fx.driftCells * progress;
             float y = AltitudeLayer.MoteOverhead.AltitudeFor();
             Camera cam = Camera.main;
             Vector3 camForward = cam != null ? cam.transform.forward : new Vector3(0f, -1f, 0f);
