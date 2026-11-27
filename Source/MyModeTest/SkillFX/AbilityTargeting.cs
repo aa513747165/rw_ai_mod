@@ -69,11 +69,18 @@ namespace MyModeTest
         /// 持续特效别用贴图圆盘——白底贴图在加法着色器下整个 quad 发光，alpha 无效整屏染色）。</summary>
         public static void DrawDisc(Vector3 pos, float radius, Color color)
         {
+            DrawDiscAtAltitude(pos, radius, color, AltitudeLayer.MetaOverlays.AltitudeFor());
+        }
+
+        /// <summary>画实心圆盘并指定高度层（落点阴影等需要压在 pawn 下面的场合用；绘制层由调用方给定）。</summary>
+        public static void DrawDiscAtAltitude(Vector3 pos, float radius, Color color, float altitudeY)
+        {
             if (radius <= 0f)
             {
                 return;
             }
             EnsureMats();
+            pos.y = altitudeY;
             discMat.color = color;
             matProps.SetColor("_Color", color);
             Graphics.DrawMesh(GetDiscMesh(radius), pos, Quaternion.identity, discMat, 0, null, 0, matProps);
@@ -372,7 +379,7 @@ namespace MyModeTest
         public bool showRangeRing = true;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）；"sideRamp"=多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式，纯视觉演示）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -464,6 +471,9 @@ namespace MyModeTest
         public float groundEffectRadius;
         /// <summary>火海半径（0=单柱喷发；缺省用预览圈半径 radius）。</summary>
         public float groundAreaRadius;
+        /// <summary>true=整图单团模式：不逐格铺火海，只在中心生成一根大火焰（visualScale 放大
+        /// 覆盖整个预览圈区域，伤害半径缺省取 radius）——5×5 整图序列帧火海用。</summary>
+        public bool groundSingleFlame;
         /// <summary>火海覆盖率。</summary>
         public float groundDensity = 0.9f;
         /// <summary>火海铺开延迟（tick/格）。</summary>
@@ -595,6 +605,9 @@ namespace MyModeTest
         /// <summary>坠落缩放区间（1→1 = 恒定大小）。</summary>
         public float meteorGrowFrom = 1f;
         public float meteorGrowTo = 1f;
+        /// <summary>true = 坠落物换成多片坡道光柱皮肤（参数复用下方 sideRamp* 字段；
+        /// 光柱顶部朝屏幕北=朝天，负漂移=向南压落，如圣光审判）。</summary>
+        public bool meteorUsePillarRamp;
 
         // —— 近战击退演示（第十二步） ——
         public float knockbackDamage = 12f;
@@ -727,6 +740,38 @@ namespace MyModeTest
         /// <summary>首/尾淡入淡出秒数。</summary>
         public float sideFlatFadeInSeconds = 0.15f;
         public float sideFlatFadeOutSeconds = 0.4f;
+
+        // —— 多片坡道堆叠序列帧演示（第二十七步：帧切 N 带沿 Z 坡道分布，龙卷风式） ——
+        /// <summary>序列帧图集贴图（横向等宽排布，侧视构图：底部贴地、顶部朝北）。</summary>
+        public string sideRampTexPath = "Things/Mote/MMT_SkillRiseFX_FlamePillar";
+        public int sideRampFrameCount = 5;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int sideRampFrameTicks = 7;
+        /// <summary>true=帧序列循环播放到时长结束；false=播完一轮停在末帧。</summary>
+        public bool sideRampLoop = true;
+        public float sideRampDurationSeconds = 2.2f;
+        /// <summary>整体宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
+        public float sideRampWidthCells = 2.2f;
+        public float sideRampHeightCells = 2.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地）。</summary>
+        public float sideRampDriftCells = 0.6f;
+        /// <summary>坡道切片数（≥2；静止时无缝拼回整帧）。</summary>
+        public int sideRampSlices = 8;
+        /// <summary>横向摆动最大幅度（格，底部不摆、随高度平方增大至顶部）。</summary>
+        public float sideRampSway = 0.35f;
+        /// <summary>摆动周期 tick（每带相位按序错开）。</summary>
+        public float sideRampSwayPeriodTicks = 40f;
+        /// <summary>顶端宽度缩放系数（&lt;1 呈锥形收口，1=直筒）。</summary>
+        public float sideRampTopScale = 0.75f;
+        /// <summary>顶端 alpha 系数（&lt;1 顶部淡出，伪造遮挡衰减）。</summary>
+        public float sideRampTopAlpha = 0.85f;
+        /// <summary>呼吸脉冲幅度（0~1，各带相位错开的宽度起伏，0=关闭）。</summary>
+        public float sideRampPulseAmp = 0.06f;
+        /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
+        public Color sideRampTint = new Color(0f, 0f, 0f, 0f);
+        /// <summary>首/尾淡入淡出秒数。</summary>
+        public float sideRampFadeInSeconds = 0.15f;
+        public float sideRampFadeOutSeconds = 0.4f;
     }
 
     public class CompProperties_MMTSkillDemo : CompProperties
@@ -823,6 +868,11 @@ namespace MyModeTest
             if (demo.demoType == "groundFire")
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                if (demo.groundSingleFlame)
+                {
+                    return "技能框架演示：" + cast + "在目标区域（半径 " + demo.radius + "）燃起持续 " + demo.groundDurationSeconds
+                        + "s 的整图序列帧火海（单团大火焰覆盖整片区域，灼烧并点燃踏入者）。";
+                }
                 if (demo.groundAreaRadius > 0f || demo.radius > 0f)
                 {
                     return "技能框架演示：" + cast + "在目标区域铺开持续 " + demo.groundDurationSeconds
@@ -907,7 +957,9 @@ namespace MyModeTest
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
                 return "技能框架演示：" + cast + "在目标区域亮出预警圈（半径 " + demo.radius + "），" + demo.meteorDelaySeconds
-                    + "s 后坠下陨石轰击（爆炸半径 " + demo.meteorExplosionRadius + "，可点燃）。";
+                    + "s 后" + (demo.meteorUsePillarRamp
+                        ? "降下圣光柱轰击（多片坡道光柱皮肤，爆炸半径 " + demo.meteorExplosionRadius + "）。"
+                        : "坠下陨石轰击（爆炸半径 " + demo.meteorExplosionRadius + "，可点燃）。");
             }
             if (demo.demoType == "knockback")
             {
@@ -980,6 +1032,12 @@ namespace MyModeTest
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
                 return "技能框架演示：" + cast + "在目标点平铺一段侧视序列帧火柱（平躺水平 quad 路线，贴图上边朝北=屏幕上，持续 "
                     + demo.sideFlatDurationSeconds + "s，纯视觉无伤害）。";
+            }
+            if (demo.demoType == "sideRamp")
+            {
+                string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
+                return "技能框架演示：" + cast + "在目标点堆叠一段侧视序列帧火柱（" + demo.sideRampSlices
+                    + " 片坡道带，锥形收放+摆动+脉冲，持续 " + demo.sideRampDurationSeconds + "s，纯视觉无伤害）。";
             }
             return "技能框架演示：范围圈敌我预览，确认后仅提示影响名单，无实际效果。";
         }
@@ -1131,7 +1189,7 @@ namespace MyModeTest
                             || demo.demoType == "summonOrb" || demo.demoType == "summonHoming"
                             || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                             || demo.demoType == "knockback" || demo.demoType == "chainLightning"
-                            || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat") && demo.radius <= 0f)
+                            || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat" || demo.demoType == "sideRamp") && demo.radius <= 0f)
                         {
                             GenDraw.DrawTargetHighlightWithLayer(t.Cell.ToVector3Shifted(), AltitudeLayer.MetaOverlays);
                         }
@@ -1225,7 +1283,7 @@ namespace MyModeTest
                 || demo.demoType == "summonOrb" || demo.demoType == "summonHoming" || demo.demoType == "summonAnimal" || demo.demoType == "summonTurret"
                 || demo.demoType == "delayedStrike" || demo.demoType == "knockback" || demo.demoType == "chainLightning"
                 || demo.demoType == "breathCone" || demo.demoType == "heal" || demo.demoType == "wall" || demo.demoType == "groundZone"
-                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat")
+                || demo.demoType == "mine" || demo.demoType == "nova" || demo.demoType == "dispel" || demo.demoType == "riseFX" || demo.demoType == "sideFlat" || demo.demoType == "sideRamp")
             {
                 castingDemo = demo;
                 castingTarget = target;
@@ -1373,7 +1431,7 @@ namespace MyModeTest
                     ? target.Thing
                     : null;
                 IntVec3 fireCell = victim?.Position ?? target.Cell;
-                bool isSea = demo.groundAreaRadius > 0f || demo.radius > 0f;
+                bool isSea = !demo.groundSingleFlame && (demo.groundAreaRadius > 0f || demo.radius > 0f);
                 MMTGroundFireUtil.FireGround(parent, fireCell, new MMTGroundFireParams
                 {
                     texPath = demo.groundTexPath,
@@ -1391,13 +1449,14 @@ namespace MyModeTest
                     armorPenetration = demo.groundArmorPenetration,
                     ignitePawnChance = demo.groundIgnitePawnChance,
                     igniteCellChance = demo.groundIgniteCellChance,
-                    effectRadius = demo.groundEffectRadius,
+                    effectRadius = demo.groundEffectRadius > 0f ? demo.groundEffectRadius
+                        : (demo.groundSingleFlame ? demo.radius : 0f),
                     areaRadius = isSea ? (demo.groundAreaRadius > 0f ? demo.groundAreaRadius : demo.radius) : 0f,
                     density = demo.groundDensity,
                     spreadPerCellTicks = demo.groundSpreadPerCellTicks,
                     startSound = sound
                 });
-                Messages.Message("【" + demo.label + "】" + (isSea ? "烈焰火海蔓延！"
+                Messages.Message("【" + demo.label + "】" + (isSea || demo.groundSingleFlame ? "烈焰火海蔓延！"
                         : victim != null ? "烈焰吞没 " + victim.LabelShortCap + "！" : "烈焰喷发！"),
                     parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
@@ -1583,8 +1642,8 @@ namespace MyModeTest
             }
             if (demo.demoType == "delayedStrike")
             {
-                // 延时打击：目标区域亮预警圈，延迟结束坠下陨石
-                MMTDelayedStrikeUtil.FireDelayedStrike(parent, target.Cell, new MMTDelayedStrikeParams
+                // 延时打击：目标区域亮预警圈，延迟结束坠下陨石（或坡道光柱皮肤，如圣光审判）
+                MMTDelayedStrikeParams dsp = new MMTDelayedStrikeParams
                 {
                     warningRadius = demo.radius > 0f ? demo.radius : 3f,
                     delayTicks = Mathf.Max(1, demo.meteorDelaySeconds.SecondsToTicks()),
@@ -1596,9 +1655,34 @@ namespace MyModeTest
                     meteorDrawSize = demo.meteorDrawSize,
                     meteorSpinDegPerTick = demo.meteorSpinDegPerTick,
                     meteorGrowFrom = demo.meteorGrowFrom,
-                    meteorGrowTo = demo.meteorGrowTo
-                });
-                Messages.Message("【" + demo.label + "】陨石即将坠落！", parent, MessageTypeDefOf.NeutralEvent, false);
+                    meteorGrowTo = demo.meteorGrowTo,
+                    anticipateSound = sound
+                };
+                if (demo.meteorUsePillarRamp)
+                {
+                    dsp.pillarRamp = new MMTSkillSideRampParams
+                    {
+                        texPath = demo.sideRampTexPath,
+                        frameCount = demo.sideRampFrameCount,
+                        frameTicks = demo.sideRampFrameTicks,
+                        loop = demo.sideRampLoop,
+                        widthCells = demo.sideRampWidthCells,
+                        heightCells = demo.sideRampHeightCells,
+                        driftCells = demo.sideRampDriftCells,
+                        slices = demo.sideRampSlices,
+                        sway = demo.sideRampSway,
+                        swayPeriodTicks = demo.sideRampSwayPeriodTicks,
+                        topScale = demo.sideRampTopScale,
+                        topAlpha = demo.sideRampTopAlpha,
+                        pulseAmp = demo.sideRampPulseAmp,
+                        tint = demo.sideRampTint,
+                        fadeInSeconds = demo.sideRampFadeInSeconds,
+                        fadeOutSeconds = demo.sideRampFadeOutSeconds
+                    };
+                }
+                MMTDelayedStrikeUtil.FireDelayedStrike(parent, target.Cell, dsp);
+                Messages.Message("【" + demo.label + "】" + (demo.meteorUsePillarRamp ? "圣光即将降临！" : "陨石即将坠落！"),
+                    parent, MessageTypeDefOf.NeutralEvent, false);
                 return;
             }
             if (demo.demoType == "knockback")
@@ -1813,6 +1897,34 @@ namespace MyModeTest
                 });
                 Messages.Message(flatFx != null ? "【" + demo.label + "】地心火柱喷发！" : "【" + demo.label + "】特效生成失败",
                     parent, flatFx != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            if (demo.demoType == "sideRamp")
+            {
+                // 多片坡道堆叠序列帧：纯视觉演示（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式）
+                Thing_MMTSkillSideRamp rampFx = MMTSkillSideRampUtil.Fire(parent.Map, target.Cell, new MMTSkillSideRampParams
+                {
+                    texPath = demo.sideRampTexPath,
+                    frameCount = demo.sideRampFrameCount,
+                    frameTicks = demo.sideRampFrameTicks,
+                    loop = demo.sideRampLoop,
+                    durationSeconds = demo.sideRampDurationSeconds,
+                    widthCells = demo.sideRampWidthCells,
+                    heightCells = demo.sideRampHeightCells,
+                    driftCells = demo.sideRampDriftCells,
+                    slices = demo.sideRampSlices,
+                    sway = demo.sideRampSway,
+                    swayPeriodTicks = demo.sideRampSwayPeriodTicks,
+                    topScale = demo.sideRampTopScale,
+                    topAlpha = demo.sideRampTopAlpha,
+                    pulseAmp = demo.sideRampPulseAmp,
+                    tint = demo.sideRampTint,
+                    fadeInSeconds = demo.sideRampFadeInSeconds,
+                    fadeOutSeconds = demo.sideRampFadeOutSeconds,
+                    startSound = sound
+                });
+                Messages.Message(rampFx != null ? "【" + demo.label + "】地心火柱喷发！" : "【" + demo.label + "】特效生成失败",
+                    parent, rampFx != null ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, false);
                 return;
             }
             ThingDef projectile = DefDatabase<ThingDef>.GetNamedSilentFail(demo.projectileDefName);

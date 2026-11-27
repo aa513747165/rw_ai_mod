@@ -120,7 +120,7 @@
 | 投射物命中附加 Hediff | `singleShot`/`funnelShot` 投射物命中后挂指定 Hediff（减速/中毒/点燃已有对应伤害类型，但"减速"类需此出口） | 猎人·震荡射击、法师·寒冰箭 |
 | `mine` 触发皮肤 | 触发后不爆炸，改为挂 Hediff/定身（backlog §一.2 已列为"后续可选扩展"） | 猎人·冰霜陷阱/毒蛇陷阱 |
 | `summonAnimal` 数量参数 | 一次召 N 只 | 猎人·兽群召唤 |
-| `strike`/`delayedStrike` 皮肤参数 | 落雷视觉换冰柱/圣光柱（加 texPath/tint 字段） | 法师·暴风雪(备选)、牧师·圣光审判 |
+| `strike`/`delayedStrike` 皮肤参数 | `delayedStrike` 坡道光柱皮肤 ✅ 已落地（`pillarRamp*` 字段，复用第二十七步坡道框架，演示「测试·圣光审判」）；`strike` 落雷换肤仍待做 | 法师·暴风雪(备选)、牧师·圣光审判 |
 | `bufffx` 覆盖物 | 给目标罩全身贴图（复用 `Thing_MMTIceBlock` Attach 机制） | 法师·寒冰屏障 |
 | `wall` 墙体 Def 参数 | 墙体建筑可配（石墙→冰墙/能量屏障） | 法师·冰墙术、工程师·能量屏障 |
 | `beam` 伤害类型参数 | 现在固定 Burn | 工程师·过载射线（想用电击） |

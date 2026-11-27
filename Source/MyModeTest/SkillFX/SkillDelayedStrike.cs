@@ -8,8 +8,12 @@ namespace MyModeTest
     // ========== 延时打击框架（第十一步：预警圈 → 延迟 → 陨石天降） ==========
     // 确认落点后，目标区域先出现持续预警圈（Thing_MMTDelayedStrike 自绘脉冲圆环，
     // 炼狱魔王火炮式"先标记后落弹"节奏），延迟结束后从高空坠下一颗陨石
-    // （Thing_MMTMeteor：斜向高速坠落 + 火焰拖尾 + 迫近呼啸），撞击点触发
+    // （Thing_MMTMeteor：斜向高速坠落 + 视觉高度北偏 + 落点阴影 + 火焰拖尾 + 迫近呼啸），撞击点触发
     // 原版爆炸（画面/音效全走 GenExplosion，可点燃）。
+    // 皮肤分支：配了 pillarRamp（MMTSkillSideRampParams）则坠落物换成多片坡道光柱
+    // （第二十七步坡道框架：侧视光柱切 N 带沿 +Z 坡道，顶部朝屏幕北=朝天，
+    // 负漂移=向南压落）——牧师·圣光审判走这条（docs/mmt-class-priest.md §3.12）；
+    // 坡道实体只承担视觉，坠落计时与撞击爆炸仍由陨石实体负责。
     // MMTDelayedStrikeUtil.FireDelayedStrike 为统一入口；pawn 技能侧出口
     // CompAbilityEffect_MMTDelayedStrike（预警圈预览复用第一步 AoETarget 框架）；
     // 建筑演示侧出口：AbilityTargeting.cs 的 CompSkillDemo（demoType="delayedStrike"）。
@@ -40,8 +44,11 @@ namespace MyModeTest
         public int fallTicks = 25;
         /// <summary>坠落起点相对撞击点的水平偏移（格，斜向砸落）。</summary>
         public float fallDistance = 14f;
-        /// <summary>坠落起点的视觉高度（格）。</summary>
+        /// <summary>坠落起点的视觉高度（格）。正交俯视下世界 Y 不可见，实现为向屏幕北（+Z）的
+        /// 偏移量：陨石从目标点以北 fallHeight 格"高空"压落，配合落点阴影读出天降感。</summary>
         public float fallHeight = 8f;
+        /// <summary>落点阴影最大 alpha（0=不画阴影；阴影随陨石逼近加深放大，是俯视下"有东西砸下来"的关键提示）。</summary>
+        public float meteorShadowAlpha = 0.35f;
         /// <summary>撞击伤害类型（null = Bomb）。</summary>
         public DamageDef damageDef;
         public float damage = 40f;
@@ -52,6 +59,10 @@ namespace MyModeTest
         public float chanceToStartFire = 0.3f;
         /// <summary>陨石开始坠落时的迫近呼啸音效（null = MortarRound_PreImpact）。</summary>
         public SoundDef anticipateSound;
+        /// <summary>坡道光柱皮肤（null = 默认陨石视觉）。配了则在坠落起点生成多片坡道光柱
+        /// （durationSeconds 会被强制对齐 fallTicks），陨石实体只保留坠落计时与撞击爆炸，
+        /// 不再自绘也不喷火焰拖尾。</summary>
+        public MMTSkillSideRampParams pillarRamp;
         public Thing equipment;
     }
 
@@ -180,6 +191,8 @@ namespace MyModeTest
     /// <summary>
     /// 陨石：从高空斜向坠向撞击点（位置插值 + 高度衰减 + 火焰拖尾），
     /// 落地触发原版爆炸后自毁。参数运行时传入不进存档；读档后立即引爆兜底。
+    /// 坡道光柱皮肤模式（pillarMode）：坠落视觉由坡道光柱实体承担（在撞击点生成，
+    /// 顶部朝屏幕北=朝天，负漂移向南压落），本实体只保留坠落计时与撞击爆炸。
     /// </summary>
     public class Thing_MMTMeteor : Thing
     {
@@ -190,6 +203,7 @@ namespace MyModeTest
         private int ticksTotal = 1;
         private int age;
         private Material mat;
+        private bool pillarMode;
         private bool loadedFromSave;
 
         public void Setup(Thing caster, MMTDelayedStrikeParams p)
@@ -197,6 +211,14 @@ namespace MyModeTest
             this.caster = caster;
             meteorParams = p;
             ticksTotal = Mathf.Max(1, p.fallTicks);
+            if (p.pillarRamp != null)
+            {
+                // 坡道光柱皮肤：光柱寿命强制对齐坠落耗时（落地即爆，爆炸闪光盖住收尾淡出）
+                pillarMode = true;
+                p.pillarRamp.durationSeconds = ticksTotal / 60f;
+                MMTSkillSideRampUtil.Fire(Map, Position, p.pillarRamp);
+                return;
+            }
             startHeight = p.fallHeight;
             // 坠落起点：撞击点西北高空（固定方向斜落，观感和迫击炮一致）
             Vector3 impact = Position.ToVector3Shifted();
@@ -211,11 +233,23 @@ namespace MyModeTest
             loadedFromSave = respawningAfterLoad;
         }
 
-        private Vector3 CurPos()
+        /// <summary>地面轨迹位置（不含视觉高度）：坠落起点（西北）→ 撞击点线性插值。</summary>
+        private Vector3 GroundPos()
         {
             float t = Mathf.Clamp01(age / (float)ticksTotal);
             Vector3 pos = Vector3.Lerp(startGround, Position.ToVector3Shifted(), t);
-            pos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + startHeight * (1f - t);
+            pos.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            return pos;
+        }
+
+        /// <summary>视觉位置：地面轨迹 + 向屏幕北（+Z）偏移剩余高度——1.7 正交俯视下
+        /// 世界 Y 不改变屏幕位置（渲染硬约束），"高度"只能画成向北偏移，
+        /// 陨石随坠落从目标以北高空压向落点（同坡道方案"高度堆在 Z 轴"的思路）。</summary>
+        private Vector3 VisualPos()
+        {
+            float t = Mathf.Clamp01(age / (float)ticksTotal);
+            Vector3 pos = GroundPos();
+            pos.z += startHeight * (1f - t);
             return pos;
         }
 
@@ -234,7 +268,7 @@ namespace MyModeTest
                 return;
             }
             age++;
-            if (Map == Find.CurrentMap)
+            if (Map == Find.CurrentMap && !pillarMode)
             {
                 SpawnTrail();
             }
@@ -244,7 +278,7 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>火焰拖尾：沿坠落轨迹抛火星。</summary>
+        /// <summary>火焰拖尾：沿视觉位置（含高度偏移）抛火星，使尾迹跟着"天上那颗"走。</summary>
         private void SpawnTrail()
         {
             Map map = Map;
@@ -253,7 +287,7 @@ namespace MyModeTest
             {
                 return;
             }
-            Vector3 pos = CurPos();
+            Vector3 pos = VisualPos();
             FleckCreationData data = FleckMaker.GetDataStatic(pos, map, fleck, Rand.Range(0.5f, 0.9f));
             data.velocity = new Vector3(Rand.Range(-0.4f, 0.4f), 0f, Rand.Range(-0.4f, 0.4f));
             data.instanceColor = new Color(1f, Rand.Range(0.4f, 0.65f), 0.15f);
@@ -276,16 +310,24 @@ namespace MyModeTest
             Destroy();
         }
 
-        /// <summary>自绘陨石：拖尾焰球，尺寸/缩放/自旋全部由参数控制（0 自旋 = 坠落不旋转）。</summary>
+        /// <summary>自绘陨石：先在落点画随逼近加深放大的阴影，再把陨石画在视觉位置
+        /// （北偏高度），尺寸/缩放/自旋全部由参数控制（0 自旋 = 坠落不旋转）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            if (mat == null || Map != Find.CurrentMap)
+            if (pillarMode || mat == null || Map != Find.CurrentMap)
             {
                 return;
             }
             float t = Mathf.Clamp01(age / (float)ticksTotal);
             float size = meteorParams.meteorDrawSize * Mathf.Lerp(meteorParams.meteorGrowFrom, meteorParams.meteorGrowTo, t);
-            Vector3 pos = CurPos();
+            if (meteorParams.meteorShadowAlpha > 0f)
+            {
+                float shadowAlpha = Mathf.Lerp(0.08f, meteorParams.meteorShadowAlpha, t);
+                float shadowRadius = size * 0.45f * Mathf.Lerp(0.5f, 1f, t);
+                MMTAoETargetPreview.DrawDiscAtAltitude(Position.ToVector3Shifted(), shadowRadius,
+                    new Color(0f, 0f, 0f, shadowAlpha), AltitudeLayer.MoteLow.AltitudeFor());
+            }
+            Vector3 pos = VisualPos();
             Quaternion rot = meteorParams.meteorSpinDegPerTick != 0f
                 ? Quaternion.AngleAxis(age * meteorParams.meteorSpinDegPerTick, Vector3.up)
                 : Quaternion.identity;
@@ -317,6 +359,36 @@ namespace MyModeTest
         public float meteorGrowTo = 1f;
         public string anticipateSoundDefName;
 
+        // —— 坡道光柱皮肤（配了 pillarRampTexPath 即替代陨石视觉，其余 meteor* 视觉字段失效） ——
+        /// <summary>光柱序列帧图集贴图（横向等宽排布，侧视构图：底部贴地、顶部朝北=朝天）。</summary>
+        public string pillarRampTexPath;
+        /// <summary>图集帧数（等宽切片，单帧贴图填 1）。</summary>
+        public int pillarRampFrameCount = 1;
+        /// <summary>每帧停留 tick 数。</summary>
+        public int pillarRampFrameTicks = 7;
+        /// <summary>坡道切片数（≥2，建议 ≤12）。</summary>
+        public int pillarRampSlices = 8;
+        /// <summary>光柱宽/高（格；宽=世界 X，高=世界 +Z 北=屏幕上；底边中点锚在落点）。</summary>
+        public float pillarRampWidthCells = 3f;
+        public float pillarRampHeightCells = 4.8f;
+        /// <summary>坠落期间整体漂移（格，负值=向南压落，模拟从天而降的砸落感）。</summary>
+        public float pillarRampDriftCells;
+        /// <summary>横向摆动最大幅度（格，圣光类给小值保持庄重）。</summary>
+        public float pillarRampSway = 0.06f;
+        /// <summary>摆动周期 tick。</summary>
+        public float pillarRampSwayPeriodTicks = 50f;
+        /// <summary>顶端宽度缩放系数（&lt;1 收口，1=直筒，&gt;1 顶端微扩=光源在上）。</summary>
+        public float pillarRampTopScale = 1f;
+        /// <summary>顶端 alpha 系数（&lt;1 顶部淡出=光柱上端延伸出屏幕）。</summary>
+        public float pillarRampTopAlpha = 0.5f;
+        /// <summary>呼吸脉冲幅度（0~1，0=关闭）。</summary>
+        public float pillarRampPulseAmp = 0.08f;
+        /// <summary>染色（白图光柱代码染色用；alpha=0 视为纯白）。</summary>
+        public Color pillarRampTint = Color.white;
+        /// <summary>首/尾淡入淡出秒数（尾部淡出会被落地爆炸闪光盖住，给小值即可）。</summary>
+        public float pillarRampFadeInSeconds = 0.08f;
+        public float pillarRampFadeOutSeconds = 0.15f;
+
         public CompProperties_MMTDelayedStrike()
         {
             compClass = typeof(CompAbilityEffect_MMTDelayedStrike);
@@ -333,7 +405,7 @@ namespace MyModeTest
         {
             base.Apply(target, dest);
             Pawn caster = parent.pawn;
-            MMTDelayedStrikeUtil.FireDelayedStrike(caster, target.Cell, new MMTDelayedStrikeParams
+            MMTDelayedStrikeParams p = new MMTDelayedStrikeParams
             {
                 warningRadius = Props.warningRadius > 0f ? Props.warningRadius : Props.radius,
                 delayTicks = Mathf.Max(1, Props.delaySeconds.SecondsToTicks()),
@@ -351,7 +423,29 @@ namespace MyModeTest
                 meteorGrowTo = Props.meteorGrowTo,
                 anticipateSound = Props.anticipateSoundDefName.NullOrEmpty() ? null : DefDatabase<SoundDef>.GetNamedSilentFail(Props.anticipateSoundDefName),
                 equipment = caster.equipment?.Primary
-            });
+            };
+            if (!Props.pillarRampTexPath.NullOrEmpty())
+            {
+                p.pillarRamp = new MMTSkillSideRampParams
+                {
+                    texPath = Props.pillarRampTexPath,
+                    frameCount = Props.pillarRampFrameCount,
+                    frameTicks = Props.pillarRampFrameTicks,
+                    widthCells = Props.pillarRampWidthCells,
+                    heightCells = Props.pillarRampHeightCells,
+                    driftCells = Props.pillarRampDriftCells,
+                    slices = Props.pillarRampSlices,
+                    sway = Props.pillarRampSway,
+                    swayPeriodTicks = Props.pillarRampSwayPeriodTicks,
+                    topScale = Props.pillarRampTopScale,
+                    topAlpha = Props.pillarRampTopAlpha,
+                    pulseAmp = Props.pillarRampPulseAmp,
+                    tint = Props.pillarRampTint,
+                    fadeInSeconds = Props.pillarRampFadeInSeconds,
+                    fadeOutSeconds = Props.pillarRampFadeOutSeconds
+                };
+            }
+            MMTDelayedStrikeUtil.FireDelayedStrike(caster, target.Cell, p);
         }
     }
 }

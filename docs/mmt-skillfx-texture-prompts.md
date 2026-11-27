@@ -647,3 +647,52 @@ negative 通用：`top-down view, radial composition, ground, text, watermark, c
    序列连贯、淡入淡出无跳变；与「测试·地心火柱」（屏幕空间版）同格对照，确认
    吃地图光照与 Altitude 遮挡差异符合预期；
 4. 终稿覆盖同名文件即生效，Def 零改动（宽高比变化时同步调 XML 宽/高格数）。
+
+---
+## 十六、火海 5×5 地面贴图 `MMT_FlameSea5x5`（5 帧，1024×1024）【已出图完成，已接入「测试·烈焰火海」】
+
+> 2026-11-27：为成片火海准备的**整图覆盖 5×5 格**帧序列方案。与 §十四 互补：§十四 是每格一簇火焰的循环动画，本节是一张铺满 5×5 区域的整图火海序列。渲染约束不变（1.7 竖直 quad 不渲染）：**俯视径向构图、整帧平铺地面**。
+> **已出图完成**：AI 逐帧出 5 帧（起燃→蔓延→峰值→旋卷→余烬，亮度曲线 3.4→21.7→65.3→17.6→0.8），Pillow 预乘黑后落盘（透明区 RGB=0 防白边，alpha max 250~255、四边 alpha=0、重心居中 ±2%，验收通过），并接入「测试·烈焰火海」（`groundSingleFlame` 整图单团模式，radius 2.5、visualScale 5、7 tick/帧，条目见 `1.7/Defs/Misc/MMT_SkillDemoSet.xml`）。
+
+- **落盘**：`1.7/Textures/Things/Mote/MMT_FlameSea5x5/MMT_FlameSea5x5_0.png` … `_4.png`（texPath `Things/Mote/MMT_FlameSea5x5/MMT_FlameSea5x5_<i>`，演示条目 `groundFrameTexPaths` 指向它们，返工覆盖同名文件即用，Def 零改动）。
+- **功能**：「测试·烈焰火海」（demoType="groundFire" + groundSingleFlame）的一体化火海本体：中心一根大火焰按 `visualScale`（5 格）放大覆盖 5×5 区域，5 帧序列循环播放；帧图为白/灰度图，代码按 `groundTint` 染橙红 `(1,0.55,0.15)`；伤害半径缺省 = 预览圈 radius（2.5 格）。
+- **接入机制**：`MMTSkillDemoEntry.groundSingleFlame`（AbilityTargeting.cs）——true 时不逐格铺火海（areaRadius=0），只在目标点生成一根大火焰，`effectRadius` 缺省取 radius。
+
+### AI 出图提示词（返工用，每帧一张）
+
+全局前缀：
+
+```text
+game VFX sprite, top-down view (viewed from directly above), a large sea of
+flames covering the entire frame, radial composition centered in frame:
+brightest white-hot fire core at the exact center, dense orange-red flame
+tongues spreading outward in all directions, flames gradually thinning and
+fading to fully transparent at all four edges, vivid orange-red fire with
+yellow-white highlights, hand-painted fantasy game style, symmetrical radial
+composition, no ground, no smoke plume, no vertical flame column,
+PNG with alpha channel
+```
+
+负面词：
+
+```text
+side view, vertical flame, smoke column, ground, terrain, text, watermark,
+hard edges, abrupt cutoff at borders, perspective tilt, frame grid,
+sprite sheet layout
+```
+
+逐帧差异（第 1 帧文生图定稿后，其余帧 img2img、重绘幅度 0.3~0.45、同种子，仅替换以下描述拼在全局前缀后）：
+
+1. `_0` 起燃：`small ignition stage, dim embers gathering at the center, low flame intensity, sparse short flame tongues`
+2. `_1` 蔓延：`flames spreading outward from the center, medium intensity, flame tongues reaching halfway to the edges`
+3. `_2` 峰值：`full eruption peak, brightest white-hot core, dense flame tongues filling the frame`
+4. `_3` 旋卷：`swirling flame tongues curling slowly, slightly dimmer, flames beginning to settle`
+5. `_4` 余烬：`dying embers, sparse fading sparks, low intensity, flames mostly gone`
+
+**验收清单**：
+
+1. 5 帧同尺寸正方形 RGBA（1024²）、透明底，四边 2px alpha = 0；
+2. 透明区 RGB 预乘为黑（防白边）；峰值帧（`_2`）alpha max ≥ 230；亮度整体按 `_0`<`_1`<`_2`>`_3`>`_4` 单调起伏；
+3. 重心全部在图幅中心 ±5% 内，逐帧无整体位移（循环首尾 `_4` → `_0` 不跳变）；
+4. 相邻帧差分检查：变化应集中在火舌细节而非整体构图（漂移过大 → 降 img2img 重绘幅度重出）；
+5. 游戏内验证：「测试·烈焰火海」5×5 区域火海循环播放流畅、无帧间跳动错位、无硬边白边。

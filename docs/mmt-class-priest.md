@@ -22,7 +22,7 @@
 | 9 | 治疗之环 | heal | 治疗·群体 | II | 中 | — |
 | 10 | 信仰守护 | aura(增益) | 光环·友方 | II | 中 | — |
 | 11 | 神圣新星 | nova | 伤害+治疗·自身周围 | III | 大 | ✅ 原型已落地（第二十二步） |
-| 12 | 圣光审判 | delayedStrike | 伤害·范围大招 | III | 大 | ⚠ 坠落物皮肤（总纲 §6-B） |
+| 12 | 圣光审判 | delayedStrike | 伤害·范围大招 | III | 大 | ✅ 坡道光柱皮肤已落地（演示「测试·圣光审判」） |
 | 13 | 神圣赞美诗 | heal | 治疗·全屏级 | III | 大 | — |
 | 14 | 守护天使 | summonAnimal | 召唤·光元素 | III | 大 | ⚠ 新 PawnKind 资产（总纲 §6-C） |
 | 15 | 复活术 | ⚠ 新机制 | 复活·单体 | III | 大 | ⚠ backlog 无，全新机制 |
@@ -136,13 +136,13 @@
 - **音效**：`MMT_Gong`（爆发瞬间）。
 - **图标**：`UI/RoM/lightburst`。
 
-### 3.12 圣光审判（III 阶，大招）
+### 3.12 圣光审判（III 阶，大招）✅ 皮肤已落地
 
-- **框架**：`delayedStrike`。radius=2.5，targetFriendly=false，range=25，castSeconds=2.5，meteorDelaySeconds=1.5，meteorFallTicks=20，meteorDamage=45，meteorExplosionRadius=2.5，meteorIgniteChance=0，meteorDrawSize=3.2，meteorSpinDegPerTick=0，meteorGrowFrom=0.6，meteorGrowTo=1。
-- **特效详情**：⚠ 坠落物贴图框架固定 `MMT_Meteor`，需 §6-B 的"皮肤参数"扩展换成**圣光柱**（`MMT_HolyPillar`，白图垂直光柱代码染金 `(1, 0.9, 0.5)`，提示词 §三）；尺寸 3.2 格（=爆炸半径 2.5 × 1.28）；不旋转；缩放 0.6→1（光柱由细到实砸下）；坠落 20 tick；落点金色爆闪 + 预警圈 2.5 格。扩展未落地前阶段一用默认陨石皮肤顶测（数值先行）。
-- **音效**：`MMT_Gong` + 原版 `Explosion_Flame`（落点，框架内置爆炸音则为框架默认）。
+- **框架**：`delayedStrike` + **坡道光柱皮肤**（`meteorUsePillarRamp`，第二十七步坡道框架复用，坠落视觉由坡道光柱承担、计时/爆炸不变；pawn 技能侧走 `CompProperties_MMTDelayedStrike.pillarRamp*` 字段）。radius=2.5，targetFriendly=false，range=25，castSeconds=2.5，meteorDelaySeconds=1.5，meteorFallTicks=20，meteorDamage=45，meteorExplosionRadius=2.5，meteorIgniteChance=0。
+- **特效详情**：贴图 `MMT_HolyPillar`（128×256 单帧白图，代码染金 `(1, 0.9, 0.55)`，已出图落地），宽 3.0 格 × 高 4.8 格，8 片坡道带；顶部 alpha 衰减至 0.45（上端延伸出屏幕=来自高空）、顶端微扩 1.1（光源在上）、摆动 0.06（庄重）、脉冲 0.08，坠落 20 tick 内向南压落 0.6 格（负漂移=砸落感）；落点金色爆闪 + 预警圈 2.5 格。演示条目「测试·圣光审判」已按本参数落地（`MMT_SkillDemoSet.xml`，含效果设计卡注释），**游戏内效果待验证**（坡道原型首个实战皮肤，顺带验证坡道本体）。
+- **音效**：`MMT_Gong`（光柱降下，迫近音效位）+ 原版爆炸音（落点，框架内置）。
 - **图标**：`UI/RoM/sol`。
-- **贴图**：需新出 `MMT_HolyPillar.png`（配 §6-B 扩展）。
+- **贴图**：✅ `Things/Mote/MMT_HolyPillar`（已出图）。
 
 ### 3.13 神圣赞美诗（III 阶，大招）
 
@@ -193,6 +193,6 @@ Start（0 费，就职自动解锁）
 | 投射物+贴图 | `MMT_Proj_HolyBolt` / `MMT_HolyBolt.png` | 惩击用金色光弹（提示词 §一） |
 | 贴图 | `MMT_NovaRing.png` | 神圣新星环（已出图完成，提示词 §十三） |
 | —— | 驱散魔法无新增资产 | 复用 `Thing_MMTBuffIconFlash` 图标桶 + 原版微光点（`dispel`，第二十三步） |
-| 贴图 | `MMT_HolyPillar.png` | 圣光审判坠落物皮肤（配 §6-B 扩展，提示词 §三） |
+| 贴图 | `MMT_HolyPillar.png` | ✅ 圣光审判坡道光柱皮肤（已出图落地，单帧白图代码染金） |
 | race+PawnKind+贴图 | `MMT_HolyGuardian` | 守护天使光元素（提示词 §四） |
 | Hediff | `MMT_Buff_Soothed` / `MMT_Buff_Valor` / `MMT_AuraBuff_Faith` / `MMT_Buff_HolyRegen` | 见总纲 §8 |

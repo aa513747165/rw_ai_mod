@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- 多片坡道堆叠序列帧特效载体（第二十七步）：侧视帧切成 N 条水平带，
+       每带一片水平 quad（plane10 + Quaternion.identity）沿世界 +Z（屏幕向北）坡道
+       排开——原版 Tornado 同款思路：高度堆在 Z 轴，世界 Y 只加微小抖动排绘制次序。
+       静止时 N 带无缝拼回整帧，每带独立锥形收放/横向摆动/呼吸脉冲/顶部透明衰减，
+       获得单帧平躺没有的体积感与运动层次。朝向锁死屏幕北。
+       本体 DrawAt 自绘（按帧+带号用 mainTextureScale/Offset 切图集），graphicData 仅为兜底。
+       参数运行时注入不进存档，读档后自毁。不直接放置/生成。 -->
+  <ThingDef>
+    <defName>MMT_SkillSideRamp</defName>
+    <label>技能坡道特效</label>
+    <thingClass>MyModeTest.Thing_MMTSkillSideRamp</thingClass>
+    <category>Attachment</category>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Mote/MMT_SkillRiseFX_FlamePillar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+  </ThingDef>
+</Defs>

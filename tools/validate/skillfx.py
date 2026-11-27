@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）+ 侧视平躺序列帧（第二十六步）Def/贴图/假人演示条目/C# 核心。"""
+"""技能特效框架静态验证：地面火焰（第六步）+ 光环（第七步）+ 增益/减益特效（第八步）+ 位移（第九步）+ 召唤（第十步）+ 余烬爆发（第二十四步）+ 侧视平躺/坡道序列帧（第二十六/二十七步）Def/贴图/假人演示条目/C# 核心。"""
 from pathlib import Path
 
 from validate_mod import assert_equal, child_text, def_map, fail, parse_xml, require_files
@@ -75,6 +75,9 @@ RISE_TEX = "1.7/Textures/Things/Mote/MMT_SkillRiseFX_FlamePillar.png"
 # —— 第 26 步：侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上） ——
 SIDEFLAT_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillSideFlat.xml"
 SIDEFLAT_CS = "Source/MyModeTest/SkillFX/SkillSideFlat.cs"
+# —— 第 27 步：多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，龙卷风式） ——
+RAMP_XML = "1.7/Defs/ThingDefs_Misc/MMT_SkillSideRamp.xml"
+RAMP_CS = "Source/MyModeTest/SkillFX/SkillSideRamp.cs"
 
 
 def validate_skillfx() -> None:
@@ -88,7 +91,7 @@ def validate_skillfx() -> None:
                    METEOR_TEX, BIGBALL_TEX, WALL_TEX,
                    ZONE_XML, ZONE_CS, MINE_XML, TRAP_CS, MINE_TEX, ICE_TEX,
                    BEAM_HEAD_TEX, BEAM_TAIL_TEX, NOVA_XML, NOVA_CS, NOVA_TEX, DISPEL_CS, EMBER_CS,
-                   RISE_XML, RISE_CS, RISE_TEX, SIDEFLAT_XML, SIDEFLAT_CS])
+                   RISE_XML, RISE_CS, RISE_TEX, SIDEFLAT_XML, SIDEFLAT_CS, RAMP_XML, RAMP_CS])
 
     defs = def_map(parse_xml(FLAME_XML))
     node = defs.get("MMT_GroundFlame")
@@ -226,7 +229,7 @@ def validate_skillfx() -> None:
         if token not in dummy:
             fail(f"假人靶子配置缺少: {token}")
 
-    # —— 演示技能集（39 条，Dev 一键赋予小人的唯一数据源） ——
+    # —— 演示技能集（40 条，Dev 一键赋予小人的唯一数据源） ——
     demoset = Path(DEMOSET_XML).read_text(encoding="utf-8")
     for token in ("MMTSkillDemoSetDef", "MMT_SkillDemoSet",
                   "测试·友方回响", "测试·敌方回响", "测试·单发火球术", "测试·多方位火球术",
@@ -235,8 +238,7 @@ def validate_skillfx() -> None:
                   "测试·烈焰喷发", "测试·烈焰火海", "groundFire", "groundRequireTarget",
                   "groundPillarHeight", "groundPillarLayers", "groundPillarTopScale", "groundPillarSway",
                   "groundFrameTexPaths", "groundFrameTicks", "MMT_FlameErupt",
-                  "emberBurst", "emberCount", "emberBurstDamage", "emberResidDurationSeconds",
-                  "emberResidDamage", "emberResidDensity", "emberSparkSpeedMin", "emberSparkSpeedMax",
+                  "groundSingleFlame", "groundVisualScale", "MMT_FlameSea5x5",
                   "测试·守护光环", "测试·迅捷光环", "测试·迟缓光环", "auraShieldMode", "auraBuffDefName",
                   "测试·迅捷祝福", "测试·群体迅捷", "测试·迟缓诅咒", "测试·群体迟缓",
                   "bufffx", "buffRequireTarget", "buffHediffDefName", "MMT_Buff_Swift", "MMT_Debuff_Slow",
@@ -266,7 +268,11 @@ def validate_skillfx() -> None:
                   "测试·地心火柱·平躺", "sideFlat", "sideFlatTexPath", "sideFlatFrameCount",
                   "sideFlatFrameTicks", "sideFlatLoop", "sideFlatDurationSeconds",
                   "sideFlatWidthCells", "sideFlatHeightCells", "sideFlatDriftCells",
-                  "sideFlatFadeInSeconds", "sideFlatFadeOutSeconds"):
+                  "sideFlatFadeInSeconds", "sideFlatFadeOutSeconds",
+                  "测试·地心火柱·坡道", "sideRamp", "sideRampTexPath", "sideRampSlices",
+                  "sideRampSway", "sideRampSwayPeriodTicks", "sideRampTopScale",
+                  "sideRampTopAlpha", "sideRampPulseAmp", "sideRampWidthCells",
+                  "sideRampHeightCells", "sideRampDriftCells"):
         if token not in demoset:
             fail(f"演示技能集缺少: {token}")
 
@@ -305,6 +311,25 @@ def validate_skillfx() -> None:
         if token not in flat_cs:
             fail(f"SkillSideFlat.cs 缺少: {token}")
 
+    # —— 多片坡道堆叠（第二十七步） ——
+    ramp_defs = def_map(parse_xml(RAMP_XML))
+    ramp = ramp_defs.get("MMT_SkillSideRamp")
+    if ramp is None:
+        fail("缺少 MMT_SkillSideRamp 定义")
+        return
+    assert_equal(child_text(ramp, "thingClass"), "MyModeTest.Thing_MMTSkillSideRamp", "坡道特效 thingClass")
+    assert_equal(child_text(ramp, "category"), "Attachment", "坡道特效 category")
+    assert_equal(child_text(ramp, "drawerType"), "RealtimeOnly", "坡道特效 drawerType")
+
+    ramp_cs = Path(RAMP_CS).read_text(encoding="utf-8")
+    for token in ("MMTSkillSideRampParams", "Thing_MMTSkillSideRamp", "MMTSkillSideRampUtil",
+                  "mainTextureScale", "mainTextureOffset", "Quaternion.identity",
+                  "PerspectiveCompensate", "ShadowCastingMode.Off", "MoteOverhead",
+                  "slices", "sway", "topScale", "topAlpha", "pulseAmp",
+                  "MMT_SkillSideRamp", "MaterialPropertyBlock", "SharedBandMat"):
+        if token not in ramp_cs:
+            fail(f"SkillSideRamp.cs 缺少: {token}")
+
     cs = Path(CS).read_text(encoding="utf-8")
     for token in ("MMTGroundFireUtil", "Thing_MMTGroundFlame", "CompAbilityEffect_MMTGroundFire",
                   "TryAttachFire", "TryStartFireIn", "FireGround",
@@ -320,6 +345,9 @@ def validate_skillfx() -> None:
     for token in ("MMT_BossFire_FlamePillar", "frameTexPaths", "MMT_FlameErupt"):
         if token not in boss_xml:
             fail(f"MMT_Abilities_FireBoss.xml 缺少: {token}")
+
+    # —— 烈焰火海整图序列帧贴图（5 帧：起燃→蔓延→峰值→旋卷→余烬，整图单团 5×5 模式） ——
+    require_files([f"1.7/Textures/Things/Mote/MMT_FlameSea5x5/MMT_FlameSea5x5_{i}.png" for i in range(5)])
 
     aura_cs = Path(AURA_CS).read_text(encoding="utf-8")
     for token in ("MMTAuraUtil", "Thing_MMTSkillAuraShield", "Thing_MMTSkillAuraBuff",
@@ -514,7 +542,9 @@ def validate_skillfx() -> None:
                   "novaHitOnce", "novaTexPath", "novaTint",
                   "dispel", "MMTDispelUtil", "dispelCount", "dispelIconTexPath",
                   "emberBurst", "MMTEmberBurstUtil", "emberCount", "emberResidDurationSeconds",
-                  "sideFlat", "MMTSkillSideFlatUtil", "sideFlatTexPath", "sideFlatDriftCells"):
+                  "groundSingleFlame",
+                  "sideFlat", "MMTSkillSideFlatUtil", "sideFlatTexPath", "sideFlatDriftCells",
+                  "sideRamp", "MMTSkillSideRampUtil", "sideRampSlices", "sideRampSway"):
         if token not in targeting_cs:
             fail(f"AbilityTargeting.cs 缺少新演示接入: {token}")
 
