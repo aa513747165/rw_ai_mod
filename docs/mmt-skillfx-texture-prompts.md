@@ -696,3 +696,46 @@ sprite sheet layout
 3. 重心全部在图幅中心 ±5% 内，逐帧无整体位移（循环首尾 `_4` → `_0` 不跳变）；
 4. 相邻帧差分检查：变化应集中在火舌细节而非整体构图（漂移过大 → 降 img2img 重绘幅度重出）；
 5. 游戏内验证：「测试·烈焰火海」5×5 区域火海循环播放流畅、无帧间跳动错位、无硬边白边。
+
+---
+## 十七、石墙术链接图集 `MMT_StoneWall`（512×512，CornerFiller 4×4）【占位图已落盘，待 AI 终稿】
+
+> 2026-11-27：石墙术改为原版 CornerFiller 链接图形（linkType + linkFlags Wall/Rock），
+> 贴图必须是 1.7 Graphic_Linked 的 4×4 图集排布：16 枚 128px 子砖按 LinkDirections
+> 位掩码 0~15 排布（Up=1 Right=2 Down=4 Left=8），index = 位掩码值，
+> 列 = index % 4、行（自底向上）= index / 4；渲染时只采样每枚子砖中央 16~112px
+> （外圈 1/8 被裁掉）。占位图由 `docs/temp/gen_stonewall_atlas.py` 生成（全局无缝砖纹 +
+> 未链接侧边深色包边），已落盘生效；AI 终稿直接覆盖同名文件，Def 零改动。
+
+- **落盘**：`1.7/Textures/Things/Building/MMT_StoneWall.png`（512×512，RGBA 不透明）。
+- **接入机制**：`MMT_MagicStoneWall.xml` graphicData 用 `graphicClass Graphic_Single` +
+  `<linkType>CornerFiller</linkType>` + linkFlags Wall/Rock，游戏自动 WrapLinked 成
+  Graphic_LinkedCornerFiller；角部填充固定采样图集 UV (0.5, 0.6) 单像素
+  （落在 index 10 子砖中部，需为不透明墙色）。
+- **图集排布速查**（每个格子 = 该朝向的链接组合，砖中央 96px 可见）：
+  - index 0（无链接）独立墙墩，四边全包边；
+  - index 5（Up+Down）竖直墙中段；index 10（Right+Left）水平墙中段；index 15 四向十字中段；
+  - 其余为 L/T/端头组合，未链接侧边画包边、链接侧边砖纹延续。
+
+### AI 出图提示词（返工用，整图一张）
+
+```text
+RimWorld style wall texture atlas, 4x4 grid of 16 square tiles, 512x512 PNG,
+top-down orthographic game art, grey stone brick wall, hand-painted,
+consistent lighting from top-left; every tile shows the same seamless stone
+brick pattern (bricks ~44x26 px with dark mortar gaps) that CONTINUES
+seamlessly across tile borders; on each tile, draw a darker outline band and
+a subtle inner highlight ONLY on the sides given by this bitmask layout
+(bit Up=1 Right=2 Down=4 Left=8, tile index = column + 4 * row-from-bottom,
+a set bit means that side connects to a neighbor wall and must have NO
+border), borders drawn 16-30 px inside each 128px tile edge, corners of the
+outline rounded; no text, no watermark, fully opaque
+```
+
+**验收清单**：
+
+1. 512×512 RGBA 全不透明（四角填充采 (0.5,0.6) 像素必须是不透明墙色）；
+2. 砖纹跨 16 枚子砖全局无缝（相邻墙连成一体），包边只出现在未链接侧且落在 16~30px 内；
+3. 游戏内验证：两格相邻石墙无缝连接、与原版墙/打磨岩壁相邻也连续，
+   单独一格呈带四边包边的独立墙墩，角部填充色与墙身一致；
+4. 终稿覆盖同名文件即生效，Def 零改动。

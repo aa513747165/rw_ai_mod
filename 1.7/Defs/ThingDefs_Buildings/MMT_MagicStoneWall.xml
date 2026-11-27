@@ -2,7 +2,9 @@
 <Defs>
   <!-- 石墙术临时石墙（第十八步）：技能召唤的满填墙体，无主派系，
        挡路挡视线挡子弹、可托屋顶、不可燃；限时走原版 CompLifespan 到期崩解。
-       不进建筑菜单（不设建筑类目），仅由 MMTWallUtil.RaiseWall 生成。 -->
+       不进建筑菜单（不设建筑类目），仅由 MMTWallUtil.RaiseWall 生成。
+       图形走原版 CornerFiller 链接（linkFlags Wall+Rock）：贴图为 4×4 图集
+       （16 枚按 LinkDirections 位掩码排布的墙砖），相邻石墙/原版墙/打磨岩壁连成一体。 -->
   <ThingDef ParentName="BuildingBase">
     <defName>MMT_MagicStoneWall</defName>
     <label>魔法石墙</label>
@@ -23,6 +25,11 @@
     <graphicData>
       <texPath>Things/Building/MMT_StoneWall</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <linkType>CornerFiller</linkType>
+      <linkFlags>
+        <li>Wall</li>
+        <li>Rock</li>
+      </linkFlags>
     </graphicData>
     <statBases>
       <MaxHitPoints>260</MaxHitPoints>

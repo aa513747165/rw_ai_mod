@@ -379,7 +379,7 @@ namespace MyModeTest
         public bool showRangeRing = true;
 
         // —— 射击类演示（第三步） ——
-        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）；"sideRamp"=多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式，纯视觉演示）；"whirlwind"=近战旋风斩（自身中心免瞄准，俯视旋涡序列帧整帧平铺地面+绕竖直轴自转，峰值帧对周围敌人结算一次伤害）。</summary>
+        /// <summary>演示类型：""/"preview"=范围圈纯提示；"singleShot"=单发射击；"funnelShot"=浮游齐射；"beam"=持续射线；"strike"=天降打击；"groundFire"=地面火焰；"aura"=自身光环（免瞄准）；"bufffx"=增益/减益特效；"blink"=折跃；"massTeleport"=群体传送（两段瞄准）；"charge"=冲锋；"jump"=跳跃；"summonOrb"=雷球；"summonHoming"=追踪弹；"summonAnimal"=动物召唤；"summonTurret"=炮塔召唤；"delayedStrike"=延时打击（陨石）；"knockback"=近战击退；"chainLightning"=连锁闪电；"breathCone"=锥形吐息（龙息）；"heal"=治疗；"wall"=造墙（石墙术，锥形末端外弧弧形墙）；"groundZone"=持续地面区域（毒气池/寒风领域）；"mine"=触发式爆炸陷阱（地雷）；"nova"=新星环（360° 扩散冲击波，自身中心免瞄准）；"dispel"=驱散/净化（单体锁定，移除限时状态）；"riseFX"=屏幕空间升起序列帧（侧视素材走 UI 层贴图，纯视觉演示）；"sideFlat"=侧视平躺序列帧（整帧平铺水平 quad，贴图上边朝北=屏幕上，纯视觉演示）；"sideRamp"=多片坡道堆叠序列帧（帧切 N 带沿 Z 坡道分布，锥形收放+摆动+脉冲，龙卷风式，纯视觉演示）；"whirlwind"=近战旋风斩（自身中心免瞄准，俯视旋涡序列帧整帧平铺地面+绕竖直轴自转，峰值帧对周围敌人结算一次伤害）。</summary>
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
@@ -718,8 +718,10 @@ namespace MyModeTest
         public float dispelIconSeconds = 0.5f;
 
         // —— 造墙演示（第十八步：石墙术） ——
-        /// <summary>石墙存续秒数（墙半径用 radius）。</summary>
+        /// <summary>石墙存续秒数（锥形半径用 radius：以施法者为锥顶的四分之一扇形，只在末端外弧生成石墙）。</summary>
         public float wallDurationSeconds = 30f;
+        /// <summary>锥形半角（度）：45° 时全角 90° = 整圆四分之一。</summary>
+        public float wallConeHalfAngleDegrees = 45f;
 
         // —— 屏幕空间升起特效演示（第二十五步：侧视序列帧火柱，绕开竖直 quad 不渲染） ——
         /// <summary>序列帧图集贴图（横向等宽排布）。</summary>
@@ -1037,7 +1039,8 @@ namespace MyModeTest
             if (demo.demoType == "wall")
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
-                return "技能框架演示：" + cast + "在圈选范围（半径 " + demo.radius + "）内召唤一片临时石墙（挡路挡视线，"
+                return "技能框架演示：" + cast + "在施法者指向鼠标方向的锥形范围（半径 " + demo.radius + "，全角 "
+                    + (demo.wallConeHalfAngleDegrees * 2f) + "°）末端外弧召唤一段弧形临时石墙（挡路挡视线，"
                     + demo.wallDurationSeconds + "s 后崩解）。";
             }
             if (demo.demoType == "groundZone")
@@ -1233,8 +1236,10 @@ namespace MyModeTest
                     }
                     else if (demo.demoType == "wall")
                     {
-                        // 石墙术：只画墙范围圈（不高亮圈内目标，墙落位与目标无关）
-                        MMTAoETargetPreview.DrawCircle(t.Cell, demo.radius, MMTAoETargetPreview.RingColor(demo.targetFriendly));
+                        // 石墙术：画以施法者为锥顶、指向鼠标的扇形预览 + 末端外弧可建墙格高亮
+                        Color preview = MMTAoETargetPreview.RingColor(demo.targetFriendly);
+                        preview.a = 0.5f;
+                        MMTWallUtil.DrawWallPreview(parent, parent.Map, t.Cell, demo.radius, demo.wallConeHalfAngleDegrees, preview);
                     }
                     else
                     {
@@ -1834,8 +1839,8 @@ namespace MyModeTest
             }
             if (demo.demoType == "wall")
             {
-                // 石墙术：圈选范围内召唤临时石墙
-                int walls = MMTWallUtil.RaiseWall(parent, target.Cell, demo.radius, new MMTWallParams
+                // 石墙术：锥形末端外弧召唤弧形临时石墙
+                int walls = MMTWallUtil.RaiseWall(parent, target.Cell, demo.radius, demo.wallConeHalfAngleDegrees, new MMTWallParams
                 {
                     durationTicks = Mathf.Max(1, demo.wallDurationSeconds.SecondsToTicks()),
                     startSound = sound

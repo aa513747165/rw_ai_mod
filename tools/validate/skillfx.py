@@ -256,6 +256,7 @@ def validate_skillfx() -> None:
                   "delayedStrike", "knockback", "chainLightning", "breathCone", "heal", "wall",
                   "meteorDelaySeconds", "meteorFallTicks", "knockbackCells", "chainBounceCount",
                   "breathRange", "healAmount", "wallDurationSeconds", "ignoreLineOfSight",
+                  "wallConeHalfAngleDegrees",
                   "MMT_Proj_BigFireball",
                   "测试·毒气池", "groundZone", "zoneDurationSeconds", "zoneIntervalTicks",
                   "zoneAffectEveryone", "zoneHediffDefName", "zoneHediffSeverity", "ToxicBuildup",
@@ -477,14 +478,16 @@ def validate_skillfx() -> None:
     assert_equal(child_text(wall_def, "fillPercent"), "1", "石墙满填")
     assert_equal(child_text(wall_def, "passability"), "Impassable", "石墙不可通行")
     wall_xml = Path(WALL_XML).read_text(encoding="utf-8")
-    for token in ("CompProperties_Lifespan", "Things/Building/MMT_StoneWall", "MaxHitPoints"):
+    for token in ("CompProperties_Lifespan", "Things/Building/MMT_StoneWall", "MaxHitPoints",
+                  "CornerFiller", "<li>Wall</li>"):
         if token not in wall_xml:
             fail(f"石墙 XML 缺少: {token}")
     if "<designationCategory>" in wall_xml:
         fail("石墙不应出现在建筑菜单（designationCategory）")
     wall_cs = Path(WALL_CS).read_text(encoding="utf-8")
     for token in ("MMTWallUtil", "CompAbilityEffect_MMTWall", "RaiseWall", "CanRaiseAt",
-                  "CompLifespan", "ThrowDustPuff"):
+                  "CompLifespan", "ThrowDustPuff", "WallCellsInCone", "coneHalfAngleDegrees",
+                  "DrawWallPreview"):
         if token not in wall_cs:
             fail(f"SkillWall.cs 缺少: {token}")
 

@@ -487,7 +487,7 @@
         <castBarColor>(0.4,1,0.5,0.5)</castBarColor>
         <healAmount>15</healAmount>
       </li>
-      <!-- 第十八步：石墙术（圈选范围召唤临时石墙） -->
+      <!-- 第十八步：石墙术（以施法者为锥顶的四分之一扇形，只在末端外弧召唤弧形临时石墙） -->
       <li>
         <label>测试·石墙术</label>
         <iconPath>Things/Building/MMT_StoneWall</iconPath>
@@ -498,6 +498,7 @@
         <range>15</range>
         <soundDefName>ChunkRock_Drop</soundDefName>
         <wallDurationSeconds>30</wallDurationSeconds>
+        <wallConeHalfAngleDegrees>45</wallConeHalfAngleDegrees>
       </li>
       <!-- 第十九步：毒气池（通用持续地面区域：站内积累原版毒素，离区自然衰减） -->
       <li>
