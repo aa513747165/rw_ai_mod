@@ -23,7 +23,10 @@ namespace MyModeTest
             // 流程开始：Mod 构造函数由游戏调用，先取设置（各消费端经 MMTSettings.Instance 读取），再应用全部 Harmony 补丁。
             Settings = GetSettings<MMTSettings>();
             Log.Message("[myModeTest] Mod loaded.");
-            new Harmony("MyModeTest.Harmony").PatchAll();
+            Harmony harmony = new Harmony("MyModeTest.Harmony");
+            harmony.PatchAll();
+            // Mana Odyssey 软兼容（未安装时静默跳过）：MO 伤害法术可对沙袋人偶施放
+            ManaOdysseyCompat.TryPatch(harmony);
         }
 
         public override string SettingsCategory()
