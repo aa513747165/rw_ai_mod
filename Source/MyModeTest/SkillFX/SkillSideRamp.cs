@@ -31,8 +31,11 @@ namespace MyModeTest
         /// <summary>整体宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
         public float widthCells = 2.2f;
         public float heightCells = 2.6f;
-        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，模拟上升感，0=钉在原地）。</summary>
-        public float driftCells = 0.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地；默认 0=固定在目标脚下地面，需要上升感时显式配）。</summary>
+        public float driftCells;
+        /// <summary>底边锚点自格中心向南（屏幕下方）偏移格数：俯视正交相机下格中心投影在小人躯干，
+        /// 南移后火柱底边落在脚下地面。</summary>
+        public float baseDownCells;
         /// <summary>坡道切片数（≥2；每带深度=heightCells/slices，静止时无缝拼回整帧）。</summary>
         public int slices = 8;
         /// <summary>横向摆动最大幅度（格，底部不摆、随高度平方增大至顶部）。</summary>
@@ -148,7 +151,8 @@ namespace MyModeTest
             {
                 baseColor.a *= Mathf.Clamp01(remain / fx.fadeOutSeconds);
             }
-            Vector3 basePos = Position.ToVector3Shifted();
+            // 锚点先向南（屏幕下方）偏移 baseDownCells 格：格中心投影在小人躯干，南移后底边落在脚下地面
+            Vector3 basePos = Position.ToVector3Shifted() + new Vector3(0f, 0f, -fx.baseDownCells);
             float baseAlt = AltitudeLayer.MoteOverhead.AltitudeFor();
             Camera cam = Camera.main;
             Vector3 camForward = cam != null ? cam.transform.forward : new Vector3(0f, -1f, 0f);

@@ -383,6 +383,9 @@ namespace MyModeTest
         public string demoType;
         /// <summary>true = 瞄准时无视视线（抛物线类技能可跨墙选点）。</summary>
         public bool ignoreLineOfSight;
+        /// <summary>true = 必须点选目标（pawn/建筑）才能释放，不允许点地板；敌我限定走 targetFriendly。
+        /// 通用版锁定开关（strike/groundFire/bufffx 另有专属 *RequireTarget 旗标，语义相同）。</summary>
+        public bool requireTarget;
         /// <summary>确认目标后的读条秒数（0=瞬发无读条），读条圆画在建筑正上方。</summary>
         public float castSeconds;
         public string projectileDefName;
@@ -451,6 +454,15 @@ namespace MyModeTest
         public List<string> groundFrameTexPaths;
         /// <summary>序列帧每帧停留 tick 数。</summary>
         public int groundFrameTicks = 7;
+        /// <summary>true=帧序列循环播放到火焰熄灭；false=帧序列按单柱存活期摊平只播一遍
+        /// （起燃→峰值→余烬随火焰寿命自然演进，不再循环重复）。</summary>
+        public bool groundFrameLoop = true;
+        /// <summary>true=喷发时在火柱位置叠加一段 sideRamp 侧视坡道火柱特效（参数复用下方 sideRamp* 字段，
+        /// 视觉与「测试·地心火柱·坡道」一致；侧视构图让火柱有竖直喷发感，地面火焰伤害逻辑不变）。</summary>
+        public bool groundSideRampFX;
+        /// <summary>true=隐藏地面火焰自身的俯视序列帧/火柱自绘（伤害/点燃逻辑不变），
+        /// 视觉完全交给叠加的 sideRamp 坡道特效。</summary>
+        public bool groundHideVisual;
         /// <summary>单柱贴图尺寸（格，贴地火盘直径）。</summary>
         public float groundVisualScale = 1.7f;
         /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
@@ -735,8 +747,10 @@ namespace MyModeTest
         /// <summary>绘制宽/高（格，贴图底边中点锚在目标格中心）。</summary>
         public float riseWidthCells = 2.2f;
         public float riseHeightCells = 2.6f;
-        /// <summary>生命周期内整体上升距离（格，0=钉在原地）。</summary>
-        public float riseCells = 0.6f;
+        /// <summary>生命周期内整体上升距离（格，0=钉在原地，默认固定在目标脚下地面）。</summary>
+        public float riseCells;
+        /// <summary>底边锚点自格中心向南（屏幕下方）偏移格数：格中心投影在小人躯干，南移后火柱从脚下地面长出。</summary>
+        public float riseBaseDownCells = 0.45f;
         /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
         public Color riseTint = new Color(0f, 0f, 0f, 0f);
         /// <summary>首/尾淡入淡出秒数。</summary>
@@ -755,8 +769,8 @@ namespace MyModeTest
         /// <summary>绘制宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
         public float sideFlatWidthCells = 2.2f;
         public float sideFlatHeightCells = 2.6f;
-        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地）。</summary>
-        public float sideFlatDriftCells = 0.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地，默认固定在目标脚下地面）。</summary>
+        public float sideFlatDriftCells;
         /// <summary>染色，alpha=0 时纯白（帧图自带颜色）。</summary>
         public Color sideFlatTint = new Color(0f, 0f, 0f, 0f);
         /// <summary>首/尾淡入淡出秒数。</summary>
@@ -775,8 +789,10 @@ namespace MyModeTest
         /// <summary>整体宽/高（格；宽=世界 X，高=世界 +Z 北；贴图底边中点锚在目标格中心）。</summary>
         public float sideRampWidthCells = 2.2f;
         public float sideRampHeightCells = 2.6f;
-        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地）。</summary>
-        public float sideRampDriftCells = 0.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地，默认固定在目标脚下地面）。</summary>
+        public float sideRampDriftCells;
+        /// <summary>底边锚点自格中心向南（屏幕下方）偏移格数：格中心投影在小人躯干，南移后底边落在脚下地面。</summary>
+        public float sideRampBaseDownCells;
         /// <summary>坡道切片数（≥2；静止时无缝拼回整帧）。</summary>
         public int sideRampSlices = 8;
         /// <summary>横向摆动最大幅度（格，底部不摆、随高度平方增大至顶部）。</summary>
@@ -1039,9 +1055,9 @@ namespace MyModeTest
             if (demo.demoType == "wall")
             {
                 string cast = demo.castSeconds > 0f ? "读条 " + demo.castSeconds + "s 后" : "瞬发，";
-                return "技能框架演示：" + cast + "在施法者指向鼠标方向的锥形范围（半径 " + demo.radius + "，全角 "
-                    + (demo.wallConeHalfAngleDegrees * 2f) + "°）末端外弧召唤一段弧形临时石墙（挡路挡视线，"
-                    + demo.wallDurationSeconds + "s 后崩解）。";
+                return "技能框架演示：" + cast + "在施法者指向鼠标方向的锥形范围（全角 "
+                    + (demo.wallConeHalfAngleDegrees * 2f) + "°）末端外弧召唤一段弧形临时石墙，墙弧贴着点击点升起（最远 "
+                    + demo.radius + " 格，挡路挡视线，" + demo.wallDurationSeconds + "s 后崩解）。";
             }
             if (demo.demoType == "groundZone")
             {
@@ -1191,8 +1207,9 @@ namespace MyModeTest
             pendingTeleportDemo = null;
             TargetingParameters parms = new TargetingParameters
             {
-                // 锁定目标类技能（单体落雷/烈焰喷发/单体增益减益/追踪弹/击退/连锁闪电/驱散）不允许点地板，必须点在 pawn/建筑上
+                // 锁定目标类技能（单体落雷/烈焰喷发/单体增益减益/追踪弹/击退/连锁闪电/驱散/地心火柱系）不允许点地板，必须点在 pawn/建筑上
                 canTargetLocations = !demo.strikeRequireTarget && !demo.groundRequireTarget && !demo.buffRequireTarget
+                    && !demo.requireTarget
                     && demo.demoType != "summonHoming" && demo.demoType != "knockback" && demo.demoType != "chainLightning"
                     && demo.demoType != "dispel",
                 canTargetPawns = true,
@@ -1318,7 +1335,8 @@ namespace MyModeTest
                         }
                         return demo.targetFriendly ? t.Thing.Faction == parent.Faction : t.Thing.HostileTo(parent);
                     }
-                    if ((demo.demoType == "strike" && demo.strikeRequireTarget)
+                    if (demo.requireTarget
+                        || (demo.demoType == "strike" && demo.strikeRequireTarget)
                         || (demo.demoType == "groundFire" && demo.groundRequireTarget)
                         || (demo.demoType == "bufffx" && demo.buffRequireTarget))
                     {
@@ -1499,6 +1517,8 @@ namespace MyModeTest
                     tint = demo.groundTint,
                     frameTexPaths = demo.groundFrameTexPaths,
                     frameTicks = demo.groundFrameTicks,
+                    frameLoop = demo.groundFrameLoop,
+                    hideVisual = demo.groundHideVisual,
                     visualScale = demo.groundVisualScale,
                     pillarHeight = demo.groundPillarHeight,
                     pillarLayers = demo.groundPillarLayers,
@@ -1517,6 +1537,31 @@ namespace MyModeTest
                     spreadPerCellTicks = demo.groundSpreadPerCellTicks,
                     startSound = sound
                 });
+                if (demo.groundSideRampFX)
+                {
+                    // 叠加侧视坡道火柱特效（与「测试·地心火柱·坡道」同款，纯视觉，无音效——喷发音由地面火焰播）
+                    MMTSkillSideRampUtil.Fire(parent.Map, fireCell, new MMTSkillSideRampParams
+                    {
+                        texPath = demo.sideRampTexPath,
+                        frameCount = demo.sideRampFrameCount,
+                        frameTicks = demo.sideRampFrameTicks,
+                        loop = demo.sideRampLoop,
+                        durationSeconds = demo.sideRampDurationSeconds,
+                        widthCells = demo.sideRampWidthCells,
+                        heightCells = demo.sideRampHeightCells,
+                        driftCells = demo.sideRampDriftCells,
+                        baseDownCells = demo.sideRampBaseDownCells,
+                        slices = demo.sideRampSlices,
+                        sway = demo.sideRampSway,
+                        swayPeriodTicks = demo.sideRampSwayPeriodTicks,
+                        topScale = demo.sideRampTopScale,
+                        topAlpha = demo.sideRampTopAlpha,
+                        pulseAmp = demo.sideRampPulseAmp,
+                        tint = demo.sideRampTint,
+                        fadeInSeconds = demo.sideRampFadeInSeconds,
+                        fadeOutSeconds = demo.sideRampFadeOutSeconds
+                    });
+                }
                 Messages.Message("【" + demo.label + "】" + (isSea || demo.groundSingleFlame ? "烈焰火海蔓延！"
                         : victim != null ? "烈焰吞没 " + victim.LabelShortCap + "！" : "烈焰喷发！"),
                     parent, MessageTypeDefOf.NeutralEvent, false);
@@ -1950,6 +1995,7 @@ namespace MyModeTest
                     widthCells = demo.riseWidthCells,
                     heightCells = demo.riseHeightCells,
                     riseCells = demo.riseCells,
+                    baseDownCells = demo.riseBaseDownCells,
                     tint = demo.riseTint,
                     fadeInSeconds = demo.riseFadeInSeconds,
                     fadeOutSeconds = demo.riseFadeOutSeconds,
@@ -1994,6 +2040,7 @@ namespace MyModeTest
                     widthCells = demo.sideRampWidthCells,
                     heightCells = demo.sideRampHeightCells,
                     driftCells = demo.sideRampDriftCells,
+                    baseDownCells = demo.sideRampBaseDownCells,
                     slices = demo.sideRampSlices,
                     sway = demo.sideRampSway,
                     swayPeriodTicks = demo.sideRampSwayPeriodTicks,

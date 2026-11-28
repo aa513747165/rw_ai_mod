@@ -242,7 +242,8 @@ def validate_skillfx() -> None:
                   "beamMuzzleOffset", "beamHeadTexPath", "beamTailTexPath", "beamHeadSize", "beamTailSize",
                   "测试·烈焰喷发", "测试·烈焰火海", "groundFire", "groundRequireTarget",
                   "groundPillarHeight", "groundPillarLayers", "groundPillarTopScale", "groundPillarSway",
-                  "groundFrameTexPaths", "groundFrameTicks", "MMT_FlameErupt",
+                  "groundFrameTexPaths", "groundFrameTicks", "groundFrameLoop", "MMT_FlameErupt",
+                  "requireTarget",
                   "groundSingleFlame", "groundVisualScale", "MMT_FlameSea5x5",
                   "测试·守护光环", "测试·迅捷光环", "测试·迟缓光环", "auraShieldMode", "auraBuffDefName",
                   "测试·迅捷祝福", "测试·群体迅捷", "测试·迟缓诅咒", "测试·群体迟缓",
@@ -270,7 +271,8 @@ def validate_skillfx() -> None:
                   "dispelIconTexPath", "dispelIconSeconds", "MMT_FastReleaseSD", "UI/RoM/purify",
                   "测试·地心火柱", "riseFX", "riseTexPath", "riseFrameCount", "riseFrameTicks",
                   "riseLoop", "riseDurationSeconds", "riseWidthCells", "riseHeightCells",
-                  "riseCells", "riseFadeInSeconds", "riseFadeOutSeconds", "MMT_SkillRiseFX_FlamePillar",
+                  "riseCells", "riseBaseDownCells", "riseFadeInSeconds", "riseFadeOutSeconds", "MMT_SkillRiseFX_FlamePillar",
+                  "groundSideRampFX", "groundHideVisual", "sideRampBaseDownCells",
                   "测试·地心火柱·平躺", "sideFlat", "sideFlatTexPath", "sideFlatFrameCount",
                   "sideFlatFrameTicks", "sideFlatLoop", "sideFlatDurationSeconds",
                   "sideFlatWidthCells", "sideFlatHeightCells", "sideFlatDriftCells",
@@ -487,7 +489,7 @@ def validate_skillfx() -> None:
     wall_cs = Path(WALL_CS).read_text(encoding="utf-8")
     for token in ("MMTWallUtil", "CompAbilityEffect_MMTWall", "RaiseWall", "CanRaiseAt",
                   "CompLifespan", "ThrowDustPuff", "WallCellsInCone", "coneHalfAngleDegrees",
-                  "DrawWallPreview"):
+                  "DrawWallPreview", "EffectiveRange"):
         if token not in wall_cs:
             fail(f"SkillWall.cs 缺少: {token}")
 

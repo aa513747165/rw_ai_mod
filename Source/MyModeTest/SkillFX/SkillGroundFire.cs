@@ -31,8 +31,14 @@ namespace MyModeTest
         /// 起燃→喷发峰值→旋卷→余烬消散，帧图本身已带颜色，tint 应传白色；
         /// 每柱帧相位按 seed 错开，火海成片时不同步）。</summary>
         public List<string> frameTexPaths;
-        /// <summary>序列帧每帧停留 tick 数。</summary>
+        /// <summary>序列帧每帧停留 tick 数（frameLoop=true 时生效）。</summary>
         public int frameTicks = 7;
+        /// <summary>true=帧序列循环播放到火焰熄灭；false=帧序列按单柱存活期摊平只播一遍
+        /// （起燃→峰值→余烬随火焰寿命自然演进，帧相位不再按 seed 错开），停在末帧直到熄灭。</summary>
+        public bool frameLoop = true;
+        /// <summary>true=完全跳过自绘（伤害/点燃逻辑不变），用于视觉改由外部特效承担
+        /// （如烈焰喷发叠加 sideRamp 坡道火柱后隐藏旧的俯视序列帧）。</summary>
+        public bool hideVisual;
         /// <summary>单柱贴图尺寸（格，贴地火盘直径；堆叠层以此为基准收小）。</summary>
         public float visualScale = 1.7f;
         /// <summary>火柱高度（世界单位，水平碟堆叠总高——1.7 竖直 quad 不渲染，
@@ -264,7 +270,7 @@ namespace MyModeTest
         /// frameTexPaths 非空时改走序列帧模式（见 DrawFrameSequence）。</summary>
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            if (flameParams == null || igniteDelayTicks > 0)
+            if (flameParams == null || igniteDelayTicks > 0 || flameParams.hideVisual)
             {
                 return;
             }
@@ -306,8 +312,9 @@ namespace MyModeTest
         }
 
         /// <summary>序列帧模式：帧图必须是**俯视**（正上方视角）的径向喷发贴图，
-        /// 与原版火焰同思路——整帧平铺在目标格地面上（plane10 + Quaternion.identity），
-        /// 按 frameTicks 循环播放、帧相位按 seed 错开（火海成片不同步）。
+        /// 与原版火焰同思路——整帧平铺在目标格地面上（plane10 + Quaternion.identity）。
+        /// frameLoop=true 按 frameTicks 循环播放、帧相位按 seed 错开（火海成片不同步）；
+        /// frameLoop=false 把帧序列摊满单柱存活期只播一遍（起燃→峰值→余烬随寿命演进）。
         /// 侧视素材在 1.7/Waylith 下没有可靠的竖直呈现手段：竖直 quad 完全不渲染，
         /// 水平切片堆叠按真实高度画也在屏幕上塌成一条带（2026-11-27 四轮实验定论，
         /// 疑似 Waylith 对抬高面片的高度处理与预期不符）——故本模式只接受俯视帧图。
@@ -315,8 +322,17 @@ namespace MyModeTest
         private void DrawFrameSequence(int elapsed, Vector3 basePos, float baseY, float scale, float flicker, Color color, Quaternion rot, Vector3 camForward)
         {
             List<string> frames = flameParams.frameTexPaths;
-            int ft = Mathf.Max(1, flameParams.frameTicks);
-            int idx = ((elapsed / ft) + Mathf.RoundToInt(seed * 3.7f)) % frames.Count;
+            int idx;
+            if (flameParams.frameLoop)
+            {
+                int ft = Mathf.Max(1, flameParams.frameTicks);
+                idx = ((elapsed / ft) + Mathf.RoundToInt(seed * 3.7f)) % frames.Count;
+            }
+            else
+            {
+                // 播一遍：帧序列摊满整个存活期（每帧 durationTotal/count tick），停在末帧直到熄灭
+                idx = Mathf.Min((int)(elapsed * (long)frames.Count / Mathf.Max(1, durationTotal)), frames.Count - 1);
+            }
             Material frameMat = SharedMat(frames[idx]);
             if (frameMat == null)
             {
@@ -347,8 +363,14 @@ namespace MyModeTest
         public Color tint = new Color(1f, 0.62f, 0.2f);
         /// <summary>序列帧贴图列表（非空时走序列帧模式，帧图已带颜色、tint 传白色）。</summary>
         public List<string> frameTexPaths;
-        /// <summary>序列帧每帧停留 tick 数。</summary>
+        /// <summary>序列帧每帧停留 tick 数（frameLoop=true 时生效）。</summary>
         public int frameTicks = 7;
+        /// <summary>true=帧序列循环播放到火焰熄灭；false=帧序列按单柱存活期摊平只播一遍
+        /// （起燃→峰值→余烬随火焰寿命自然演进，帧相位不再按 seed 错开），停在末帧直到熄灭。</summary>
+        public bool frameLoop = true;
+        /// <summary>true=完全跳过自绘（伤害/点燃逻辑不变），用于视觉改由外部特效承担
+        /// （如烈焰喷发叠加 sideRamp 坡道火柱后隐藏旧的俯视序列帧）。</summary>
+        public bool hideVisual;
         public float visualScale = 1.7f;
         /// <summary>火柱堆叠参数：总高（世界单位）/层数/顶端缩放系数（相对火盘）/顶端摆动幅度。</summary>
         public float pillarHeight = 1.4f;
@@ -391,6 +413,8 @@ namespace MyModeTest
                 tint = Props.tint,
                 frameTexPaths = Props.frameTexPaths,
                 frameTicks = Props.frameTicks,
+                frameLoop = Props.frameLoop,
+                hideVisual = Props.hideVisual,
                 visualScale = Props.visualScale,
                 pillarHeight = Props.pillarHeight,
                 pillarLayers = Props.pillarLayers,

@@ -8,7 +8,8 @@ namespace MyModeTest
 {
     // ========== 造墙/地形障碍框架（第十八步：石墙术） ==========
     // 以施法者为锥顶、指向目标点的四分之一圆环（90° 扇形）范围内，仅在锥形
-    // 末端外弧（约 1 格厚的环带）召唤一段弧形临时石墙：
+    // 末端外弧（约 1 格厚的环带）召唤一段弧形临时石墙；锥形半径 = 施法者到点击点
+    // 的距离（radius 参数为距离上限），墙弧贴着点击点升起，点哪墙在哪：
     // 满填墙体（挡路挡视线挡子弹、可托屋顶、不可燃），无主派系（不属玩家也不
     // 属敌人），限时走原版 CompLifespan（age 偏移实现运行时自定义时长），到期崩解消失。
     // 墙体图形走原版 CornerFiller 链接（linkFlags Wall+Rock），相邻石墙之间、
@@ -43,6 +44,15 @@ namespace MyModeTest
             return cell.InBounds(map) && cell.Standable(map)
                 && cell.GetEdifice(map) == null && cell.GetFirstPawn(map) == null
                 && cell.GetFirstItem(map) == null;
+        }
+
+        /// <summary>墙弧实际距离：贴着点击点（施法者→目标距离），下限 1.5 格（不糊在施法者脚下），
+        /// 上限 maxRange（技能可达范围）。点哪墙在哪，距离由点击位置决定。</summary>
+        public static float EffectiveRange(IntVec3 origin, IntVec3 targetCell, float maxRange)
+        {
+            float dist = Mathf.Sqrt((targetCell.x - origin.x) * (targetCell.x - origin.x)
+                + (targetCell.z - origin.z) * (targetCell.z - origin.z));
+            return Mathf.Clamp(dist, 1.5f, Mathf.Max(1.5f, maxRange));
         }
 
         /// <summary>
@@ -89,7 +99,7 @@ namespace MyModeTest
             }
         }
 
-        /// <summary>沿锥形末端外弧召唤石墙，返回成功召唤数。</summary>
+        /// <summary>沿锥形末端外弧召唤石墙（弧线贴着点击点，距离上限 range），返回成功召唤数。</summary>
         public static int RaiseWall(Thing caster, IntVec3 targetCell, float range, float halfAngleDegrees, MMTWallParams p)
         {
             Map map = caster?.MapHeld;
@@ -104,7 +114,7 @@ namespace MyModeTest
                 return 0;
             }
             int count = 0;
-            foreach (IntVec3 cell in WallCellsInCone(caster.Position, targetCell, range, halfAngleDegrees))
+            foreach (IntVec3 cell in WallCellsInCone(caster.Position, targetCell, EffectiveRange(caster.Position, targetCell, range), halfAngleDegrees))
             {
                 if (!CanRaiseAt(cell, map))
                 {
@@ -130,11 +140,11 @@ namespace MyModeTest
             return count;
         }
 
-        /// <summary>锥形末端外弧中当前可建墙的格数（预览提示用）。</summary>
+        /// <summary>锥形末端外弧中当前可建墙的格数（预览提示用；弧线贴着点击点，range 为距离上限）。</summary>
         public static int CountValidCells(Map map, IntVec3 origin, IntVec3 targetCell, float range, float halfAngleDegrees)
         {
             int n = 0;
-            foreach (IntVec3 cell in WallCellsInCone(origin, targetCell, range, halfAngleDegrees))
+            foreach (IntVec3 cell in WallCellsInCone(origin, targetCell, EffectiveRange(origin, targetCell, range), halfAngleDegrees))
             {
                 if (CanRaiseAt(cell, map))
                 {
@@ -144,20 +154,21 @@ namespace MyModeTest
             return n;
         }
 
-        /// <summary>画石墙术瞄准预览：施法者为锥顶的扇形边界线+末端弧，并高亮末端外弧可建墙格。</summary>
+        /// <summary>画石墙术瞄准预览：施法者为锥顶、末端弧贴着鼠标格的扇形边界线+末端弧，并高亮末端外弧可建墙格。</summary>
         public static void DrawWallPreview(Thing caster, Map map, IntVec3 targetCell, float range, float halfAngleDegrees, Color color)
         {
             if (caster == null || map == null || map != Find.CurrentMap)
             {
                 return;
             }
+            float effRange = EffectiveRange(caster.Position, targetCell, range);
             Vector3 dir = MMTBeamUtil.BeamDirection(caster, targetCell);
             if (dir.sqrMagnitude > 0.01f)
             {
                 MMTBreathUtil.DrawConePreview(map, caster.Position.ToVector3Shifted(), dir,
-                    range, halfAngleDegrees, ConePreviewTexPath, color);
+                    effRange, halfAngleDegrees, ConePreviewTexPath, color);
             }
-            foreach (IntVec3 cell in WallCellsInCone(caster.Position, targetCell, range, halfAngleDegrees))
+            foreach (IntVec3 cell in WallCellsInCone(caster.Position, targetCell, effRange, halfAngleDegrees))
             {
                 if (CanRaiseAt(cell, map))
                 {
@@ -174,14 +185,14 @@ namespace MyModeTest
         public string wallDefName = "MMT_MagicStoneWall";
         /// <summary>墙体存续秒数（0 = 用墙体 Def 自带 lifespan）。</summary>
         public float durationSeconds = 30f;
-        /// <summary>锥形半角（度）：45° 时全角 90° = 整圆四分之一；锥形半径用 radius。</summary>
+        /// <summary>锥形半角（度）：45° 时全角 90° = 整圆四分之一；锥形半径 = 施法者到点击点的距离，radius 是距离上限。</summary>
         public float coneHalfAngleDegrees = MMTWallUtil.DefaultHalfAngleDegrees;
         public string soundDefName = "ChunkRock_Drop";
 
         public CompProperties_MMTWall()
         {
             compClass = typeof(CompAbilityEffect_MMTWall);
-            radius = 2.5f;
+            radius = 12f;
         }
     }
 

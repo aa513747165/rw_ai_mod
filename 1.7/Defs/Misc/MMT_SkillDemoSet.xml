@@ -93,10 +93,10 @@
         <strikeIntervalTicks>12</strikeIntervalTicks>
         <strikeDamage>10</strikeDamage>
       </li>
-      <!-- 第六步：地面火焰·烈焰喷发（单体火柱，俯视序列帧模式）
-           效果设计卡：5 帧径向爆燃序列（起燃→峰值→旋卷→余烬）按 groundFrameTicks 循环播放、
-           整帧平铺目标格地面（1.7 竖直 quad 不渲染、水平切片堆叠已证伪塌扁，
-           序列帧只做俯视径向构图），帧图自带颜色故 groundTint 纯白。
+      <!-- 第六步：地面火焰·烈焰喷发（单体火柱）
+           效果设计卡：2026-11-28 起旧的俯视序列帧自绘已隐藏（groundHideVisual），视觉全部交给
+           sideRamp 侧视坡道火柱（groundSideRampFX，与「地心火柱·坡道」同款，8 片坡道带+锥形收放
+           +摆动+脉冲，锚点南移 1 格落在脚下地面，时长对齐 6s 存活期）；地面火焰只保留伤害/点燃逻辑。
            火海（下条）另走余烬桶、不另写 -->
       <li>
         <label>测试·烈焰喷发</label>
@@ -127,10 +127,33 @@
         <groundDamageIntervalTicks>10</groundDamageIntervalTicks>
         <groundIgnitePawnChance>0.3</groundIgnitePawnChance>
         <groundIgniteCellChance>0.05</groundIgniteCellChance>
+        <!-- 2026-11-28：隐藏旧的俯视序列帧自绘，视觉全部交给下方 sideRamp 坡道火柱 -->
+        <groundHideVisual>true</groundHideVisual>
+        <!-- 叠加「测试·地心火柱·坡道」同款侧视坡道火柱（2026-11-28）：火柱有竖直喷发感，
+             时长对齐火焰 6s 存活期，锚点南移 1 格落在脚下地面，纯视觉不影响伤害逻辑 -->
+        <groundSideRampFX>true</groundSideRampFX>
+        <sideRampTexPath>Things/Mote/MMT_SkillRiseFX_FlamePillar</sideRampTexPath>
+        <sideRampFrameCount>5</sideRampFrameCount>
+        <sideRampFrameTicks>7</sideRampFrameTicks>
+        <sideRampLoop>true</sideRampLoop>
+        <sideRampDurationSeconds>6</sideRampDurationSeconds>
+        <sideRampWidthCells>2.2</sideRampWidthCells>
+        <sideRampHeightCells>2.6</sideRampHeightCells>
+        <sideRampDriftCells>0</sideRampDriftCells>
+        <sideRampBaseDownCells>1</sideRampBaseDownCells>
+        <sideRampSlices>8</sideRampSlices>
+        <sideRampSway>0.35</sideRampSway>
+        <sideRampSwayPeriodTicks>40</sideRampSwayPeriodTicks>
+        <sideRampTopScale>0.75</sideRampTopScale>
+        <sideRampTopAlpha>0.85</sideRampTopAlpha>
+        <sideRampPulseAmp>0.06</sideRampPulseAmp>
+        <sideRampFadeInSeconds>0.15</sideRampFadeInSeconds>
+        <sideRampFadeOutSeconds>0.4</sideRampFadeOutSeconds>
       </li>
       <!-- 烈焰火海·整图序列帧版（2026-11-27 替换第二十四步余烬爆发版，余烬爆发框架 SkillEmberBurst.cs 保留备用）
            效果设计卡：整图单团模式（groundSingleFlame）——中心一根大火焰，visualScale 5 格覆盖 5×5 区域
-           （预览圈 radius 2.5 ≈ 5×5 格）；5 帧俯视径向火海序列（起燃→蔓延→峰值→旋卷→余烬）7 tick/帧循环；
+           （预览圈 radius 2.5 ≈ 5×5 格）；5 帧俯视径向火海序列（起燃→蔓延→峰值→旋卷→余烬）
+           groundFrameLoop=false 按火焰存活期 6s 摊平只播一遍（不循环不重复，约 1.2s/帧随寿命自然演进）；
            帧图为白/灰度图（已预乘黑防白边），groundTint 染橙红 (1,0.55,0.15)；不旋转（帧图自带旋卷帧）；
            伤害半径缺省 = radius。贴图 MMT_FlameSea5x5_0~4（1024²），提示词见 docs/mmt-skillfx-texture-prompts.md §十六 -->
       <li>
@@ -153,6 +176,7 @@
           <li>Things/Mote/MMT_FlameSea5x5/MMT_FlameSea5x5_4</li>
         </groundFrameTexPaths>
         <groundFrameTicks>7</groundFrameTicks>
+        <groundFrameLoop>false</groundFrameLoop>
         <groundVisualScale>5</groundVisualScale>
         <groundDamage>4</groundDamage>
         <groundDamageIntervalTicks>15</groundDamageIntervalTicks>
@@ -388,7 +412,7 @@
            走第二十六步 sideFlat 平躺水平 quad 路线，旋转锁 0° 贴图上边朝北=光束朝上）。
            冲击环直径 ≈ 5 格 = 爆炸半径 2.5 × 2（实测环带占帧宽 0.79 → 绘制宽 6.4 格，正方形帧高同宽）；
            爆发中心实测在帧底边上方 0.37 → offsetZ -2.37 格把环心压回撞击点（光束顶伸出落点以北约 4 格）；
-           3 tick/帧共 0.7s 播完一轮不循环，尾淡出 0.1s；落点原版爆炸半径 2.5 不点燃（闪光作高光打底），
+           5 tick/帧共 1.17s 播完一轮不循环，尾淡出 0.1s；落点原版爆炸半径 2.5 不点燃（闪光作高光打底），
            迫近音效 MMT_Gong（圣钟）。参考：DNF 被击金爆/FF 系圣光审判落地段 -->
       <li>
         <label>测试·圣光审判II</label>
@@ -406,7 +430,7 @@
         <meteorIgniteChance>0</meteorIgniteChance>
         <impactBurstTexPath>Things/Mote/MMT_HolyJudgment2_Burst</impactBurstTexPath>
         <impactBurstFrameCount>14</impactBurstFrameCount>
-        <impactBurstFrameTicks>3</impactBurstFrameTicks>
+        <impactBurstFrameTicks>5</impactBurstFrameTicks>
         <impactBurstWidthCells>6.4</impactBurstWidthCells>
         <impactBurstHeightCells>6.4</impactBurstHeightCells>
         <impactBurstOffsetZCells>-2.37</impactBurstOffsetZCells>
@@ -487,11 +511,12 @@
         <castBarColor>(0.4,1,0.5,0.5)</castBarColor>
         <healAmount>15</healAmount>
       </li>
-      <!-- 第十八步：石墙术（以施法者为锥顶的四分之一扇形，只在末端外弧召唤弧形临时石墙） -->
+      <!-- 第十八步：石墙术（以施法者为锥顶的四分之一扇形，只在末端外弧召唤弧形临时石墙；
+           墙弧贴着点击点升起——锥形半径 = 施法者到点击点距离，radius 仅作距离上限 15 格） -->
       <li>
         <label>测试·石墙术</label>
         <iconPath>Things/Building/MMT_StoneWall</iconPath>
-        <radius>2.5</radius>
+        <radius>15</radius>
         <demoType>wall</demoType>
         <castSeconds>1.5</castSeconds>
         <castBarColor>(0.7,0.65,0.55,0.5)</castBarColor>
@@ -614,14 +639,15 @@
            效果设计卡：侧视 5 帧图集（爱给网 234 序列帧，单帧 110×128，宽高比 0.86）走
            DrawGUIOverlay 屏幕空间贴图（1.7 竖直 quad 不渲染的绕行路线；画在世界物体之上、
            不吃光照，迷雾格手动跳过）。贴图底边中点锚在目标格中心，宽 2.2 格 / 高 2.6 格，
-           7 tick/帧循环播放，总时长 2.2s，整体上升 0.6 格模拟喷发感，首尾 0.15s/0.4s
-           淡入淡出。帧图自带颜色故 riseTint 缺省（=纯白）。 -->
+           7 tick/帧循环播放，总时长 2.2s，锁定敌方目标释放、特效固定其脚下地面不漂移，
+           首尾 0.15s/0.4s 淡入淡出。帧图自带颜色故 riseTint 缺省（=纯白）。 -->
       <li>
         <label>测试·地心火柱</label>
         <iconPath>Things/Mote/BlastFlame</iconPath>
         <radius>0</radius>
         <targetFriendly>false</targetFriendly>
         <demoType>riseFX</demoType>
+        <requireTarget>true</requireTarget>
         <castSeconds>1</castSeconds>
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
         <soundDefName>FireSpew_Resolve</soundDefName>
@@ -632,7 +658,9 @@
         <riseDurationSeconds>2.2</riseDurationSeconds>
         <riseWidthCells>2.2</riseWidthCells>
         <riseHeightCells>2.6</riseHeightCells>
-        <riseCells>0.6</riseCells>
+        <riseCells>0</riseCells>
+        <!-- 底边锚点自格中心南移 1 格：格中心投影在小人躯干，南移后火柱从脚下地面长出 -->
+        <riseBaseDownCells>1</riseBaseDownCells>
         <riseFadeInSeconds>0.15</riseFadeInSeconds>
         <riseFadeOutSeconds>0.4</riseFadeOutSeconds>
       </li>
@@ -641,7 +669,7 @@
            整帧平铺水平 quad（plane10 + Quaternion.identity，旋转锁 0°——贴图"上"边朝世界 +Z 北
            = 屏幕上；1.7 主相机为 90° 正上方正交相机，地面与屏幕 1:1 无失真映射，无需预拉伸）。
            贴图底边中点锚在目标格中心，宽 2.2 格（世界 X）/ 高 2.6 格（朝北延伸），
-           7 tick/帧循环播放，总时长 2.2s，整体向北漂移 0.6 格模拟喷发上升感，
+           7 tick/帧循环播放，总时长 2.2s，锁定敌方目标释放、特效固定其脚下地面不漂移，
            首尾 0.15s/0.4s 淡入淡出。画在 MoteOverhead 层（高于 pawn，遮挡按 Altitude 判定）。
            已知代价：朝向锁死屏幕北（绕 Y 旋转即穿帮）；与第二十五步屏幕空间版对照验证。 -->
       <li>
@@ -650,6 +678,7 @@
         <radius>0</radius>
         <targetFriendly>false</targetFriendly>
         <demoType>sideFlat</demoType>
+        <requireTarget>true</requireTarget>
         <castSeconds>1</castSeconds>
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
         <soundDefName>FireSpew_Resolve</soundDefName>
@@ -660,7 +689,7 @@
         <sideFlatDurationSeconds>2.2</sideFlatDurationSeconds>
         <sideFlatWidthCells>2.2</sideFlatWidthCells>
         <sideFlatHeightCells>2.6</sideFlatHeightCells>
-        <sideFlatDriftCells>0.6</sideFlatDriftCells>
+        <sideFlatDriftCells>0</sideFlatDriftCells>
         <sideFlatFadeInSeconds>0.15</sideFlatFadeInSeconds>
         <sideFlatFadeOutSeconds>0.4</sideFlatFadeOutSeconds>
       </li>
@@ -669,7 +698,8 @@
            沿 +Z 坡道排开——静止时无缝拼回整帧（与第二十六步单帧平躺同图），
            每带独立：锥形收放（底宽 1 → 顶 0.75）、横向摆动（顶部 0.35 格、随高度平方增大、
            周期 40 tick、带间相位错开）、呼吸脉冲 ±6%、顶部 alpha 衰减至 0.85。
-           7 tick/帧循环，总时长 2.2s，整体向北漂移 0.6 格，首尾 0.15s/0.4s 淡入淡出。
+           7 tick/帧循环，总时长 2.2s，锁定敌方目标释放、特效固定其脚下地面不漂移，
+           首尾 0.15s/0.4s 淡入淡出。
            世界 Y 逐带 +0.004 微抬排绘制次序（不承担高度——高度全在 Z 轴，原版 Tornado 同款）。
            与第二十六步同格对照：坡道版应有火舌舔动/柱体扭动的体积感。朝向锁死屏幕北。 -->
       <li>
@@ -678,6 +708,7 @@
         <radius>0</radius>
         <targetFriendly>false</targetFriendly>
         <demoType>sideRamp</demoType>
+        <requireTarget>true</requireTarget>
         <castSeconds>1</castSeconds>
         <castBarColor>(1,0.45,0.15,0.5)</castBarColor>
         <soundDefName>FireSpew_Resolve</soundDefName>
@@ -688,7 +719,7 @@
         <sideRampDurationSeconds>2.2</sideRampDurationSeconds>
         <sideRampWidthCells>2.2</sideRampWidthCells>
         <sideRampHeightCells>2.6</sideRampHeightCells>
-        <sideRampDriftCells>0.6</sideRampDriftCells>
+        <sideRampDriftCells>0</sideRampDriftCells>
         <sideRampSlices>8</sideRampSlices>
         <sideRampSway>0.35</sideRampSway>
         <sideRampSwayPeriodTicks>40</sideRampSwayPeriodTicks>

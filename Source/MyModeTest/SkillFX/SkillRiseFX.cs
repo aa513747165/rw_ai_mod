@@ -25,11 +25,14 @@ namespace MyModeTest
         public bool loop = true;
         /// <summary>特效总时长秒数（到期 mote 自动销毁）。</summary>
         public float durationSeconds = 2.2f;
-        /// <summary>绘制宽/高（格，按相机投影逐帧换算成屏幕像素；贴图底边中点锚在目标格中心）。</summary>
+        /// <summary>绘制宽/高（格，按相机投影逐帧换算成屏幕像素；贴图底边中点锚在目标格中心向南 baseDownCells 处）。</summary>
         public float widthCells = 2.2f;
         public float heightCells = 2.6f;
-        /// <summary>生命周期内整体上升距离（格，0=钉在原地）。</summary>
-        public float riseCells = 0.6f;
+        /// <summary>生命周期内整体上升距离（格，0=钉在原地；默认 0=固定在目标脚下地面，需要上升感时显式配）。</summary>
+        public float riseCells;
+        /// <summary>底边锚点自格中心向南（屏幕下方）偏移格数：俯视正交相机下格中心投影在小人躯干，
+        /// 脚下地面在格南缘附近，向下偏移让火柱从脚下地面长出（0.45≈小人脚位）。</summary>
+        public float baseDownCells = 0.45f;
         /// <summary>染色（帧图自带颜色时保持纯白；alpha=0 视为未设置按纯白处理）。</summary>
         public Color tint = Color.white;
         /// <summary>首/尾淡入淡出秒数（0=生硬出现/消失）。</summary>
@@ -82,8 +85,9 @@ namespace MyModeTest
             float progress = Mathf.Clamp01(age / duration);
 
             // 世界→屏幕投影：像素/格用投影目标点与其东侧 1 格点的屏幕间距实测，透视/缩放都自适应
+            // 锚点先向南（屏幕下方）偏移 baseDownCells 格：格中心投影在小人躯干，南移后底边落在脚下地面
             Camera cam = Find.Camera;
-            Vector3 world = DrawPos;
+            Vector3 world = DrawPos + new Vector3(0f, 0f, -fx.baseDownCells);
             Vector3 sp0 = cam.WorldToScreenPoint(world);
             if (sp0.z <= 0f)
             {

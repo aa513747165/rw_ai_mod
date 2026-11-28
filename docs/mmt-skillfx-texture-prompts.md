@@ -698,14 +698,18 @@ sprite sheet layout
 5. 游戏内验证：「测试·烈焰火海」5×5 区域火海循环播放流畅、无帧间跳动错位、无硬边白边。
 
 ---
-## 十七、石墙术链接图集 `MMT_StoneWall`（512×512，CornerFiller 4×4）【占位图已落盘，待 AI 终稿】
+## 十七、石墙术链接图集 `MMT_StoneWall`（512×512，CornerFiller 4×4）【伪立体版已落盘，待 AI 终稿】
 
 > 2026-11-27：石墙术改为原版 CornerFiller 链接图形（linkType + linkFlags Wall/Rock），
 > 贴图必须是 1.7 Graphic_Linked 的 4×4 图集排布：16 枚 128px 子砖按 LinkDirections
 > 位掩码 0~15 排布（Up=1 Right=2 Down=4 Left=8），index = 位掩码值，
 > 列 = index % 4、行（自底向上）= index / 4；渲染时只采样每枚子砖中央 16~112px
-> （外圈 1/8 被裁掉）。占位图由 `docs/temp/gen_stonewall_atlas.py` 生成（全局无缝砖纹 +
-> 未链接侧边深色包边），已落盘生效；AI 终稿直接覆盖同名文件，Def 零改动。
+> （外圈 1/8 被裁掉，UV 内缩 0.03125 经 ildump 反汇编 MaterialAtlas 构造核实）。
+> 2026-11-27 二版：旧图纯平面砖纹无立体感，重做成**伪立体**——北暴露侧顶面亮带、
+> 南暴露侧正面深暗渐变带（墙的厚度面，立体感主力）、东暗侧面、西亮侧面，
+> 全部锚在可见框 16~112px 上；脚本 `tools/temp/gen_stonewall_tex.py`
+> （旧 `docs/temp/gen_stonewall_atlas.py` 已丢失，本脚本为替代），
+> 已落盘生效；AI 终稿直接覆盖同名文件，Def 零改动。
 
 - **落盘**：`1.7/Textures/Things/Building/MMT_StoneWall.png`（512×512，RGBA 不透明）。
 - **接入机制**：`MMT_MagicStoneWall.xml` graphicData 用 `graphicClass Graphic_Single` +
@@ -724,12 +728,14 @@ RimWorld style wall texture atlas, 4x4 grid of 16 square tiles, 512x512 PNG,
 top-down orthographic game art, grey stone brick wall, hand-painted,
 consistent lighting from top-left; every tile shows the same seamless stone
 brick pattern (bricks ~44x26 px with dark mortar gaps) that CONTINUES
-seamlessly across tile borders; on each tile, draw a darker outline band and
-a subtle inner highlight ONLY on the sides given by this bitmask layout
-(bit Up=1 Right=2 Down=4 Left=8, tile index = column + 4 * row-from-bottom,
+seamlessly across tile borders; pseudo-3D depth: on OPEN (unlinked) sides
+draw a lighter top-face band on the north edge and a darker shaded front-face
+band on the south edge (the wall's visible thickness), subtle side shading on
+east/west open edges, plus a dark outline band; sides given by this bitmask
+layout (bit Up=1 Right=2 Down=4 Left=8, tile index = column + 4 * row-from-bottom,
 a set bit means that side connects to a neighbor wall and must have NO
-border), borders drawn 16-30 px inside each 128px tile edge, corners of the
-outline rounded; no text, no watermark, fully opaque
+border), edge bands drawn 16-34 px inside each 128px tile edge; no text, no
+watermark, fully opaque
 ```
 
 **验收清单**：

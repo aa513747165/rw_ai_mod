@@ -35,8 +35,8 @@ namespace MyModeTest
         /// <summary>锚点沿世界 Z 的额外平移（格，负值=整体向南/屏幕下压）：帧图爆发中心不在底边时
         /// 用它把视觉中心拉回目标格（如金爆冲击环中心在帧底边上方 0.37 × 高 → offsetZ = -0.37 × 高）。</summary>
         public float offsetZCells;
-        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，模拟上升感，0=钉在原地）。</summary>
-        public float driftCells = 0.6f;
+        /// <summary>生命周期内整体向北（屏幕上）漂移距离（格，0=钉在原地；默认 0=固定在目标脚下地面，需要上升感时显式配）。</summary>
+        public float driftCells;
         /// <summary>染色（帧图自带颜色时保持纯白；alpha=0 视为未设置按纯白处理）。</summary>
         public Color tint = Color.white;
         /// <summary>首/尾淡入淡出秒数（0=生硬出现/消失）。</summary>
